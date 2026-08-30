@@ -1,9 +1,67 @@
-export function PageHero({ title, subtitle }: { title: string; subtitle?: string }) {
+import { Link } from "@tanstack/react-router";
+import { ChevronRight, Home } from "lucide-react";
+
+interface PageHeroProps {
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  breadcrumb?: { label: string; to?: string }[];
+}
+
+export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) {
   return (
-    <section className="bg-gradient-to-br from-primary to-primary/80 text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 md:py-20">
-        <h1 className="text-3xl md:text-5xl font-bold">{title}</h1>
-        {subtitle && <p className="mt-3 text-base md:text-lg opacity-90 max-w-3xl">{subtitle}</p>}
+    <section className="relative overflow-hidden bg-slate-950 text-white py-14 sm:py-20 border-b border-slate-800">
+      {/* Background Decorative Pattern & Gradients */}
+      <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
+      <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-1.5 text-xs text-slate-400 mb-4 font-medium" aria-label="Breadcrumb">
+          <Link to="/" className="hover:text-emerald-400 transition flex items-center gap-1">
+            <Home className="h-3.5 w-3.5" />
+            <span>Home</span>
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5 text-slate-600" />
+          {breadcrumb ? (
+            breadcrumb.map((b, idx) => (
+              <div key={idx} className="flex items-center gap-1.5">
+                {b.to ? (
+                  <Link to={b.to} className="hover:text-emerald-400 transition">
+                    {b.label}
+                  </Link>
+                ) : (
+                  <span className="text-emerald-400 font-semibold">{b.label}</span>
+                )}
+                {idx < breadcrumb.length - 1 && (
+                  <ChevronRight className="h-3.5 w-3.5 text-slate-600" />
+                )}
+              </div>
+            ))
+          ) : (
+            <span className="text-emerald-400 font-semibold">{title}</span>
+          )}
+        </nav>
+
+        {/* Badge */}
+        {badge && (
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold mb-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+            <span>{badge}</span>
+          </div>
+        )}
+
+        {/* Main Title & Subtitle */}
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight max-w-4xl">
+          {title}
+        </h1>
+
+        {subtitle && (
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed font-normal">
+            {subtitle}
+          </p>
+        )}
       </div>
     </section>
   );

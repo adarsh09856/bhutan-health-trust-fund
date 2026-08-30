@@ -15,6 +15,10 @@ import {
   Loader2,
   Sparkles,
   ShieldCheck,
+  Award,
+  ArrowRight,
+  TrendingUp,
+  Landmark,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -22,8 +26,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/get-involved")({
   head: () => ({
     meta: [
-      { title: "Get Involved & Donate | Bhutan Health Trust Fund" },
-      { name: "description", content: "Support BHTF through direct donations, organizational partnerships, volunteering, and career opportunities." },
+      { title: "Donate & Support | Bhutan Health Trust Fund" },
+      {
+        name: "description",
+        content:
+          "Make a tax-deductible donation pledge to Bhutan Health Trust Fund. 1:1 RGOB matched endowment model for essential medicines and vaccines.",
+      },
     ],
   }),
   component: GetInvolvedPage,
@@ -33,22 +41,45 @@ const ways = [
   {
     icon: Heart,
     title: "Public Donations",
-    text: "Every Ngultrum directly procures life-saving medicines and childhood vaccines for Bhutanese families.",
+    text: "Every single Ngultrum contributed directly finances essential medicines and childhood vaccines across all 20 Dzongkhags.",
   },
   {
     icon: Handshake,
-    title: "Strategic Partnerships",
-    text: "Collaborate with bilateral, multilateral, and philanthropic foundations advancing universal health coverage.",
+    title: "Corporate CSR Partnerships",
+    text: "Partner with BHTF for institutional CSR allocations with official DRC Bhutan tax deduction certification.",
   },
   {
-    icon: Users,
-    title: "Community Outreach",
-    text: "Participate in health literacy drives, blood donation events, and public health campaigns across dzongkhags.",
+    icon: Landmark,
+    title: "Endowment Legacy Giving",
+    text: "Establish permanent named health endowments or long-term philanthropic trusts supporting remote primary clinics.",
   },
   {
     icon: Briefcase,
-    title: "Careers & Internships",
-    text: "Join our dedicated secretariat team in public health financing, procurement, and governance.",
+    title: "International Bilateral Grants",
+    text: "Collaborate with WHO, UNICEF, and global health foundations under autonomous statutory governance.",
+  },
+];
+
+const tiers = [
+  {
+    amount: 500,
+    label: "Nu. 500",
+    impact: "Provides full childhood immunization course for 2 infants",
+  },
+  {
+    amount: 1000,
+    label: "Nu. 1,000",
+    impact: "Supplies essential antibiotic buffers for a rural BHU clinic",
+  },
+  {
+    amount: 5000,
+    label: "Nu. 5,000",
+    impact: "Finances clean emergency maternal delivery and neonatal kits",
+  },
+  {
+    amount: 10000,
+    label: "Nu. 10,000",
+    impact: "Sponsors essential chronic care medicines for an entire village",
   },
 ];
 
@@ -57,7 +88,9 @@ function GetInvolvedPage() {
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD">("MBOB");
+  const [paymentMethod, setPaymentMethod] = useState<
+    "MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD"
+  >("MBOB");
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -92,10 +125,10 @@ function GetInvolvedPage() {
           paymentMethod: res.paymentMethod,
           message: res.message,
         });
-        toast.success(`Donation pledge generated! Reference: ${res.referenceNo}`);
+        toast.success(`Donation pledge recorded! Tracking Ref: ${res.referenceNo}`);
       }
     } catch {
-      toast.error("Failed to process donation pledge. Please try again.");
+      toast.error("Failed to record donation pledge. Please check your inputs.");
     } finally {
       setLoading(false);
     }
@@ -107,111 +140,164 @@ function GetInvolvedPage() {
   };
 
   return (
-    <>
+    <div className="space-y-16 sm:space-y-24 pb-20">
       <PageHero
-        title="Get Involved"
-        subtitle="Join our sacred journey of ensuring no Bhutanese is denied essential healthcare due to financial hardship."
+        badge="Tax Deductible in Bhutan"
+        title="Support the Bhutan Health Trust Fund"
+        subtitle="Every Ngultrum you pledge is doubled 1:1 by the Royal Government of Bhutan to build a permanent, sovereign health endowment."
       />
 
-      {/* 4 Pillars Section */}
-      <section className="mx-auto max-w-7xl px-4 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {ways.map((w) => (
-          <div key={w.title} className="bg-white border rounded-xl p-6 text-center shadow-xs hover:border-slate-300 transition">
-            <div className="h-12 w-12 mx-auto rounded-full bg-secondary/10 text-secondary grid place-items-center mb-3">
-              <w.icon className="h-6 w-6" />
+      {/* 4 Pillars of Engagement */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {ways.map((w) => (
+            <div
+              key={w.title}
+              className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-150 space-y-3"
+            >
+              <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center mb-4">
+                <w.icon className="h-6 w-6" />
+              </div>
+              <h3 className="font-bold text-slate-900 text-base">{w.title}</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{w.text}</p>
             </div>
-            <h3 className="font-bold text-primary mb-1 text-base">{w.title}</h3>
-            <p className="text-xs text-muted-foreground leading-relaxed">{w.text}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
-      {/* Donation Form Section */}
-      <section className="mx-auto max-w-4xl px-4 pb-20">
-        <div className="bg-white border rounded-2xl p-6 sm:p-10 shadow-sm">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-rose-50 text-rose-600 mb-2">
-              <Heart className="h-3.5 w-3.5" /> 100% Tax Deductible in Bhutan
+      {/* Donation Form & Pledge Section */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              <span>1:1 RGOB Matching Model Guaranteed</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-primary">Contribute to the Trust Fund</h2>
-            <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
-              Every Ngultrum contributes to the perpetual capital endowment financing routine vaccines and essential medicines across all 20 Dzongkhags.
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Make a Healthcare Contribution Pledge
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA Payment Gateway, or direct bank transfer.
             </p>
           </div>
 
           {receiptData ? (
             <div className="space-y-6">
               {/* Receipt Voucher */}
-              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-6 sm:p-8 relative">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-3xl p-6 sm:p-10 relative space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
                   <div>
-                    <div className="text-xs uppercase font-semibold tracking-wider text-slate-500">
+                    <span className="text-xs uppercase font-bold tracking-widest text-emerald-700 block">
                       Official Pledge Voucher
-                    </div>
-                    <div className="text-xl font-bold text-primary">Bhutan Health Trust Fund</div>
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+                      Bhutan Health Trust Fund
+                    </h3>
+                    <p className="text-xs text-slate-500">Royal Charter Autonomous Statutory Entity</p>
                   </div>
                   <div className="text-left sm:text-right">
-                    <div className="text-xs text-slate-500 font-medium">Tracking Reference:</div>
-                    <div className="text-lg font-mono font-bold text-emerald-700">{receiptData.referenceNo}</div>
+                    <span className="text-xs text-slate-400 font-semibold block">Tracking Reference:</span>
+                    <span className="text-xl font-mono font-extrabold text-emerald-700">
+                      {receiptData.referenceNo}
+                    </span>
                   </div>
                 </div>
 
-                <div className="py-6 grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <div className="text-xs text-slate-500">Pledged Amount:</div>
-                    <div className="text-3xl font-black text-slate-900 mt-0.5">
-                      Nu. {receiptData.amountNu.toLocaleString()}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-xs text-slate-500 font-semibold">Pledged Amount:</span>
+                      <div className="text-3xl sm:text-4xl font-black text-slate-900 mt-1">
+                        Nu. {receiptData.amountNu.toLocaleString()}
+                      </div>
+                      <div className="text-xs font-semibold text-emerald-700 mt-1">
+                        + Nu. {receiptData.amountNu.toLocaleString()} (Matched by RGOB) = Nu.{" "}
+                        {(receiptData.amountNu * 2).toLocaleString()} Total Value
+                      </div>
                     </div>
 
-                    <div className="mt-4 space-y-1 text-xs text-slate-600">
-                      <div><span className="font-semibold">Donor:</span> {donorName || "Anonymous Donor"}</div>
-                      <div><span className="font-semibold">Email:</span> {donorEmail}</div>
-                      <div><span className="font-semibold">Selected Method:</span> {receiptData.paymentMethod}</div>
-                      <div><span className="font-semibold">Date:</span> {new Date().toLocaleDateString()}</div>
+                    <div className="space-y-1.5 text-xs text-slate-700 bg-white p-4 rounded-xl border border-slate-200">
+                      <div>
+                        <strong className="text-slate-900">Donor Name:</strong>{" "}
+                        {donorName || "Anonymous Benefactor"}
+                      </div>
+                      <div>
+                        <strong className="text-slate-900">Email Address:</strong> {donorEmail}
+                      </div>
+                      {donorPhone && (
+                        <div>
+                          <strong className="text-slate-900">Phone:</strong> {donorPhone}
+                        </div>
+                      )}
+                      <div>
+                        <strong className="text-slate-900">Payment Channel:</strong>{" "}
+                        {receiptData.paymentMethod}
+                      </div>
+                      <div>
+                        <strong className="text-slate-900">Pledge Date:</strong>{" "}
+                        {new Date().toLocaleDateString("en-US", {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </div>
                     </div>
                   </div>
 
-                  {/* Payment Transfer Instructions */}
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-xs space-y-3">
-                    <div className="font-bold text-slate-800 flex items-center gap-1.5">
-                      <Building className="h-4 w-4 text-primary" /> Bank of Bhutan Deposit Details:
+                  {/* Bank Deposit Box */}
+                  <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
+                    <div className="font-bold text-slate-900 flex items-center gap-2 border-b pb-2">
+                      <Building className="h-4 w-4 text-emerald-700" />
+                      <span>Bank of Bhutan Official Account</span>
                     </div>
-                    <div className="space-y-1.5 text-slate-600 font-mono">
-                      <div className="flex items-center justify-between bg-slate-50 p-2 rounded">
+
+                    <div className="space-y-2 font-mono text-slate-700">
+                      <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
                         <span>Account: 100984572</span>
-                        <button onClick={() => handleCopy("100984572")} className="text-primary hover:underline">
-                          <Copy className="h-3.5 w-3.5" />
+                        <button
+                          type="button"
+                          onClick={() => handleCopy("100984572")}
+                          className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
+                          title="Copy Account Number"
+                        >
+                          <Copy className="h-4 w-4" />
                         </button>
                       </div>
-                      <div className="flex items-center justify-between bg-slate-50 p-2 rounded">
-                        <span>Name: Bhutan Health Trust Fund</span>
+                      <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                        Title: Bhutan Health Trust Fund
                       </div>
-                      <div className="flex items-center justify-between bg-slate-50 p-2 rounded">
-                        <span>Branch: Thimphu Main Branch</span>
+                      <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                        Branch: Thimphu Main Branch (SWIFT: BOBKBTBT)
                       </div>
                     </div>
-                    <p className="text-[11px] text-slate-500">
-                      Please quote reference <span className="font-bold text-primary">{receiptData.referenceNo}</span> in your transfer remarks/narration.
+
+                    <p className="text-[11px] text-slate-500 leading-relaxed pt-1">
+                      ⚠️ Please enter your Reference{" "}
+                      <strong className="text-slate-900 font-mono">{receiptData.referenceNo}</strong> into the
+                      narration/remarks field during transfer.
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
-                  <span className="text-slate-500 flex items-center gap-1">
-                    <ShieldCheck className="h-4 w-4 text-emerald-600" /> A confirmation copy has been logged to your email.
+                <div className="pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                  <span className="text-xs text-slate-500 flex items-center gap-1.5">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" /> Stamped acknowledgment logged for tax deduction.
                   </span>
-                  <div className="flex items-center gap-2">
+
+                  <div className="flex items-center gap-3">
                     <button
+                      type="button"
                       onClick={() => window.print()}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-lg font-semibold transition"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl text-xs font-bold transition cursor-pointer"
                     >
-                      <Printer className="h-3.5 w-3.5" /> Print Voucher
+                      <Printer className="h-4 w-4" /> Print Stamped Voucher
                     </button>
                     <button
+                      type="button"
                       onClick={() => setReceiptData(null)}
-                      className="px-3 py-1.5 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition"
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition cursor-pointer"
                     >
-                      Make Another Pledge
+                      Create Another Pledge
                     </button>
                   </div>
                 </div>
@@ -220,28 +306,28 @@ function GetInvolvedPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Preset Amounts */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">
-                  Select Donation Tier
+              <div className="space-y-3">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Select Donation Tier & Tangible Health Impact
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {[500, 1000, 5000, 10000].map((a) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {tiers.map((t) => (
                     <button
                       type="button"
-                      key={a}
-                      onClick={() => setAmount(a)}
-                      className={`rounded-xl border-2 py-3.5 px-2 text-sm font-bold transition flex flex-col items-center justify-center cursor-pointer ${
-                        amount === a
-                          ? "border-primary bg-primary text-white shadow-sm"
-                          : "border-slate-200 hover:border-primary text-slate-700 bg-white"
+                      key={t.amount}
+                      onClick={() => setAmount(t.amount)}
+                      className={`p-4 rounded-2xl border-2 text-left transition duration-150 flex flex-col justify-between cursor-pointer ${
+                        amount === t.amount
+                          ? "border-emerald-600 bg-emerald-50/60 ring-2 ring-emerald-600/20 shadow-sm"
+                          : "border-slate-200 hover:border-slate-300 bg-white"
                       }`}
                     >
-                      <span>Nu. {a.toLocaleString()}</span>
-                      <span className="text-[10px] font-normal opacity-80 mt-0.5">
-                        {a === 500 && "Vaccine Kit"}
-                        {a === 1000 && "Clinic Supply"}
-                        {a === 5000 && "Emergency Kit"}
-                        {a === 10000 && "Annual Sponsor"}
+                      <div>
+                        <div className="font-extrabold text-lg text-slate-900">{t.label}</div>
+                        <p className="text-[11px] text-slate-600 mt-1 leading-snug">{t.impact}</p>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-700 mt-2 block">
+                        Matched: Nu. {(t.amount * 2).toLocaleString()}
                       </span>
                     </button>
                   ))}
@@ -249,43 +335,46 @@ function GetInvolvedPage() {
               </div>
 
               {/* Custom Amount */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
-                  Or enter custom amount (Nu.)
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Or Specify Custom Amount (Nu.)
                 </label>
-                <input
-                  type="number"
-                  min={50}
-                  value={amount}
-                  onChange={(e) => setAmount(Math.max(50, Number(e.target.value)))}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 text-base font-bold text-slate-900 focus:ring-2 focus:ring-primary focus:outline-none"
-                />
+                <div className="relative">
+                  <span className="absolute left-4 top-3 text-sm font-bold text-slate-400">Nu.</span>
+                  <input
+                    type="number"
+                    min={50}
+                    value={amount}
+                    onChange={(e) => setAmount(Math.max(50, Number(e.target.value)))}
+                    className="w-full rounded-xl border border-slate-300 pl-12 pr-4 py-3 text-base font-extrabold text-slate-900 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
+                  />
+                </div>
               </div>
 
-              {/* Payment Method Selector */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">
-                  Preferred Payment Mode
+              {/* Payment Mode Selector */}
+              <div className="space-y-2.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Select Payment / Deposit Channel
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { id: "MBOB", label: "MBOB / Mobile Banking", icon: QrCode },
+                    { id: "MBOB", label: "MBOB Mobile Banking", icon: QrCode },
                     { id: "BNB_PAY", label: "BNB Pay / MPAY", icon: QrCode },
-                    { id: "RMA_GATEWAY", label: "RMA Bhutan Pay Gateway", icon: Building },
-                    { id: "BANK_TRANSFER", label: "Direct Bank Transfer", icon: Building },
+                    { id: "RMA_GATEWAY", label: "RMA Payment Gateway", icon: Building },
+                    { id: "BANK_TRANSFER", label: "Bank Wire Transfer", icon: Building },
                     { id: "INTERNATIONAL_CARD", label: "International Card", icon: CreditCard },
                   ].map((pm) => (
                     <button
                       type="button"
                       key={pm.id}
                       onClick={() => setPaymentMethod(pm.id as any)}
-                      className={`p-3 rounded-xl border text-left text-xs font-semibold flex items-center gap-2.5 transition cursor-pointer ${
+                      className={`p-3.5 rounded-xl border text-left text-xs font-bold flex items-center gap-2.5 transition cursor-pointer ${
                         paymentMethod === pm.id
-                          ? "border-primary bg-primary/5 text-primary ring-2 ring-primary"
+                          ? "border-emerald-600 bg-emerald-50 text-emerald-900 ring-2 ring-emerald-600/20"
                           : "border-slate-200 text-slate-700 hover:bg-slate-50"
                       }`}
                     >
-                      <pm.icon className="h-4 w-4 shrink-0" />
+                      <pm.icon className="h-4 w-4 shrink-0 text-emerald-700" />
                       <span>{pm.label}</span>
                     </button>
                   ))}
@@ -293,9 +382,9 @@ function GetInvolvedPage() {
               </div>
 
               {/* Personal Details */}
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Donor Full Name
                   </label>
                   <input
@@ -304,65 +393,65 @@ function GetInvolvedPage() {
                     disabled={isAnonymous}
                     value={donorName}
                     onChange={(e) => setDonorName(e.target.value)}
-                    placeholder="e.g. Dechen Wangmo"
-                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none disabled:bg-slate-100"
+                    placeholder="e.g. Tshering Yangzom"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition disabled:bg-slate-100"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
-                    Email for Official Receipt
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Email Address (For Tax Voucher)
                   </label>
                   <input
                     type="email"
                     required
                     value={donorEmail}
                     onChange={(e) => setDonorEmail(e.target.value)}
-                    placeholder="dechen@example.bt"
-                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                    placeholder="tshering@organization.bt"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
-                    Phone / Mobile (Optional)
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Mobile Number (Optional)
                   </label>
                   <input
                     type="tel"
                     value={donorPhone}
                     onChange={(e) => setDonorPhone(e.target.value)}
                     placeholder="+975 17XXXXXX"
-                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">
-                    Dedication Message (Optional)
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Dedication Note (Optional)
                   </label>
                   <input
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="e.g. In loving memory of..."
-                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                    placeholder="e.g. For pediatric vaccines in Gasa"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
                 </div>
               </div>
 
               {/* Anonymous Checkbox */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 pt-1">
                 <input
                   type="checkbox"
-                  id="anonymousCheck"
+                  id="anonCheck"
                   checked={isAnonymous}
                   onChange={(e) => setIsAnonymous(e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
                 />
-                <label htmlFor="anonymousCheck" className="text-xs font-medium text-slate-600 cursor-pointer">
-                  Make this contribution anonymous in public donor reports
+                <label htmlFor="anonCheck" className="text-xs font-medium text-slate-600 cursor-pointer">
+                  List this contribution as "Anonymous Benefactor" in public annual reports
                 </label>
               </div>
 
@@ -370,15 +459,16 @@ function GetInvolvedPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl text-base shadow-lg transition duration-150 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-4 px-6 rounded-2xl text-sm sm:text-base shadow-lg shadow-emerald-700/20 transition duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 active:scale-98"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="h-5 w-5 animate-spin" /> Recording Pledge...
+                    <Loader2 className="h-5 w-5 animate-spin" /> Recording Official Pledge...
                   </>
                 ) : (
                   <>
-                    <Heart className="h-5 w-5 text-rose-300 fill-rose-300" /> Proceed to Donate Nu. {amount.toLocaleString()}
+                    <Heart className="h-5 w-5 fill-white" /> Complete Pledge of Nu.{" "}
+                    {amount.toLocaleString()} (Total Value: Nu. {(amount * 2).toLocaleString()})
                   </>
                 )}
               </button>
@@ -386,6 +476,6 @@ function GetInvolvedPage() {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 }
