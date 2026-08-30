@@ -10,11 +10,9 @@ interface PageHeroProps {
 
 export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-slate-950 text-white py-14 sm:py-20 border-b border-slate-800">
-      {/* Background Decorative Pattern & Gradients */}
-      <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
-      <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none"></div>
-      <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+    <section className="relative bg-slate-950 text-white py-14 sm:py-20 border-b border-slate-800 bg-[radial-gradient(ellipse_at_top_right,_rgba(16,185,129,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_left,_rgba(245,158,11,0.1),transparent_50%)]">
+      {/* Background Subtle Grid Pattern */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}

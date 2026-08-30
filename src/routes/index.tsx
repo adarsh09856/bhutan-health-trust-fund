@@ -186,7 +186,7 @@ function Index() {
             alt="Bhutan Himalayas & Monasteries"
             width={1920}
             height={1080}
-            className="h-full w-full object-cover object-center opacity-35 scale-105 transition duration-700 hover:scale-100"
+            className="h-full w-full object-cover object-center opacity-35 pointer-events-none"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40" />
