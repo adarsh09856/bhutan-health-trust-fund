@@ -7,6 +7,10 @@ import { nitro } from "nitro/vite";
 const PORT = Number(process.env.PORT || process.env.NITRO_PORT || 6060);
 
 export default defineConfig({
+  esbuild: {
+    jsx: "automatic",
+    jsxDev: false,
+  },
   server: {
     port: PORT,
     host: "0.0.0.0",
@@ -15,12 +19,15 @@ export default defineConfig({
     port: PORT,
     host: "0.0.0.0",
   },
+  resolve: {
+    dedupe: ["react", "react-dom"],
+  },
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
-    tailwindcss(),
     tanstackStart({
       server: { entry: "server" },
     }),
+    tailwindcss(),
     nitro({
       config: {
         devServer: { port: PORT },
