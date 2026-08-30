@@ -84,8 +84,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@bhtf" },
       { name: "twitter:title", content: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
       { name: "twitter:description", content: "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e17b6eb8-cf46-4627-aff2-e3015c2263a0/id-preview-1b16821b--1500e745-e9c5-4059-bf43-ac2ab6aa42fb.lovable.app-1779890469584.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e17b6eb8-cf46-4627-aff2-e3015c2263a0/id-preview-1b16821b--1500e745-e9c5-4059-bf43-ac2ab6aa42fb.lovable.app-1779890469584.png" },
+      { property: "og:image", content: "/assets/hero-bhutan.jpg" },
+      { name: "twitter:image", content: "/assets/hero-bhutan.jpg" },
     ],
     links: [
       {
