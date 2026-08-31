@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { EndowmentCalculator } from "@/components/endowment-calculator";
 
 export const Route = createFileRoute("/get-involved")({
   head: () => ({
@@ -163,6 +164,11 @@ function GetInvolvedPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Interactive 1:1 RGOB Sovereign Matching Simulator */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <EndowmentCalculator />
       </section>
 
       {/* Donation Form & Pledge Section */}

@@ -18,6 +18,8 @@ import {
   Layers,
   ThermometerSnowflake,
 } from "lucide-react";
+import { CommodityTracker } from "@/components/commodity-tracker";
+import { DzongkhagExplorer } from "@/components/dzongkhag-map";
 
 export const Route = createFileRoute("/our-work")({
   head: () => ({
@@ -84,29 +86,6 @@ const programs = [
   },
 ];
 
-const dzongkhagRegions = [
-  {
-    region: "Western Region",
-    dzongkhags: ["Thimphu", "Paro", "Haa", "Chhukha", "Samtse"],
-    centers: "5 Hospitals, 48 BHUs, JDWNRH Apex Referral Center",
-  },
-  {
-    region: "Central Region",
-    dzongkhags: ["Punakha", "Wangdue Phodrang", "Gasa", "Trongsa", "Bumthang"],
-    centers: "5 Hospitals, 42 BHUs, High-Altitude Alpine Health Posts",
-  },
-  {
-    region: "Eastern Region",
-    dzongkhags: ["Mongar", "Trashigang", "Trashiyangtse", "Lhuentse", "Pemagatshel", "Samdrup Jongkhar"],
-    centers: "6 Hospitals, 65 BHUs, Mongar Regional Referral Hospital",
-  },
-  {
-    region: "Southern Region",
-    dzongkhags: ["Sarpang", "Tsirang", "Dagana", "Zhemgang"],
-    centers: "4 Hospitals, 45 BHUs, Gelephu Regional Referral Hospital",
-  },
-];
-
 const procurementSteps = [
   {
     step: "01",
@@ -139,7 +118,12 @@ function OurWork() {
         subtitle="Ensuring no hospital, clinic, or health post across Bhutan faces stockouts of life-saving medicines or vaccines."
       />
 
-      {/* 1. Core Commodities Grid */}
+      {/* 1. Interactive Health Commodity Streams */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <CommodityTracker />
+      </section>
+
+      {/* 2. Core Commodities Summary Cards */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-2">
@@ -182,55 +166,14 @@ function OurWork() {
         </div>
       </section>
 
-      {/* 2. Nationwide Reach Across 20 Dzongkhags */}
+      {/* 3. Interactive Nationwide Reach Across 20 Dzongkhags */}
       <section className="bg-slate-50 border-y border-slate-200/80 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-2">
-              Equitable Geographic Distribution
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900">
-              Serving All 20 Dzongkhags
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm mt-3">
-              BHTF's mandate guarantees that a child born in the most distant village receives the exact same high-quality vaccine as in the capital.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {dzongkhagRegions.map((reg, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs hover:shadow-md transition space-y-4"
-              >
-                <div className="flex items-center justify-between border-b pb-3">
-                  <h3 className="font-bold text-base text-slate-900">{reg.region}</h3>
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
-                    {reg.dzongkhags.length} Districts
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5">
-                  {reg.dzongkhags.map((d) => (
-                    <span
-                      key={d}
-                      className="text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-medium"
-                    >
-                      {d}
-                    </span>
-                  ))}
-                </div>
-
-                <p className="text-xs text-slate-500 pt-2 border-t border-slate-100 font-medium">
-                  {reg.centers}
-                </p>
-              </div>
-            ))}
-          </div>
+          <DzongkhagExplorer />
         </div>
       </section>
 
-      {/* 3. Transparent Procurement Cycle */}
+      {/* 4. Transparent Procurement Cycle */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-2">
@@ -262,7 +205,7 @@ function OurWork() {
         </div>
       </section>
 
-      {/* 4. Action Banner */}
+      {/* 5. Action Banner */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-emerald-800 to-slate-900 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
@@ -273,7 +216,7 @@ function OurWork() {
           </div>
           <Link
             to="/get-involved"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-extrabold text-sm hover:bg-emerald-50 transition shrink-0 shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-extrabold text-sm hover:bg-emerald-50 transition shrink-0 shadow-lg cursor-pointer"
           >
             <HandHeart className="h-4 w-4 text-emerald-700" />
             <span>Donate to the Trust Fund</span>

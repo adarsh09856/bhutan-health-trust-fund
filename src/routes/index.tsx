@@ -21,11 +21,15 @@ import {
   Download,
   Building,
   ArrowUpRight,
+  Award,
 } from "lucide-react";
 import hero from "@/assets/hero-bhutan.jpg";
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
+import { DzongkhagExplorer } from "@/components/dzongkhag-map";
+import { EndowmentCalculator } from "@/components/endowment-calculator";
+import { CommodityTracker } from "@/components/commodity-tracker";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,90 +54,90 @@ const quickAccess = [
     color: "bg-emerald-500/10 text-emerald-600 border-emerald-200",
   },
   {
-    icon: Syringe,
-    label: "Vaccines & Medicines",
-    desc: "120+ vital drugs & universal immunization",
+    icon: Pill,
+    label: "Essential Medicines",
+    desc: "120+ Vital Primary Health Drugs",
     to: "/our-work",
-    color: "bg-blue-500/10 text-blue-600 border-blue-200",
+    color: "bg-teal-500/10 text-teal-600 border-teal-200",
+  },
+  {
+    icon: Syringe,
+    label: "Universal Vaccines",
+    desc: "100% Childhood & Routine Coverage",
+    to: "/our-work",
+    color: "bg-cyan-500/10 text-cyan-600 border-cyan-200",
   },
   {
     icon: FileText,
-    label: "Statutory Reports",
-    desc: "Audited financial statements & publications",
+    label: "Reports & Audits",
+    desc: "Statutory Financial & RAA Audits",
     to: "/reports",
     color: "bg-amber-500/10 text-amber-600 border-amber-200",
   },
   {
     icon: ShieldCheck,
-    label: "Policies & Standards",
-    desc: "Whistleblower & procurement guidelines",
+    label: "Governance & Charter",
+    desc: "Trust Regulations & Ethics Policies",
     to: "/policies",
     color: "bg-indigo-500/10 text-indigo-600 border-indigo-200",
   },
   {
-    icon: Megaphone,
-    label: "News & Media",
-    desc: "Official press releases & updates",
-    to: "/news",
+    icon: HandHeart,
+    label: "Donate & Double (1:1)",
+    desc: "Every 1 Nu. Matched by Royal Government",
+    to: "/get-involved",
     color: "bg-rose-500/10 text-rose-600 border-rose-200",
   },
-  {
-    icon: HandHeart,
-    label: "Support the Fund",
-    desc: "Make a tax-deductible donation pledge",
-    to: "/get-involved",
-    color: "bg-purple-500/10 text-purple-600 border-purple-200",
-  },
-] as const;
+];
 
 const keyStats = [
   {
-    icon: Users,
     value: "780,000+",
     label: "Citizens Protected",
-    desc: "Universal healthcare safety net across Bhutan",
+    desc: "Universal health coverage for every citizen across the Kingdom",
+    icon: Users,
   },
   {
-    icon: Pill,
     value: "120+",
     label: "Essential Medicines",
-    desc: "Financed uninterruptedly for hospitals & BHUs",
+    desc: "Uninterrupted national supply of primary and emergency drugs",
+    icon: Pill,
   },
   {
-    icon: Syringe,
-    value: "100%",
-    label: "Vaccine Coverage",
-    desc: "EPI routine childhood immunization guaranteed",
-  },
-  {
-    icon: ShieldCheck,
     value: "20 / 20",
-    label: "Dzongkhags Reached",
-    desc: "From Thimphu to remote alpine highland clinics",
+    label: "Dzongkhags Covered",
+    desc: "Direct supply line to all remote Primary Health Units (BHUs)",
+    icon: MapPin,
   },
-] as const;
+  {
+    value: "100%",
+    label: "Childhood Vaccines",
+    desc: "Routine infant immunizations fully guaranteed in perpetuity",
+    icon: Syringe,
+  },
+];
 
 const corePillars = [
   {
-    icon: Syringe,
-    title: "Universal Childhood Vaccines",
-    description:
-      "Financing Bhutan's Expanded Programme on Immunization (EPI) covering Hepatitis B, MMR, Pentavalent, Polio, and HPV vaccines to eradicate preventable diseases.",
-    badge: "Life-Saving Vaccines",
-  },
-  {
     icon: Pill,
-    title: "120+ Essential Medicines",
+    title: "120+ Essential Medicines Guarantee",
     description:
-      "Sustainably procuring vital antibiotics, cardiovascular drugs, insulin, anti-hypertensives, and psychiatric medications for every Primary Health Centre (BHU) and hospital.",
+      "Guarantees year-round buffer stock of vital primary healthcare medicines, antibiotics, analgesics, and emergency cardiovascular drugs for every hospital and BHU in Bhutan.",
     badge: "Primary Healthcare",
   },
   {
-    icon: Activity,
-    title: "Diagnostic Reagents & Lab Kits",
+    icon: Syringe,
+    title: "Universal Routine Childhood Vaccines",
     description:
-      "Ensuring regional hospitals and district health centres are equipped with essential diagnostic reagents, testing strips, blood safety kits, and screening supplies.",
-    badge: "Clinical Diagnostics",
+      "Finances 100% of routine pediatric vaccines—including Pentavalent, BCG, Measles, Polio, Rotavirus, and HPV—ensuring zero preventable childhood illness outbreaks.",
+    badge: "Immunization",
+  },
+  {
+    icon: Activity,
+    title: "High-Altitude Cold Chain Logistics",
+    description:
+      "Maintains solar-powered and temperature-monitored cold chain storage units across extreme high-altitude alpine regions like Gasa, Laya, and Lunana.",
+    badge: "Supply Chain",
   },
   {
     icon: HeartHandshake,
@@ -218,56 +222,59 @@ function Index() {
             <div className="pt-3 flex flex-wrap items-center gap-3.5">
               <Link
                 to="/get-involved"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 hover:shadow-xl transition-all duration-150 active:scale-95"
+                className="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm font-bold shadow-lg shadow-emerald-900/30 hover:shadow-xl transition-all duration-150 cursor-pointer active:scale-95"
               >
-                <HandHeart className="h-4 w-4" />
-                <span>Support the Trust Fund</span>
+                <HandHeart className="h-4 w-4 fill-white" />
+                <span>Support & Double Your Pledge (1:1)</span>
               </Link>
 
               <Link
-                to="/our-work"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 backdrop-blur-md transition duration-150"
+                to="/about"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-sm font-semibold border border-white/20 backdrop-blur-md transition cursor-pointer"
               >
-                <span>Explore Programs</span>
-                <ArrowRight className="h-4 w-4 text-emerald-400" />
+                <span>Read Royal Charter Mandate</span>
+                <ArrowRight className="h-4 w-4" />
               </Link>
+            </div>
 
-              <Link
-                to="/reports"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-900 text-slate-300 hover:text-white font-medium text-sm border border-slate-700 transition"
-              >
-                <FileText className="h-4 w-4 text-amber-400" />
-                <span>Audit Reports</span>
-              </Link>
+            {/* Trust Badges */}
+            <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-6 text-xs text-slate-400 font-medium">
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-emerald-400" /> Statutory Trust Fund
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Lock className="h-4 w-4 text-amber-400" /> Ring-Fenced Health Corpus
+              </span>
+              <span className="flex items-center gap-1.5">
+                <BarChart3 className="h-4 w-4 text-emerald-400" /> Royal Audit Authority Certified
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Floating Quick Access Matrix */}
-      <section className="relative z-20 -mt-16 sm:-mt-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 p-5 sm:p-7 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-            {quickAccess.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className="group flex flex-col items-center text-center p-3.5 sm:p-4 rounded-xl border border-transparent hover:border-slate-200 hover:bg-slate-50 transition-all duration-150"
+      {/* 2. Floating Quick Access Navigation Matrix */}
+      <section className="relative z-20 -mt-12 sm:-mt-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 p-5 sm:p-7 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          {quickAccess.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className="group flex flex-col items-center text-center p-3.5 sm:p-4 rounded-xl border border-transparent hover:border-slate-200 hover:bg-slate-50 transition-all duration-150"
+            >
+              <div
+                className={`h-12 w-12 rounded-xl grid place-items-center mb-2.5 border ${item.color} group-hover:scale-110 transition duration-200`}
               >
-                <div
-                  className={`h-12 w-12 rounded-xl grid place-items-center mb-2.5 border ${item.color} group-hover:scale-110 transition duration-200`}
-                >
-                  <item.icon className="h-5 w-5" />
-                </div>
-                <h2 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition leading-snug">
-                  {item.label}
-                </h2>
-                <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-tight hidden sm:block">
-                  {item.desc}
-                </p>
-              </Link>
-            ))}
-          </div>
+                <item.icon className="h-5 w-5" />
+              </div>
+              <h2 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition leading-snug">
+                {item.label}
+              </h2>
+              <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-tight hidden sm:block">
+                {item.desc}
+              </p>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -308,181 +315,28 @@ function Index() {
         </div>
       </section>
 
-      {/* 4. Core Mandate & What We Fund */}
+      {/* 4. Interactive 6 Health Commodities Pipeline */}
       <section className="mt-20 sm:mt-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-2">
-                Our Strategic Priorities
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                What the Trust Fund Finances
-              </h2>
-            </div>
-            <Link
-              to="/our-work"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 hover:text-emerald-800 transition"
-            >
-              <span>View all procurement categories</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {corePillars.map((pillar, idx) => (
-              <div
-                key={idx}
-                className="group bg-white rounded-2xl border border-slate-200/90 p-7 sm:p-8 shadow-xs hover:shadow-lg hover:border-emerald-200 transition-all duration-200 flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center group-hover:bg-emerald-600 group-hover:text-white transition duration-200">
-                      <pillar.icon className="h-6 w-6" />
-                    </div>
-                    <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700 group-hover:bg-emerald-50 group-hover:text-emerald-700 transition">
-                      {pillar.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                    {pillar.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {pillar.description}
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-700">
-                  <span className="flex items-center gap-1 text-emerald-700">
-                    <CheckCircle2 className="h-3.5 w-3.5" /> Guaranteed by Charter
-                  </span>
-                  <Link
-                    to="/our-work"
-                    className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 group-hover:translate-x-1 transition duration-150"
-                  >
-                    Details <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          <CommodityTracker />
         </div>
       </section>
 
-      {/* 5. 1:1 RGOB Matching Mechanism Spotlight */}
+      {/* 5. Interactive 20 Dzongkhags Health District Explorer */}
+      <section className="mt-20 sm:mt-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <DzongkhagExplorer />
+        </div>
+      </section>
+
+      {/* 6. Interactive 1:1 RGOB Matching Simulator */}
       <section className="mt-20 sm:mt-28 bg-slate-50 border-y border-slate-200/80 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-6 space-y-5">
-              <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block">
-                Sustainable Financing Innovation
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-                Every 1 Nu. You Contribute Is Matched by 1 Nu. from the Royal Government
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                The Bhutan Health Trust Fund operates an endowment model where the capital is invested
-                prudently. The annual returns and matched contributions directly finance vaccine and medicine
-                procurement without depleting the principal corpus.
-              </p>
-
-              <div className="space-y-3 pt-2">
-                <div className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">100% Ring-Fenced Health Corpus</h4>
-                    <p className="text-xs text-slate-500">Funds cannot be diverted to non-health operational expenditures.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">Royal Audit Authority Oversight</h4>
-                    <p className="text-xs text-slate-500">Subject to annual public statutory audit with zero tolerance for leakages.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">Tax Deductible in Bhutan</h4>
-                    <p className="text-xs text-slate-500">Corporate and individual donations eligible for tax exemption under DRC rules.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <Link
-                  to="/get-involved"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition"
-                >
-                  <HandHeart className="h-4 w-4 text-emerald-400" />
-                  <span>Make an Institutional or Personal Pledge</span>
-                </Link>
-              </div>
-            </div>
-
-            <div className="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl space-y-6">
-              <h3 className="text-base font-bold text-slate-900 border-b pb-3 flex items-center justify-between">
-                <span>Financing Flow Architecture</span>
-                <span className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-semibold">Endowment Model</span>
-              </h3>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-emerald-600 text-white grid place-items-center font-bold text-sm">
-                      50%
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-slate-900">Citizen & Donor Contributions</div>
-                      <div className="text-xs text-slate-500">Individual, corporate and international donors</div>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-emerald-700">+ Nu. 1.00</span>
-                </div>
-
-                <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-amber-500 text-white grid place-items-center font-bold text-sm">
-                      50%
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-slate-900">RGOB 1:1 Matching Grant</div>
-                      <div className="text-xs text-slate-500">Direct allocation from Ministry of Finance</div>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-amber-700">+ Nu. 1.00</span>
-                </div>
-
-                <div className="p-4 rounded-xl bg-emerald-900 text-white flex items-center justify-between shadow-inner">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-white/20 text-white grid place-items-center font-bold text-sm">
-                      =
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-white">Total Health Impact Value</div>
-                      <div className="text-xs text-emerald-200">200% purchasing power for vital medicine tenders</div>
-                    </div>
-                  </div>
-                  <span className="text-base font-extrabold text-emerald-300">Nu. 2.00</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <EndowmentCalculator />
         </div>
       </section>
 
-      {/* 6. Latest News & Announcements Spotlight */}
+      {/* 7. Latest News & Announcements Spotlight */}
       <section className="mt-20 sm:mt-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
@@ -563,7 +417,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 7. Institutional Partners & International Collaborations */}
+      {/* 8. Institutional Partners & International Collaborations */}
       <section className="mt-20 sm:mt-28 border-t border-slate-200/80 bg-white py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-slate-400 block mb-6">
@@ -590,7 +444,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 8. Modern Call To Action Banner */}
+      {/* 9. Modern Call To Action Banner */}
       <section className="mt-6 mb-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden bg-gradient-to-r from-emerald-800 via-emerald-700 to-slate-900 rounded-3xl p-8 sm:p-14 text-white shadow-2xl">
           <div className="relative z-10 max-w-3xl space-y-5">
