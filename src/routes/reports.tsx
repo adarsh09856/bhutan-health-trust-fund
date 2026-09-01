@@ -14,6 +14,9 @@ import {
   Sparkles,
   ArrowDownToLine,
   TrendingUp,
+  BarChart3,
+  Award,
+  Filter,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -57,8 +60,7 @@ function ReportsPage() {
     setDownloadingId(r.id);
     try {
       await trackReportDownload({ data: { reportId: r.id } });
-      toast.success(`Downloading ${r.title}...`);
-      // Simulate clean file download
+      toast.success(`Downloading "${r.title}"...`);
       setTimeout(() => {
         const link = document.createElement("a");
         link.href = r.fileUrl;
@@ -74,13 +76,12 @@ function ReportsPage() {
   };
 
   const categories = [
-    "ALL",
-    "Annual Report",
-    "Financial",
-    "Research",
-    "Governance",
-    "Assessment",
-    "Strategy",
+    { id: "ALL", label: "All Publications" },
+    { id: "Annual Report", label: "Annual Reports" },
+    { id: "Financial", label: "Audited Financials" },
+    { id: "Governance", label: "Governance & Charters" },
+    { id: "Research", label: "Health Impact & Research" },
+    { id: "Strategy", label: "Strategic Plans" },
   ];
 
   const filtered = reports.filter((r) => {
@@ -100,132 +101,139 @@ function ReportsPage() {
         subtitle="Uncompromising fiduciary accountability, audited financial statements, and empirical public health impact assessments."
       />
 
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* Transparency Overview Stats Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0">
+      {/* Transparency Metric Highlights */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 border border-emerald-200">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>
-              <div className="text-xl font-extrabold text-slate-900">100% Unqualified</div>
-              <p className="text-xs text-slate-500">Clean statutory audit opinions by Royal Audit Authority</p>
+              <div className="text-2xl font-black text-slate-900 font-mono">100%</div>
+              <div className="text-xs font-bold text-slate-500 mt-0.5">Unqualified RAA Audit Rating</div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0">
-              <Calendar className="h-6 w-6" />
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 border border-amber-200">
+              <FileText className="h-6 w-6" />
             </div>
             <div>
-              <div className="text-xl font-extrabold text-slate-900">20+ Years</div>
-              <p className="text-xs text-slate-500">Unbroken public archive of annual financial reports</p>
+              <div className="text-2xl font-black text-slate-900 font-mono">{reports.length}+</div>
+              <div className="text-xs font-bold text-slate-500 mt-0.5">Public Official Documents</div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0">
-              <TrendingUp className="h-6 w-6" />
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="h-12 w-12 rounded-2xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 border border-blue-200">
+              <BarChart3 className="h-6 w-6" />
             </div>
             <div>
-              <div className="text-xl font-extrabold text-slate-900">Zero Leakage</div>
-              <p className="text-xs text-slate-500">Fiduciary controls aligned with World Bank standards</p>
+              <div className="text-2xl font-black text-slate-900 font-mono">2003–2026</div>
+              <div className="text-xs font-bold text-slate-500 mt-0.5">Historical Archive Indexed</div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Search & Category Filter Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div className="flex items-center gap-2.5 flex-1 w-full bg-slate-50 rounded-xl px-3.5 py-2 border border-slate-200/80">
-            <Search className="h-4 w-4 text-slate-400 shrink-0" />
+      {/* Main Filter & Search Area */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Search Box */}
+          <div className="relative w-full md:w-96">
+            <Search className="h-4 w-4 absolute left-3.5 top-3.5 text-slate-400" />
             <input
               type="text"
-              placeholder="Search reports by title, audit year, or topic..."
+              placeholder="Search reports, years, audits..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full text-xs sm:text-sm outline-none bg-transparent placeholder-slate-400 text-slate-800"
+              className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white transition"
             />
           </div>
 
+          {/* Category Filters */}
           <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
             {categories.map((c) => (
               <button
-                key={c}
-                onClick={() => setSelectedCategory(c)}
-                className={`px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                  selectedCategory === c
-                    ? "bg-slate-900 text-white shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                key={c.id}
+                type="button"
+                onClick={() => setSelectedCategory(c.id)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer ${
+                  selectedCategory === c.id
+                    ? "bg-slate-900 text-white shadow-md"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
                 }`}
               >
-                {c === "ALL" ? "All Publications" : c}
+                {c.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Publications Grid */}
+        {/* Reports Grid */}
         {loading ? (
-          <div className="py-24 flex flex-col items-center justify-center gap-3 text-slate-500">
-            <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
-            <p className="text-sm font-semibold">Loading official publications catalog...</p>
+          <div className="py-20 text-center space-y-3">
+            <Loader2 className="h-8 w-8 text-emerald-600 animate-spin mx-auto" />
+            <p className="text-xs font-bold text-slate-500">Loading statutory repository...</p>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="py-16 text-center text-slate-500 bg-white rounded-2xl border border-slate-200 p-8">
-            <p className="text-sm font-medium">No publications found matching your search criteria.</p>
+          <div className="bg-slate-50 rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
+            <FileText className="h-10 w-10 text-slate-400 mx-auto" />
+            <h3 className="font-bold text-slate-800 text-sm">No matching publications found</h3>
+            <p className="text-xs text-slate-500">Try adjusting your keyword search or category filter.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((r) => (
-              <article
+              <div
                 key={r.id}
-                className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-xs hover:shadow-lg hover:border-emerald-300 transition duration-200 space-y-6"
+                className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 flex flex-col justify-between space-y-6 group"
               >
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-slate-900 text-emerald-400 grid place-items-center shrink-0">
-                    <FileText className="h-6 w-6" />
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-extrabold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      {r.category}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-slate-500 flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5 text-slate-400" /> {r.year}
+                    </span>
                   </div>
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
-                        {r.category}
-                      </span>
-                      <span className="text-xs font-semibold text-slate-500">
-                        Fiscal Year {r.year}
-                      </span>
-                    </div>
-                    <h3 className="font-bold text-base sm:text-lg text-slate-900 leading-snug">
+
+                  <div>
+                    <h3 className="font-extrabold text-base sm:text-lg text-slate-900 group-hover:text-emerald-700 transition leading-snug">
                       {r.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">
+                    <p className="text-xs text-slate-600 leading-relaxed mt-2 font-normal line-clamp-3">
                       {r.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs text-slate-400 font-medium">
-                    PDF · {r.fileSize} · {r.downloadCount.toLocaleString()} downloads
-                  </span>
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <div className="text-slate-400 font-mono text-[11px]">
+                    {r.fileSize} • {r.downloadsCount} downloads
+                  </div>
 
                   <button
                     type="button"
                     onClick={() => handleDownload(r)}
                     disabled={downloadingId === r.id}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition duration-150 cursor-pointer disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-800 font-bold transition duration-150 cursor-pointer shadow-xs active:scale-95 disabled:opacity-50"
                   >
                     {downloadingId === r.id ? (
                       <>
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" /> Preparing File...
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        <span>Downloading...</span>
                       </>
                     ) : (
                       <>
-                        <ArrowDownToLine className="h-3.5 w-3.5" /> Download Document
+                        <Download className="h-3.5 w-3.5" />
+                        <span>Download PDF</span>
                       </>
                     )}
                   </button>
                 </div>
-              </article>
+              </div>
             ))}
           </div>
         )}

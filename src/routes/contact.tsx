@@ -14,6 +14,7 @@ import {
   ChevronDown,
   Building2,
   ShieldCheck,
+  Award,
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -35,7 +36,7 @@ export const Route = createFileRoute("/contact")({
 const faqs = [
   {
     q: "How does the 1:1 RGOB Matching Fund work?",
-    a: "Every single Ngultrum contributed by individuals, organizations, or international donors is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling your health impact.",
+    a: "Every single Ngultrum contributed by individuals, corporations, or international donors is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling your healthcare purchasing power.",
   },
   {
     q: "Are donations to BHTF tax-deductible in Bhutan?",
@@ -43,11 +44,15 @@ const faqs = [
   },
   {
     q: "How does BHTF select which medicines and vaccines to finance?",
-    a: "BHTF finances commodities from the National Essential Medicines List (NEML) approved by the Ministry of Health and Drug Regulatory Authority of Bhutan, following WHO prequalification standards.",
+    a: "BHTF finances commodities from the National Essential Medicines List (NEML) approved by the Ministry of Health and Drug Regulatory Authority of Bhutan, strictly adhering to WHO prequalification standards.",
   },
   {
     q: "Can international donors contribute in foreign currencies (USD, EUR, GBP)?",
     a: "Yes. BHTF maintains official foreign currency accounts with the Bank of Bhutan and Bhutan National Bank for direct international SWIFT wire transfers.",
+  },
+  {
+    q: "How can remote gewog clinics report emergency stock alerts?",
+    a: "Basic Health Units (BHUs) communicate through the National Emergency Health Logistics Channel and Dzongkhag Health Officers to trigger immediate replenishment.",
   },
 ];
 
@@ -98,107 +103,100 @@ function ContactPage() {
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-          {/* Contact Details Column */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-5">
-              <h3 className="font-extrabold text-base text-slate-900 border-b pb-3 flex items-center gap-2">
+          {/* Contact Details Column (4 Cols) */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs space-y-6">
+              <h3 className="font-black text-lg text-slate-900 border-b pb-4 flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-emerald-700" />
                 <span>Secretariat Directory</span>
               </h3>
 
-              <div className="space-y-4 text-xs sm:text-sm">
+              <div className="space-y-5 text-xs sm:text-sm">
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0">
-                    <MapPin className="h-4 w-4" />
+                  <div className="h-10 w-10 rounded-2xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 border border-emerald-200">
+                    <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-slate-900 block">Secretariat Headquarters</span>
-                    <span className="text-slate-600">Kawajangsa, Thimphu, Kingdom of Bhutan</span>
+                    <span className="font-extrabold text-slate-900 block">Secretariat Headquarters</span>
+                    <span className="text-slate-600 leading-snug block mt-0.5">Kawajangsa, Thimphu, Kingdom of Bhutan</span>
                     <span className="text-[11px] text-slate-400 block mt-0.5">(Adjacent to Ministry of Health)</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0">
-                    <Phone className="h-4 w-4" />
+                  <div className="h-10 w-10 rounded-2xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 border border-blue-200">
+                    <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-slate-900 block">Telephone Desks</span>
-                    <a href="tel:+9752328999" className="text-slate-600 hover:text-emerald-700 transition">
+                    <span className="font-extrabold text-slate-900 block">Telephone Desks</span>
+                    <a href="tel:+9752328999" className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono">
                       +975 2 328999 / 338999
                     </a>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">Toll-Free Helpline: 112 (24/7)</span>
+                    <span className="text-[11px] text-emerald-700 font-bold block mt-0.5">Emergency Helpline: 112 (24/7)</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0">
-                    <Mail className="h-4 w-4" />
+                  <div className="h-10 w-10 rounded-2xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 border border-purple-200">
+                    <Mail className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-slate-900 block">Official Electronic Inquiries</span>
-                    <a href="mailto:info@bhtf.bt" className="text-slate-600 hover:text-emerald-700 transition">
+                    <span className="font-extrabold text-slate-900 block">Official Inquiries</span>
+                    <a href="mailto:info@bhtf.bt" className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono">
                       info@bhtf.bt / secretariat@bhtf.bt
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0">
-                    <Clock className="h-4 w-4" />
+                  <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 border border-amber-200">
+                    <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-slate-900 block">Official Working Hours</span>
-                    <span className="text-slate-600">Mon–Fri · 9:00 AM – 5:00 PM (BTT)</span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">Closed on National & Government Holidays</span>
+                    <span className="font-extrabold text-slate-900 block">Secretariat Office Hours</span>
+                    <span className="text-slate-600 block mt-0.5">Monday – Friday: 9:00 AM – 5:00 PM</span>
+                    <span className="text-[11px] text-slate-400 block mt-0.5">(BST Bhutan Standard Time, UTC+6)</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-emerald-900 text-white rounded-2xl p-6 shadow-md space-y-2">
-              <div className="flex items-center gap-2 text-emerald-300 text-xs font-bold">
-                <ShieldCheck className="h-4 w-4" />
-                <span>Citizen Guarantee</span>
-              </div>
-              <p className="text-xs text-emerald-100 leading-relaxed">
-                All inquiries submitted through this portal are logged directly into our administrative tracking system and acknowledged promptly.
+            {/* Statutory Trust Guarantee Box */}
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-950 to-slate-900 text-white border border-emerald-500/30 space-y-2 shadow-md">
+              <span className="text-amber-400 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4" /> Royal Charter Fiduciary Oversight
+              </span>
+              <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                All communications and partnership proposals are logged with the Executive Secretariat for official Trustee review.
               </p>
             </div>
           </div>
 
-          {/* Form Column */}
-          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs">
-            <div className="mb-6 space-y-1">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-                Send an Official Message to the Secretariat
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500">
-                Please fill out the form below. For confidential whistleblower disclosures, you may also email{" "}
-                <a href="mailto:ethics@bhtf.bt" className="text-emerald-700 font-semibold underline">
-                  ethics@bhtf.bt
-                </a>
-                .
+          {/* Interactive Inquiry Form Column (8 Cols) */}
+          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-6">
+            <div className="border-b pb-4">
+              <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-1">
+                Direct Communication Portal
+              </span>
+              <h3 className="text-2xl font-black text-slate-900">Send an Official Inquiry</h3>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Please complete the form below. Official responses are typically dispatched within 2 business days.
               </p>
             </div>
 
             {submitted ? (
-              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8 sm:p-12 text-center space-y-4">
-                <div className="h-14 w-14 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center mx-auto">
+              <div className="py-12 text-center space-y-4 bg-emerald-50/50 rounded-3xl border border-emerald-200 p-8">
+                <div className="h-14 w-14 rounded-full bg-emerald-600 text-white grid place-items-center mx-auto shadow-md">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-emerald-950">Inquiry Logged Successfully!</h3>
-                  <p className="text-xs sm:text-sm text-emerald-800 max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong className="font-semibold">{name}</strong>. Your message regarding "
-                    <span className="font-semibold">{subject}</span>" has been recorded. Our secretariat desk will contact you at{" "}
-                    <strong className="font-semibold">{email}</strong>.
-                  </p>
-                </div>
+                <h4 className="text-xl font-black text-slate-900">Inquiry Successfully Transmitted</h4>
+                <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                  Thank you. Your message has been logged with the BHTF Secretariat. A representative will contact you via email shortly.
+                </p>
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="mt-4 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition shadow-xs cursor-pointer"
+                  className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition cursor-pointer"
                 >
                   Send Another Inquiry
                 </button>
@@ -208,73 +206,73 @@ function ContactPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Your Full Name <span className="text-rose-500">*</span>
+                      Your Full Name
                     </label>
                     <input
                       type="text"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Tshering Wangchuk"
-                      className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
+                      placeholder="e.g. Kinley Dorji"
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Official Email Address <span className="text-rose-500">*</span>
+                      Email Address
                     </label>
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tshering@organization.bt"
-                      className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
+                      placeholder="kinley@organization.bt"
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Inquiry Subject <span className="text-rose-500">*</span>
+                    Subject / Inquiry Category
                   </label>
                   <input
                     type="text"
                     required
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    placeholder="e.g. Inquiry regarding Essential Medicines replenishment in Mongar"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
+                    placeholder="e.g. CSR Health Partnership or Donation Inquiries"
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Detailed Message <span className="text-rose-500">*</span>
+                    Detailed Message
                   </label>
                   <textarea
-                    required
                     rows={5}
+                    required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Please provide complete context regarding your inquiry, partnership proposal, or feedback..."
-                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
+                    placeholder="Please provide details regarding your inquiry or proposed collaboration..."
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-3 rounded-xl text-xs sm:text-sm shadow-md transition disabled:opacity-50 cursor-pointer active:scale-95"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-md shadow-emerald-700/25 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 active:scale-95 border border-emerald-400/30"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" /> Transmitting Message...
+                      <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
                     </>
                   ) : (
                     <>
-                      <Send className="h-4 w-4" /> Send Inquiry to Secretariat
+                      <Send className="h-4 w-4" /> Send Message to Secretariat
                     </>
                   )}
                 </button>
@@ -284,46 +282,46 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* Frequently Asked Questions Accordion */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-12 space-y-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-1">
-              Common Questions
-            </span>
-            <h3 className="text-2xl font-extrabold text-slate-900">Frequently Asked Questions</h3>
-          </div>
+      {/* Interactive FAQ Accordion */}
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center space-y-2">
+          <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block">
+            Frequently Asked Questions
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Common Inquiries on BHTF Operations
+          </h3>
+        </div>
 
-          <div className="max-w-3xl mx-auto space-y-3">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-xs transition"
+        <div className="space-y-3">
+          {faqs.map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div
+                key={idx}
+                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs transition"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  className="w-full p-5 text-left font-extrabold text-slate-900 text-sm sm:text-base flex items-center justify-between gap-4 hover:text-emerald-700 transition cursor-pointer"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-slate-900 hover:text-emerald-700 transition cursor-pointer"
-                  >
-                    <span>{faq.q}</span>
-                    <ChevronDown
-                      className={`h-5 w-5 text-slate-400 shrink-0 transition-transform duration-200 ${
-                        isOpen ? "rotate-180 text-emerald-700" : ""
-                      }`}
-                    />
-                  </button>
+                  <span>{faq.q}</span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-400 transition duration-200 shrink-0 ${
+                      isOpen ? "rotate-180 text-emerald-700" : ""
+                    }`}
+                  />
+                </button>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 animate-in fade-in-50 duration-150">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                {isOpen && (
+                  <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 animate-in fade-in duration-150">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
     </div>

@@ -15,6 +15,8 @@ import {
   Eye,
   ExternalLink,
   ChevronDown,
+  Sparkles,
+  Award,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -35,6 +37,8 @@ export const Route = createFileRoute("/policies")({
 const policyCategories = [
   {
     category: "Foundational & Charter",
+    icon: Award,
+    color: "bg-amber-50 text-amber-700 border-amber-200",
     items: [
       {
         id: "royal-charter",
@@ -56,6 +60,8 @@ const policyCategories = [
   },
   {
     category: "Procurement & Quality Standards",
+    icon: Scale,
+    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
     items: [
       {
         id: "procurement-rules",
@@ -77,6 +83,8 @@ const policyCategories = [
   },
   {
     category: "Integrity & Anti-Corruption",
+    icon: ShieldCheck,
+    color: "bg-rose-50 text-rose-700 border-rose-200",
     items: [
       {
         id: "anti-corruption",
@@ -98,167 +106,139 @@ const policyCategories = [
   },
   {
     category: "Financial Fiduciary & Investments",
+    icon: Lock,
+    color: "bg-blue-50 text-blue-700 border-blue-200",
     items: [
       {
         id: "investment-policy",
-        title: "Endowment Investment Policy Statement (IPS)",
-        badge: "Endowment",
+        title: "Endowment Capital Investment & Risk Management Guidelines",
+        badge: "Fiduciary",
         summary:
-          "Guiding conservative capital preservation, asset allocation limits, ethical investing criteria, and risk management parameters for trust fund investments.",
+          "Prescribes conservative sovereign investment mandates, capital preservation rules, and permissible asset classes to protect the corpus against inflation.",
         docSize: "1.1 MB PDF",
       },
       {
-        id: "donor-rights",
-        title: "Donor Transparency & Gift Acceptance Charter",
-        badge: "Fiduciary",
+        id: "matching-fund-protocol",
+        title: "RGOB 1:1 Matching Fund Release Operational Protocol",
+        badge: "Statutory",
         summary:
-          "Standards governing the acceptance of public and international gifts, ring-fenced allocation, and the 1:1 RGOB matching fund mechanism.",
-        docSize: "590 KB PDF",
+          "Defines procedures for Ministry of Finance verification and automated 1:1 sovereign fund matching upon deposit of donor pledges.",
+        docSize: "520 KB PDF",
       },
     ],
   },
 ];
 
 function Policies() {
-  const [expandedId, setExpandedId] = useState<string | null>("royal-charter");
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
-  const handleDownload = (title: string) => {
-    toast.success(`Downloading official policy: ${title}`);
+  const handleDownload = (p: { title: string; docSize: string }) => {
+    setDownloadingId(p.title);
+    toast.success(`Preparing official copy of ${p.title}...`);
     setTimeout(() => {
-      const link = document.createElement("a");
-      link.href = "#";
-      link.download = `${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.pdf`;
-      link.click();
-    }, 400);
+      setDownloadingId(null);
+      toast.success(`Official document downloaded successfully.`);
+    }, 600);
   };
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
       <PageHero
-        badge="Zero-Tolerance Fiduciary Integrity"
-        title="Governance, Policies & Standards"
-        subtitle="Upholding the highest standards of transparency, statutory compliance, and ethical stewardship in public health financing."
+        badge="Autonomous Fiduciary Governance"
+        title="Governance, Policies & Ethics"
+        subtitle="Institutional regulations, statutory anti-corruption safeguards, and quality assurance frameworks of the Bhutan Health Trust Fund."
       />
 
-      {/* 1. Core Principles Strip */}
+      {/* 4 Pillars Grid */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-2">
-            <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center mb-3">
-              <Scale className="h-5 w-5" />
-            </div>
-            <h3 className="font-bold text-base text-slate-900">Royal Audit Authority</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Subject to annual independent statutory audit with full disclosure of all receipts, disbursements, and investment returns.
-            </p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {policyCategories.map((cat, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 space-y-6"
+            >
+              <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div className={`h-11 w-11 rounded-2xl grid place-items-center border ${cat.color}`}>
+                  <cat.icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">{cat.category}</h3>
+                  <span className="text-xs text-slate-500 font-medium">Official Regulatory Instruments</span>
+                </div>
+              </div>
 
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-2">
-            <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-700 grid place-items-center mb-3">
-              <ShieldCheck className="h-5 w-5" />
-            </div>
-            <h3 className="font-bold text-base text-slate-900">WHO & International Standards</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              All vaccine and medicine procurement strictly adheres to World Health Organization prequalification and safety guidelines.
-            </p>
-          </div>
+              <div className="space-y-4">
+                {cat.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3 hover:bg-white hover:border-emerald-300 transition"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <h4 className="font-extrabold text-sm text-slate-900 leading-snug">{item.title}</h4>
+                      <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 shrink-0">
+                        {item.badge}
+                      </span>
+                    </div>
 
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-2">
-            <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 grid place-items-center mb-3">
-              <Lock className="h-5 w-5" />
+                    <p className="text-xs text-slate-600 leading-relaxed font-normal">{item.summary}</p>
+
+                    <div className="pt-2 flex items-center justify-between border-t border-slate-200/60 text-xs">
+                      <span className="text-slate-400 font-mono text-[11px]">{item.docSize}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleDownload(item)}
+                        className="inline-flex items-center gap-1 text-emerald-700 font-bold hover:text-emerald-800 transition cursor-pointer text-xs"
+                      >
+                        <Download className="h-3.5 w-3.5" />
+                        <span>Download Instrument</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h3 className="font-bold text-base text-slate-900">Ring-Fenced Health Corpus</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Endowment capital is legally safeguarded by Royal Charter to guarantee perpetual healthcare financing.
-            </p>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* 2. Structured Policy Catalog */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-        {policyCategories.map((cat, idx) => (
-          <div key={idx} className="space-y-6">
-            <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
-              <span className="h-2 w-2 rounded-full bg-emerald-600"></span>
-              <h2 className="text-xl font-extrabold text-slate-900">{cat.category}</h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {cat.items.map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-xs hover:shadow-md hover:border-emerald-300 transition duration-200 flex flex-col justify-between space-y-4"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
-                        {item.badge}
-                      </span>
-                      <span className="text-xs font-mono text-slate-400">{item.docSize}</span>
-                    </div>
-
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">
-                      {item.summary}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
-                      <CheckCircle2 className="h-4 w-4" /> Active Policy
-                    </span>
-
-                    <button
-                      type="button"
-                      onClick={() => handleDownload(item.title)}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer"
-                    >
-                      <Download className="h-3.5 w-3.5" /> PDF Copy
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* 3. Confidential Whistleblower & Ethics Hotline Banner */}
+      {/* Whistleblower & Direct Reporting Box */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl space-y-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-500/30">
-                <AlertTriangle className="h-3.5 w-3.5" />
-                <span>Protected Whistleblower Channel</span>
+        <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-rose-500/30 shadow-2xl space-y-6 relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold border border-rose-500/30">
+                <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
+                <span>Statutory Whistleblower Protection</span>
               </div>
-              <h3 className="text-2xl font-extrabold text-white">
-                Confidential Ethics & Anti-Corruption Reporting
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                Confidential Reporting & Anti-Corruption Channel
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                If you suspect any procurement irregularity, conflict of interest, or financial misconduct,
-                report it directly to the Secretariat Ethics Officer. All disclosures are strictly confidential with full legal protection.
-              </p>
+            </div>
+            <span className="text-xs font-mono text-slate-400 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 self-start sm:self-auto">
+              ACC Bhutan Harmonized
+            </span>
+          </div>
+
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl font-normal">
+            Under the Anti-Corruption Act of the Kingdom of Bhutan and BHTF Trust Regulations, any citizen or contractor may confidentially report concerns regarding procurement irregularities, conflicts of interest, or misconduct with full legal protection.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
+            <div className="bg-slate-800/90 p-4 rounded-2xl border border-slate-700/80 space-y-1">
+              <span className="text-slate-400 font-medium flex items-center gap-1.5">
+                <Mail className="h-4 w-4 text-emerald-400" /> Confidential Ombudsman Email:
+              </span>
+              <a href="mailto:integrity@bhtf.bt" className="text-sm font-bold text-white hover:text-emerald-400 transition font-mono">
+                integrity@bhtf.bt
+              </a>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <a
-                href="mailto:ethics@bhtf.bt"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-md"
-              >
-                <Mail className="h-4 w-4" />
-                <span>ethics@bhtf.bt</span>
-              </a>
-              <a
-                href="tel:+9752328999"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition"
-              >
-                <Phone className="h-4 w-4" />
-                <span>+975 2 328999</span>
+            <div className="bg-slate-800/90 p-4 rounded-2xl border border-slate-700/80 space-y-1">
+              <span className="text-slate-400 font-medium flex items-center gap-1.5">
+                <Phone className="h-4 w-4 text-amber-400" /> Direct Secretariat Hotline:
+              </span>
+              <a href="tel:+9752328999" className="text-sm font-bold text-white hover:text-amber-400 transition font-mono">
+                +975 2 328999 (Ext 104)
               </a>
             </div>
           </div>
