@@ -10,7 +10,7 @@ interface PageHeroProps {
 
 export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-14 sm:py-20 border-b border-amber-500/20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white pt-24 pb-14 sm:pt-32 sm:pb-20 border-b border-amber-500/20">
       {/* Background Subtle Ambient Glows */}
       <div className="absolute top-0 right-1/4 h-80 w-80 bg-gradient-to-br from-amber-500/10 via-emerald-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-10 h-72 w-72 bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>

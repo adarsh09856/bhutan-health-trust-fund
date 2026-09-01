@@ -192,7 +192,7 @@ function Index() {
         <div className="absolute top-10 left-1/4 h-96 w-96 bg-gradient-to-br from-amber-500/15 via-emerald-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-10 right-10 h-96 w-96 bg-gradient-to-br from-emerald-500/15 via-teal-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-28 sm:pt-20 sm:pb-36 lg:pt-24 lg:pb-44">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 pb-28 sm:pt-36 sm:pb-36 lg:pt-40 lg:pb-44">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Column: Headline, Subtitle & Action CTAs (7 Cols) */}
             <div className="lg:col-span-7 space-y-6">
