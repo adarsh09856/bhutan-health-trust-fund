@@ -30,24 +30,9 @@ import logo from "@/assets/logo.png";
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const { user } = useAdminAuth();
   const location = useLocation();
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Track window scroll for capsule bar transformation
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 25) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Close mobile menu & dropdown on route change
   useEffect(() => {
@@ -67,17 +52,9 @@ export function SiteHeader() {
   };
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transform-gpu will-change-transform transition-all duration-300 ${
-        isScrolled ? "py-2 sm:py-3 px-3 sm:px-6 lg:px-8" : "py-0"
-      }`}
-    >
-      {/* Top Bhutan National Institutional Ribbon (Smoothly tucks away on scroll) */}
-      <div
-        className={`bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-slate-200 text-xs px-4 border-b border-amber-500/20 shadow-xs transition-all duration-300 overflow-hidden ${
-          isScrolled ? "max-h-0 opacity-0 py-0 border-0 pointer-events-none" : "max-h-12 opacity-100 py-1.5"
-        }`}
-      >
+    <div className="w-full">
+      {/* 1. Top Bhutan National Institutional Ribbon (Static Document Header) */}
+      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-slate-200 text-xs py-1.5 px-4 border-b border-amber-500/20 shadow-xs">
         <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium whitespace-nowrap">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/25 to-emerald-500/25 text-amber-300 font-extrabold text-[11px] border border-amber-500/40 shadow-xs">
@@ -109,22 +86,12 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Main Glass Header / Floating Capsule Navbar */}
-      <div
-        className={`mx-auto transition-all duration-300 ${
-          isScrolled
-            ? "max-w-7xl bg-white/95 backdrop-blur-2xl border border-emerald-500/30 rounded-3xl sm:rounded-full shadow-[0_12px_40px_rgba(0,0,0,0.12)] px-4 sm:px-6 py-2"
-            : "w-full bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.06)] px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3"
-        }`}
-      >
-        <div className="flex items-center justify-between gap-3 sm:gap-4">
-          {/* Logo & Dzongkha Title */}
+      {/* 2. Permanent Sticky Floating Capsule Navigation Bar (Never Hides on Scroll) */}
+      <header className="sticky top-0 z-50 w-full pt-2.5 pb-2.5 px-3 sm:px-6 lg:px-8 transform-gpu will-change-transform pointer-events-none">
+        <div className="mx-auto max-w-7xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.08)] px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition duration-200 hover:border-emerald-500/30 hover:shadow-[0_12px_35px_rgba(0,0,0,0.12)]">
+          {/* Logo & Dzongkha Title in Capsule */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 whitespace-nowrap">
-            <div
-              className={`rounded-2xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 border border-amber-200/60 p-1.5 shadow-sm shadow-amber-500/10 grid place-items-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-md ${
-                isScrolled ? "h-10 w-10 sm:h-11 sm:w-11" : "h-12 w-12 sm:h-13 sm:w-13"
-              }`}
-            >
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 border border-amber-200/60 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105">
               <img
                 src={logo}
                 alt="Bhutan Health Trust Fund Emblem"
@@ -135,23 +102,14 @@ export function SiteHeader() {
               <span className="text-[10px] sm:text-[11px] font-extrabold text-emerald-700 tracking-wider flex items-center gap-1">
                 འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
               </span>
-              <span
-                className={`font-black text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition ${
-                  isScrolled ? "text-xs sm:text-sm md:text-base" : "text-sm sm:text-base md:text-lg"
-                }`}
-              >
+              <span className="text-xs sm:text-sm md:text-base font-black text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition">
                 Bhutan Health Trust Fund
               </span>
-              {!isScrolled && (
-                <span className="hidden md:block text-[10px] text-slate-500 font-medium">
-                  Royal Government of Bhutan
-                </span>
-              )}
             </div>
           </Link>
 
-          {/* Desktop Streamlined Grouped Navigation (Capsule Pill Style) */}
-          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 backdrop-blur-md p-1.5 rounded-full border border-slate-200 shadow-inner shrink-0">
+          {/* Desktop Capsule Pill Navigation Menu */}
+          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 backdrop-blur-md p-1 rounded-full border border-slate-200 shadow-inner shrink-0">
             {/* Home */}
             <Link
               to="/"
@@ -377,11 +335,11 @@ export function SiteHeader() {
             </Link>
           </nav>
 
-          {/* Right Action CTAs */}
+          {/* Right Action CTAs in Capsule */}
           <div className="hidden sm:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
             <Link
               to="/get-involved"
-              className="whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold shadow-md shadow-emerald-700/25 hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-400/30"
+              className="whitespace-nowrap inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold shadow-md shadow-emerald-700/25 hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-400/30"
             >
               <Heart className="h-3.5 w-3.5 fill-white text-white shrink-0" />
               <span>Donate (1:1 Matched)</span>
@@ -390,7 +348,7 @@ export function SiteHeader() {
             {user ? (
               <Link
                 to="/admin/dashboard"
-                className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition duration-150 cursor-pointer shrink-0 border border-slate-700"
+                className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition duration-150 cursor-pointer shrink-0 border border-slate-700"
               >
                 <LayoutDashboard className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                 <span>Admin Panel</span>
@@ -398,7 +356,7 @@ export function SiteHeader() {
             ) : (
               <Link
                 to="/admin/login"
-                className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-800 text-xs font-bold border border-slate-300 shadow-xs transition duration-150 cursor-pointer shrink-0"
+                className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-800 text-xs font-bold border border-slate-300 shadow-xs transition duration-150 cursor-pointer shrink-0"
               >
                 <LogIn className="h-3.5 w-3.5 text-slate-600 shrink-0" />
                 <span>Staff Portal</span>
@@ -430,74 +388,74 @@ export function SiteHeader() {
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Glass Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden mx-3 mt-2 border border-slate-200/90 bg-white/98 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150">
-          <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-2 rounded-2xl border border-slate-200 space-y-1">
-            {[
-              { to: "/", label: "Home" },
-              { to: "/about", label: "About Us & Royal Charter" },
-              { to: "/our-work", label: "Our Programs & Commodities" },
-              { to: "/reports", label: "Reports & Publications" },
-              { to: "/policies", label: "Governance & Policies" },
-              { to: "/news", label: "News & Media Room" },
-              { to: "/get-involved", label: "Get Involved & Donate (1:1)" },
-              { to: "/contact", label: "Contact Secretariat" },
-            ].map((item) => {
-              const isActive =
-                item.to === "/"
-                  ? location.pathname === "/"
-                  : location.pathname.startsWith(item.to);
+        {/* Mobile Glass Menu Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mx-auto max-w-7xl mt-2 border border-slate-200/90 bg-white/98 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150 pointer-events-auto">
+            <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-2 rounded-2xl border border-slate-200 space-y-1">
+              {[
+                { to: "/", label: "Home" },
+                { to: "/about", label: "About Us & Royal Charter" },
+                { to: "/our-work", label: "Our Programs & Commodities" },
+                { to: "/reports", label: "Reports & Publications" },
+                { to: "/policies", label: "Governance & Policies" },
+                { to: "/news", label: "News & Media Room" },
+                { to: "/get-involved", label: "Get Involved & Donate (1:1)" },
+                { to: "/contact", label: "Contact Secretariat" },
+              ].map((item) => {
+                const isActive =
+                  item.to === "/"
+                    ? location.pathname === "/"
+                    : location.pathname.startsWith(item.to);
 
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
-                    isActive
-                      ? "bg-slate-900 text-white shadow-xs"
-                      : "text-slate-700 hover:bg-white"
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <ChevronRight
-                    className={`h-3.5 w-3.5 ${
-                      isActive ? "text-amber-400" : "text-slate-400"
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+                      isActive
+                        ? "bg-slate-900 text-white shadow-xs"
+                        : "text-slate-700 hover:bg-white"
                     }`}
-                  />
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight
+                      className={`h-3.5 w-3.5 ${
+                        isActive ? "text-amber-400" : "text-slate-400"
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="pt-1 flex flex-col gap-2">
+              <Link
+                to="/get-involved"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white font-extrabold text-xs shadow-md whitespace-nowrap"
+              >
+                <Heart className="h-4 w-4 fill-white" /> Make a Donation Pledge (1:1 Matched)
+              </Link>
+
+              {user ? (
+                <Link
+                  to="/admin/dashboard"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs shadow-xs whitespace-nowrap"
+                >
+                  <LayoutDashboard className="h-4 w-4 text-amber-400" /> Open Admin Dashboard
                 </Link>
-              );
-            })}
+              ) : (
+                <Link
+                  to="/admin/login"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-200 shadow-xs whitespace-nowrap"
+                >
+                  <LogIn className="h-4 w-4 text-slate-600" /> Secretariat Staff Portal
+                </Link>
+              )}
+            </div>
           </div>
-
-          <div className="pt-1 flex flex-col gap-2">
-            <Link
-              to="/get-involved"
-              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white font-extrabold text-xs shadow-md whitespace-nowrap"
-            >
-              <Heart className="h-4 w-4 fill-white" /> Make a Donation Pledge (1:1 Matched)
-            </Link>
-
-            {user ? (
-              <Link
-                to="/admin/dashboard"
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs shadow-xs whitespace-nowrap"
-              >
-                <LayoutDashboard className="h-4 w-4 text-amber-400" /> Open Admin Dashboard
-              </Link>
-            ) : (
-              <Link
-                to="/admin/login"
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-200 shadow-xs whitespace-nowrap"
-              >
-                <LogIn className="h-4 w-4 text-slate-600" /> Secretariat Staff Portal
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
-    </header>
+        )}
+      </header>
+    </div>
   );
 }
