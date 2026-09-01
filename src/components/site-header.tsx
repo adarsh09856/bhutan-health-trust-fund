@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Heart,
   LogIn,
@@ -9,37 +9,51 @@ import {
   MapPin,
   X,
   LayoutDashboard,
+  ChevronDown,
   ChevronRight,
   Sparkles,
   ShieldCheck,
+  Building,
+  FileText,
+  Syringe,
+  Pill,
+  Award,
+  Lock,
+  Globe2,
+  Newspaper,
+  HeartHandshake,
+  Landmark,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import logo from "@/assets/logo.png";
 
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About Us" },
-  { to: "/our-work", label: "Our Work" },
-  { to: "/reports", label: "Reports" },
-  { to: "/policies", label: "Policies" },
-  { to: "/news", label: "News & Media" },
-  { to: "/get-involved", label: "Get Involved" },
-  { to: "/contact", label: "Contact" },
-] as const;
-
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const { user } = useAdminAuth();
   const location = useLocation();
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
+    setOpenDropdown(null);
   }, [location.pathname]);
+
+  const handleMouseEnter = (name: string) => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setOpenDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full transform-gpu will-change-transform">
-      {/* Top Bhutan National Institutional Ribbon */}
+      {/* Top Bhutan National Ribbon */}
       <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-slate-200 text-xs py-1.5 px-4 border-b border-amber-500/20 shadow-xs">
         <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium whitespace-nowrap">
@@ -73,9 +87,9 @@ export function SiteHeader() {
       </div>
 
       {/* Main Glass Header */}
-      <div className="bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.05)]">
+      <div className="bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.06)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 gap-3 xl:gap-6">
+          <div className="flex items-center justify-between h-20 gap-4">
             {/* Logo & Dzongkha Title in Colorful Badge */}
             <Link to="/" className="flex items-center gap-3.5 group shrink-0 whitespace-nowrap">
               <div className="relative h-13 w-13 rounded-2xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 border border-amber-200/60 p-1.5 shadow-sm shadow-amber-500/10 grid place-items-center transition duration-300 group-hover:scale-105 group-hover:shadow-md">
@@ -98,38 +112,241 @@ export function SiteHeader() {
               </div>
             </Link>
 
-            {/* Desktop Frosted Glass Pill Menu */}
-            <nav className="hidden xl:flex items-center gap-1 bg-gradient-to-r from-slate-100/90 via-slate-50/90 to-slate-100/90 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/80 shadow-inner shrink-0 whitespace-nowrap">
-              {navLinks.map((item) => {
-                const isActive =
-                  item.to === "/"
-                    ? location.pathname === "/"
-                    : location.pathname.startsWith(item.to);
+            {/* Desktop Streamlined Grouped Navigation (Clean & Compact) */}
+            <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200 shadow-inner shrink-0">
+              {/* Home */}
+              <Link
+                to="/"
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 ${
+                  location.pathname === "/"
+                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
+                    : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                }`}
+              >
+                Home
+              </Link>
 
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className={`whitespace-nowrap px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 shrink-0 ${
-                      isActive
-                        ? "bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-md shadow-slate-900/20"
-                        : "text-slate-700 hover:text-emerald-700 hover:bg-white/90"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+              {/* About Us Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => handleMouseEnter("about")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  type="button"
+                  className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer ${
+                    location.pathname.startsWith("/about")
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                  }`}
+                >
+                  <span>About Us</span>
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </button>
+
+                {openDropdown === "about" && (
+                  <div className="absolute top-full left-0 mt-2 w-72 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                    <Link
+                      to="/about"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
+                        <Landmark className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
+                          Royal Charter Mandate
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          Founding history, mission & GNH alignment
+                        </p>
+                      </div>
+                    </Link>
+
+                    <Link
+                      to="/about"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-500 group-hover:text-white transition">
+                        <ShieldCheck className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
+                          Board of Trustees & Oversight
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          Governance, fiduciary safeguards & leadership
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Our Programs Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => handleMouseEnter("programs")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <Link
+                  to="/our-work"
+                  className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer ${
+                    location.pathname.startsWith("/our-work")
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                  }`}
+                >
+                  <span>Our Programs</span>
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </Link>
+
+                {openDropdown === "programs" && (
+                  <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                    <Link
+                      to="/our-work"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
+                        <Syringe className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
+                          Universal Routine Vaccines
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          100% Childhood immunization antigens
+                        </p>
+                      </div>
+                    </Link>
+
+                    <Link
+                      to="/our-work"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
+                        <Pill className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
+                          120+ Essential Medicines
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          Primary health formulary & emergency drugs
+                        </p>
+                      </div>
+                    </Link>
+
+                    <Link
+                      to="/our-work"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-cyan-50 text-cyan-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-cyan-600 group-hover:text-white transition">
+                        <Globe2 className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-cyan-700 transition">
+                          20 Dzongkhags Reach Matrix
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          Equitable distribution to 205 remote gewogs
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Transparency & Governance Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => handleMouseEnter("transparency")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  type="button"
+                  className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer ${
+                    location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                  }`}
+                >
+                  <span>Transparency</span>
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </button>
+
+                {openDropdown === "transparency" && (
+                  <div className="absolute top-full left-0 mt-2 w-72 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-2xl shadow-2xl p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                    <Link
+                      to="/reports"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
+                        <FileText className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-purple-700 transition">
+                          Reports & Audits
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          Annual reports & RAA certified statements
+                        </p>
+                      </div>
+                    </Link>
+
+                    <Link
+                      to="/policies"
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition text-left group"
+                    >
+                      <div className="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-teal-600 group-hover:text-white transition">
+                        <ShieldCheck className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-teal-700 transition">
+                          Governance & Policies
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-snug">
+                          Procurement ethics & whistleblower channel
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* News & Media */}
+              <Link
+                to="/news"
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 ${
+                  location.pathname.startsWith("/news")
+                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
+                    : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                }`}
+              >
+                News
+              </Link>
+
+              {/* Contact */}
+              <Link
+                to="/contact"
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 ${
+                  location.pathname === "/contact"
+                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
+                    : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                }`}
+              >
+                Contact
+              </Link>
             </nav>
 
-            {/* Right Action CTAs */}
+            {/* Right Action CTAs with Glowing Gradient */}
             <div className="hidden sm:flex items-center gap-3 shrink-0 whitespace-nowrap">
               <Link
                 to="/get-involved"
                 className="whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold shadow-md shadow-emerald-700/25 hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-400/30"
               >
                 <Heart className="h-3.5 w-3.5 fill-white text-white shrink-0" />
-                <span>Donate Nu. (1:1 Matched)</span>
+                <span>Donate (1:1 Matched)</span>
               </Link>
 
               {user ? (
@@ -152,7 +369,7 @@ export function SiteHeader() {
             </div>
 
             {/* Mobile Hamburger Button */}
-            <div className="flex xl:hidden items-center gap-2">
+            <div className="flex lg:hidden items-center gap-2">
               <Link
                 to="/get-involved"
                 className="sm:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold shadow-xs whitespace-nowrap"
@@ -180,9 +397,18 @@ export function SiteHeader() {
 
       {/* Mobile Glass Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-b border-slate-200 bg-white/98 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150">
-          <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-1.5 rounded-2xl border border-slate-200 space-y-1">
-            {navLinks.map((item) => {
+        <div className="lg:hidden border-b border-slate-200 bg-white/98 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150">
+          <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-2 rounded-2xl border border-slate-200 space-y-1">
+            {[
+              { to: "/", label: "Home" },
+              { to: "/about", label: "About Us & Royal Charter" },
+              { to: "/our-work", label: "Our Programs & Commodities" },
+              { to: "/reports", label: "Reports & Publications" },
+              { to: "/policies", label: "Governance & Policies" },
+              { to: "/news", label: "News & Media Room" },
+              { to: "/get-involved", label: "Get Involved & Donate (1:1)" },
+              { to: "/contact", label: "Contact Secretariat" },
+            ].map((item) => {
               const isActive =
                 item.to === "/"
                   ? location.pathname === "/"
@@ -192,7 +418,7 @@ export function SiteHeader() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                     isActive
                       ? "bg-slate-900 text-white shadow-xs"
                       : "text-slate-700 hover:bg-white"
