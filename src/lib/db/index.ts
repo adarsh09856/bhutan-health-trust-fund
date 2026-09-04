@@ -10,6 +10,8 @@ import {
   initialDonations,
   initialInquiries,
   initialSubscribers,
+  initialCourses,
+  initialEnrollments,
 } from "./seed-data";
 import type {
   User,
@@ -20,6 +22,8 @@ import type {
   Donation,
   Inquiry,
   Subscriber,
+  Course,
+  CourseEnrollment,
   NewUser,
   NewNewsArticle,
   NewReport,
@@ -28,6 +32,8 @@ import type {
   NewDonation,
   NewInquiry,
   NewSubscriber,
+  NewCourse,
+  NewCourseEnrollment,
 } from "./schema";
 
 /**
@@ -47,6 +53,8 @@ interface PersistedState {
   donations: Donation[];
   inquiries: Inquiry[];
   subscribers: Subscriber[];
+  courses?: Course[];
+  courseEnrollments?: CourseEnrollment[];
 }
 
 class BHTFDataStore {
@@ -58,6 +66,8 @@ class BHTFDataStore {
   private donations: Donation[] = [];
   private inquiries: Inquiry[] = [];
   private subscribers: Subscriber[] = [];
+  private courses: Course[] = [];
+  private courseEnrollments: CourseEnrollment[] = [];
   private initialized = false;
 
   constructor() {
@@ -75,6 +85,8 @@ class BHTFDataStore {
         donations: this.donations,
         inquiries: this.inquiries,
         subscribers: this.subscribers,
+        courses: this.courses,
+        courseEnrollments: this.courseEnrollments,
       };
       fs.writeFileSync(DB_FILE_PATH, JSON.stringify(state, null, 2), "utf-8");
     } catch {
@@ -98,6 +110,13 @@ class BHTFDataStore {
           this.donations = parsed.donations || [];
           this.inquiries = parsed.inquiries || [];
           this.subscribers = parsed.subscribers || [];
+          this.courses = parsed.courses && parsed.courses.length ? parsed.courses : [];
+          this.courseEnrollments = parsed.courseEnrollments || [];
+
+          if (this.courses.length === 0) {
+            this.seedCourses();
+          }
+
           this.initialized = true;
           return;
         }
@@ -127,9 +146,9 @@ class BHTFDataStore {
       coverImage: n.coverImage,
       category: n.category || "General",
       author: n.author || "BHTF Media",
-      isPublished: n.isPublished ?? true,
-      publishedAt: n.publishedAt || new Date(),
-      viewsCount: n.viewsCount || 0,
+      isPublished: n.isPublished !== undefined ? n.isPublished : true,
+      publishedAt: new Date(Date.now() - idx * 86400000 * 4),
+      viewsCount: n.viewsCount || 250,
       createdAt: new Date(),
       updatedAt: new Date(),
     }));
@@ -143,7 +162,7 @@ class BHTFDataStore {
       fileUrl: r.fileUrl,
       fileSize: r.fileSize || "2.4 MB",
       description: r.description,
-      downloadCount: r.downloadCount || 0,
+      downloadCount: 45 + idx * 12,
       createdAt: new Date(),
     }));
 
@@ -185,10 +204,10 @@ class BHTFDataStore {
       amountNu: d.amountNu,
       currency: d.currency || "BTN",
       paymentMethod: d.paymentMethod || "MBOB",
-      status: d.status || "PENDING",
+      status: d.status || "COMPLETED",
       message: d.message || null,
-      isAnonymous: d.isAnonymous ?? false,
-      createdAt: new Date(Date.now() - (idx + 1) * 86400000),
+      isAnonymous: d.isAnonymous || false,
+      createdAt: new Date(Date.now() - idx * 86400000 * 2),
     }));
 
     // Seed Inquiries
@@ -200,75 +219,90 @@ class BHTFDataStore {
       message: iq.message,
       status: iq.status || "UNREAD",
       replyNotes: iq.replyNotes || null,
-      createdAt: new Date(Date.now() - (idx + 1) * 43200000),
+      createdAt: new Date(Date.now() - idx * 86400000 * 3),
     }));
 
     // Seed Subscribers
     this.subscribers = initialSubscribers.map((s, idx) => ({
       id: idx + 1,
       email: s.email,
-      isActive: s.isActive ?? true,
-      subscribedAt: new Date(Date.now() - (idx + 1) * 172800000),
+      isActive: s.isActive !== undefined ? s.isActive : true,
+      subscribedAt: new Date(Date.now() - idx * 86400000 * 7),
     }));
+
+    this.seedCourses();
 
     this.initialized = true;
     this.persist();
   }
 
-  // --- Users / Auth Operations ---
-  public async getUserByEmail(email: string): Promise<User | undefined> {
-    return this.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-  }
-
-  public async getUserById(id: number): Promise<User | undefined> {
-    return this.users.find((u) => u.id === id);
-  }
-
-  public async createUser(data: NewUser): Promise<User> {
-    const newUser: User = {
-      id: this.users.length ? Math.max(...this.users.map((u) => u.id)) + 1 : 1,
-      name: data.name,
-      email: data.email,
-      passwordHash: data.passwordHash,
-      role: data.role || "ADMIN",
+  private seedCourses() {
+    this.courses = initialCourses.map((c, idx) => ({
+      id: idx + 1,
+      slug: c.slug,
+      title: c.title,
+      category: c.category || "Cold Chain & Vaccines",
+      description: c.description,
+      instructor: c.instructor || "BHTF & KGUMSB Faculty",
+      durationHours: c.durationHours || "4 Hours",
+      difficulty: c.difficulty || "Intermediate",
+      modulesCount: c.modulesCount || 4,
+      enrolledCount: c.enrolledCount || 100,
+      isPublished: c.isPublished !== undefined ? c.isPublished : true,
       createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.users.push(newUser);
-    this.persist();
-    return newUser;
+    }));
+
+    this.courseEnrollments = initialEnrollments.map((e, idx) => ({
+      id: idx + 1,
+      courseId: e.courseId,
+      studentName: e.studentName,
+      studentEmail: e.studentEmail,
+      progressPercent: e.progressPercent || 100,
+      quizScore: e.quizScore || 95,
+      isCompleted: e.isCompleted !== undefined ? e.isCompleted : true,
+      certificateId: e.certificateId || `BHTF-CERT-2026-${9000 + idx}`,
+      completedAt: new Date(Date.now() - idx * 86400000 * 5),
+      createdAt: new Date(Date.now() - (idx + 1) * 86400000 * 10),
+    }));
   }
 
-  // --- News Articles Operations ---
+  // --- Users & Auth ---
+  public async findUserByEmail(email: string): Promise<User | null> {
+    return this.users.find((u) => u.email.toLowerCase() === email.toLowerCase()) || null;
+  }
+
+  public async findUserById(id: number): Promise<User | null> {
+    return this.users.find((u) => u.id === id) || null;
+  }
+
+  // --- News Articles ---
   public async getAllNews(onlyPublished = true): Promise<NewsArticle[]> {
-    let list = [...this.newsArticles];
-    if (onlyPublished) {
-      list = list.filter((n) => n.isPublished);
-    }
-    return list.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+    const list = onlyPublished ? this.newsArticles.filter((n) => n.isPublished) : this.newsArticles;
+    return [...list].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
   }
 
-  public async getNewsBySlug(slug: string): Promise<NewsArticle | undefined> {
+  public async getNewsBySlug(slug: string): Promise<NewsArticle | null> {
     const article = this.newsArticles.find((n) => n.slug === slug);
     if (article) {
       article.viewsCount = (article.viewsCount || 0) + 1;
       this.persist();
     }
-    return article;
+    return article || null;
   }
 
   public async createNews(data: NewNewsArticle): Promise<NewsArticle> {
+    const id = this.newsArticles.length ? Math.max(...this.newsArticles.map((n) => n.id)) + 1 : 1;
     const article: NewsArticle = {
-      id: this.newsArticles.length ? Math.max(...this.newsArticles.map((n) => n.id)) + 1 : 1,
-      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      id,
+      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       title: data.title,
       excerpt: data.excerpt,
       content: data.content,
-      coverImage: data.coverImage || "/src/assets/news-vaccine.jpg",
+      coverImage: data.coverImage,
       category: data.category || "General",
       author: data.author || "BHTF Media",
-      isPublished: data.isPublished ?? true,
-      publishedAt: data.publishedAt || new Date(),
+      isPublished: data.isPublished !== undefined ? data.isPublished : true,
+      publishedAt: new Date(),
       viewsCount: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -278,16 +312,16 @@ class BHTFDataStore {
     return article;
   }
 
-  public async updateNews(id: number, data: Partial<NewNewsArticle>): Promise<NewsArticle | undefined> {
-    const index = this.newsArticles.findIndex((n) => n.id === id);
-    if (index === -1) return undefined;
-    this.newsArticles[index] = {
-      ...this.newsArticles[index],
+  public async updateNews(id: number, data: Partial<NewNewsArticle>): Promise<NewsArticle | null> {
+    const idx = this.newsArticles.findIndex((n) => n.id === id);
+    if (idx === -1) return null;
+    this.newsArticles[idx] = {
+      ...this.newsArticles[idx],
       ...data,
       updatedAt: new Date(),
     };
     this.persist();
-    return this.newsArticles[index];
+    return this.newsArticles[idx];
   }
 
   public async deleteNews(id: number): Promise<boolean> {
@@ -297,19 +331,20 @@ class BHTFDataStore {
     return this.newsArticles.length < initialLen;
   }
 
-  // --- Reports Operations ---
+  // --- Reports & Publications ---
   public async getAllReports(): Promise<Report[]> {
-    return [...this.reports].sort((a, b) => b.year.localeCompare(a.year));
+    return [...this.reports].sort((a, b) => parseInt(b.year) - parseInt(a.year));
   }
 
   public async createReport(data: NewReport): Promise<Report> {
+    const id = this.reports.length ? Math.max(...this.reports.map((r) => r.id)) + 1 : 1;
     const report: Report = {
-      id: this.reports.length ? Math.max(...this.reports.map((r) => r.id)) + 1 : 1,
+      id,
       title: data.title,
       year: data.year,
       category: data.category || "Annual Report",
-      fileUrl: data.fileUrl || "/documents/sample-report.pdf",
-      fileSize: data.fileSize || "2.4 MB",
+      fileUrl: data.fileUrl,
+      fileSize: data.fileSize || "2.5 MB",
       description: data.description,
       downloadCount: 0,
       createdAt: new Date(),
@@ -319,14 +354,6 @@ class BHTFDataStore {
     return report;
   }
 
-  public async incrementReportDownload(id: number): Promise<void> {
-    const report = this.reports.find((r) => r.id === id);
-    if (report) {
-      report.downloadCount = (report.downloadCount || 0) + 1;
-      this.persist();
-    }
-  }
-
   public async deleteReport(id: number): Promise<boolean> {
     const initialLen = this.reports.length;
     this.reports = this.reports.filter((r) => r.id !== id);
@@ -334,14 +361,25 @@ class BHTFDataStore {
     return this.reports.length < initialLen;
   }
 
-  // --- Policies Operations ---
+  public async incrementReportDownload(id: number): Promise<boolean> {
+    const report = this.reports.find((r) => r.id === id);
+    if (report) {
+      report.downloadCount = (report.downloadCount || 0) + 1;
+      this.persist();
+      return true;
+    }
+    return false;
+  }
+
+  // --- Policies ---
   public async getAllPolicies(): Promise<Policy[]> {
     return [...this.policies];
   }
 
   public async createPolicy(data: NewPolicy): Promise<Policy> {
+    const id = this.policies.length ? Math.max(...this.policies.map((p) => p.id)) + 1 : 1;
     const policy: Policy = {
-      id: this.policies.length ? Math.max(...this.policies.map((p) => p.id)) + 1 : 1,
+      id,
       title: data.title,
       slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       summary: data.summary,
@@ -357,16 +395,16 @@ class BHTFDataStore {
     return policy;
   }
 
-  public async updatePolicy(id: number, data: Partial<NewPolicy>): Promise<Policy | undefined> {
-    const index = this.policies.findIndex((p) => p.id === id);
-    if (index === -1) return undefined;
-    this.policies[index] = {
-      ...this.policies[index],
+  public async updatePolicy(id: number, data: Partial<NewPolicy>): Promise<Policy | null> {
+    const idx = this.policies.findIndex((p) => p.id === id);
+    if (idx === -1) return null;
+    this.policies[idx] = {
+      ...this.policies[idx],
       ...data,
       updatedAt: new Date(),
     };
     this.persist();
-    return this.policies[index];
+    return this.policies[idx];
   }
 
   public async deletePolicy(id: number): Promise<boolean> {
@@ -376,21 +414,43 @@ class BHTFDataStore {
     return this.policies.length < initialLen;
   }
 
-  // --- Programs Operations ---
+  // --- Programs ---
   public async getAllPrograms(): Promise<Program[]> {
     return [...this.programs];
   }
 
-  // --- Donations Operations ---
+  public async createProgram(data: NewProgram): Promise<Program> {
+    const id = this.programs.length ? Math.max(...this.programs.map((p) => p.id)) + 1 : 1;
+    const program: Program = {
+      id,
+      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      title: data.title,
+      summary: data.summary,
+      fullDescription: data.fullDescription,
+      icon: data.icon || "Pill",
+      targetDzongkhags: data.targetDzongkhags || "All 20 Dzongkhags",
+      beneficiariesReached: data.beneficiariesReached || "780,000+ citizens",
+      status: data.status || "ACTIVE",
+      createdAt: new Date(),
+    };
+    this.programs.push(program);
+    this.persist();
+    return program;
+  }
+
+  // --- Donations ---
   public async getAllDonations(): Promise<Donation[]> {
     return [...this.donations].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   public async createDonation(data: NewDonation): Promise<Donation> {
-    const ref = data.referenceNo || `BHTF-DON-${Math.floor(100000 + Math.random() * 900000)}`;
+    const id = this.donations.length ? Math.max(...this.donations.map((d) => d.id)) + 1 : 1;
+    const randomSuffix = Math.floor(100000 + Math.random() * 900000);
+    const referenceNo = data.referenceNo || `BHTF-DON-${randomSuffix}`;
+
     const donation: Donation = {
-      id: this.donations.length ? Math.max(...this.donations.map((d) => d.id)) + 1 : 1,
-      referenceNo: ref,
+      id,
+      referenceNo,
       donorName: data.donorName,
       donorEmail: data.donorEmail,
       donorPhone: data.donorPhone || null,
@@ -399,31 +459,32 @@ class BHTFDataStore {
       paymentMethod: data.paymentMethod || "MBOB",
       status: data.status || "PENDING",
       message: data.message || null,
-      isAnonymous: data.isAnonymous ?? false,
+      isAnonymous: data.isAnonymous || false,
       createdAt: new Date(),
     };
+
     this.donations.unshift(donation);
     this.persist();
     return donation;
   }
 
-  public async updateDonationStatus(id: number, status: string): Promise<Donation | undefined> {
-    const donation = this.donations.find((d) => d.id === id);
-    if (donation) {
-      donation.status = status;
-      this.persist();
-    }
-    return donation;
+  public async updateDonationStatus(id: number, status: string): Promise<Donation | null> {
+    const idx = this.donations.findIndex((d) => d.id === id);
+    if (idx === -1) return null;
+    this.donations[idx].status = status;
+    this.persist();
+    return this.donations[idx];
   }
 
-  // --- Inquiries Operations ---
+  // --- Inquiries ---
   public async getAllInquiries(): Promise<Inquiry[]> {
     return [...this.inquiries].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   public async createInquiry(data: NewInquiry): Promise<Inquiry> {
+    const id = this.inquiries.length ? Math.max(...this.inquiries.map((i) => i.id)) + 1 : 1;
     const inquiry: Inquiry = {
-      id: this.inquiries.length ? Math.max(...this.inquiries.map((iq) => iq.id)) + 1 : 1,
+      id,
       name: data.name,
       email: data.email,
       subject: data.subject,
@@ -437,36 +498,37 @@ class BHTFDataStore {
     return inquiry;
   }
 
-  public async updateInquiryStatus(id: number, status: string, replyNotes?: string): Promise<Inquiry | undefined> {
-    const inquiry = this.inquiries.find((iq) => iq.id === id);
-    if (inquiry) {
-      inquiry.status = status;
-      if (replyNotes !== undefined) {
-        inquiry.replyNotes = replyNotes;
-      }
-      this.persist();
+  public async updateInquiryStatus(id: number, status: string, replyNotes?: string): Promise<Inquiry | null> {
+    const idx = this.inquiries.findIndex((i) => i.id === id);
+    if (idx === -1) return null;
+    this.inquiries[idx].status = status;
+    if (replyNotes !== undefined) {
+      this.inquiries[idx].replyNotes = replyNotes;
     }
-    return inquiry;
+    this.persist();
+    return this.inquiries[idx];
   }
 
   public async deleteInquiry(id: number): Promise<boolean> {
     const initialLen = this.inquiries.length;
-    this.inquiries = this.inquiries.filter((iq) => iq.id !== id);
+    this.inquiries = this.inquiries.filter((i) => i.id !== id);
     this.persist();
     return this.inquiries.length < initialLen;
   }
 
-  // --- Subscribers Operations ---
+  // --- Subscribers ---
   public async getAllSubscribers(): Promise<Subscriber[]> {
-    return [...this.subscribers].sort((a, b) => new Date(b.subscribedAt).getTime() - new Date(a.subscribedAt).getTime());
+    return [...this.subscribers];
   }
 
   public async addSubscriber(email: string): Promise<Subscriber> {
-    const normalized = email.trim().toLowerCase();
+    const normalized = email.toLowerCase().trim();
     const existing = this.subscribers.find((s) => s.email.toLowerCase() === normalized);
     if (existing) {
-      existing.isActive = true;
-      this.persist();
+      if (!existing.isActive) {
+        existing.isActive = true;
+        this.persist();
+      }
       return existing;
     }
     const subscriber: Subscriber = {
@@ -485,6 +547,93 @@ class BHTFDataStore {
     this.subscribers = this.subscribers.filter((s) => s.id !== id);
     this.persist();
     return this.subscribers.length < initialLen;
+  }
+
+  // --- Academy & Courses ---
+  public async getAllCourses(onlyPublished = true): Promise<Course[]> {
+    const list = onlyPublished ? this.courses.filter((c) => c.isPublished) : this.courses;
+    return [...list];
+  }
+
+  public async getCourseBySlug(slug: string): Promise<Course | null> {
+    return this.courses.find((c) => c.slug === slug) || null;
+  }
+
+  public async createCourse(data: NewCourse): Promise<Course> {
+    const id = this.courses.length ? Math.max(...this.courses.map((c) => c.id)) + 1 : 1;
+    const course: Course = {
+      id,
+      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      title: data.title,
+      category: data.category || "Cold Chain & Vaccines",
+      description: data.description,
+      instructor: data.instructor || "BHTF & KGUMSB Faculty",
+      durationHours: data.durationHours || "4 Hours",
+      difficulty: data.difficulty || "Intermediate",
+      modulesCount: data.modulesCount || 4,
+      enrolledCount: data.enrolledCount || 0,
+      isPublished: data.isPublished !== undefined ? data.isPublished : true,
+      createdAt: new Date(),
+    };
+    this.courses.push(course);
+    this.persist();
+    return course;
+  }
+
+  public async updateCourse(id: number, data: Partial<NewCourse>): Promise<Course | null> {
+    const idx = this.courses.findIndex((c) => c.id === id);
+    if (idx === -1) return null;
+    this.courses[idx] = {
+      ...this.courses[idx],
+      ...data,
+    };
+    this.persist();
+    return this.courses[idx];
+  }
+
+  public async deleteCourse(id: number): Promise<boolean> {
+    const initialLen = this.courses.length;
+    this.courses = this.courses.filter((c) => c.id !== id);
+    this.persist();
+    return this.courses.length < initialLen;
+  }
+
+  public async getCourseEnrollments(): Promise<CourseEnrollment[]> {
+    return [...this.courseEnrollments];
+  }
+
+  public async submitCourseCompletion(data: {
+    courseId: number;
+    studentName: string;
+    studentEmail: string;
+    quizScore: number;
+  }): Promise<CourseEnrollment> {
+    const id = this.courseEnrollments.length ? Math.max(...this.courseEnrollments.map((e) => e.id)) + 1 : 1;
+    const randomCert = Math.floor(1000 + Math.random() * 9000);
+    const certificateId = `BHTF-CERT-2026-${randomCert}`;
+
+    const enrollment: CourseEnrollment = {
+      id,
+      courseId: data.courseId,
+      studentName: data.studentName,
+      studentEmail: data.studentEmail,
+      progressPercent: 100,
+      quizScore: data.quizScore,
+      isCompleted: true,
+      certificateId,
+      completedAt: new Date(),
+      createdAt: new Date(),
+    };
+
+    // Increment enrolled count on the course
+    const course = this.courses.find((c) => c.id === data.courseId);
+    if (course) {
+      course.enrolledCount = (course.enrolledCount || 0) + 1;
+    }
+
+    this.courseEnrollments.unshift(enrollment);
+    this.persist();
+    return enrollment;
   }
 
   // --- Reset Database to Initial Factory State ---
@@ -511,6 +660,8 @@ class BHTFDataStore {
     const publishedNewsCount = this.newsArticles.filter((n) => n.isPublished).length;
     const activeSubscribersCount = this.subscribers.filter((s) => s.isActive).length;
     const totalReportsCount = this.reports.length;
+    const totalCoursesCount = this.courses.length;
+    const totalEnrollmentsCount = this.courseEnrollments.length;
 
     // Monthly donation stats for charts
     const monthlyStats = [
@@ -531,6 +682,8 @@ class BHTFDataStore {
       publishedNewsCount,
       activeSubscribersCount,
       totalReportsCount,
+      totalCoursesCount,
+      totalEnrollmentsCount,
       monthlyStats,
       recentDonations: this.donations.slice(0, 5),
       recentInquiries: this.inquiries.slice(0, 5),

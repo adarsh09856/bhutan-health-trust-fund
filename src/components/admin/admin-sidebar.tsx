@@ -16,6 +16,7 @@ import {
   Landmark,
   Shield,
   Coins,
+  GraduationCap,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { getDashboardAnalytics } from "@/lib/api/admin.functions";
@@ -30,6 +31,7 @@ const crmNavItems = [
 ];
 
 const cmsNavItems = [
+  { to: "/admin/courses", label: "Academy & LMS Controls", icon: GraduationCap },
   { to: "/admin/news", label: "News & Press Releases", icon: Newspaper },
   { to: "/admin/reports", label: "Reports & RAA Audits", icon: FileText },
   { to: "/admin/policies", label: "Policies & Royal Charters", icon: ShieldCheck },

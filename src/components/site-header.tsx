@@ -23,6 +23,7 @@ import {
   Newspaper,
   HeartHandshake,
   Landmark,
+  GraduationCap,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import logo from "@/assets/logo.png";
@@ -276,6 +277,19 @@ export function SiteHeader() {
             )}
           </div>
 
+          {/* Health Academy LMS */}
+          <Link
+            to="/academy"
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 inline-flex items-center gap-1.5 ${
+              location.pathname.startsWith("/academy")
+                ? "bg-blue-900 text-white shadow-md shadow-blue-900/20"
+                : "text-slate-700 hover:text-blue-700 hover:bg-white"
+            }`}
+          >
+            <GraduationCap className="h-3.5 w-3.5 text-blue-600" />
+            <span>Academy LMS</span>
+          </Link>
+
           {/* News & Media */}
           <Link
             to="/news"
@@ -311,23 +325,59 @@ export function SiteHeader() {
             <span>Donate (1:1 Matched)</span>
           </Link>
 
-          {user ? (
-            <Link
-              to="/admin/dashboard"
-              className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition duration-150 cursor-pointer shrink-0 border border-slate-700"
+          {/* Portals Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter("portals")}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              type="button"
+              className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 shadow-xs transition duration-150 cursor-pointer shrink-0"
             >
-              <LayoutDashboard className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-              <span>Admin Panel</span>
-            </Link>
-          ) : (
-            <Link
-              to="/admin/login"
-              className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-800 text-xs font-bold border border-slate-300 shadow-xs transition duration-150 cursor-pointer shrink-0"
-            >
-              <LogIn className="h-3.5 w-3.5 text-slate-600 shrink-0" />
-              <span>Staff Portal</span>
-            </Link>
-          )}
+              <Lock className="h-3.5 w-3.5 text-slate-600 shrink-0" />
+              <span>Portals</span>
+              <ChevronDown className="h-3 w-3 text-slate-500" />
+            </button>
+
+            {openDropdown === "portals" && (
+              <div className="absolute top-full right-0 mt-3 w-72 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                <Link
+                  to="/academy"
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-blue-50/70 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <GraduationCap className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
+                      Health Academy LMS
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Student training & CME certificates
+                    </p>
+                  </div>
+                </Link>
+
+                <Link
+                  to={user ? "/admin/dashboard" : "/admin/login"}
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-emerald-50/70 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-slate-900 text-amber-400 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <LayoutDashboard className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
+                      Secretariat Staff Portal
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      {user ? `Logged in as ${user.name}` : "Restricted admin & CRM access"}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Mobile Actions: Donate + Hamburger Toggle */}
@@ -363,6 +413,7 @@ export function SiteHeader() {
               { to: "/", label: "Home" },
               { to: "/about", label: "About Us & Royal Charter" },
               { to: "/our-work", label: "Our Programs & Commodities" },
+              { to: "/academy", label: "Health Academy & Student LMS 🎓" },
               { to: "/reports", label: "Reports & Publications" },
               { to: "/policies", label: "Governance & Policies" },
               { to: "/news", label: "News & Media Room" },
@@ -403,12 +454,19 @@ export function SiteHeader() {
               <Heart className="h-4 w-4 fill-white" /> Make a Donation Pledge (1:1 Matched)
             </Link>
 
+            <Link
+              to="/academy"
+              className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-blue-50 text-blue-900 font-bold text-xs border border-blue-200 shadow-xs whitespace-nowrap"
+            >
+              <GraduationCap className="h-4 w-4 text-blue-700" /> Health Academy & Student LMS
+            </Link>
+
             {user ? (
               <Link
                 to="/admin/dashboard"
                 className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs shadow-xs whitespace-nowrap"
               >
-                <LayoutDashboard className="h-4 w-4 text-amber-400" /> Open Admin Dashboard
+                <LayoutDashboard className="h-4 w-4 text-amber-400" /> Secretariat Admin Dashboard
               </Link>
             ) : (
               <Link

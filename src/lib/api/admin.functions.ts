@@ -195,3 +195,67 @@ export const deleteAdminSubscriber = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     return await db.deleteSubscriber(data.id);
   });
+
+// --- LMS Courses Admin Functions ---
+export const getAdminCourses = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllCourses();
+});
+
+export const createAdminCourse = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      title: z.string().min(3),
+      slug: z.string().optional(),
+      category: z.string().default("Cold Chain & Vaccines"),
+      description: z.string().min(10),
+      instructor: z.string().default("BHTF & KGUMSB Faculty"),
+      durationHours: z.string().default("4 Hours"),
+      difficulty: z.enum(["Beginner", "Intermediate", "Advanced"]).default("Intermediate"),
+      modulesCount: z.number().default(4),
+      isPublished: z.boolean().default(true),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createCourse({
+      title: data.title,
+      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      category: data.category,
+      description: data.description,
+      instructor: data.instructor,
+      durationHours: data.durationHours,
+      difficulty: data.difficulty,
+      modulesCount: data.modulesCount,
+      isPublished: data.isPublished,
+    });
+  });
+
+export const updateAdminCourse = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      title: z.string().optional(),
+      category: z.string().optional(),
+      description: z.string().optional(),
+      instructor: z.string().optional(),
+      durationHours: z.string().optional(),
+      difficulty: z.string().optional(),
+      modulesCount: z.number().optional(),
+      isPublished: z.boolean().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateCourse(id, rest);
+  });
+
+export const deleteAdminCourse = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteCourse(data.id);
+  });
+
+export const getAdminCourseEnrollments = createServerFn({ method: "GET" })
+  .validator(z.object({ courseId: z.number().optional() }))
+  .handler(async ({ data }) => {
+    return await db.getCourseEnrollments(data?.courseId);
+  });

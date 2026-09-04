@@ -115,3 +115,30 @@ export const getPublicPolicies = createServerFn({ method: "GET" }).handler(async
 export const getPublicPrograms = createServerFn({ method: "GET" }).handler(async () => {
   return await db.getAllPrograms();
 });
+
+// --- Get Public Academy Courses ---
+export const getPublicCourses = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllCourses();
+});
+
+// --- Get Public Course by Slug ---
+export const getPublicCourseBySlug = createServerFn({ method: "GET" })
+  .validator(z.object({ slug: z.string() }))
+  .handler(async ({ data }) => {
+    return await db.getCourseBySlug(data.slug);
+  });
+
+// --- Submit Course Quiz & Certification ---
+export const submitCourseQuizCompletion = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      courseId: z.number(),
+      studentName: z.string().min(2, "Full name is required for certification"),
+      studentEmail: z.string().email("Valid institutional or personal email required"),
+      institution: z.string().optional(),
+      quizScore: z.number().min(0).max(100),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.submitCourseCompletion(data);
+  });
