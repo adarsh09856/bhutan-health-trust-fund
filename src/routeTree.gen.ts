@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as AcademyRouteImport } from './routes/academy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
 import { Route as NewsRouteImport } from './routes/news'
@@ -19,7 +18,6 @@ import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as AdminCoursesRouteImport } from './routes/admin/courses'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminDonationsRouteImport } from './routes/admin/donations'
 import { Route as AdminInquiriesRouteImport } from './routes/admin/inquiries'
@@ -39,11 +37,6 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AcademyRoute = AcademyRouteImport.update({
-  id: '/academy',
-  path: '/academy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -79,11 +72,6 @@ const ReportsRoute = ReportsRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminCoursesRoute = AdminCoursesRouteImport.update({
-  id: '/admin/courses',
-  path: '/admin/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
@@ -140,14 +128,12 @@ const NewsSlugRoute = NewsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/academy': typeof AcademyRoute
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
-  '/admin/courses': typeof AdminCoursesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -163,14 +149,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/academy': typeof AcademyRoute
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
-  '/admin/courses': typeof AdminCoursesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -187,14 +171,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/academy': typeof AcademyRoute
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
-  '/admin/courses': typeof AdminCoursesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -212,14 +194,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/academy'
     | '/contact'
     | '/get-involved'
     | '/news'
     | '/our-work'
     | '/policies'
     | '/reports'
-    | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/inquiries'
@@ -235,14 +215,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/academy'
     | '/contact'
     | '/get-involved'
     | '/news'
     | '/our-work'
     | '/policies'
     | '/reports'
-    | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/inquiries'
@@ -258,14 +236,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
-    | '/academy'
     | '/contact'
     | '/get-involved'
     | '/news'
     | '/our-work'
     | '/policies'
     | '/reports'
-    | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/inquiries'
@@ -282,14 +258,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AcademyRoute: typeof AcademyRoute
   ContactRoute: typeof ContactRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
   NewsRoute: typeof NewsRouteWithChildren
   OurWorkRoute: typeof OurWorkRoute
   PoliciesRoute: typeof PoliciesRoute
   ReportsRoute: typeof ReportsRoute
-  AdminCoursesRoute: typeof AdminCoursesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDonationsRoute: typeof AdminDonationsRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
@@ -316,13 +290,6 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/academy': {
-      id: '/academy'
-      path: '/academy'
-      fullPath: '/academy'
-      preLoaderRoute: typeof AcademyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -372,13 +339,6 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/courses': {
-      id: '/admin/courses'
-      path: '/admin/courses'
-      fullPath: '/admin/courses'
-      preLoaderRoute: typeof AdminCoursesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/dashboard': {
@@ -467,14 +427,12 @@ const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AcademyRoute: AcademyRoute,
   ContactRoute: ContactRoute,
   GetInvolvedRoute: GetInvolvedRoute,
   NewsRoute: NewsRouteWithChildren,
   OurWorkRoute: OurWorkRoute,
   PoliciesRoute: PoliciesRoute,
   ReportsRoute: ReportsRoute,
-  AdminCoursesRoute: AdminCoursesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDonationsRoute: AdminDonationsRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,

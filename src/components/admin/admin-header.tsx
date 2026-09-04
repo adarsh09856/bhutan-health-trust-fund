@@ -34,10 +34,6 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
     title: "Policies & Royal Charters CMS",
     subtitle: "Manage foundational charters, procurement guidelines, and ethics policies.",
   },
-  "/admin/courses": {
-    title: "Healthcare Academy & LMS Training Controls",
-    subtitle: "Curriculum modules, KGUMSB clinical certifications & accredited healthcare trainee records.",
-  },
 };
 
 export function AdminHeader({ onToggleMenu }: { onToggleMenu: () => void }) {

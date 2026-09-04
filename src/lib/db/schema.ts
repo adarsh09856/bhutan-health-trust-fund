@@ -97,34 +97,6 @@ export const programs = pgTable("programs", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const courses = pgTable("courses", {
-  id: serial("id").primaryKey(),
-  slug: text("slug").notNull().unique(),
-  title: text("title").notNull(),
-  category: text("category").notNull().default("Cold Chain & Vaccines"), // Cold Chain & Vaccines, Essential Medicines, Maternal Health, Quality Assurance
-  description: text("description").notNull(),
-  instructor: text("instructor").notNull().default("BHTF & KGUMSB Faculty"),
-  durationHours: text("duration_hours").notNull().default("4 Hours"),
-  difficulty: text("difficulty").notNull().default("Intermediate"), // Beginner, Intermediate, Advanced
-  modulesCount: integer("modules_count").notNull().default(4),
-  enrolledCount: integer("enrolled_count").notNull().default(0),
-  isPublished: boolean("is_published").notNull().default(true),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-export const courseEnrollments = pgTable("course_enrollments", {
-  id: serial("id").primaryKey(),
-  courseId: integer("course_id").notNull(),
-  studentName: text("student_name").notNull(),
-  studentEmail: text("student_email").notNull(),
-  progressPercent: integer("progress_percent").notNull().default(0),
-  quizScore: integer("quiz_score").notNull().default(0),
-  isCompleted: boolean("is_completed").notNull().default(false),
-  certificateId: text("certificate_id"), // e.g. BHTF-CERT-2026-9812
-  completedAt: timestamp("completed_at"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type NewsArticle = typeof newsArticles.$inferSelect;
@@ -141,7 +113,3 @@ export type Subscriber = typeof subscribers.$inferSelect;
 export type NewSubscriber = typeof subscribers.$inferInsert;
 export type Program = typeof programs.$inferSelect;
 export type NewProgram = typeof programs.$inferInsert;
-export type Course = typeof courses.$inferSelect;
-export type NewCourse = typeof courses.$inferInsert;
-export type CourseEnrollment = typeof courseEnrollments.$inferSelect;
-export type NewCourseEnrollment = typeof courseEnrollments.$inferInsert;

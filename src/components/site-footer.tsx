@@ -112,11 +112,6 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link to="/academy" className="hover:text-amber-400 transition flex items-center gap-1.5 text-blue-300">
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Healthcare Academy & LMS 🎓
-              </Link>
-            </li>
-            <li>
               <Link to="/reports" className="hover:text-blue-400 transition flex items-center gap-1.5">
                 <ArrowUpRight className="h-3 w-3 text-slate-500" /> Statutory Annual Reports & Audits
               </Link>

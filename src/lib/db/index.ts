@@ -10,8 +10,6 @@ import {
   initialDonations,
   initialInquiries,
   initialSubscribers,
-  initialCourses,
-  initialEnrollments,
 } from "./seed-data";
 import type {
   User,
@@ -22,8 +20,6 @@ import type {
   Donation,
   Inquiry,
   Subscriber,
-  Course,
-  CourseEnrollment,
   NewUser,
   NewNewsArticle,
   NewReport,
@@ -32,8 +28,6 @@ import type {
   NewDonation,
   NewInquiry,
   NewSubscriber,
-  NewCourse,
-  NewCourseEnrollment,
 } from "./schema";
 
 /**
@@ -53,8 +47,6 @@ interface PersistedState {
   donations: Donation[];
   inquiries: Inquiry[];
   subscribers: Subscriber[];
-  courses?: Course[];
-  courseEnrollments?: CourseEnrollment[];
 }
 
 class BHTFDataStore {
@@ -66,8 +58,6 @@ class BHTFDataStore {
   private donations: Donation[] = [];
   private inquiries: Inquiry[] = [];
   private subscribers: Subscriber[] = [];
-  private courses: Course[] = [];
-  private courseEnrollments: CourseEnrollment[] = [];
   private initialized = false;
 
   constructor() {
@@ -85,8 +75,6 @@ class BHTFDataStore {
         donations: this.donations,
         inquiries: this.inquiries,
         subscribers: this.subscribers,
-        courses: this.courses,
-        courseEnrollments: this.courseEnrollments,
       };
       fs.writeFileSync(DB_FILE_PATH, JSON.stringify(state, null, 2), "utf-8");
     } catch {
@@ -110,12 +98,6 @@ class BHTFDataStore {
           this.donations = parsed.donations || [];
           this.inquiries = parsed.inquiries || [];
           this.subscribers = parsed.subscribers || [];
-          this.courses = parsed.courses && parsed.courses.length ? parsed.courses : [];
-          this.courseEnrollments = parsed.courseEnrollments || [];
-
-          if (this.courses.length === 0) {
-            this.seedCourses();
-          }
 
           this.initialized = true;
           return;
@@ -230,40 +212,8 @@ class BHTFDataStore {
       subscribedAt: new Date(Date.now() - idx * 86400000 * 7),
     }));
 
-    this.seedCourses();
-
     this.initialized = true;
     this.persist();
-  }
-
-  private seedCourses() {
-    this.courses = initialCourses.map((c, idx) => ({
-      id: idx + 1,
-      slug: c.slug,
-      title: c.title,
-      category: c.category || "Cold Chain & Vaccines",
-      description: c.description,
-      instructor: c.instructor || "BHTF & KGUMSB Faculty",
-      durationHours: c.durationHours || "4 Hours",
-      difficulty: c.difficulty || "Intermediate",
-      modulesCount: c.modulesCount || 4,
-      enrolledCount: c.enrolledCount || 100,
-      isPublished: c.isPublished !== undefined ? c.isPublished : true,
-      createdAt: new Date(),
-    }));
-
-    this.courseEnrollments = initialEnrollments.map((e, idx) => ({
-      id: idx + 1,
-      courseId: e.courseId,
-      studentName: e.studentName,
-      studentEmail: e.studentEmail,
-      progressPercent: e.progressPercent || 100,
-      quizScore: e.quizScore || 95,
-      isCompleted: e.isCompleted !== undefined ? e.isCompleted : true,
-      certificateId: e.certificateId || `BHTF-CERT-2026-${9000 + idx}`,
-      completedAt: new Date(Date.now() - idx * 86400000 * 5),
-      createdAt: new Date(Date.now() - (idx + 1) * 86400000 * 10),
-    }));
   }
 
   // --- Users & Auth ---
@@ -549,93 +499,6 @@ class BHTFDataStore {
     return this.subscribers.length < initialLen;
   }
 
-  // --- Academy & Courses ---
-  public async getAllCourses(onlyPublished = true): Promise<Course[]> {
-    const list = onlyPublished ? this.courses.filter((c) => c.isPublished) : this.courses;
-    return [...list];
-  }
-
-  public async getCourseBySlug(slug: string): Promise<Course | null> {
-    return this.courses.find((c) => c.slug === slug) || null;
-  }
-
-  public async createCourse(data: NewCourse): Promise<Course> {
-    const id = this.courses.length ? Math.max(...this.courses.map((c) => c.id)) + 1 : 1;
-    const course: Course = {
-      id,
-      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      title: data.title,
-      category: data.category || "Cold Chain & Vaccines",
-      description: data.description,
-      instructor: data.instructor || "BHTF & KGUMSB Faculty",
-      durationHours: data.durationHours || "4 Hours",
-      difficulty: data.difficulty || "Intermediate",
-      modulesCount: data.modulesCount || 4,
-      enrolledCount: data.enrolledCount || 0,
-      isPublished: data.isPublished !== undefined ? data.isPublished : true,
-      createdAt: new Date(),
-    };
-    this.courses.push(course);
-    this.persist();
-    return course;
-  }
-
-  public async updateCourse(id: number, data: Partial<NewCourse>): Promise<Course | null> {
-    const idx = this.courses.findIndex((c) => c.id === id);
-    if (idx === -1) return null;
-    this.courses[idx] = {
-      ...this.courses[idx],
-      ...data,
-    };
-    this.persist();
-    return this.courses[idx];
-  }
-
-  public async deleteCourse(id: number): Promise<boolean> {
-    const initialLen = this.courses.length;
-    this.courses = this.courses.filter((c) => c.id !== id);
-    this.persist();
-    return this.courses.length < initialLen;
-  }
-
-  public async getCourseEnrollments(): Promise<CourseEnrollment[]> {
-    return [...this.courseEnrollments];
-  }
-
-  public async submitCourseCompletion(data: {
-    courseId: number;
-    studentName: string;
-    studentEmail: string;
-    quizScore: number;
-  }): Promise<CourseEnrollment> {
-    const id = this.courseEnrollments.length ? Math.max(...this.courseEnrollments.map((e) => e.id)) + 1 : 1;
-    const randomCert = Math.floor(1000 + Math.random() * 9000);
-    const certificateId = `BHTF-CERT-2026-${randomCert}`;
-
-    const enrollment: CourseEnrollment = {
-      id,
-      courseId: data.courseId,
-      studentName: data.studentName,
-      studentEmail: data.studentEmail,
-      progressPercent: 100,
-      quizScore: data.quizScore,
-      isCompleted: true,
-      certificateId,
-      completedAt: new Date(),
-      createdAt: new Date(),
-    };
-
-    // Increment enrolled count on the course
-    const course = this.courses.find((c) => c.id === data.courseId);
-    if (course) {
-      course.enrolledCount = (course.enrolledCount || 0) + 1;
-    }
-
-    this.courseEnrollments.unshift(enrollment);
-    this.persist();
-    return enrollment;
-  }
-
   // --- Reset Database to Initial Factory State ---
   public resetToFactoryDemo() {
     try {
@@ -660,8 +523,6 @@ class BHTFDataStore {
     const publishedNewsCount = this.newsArticles.filter((n) => n.isPublished).length;
     const activeSubscribersCount = this.subscribers.filter((s) => s.isActive).length;
     const totalReportsCount = this.reports.length;
-    const totalCoursesCount = this.courses.length;
-    const totalEnrollmentsCount = this.courseEnrollments.length;
 
     // Monthly donation stats for charts
     const monthlyStats = [
@@ -682,8 +543,6 @@ class BHTFDataStore {
       publishedNewsCount,
       activeSubscribersCount,
       totalReportsCount,
-      totalCoursesCount,
-      totalEnrollmentsCount,
       monthlyStats,
       recentDonations: this.donations.slice(0, 5),
       recentInquiries: this.inquiries.slice(0, 5),
