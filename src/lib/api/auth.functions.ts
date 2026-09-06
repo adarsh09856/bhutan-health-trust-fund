@@ -10,31 +10,52 @@ export const adminLogin = createServerFn({ method: "POST" })
     })
   )
   .handler(async ({ data }) => {
-    const user = await authenticateAdmin(data.email, data.password);
-    if (!user) {
-      return {
-        success: false,
-        error: "Invalid email address or password. Please try again.",
-      };
-    }
+    try {
+      const user = await authenticateAdmin(data.email, data.password);
+      if (!user) {
+        return {
+          success: false,
+          error: "Invalid email address or password. Please verify credentials.",
+        };
+      }
 
-    const token = createSessionToken({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-    });
-
-    return {
-      success: true,
-      token,
-      user: {
+      const token = createSessionToken({
         id: user.id,
         email: user.email,
         name: user.name,
         role: user.role,
-      },
-    };
+      });
+
+      return {
+        success: true,
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        },
+      };
+    } catch (err: any) {
+      console.error("[Admin Auth Error]:", err);
+      const msg = err?.message || String(err);
+      if (
+        msg.includes("connect") ||
+        msg.includes("ECONNREFUSED") ||
+        msg.includes("relation") ||
+        msg.includes("password authentication failed") ||
+        msg.includes("database")
+      ) {
+        return {
+          success: false,
+          error: "Database unreachable or not initialized. Ensure PostgreSQL is active on aaPanel and 'npm run db:push && npm run db:seed' was executed.",
+        };
+      }
+      return {
+        success: false,
+        error: "Authentication service error: " + (err?.message || "Unknown error"),
+      };
+    }
   });
 
 export const verifyCurrentSession = createServerFn({ method: "POST" })

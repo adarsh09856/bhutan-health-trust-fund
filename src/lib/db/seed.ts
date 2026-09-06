@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { drizzleDb, pool } from "./client";
 import * as schema from "./schema";
 import {

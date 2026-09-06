@@ -33,10 +33,11 @@ function AdminLoginPage() {
         toast.success(`Welcome back, ${res.user.name}!`);
         router.navigate({ to: "/admin/dashboard" });
       } else {
-        toast.error(res.error || "Authentication failed. Please check credentials.");
+        toast.error(res.error || "Authentication failed. Please check credentials.", { duration: 5000 });
       }
-    } catch {
-      toast.error("Failed to connect to the authentication server.");
+    } catch (err: any) {
+      const msg = err?.message || "Failed to connect to the authentication server.";
+      toast.error(msg, { duration: 6000 });
     } finally {
       setLoading(false);
     }
