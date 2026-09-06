@@ -94,6 +94,23 @@ export const deleteAdminReport = createServerFn({ method: "POST" })
     return await db.deleteReport(data.id);
   });
 
+export const updateAdminReport = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      title: z.string().optional(),
+      year: z.string().optional(),
+      category: z.string().optional(),
+      fileUrl: z.string().optional(),
+      fileSize: z.string().optional(),
+      description: z.string().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateReport(id, rest);
+  });
+
 // --- Policies Admin Functions ---
 export const getAdminPolicies = createServerFn({ method: "GET" }).handler(async () => {
   return await db.getAllPolicies();
@@ -151,6 +168,43 @@ export const getAdminDonations = createServerFn({ method: "GET" }).handler(async
   return await db.getAllDonations();
 });
 
+export const createAdminDonation = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      donorName: z.string().min(2),
+      donorEmail: z.string().email(),
+      donorPhone: z.string().optional(),
+      amountNu: z.number().min(1),
+      paymentMethod: z.enum([
+        "CASH",
+        "CHEQUE",
+        "MBOB",
+        "BNB_PAY",
+        "RMA_GATEWAY",
+        "BANK_TRANSFER",
+        "INTERNATIONAL_CARD",
+      ]),
+      status: z.enum(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"]).default("VERIFIED"),
+      message: z.string().optional(),
+      isAnonymous: z.boolean().default(false),
+    })
+  )
+  .handler(async ({ data }) => {
+    const refNo = `BHTF-REM-${Math.floor(100000 + Math.random() * 900000)}`;
+    return await db.createDonation({
+      referenceNo: refNo,
+      donorName: data.donorName.trim(),
+      donorEmail: data.donorEmail.trim().toLowerCase(),
+      donorPhone: data.donorPhone?.trim() || null,
+      amountNu: data.amountNu,
+      currency: "BTN",
+      paymentMethod: data.paymentMethod,
+      status: data.status,
+      message: data.message?.trim() || null,
+      isAnonymous: data.isAnonymous,
+    });
+  });
+
 export const updateDonationStatus = createServerFn({ method: "POST" })
   .validator(
     z.object({
@@ -162,10 +216,39 @@ export const updateDonationStatus = createServerFn({ method: "POST" })
     return await db.updateDonationStatus(data.id, data.status);
   });
 
+export const deleteAdminDonation = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteDonation(data.id);
+  });
+
 // --- Inquiries Admin Functions ---
 export const getAdminInquiries = createServerFn({ method: "GET" }).handler(async () => {
   return await db.getAllInquiries();
 });
+
+export const createAdminInquiry = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      name: z.string().min(2),
+      email: z.string().email(),
+      subject: z.string().min(3),
+      message: z.string().min(5),
+      channel: z.enum(["WALK_IN", "PHONE", "EMAIL"]).default("WALK_IN"),
+      loggedBy: z.string().min(2),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createInquiry({
+      name: data.name.trim(),
+      email: data.email.trim().toLowerCase(),
+      subject: data.subject.trim(),
+      message: data.message.trim(),
+      channel: data.channel,
+      loggedBy: data.loggedBy.trim(),
+      status: "UNREAD",
+    });
+  });
 
 export const updateInquiryStatus = createServerFn({ method: "POST" })
   .validator(
@@ -190,8 +273,87 @@ export const getAdminSubscribers = createServerFn({ method: "GET" }).handler(asy
   return await db.getAllSubscribers();
 });
 
+export const createAdminSubscriber = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      email: z.string().email(),
+      isActive: z.boolean().default(true),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.adminAddSubscriber(data.email, data.isActive);
+  });
+
+export const updateAdminSubscriberStatus = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      isActive: z.boolean(),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.updateSubscriberStatus(data.id, data.isActive);
+  });
+
 export const deleteAdminSubscriber = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
     return await db.deleteSubscriber(data.id);
   });
+
+// --- Programs Admin Functions ---
+export const getAdminPrograms = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllPrograms();
+});
+
+export const createAdminProgram = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      title: z.string().min(3),
+      slug: z.string().optional(),
+      summary: z.string().min(5),
+      fullDescription: z.string().min(10),
+      icon: z.string().default("Pill"),
+      targetDzongkhags: z.string().default("All 20 Dzongkhags"),
+      beneficiariesReached: z.string().default("780,000+ citizens"),
+      status: z.enum(["ACTIVE", "PAUSED", "COMPLETED"]).default("ACTIVE"),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createProgram({
+      title: data.title,
+      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      summary: data.summary,
+      fullDescription: data.fullDescription,
+      icon: data.icon,
+      targetDzongkhags: data.targetDzongkhags,
+      beneficiariesReached: data.beneficiariesReached,
+      status: data.status,
+    });
+  });
+
+export const updateAdminProgram = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      title: z.string().optional(),
+      slug: z.string().optional(),
+      summary: z.string().optional(),
+      fullDescription: z.string().optional(),
+      icon: z.string().optional(),
+      targetDzongkhags: z.string().optional(),
+      beneficiariesReached: z.string().optional(),
+      status: z.string().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateProgram(id, rest);
+  });
+
+export const deleteAdminProgram = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteProgram(data.id);
+  });
+

@@ -17,6 +17,7 @@ import { Route as NewsRouteImport } from './routes/news'
 import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as TrackDonationRouteImport } from './routes/track-donation'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminDonationsRouteImport } from './routes/admin/donations'
@@ -67,6 +68,11 @@ const PoliciesRoute = PoliciesRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackDonationRoute = TrackDonationRouteImport.update({
+  id: '/track-donation',
+  path: '/track-donation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/track-donation': typeof TrackDonationRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/track-donation': typeof TrackDonationRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/track-donation': typeof TrackDonationRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/track-donation'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/inquiries'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/track-donation'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/inquiries'
@@ -242,6 +253,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/track-donation'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/inquiries'
@@ -264,6 +276,7 @@ export interface RootRouteChildren {
   OurWorkRoute: typeof OurWorkRoute
   PoliciesRoute: typeof PoliciesRoute
   ReportsRoute: typeof ReportsRoute
+  TrackDonationRoute: typeof TrackDonationRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDonationsRoute: typeof AdminDonationsRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track-donation': {
+      id: '/track-donation'
+      path: '/track-donation'
+      fullPath: '/track-donation'
+      preLoaderRoute: typeof TrackDonationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -433,6 +453,7 @@ const rootRouteChildren: RootRouteChildren = {
   OurWorkRoute: OurWorkRoute,
   PoliciesRoute: PoliciesRoute,
   ReportsRoute: ReportsRoute,
+  TrackDonationRoute: TrackDonationRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDonationsRoute: AdminDonationsRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,

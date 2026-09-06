@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import {
   getAdminInquiries,
+  createAdminInquiry,
   updateInquiryStatus,
   deleteAdminInquiry,
 } from "@/lib/api/admin.functions";
@@ -24,6 +25,7 @@ import {
   FileText,
   User,
   Archive,
+  Plus,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -58,6 +60,64 @@ export function AdminInquiriesPage() {
   const [replyNotes, setReplyNotes] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [updating, setUpdating] = useState(false);
+
+  // Walk-in / Phone Ticket Logging Form State
+  const [logModalOpen, setLogModalOpen] = useState(false);
+  const [logName, setLogName] = useState("");
+  const [logEmail, setLogEmail] = useState("");
+  const [logSubject, setLogSubject] = useState("");
+  const [logMessage, setLogMessage] = useState("");
+  const [logChannel, setLogChannel] = useState<"WALK_IN" | "PHONE" | "EMAIL">("WALK_IN");
+  const [logLoggedBy, setLogLoggedBy] = useState("");
+  const [savingLog, setSavingLog] = useState(false);
+
+  const getChannelBadge = (ch?: string | null) => {
+    switch (ch) {
+      case "WALK_IN":
+        return "bg-purple-50 text-purple-700 border-purple-200";
+      case "PHONE":
+        return "bg-amber-50 text-amber-700 border-amber-200";
+      case "EMAIL":
+        return "bg-slate-100 text-slate-700 border-slate-200";
+      case "WEB":
+      default:
+        return "bg-blue-50 text-blue-700 border-blue-200";
+    }
+  };
+
+  const handleSaveLog = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!logLoggedBy.trim()) {
+      toast.error("Secretariat officer name is required.");
+      return;
+    }
+    setSavingLog(true);
+    try {
+      await createAdminInquiry({
+        data: {
+          name: logName,
+          email: logEmail,
+          subject: logSubject,
+          message: logMessage,
+          channel: logChannel,
+          loggedBy: logLoggedBy.trim(),
+        },
+      });
+      toast.success("Walk-in / Phone inquiry logged successfully.");
+      setLogModalOpen(false);
+      setLogName("");
+      setLogEmail("");
+      setLogSubject("");
+      setLogMessage("");
+      setLogChannel("WALK_IN");
+      setLogLoggedBy("");
+      fetchInquiries();
+    } catch {
+      toast.error("Failed to log inquiry.");
+    } finally {
+      setSavingLog(false);
+    }
+  };
 
   const fetchInquiries = async () => {
     try {
@@ -162,6 +222,15 @@ export function AdminInquiriesPage() {
               Manage public citizen correspondence, partnership proposals, and confidential anti-corruption reports.
             </p>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setLogModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-black shadow-md shadow-purple-700/20 transition cursor-pointer self-start sm:self-auto"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Log Walk-in / Phone Inquiry</span>
+          </button>
         </div>
 
         {/* Triage Overview Metric Cards */}
@@ -254,10 +323,24 @@ export function AdminInquiriesPage() {
                   {filteredInquiries.map((iq) => {
                     const cat = getInquiryCategory(iq.subject, iq.message);
                     return (
-                      <tr key={iq.id} className="hover:bg-slate-50/80 transition group">
-                        <td className="py-4 px-5 space-y-0.5">
-                          <div className="font-extrabold text-slate-900">{iq.name}</div>
+                      <tr key={iq.id} className="hover:bg-slate-50/80 transition">
+                        <td className="py-4 px-5 space-y-1">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="font-extrabold text-slate-900">{iq.name}</span>
+                            <span
+                              className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${getChannelBadge(
+                                iq.channel
+                              )}`}
+                            >
+                              {iq.channel || "WEB"}
+                            </span>
+                          </div>
                           <div className="text-[11px] text-slate-500 font-mono">{iq.email}</div>
+                          {iq.loggedBy && (
+                            <div className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 inline-block">
+                              Logged by {iq.loggedBy}
+                            </div>
+                          )}
                         </td>
 
                         <td className="py-4 px-5 space-y-1 max-w-xs sm:max-w-md">
@@ -336,13 +419,27 @@ export function AdminInquiriesPage() {
 
               {/* Sender Info & Message Body */}
               <div className="space-y-4 text-xs">
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <span className="text-slate-400 font-medium block">Sender:</span>
-                    <strong className="text-slate-900 text-sm font-black">{selectedInquiry.name}</strong>
-                    <span className="text-slate-500 block font-mono">{selectedInquiry.email}</span>
+                    <span className="text-slate-400 font-medium block">Sender & Intake Channel:</span>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <strong className="text-slate-900 text-sm font-black">{selectedInquiry.name}</strong>
+                      <span
+                        className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${getChannelBadge(
+                          selectedInquiry.channel
+                        )}`}
+                      >
+                        {selectedInquiry.channel || "WEB"}
+                      </span>
+                    </div>
+                    <span className="text-slate-500 block font-mono mt-0.5">{selectedInquiry.email}</span>
+                    {selectedInquiry.loggedBy && (
+                      <div className="text-[10px] font-bold text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded-md border border-purple-200 inline-block mt-1">
+                        Secretariat Officer: {selectedInquiry.loggedBy}
+                      </div>
+                    )}
                   </div>
-                  <div className="text-right">
+                  <div className="text-left sm:text-right">
                     <span className="text-slate-400 font-medium block">Received:</span>
                     <span className="font-mono text-slate-700">{new Date(selectedInquiry.createdAt).toLocaleString()}</span>
                   </div>
@@ -443,6 +540,145 @@ export function AdminInquiriesPage() {
                   Close
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal 2: Log Walk-in / Phone Inquiry */}
+        {logModalOpen && (
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-200 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+              <div className="sticky top-0 bg-white px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center">
+                    <Sparkles className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-slate-900 text-base">Log Walk-in / Phone Inquiry</h3>
+                    <p className="text-[11px] text-slate-500 font-medium">Record in-person or telephone correspondence at the Secretariat</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setLogModalOpen(false)}
+                  className="h-8 w-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 grid place-items-center transition cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveLog} className="p-6 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Citizen / Contact Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={logName}
+                      onChange={(e) => setLogName(e.target.value)}
+                      placeholder="e.g. Karma Tshering"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={logEmail}
+                      onChange={(e) => setLogEmail(e.target.value)}
+                      placeholder="citizen@domain.bt"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Channel *
+                    </label>
+                    <select
+                      value={logChannel}
+                      onChange={(e) => setLogChannel(e.target.value as any)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
+                    >
+                      <option value="WALK_IN">Walk-in (Kawajangsa Secretariat)</option>
+                      <option value="PHONE">Telephone Call (112 or Landline)</option>
+                      <option value="EMAIL">Official Direct Email</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Logged By (Officer Name) *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={logLoggedBy}
+                      onChange={(e) => setLogLoggedBy(e.target.value)}
+                      placeholder="e.g. Tenzin Wangchuk, Desk Officer"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                    Subject / Concern Summary *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={logSubject}
+                    onChange={(e) => setLogSubject(e.target.value)}
+                    placeholder="e.g. Medicine Buffer Availability Query - Trashigang"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                    Detailed Inquiry Message / Notes *
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={logMessage}
+                    onChange={(e) => setLogMessage(e.target.value)}
+                    placeholder="Provide details regarding the citizen's inquiry, required follow-up, or district logistics..."
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  />
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setLogModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={savingLog}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-black shadow-md shadow-purple-700/20 transition cursor-pointer disabled:opacity-50"
+                  >
+                    {savingLog ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-4 w-4" />
+                    )}
+                    <span>Save & Log Ticket</span>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

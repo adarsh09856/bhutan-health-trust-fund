@@ -115,3 +115,44 @@ export const getPublicPolicies = createServerFn({ method: "GET" }).handler(async
 export const getPublicPrograms = createServerFn({ method: "GET" }).handler(async () => {
   return await db.getAllPrograms();
 });
+
+// --- Lookup Donation (Citizen & Donor Public Tracking) ---
+export const lookupDonation = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      referenceNo: z.string().min(3, "Reference number is required"),
+      donorEmail: z.string().email("Valid donor email is required"),
+    })
+  )
+  .handler(async ({ data }) => {
+    const donation = await db.findDonationByReference(data.referenceNo.trim());
+
+    if (
+      !donation ||
+      donation.donorEmail.toLowerCase().trim() !== data.donorEmail.toLowerCase().trim()
+    ) {
+      return {
+        success: false as const,
+        error: "No contribution record found matching that Reference Number and Donor Email. Please verify both details.",
+      };
+    }
+
+    return {
+      success: true as const,
+      donation: {
+        id: donation.id,
+        referenceNo: donation.referenceNo,
+        donorName: donation.isAnonymous ? "Anonymous Benefactor" : donation.donorName,
+        donorEmail: donation.donorEmail,
+        donorPhone: donation.donorPhone,
+        amountNu: donation.amountNu,
+        currency: donation.currency,
+        paymentMethod: donation.paymentMethod,
+        status: donation.status,
+        message: donation.message,
+        isAnonymous: donation.isAnonymous,
+        createdAt: donation.createdAt,
+      },
+    };
+  });
+

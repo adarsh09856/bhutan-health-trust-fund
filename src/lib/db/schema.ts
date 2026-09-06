@@ -74,6 +74,8 @@ export const inquiries = pgTable("inquiries", {
   message: text("message").notNull(),
   status: text("status").notNull().default("UNREAD"), // UNREAD, IN_PROGRESS, REPLIED, ARCHIVED
   replyNotes: text("reply_notes"),
+  channel: text("channel").notNull().default("WEB"), // WEB, WALK_IN, PHONE, EMAIL
+  loggedBy: text("logged_by"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

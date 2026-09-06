@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { getAdminDonations, updateDonationStatus } from "@/lib/api/admin.functions";
+import {
+  getAdminDonations,
+  updateDonationStatus,
+  createAdminDonation,
+  deleteAdminDonation,
+} from "@/lib/api/admin.functions";
 import type { Donation } from "@/lib/db/schema";
 import {
   Search,
@@ -25,6 +30,8 @@ import {
   Heart,
   Calendar,
   Filter,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
@@ -45,6 +52,20 @@ export function AdminDonationsPage() {
   const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
   const [voucherModalOpen, setVoucherModalOpen] = useState(false);
 
+  // Offline Remittance Form State
+  const [offlineModalOpen, setOfflineModalOpen] = useState(false);
+  const [offlineDonorName, setOfflineDonorName] = useState("");
+  const [offlineDonorEmail, setOfflineDonorEmail] = useState("");
+  const [offlineDonorPhone, setOfflineDonorPhone] = useState("");
+  const [offlineAmountNu, setOfflineAmountNu] = useState<number | "">("");
+  const [offlinePaymentMethod, setOfflinePaymentMethod] = useState<
+    "CASH" | "CHEQUE" | "MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD"
+  >("CASH");
+  const [offlineStatus, setOfflineStatus] = useState<"PENDING" | "VERIFIED" | "COMPLETED" | "CANCELLED">("VERIFIED");
+  const [offlineMessage, setOfflineMessage] = useState("");
+  const [offlineIsAnonymous, setOfflineIsAnonymous] = useState(false);
+  const [savingOffline, setSavingOffline] = useState(false);
+
   const fetchDonations = async () => {
     try {
       const res = await getAdminDonations();
@@ -53,6 +74,58 @@ export function AdminDonationsPage() {
       toast.error("Failed to load donations ledger.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteDonation = async (id: number, refNo: string) => {
+    if (!window.confirm(`Are you sure you want to permanently delete donation record ${refNo}?`)) return;
+    try {
+      await deleteAdminDonation({ data: { id } });
+      toast.success(`Donation record ${refNo} deleted.`);
+      if (selectedDonation?.id === id) {
+        setSelectedDonation(null);
+      }
+      fetchDonations();
+    } catch {
+      toast.error("Failed to delete donation record.");
+    }
+  };
+
+  const handleSaveOffline = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!offlineAmountNu || Number(offlineAmountNu) <= 0) {
+      toast.error("Please enter a valid donation amount.");
+      return;
+    }
+    setSavingOffline(true);
+    try {
+      await createAdminDonation({
+        data: {
+          donorName: offlineDonorName,
+          donorEmail: offlineDonorEmail,
+          donorPhone: offlineDonorPhone || undefined,
+          amountNu: Number(offlineAmountNu),
+          paymentMethod: offlinePaymentMethod,
+          status: offlineStatus,
+          message: offlineMessage || undefined,
+          isAnonymous: offlineIsAnonymous,
+        },
+      });
+      toast.success("Offline remittance logged and verified in fiduciary ledger.");
+      setOfflineModalOpen(false);
+      setOfflineDonorName("");
+      setOfflineDonorEmail("");
+      setOfflineDonorPhone("");
+      setOfflineAmountNu("");
+      setOfflinePaymentMethod("CASH");
+      setOfflineStatus("VERIFIED");
+      setOfflineMessage("");
+      setOfflineIsAnonymous(false);
+      fetchDonations();
+    } catch {
+      toast.error("Failed to register offline remittance.");
+    } finally {
+      setSavingOffline(false);
     }
   };
 
@@ -155,7 +228,15 @@ export function AdminDonationsPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setOfflineModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-black rounded-2xl shadow-md shadow-emerald-700/20 transition cursor-pointer active:scale-95"
+            >
+              <Plus className="h-4 w-4" /> Register Offline Remittance
+            </button>
+
             <button
               type="button"
               onClick={handleExportCSV}
@@ -227,6 +308,8 @@ export function AdminDonationsPage() {
               className="px-3.5 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none"
             >
               <option value="ALL">All Payment Modes</option>
+              <option value="CASH">Cash Remittance (Kawajangsa)</option>
+              <option value="CHEQUE">Bank Cheque / Draft</option>
               <option value="MBOB">MBOB Mobile Banking</option>
               <option value="BNB_PAY">BNB Pay / MPAY</option>
               <option value="RMA_GATEWAY">RMA Payment Gateway</option>
@@ -329,6 +412,16 @@ export function AdminDonationsPage() {
                             <Eye className="h-3 w-3" />
                             <span>Details</span>
                           </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteDonation(d.id, d.referenceNo)}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold transition cursor-pointer text-xs"
+                            title="Delete donation record"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                            <span>Delete</span>
+                          </button>
                         </td>
                       </tr>
                     );
@@ -415,7 +508,7 @@ export function AdminDonationsPage() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t flex justify-between gap-3">
+              <div className="pt-4 border-t flex flex-wrap items-center justify-between gap-3">
                 <button
                   type="button"
                   onClick={() => setVoucherModalOpen(true)}
@@ -424,13 +517,23 @@ export function AdminDonationsPage() {
                   <Printer className="h-4 w-4" /> Print DRC Tax Certificate
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => setSelectedDonation(null)}
-                  className="px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
-                >
-                  Close
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteDonation(selectedDonation.id, selectedDonation.referenceNo)}
+                    className="px-3.5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" /> Delete Record
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDonation(null)}
+                    className="px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -535,6 +638,176 @@ export function AdminDonationsPage() {
                   Close
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal 3: Register Offline Bank/Cash Remittance */}
+        {offlineModalOpen && (
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-200 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+              <div className="sticky top-0 bg-white px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
+                    <Sparkles className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-slate-900 text-base">Register Offline Remittance</h3>
+                    <p className="text-[11px] text-slate-500 font-medium">Log bank deposits, cheques, or cash received at Secretariat</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOfflineModalOpen(false)}
+                  className="h-8 w-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 grid place-items-center transition cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveOffline} className="p-6 space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                    Donor / Institution Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={offlineDonorName}
+                    onChange={(e) => setOfflineDonorName(e.target.value)}
+                    placeholder="e.g. Jigme Dorji or Bank of Bhutan CSR"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Donor Email *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={offlineDonorEmail}
+                      onChange={(e) => setOfflineDonorEmail(e.target.value)}
+                      placeholder="donor@organization.bt"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Donor Contact Phone
+                    </label>
+                    <input
+                      type="tel"
+                      value={offlineDonorPhone}
+                      onChange={(e) => setOfflineDonorPhone(e.target.value)}
+                      placeholder="+975 17 123456"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Amount (Nu.) *
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      min={1}
+                      value={offlineAmountNu}
+                      onChange={(e) => setOfflineAmountNu(e.target.value === "" ? "" : Number(e.target.value))}
+                      placeholder="e.g. 50000"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                      Payment Channel *
+                    </label>
+                    <select
+                      value={offlinePaymentMethod}
+                      onChange={(e) => setOfflinePaymentMethod(e.target.value as any)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
+                    >
+                      <option value="CASH">Cash Remittance (Secretariat Desk)</option>
+                      <option value="CHEQUE">Bank Cheque / Draft</option>
+                      <option value="BANK_TRANSFER">Direct Wire Transfer (BOB/BNB)</option>
+                      <option value="MBOB">MBOB Counter Confirmation</option>
+                      <option value="BNB_PAY">BNB Pay Counter Confirmation</option>
+                      <option value="RMA_GATEWAY">RMA Payment Gateway</option>
+                      <option value="INTERNATIONAL_CARD">International Wire / SWIFT</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                    Remittance Fiduciary Status
+                  </label>
+                  <select
+                    value={offlineStatus}
+                    onChange={(e) => setOfflineStatus(e.target.value as any)}
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white font-bold text-emerald-800"
+                  >
+                    <option value="VERIFIED">VERIFIED (Physical Receipt / Statement Checked)</option>
+                    <option value="COMPLETED">COMPLETED (Audited & Credited to Trust Fund)</option>
+                    <option value="PENDING">PENDING (Cheque Clearance In Progress)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                    Internal Notes / Bank Cheque No. / Dedication
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={offlineMessage}
+                    onChange={(e) => setOfflineMessage(e.target.value)}
+                    placeholder="e.g. Cheque #492819 deposited to BOB Kawajangsa Account"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                  />
+                </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    id="offline-anonymous"
+                    checked={offlineIsAnonymous}
+                    onChange={(e) => setOfflineIsAnonymous(e.target.checked)}
+                    className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4"
+                  />
+                  <label htmlFor="offline-anonymous" className="text-xs text-slate-600 font-medium">
+                    Mark donor name as anonymous on public transparency ledger
+                  </label>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setOfflineModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={savingOffline}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-black shadow-md shadow-emerald-700/20 transition cursor-pointer disabled:opacity-50"
+                  >
+                    {savingOffline ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-4 w-4" />
+                    )}
+                    <span>Log Offline Remittance</span>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

@@ -211,7 +211,7 @@ function ReportsPage() {
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
                   <div className="text-slate-400 font-mono text-[11px]">
-                    {r.fileSize} • {r.downloadsCount} downloads
+                    {r.fileSize} • {r.downloadCount || 0} downloads
                   </div>
 
                   <button

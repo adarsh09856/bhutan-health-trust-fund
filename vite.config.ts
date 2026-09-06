@@ -29,9 +29,7 @@ export default defineConfig({
     }),
     tailwindcss(),
     nitro({
-      config: {
-        devServer: { port: PORT },
-      },
+      devServer: { port: PORT },
     }),
   ],
 });

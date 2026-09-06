@@ -122,6 +122,11 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link to="/track-donation" className="hover:text-emerald-300 transition flex items-center gap-1.5 font-medium">
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Track My Donation / Tax Voucher
+              </Link>
+            </li>
+            <li>
               <Link to="/news" className="hover:text-purple-400 transition flex items-center gap-1.5">
                 <ArrowUpRight className="h-3 w-3 text-slate-500" /> Press Releases & Media Room
               </Link>

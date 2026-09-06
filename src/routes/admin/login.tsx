@@ -2,7 +2,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { adminLogin } from "@/lib/api/auth.functions";
-import { Lock, Mail, ShieldCheck, ArrowRight, Loader2, Sparkles, UserCheck, KeyRound } from "lucide-react";
+import { Lock, Mail, ShieldCheck, ArrowRight, Loader2, Eye, EyeOff, ShieldAlert } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
 
@@ -10,15 +10,16 @@ export const Route = createFileRoute("/admin/login")({
   head: () => ({
     meta: [
       { title: "Admin Login | Bhutan Health Trust Fund" },
-      { name: "description", content: "Administrative authentication portal for BHTF staff." },
+      { name: "description", content: "Official secretariat administrative portal for BHTF staff." },
     ],
   }),
   component: AdminLoginPage,
 });
 
 function AdminLoginPage() {
-  const [email, setEmail] = useState("admin@bhtf.bt");
-  const [password, setPassword] = useState("Admin@BHTF2026");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAdminAuth();
   const router = useRouter();
@@ -46,18 +47,6 @@ function AdminLoginPage() {
     handleLoginWithCredentials(email, password);
   };
 
-  const handleQuickDemoAdmin = () => {
-    setEmail("admin@bhtf.bt");
-    setPassword("Admin@BHTF2026");
-    handleLoginWithCredentials("admin@bhtf.bt", "Admin@BHTF2026");
-  };
-
-  const handleQuickDemoEditor = () => {
-    setEmail("media@bhtf.bt");
-    setPassword("Admin@BHTF2026");
-    handleLoginWithCredentials("media@bhtf.bt", "Admin@BHTF2026");
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-primary/90 flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-700/20">
@@ -68,6 +57,11 @@ function AdminLoginPage() {
           </div>
           <h1 className="text-xl font-bold tracking-tight">Bhutan Health Trust Fund</h1>
           <p className="text-xs text-primary-foreground/80 mt-1">Management & Executive Portal</p>
+
+          <div className="bg-white/10 backdrop-blur-xs border border-white/20 rounded-xl p-3 text-emerald-100 text-xs flex items-center gap-2 mt-4 text-left">
+            <ShieldAlert className="h-4 w-4 text-amber-300 shrink-0" />
+            <span>Official Secretariat Access Only — use your @bhtf.bt credentials</span>
+          </div>
         </div>
 
         {/* Form Body */}
@@ -75,46 +69,8 @@ function AdminLoginPage() {
           <div className="mb-6">
             <h2 className="text-lg font-bold text-slate-900">Sign in to your account</h2>
             <p className="text-xs text-slate-500 mt-1">
-              Select a demo account below or enter your official secretariat credentials.
+              Enter your official secretariat credentials to access administrative systems.
             </p>
-          </div>
-
-          {/* Quick 1-Click Demo Buttons */}
-          <div className="mb-6 space-y-2">
-            <div className="text-[11px] font-bold text-slate-700 uppercase tracking-wide flex items-center gap-1">
-              <Sparkles className="h-3.5 w-3.5 text-amber-500" /> Instant 1-Click Demo Logins:
-            </div>
-            <div className="grid grid-cols-1 gap-2">
-              <button
-                type="button"
-                onClick={handleQuickDemoAdmin}
-                disabled={loading}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 px-3 rounded-lg flex items-center justify-between transition cursor-pointer shadow-xs"
-              >
-                <span className="flex items-center gap-2">
-                  <UserCheck className="h-4 w-4 text-amber-400" /> Login as Super Admin
-                </span>
-                <span className="font-mono text-[10px] text-slate-400">admin@bhtf.bt</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleQuickDemoEditor}
-                disabled={loading}
-                className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-2.5 px-3 rounded-lg flex items-center justify-between transition cursor-pointer"
-              >
-                <span className="flex items-center gap-2">
-                  <KeyRound className="h-4 w-4 text-primary" /> Login as Media Editor
-                </span>
-                <span className="font-mono text-[10px] text-slate-500">media@bhtf.bt</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="relative flex py-2 items-center mb-4">
-            <div className="flex-grow border-t border-slate-200"></div>
-            <span className="flex-shrink mx-3 text-slate-400 text-[10px] uppercase font-semibold">Or enter manually</span>
-            <div className="flex-grow border-t border-slate-200"></div>
           </div>
 
           <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -129,7 +85,7 @@ function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@bhtf.bt"
+                  placeholder="name@bhtf.bt"
                   className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 />
               </div>
@@ -142,13 +98,22 @@ function AdminLoginPage() {
               <div className="relative">
                 <Lock className="h-4 w-4 text-slate-400 absolute left-3 top-3.5" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  className="w-full pl-9 pr-11 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 cursor-pointer p-0.5 rounded"
+                  title={showPassword ? "Hide password" : "Show password"}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
               </div>
             </div>
 
@@ -169,13 +134,16 @@ function AdminLoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span className="flex items-center gap-1">
-              <ShieldCheck className="h-4 w-4 text-emerald-600" /> Offline Demo Ready
-            </span>
-            <a href="/" className="text-primary font-medium hover:underline">
-              Return to Website →
-            </a>
+          <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-3">
+            <div className="flex items-start gap-2 text-[11px] text-slate-400 leading-snug">
+              <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+              <span>Royal Government of Bhutan IT Security Advisory: Unauthorized access attempts are monitored and logged.</span>
+            </div>
+            <div className="text-right">
+              <a href="/" className="text-xs text-primary font-medium hover:underline">
+                Return to Website →
+              </a>
+            </div>
           </div>
         </div>
       </div>

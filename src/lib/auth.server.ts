@@ -1,5 +1,6 @@
 import { db } from "./db";
 import type { User } from "./db/schema";
+import bcrypt from "bcryptjs";
 
 const SESSION_COOKIE_NAME = "bhtf_admin_session";
 const SESSION_SECRET = process.env.SESSION_SECRET || "bhtf_secure_session_secret_2026";
@@ -63,12 +64,13 @@ export async function authenticateAdmin(email: string, password: string): Promis
   const user = await db.getUserByEmail(email);
   if (!user) return null;
 
-  // Verify password: support both plain match during dev and bcrypt match
-  if (password === "Admin@BHTF2026" || password === "admin123") {
-    return user;
-  }
+  try {
+    if (bcrypt.compareSync(password, user.passwordHash)) {
+      return user;
+    }
+  } catch {}
 
-  // Also check if matches stored hash or exact string
+  // Direct match fallback
   if (user.passwordHash === password) {
     return user;
   }

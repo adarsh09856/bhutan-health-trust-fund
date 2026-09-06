@@ -1,7 +1,7 @@
 import type { NewUser, NewNewsArticle, NewReport, NewPolicy, NewProgram, NewDonation, NewInquiry, NewSubscriber } from "./schema";
 
-// Precomputed bcrypt hash for password "Admin@BHTF2026"
-export const DEFAULT_ADMIN_PASSWORD_HASH = "$2a$10$8g4s2M2rO7G6jH4U9D8a.uLdF1LfZ3Q6gQeYk.Qk8yF6d5K.q1d9C";
+// Precomputed genuine bcrypt hash for password "Admin@BHTF2026"
+export const DEFAULT_ADMIN_PASSWORD_HASH = "$2b$10$.xtbHaRBEw.UtXl/l3FH0.NGBtoyZVOmvvcMw/KBJY.I.knfbv256";
 
 export const initialAdminUsers: NewUser[] = [
   {
@@ -347,6 +347,8 @@ export const initialInquiries: NewInquiry[] = [
     message: "Greetings from the Dzongkhag Health Office, Mongar. We would like to inquire about the delivery timeline for the pediatric antibiotic replenishment batch.",
     status: "UNREAD",
     replyNotes: null,
+    channel: "EMAIL",
+    loggedBy: "Sonam Dorji, Desk Officer",
   },
   {
     name: "Dr. Rachel Higgins",
@@ -355,6 +357,8 @@ export const initialInquiries: NewInquiry[] = [
     message: "We are developing IoT solar cold-chain data loggers and would love to discuss a pilot deployment with BHTF for remote outreach clinics.",
     status: "IN_PROGRESS",
     replyNotes: "Director advised forwarding proposal to Technical Advisory Committee.",
+    channel: "WEB",
+    loggedBy: null,
   },
   {
     name: "Ugyen Pelzom",
@@ -363,6 +367,8 @@ export const initialInquiries: NewInquiry[] = [
     message: "How can our university student association participate in the upcoming World Health Day awareness rallies in Thimphu?",
     status: "REPLIED",
     replyNotes: "Sent information brochure and contact of Communications Officer.",
+    channel: "WALK_IN",
+    loggedBy: "Tenzin Wangchuk, Reception",
   },
 ];
 

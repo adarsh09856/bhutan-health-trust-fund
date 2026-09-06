@@ -10,6 +10,10 @@
     "build:dev": "vite build --mode development",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "npx tsx src/lib/db/seed.ts",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

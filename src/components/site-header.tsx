@@ -228,7 +228,9 @@ export function SiteHeader() {
             <button
               type="button"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
+                location.pathname.startsWith("/reports") ||
+                location.pathname.startsWith("/policies") ||
+                location.pathname.startsWith("/track-donation")
                   ? "bg-slate-900 text-white shadow-md"
                   : "text-slate-700 hover:text-emerald-700 hover:bg-white"
               }`}
@@ -269,6 +271,23 @@ export function SiteHeader() {
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
                       Procurement ethics & whistleblower channel
+                    </p>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/track-donation"
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
+                    <Award className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
+                      Track Contribution & Tax Voucher
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      1:1 RGOB matching lookup & DRC certificate
                     </p>
                   </div>
                 </Link>
@@ -365,6 +384,7 @@ export function SiteHeader() {
               { to: "/our-work", label: "Our Programs & Commodities" },
               { to: "/reports", label: "Reports & Publications" },
               { to: "/policies", label: "Governance & Policies" },
+              { to: "/track-donation", label: "Track Donation & Tax Voucher" },
               { to: "/news", label: "News & Media Room" },
               { to: "/get-involved", label: "Get Involved & Donate (1:1)" },
               { to: "/contact", label: "Contact Secretariat" },

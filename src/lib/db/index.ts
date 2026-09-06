@@ -1,16 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
-import process from "node:process";
-import {
-  initialAdminUsers,
-  initialNewsArticles,
-  initialReports,
-  initialPolicies,
-  initialPrograms,
-  initialDonations,
-  initialInquiries,
-  initialSubscribers,
-} from "./seed-data";
+import { eq, desc, asc, sql } from "drizzle-orm";
+import { drizzleDb } from "./client";
+import * as schema from "./schema";
 import type {
   User,
   NewsArticle,
@@ -31,500 +21,428 @@ import type {
 } from "./schema";
 
 /**
- * End-to-End Local JSON File + In-Memory Database Store for BHTF
- * Enables full live CRUD operations, offline demo accounts, and local persistence
- * without requiring any external live PostgreSQL server.
+ * Enterprise Production PostgreSQL Database Layer for BHTF
+ * Direct Drizzle ORM queries against live aaPanel-hosted PostgreSQL database.
  */
-
-const DB_FILE_PATH = path.resolve(process.cwd(), ".local-db-data.json");
-
-interface PersistedState {
-  users: User[];
-  newsArticles: NewsArticle[];
-  reports: Report[];
-  policies: Policy[];
-  programs: Program[];
-  donations: Donation[];
-  inquiries: Inquiry[];
-  subscribers: Subscriber[];
-}
-
 class BHTFDataStore {
-  private users: User[] = [];
-  private newsArticles: NewsArticle[] = [];
-  private reports: Report[] = [];
-  private policies: Policy[] = [];
-  private programs: Program[] = [];
-  private donations: Donation[] = [];
-  private inquiries: Inquiry[] = [];
-  private subscribers: Subscriber[] = [];
-  private initialized = false;
-
-  constructor() {
-    this.init();
-  }
-
-  private persist() {
-    try {
-      const state: PersistedState = {
-        users: this.users,
-        newsArticles: this.newsArticles,
-        reports: this.reports,
-        policies: this.policies,
-        programs: this.programs,
-        donations: this.donations,
-        inquiries: this.inquiries,
-        subscribers: this.subscribers,
-      };
-      fs.writeFileSync(DB_FILE_PATH, JSON.stringify(state, null, 2), "utf-8");
-    } catch {
-      // In-memory fallback if filesystem write is restricted
-    }
-  }
-
-  public init() {
-    if (this.initialized) return;
-
-    try {
-      if (fs.existsSync(DB_FILE_PATH)) {
-        const raw = fs.readFileSync(DB_FILE_PATH, "utf-8");
-        const parsed: PersistedState = JSON.parse(raw);
-        if (parsed.users && parsed.newsArticles) {
-          this.users = parsed.users;
-          this.newsArticles = parsed.newsArticles;
-          this.reports = parsed.reports || [];
-          this.policies = parsed.policies || [];
-          this.programs = parsed.programs || [];
-          this.donations = parsed.donations || [];
-          this.inquiries = parsed.inquiries || [];
-          this.subscribers = parsed.subscribers || [];
-
-          this.initialized = true;
-          return;
-        }
-      }
-    } catch {
-      // Fallback to fresh seed
-    }
-
-    // Seed Users
-    this.users = initialAdminUsers.map((u, idx) => ({
-      id: idx + 1,
-      name: u.name,
-      email: u.email,
-      passwordHash: u.passwordHash,
-      role: u.role || "ADMIN",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-
-    // Seed News Articles
-    this.newsArticles = initialNewsArticles.map((n, idx) => ({
-      id: idx + 1,
-      slug: n.slug,
-      title: n.title,
-      excerpt: n.excerpt,
-      content: n.content,
-      coverImage: n.coverImage,
-      category: n.category || "General",
-      author: n.author || "BHTF Media",
-      isPublished: n.isPublished !== undefined ? n.isPublished : true,
-      publishedAt: new Date(Date.now() - idx * 86400000 * 4),
-      viewsCount: n.viewsCount || 250,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-
-    // Seed Reports
-    this.reports = initialReports.map((r, idx) => ({
-      id: idx + 1,
-      title: r.title,
-      year: r.year,
-      category: r.category || "Annual Report",
-      fileUrl: r.fileUrl,
-      fileSize: r.fileSize || "2.4 MB",
-      description: r.description,
-      downloadCount: 45 + idx * 12,
-      createdAt: new Date(),
-    }));
-
-    // Seed Policies
-    this.policies = initialPolicies.map((p, idx) => ({
-      id: idx + 1,
-      title: p.title,
-      slug: p.slug,
-      summary: p.summary,
-      content: p.content,
-      fileUrl: p.fileUrl || null,
-      category: p.category || "Governance",
-      effectiveDate: p.effectiveDate || "2024",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-
-    // Seed Programs
-    this.programs = initialPrograms.map((pr, idx) => ({
-      id: idx + 1,
-      slug: pr.slug,
-      title: pr.title,
-      summary: pr.summary,
-      fullDescription: pr.fullDescription,
-      icon: pr.icon || "Pill",
-      targetDzongkhags: pr.targetDzongkhags || "All 20 Dzongkhags",
-      beneficiariesReached: pr.beneficiariesReached || "780,000+ citizens",
-      status: pr.status || "ACTIVE",
-      createdAt: new Date(),
-    }));
-
-    // Seed Donations
-    this.donations = initialDonations.map((d, idx) => ({
-      id: idx + 1,
-      referenceNo: d.referenceNo,
-      donorName: d.donorName,
-      donorEmail: d.donorEmail,
-      donorPhone: d.donorPhone || null,
-      amountNu: d.amountNu,
-      currency: d.currency || "BTN",
-      paymentMethod: d.paymentMethod || "MBOB",
-      status: d.status || "COMPLETED",
-      message: d.message || null,
-      isAnonymous: d.isAnonymous || false,
-      createdAt: new Date(Date.now() - idx * 86400000 * 2),
-    }));
-
-    // Seed Inquiries
-    this.inquiries = initialInquiries.map((iq, idx) => ({
-      id: idx + 1,
-      name: iq.name,
-      email: iq.email,
-      subject: iq.subject,
-      message: iq.message,
-      status: iq.status || "UNREAD",
-      replyNotes: iq.replyNotes || null,
-      createdAt: new Date(Date.now() - idx * 86400000 * 3),
-    }));
-
-    // Seed Subscribers
-    this.subscribers = initialSubscribers.map((s, idx) => ({
-      id: idx + 1,
-      email: s.email,
-      isActive: s.isActive !== undefined ? s.isActive : true,
-      subscribedAt: new Date(Date.now() - idx * 86400000 * 7),
-    }));
-
-    this.initialized = true;
-    this.persist();
-  }
-
   // --- Users & Auth ---
   public async findUserByEmail(email: string): Promise<User | null> {
-    return this.users.find((u) => u.email.toLowerCase() === email.toLowerCase()) || null;
+    const normalized = email.trim().toLowerCase();
+    const [user] = await drizzleDb
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.email, normalized));
+    return user || null;
+  }
+
+  public async getUserByEmail(email: string): Promise<User | null> {
+    return this.findUserByEmail(email);
   }
 
   public async findUserById(id: number): Promise<User | null> {
-    return this.users.find((u) => u.id === id) || null;
+    const [user] = await drizzleDb
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.id, id));
+    return user || null;
   }
 
   // --- News Articles ---
   public async getAllNews(onlyPublished = true): Promise<NewsArticle[]> {
-    const list = onlyPublished ? this.newsArticles.filter((n) => n.isPublished) : this.newsArticles;
-    return [...list].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+    if (onlyPublished) {
+      return await drizzleDb
+        .select()
+        .from(schema.newsArticles)
+        .where(eq(schema.newsArticles.isPublished, true))
+        .orderBy(desc(schema.newsArticles.publishedAt));
+    }
+    return await drizzleDb
+      .select()
+      .from(schema.newsArticles)
+      .orderBy(desc(schema.newsArticles.publishedAt));
   }
 
   public async getNewsBySlug(slug: string): Promise<NewsArticle | null> {
-    const article = this.newsArticles.find((n) => n.slug === slug);
+    const [article] = await drizzleDb
+      .select()
+      .from(schema.newsArticles)
+      .where(eq(schema.newsArticles.slug, slug));
     if (article) {
-      article.viewsCount = (article.viewsCount || 0) + 1;
-      this.persist();
+      await drizzleDb
+        .update(schema.newsArticles)
+        .set({ viewsCount: (article.viewsCount || 0) + 1 })
+        .where(eq(schema.newsArticles.id, article.id));
     }
     return article || null;
   }
 
   public async createNews(data: NewNewsArticle): Promise<NewsArticle> {
-    const id = this.newsArticles.length ? Math.max(...this.newsArticles.map((n) => n.id)) + 1 : 1;
-    const article: NewsArticle = {
-      id,
-      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      title: data.title,
-      excerpt: data.excerpt,
-      content: data.content,
-      coverImage: data.coverImage,
-      category: data.category || "General",
-      author: data.author || "BHTF Media",
-      isPublished: data.isPublished !== undefined ? data.isPublished : true,
-      publishedAt: new Date(),
-      viewsCount: 0,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.newsArticles.unshift(article);
-    this.persist();
-    return article;
+    const slug =
+      data.slug ||
+      data.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+    const [created] = await drizzleDb
+      .insert(schema.newsArticles)
+      .values({
+        ...data,
+        slug,
+        viewsCount: 0,
+        publishedAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .returning();
+    return created;
   }
 
   public async updateNews(id: number, data: Partial<NewNewsArticle>): Promise<NewsArticle | null> {
-    const idx = this.newsArticles.findIndex((n) => n.id === id);
-    if (idx === -1) return null;
-    this.newsArticles[idx] = {
-      ...this.newsArticles[idx],
-      ...data,
-      updatedAt: new Date(),
-    };
-    this.persist();
-    return this.newsArticles[idx];
+    const [updated] = await drizzleDb
+      .update(schema.newsArticles)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.newsArticles.id, id))
+      .returning();
+    return updated || null;
   }
 
   public async deleteNews(id: number): Promise<boolean> {
-    const initialLen = this.newsArticles.length;
-    this.newsArticles = this.newsArticles.filter((n) => n.id !== id);
-    this.persist();
-    return this.newsArticles.length < initialLen;
+    const deleted = await drizzleDb
+      .delete(schema.newsArticles)
+      .where(eq(schema.newsArticles.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // --- Reports & Publications ---
   public async getAllReports(): Promise<Report[]> {
-    return [...this.reports].sort((a, b) => parseInt(b.year) - parseInt(a.year));
+    return await drizzleDb
+      .select()
+      .from(schema.reports)
+      .orderBy(desc(schema.reports.year), desc(schema.reports.createdAt));
   }
 
   public async createReport(data: NewReport): Promise<Report> {
-    const id = this.reports.length ? Math.max(...this.reports.map((r) => r.id)) + 1 : 1;
-    const report: Report = {
-      id,
-      title: data.title,
-      year: data.year,
-      category: data.category || "Annual Report",
-      fileUrl: data.fileUrl,
-      fileSize: data.fileSize || "2.5 MB",
-      description: data.description,
-      downloadCount: 0,
-      createdAt: new Date(),
-    };
-    this.reports.unshift(report);
-    this.persist();
-    return report;
+    const [created] = await drizzleDb
+      .insert(schema.reports)
+      .values({
+        ...data,
+        downloadCount: 0,
+      })
+      .returning();
+    return created;
+  }
+
+  public async updateReport(id: number, data: Partial<NewReport>): Promise<Report | null> {
+    const [updated] = await drizzleDb
+      .update(schema.reports)
+      .set(data)
+      .where(eq(schema.reports.id, id))
+      .returning();
+    return updated || null;
   }
 
   public async deleteReport(id: number): Promise<boolean> {
-    const initialLen = this.reports.length;
-    this.reports = this.reports.filter((r) => r.id !== id);
-    this.persist();
-    return this.reports.length < initialLen;
+    const deleted = await drizzleDb
+      .delete(schema.reports)
+      .where(eq(schema.reports.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   public async incrementReportDownload(id: number): Promise<boolean> {
-    const report = this.reports.find((r) => r.id === id);
-    if (report) {
-      report.downloadCount = (report.downloadCount || 0) + 1;
-      this.persist();
-      return true;
-    }
-    return false;
+    await drizzleDb
+      .update(schema.reports)
+      .set({ downloadCount: sql`${schema.reports.downloadCount} + 1` })
+      .where(eq(schema.reports.id, id));
+    return true;
   }
 
   // --- Policies ---
   public async getAllPolicies(): Promise<Policy[]> {
-    return [...this.policies];
+    return await drizzleDb
+      .select()
+      .from(schema.policies)
+      .orderBy(desc(schema.policies.createdAt));
   }
 
   public async createPolicy(data: NewPolicy): Promise<Policy> {
-    const id = this.policies.length ? Math.max(...this.policies.map((p) => p.id)) + 1 : 1;
-    const policy: Policy = {
-      id,
-      title: data.title,
-      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      summary: data.summary,
-      content: data.content,
-      fileUrl: data.fileUrl || null,
-      category: data.category || "Governance",
-      effectiveDate: data.effectiveDate || "2024",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.policies.unshift(policy);
-    this.persist();
-    return policy;
+    const slug =
+      data.slug ||
+      data.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+    const [created] = await drizzleDb
+      .insert(schema.policies)
+      .values({
+        ...data,
+        slug,
+        updatedAt: new Date(),
+      })
+      .returning();
+    return created;
   }
 
   public async updatePolicy(id: number, data: Partial<NewPolicy>): Promise<Policy | null> {
-    const idx = this.policies.findIndex((p) => p.id === id);
-    if (idx === -1) return null;
-    this.policies[idx] = {
-      ...this.policies[idx],
-      ...data,
-      updatedAt: new Date(),
-    };
-    this.persist();
-    return this.policies[idx];
+    const [updated] = await drizzleDb
+      .update(schema.policies)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.policies.id, id))
+      .returning();
+    return updated || null;
   }
 
   public async deletePolicy(id: number): Promise<boolean> {
-    const initialLen = this.policies.length;
-    this.policies = this.policies.filter((p) => p.id !== id);
-    this.persist();
-    return this.policies.length < initialLen;
+    const deleted = await drizzleDb
+      .delete(schema.policies)
+      .where(eq(schema.policies.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // --- Programs ---
   public async getAllPrograms(): Promise<Program[]> {
-    return [...this.programs];
+    return await drizzleDb
+      .select()
+      .from(schema.programs)
+      .orderBy(asc(schema.programs.id));
   }
 
   public async createProgram(data: NewProgram): Promise<Program> {
-    const id = this.programs.length ? Math.max(...this.programs.map((p) => p.id)) + 1 : 1;
-    const program: Program = {
-      id,
-      slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      title: data.title,
-      summary: data.summary,
-      fullDescription: data.fullDescription,
-      icon: data.icon || "Pill",
-      targetDzongkhags: data.targetDzongkhags || "All 20 Dzongkhags",
-      beneficiariesReached: data.beneficiariesReached || "780,000+ citizens",
-      status: data.status || "ACTIVE",
-      createdAt: new Date(),
-    };
-    this.programs.push(program);
-    this.persist();
-    return program;
+    const slug =
+      data.slug ||
+      data.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+    const [created] = await drizzleDb
+      .insert(schema.programs)
+      .values({
+        ...data,
+        slug,
+      })
+      .returning();
+    return created;
+  }
+
+  public async updateProgram(id: number, data: Partial<NewProgram>): Promise<Program | null> {
+    const [updated] = await drizzleDb
+      .update(schema.programs)
+      .set(data)
+      .where(eq(schema.programs.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteProgram(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.programs)
+      .where(eq(schema.programs.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // --- Donations ---
   public async getAllDonations(): Promise<Donation[]> {
-    return [...this.donations].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return await drizzleDb
+      .select()
+      .from(schema.donations)
+      .orderBy(desc(schema.donations.createdAt));
   }
 
   public async createDonation(data: NewDonation): Promise<Donation> {
-    const id = this.donations.length ? Math.max(...this.donations.map((d) => d.id)) + 1 : 1;
     const randomSuffix = Math.floor(100000 + Math.random() * 900000);
     const referenceNo = data.referenceNo || `BHTF-DON-${randomSuffix}`;
 
-    const donation: Donation = {
-      id,
-      referenceNo,
-      donorName: data.donorName,
-      donorEmail: data.donorEmail,
-      donorPhone: data.donorPhone || null,
-      amountNu: data.amountNu,
-      currency: data.currency || "BTN",
-      paymentMethod: data.paymentMethod || "MBOB",
-      status: data.status || "PENDING",
-      message: data.message || null,
-      isAnonymous: data.isAnonymous || false,
-      createdAt: new Date(),
-    };
+    const [created] = await drizzleDb
+      .insert(schema.donations)
+      .values({
+        ...data,
+        referenceNo,
+      })
+      .returning();
+    return created;
+  }
 
-    this.donations.unshift(donation);
-    this.persist();
-    return donation;
+  public async findDonationByReference(referenceNo: string): Promise<Donation | null> {
+    const [donation] = await drizzleDb
+      .select()
+      .from(schema.donations)
+      .where(eq(schema.donations.referenceNo, referenceNo.trim()));
+    return donation || null;
   }
 
   public async updateDonationStatus(id: number, status: string): Promise<Donation | null> {
-    const idx = this.donations.findIndex((d) => d.id === id);
-    if (idx === -1) return null;
-    this.donations[idx].status = status;
-    this.persist();
-    return this.donations[idx];
+    const [updated] = await drizzleDb
+      .update(schema.donations)
+      .set({ status })
+      .where(eq(schema.donations.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteDonation(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.donations)
+      .where(eq(schema.donations.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // --- Inquiries ---
   public async getAllInquiries(): Promise<Inquiry[]> {
-    return [...this.inquiries].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return await drizzleDb
+      .select()
+      .from(schema.inquiries)
+      .orderBy(desc(schema.inquiries.createdAt));
   }
 
   public async createInquiry(data: NewInquiry): Promise<Inquiry> {
-    const id = this.inquiries.length ? Math.max(...this.inquiries.map((i) => i.id)) + 1 : 1;
-    const inquiry: Inquiry = {
-      id,
-      name: data.name,
-      email: data.email,
-      subject: data.subject,
-      message: data.message,
-      status: "UNREAD",
-      replyNotes: null,
-      createdAt: new Date(),
-    };
-    this.inquiries.unshift(inquiry);
-    this.persist();
-    return inquiry;
+    const [created] = await drizzleDb
+      .insert(schema.inquiries)
+      .values({
+        ...data,
+        status: data.status || "UNREAD",
+        channel: data.channel || "WEB",
+        loggedBy: data.loggedBy || null,
+      })
+      .returning();
+    return created;
   }
 
-  public async updateInquiryStatus(id: number, status: string, replyNotes?: string): Promise<Inquiry | null> {
-    const idx = this.inquiries.findIndex((i) => i.id === id);
-    if (idx === -1) return null;
-    this.inquiries[idx].status = status;
+  public async updateInquiryStatus(
+    id: number,
+    status: string,
+    replyNotes?: string
+  ): Promise<Inquiry | null> {
+    const updatePayload: Record<string, any> = { status };
     if (replyNotes !== undefined) {
-      this.inquiries[idx].replyNotes = replyNotes;
+      updatePayload.replyNotes = replyNotes;
     }
-    this.persist();
-    return this.inquiries[idx];
+
+    const [updated] = await drizzleDb
+      .update(schema.inquiries)
+      .set(updatePayload)
+      .where(eq(schema.inquiries.id, id))
+      .returning();
+    return updated || null;
   }
 
   public async deleteInquiry(id: number): Promise<boolean> {
-    const initialLen = this.inquiries.length;
-    this.inquiries = this.inquiries.filter((i) => i.id !== id);
-    this.persist();
-    return this.inquiries.length < initialLen;
+    const deleted = await drizzleDb
+      .delete(schema.inquiries)
+      .where(eq(schema.inquiries.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // --- Subscribers ---
   public async getAllSubscribers(): Promise<Subscriber[]> {
-    return [...this.subscribers];
+    return await drizzleDb
+      .select()
+      .from(schema.subscribers)
+      .orderBy(desc(schema.subscribers.subscribedAt));
   }
 
   public async addSubscriber(email: string): Promise<Subscriber> {
     const normalized = email.toLowerCase().trim();
-    const existing = this.subscribers.find((s) => s.email.toLowerCase() === normalized);
+    const [existing] = await drizzleDb
+      .select()
+      .from(schema.subscribers)
+      .where(eq(schema.subscribers.email, normalized));
+
     if (existing) {
       if (!existing.isActive) {
-        existing.isActive = true;
-        this.persist();
+        const [reactivated] = await drizzleDb
+          .update(schema.subscribers)
+          .set({ isActive: true })
+          .where(eq(schema.subscribers.id, existing.id))
+          .returning();
+        return reactivated;
       }
       return existing;
     }
-    const subscriber: Subscriber = {
-      id: this.subscribers.length ? Math.max(...this.subscribers.map((s) => s.id)) + 1 : 1,
-      email: normalized,
-      isActive: true,
-      subscribedAt: new Date(),
-    };
-    this.subscribers.unshift(subscriber);
-    this.persist();
-    return subscriber;
+
+    const [created] = await drizzleDb
+      .insert(schema.subscribers)
+      .values({
+        email: normalized,
+        isActive: true,
+      })
+      .returning();
+    return created;
+  }
+
+  public async adminAddSubscriber(email: string, isActive = true): Promise<Subscriber> {
+    const normalized = email.toLowerCase().trim();
+    const [existing] = await drizzleDb
+      .select()
+      .from(schema.subscribers)
+      .where(eq(schema.subscribers.email, normalized));
+
+    if (existing) {
+      const [updated] = await drizzleDb
+        .update(schema.subscribers)
+        .set({ isActive })
+        .where(eq(schema.subscribers.id, existing.id))
+        .returning();
+      return updated;
+    }
+
+    const [created] = await drizzleDb
+      .insert(schema.subscribers)
+      .values({
+        email: normalized,
+        isActive,
+      })
+      .returning();
+    return created;
+  }
+
+  public async updateSubscriberStatus(id: number, isActive: boolean): Promise<Subscriber | null> {
+    const [updated] = await drizzleDb
+      .update(schema.subscribers)
+      .set({ isActive })
+      .where(eq(schema.subscribers.id, id))
+      .returning();
+    return updated || null;
   }
 
   public async deleteSubscriber(id: number): Promise<boolean> {
-    const initialLen = this.subscribers.length;
-    this.subscribers = this.subscribers.filter((s) => s.id !== id);
-    this.persist();
-    return this.subscribers.length < initialLen;
-  }
-
-  // --- Reset Database to Initial Factory State ---
-  public resetToFactoryDemo() {
-    try {
-      if (fs.existsSync(DB_FILE_PATH)) {
-        fs.unlinkSync(DB_FILE_PATH);
-      }
-    } catch {
-      // ignore
-    }
-    this.initialized = false;
-    this.init();
+    const deleted = await drizzleDb
+      .delete(schema.subscribers)
+      .where(eq(schema.subscribers.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // --- Dashboard Aggregations ---
   public async getDashboardMetrics() {
-    const totalDonationsNu = this.donations
+    const allDonations = await this.getAllDonations();
+    const allInquiries = await this.getAllInquiries();
+    const allNews = await this.getAllNews(false);
+    const allSubscribers = await this.getAllSubscribers();
+    const allReports = await this.getAllReports();
+
+    const totalDonationsNu = allDonations
       .filter((d) => d.status === "COMPLETED" || d.status === "VERIFIED")
       .reduce((sum, d) => sum + d.amountNu, 0);
 
-    const pendingDonationsCount = this.donations.filter((d) => d.status === "PENDING").length;
-    const unreadInquiriesCount = this.inquiries.filter((iq) => iq.status === "UNREAD").length;
-    const publishedNewsCount = this.newsArticles.filter((n) => n.isPublished).length;
-    const activeSubscribersCount = this.subscribers.filter((s) => s.isActive).length;
-    const totalReportsCount = this.reports.length;
+    const pendingDonationsCount = allDonations.filter((d) => d.status === "PENDING").length;
+    const unreadInquiriesCount = allInquiries.filter((iq) => iq.status === "UNREAD").length;
+    const publishedNewsCount = allNews.filter((n) => n.isPublished).length;
+    const activeSubscribersCount = allSubscribers.filter((s) => s.isActive).length;
+    const totalReportsCount = allReports.length;
 
-    // Monthly donation stats for charts
     const monthlyStats = [
       { month: "Jan", amount: 145000, donors: 18 },
       { month: "Feb", amount: 210000, donors: 24 },
@@ -533,7 +451,11 @@ class BHTFDataStore {
       { month: "May", amount: 290000, donors: 28 },
       { month: "Jun", amount: 410000, donors: 42 },
       { month: "Jul", amount: 380000, donors: 39 },
-      { month: "Aug", amount: totalDonationsNu > 0 ? totalDonationsNu : 450000, donors: this.donations.length + 30 },
+      {
+        month: "Aug",
+        amount: totalDonationsNu > 0 ? totalDonationsNu : 450000,
+        donors: allDonations.length + 30,
+      },
     ];
 
     return {
@@ -544,8 +466,8 @@ class BHTFDataStore {
       activeSubscribersCount,
       totalReportsCount,
       monthlyStats,
-      recentDonations: this.donations.slice(0, 5),
-      recentInquiries: this.inquiries.slice(0, 5),
+      recentDonations: allDonations.slice(0, 5),
+      recentInquiries: allInquiries.slice(0, 5),
     };
   }
 }

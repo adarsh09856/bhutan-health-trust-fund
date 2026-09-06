@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
 import { submitDonationPledge } from "@/lib/api/public.functions";
 import {
@@ -280,7 +280,11 @@ function GetInvolvedPage() {
                     <p className="text-[11px] text-slate-500 leading-relaxed pt-1">
                       ⚠️ Please enter your Reference{" "}
                       <strong className="text-slate-900 font-mono">{receiptData.referenceNo}</strong> into the
-                      narration/remarks field during transfer.
+                      narration/remarks field during transfer. You can track your remittance and download an official DRC tax certificate anytime at{" "}
+                      <Link to="/track-donation" className="text-emerald-700 font-bold underline">
+                        Track My Donation
+                      </Link>
+                      .
                     </p>
                   </div>
                 </div>
@@ -290,7 +294,13 @@ function GetInvolvedPage() {
                     <ShieldCheck className="h-4 w-4 text-emerald-600" /> Stamped acknowledgment logged for tax deduction.
                   </span>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link
+                      to="/track-donation"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition cursor-pointer"
+                    >
+                      <Award className="h-4 w-4 text-amber-400" /> Track & DRC Tax Certificate
+                    </Link>
                     <button
                       type="button"
                       onClick={() => window.print()}

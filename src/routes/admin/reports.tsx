@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { getAdminReports, createAdminReport, deleteAdminReport } from "@/lib/api/admin.functions";
+import {
+  getAdminReports,
+  createAdminReport,
+  updateAdminReport,
+  deleteAdminReport,
+} from "@/lib/api/admin.functions";
 import type { Report } from "@/lib/db/schema";
 import {
   Plus,
@@ -9,6 +14,7 @@ import {
   FileText,
   Download,
   Trash2,
+  Edit3,
   Loader2,
   X,
   ExternalLink,
@@ -32,6 +38,7 @@ export function AdminReportsPage() {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [modalOpen, setModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   // Form State
   const [title, setTitle] = useState("");
@@ -58,6 +65,7 @@ export function AdminReportsPage() {
   }, []);
 
   const openCreateModal = () => {
+    setEditingId(null);
     setTitle("");
     setYear(new Date().getFullYear().toString());
     setCategory("Annual Report");
@@ -67,25 +75,51 @@ export function AdminReportsPage() {
     setModalOpen(true);
   };
 
+  const openEditModal = (r: Report) => {
+    setEditingId(r.id);
+    setTitle(r.title);
+    setYear(r.year);
+    setCategory(r.category);
+    setFileUrl(r.fileUrl);
+    setFileSize(r.fileSize || "2.8 MB");
+    setDescription(r.description);
+    setModalOpen(true);
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     try {
-      await createAdminReport({
-        data: {
-          title,
-          year,
-          category,
-          fileUrl,
-          fileSize,
-          description,
-        },
-      });
-      toast.success("New statutory report cataloged successfully.");
+      if (editingId) {
+        await updateAdminReport({
+          data: {
+            id: editingId,
+            title,
+            year,
+            category,
+            fileUrl,
+            fileSize,
+            description,
+          },
+        });
+        toast.success("Statutory report updated successfully.");
+      } else {
+        await createAdminReport({
+          data: {
+            title,
+            year,
+            category,
+            fileUrl,
+            fileSize,
+            description,
+          },
+        });
+        toast.success("New statutory report cataloged successfully.");
+      }
       setModalOpen(false);
       fetchReports();
     } catch {
-      toast.error("Failed to catalog report.");
+      toast.error("Failed to save report.");
     } finally {
       setSaving(false);
     }
@@ -251,6 +285,14 @@ export function AdminReportsPage() {
                       <td className="py-4 px-5 text-right space-x-2">
                         <button
                           type="button"
+                          onClick={() => openEditModal(r)}
+                          className="p-1.5 rounded-xl text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition cursor-pointer"
+                          title="Edit Report Metadata"
+                        >
+                          <Edit3 className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
                           onClick={() => handleDelete(r.id, r.title)}
                           className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
                           title="Delete Report"
@@ -275,7 +317,9 @@ export function AdminReportsPage() {
                   <span className="text-xs font-black text-emerald-700 uppercase tracking-widest">
                     Statutory Repository
                   </span>
-                  <h3 className="text-lg font-black text-slate-900">Catalog New Official Report</h3>
+                  <h3 className="text-lg font-black text-slate-900">
+                    {editingId ? "Edit Statutory Report Details" : "Catalog New Official Report"}
+                  </h3>
                 </div>
                 <button
                   type="button"
@@ -386,11 +430,11 @@ export function AdminReportsPage() {
                   >
                     {saving ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" /> Cataloging...
+                        <Loader2 className="h-4 w-4 animate-spin" /> {editingId ? "Saving..." : "Cataloging..."}
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-4 w-4" /> Catalog Report
+                        <Sparkles className="h-4 w-4" /> {editingId ? "Save Changes" : "Catalog Report"}
                       </>
                     )}
                   </button>

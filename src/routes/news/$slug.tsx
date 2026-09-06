@@ -127,7 +127,7 @@ function NewsDetailPage() {
             </span>
             <span className="text-slate-400">•</span>
             <span className="text-slate-500 font-medium flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5 text-emerald-700" /> {article.publishedAt}
+              <Calendar className="h-3.5 w-3.5 text-emerald-700" /> {new Date(article.publishedAt).toLocaleDateString()}
             </span>
             <span className="text-slate-400">•</span>
             <span className="text-slate-500 font-medium">BHTF Official Secretariat</span>

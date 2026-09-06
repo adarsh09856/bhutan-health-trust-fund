@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { getAdminSubscribers, deleteAdminSubscriber } from "@/lib/api/admin.functions";
+import {
+  getAdminSubscribers,
+  deleteAdminSubscriber,
+  createAdminSubscriber,
+  updateAdminSubscriberStatus,
+} from "@/lib/api/admin.functions";
 import type { Subscriber } from "@/lib/db/schema";
 import {
   Search,
@@ -37,6 +42,12 @@ export function AdminSubscribersPage() {
   const [campaignBody, setCampaignBody] = useState("");
   const [sendingBroadcast, setSendingBroadcast] = useState(false);
 
+  // Add Subscriber Form State
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addEmail, setAddEmail] = useState("");
+  const [addIsActive, setAddIsActive] = useState(true);
+  const [savingAdd, setSavingAdd] = useState(false);
+
   const fetchSubscribers = async () => {
     try {
       const res = await getAdminSubscribers();
@@ -45,6 +56,40 @@ export function AdminSubscribersPage() {
       toast.error("Failed to load subscribers.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddSubscriber = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!addEmail.trim()) {
+      toast.error("Valid email address is required.");
+      return;
+    }
+    setSavingAdd(true);
+    try {
+      await createAdminSubscriber({ data: { email: addEmail.trim(), isActive: addIsActive } });
+      toast.success("Subscriber added to audience list.");
+      setAddModalOpen(false);
+      setAddEmail("");
+      setAddIsActive(true);
+      fetchSubscribers();
+    } catch {
+      toast.error("Failed to add subscriber.");
+    } finally {
+      setSavingAdd(false);
+    }
+  };
+
+  const handleToggleStatus = async (id: number, currentStatus: boolean) => {
+    const newStatus = !currentStatus;
+    try {
+      await updateAdminSubscriberStatus({ data: { id, isActive: newStatus } });
+      toast.success(`Subscriber status updated to ${newStatus ? "Active" : "Unsubscribed"}.`);
+      setSubscribers((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, isActive: newStatus } : s))
+      );
+    } catch {
+      toast.error("Failed to update subscriber status.");
     }
   };
 
@@ -120,11 +165,19 @@ export function AdminSubscribersPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setAddModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-black rounded-2xl shadow-md shadow-emerald-700/20 transition cursor-pointer active:scale-95"
+            >
+              <Plus className="h-4 w-4" /> Add Subscriber
+            </button>
+
             <button
               type="button"
               onClick={() => setBroadcastModalOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold rounded-2xl shadow-md transition cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-2xl shadow-xs transition cursor-pointer active:scale-95"
             >
               <Send className="h-4 w-4" /> Compose Broadcast
             </button>
@@ -144,9 +197,11 @@ export function AdminSubscribersPage() {
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active Subscribers</span>
             <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
-              {subscribers.length}
+              {subscribers.filter((s) => s.isActive).length}
             </div>
-            <span className="text-xs font-bold text-emerald-700 block">100% Opt-in Verification Rate</span>
+            <span className="text-xs font-bold text-emerald-700 block">
+              {subscribers.length} total registered records
+            </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
@@ -214,9 +269,23 @@ export function AdminSubscribersPage() {
                       </td>
 
                       <td className="py-4 px-5">
-                        <span className="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
-                          Active Recipient
-                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleToggleStatus(s.id, s.isActive)}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold border transition cursor-pointer ${
+                            s.isActive
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                              : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
+                          }`}
+                          title="Click to toggle subscription status"
+                        >
+                          <span
+                            className={`h-2 w-2 rounded-full ${
+                              s.isActive ? "bg-emerald-500 animate-pulse" : "bg-slate-400"
+                            }`}
+                          ></span>
+                          <span>{s.isActive ? "Active Recipient" : "Unsubscribed"}</span>
+                        </button>
                       </td>
 
                       <td className="py-4 px-5 text-right">
@@ -332,6 +401,90 @@ export function AdminSubscribersPage() {
                     className="px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
                   >
                     Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal 2: Add Subscriber */}
+        {addModalOpen && (
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-md w-full border border-slate-200 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+              <div className="bg-white px-6 py-4 border-b border-slate-100 flex items-center justify-between rounded-t-3xl">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
+                    <Sparkles className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-slate-900 text-base">Add New Subscriber</h3>
+                    <p className="text-[11px] text-slate-500 font-medium">Add citizen or partner to official bulletin list</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAddModalOpen(false)}
+                  className="h-8 w-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 grid place-items-center transition cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleAddSubscriber} className="p-6 space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                    Subscriber Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={addEmail}
+                    onChange={(e) => setAddEmail(e.target.value)}
+                    placeholder="official.contact@organization.bt"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 block">Subscription Status</span>
+                    <span className="text-[11px] text-slate-500">
+                      {addIsActive ? "Active recipient (will receive bulletins)" : "Inactive / Unsubscribed"}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setAddIsActive(!addIsActive)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                      addIsActive
+                        ? "bg-emerald-600 text-white shadow-xs"
+                        : "bg-slate-200 text-slate-700 hover:bg-slate-300"
+                    }`}
+                  >
+                    {addIsActive ? "Active" : "Inactive"}
+                  </button>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setAddModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={savingAdd}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-black shadow-md shadow-emerald-700/20 transition cursor-pointer disabled:opacity-50"
+                  >
+                    {savingAdd ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-4 w-4" />
+                    )}
+                    <span>Add to Audience</span>
                   </button>
                 </div>
               </form>
