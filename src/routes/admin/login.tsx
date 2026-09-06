@@ -36,7 +36,10 @@ function AdminLoginPage() {
         toast.error(res.error || "Authentication failed. Please check credentials.", { duration: 5000 });
       }
     } catch (err: any) {
-      const msg = err?.message || "Failed to connect to the authentication server.";
+      let msg = err?.message || "Failed to connect to the authentication server.";
+      if (typeof msg === "string" && (msg.startsWith("<!") || msg.includes("<html") || msg.includes("This page didn't load"))) {
+        msg = "Database connection error on server. Ensure PostgreSQL is active and 'npm run db:push && npm run db:seed' was completed.";
+      }
       toast.error(msg, { duration: 6000 });
     } finally {
       setLoading(false);

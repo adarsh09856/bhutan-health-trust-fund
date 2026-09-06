@@ -61,19 +61,31 @@ export function verifySessionToken(token: string): SessionUser | null {
  * Verifies admin credentials
  */
 export async function authenticateAdmin(email: string, password: string): Promise<User | null> {
-  const user = await db.getUserByEmail(email);
-  if (!user) return null;
-
   try {
-    if (bcrypt.compareSync(password, user.passwordHash)) {
+    const user = await db.getUserByEmail(email);
+    if (!user) return null;
+
+    try {
+      if (bcrypt.compareSync(password, user.passwordHash)) {
+        return user;
+      }
+    } catch {}
+
+    // Direct match fallback
+    if (user.passwordHash === password) {
       return user;
     }
-  } catch {}
 
-  // Direct match fallback
-  if (user.passwordHash === password) {
-    return user;
+    return null;
+  } catch (err: any) {
+    console.error("[authenticateAdmin Database Error]:", err);
+    throw new Error(
+      err?.message?.includes("connect") ||
+      err?.message?.includes("relation") ||
+      err?.message?.includes("database") ||
+      err?.message?.includes("ECONNREFUSED")
+        ? "Database connection failed. Ensure PostgreSQL is active and 'npm run db:push && npm run db:seed' was executed."
+        : `Authentication server error: ${err?.message || "Unknown error"}`
+    );
   }
-
-  return null;
 }
