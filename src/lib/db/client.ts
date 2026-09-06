@@ -1,10 +1,17 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config();
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), ".env"), override: true });
+} catch {}
+
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
 
 const connectionString =
-  process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/bhtf_production";
+  process.env.DATABASE_URL || "postgresql://newdb:newdb@127.0.0.1:5432/newdb";
 
 export const pool = new Pool({
   connectionString,
