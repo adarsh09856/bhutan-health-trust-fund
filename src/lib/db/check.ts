@@ -21,28 +21,26 @@ async function check() {
 
   try {
     const client = await pool.connect();
-    console.log("? Successfully connected to PostgreSQL server!");
+    console.log(">> Successfully connected to PostgreSQL server!");
 
     const tablesRes = await client.query(
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public';
+      "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';"
     );
-    console.log("?? Public tables found:", tablesRes.rows.map((r: any) => r.table_name));
+    console.log(">> Public tables found:", tablesRes.rows.map((r: any) => r.table_name));
 
-    const usersRes = await client.query(SELECT id, email, name, role, password_hash FROM users;);
-    console.log(?? Users in database ():);
+    const usersRes = await client.query("SELECT id, email, name, role, password_hash FROM users;");
+    console.log(`>> Users in database (${usersRes.rows.length}):`);
     for (const u of usersRes.rows) {
       const isMatch = bcrypt.compareSync("Admin@BHTF2026", u.password_hash);
-      console.log(  - []  (Password 'Admin@BHTF2026' matches: ));
+      console.log(`  - [${u.role}] ${u.email} (Password 'Admin@BHTF2026' matches hash: ${isMatch})`);
     }
 
     client.release();
     await pool.end();
     console.log("-----------------------------------------");
-    console.log("?? Database health check passed completely!");
+    console.log(">> Database health check passed completely!");
   } catch (err: any) {
-    console.error("? Database check failed with error:", err.message);
+    console.error(">> Database check failed with error:", err.message);
     if (err.code) console.error("   Error code:", err.code);
     if (err.detail) console.error("   Detail:", err.detail);
     await pool.end();
@@ -51,3 +49,4 @@ async function check() {
 }
 
 check();
+
