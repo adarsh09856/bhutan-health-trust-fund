@@ -324,27 +324,19 @@ export function SiteHeader() {
         <div className="hidden sm:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
           <Link
             to="/get-involved"
-            className="whitespace-nowrap inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold shadow-md shadow-emerald-700/25 hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-400/30"
+            className="whitespace-nowrap inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold shadow-md shadow-emerald-700/25 hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-400/30"
           >
             <Heart className="h-3.5 w-3.5 fill-white text-white shrink-0" />
             <span>Donate (1:1 Matched)</span>
           </Link>
 
-          {user ? (
+          {user && (
             <Link
               to="/admin/dashboard"
               className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition duration-150 cursor-pointer shrink-0 border border-slate-700"
             >
               <LayoutDashboard className="h-3.5 w-3.5 text-amber-400 shrink-0" />
               <span>Admin Panel</span>
-            </Link>
-          ) : (
-            <Link
-              to="/admin/login"
-              className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-800 text-xs font-bold border border-slate-300 shadow-xs transition duration-150 cursor-pointer shrink-0"
-            >
-              <LogIn className="h-3.5 w-3.5 text-slate-600 shrink-0" />
-              <span>Staff Portal</span>
             </Link>
           )}
         </div>
@@ -423,19 +415,12 @@ export function SiteHeader() {
               <Heart className="h-4 w-4 fill-white" /> Make a Donation Pledge (1:1 Matched)
             </Link>
 
-            {user ? (
+            {user && (
               <Link
                 to="/admin/dashboard"
                 className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs shadow-xs whitespace-nowrap"
               >
                 <LayoutDashboard className="h-4 w-4 text-amber-400" /> Open Admin Dashboard
-              </Link>
-            ) : (
-              <Link
-                to="/admin/login"
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-200 shadow-xs whitespace-nowrap"
-              >
-                <LogIn className="h-4 w-4 text-slate-600" /> Secretariat Staff Portal
               </Link>
             )}
           </div>
