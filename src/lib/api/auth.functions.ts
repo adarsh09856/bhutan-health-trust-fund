@@ -39,21 +39,9 @@ export const adminLogin = createServerFn({ method: "POST" })
     } catch (err: any) {
       console.error("[Admin Auth Error]:", err);
       const msg = err?.message || String(err);
-      if (
-        msg.includes("connect") ||
-        msg.includes("ECONNREFUSED") ||
-        msg.includes("relation") ||
-        msg.includes("password authentication failed") ||
-        msg.includes("database")
-      ) {
-        return {
-          success: false,
-          error: "Database unreachable or not initialized. Ensure PostgreSQL is active on aaPanel and 'npm run db:push && npm run db:seed' was executed.",
-        };
-      }
       return {
         success: false,
-        error: "Authentication service error: " + (err?.message || "Unknown error"),
+        error: `Database Auth Failure: ${msg}`,
       };
     }
   });

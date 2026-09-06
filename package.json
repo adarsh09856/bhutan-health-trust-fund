@@ -14,6 +14,7 @@
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "npx tsx src/lib/db/seed.ts",
+    "db:check": "npx tsx src/lib/db/check.ts",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

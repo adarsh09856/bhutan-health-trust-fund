@@ -38,9 +38,9 @@ function AdminLoginPage() {
     } catch (err: any) {
       let msg = err?.message || "Failed to connect to the authentication server.";
       if (typeof msg === "string" && (msg.startsWith("<!") || msg.includes("<html") || msg.includes("This page didn't load"))) {
-        msg = "Database connection error on server. Ensure PostgreSQL is active and 'npm run db:push && npm run db:seed' was completed.";
+        msg = "Server returned 500 error page. Please run 'npm run db:check' in terminal to inspect database connection.";
       }
-      toast.error(msg, { duration: 6000 });
+      toast.error(msg, { duration: 8000 });
     } finally {
       setLoading(false);
     }
