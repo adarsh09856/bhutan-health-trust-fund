@@ -4,6 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { nitro } from "nitro/vite";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const PORT = Number(process.env.PORT || process.env.NITRO_PORT || 6060);
 
 export default defineConfig({
@@ -20,7 +26,13 @@ export default defineConfig({
     host: "0.0.0.0",
   },
   resolve: {
+    alias: {
+      "pg-native": path.resolve(__dirname, "src/lib/stubs/pg-native.ts"),
+    },
     dedupe: ["react", "react-dom"],
+  },
+  ssr: {
+    external: ["pg", "pg-native"],
   },
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
@@ -30,6 +42,9 @@ export default defineConfig({
     tailwindcss(),
     nitro({
       devServer: { port: PORT },
+      externals: {
+        external: ["pg", "pg-native"],
+      },
     }),
   ],
 });
