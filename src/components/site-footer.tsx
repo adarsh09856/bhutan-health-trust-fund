@@ -249,10 +249,6 @@ export function SiteFooter() {
             <Link to="/policies" className="hover:text-emerald-400 transition">
               Whistleblower Protection
             </Link>
-            <span>•</span>
-            <Link to="/admin/login" className="text-slate-500 hover:text-slate-300 transition">
-              Staff Portal
-            </Link>
           </div>
         </div>
       </div>
