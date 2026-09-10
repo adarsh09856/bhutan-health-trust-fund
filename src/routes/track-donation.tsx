@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
+import { institutionalConfig } from "@/config/institutional";
 
 export const Route = createFileRoute("/track-donation")({
   head: () => ({
@@ -406,8 +407,26 @@ export function TrackDonationPage() {
             {/* Official Printable Voucher (#printable-voucher) */}
             <div
               id="printable-voucher"
-              className="bg-white border-2 border-slate-800 p-8 sm:p-12 rounded-3xl shadow-xl space-y-8 print:border-none print:shadow-none print:p-4 print:rounded-none print:m-0"
+              className="relative overflow-hidden bg-white border-2 border-slate-800 p-8 sm:p-12 rounded-3xl shadow-xl space-y-8 print:border-none print:shadow-none print:p-4 print:rounded-none print:m-0"
             >
+              {/* Hard Constraint (Section 0): Prominent Sample Watermark (Screen and Print) */}
+              {!institutionalConfig.isTaxCertificateValid && (
+                <>
+                  <div className="bg-rose-50 border-2 border-dashed border-rose-500 text-rose-800 p-3.5 rounded-2xl text-center text-xs font-black uppercase tracking-widest shadow-xs print:bg-slate-100 print:text-black print:border-slate-800">
+                    ⚠️ {institutionalConfig.sampleWatermarkText} — PENDING OFFICIAL STATUTORY
+                    CLEARANCE // TODO-VERIFY
+                  </div>
+                  <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-20 select-none print-watermark">
+                    <div className="transform -rotate-45 text-rose-600/25 border-4 border-dashed border-rose-600/35 py-6 px-8 sm:px-12 text-2xl sm:text-4xl lg:text-5xl font-black tracking-widest uppercase text-center print:text-slate-900/30 print:border-slate-800/40">
+                      <div>{institutionalConfig.sampleWatermarkText}</div>
+                      <div className="text-xs sm:text-sm font-bold tracking-normal mt-2 text-rose-700/60 print:text-slate-800/60">
+                        NOT VALID FOR OFFICIAL DRC TAX EXEMPTION // TODO-VERIFY
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
               {/* Header */}
               <div className="text-center space-y-2 border-b-2 border-slate-800 pb-6">
                 <div className="flex justify-center items-center gap-3">
@@ -541,8 +560,22 @@ export function TrackDonationPage() {
                   essential drugs across all 20 Dzongkhags.
                 </p>
                 <p>
-                  This document serves as an authentic legal receipt recognized by the Department of
-                  Revenue & Customs (DRC), Ministry of Finance, Royal Government of Bhutan.
+                  {!institutionalConfig.isTaxCertificateValid ? (
+                    <span className="text-rose-700 font-semibold block bg-rose-50 p-2.5 rounded-lg border border-rose-200 mt-2 print:border-slate-400 print:bg-slate-50 print:text-slate-900">
+                      <strong>Statutory Notice ({institutionalConfig.sampleWatermarkText}):</strong>{" "}
+                      This voucher is a demonstration display and is not valid for official tax
+                      exemption or statutory revenue reporting. Authentic tax receipts recognized by
+                      the Department of Revenue & Customs (DRC), Ministry of Finance, Royal
+                      Government of Bhutan are issued exclusively by the BHTF Secretariat after
+                      audit reconciliation. // TODO-VERIFY
+                    </span>
+                  ) : (
+                    <span>
+                      This document serves as an authentic legal receipt recognized by the
+                      Department of Revenue & Customs (DRC), Ministry of Finance, Royal Government
+                      of Bhutan.
+                    </span>
+                  )}
                 </p>
               </div>
 

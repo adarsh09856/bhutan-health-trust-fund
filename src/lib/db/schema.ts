@@ -5,7 +5,10 @@ export const users = pgTable("users", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
-  role: text("role").notNull().default("ADMIN"), // SUPER_ADMIN, ADMIN, EDITOR
+  role: text("role").notNull().default("SUPER_ADMIN"), // SUPER_ADMIN, EDITOR
+  isActive: boolean("is_active").notNull().default(true),
+  failedAttempts: integer("failed_attempts").notNull().default(0),
+  lockedUntil: timestamp("locked_until"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -152,8 +155,77 @@ export const siteSettings = pgTable("site_settings", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+/**
+ * Real Database-Backed Sessions Table
+ * Enables 0ms linger instant session revocation upon account deactivation or admin logout.
+ */
+export const userSessions = pgTable("user_sessions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  tokenHash: text("token_hash").notNull().unique(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  expiresAt: timestamp("expires_at").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/**
+ * Immutable Fiduciary Audit Logs Table
+ * Strictly append-only — NO DELETE, NO UPDATE permitted.
+ */
+export const auditLogs = pgTable("audit_logs", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id, { onDelete: "set null" }),
+  userEmail: text("user_email").notNull(),
+  action: text("action").notNull(), // CREATE, UPDATE, DELETE, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, SESSION_REVOKED, SYSTEM_SETTING_CHANGED
+  entity: text("entity").notNull(), // NEWS, REPORT, POLICY, DONATION, USER, SETTING, SESSION, FAQ, TRUSTEE, PROGRAM, SYSTEM
+  entityId: text("entity_id"),
+  details: text("details"),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/**
+ * System Events Table
+ * Tracks critical server events, background tasks, and security lockdowns.
+ */
+export const systemEvents = pgTable("system_events", {
+  id: serial("id").primaryKey(),
+  eventType: text("event_type").notNull(), // STARTUP, SEED_EXECUTED, RATE_LIMIT_LOCKOUT, BACKUP, ERROR
+  message: text("message").notNull(),
+  metadata: text("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/**
+ * Procurement Steps Table
+ * Dynamic sovereign procurement lifecycle management.
+ */
+export const procurementSteps = pgTable("procurement_steps", {
+  id: serial("id").primaryKey(),
+  stepNumber: text("step_number").notNull(), // e.g. "01", "02"
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  orderIndex: integer("order_index").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+export type UserSession = typeof userSessions.$inferSelect;
+export type NewUserSession = typeof userSessions.$inferInsert;
+export type AuditLog = typeof auditLogs.$inferSelect;
+export type NewAuditLog = typeof auditLogs.$inferInsert;
+export type SystemEvent = typeof systemEvents.$inferSelect;
+export type NewSystemEvent = typeof systemEvents.$inferInsert;
+export type ProcurementStep = typeof procurementSteps.$inferSelect;
+export type NewProcurementStep = typeof procurementSteps.$inferInsert;
 export type NewsArticle = typeof newsArticles.$inferSelect;
 export type NewNewsArticle = typeof newsArticles.$inferInsert;
 export type Report = typeof reports.$inferSelect;

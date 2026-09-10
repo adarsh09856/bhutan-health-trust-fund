@@ -13,6 +13,7 @@ import type {
   NewMilestone,
   NewSiteSetting,
 } from "./schema";
+import { institutionalConfig } from "../../config/institutional";
 
 // Precomputed genuine bcrypt hash for password "Admin@BHTF2026"
 export const DEFAULT_ADMIN_PASSWORD_HASH =
@@ -625,45 +626,57 @@ export const initialSiteSettings: NewSiteSetting[] = [
   },
   {
     settingKey: "secretariat_phone",
-    settingValue: "+975 2 328999 / 338999",
+    settingValue: institutionalConfig.secretariatPhone, // TODO-VERIFY
     category: "contact",
     description: "Secretariat official telephone contact",
   },
   {
     settingKey: "secretariat_email",
-    settingValue: "info@bhtf.bt",
+    settingValue: institutionalConfig.secretariatEmail, // TODO-VERIFY
     category: "contact",
     description: "Secretariat primary contact email",
   },
   {
     settingKey: "secretariat_address",
-    settingValue: "BHTF Secretariat, Kawajangsa, Thimphu, Kingdom of Bhutan",
+    settingValue: institutionalConfig.secretariatAddress, // TODO-VERIFY
     category: "contact",
     description: "Secretariat physical headquarters address",
   },
   {
     settingKey: "bob_account_no",
-    settingValue: "100984572",
+    settingValue: institutionalConfig.bankAccountBOB, // TODO-VERIFY
     category: "banking",
     description: "Bank of Bhutan official donation account number",
   },
   {
     settingKey: "bob_account_title",
-    settingValue: "Bhutan Health Trust Fund",
+    settingValue: institutionalConfig.siteName,
     category: "banking",
     description: "Bank of Bhutan account title",
   },
   {
     settingKey: "bob_swift_code",
-    settingValue: "BOBKBTBT",
+    settingValue: institutionalConfig.swiftCodeBOB, // TODO-VERIFY
     category: "banking",
     description: "Bank of Bhutan SWIFT code for wire transfers",
   },
   {
     settingKey: "bnb_account_no",
-    settingValue: "0000023485",
+    settingValue: institutionalConfig.bankAccountBNB, // TODO-VERIFY
     category: "banking",
     description: "Bhutan National Bank account number",
+  },
+  {
+    settingKey: "bnb_swift_code",
+    settingValue: institutionalConfig.swiftCodeBNB, // TODO-VERIFY
+    category: "banking",
+    description: "Bhutan National Bank SWIFT code for wire transfers",
+  },
+  {
+    settingKey: "tax_exemption_id",
+    settingValue: institutionalConfig.taxExemptionId, // TODO-VERIFY
+    category: "statutory",
+    description: "Department of Revenue & Customs 100% Tax Exemption Reference ID",
   },
   {
     settingKey: "matching_ratio",

@@ -19,6 +19,7 @@ import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as TrackDonationRouteImport } from './routes/track-donation'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminAuditLogsRouteImport } from './routes/admin/audit-logs'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminDonationsRouteImport } from './routes/admin/donations'
 import { Route as AdminFaqsRouteImport } from './routes/admin/faqs'
@@ -28,11 +29,14 @@ import { Route as AdminMetricsRouteImport } from './routes/admin/metrics'
 import { Route as AdminMilestonesRouteImport } from './routes/admin/milestones'
 import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminPoliciesRouteImport } from './routes/admin/policies'
+import { Route as AdminProcurementRouteImport } from './routes/admin/procurement'
 import { Route as AdminProgramsRouteImport } from './routes/admin/programs'
 import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminSetupRouteImport } from './routes/admin/setup'
 import { Route as AdminSubscribersRouteImport } from './routes/admin/subscribers'
 import { Route as AdminTrusteesRouteImport } from './routes/admin/trustees'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as NewsSlugRouteImport } from './routes/news/$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -85,6 +89,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAuditLogsRoute = AdminAuditLogsRouteImport.update({
+  id: '/admin/audit-logs',
+  path: '/admin/audit-logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
@@ -130,6 +139,11 @@ const AdminPoliciesRoute = AdminPoliciesRouteImport.update({
   path: '/admin/policies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminProcurementRoute = AdminProcurementRouteImport.update({
+  id: '/admin/procurement',
+  path: '/admin/procurement',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminProgramsRoute = AdminProgramsRouteImport.update({
   id: '/admin/programs',
   path: '/admin/programs',
@@ -145,6 +159,11 @@ const AdminSettingsRoute = AdminSettingsRouteImport.update({
   path: '/admin/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSetupRoute = AdminSetupRouteImport.update({
+  id: '/admin/setup',
+  path: '/admin/setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminSubscribersRoute = AdminSubscribersRouteImport.update({
   id: '/admin/subscribers',
   path: '/admin/subscribers',
@@ -153,6 +172,11 @@ const AdminSubscribersRoute = AdminSubscribersRouteImport.update({
 const AdminTrusteesRoute = AdminTrusteesRouteImport.update({
   id: '/admin/trustees',
   path: '/admin/trustees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
@@ -171,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
   '/track-donation': typeof TrackDonationRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/faqs': typeof AdminFaqsRoute
@@ -180,11 +205,14 @@ export interface FileRoutesByFullPath {
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
   '/admin/policies': typeof AdminPoliciesRoute
+  '/admin/procurement': typeof AdminProcurementRoute
   '/admin/programs': typeof AdminProgramsRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/setup': typeof AdminSetupRoute
   '/admin/subscribers': typeof AdminSubscribersRoute
   '/admin/trustees': typeof AdminTrusteesRoute
+  '/admin/users': typeof AdminUsersRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -198,6 +226,7 @@ export interface FileRoutesByTo {
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
   '/track-donation': typeof TrackDonationRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/faqs': typeof AdminFaqsRoute
@@ -207,11 +236,14 @@ export interface FileRoutesByTo {
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
   '/admin/policies': typeof AdminPoliciesRoute
+  '/admin/procurement': typeof AdminProcurementRoute
   '/admin/programs': typeof AdminProgramsRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/setup': typeof AdminSetupRoute
   '/admin/subscribers': typeof AdminSubscribersRoute
   '/admin/trustees': typeof AdminTrusteesRoute
+  '/admin/users': typeof AdminUsersRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -226,6 +258,7 @@ export interface FileRoutesById {
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
   '/track-donation': typeof TrackDonationRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/faqs': typeof AdminFaqsRoute
@@ -235,11 +268,14 @@ export interface FileRoutesById {
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
   '/admin/policies': typeof AdminPoliciesRoute
+  '/admin/procurement': typeof AdminProcurementRoute
   '/admin/programs': typeof AdminProgramsRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/setup': typeof AdminSetupRoute
   '/admin/subscribers': typeof AdminSubscribersRoute
   '/admin/trustees': typeof AdminTrusteesRoute
+  '/admin/users': typeof AdminUsersRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -255,6 +291,7 @@ export interface FileRouteTypes {
     | '/policies'
     | '/reports'
     | '/track-donation'
+    | '/admin/audit-logs'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/faqs'
@@ -264,11 +301,14 @@ export interface FileRouteTypes {
     | '/admin/milestones'
     | '/admin/news'
     | '/admin/policies'
+    | '/admin/procurement'
     | '/admin/programs'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/setup'
     | '/admin/subscribers'
     | '/admin/trustees'
+    | '/admin/users'
     | '/news/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -282,6 +322,7 @@ export interface FileRouteTypes {
     | '/policies'
     | '/reports'
     | '/track-donation'
+    | '/admin/audit-logs'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/faqs'
@@ -291,11 +332,14 @@ export interface FileRouteTypes {
     | '/admin/milestones'
     | '/admin/news'
     | '/admin/policies'
+    | '/admin/procurement'
     | '/admin/programs'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/setup'
     | '/admin/subscribers'
     | '/admin/trustees'
+    | '/admin/users'
     | '/news/$slug'
     | '/admin'
   id:
@@ -309,6 +353,7 @@ export interface FileRouteTypes {
     | '/policies'
     | '/reports'
     | '/track-donation'
+    | '/admin/audit-logs'
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/faqs'
@@ -318,11 +363,14 @@ export interface FileRouteTypes {
     | '/admin/milestones'
     | '/admin/news'
     | '/admin/policies'
+    | '/admin/procurement'
     | '/admin/programs'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/setup'
     | '/admin/subscribers'
     | '/admin/trustees'
+    | '/admin/users'
     | '/news/$slug'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -337,6 +385,7 @@ export interface RootRouteChildren {
   PoliciesRoute: typeof PoliciesRoute
   ReportsRoute: typeof ReportsRoute
   TrackDonationRoute: typeof TrackDonationRoute
+  AdminAuditLogsRoute: typeof AdminAuditLogsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDonationsRoute: typeof AdminDonationsRoute
   AdminFaqsRoute: typeof AdminFaqsRoute
@@ -346,11 +395,14 @@ export interface RootRouteChildren {
   AdminMilestonesRoute: typeof AdminMilestonesRoute
   AdminNewsRoute: typeof AdminNewsRoute
   AdminPoliciesRoute: typeof AdminPoliciesRoute
+  AdminProcurementRoute: typeof AdminProcurementRoute
   AdminProgramsRoute: typeof AdminProgramsRoute
   AdminReportsRoute: typeof AdminReportsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSetupRoute: typeof AdminSetupRoute
   AdminSubscribersRoute: typeof AdminSubscribersRoute
   AdminTrusteesRoute: typeof AdminTrusteesRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -426,6 +478,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/audit-logs': {
+      id: '/admin/audit-logs'
+      path: '/admin/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AdminAuditLogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
@@ -489,6 +548,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPoliciesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/procurement': {
+      id: '/admin/procurement'
+      path: '/admin/procurement'
+      fullPath: '/admin/procurement'
+      preLoaderRoute: typeof AdminProcurementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/programs': {
       id: '/admin/programs'
       path: '/admin/programs'
@@ -510,6 +576,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/setup': {
+      id: '/admin/setup'
+      path: '/admin/setup'
+      fullPath: '/admin/setup'
+      preLoaderRoute: typeof AdminSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/subscribers': {
       id: '/admin/subscribers'
       path: '/admin/subscribers'
@@ -522,6 +595,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/trustees'
       fullPath: '/admin/trustees'
       preLoaderRoute: typeof AdminTrusteesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news/$slug': {
@@ -554,6 +634,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoliciesRoute: PoliciesRoute,
   ReportsRoute: ReportsRoute,
   TrackDonationRoute: TrackDonationRoute,
+  AdminAuditLogsRoute: AdminAuditLogsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDonationsRoute: AdminDonationsRoute,
   AdminFaqsRoute: AdminFaqsRoute,
@@ -563,11 +644,14 @@ const rootRouteChildren: RootRouteChildren = {
   AdminMilestonesRoute: AdminMilestonesRoute,
   AdminNewsRoute: AdminNewsRoute,
   AdminPoliciesRoute: AdminPoliciesRoute,
+  AdminProcurementRoute: AdminProcurementRoute,
   AdminProgramsRoute: AdminProgramsRoute,
   AdminReportsRoute: AdminReportsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminSetupRoute: AdminSetupRoute,
   AdminSubscribersRoute: AdminSubscribersRoute,
   AdminTrusteesRoute: AdminTrusteesRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport

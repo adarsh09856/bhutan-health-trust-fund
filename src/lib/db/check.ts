@@ -31,12 +31,11 @@ async function check() {
       tablesRes.rows.map((r: any) => r.table_name),
     );
 
-    const usersRes = await client.query("SELECT id, email, name, role, password_hash FROM users;");
+    const usersRes = await client.query("SELECT id, email, name, role, is_active FROM users;");
     console.log(`>> Users in database (${usersRes.rows.length}):`);
     for (const u of usersRes.rows) {
-      const isMatch = bcrypt.compareSync("Admin@BHTF2026", u.password_hash);
       console.log(
-        `  - [${u.role}] ${u.email} (Password 'Admin@BHTF2026' matches hash: ${isMatch})`,
+        `  - [${u.role}] ${u.email} (${u.name}) — Active: ${u.is_active}`,
       );
     }
 

@@ -23,6 +23,7 @@ import {
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { EndowmentCalculator } from "@/components/endowment-calculator";
+import { institutionalConfig } from "@/config/institutional";
 
 export const Route = createFileRoute("/get-involved")({
   head: () => ({
@@ -273,10 +274,18 @@ function GetInvolvedPage() {
 
                     <div className="space-y-2 font-mono text-slate-700">
                       <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
-                        <span>Account: {settings["bob_account_no"] || "100984572"}</span>
+                        {/* Section 0 Hard Constraint: Institutional Placeholder // TODO-VERIFY */}
+                        <span>
+                          Account:{" "}
+                          {settings["bob_account_no"] || institutionalConfig.bankAccountBOB}
+                        </span>
                         <button
                           type="button"
-                          onClick={() => handleCopy(settings["bob_account_no"] || "100984572")}
+                          onClick={() =>
+                            handleCopy(
+                              settings["bob_account_no"] || institutionalConfig.bankAccountBOB,
+                            )
+                          }
                           className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
                           title="Copy Account Number"
                         >
@@ -284,11 +293,12 @@ function GetInvolvedPage() {
                         </button>
                       </div>
                       <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                        Title: {settings["bob_account_title"] || "Bhutan Health Trust Fund"}
+                        Title: {settings["bob_account_title"] || institutionalConfig.siteName}
                       </div>
                       <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                        {/* Section 0 Hard Constraint: SWIFT Placeholder // TODO-VERIFY */}
                         Branch: Thimphu Main Branch (SWIFT:{" "}
-                        {settings["bob_swift_code"] || "BOBKBTBT"})
+                        {settings["bob_swift_code"] || institutionalConfig.swiftCodeBOB})
                       </div>
                     </div>
 

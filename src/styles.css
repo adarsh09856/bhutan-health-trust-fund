@@ -177,3 +177,23 @@
   background-size: 200% 100%;
   animation: shimmer 2.5s infinite;
 }
+
+/* Print CSS for Sovereign Documents & Statutory Watermarks */
+@media print {
+  @page {
+    margin: 1.5cm;
+    size: A4 portrait;
+  }
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .print-watermark {
+    display: flex !important;
+    opacity: 0.3 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

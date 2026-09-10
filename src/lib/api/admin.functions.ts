@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 import { db } from "../db";
+import { requireAdminFromRequest, requireSuperAdminFromRequest } from "../auth.server";
 
 // --- Dashboard Analytics ---
 export const getDashboardAnalytics = createServerFn({ method: "GET" }).handler(async () => {
@@ -570,5 +572,250 @@ export const updateAdminSetting = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    return await db.updateSetting(data.key.trim(), data.value.trim());
+    const admin = await requireAdminFromRequest();
+    const res = await db.updateSetting(data.key.trim(), data.value.trim());
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "UPDATE_SETTING",
+      entity: "SETTING",
+      entityId: data.key,
+      details: `Updated setting ${data.key} = ${data.value}`,
+    });
+
+    return res;
+  });
+
+// --- User Management & Session Revocation Functions (Super Admin Only) ---
+export const getAdminUsers = createServerFn({ method: "GET" }).handler(async () => {
+  await requireSuperAdminFromRequest();
+  return await db.getAllUsers();
+});
+
+export const createAdminUser = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      name: z.string().min(2, "Name is required"),
+      email: z.string().email("Valid email required"),
+      password: z.string().min(8, "Password must be at least 8 characters"),
+      role: z.enum(["SUPER_ADMIN", "EDITOR"]).default("EDITOR"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    const passwordHash = bcrypt.hashSync(data.password, 12);
+    const user = await db.createUser({
+      name: data.name.trim(),
+      email: data.email.trim().toLowerCase(),
+      passwordHash,
+      role: data.role,
+    });
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "CREATE_USER",
+      entity: "USER",
+      entityId: String(user.id),
+      details: `Created user ${user.email} with role ${user.role}.`,
+    });
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      isActive: user.isActive,
+      createdAt: user.createdAt,
+    };
+  });
+
+export const updateAdminUser = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      name: z.string().optional(),
+      role: z.enum(["SUPER_ADMIN", "EDITOR"]).optional(),
+      isActive: z.boolean().optional(),
+      password: z.string().min(8).optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    const updateData: any = {};
+    if (data.name) updateData.name = data.name.trim();
+    if (data.role) updateData.role = data.role;
+    if (data.isActive !== undefined) {
+      updateData.isActive = data.isActive;
+      // If deactivating user, revoke all active sessions immediately
+      if (!data.isActive) {
+        await db.revokeAllUserSessions(data.id);
+      }
+    }
+    if (data.password) {
+      updateData.passwordHash = bcrypt.hashSync(data.password, 12);
+      // Revoke old sessions when password changes
+      await db.revokeAllUserSessions(data.id);
+    }
+
+    const updated = await db.updateUser(data.id, updateData);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "UPDATE_USER",
+      entity: "USER",
+      entityId: String(data.id),
+      details: `Updated parameters: ${Object.keys(updateData).join(", ")}`,
+    });
+
+    return updated;
+  });
+
+export const deleteAdminUser = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    if (admin.id === data.id) {
+      throw new Error("Cannot delete your own administrator account.");
+    }
+    await db.revokeAllUserSessions(data.id);
+    const success = await db.deleteUser(data.id);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "DELETE_USER",
+      entity: "USER",
+      entityId: String(data.id),
+      details: `Permanently deleted user #${data.id}`,
+    });
+
+    return { success };
+  });
+
+export const getUserSessions = createServerFn({ method: "GET" })
+  .validator(z.object({ userId: z.number() }))
+  .handler(async ({ data }) => {
+    await requireSuperAdminFromRequest();
+    return await db.getActiveSessionsForUser(data.userId);
+  });
+
+export const revokeUserSession = createServerFn({ method: "POST" })
+  .validator(z.object({ sessionId: z.number() }))
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    const success = await db.revokeSession(data.sessionId);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "REVOKE_SESSION",
+      entity: "SESSION",
+      entityId: String(data.sessionId),
+      details: `Session #${data.sessionId} revoked by super admin.`,
+    });
+
+    return { success };
+  });
+
+// --- Audit Logs & System Events Functions (Super Admin Only) ---
+export const getAdminAuditLogs = createServerFn({ method: "GET" })
+  .validator(
+    z
+      .object({
+        limit: z.number().optional().default(100),
+        offset: z.number().optional().default(0),
+      })
+      .optional(),
+  )
+  .handler(async ({ data }) => {
+    await requireSuperAdminFromRequest();
+    return await db.getAuditLogs(data?.limit, data?.offset);
+  });
+
+export const getAdminSystemEvents = createServerFn({ method: "GET" })
+  .validator(z.object({ limit: z.number().optional().default(100) }).optional())
+  .handler(async ({ data }) => {
+    await requireSuperAdminFromRequest();
+    return await db.getSystemEvents(data?.limit);
+  });
+
+// --- Procurement Steps CMS Functions ---
+export const getAdminProcurementSteps = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
+  return await db.getProcurementSteps();
+});
+
+export const createAdminProcurementStep = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      stepNumber: z.string().min(1),
+      title: z.string().min(3),
+      description: z.string().min(5),
+      orderIndex: z.number().default(0),
+      isActive: z.boolean().default(true),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const step = await db.createProcurementStep(data);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "CREATE_PROCUREMENT_STEP",
+      entity: "PROCUREMENT",
+      entityId: String(step.id),
+      details: `Created step ${step.stepNumber}: ${step.title}`,
+    });
+
+    return step;
+  });
+
+export const updateAdminProcurementStep = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      stepNumber: z.string().optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      orderIndex: z.number().optional(),
+      isActive: z.boolean().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const { id, ...rest } = data;
+    const step = await db.updateProcurementStep(id, rest);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "UPDATE_PROCUREMENT_STEP",
+      entity: "PROCUREMENT",
+      entityId: String(id),
+      details: `Updated procurement step #${id}`,
+    });
+
+    return step;
+  });
+
+export const deleteAdminProcurementStep = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const success = await db.deleteProcurementStep(data.id);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "DELETE_PROCUREMENT_STEP",
+      entity: "PROCUREMENT",
+      entityId: String(data.id),
+      details: `Deleted procurement step #${data.id}`,
+    });
+
+    return { success };
   });

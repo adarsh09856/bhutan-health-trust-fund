@@ -20,6 +20,7 @@ import {
 import { subscribeNewsletter } from "@/lib/api/public.functions";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
+import { institutionalConfig } from "@/config/institutional";
 
 export function SiteFooter() {
   const [email, setEmail] = useState("");
@@ -177,18 +178,27 @@ export function SiteFooter() {
           <ul className="space-y-3.5 text-xs text-slate-400 font-medium">
             <li className="flex items-start gap-2.5">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-amber-400" />
-              <span>BHTF Secretariat, Kawajangsa, Thimphu, Kingdom of Bhutan</span>
+              {/* Section 0 Institutional Config // TODO-VERIFY */}
+              <span>{institutionalConfig.secretariatAddress}</span>
             </li>
             <li className="flex items-center gap-2.5">
               <Phone className="h-4 w-4 shrink-0 text-emerald-400" />
-              <a href="tel:+9752328999" className="hover:text-white transition">
-                +975 2 328999 / 338999
+              {/* Section 0 Institutional Config // TODO-VERIFY */}
+              <a
+                href={`tel:${institutionalConfig.secretariatPhone.replace(/[^0-9+]/g, "")}`}
+                className="hover:text-white transition"
+              >
+                {institutionalConfig.secretariatPhone}
               </a>
             </li>
             <li className="flex items-center gap-2.5">
               <Mail className="h-4 w-4 shrink-0 text-emerald-400" />
-              <a href="mailto:info@bhtf.bt" className="hover:text-white transition">
-                info@bhtf.bt / secretariat@bhtf.bt
+              {/* Section 0 Institutional Config // TODO-VERIFY */}
+              <a
+                href={`mailto:${institutionalConfig.secretariatEmail}`}
+                className="hover:text-white transition"
+              >
+                {institutionalConfig.secretariatEmail}
               </a>
             </li>
             <li className="pt-1">

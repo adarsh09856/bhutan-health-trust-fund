@@ -1,8 +1,8 @@
-import { eq, desc, asc, sql } from "drizzle-orm";
+import { eq, desc, asc, sql, and, gt } from "drizzle-orm";
 import { drizzleDb } from "./client";
 import * as schema from "./schema";
+import { ensureDatabaseSchema } from "./init";
 import {
-  initialAdminUsers,
   initialNewsArticles,
   initialReports,
   initialPolicies,
@@ -18,6 +18,14 @@ import {
 } from "./seed-data";
 import type {
   User,
+  UserSession,
+  NewUserSession,
+  AuditLog,
+  NewAuditLog,
+  SystemEvent,
+  NewSystemEvent,
+  ProcurementStep,
+  NewProcurementStep,
   NewsArticle,
   Report,
   Policy,
@@ -63,20 +71,6 @@ class BHTFDataStore {
     } catch (err: any) {
       console.warn("[PostgreSQL findUserByEmail Warning]:", err?.message || err);
     }
-
-    const fallbackUser = initialAdminUsers.find((u) => u.email.toLowerCase() === normalized);
-    if (fallbackUser) {
-      return {
-        id: 1,
-        name: fallbackUser.name,
-        email: fallbackUser.email,
-        passwordHash: fallbackUser.passwordHash || "",
-        role: fallbackUser.role || "ADMIN",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-    }
-
     return null;
   }
 
@@ -943,7 +937,309 @@ class BHTFDataStore {
       recentInquiries: allInquiries.slice(0, 5),
     };
   }
+
+  // --- Sessions Management ---
+  public async createSession(
+    userId: number,
+    tokenHash: string,
+    ipAddress?: string,
+    userAgent?: string,
+    expiresAt?: Date,
+  ): Promise<UserSession> {
+    const exp = expiresAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const [session] = await drizzleDb
+      .insert(schema.userSessions)
+      .values({
+        userId,
+        tokenHash,
+        ipAddress: ipAddress || null,
+        userAgent: userAgent || null,
+        expiresAt: exp,
+        isActive: true,
+      })
+      .returning();
+    return session;
+  }
+
+  public async findSessionByTokenHash(
+    tokenHash: string,
+  ): Promise<{ session: UserSession; user: User } | null> {
+    try {
+      const rows = await drizzleDb
+        .select({
+          session: schema.userSessions,
+          user: schema.users,
+        })
+        .from(schema.userSessions)
+        .innerJoin(schema.users, eq(schema.userSessions.userId, schema.users.id))
+        .where(
+          and(
+            eq(schema.userSessions.tokenHash, tokenHash),
+            eq(schema.userSessions.isActive, true),
+            gt(schema.userSessions.expiresAt, new Date()),
+            eq(schema.users.isActive, true),
+          ),
+        );
+
+      if (rows.length > 0) {
+        return rows[0];
+      }
+    } catch (err: any) {
+      console.warn("[PostgreSQL findSessionByTokenHash Warning]:", err?.message || err);
+    }
+    return null;
+  }
+
+  public async revokeSession(sessionId: number): Promise<boolean> {
+    const [updated] = await drizzleDb
+      .update(schema.userSessions)
+      .set({ isActive: false })
+      .where(eq(schema.userSessions.id, sessionId))
+      .returning();
+    return !!updated;
+  }
+
+  public async revokeAllUserSessions(userId: number): Promise<boolean> {
+    await drizzleDb
+      .update(schema.userSessions)
+      .set({ isActive: false })
+      .where(eq(schema.userSessions.userId, userId));
+    return true;
+  }
+
+  public async getActiveSessionsForUser(userId: number): Promise<UserSession[]> {
+    return await drizzleDb
+      .select()
+      .from(schema.userSessions)
+      .where(
+        and(
+          eq(schema.userSessions.userId, userId),
+          eq(schema.userSessions.isActive, true),
+          gt(schema.userSessions.expiresAt, new Date()),
+        ),
+      )
+      .orderBy(desc(schema.userSessions.createdAt));
+  }
+
+  // --- Audit Logging & System Events ---
+  public async logAuditEvent(data: {
+    userId?: number | null;
+    userEmail: string;
+    action: string;
+    entity: string;
+    entityId?: string | null;
+    details?: string | null;
+    ipAddress?: string | null;
+    userAgent?: string | null;
+  }): Promise<void> {
+    try {
+      await drizzleDb.insert(schema.auditLogs).values({
+        userId: data.userId || null,
+        userEmail: data.userEmail,
+        action: data.action,
+        entity: data.entity,
+        entityId: data.entityId || null,
+        details: data.details || null,
+        ipAddress: data.ipAddress || null,
+        userAgent: data.userAgent || null,
+      });
+    } catch (err: any) {
+      console.warn("[PostgreSQL logAuditEvent Warning]:", err?.message || err);
+    }
+  }
+
+  public async getAuditLogs(limit = 100, offset = 0): Promise<AuditLog[]> {
+    try {
+      return await drizzleDb
+        .select()
+        .from(schema.auditLogs)
+        .orderBy(desc(schema.auditLogs.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAuditLogs Warning]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async logSystemEvent(
+    eventType: string,
+    message: string,
+    metadata?: string,
+  ): Promise<void> {
+    try {
+      await drizzleDb.insert(schema.systemEvents).values({
+        eventType,
+        message,
+        metadata: metadata || null,
+      });
+    } catch (err: any) {
+      console.warn("[PostgreSQL logSystemEvent Warning]:", err?.message || err);
+    }
+  }
+
+  public async getSystemEvents(limit = 100): Promise<SystemEvent[]> {
+    try {
+      return await drizzleDb
+        .select()
+        .from(schema.systemEvents)
+        .orderBy(desc(schema.systemEvents.createdAt))
+        .limit(limit);
+    } catch (err: any) {
+      console.warn("[PostgreSQL getSystemEvents Warning]:", err?.message || err);
+      return [];
+    }
+  }
+
+  // --- User Management & Security Lockouts ---
+  public async recordFailedLoginAttempt(
+    email: string,
+  ): Promise<{ locked: boolean; lockedUntil: Date | null; attempts: number }> {
+    const normalized = email.trim().toLowerCase();
+    const [user] = await drizzleDb
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.email, normalized));
+
+    if (!user) return { locked: false, lockedUntil: null, attempts: 0 };
+
+    const attempts = (user.failedAttempts || 0) + 1;
+    let lockedUntil: Date | null = null;
+    let locked = false;
+
+    if (attempts >= 5) {
+      // 15-minute progressive account lockout
+      lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+      locked = true;
+    }
+
+    await drizzleDb
+      .update(schema.users)
+      .set({
+        failedAttempts: attempts,
+        lockedUntil,
+      })
+      .where(eq(schema.users.id, user.id));
+
+    return { locked, lockedUntil, attempts };
+  }
+
+  public async resetFailedLoginAttempts(userId: number): Promise<void> {
+    await drizzleDb
+      .update(schema.users)
+      .set({
+        failedAttempts: 0,
+        lockedUntil: null,
+      })
+      .where(eq(schema.users.id, userId));
+  }
+
+  public async hasAnySuperAdmin(): Promise<boolean> {
+    try {
+      const [res] = await drizzleDb
+        .select({ count: sql<number>`count(*)` })
+        .from(schema.users)
+        .where(and(eq(schema.users.role, "SUPER_ADMIN"), eq(schema.users.isActive, true)));
+      return Number(res?.count || 0) > 0;
+    } catch {
+      return false;
+    }
+  }
+
+  public async getAllUsers(): Promise<Omit<User, "passwordHash">[]> {
+    try {
+      const usersList = await drizzleDb
+        .select()
+        .from(schema.users)
+        .orderBy(desc(schema.users.createdAt));
+      return usersList.map(({ passwordHash, ...u }) => u);
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllUsers Warning]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async createUser(data: {
+    name: string;
+    email: string;
+    passwordHash: string;
+    role?: string;
+  }): Promise<User> {
+    const [user] = await drizzleDb
+      .insert(schema.users)
+      .values({
+        name: data.name,
+        email: data.email.trim().toLowerCase(),
+        passwordHash: data.passwordHash,
+        role: data.role || "EDITOR",
+        isActive: true,
+        failedAttempts: 0,
+      })
+      .returning();
+    return user;
+  }
+
+  public async updateUser(
+    id: number,
+    data: Partial<{ name: string; role: string; isActive: boolean; passwordHash: string }>,
+  ): Promise<User | null> {
+    const [updated] = await drizzleDb
+      .update(schema.users)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.users.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteUser(id: number): Promise<boolean> {
+    const deleted = await drizzleDb.delete(schema.users).where(eq(schema.users.id, id)).returning();
+    return deleted.length > 0;
+  }
+
+  // --- Procurement Steps CMS ---
+  public async getProcurementSteps(): Promise<ProcurementStep[]> {
+    try {
+      return await drizzleDb
+        .select()
+        .from(schema.procurementSteps)
+        .orderBy(asc(schema.procurementSteps.orderIndex));
+    } catch (err: any) {
+      console.warn("[PostgreSQL getProcurementSteps Warning]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async createProcurementStep(data: NewProcurementStep): Promise<ProcurementStep> {
+    const [step] = await drizzleDb.insert(schema.procurementSteps).values(data).returning();
+    return step;
+  }
+
+  public async updateProcurementStep(
+    id: number,
+    data: Partial<NewProcurementStep>,
+  ): Promise<ProcurementStep | null> {
+    const [updated] = await drizzleDb
+      .update(schema.procurementSteps)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(schema.procurementSteps.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteProcurementStep(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.procurementSteps)
+      .where(eq(schema.procurementSteps.id, id))
+      .returning();
+    return deleted.length > 0;
+  }
 }
 
 // Global Singleton for BHTF Data Store
 export const db = new BHTFDataStore();
+
+// Trigger idempotent schema check on initialization
+ensureDatabaseSchema().catch(() => {});

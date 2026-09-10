@@ -192,3 +192,8 @@ export const getPublicSettings = createServerFn({ method: "GET" }).handler(async
   }
   return map;
 });
+
+// --- Get Public Procurement Steps ---
+export const getPublicProcurementSteps = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getProcurementSteps();
+});

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { institutionalConfig } from "@/config/institutional";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -140,8 +141,9 @@ function ContactPage() {
                     <span className="font-extrabold text-slate-900 block">
                       Secretariat Headquarters
                     </span>
+                    {/* Section 0 Institutional Config // TODO-VERIFY */}
                     <span className="text-slate-600 leading-snug block mt-0.5">
-                      {settings["secretariat_address"] || "Kawajangsa, Thimphu, Kingdom of Bhutan"}
+                      {settings["secretariat_address"] || institutionalConfig.secretariatAddress}
                     </span>
                     <span className="text-[11px] text-slate-400 block mt-0.5">
                       (Adjacent to Ministry of Health)
@@ -155,12 +157,16 @@ function ContactPage() {
                   </div>
                   <div>
                     <span className="font-extrabold text-slate-900 block">Telephone Desks</span>
+                    {/* Section 0 Institutional Config // TODO-VERIFY */}
                     <span className="text-slate-600 block mt-0.5 font-mono">
-                      {settings["secretariat_phone"] || "+975 2 328999 / 338999"}
+                      {settings["secretariat_phone"] || institutionalConfig.secretariatPhone}
                     </span>
                     <span className="text-[11px] text-emerald-700 font-bold block mt-0.5">
-                      Emergency Helpline: {settings["emergency_hotline"] || "112"} (
-                      {settings["emergency_hotline_label"] || "24/7"})
+                      Emergency Helpline:{" "}
+                      {settings["emergency_hotline"] || institutionalConfig.emergencyHelpline} (
+                      {settings["emergency_hotline_label"] ||
+                        institutionalConfig.emergencyHelplineLabel}
+                      )
                     </span>
                   </div>
                 </div>
@@ -171,11 +177,12 @@ function ContactPage() {
                   </div>
                   <div>
                     <span className="font-extrabold text-slate-900 block">Official Inquiries</span>
+                    {/* Section 0 Institutional Config // TODO-VERIFY */}
                     <a
-                      href={`mailto:${settings["secretariat_email"] || "info@bhtf.bt"}`}
+                      href={`mailto:${settings["secretariat_email"] || institutionalConfig.secretariatEmail}`}
                       className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono"
                     >
-                      {settings["secretariat_email"] || "info@bhtf.bt"}
+                      {settings["secretariat_email"] || institutionalConfig.secretariatEmail}
                     </a>
                   </div>
                 </div>

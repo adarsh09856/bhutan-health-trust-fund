@@ -20,6 +20,8 @@ import {
   BarChart3,
   History,
   Sliders,
+  Scale,
+  UserCheck,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { getDashboardAnalytics } from "@/lib/api/admin.functions";
@@ -47,6 +49,7 @@ const cmsNavItems = [
   { to: "/admin/news", label: "News & Press Releases", icon: Newspaper },
   { to: "/admin/reports", label: "Reports & RAA Audits", icon: FileText },
   { to: "/admin/policies", label: "Policies & Royal Charters", icon: ShieldCheck },
+  { to: "/admin/procurement", label: "Procurement Cycle CMS", icon: Scale },
 ];
 
 const governanceNavItems = [
@@ -54,6 +57,8 @@ const governanceNavItems = [
   { to: "/admin/faqs", label: "FAQs & Helpdesk", icon: HelpCircle },
   { to: "/admin/metrics", label: "National Impact Stats", icon: BarChart3 },
   { to: "/admin/milestones", label: "Historical Timeline", icon: History },
+  { to: "/admin/users", label: "Admin Users & Roles", icon: UserCheck },
+  { to: "/admin/audit-logs", label: "Fiduciary Audit Logs", icon: ShieldCheck },
   { to: "/admin/settings", label: "Site Settings & Config", icon: Sliders },
 ];
 
