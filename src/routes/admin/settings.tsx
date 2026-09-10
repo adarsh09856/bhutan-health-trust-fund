@@ -1,10 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
-import {
-  getAdminSettings,
-  updateAdminSetting,
-} from "@/lib/api/admin.functions";
+import { getAdminSettings, updateAdminSetting } from "@/lib/api/admin.functions";
 import type { SiteSetting } from "@/lib/db/schema";
 import {
   Sliders,
@@ -105,14 +102,16 @@ export function AdminSettingsPage() {
       id: "matching",
       title: "Sovereign Matching & Institutional Policy",
       icon: Coins,
-      description: "Multiplier ratio guaranteed by the Royal Government and site-wide announcement banners.",
+      description:
+        "Multiplier ratio guaranteed by the Royal Government and site-wide announcement banners.",
       keys: ["matching_ratio", "announcement_banner", "announcement_banner_enabled"],
     },
     {
       id: "contact",
       title: "Emergency Helplines & Secretariat Contacts",
       icon: Phone,
-      description: "Direct emergency contacts displayed in headers, footers, and the citizen contact portal.",
+      description:
+        "Direct emergency contacts displayed in headers, footers, and the citizen contact portal.",
       keys: [
         "emergency_hotline",
         "emergency_hotline_label",
@@ -148,7 +147,8 @@ export function AdminSettingsPage() {
               Global Site Settings & Fiduciary Hub
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Configure sovereign matching multipliers, emergency hotlines, designated banking accounts, and public portal announcements.
+              Configure sovereign matching multipliers, emergency hotlines, designated banking
+              accounts, and public portal announcements.
             </p>
           </div>
 
@@ -167,7 +167,11 @@ export function AdminSettingsPage() {
               disabled={savingAll}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-emerald-700/20 transition cursor-pointer disabled:opacity-50"
             >
-              {savingAll ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {savingAll ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
               Save All Changes
             </button>
           </div>
@@ -225,7 +229,8 @@ export function AdminSettingsPage() {
                                 <button
                                   type="button"
                                   onClick={() => {
-                                    const next = formValues[s.settingKey] === "true" ? "false" : "true";
+                                    const next =
+                                      formValues[s.settingKey] === "true" ? "false" : "true";
                                     handleChange(s.settingKey, next);
                                   }}
                                   className={`px-4 py-2 rounded-xl text-xs font-bold border transition cursor-pointer ${
@@ -234,7 +239,9 @@ export function AdminSettingsPage() {
                                       : "bg-slate-100 border-slate-200 text-slate-500"
                                   }`}
                                 >
-                                  {formValues[s.settingKey] === "true" ? "ENABLED (Live)" : "DISABLED"}
+                                  {formValues[s.settingKey] === "true"
+                                    ? "ENABLED (Live)"
+                                    : "DISABLED"}
                                 </button>
                               </div>
                             ) : (
@@ -252,7 +259,11 @@ export function AdminSettingsPage() {
                               disabled={isSaving}
                               className="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 text-slate-700 border border-slate-200 transition shrink-0 cursor-pointer disabled:opacity-50"
                             >
-                              {isSaving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Update"}
+                              {isSaving ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                              ) : (
+                                "Update"
+                              )}
                             </button>
                           </div>
                         </div>

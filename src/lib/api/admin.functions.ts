@@ -23,7 +23,7 @@ export const createNewsArticle = createServerFn({ method: "POST" })
       coverImage: z.string().default("/src/assets/news-vaccine.jpg"),
       author: z.string().default("BHTF Media"),
       isPublished: z.boolean().default(true),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createNews({
@@ -48,7 +48,7 @@ export const updateNewsArticle = createServerFn({ method: "POST" })
       content: z.string().optional(),
       coverImage: z.string().optional(),
       isPublished: z.boolean().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -75,7 +75,7 @@ export const createAdminReport = createServerFn({ method: "POST" })
       fileUrl: z.string().min(1),
       fileSize: z.string().default("2.5 MB"),
       description: z.string().min(5),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createReport({
@@ -104,7 +104,7 @@ export const updateAdminReport = createServerFn({ method: "POST" })
       fileUrl: z.string().optional(),
       fileSize: z.string().optional(),
       description: z.string().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -126,7 +126,7 @@ export const createAdminPolicy = createServerFn({ method: "POST" })
       content: z.string().min(10),
       fileUrl: z.string().optional(),
       effectiveDate: z.string().default("2024"),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createPolicy({
@@ -150,7 +150,7 @@ export const updateAdminPolicy = createServerFn({ method: "POST" })
       content: z.string().optional(),
       fileUrl: z.string().optional(),
       effectiveDate: z.string().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -187,7 +187,7 @@ export const createAdminDonation = createServerFn({ method: "POST" })
       status: z.enum(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"]).default("VERIFIED"),
       message: z.string().optional(),
       isAnonymous: z.boolean().default(false),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const refNo = `BHTF-REM-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -210,7 +210,7 @@ export const updateDonationStatus = createServerFn({ method: "POST" })
     z.object({
       id: z.number(),
       status: z.enum(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"]),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.updateDonationStatus(data.id, data.status);
@@ -236,7 +236,7 @@ export const createAdminInquiry = createServerFn({ method: "POST" })
       message: z.string().min(5),
       channel: z.enum(["WALK_IN", "PHONE", "EMAIL"]).default("WALK_IN"),
       loggedBy: z.string().min(2),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createInquiry({
@@ -256,7 +256,7 @@ export const updateInquiryStatus = createServerFn({ method: "POST" })
       id: z.number(),
       status: z.enum(["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"]),
       replyNotes: z.string().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.updateInquiryStatus(data.id, data.status, data.replyNotes);
@@ -278,7 +278,7 @@ export const createAdminSubscriber = createServerFn({ method: "POST" })
     z.object({
       email: z.string().email(),
       isActive: z.boolean().default(true),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.adminAddSubscriber(data.email, data.isActive);
@@ -289,7 +289,7 @@ export const updateAdminSubscriberStatus = createServerFn({ method: "POST" })
     z.object({
       id: z.number(),
       isActive: z.boolean(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.updateSubscriberStatus(data.id, data.isActive);
@@ -317,7 +317,7 @@ export const createAdminProgram = createServerFn({ method: "POST" })
       targetDzongkhags: z.string().default("All 20 Dzongkhags"),
       beneficiariesReached: z.string().default("780,000+ citizens"),
       status: z.enum(["ACTIVE", "PAUSED", "COMPLETED"]).default("ACTIVE"),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createProgram({
@@ -344,7 +344,7 @@ export const updateAdminProgram = createServerFn({ method: "POST" })
       targetDzongkhags: z.string().optional(),
       beneficiariesReached: z.string().optional(),
       status: z.string().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -373,7 +373,7 @@ export const createAdminTrustee = createServerFn({ method: "POST" })
       photoUrl: z.string().optional(),
       orderIndex: z.number().default(0),
       isActive: z.boolean().default(true),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createTrustee({
@@ -400,7 +400,7 @@ export const updateAdminTrustee = createServerFn({ method: "POST" })
       photoUrl: z.string().optional(),
       orderIndex: z.number().optional(),
       isActive: z.boolean().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -426,7 +426,7 @@ export const createAdminFaq = createServerFn({ method: "POST" })
       category: z.string().default("General"),
       orderIndex: z.number().default(0),
       isPublished: z.boolean().default(true),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createFaq({
@@ -447,7 +447,7 @@ export const updateAdminFaq = createServerFn({ method: "POST" })
       category: z.string().optional(),
       orderIndex: z.number().optional(),
       isPublished: z.boolean().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -475,7 +475,7 @@ export const createAdminMetric = createServerFn({ method: "POST" })
       badge: z.string().default("Verified"),
       orderIndex: z.number().default(0),
       isActive: z.boolean().default(true),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createImpactMetric({
@@ -500,7 +500,7 @@ export const updateAdminMetric = createServerFn({ method: "POST" })
       badge: z.string().optional(),
       orderIndex: z.number().optional(),
       isActive: z.boolean().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -525,7 +525,7 @@ export const createAdminMilestone = createServerFn({ method: "POST" })
       title: z.string().min(3),
       description: z.string().min(5),
       orderIndex: z.number().default(0),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.createMilestone({
@@ -544,7 +544,7 @@ export const updateAdminMilestone = createServerFn({ method: "POST" })
       title: z.string().optional(),
       description: z.string().optional(),
       orderIndex: z.number().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const { id, ...rest } = data;
@@ -567,10 +567,8 @@ export const updateAdminSetting = createServerFn({ method: "POST" })
     z.object({
       key: z.string().min(1),
       value: z.string(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     return await db.updateSetting(data.key.trim(), data.value.trim());
   });
-
-

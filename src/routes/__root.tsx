@@ -78,15 +78,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
-      { name: "description", content: "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese." },
+      {
+        name: "description",
+        content:
+          "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese.",
+      },
       { name: "author", content: "Bhutan Health Trust Fund" },
-      { property: "og:title", content: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
-      { property: "og:description", content: "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese." },
+      {
+        property: "og:title",
+        content: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan",
+      },
+      {
+        property: "og:description",
+        content:
+          "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@bhtf" },
-      { name: "twitter:title", content: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
-      { name: "twitter:description", content: "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese." },
+      {
+        name: "twitter:title",
+        content: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Bhutan Health Trust Fund finances essential medicines and vaccines to strengthen primary healthcare for every Bhutanese.",
+      },
       { property: "og:image", content: "/assets/hero-bhutan.jpg" },
       { name: "twitter:image", content: "/assets/hero-bhutan.jpg" },
     ],

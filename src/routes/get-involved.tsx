@@ -192,7 +192,8 @@ function GetInvolvedPage() {
               Make a Healthcare Contribution Pledge
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA Payment Gateway, or direct bank transfer.
+              Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA
+              Payment Gateway, or direct bank transfer.
             </p>
           </div>
 
@@ -208,10 +209,14 @@ function GetInvolvedPage() {
                     <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
                       Bhutan Health Trust Fund
                     </h3>
-                    <p className="text-xs text-slate-500">Royal Charter Autonomous Statutory Entity</p>
+                    <p className="text-xs text-slate-500">
+                      Royal Charter Autonomous Statutory Entity
+                    </p>
                   </div>
                   <div className="text-left sm:text-right">
-                    <span className="text-xs text-slate-400 font-semibold block">Tracking Reference:</span>
+                    <span className="text-xs text-slate-400 font-semibold block">
+                      Tracking Reference:
+                    </span>
                     <span className="text-xl font-mono font-extrabold text-emerald-700">
                       {receiptData.referenceNo}
                     </span>
@@ -259,37 +264,41 @@ function GetInvolvedPage() {
                     </div>
                   </div>
 
-                    {/* Bank Deposit Box */}
-                    <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
-                      <div className="font-bold text-slate-900 flex items-center gap-2 border-b pb-2">
-                        <Building className="h-4 w-4 text-emerald-700" />
-                        <span>Bank of Bhutan Official Account</span>
-                      </div>
+                  {/* Bank Deposit Box */}
+                  <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
+                    <div className="font-bold text-slate-900 flex items-center gap-2 border-b pb-2">
+                      <Building className="h-4 w-4 text-emerald-700" />
+                      <span>Bank of Bhutan Official Account</span>
+                    </div>
 
-                      <div className="space-y-2 font-mono text-slate-700">
-                        <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
-                          <span>Account: {settings["bob_account_no"] || "100984572"}</span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopy(settings["bob_account_no"] || "100984572")}
-                            className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
-                            title="Copy Account Number"
-                          >
-                            <Copy className="h-4 w-4" />
-                          </button>
-                        </div>
-                        <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                          Title: {settings["bob_account_title"] || "Bhutan Health Trust Fund"}
-                        </div>
-                        <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                          Branch: Thimphu Main Branch (SWIFT: {settings["bob_swift_code"] || "BOBKBTBT"})
-                        </div>
+                    <div className="space-y-2 font-mono text-slate-700">
+                      <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
+                        <span>Account: {settings["bob_account_no"] || "100984572"}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(settings["bob_account_no"] || "100984572")}
+                          className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
+                          title="Copy Account Number"
+                        >
+                          <Copy className="h-4 w-4" />
+                        </button>
                       </div>
+                      <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                        Title: {settings["bob_account_title"] || "Bhutan Health Trust Fund"}
+                      </div>
+                      <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                        Branch: Thimphu Main Branch (SWIFT:{" "}
+                        {settings["bob_swift_code"] || "BOBKBTBT"})
+                      </div>
+                    </div>
 
                     <p className="text-[11px] text-slate-500 leading-relaxed pt-1">
                       ⚠️ Please enter your Reference{" "}
-                      <strong className="text-slate-900 font-mono">{receiptData.referenceNo}</strong> into the
-                      narration/remarks field during transfer. You can track your remittance and download an official DRC tax certificate anytime at{" "}
+                      <strong className="text-slate-900 font-mono">
+                        {receiptData.referenceNo}
+                      </strong>{" "}
+                      into the narration/remarks field during transfer. You can track your
+                      remittance and download an official DRC tax certificate anytime at{" "}
                       <Link to="/track-donation" className="text-emerald-700 font-bold underline">
                         Track My Donation
                       </Link>
@@ -300,7 +309,8 @@ function GetInvolvedPage() {
 
                 <div className="pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
                   <span className="text-xs text-slate-500 flex items-center gap-1.5">
-                    <ShieldCheck className="h-4 w-4 text-emerald-600" /> Stamped acknowledgment logged for tax deduction.
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" /> Stamped acknowledgment
+                    logged for tax deduction.
                   </span>
 
                   <div className="flex flex-wrap items-center gap-3">
@@ -365,7 +375,9 @@ function GetInvolvedPage() {
                   Or Specify Custom Amount (Nu.)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-3 text-sm font-bold text-slate-400">Nu.</span>
+                  <span className="absolute left-4 top-3 text-sm font-bold text-slate-400">
+                    Nu.
+                  </span>
                   <input
                     type="number"
                     min={50}
@@ -475,7 +487,10 @@ function GetInvolvedPage() {
                   onChange={(e) => setIsAnonymous(e.target.checked)}
                   className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
                 />
-                <label htmlFor="anonCheck" className="text-xs font-medium text-slate-600 cursor-pointer">
+                <label
+                  htmlFor="anonCheck"
+                  className="text-xs font-medium text-slate-600 cursor-pointer"
+                >
                   List this contribution as "Anonymous Benefactor" in public annual reports
                 </label>
               </div>

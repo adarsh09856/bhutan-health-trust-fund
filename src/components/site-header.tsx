@@ -56,7 +56,10 @@ export function SiteHeader() {
       {/* Floating Glass Capsule Navigation Island */}
       <div className="mx-auto max-w-7xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.12)] px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-200 hover:border-emerald-500/40 hover:shadow-[0_14px_45px_rgba(0,0,0,0.16)]">
         {/* Logo & Dzongkha Title in Capsule */}
-        <Link to="/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 whitespace-nowrap">
+        <Link
+          to="/"
+          className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 whitespace-nowrap"
+        >
           <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 border border-amber-200/60 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105">
             <img
               src={logo}
@@ -382,25 +385,19 @@ export function SiteHeader() {
               { to: "/contact", label: "Contact Secretariat" },
             ].map((item) => {
               const isActive =
-                item.to === "/"
-                  ? location.pathname === "/"
-                  : location.pathname.startsWith(item.to);
+                item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to);
 
               return (
                 <Link
                   key={item.to}
                   to={item.to}
                   className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
-                    isActive
-                      ? "bg-slate-900 text-white shadow-xs"
-                      : "text-slate-700 hover:bg-white"
+                    isActive ? "bg-slate-900 text-white shadow-xs" : "text-slate-700 hover:bg-white"
                   }`}
                 >
                   <span>{item.label}</span>
                   <ChevronRight
-                    className={`h-3.5 w-3.5 ${
-                      isActive ? "text-amber-400" : "text-slate-400"
-                    }`}
+                    className={`h-3.5 w-3.5 ${isActive ? "text-amber-400" : "text-slate-400"}`}
                   />
                 </Link>
               );

@@ -72,7 +72,13 @@ const values = [
   },
 ];
 
-const trustees: { name?: string; role: string; organization: string; badge: string; desc: string }[] = [
+const trustees: {
+  name?: string;
+  role: string;
+  organization: string;
+  badge: string;
+  desc: string;
+}[] = [
   {
     role: "Chairperson of the Board",
     organization: "Ministry of Health, RGOB",
@@ -157,23 +163,25 @@ function About() {
       .catch(() => {});
   }, []);
 
-  const displayTrustees = liveTrustees.length > 0
-    ? liveTrustees.map((t) => ({
-        role: t.role,
-        organization: t.organization,
-        badge: t.badge,
-        desc: t.bio,
-        name: t.name,
-      }))
-    : trustees;
+  const displayTrustees =
+    liveTrustees.length > 0
+      ? liveTrustees.map((t) => ({
+          role: t.role,
+          organization: t.organization,
+          badge: t.badge,
+          desc: t.bio,
+          name: t.name,
+        }))
+      : trustees;
 
-  const displayMilestones = liveMilestones.length > 0
-    ? liveMilestones.map((m) => ({
-        year: m.year,
-        title: m.title,
-        desc: m.description,
-      }))
-    : milestones;
+  const displayMilestones =
+    liveMilestones.length > 0
+      ? liveMilestones.map((m) => ({
+          year: m.year,
+          title: m.title,
+          desc: m.description,
+        }))
+      : milestones;
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
@@ -196,15 +204,17 @@ function About() {
             </h2>
             <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
               <p>
-                In the Kingdom of Bhutan, healthcare is recognized by the Constitution as a fundamental human right.
-                Under the visionary leadership of His Majesty the King, the Bhutan Health Trust Fund (BHTF) was
-                established to ensure that universal access to free primary healthcare is never compromised by external
-                economic shocks or donor phase-outs.
+                In the Kingdom of Bhutan, healthcare is recognized by the Constitution as a
+                fundamental human right. Under the visionary leadership of His Majesty the King, the
+                Bhutan Health Trust Fund (BHTF) was established to ensure that universal access to
+                free primary healthcare is never compromised by external economic shocks or donor
+                phase-outs.
               </p>
               <p>
-                Operating as an autonomous statutory body, BHTF manages a permanent sovereign endowment whose returns are
-                solely dedicated to procuring essential drugs and universal vaccines for every hospital and
-                Primary Health Centre (BHU) across all 20 Dzongkhags.
+                Operating as an autonomous statutory body, BHTF manages a permanent sovereign
+                endowment whose returns are solely dedicated to procuring essential drugs and
+                universal vaccines for every hospital and Primary Health Centre (BHU) across all 20
+                Dzongkhags.
               </p>
             </div>
 
@@ -232,14 +242,22 @@ function About() {
               >
                 <div className="flex items-center justify-between mb-2.5">
                   <div className="flex items-center gap-3">
-                    <div className={`h-10 w-10 rounded-xl grid place-items-center border ${v.color}`}>
+                    <div
+                      className={`h-10 w-10 rounded-xl grid place-items-center border ${v.color}`}
+                    >
                       <v.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">{v.title}</h3>
+                    <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+                      {v.title}
+                    </h3>
                   </div>
-                  <span className="text-[10px] font-black text-emerald-800 tracking-wider">{v.dzongkha}</span>
+                  <span className="text-[10px] font-black text-emerald-800 tracking-wider">
+                    {v.dzongkha}
+                  </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">{v.text}</p>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  {v.text}
+                </p>
               </div>
             ))}
           </div>
@@ -257,8 +275,9 @@ function About() {
               Board of Trustees & Oversight
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed">
-              BHTF is governed by an eminent multi-sectoral Board of Trustees comprising royal government leadership,
-              multilateral health authorities, and civil society representatives.
+              BHTF is governed by an eminent multi-sectoral Board of Trustees comprising royal
+              government leadership, multilateral health authorities, and civil society
+              representatives.
             </p>
           </div>
 
@@ -284,7 +303,9 @@ function About() {
                         {t.name}
                       </span>
                     )}
-                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition">{t.role}</h3>
+                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition">
+                      {t.role}
+                    </h3>
                     <span className="text-xs font-bold text-emerald-700 block mt-0.5">
                       {t.organization}
                     </span>
@@ -313,7 +334,8 @@ function About() {
             Milestones in Health Sovereignty
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-3">
-            From an ambitious vision at the World Health Assembly in Geneva to an enduring multi-billion sovereign healthcare corpus.
+            From an ambitious vision at the World Health Assembly in Geneva to an enduring
+            multi-billion sovereign healthcare corpus.
           </p>
         </div>
 
@@ -333,7 +355,9 @@ function About() {
                   {m.year}
                 </span>
                 <h3 className="font-extrabold text-base sm:text-lg text-slate-900">{m.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">{m.desc}</p>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  {m.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -346,7 +370,8 @@ function About() {
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black">Support the Sovereign Health Shield</h3>
             <p className="text-xs sm:text-sm text-emerald-100 max-w-xl font-normal">
-              Every contribution is matched 1:1 by the Royal Government of Bhutan to guarantee free medicines for generations.
+              Every contribution is matched 1:1 by the Royal Government of Bhutan to guarantee free
+              medicines for generations.
             </p>
           </div>
           <Link

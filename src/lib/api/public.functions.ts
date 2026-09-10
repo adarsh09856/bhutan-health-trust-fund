@@ -10,7 +10,7 @@ export const submitContactInquiry = createServerFn({ method: "POST" })
       email: z.string().email("Invalid email address"),
       subject: z.string().min(3, "Subject must be at least 3 characters"),
       message: z.string().min(10, "Message must be at least 10 characters"),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const inquiry = await db.createInquiry({
@@ -36,10 +36,16 @@ export const submitDonationPledge = createServerFn({ method: "POST" })
       donorEmail: z.string().email("Valid email is required"),
       donorPhone: z.string().optional(),
       amountNu: z.number().min(50, "Minimum donation is Nu. 50"),
-      paymentMethod: z.enum(["MBOB", "BNB_PAY", "RMA_GATEWAY", "BANK_TRANSFER", "INTERNATIONAL_CARD"]),
+      paymentMethod: z.enum([
+        "MBOB",
+        "BNB_PAY",
+        "RMA_GATEWAY",
+        "BANK_TRANSFER",
+        "INTERNATIONAL_CARD",
+      ]),
       message: z.string().optional(),
       isAnonymous: z.boolean().default(false),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const refNo = `BHTF-DON-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -122,7 +128,7 @@ export const lookupDonation = createServerFn({ method: "POST" })
     z.object({
       referenceNo: z.string().min(3, "Reference number is required"),
       donorEmail: z.string().email("Valid donor email is required"),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const donation = await db.findDonationByReference(data.referenceNo.trim());
@@ -133,7 +139,8 @@ export const lookupDonation = createServerFn({ method: "POST" })
     ) {
       return {
         success: false as const,
-        error: "No contribution record found matching that Reference Number and Donor Email. Please verify both details.",
+        error:
+          "No contribution record found matching that Reference Number and Donor Email. Please verify both details.",
       };
     }
 
@@ -185,4 +192,3 @@ export const getPublicSettings = createServerFn({ method: "GET" }).handler(async
   }
   return map;
 });
-

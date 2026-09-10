@@ -153,7 +153,8 @@ export function AdminInquiriesPage() {
         data: {
           id: selectedInquiry.id,
           status,
-          replyNotes: replyNotes + (responseMessage ? `\n[Dispatched Response]: ${responseMessage}` : ""),
+          replyNotes:
+            replyNotes + (responseMessage ? `\n[Dispatched Response]: ${responseMessage}` : ""),
         },
       });
       toast.success(`Inquiry ticket updated to ${status}.`);
@@ -182,16 +183,46 @@ export function AdminInquiriesPage() {
 
   const getInquiryCategory = (subject: string, message: string) => {
     const text = (subject + " " + message).toLowerCase();
-    if (text.includes("whistleblower") || text.includes("corruption") || text.includes("irregularity")) {
-      return { label: "Confidential Ombudsman Report", color: "bg-rose-100 text-rose-800 border-rose-300", isWhistleblower: true };
+    if (
+      text.includes("whistleblower") ||
+      text.includes("corruption") ||
+      text.includes("irregularity")
+    ) {
+      return {
+        label: "Confidential Ombudsman Report",
+        color: "bg-rose-100 text-rose-800 border-rose-300",
+        isWhistleblower: true,
+      };
     }
-    if (text.includes("donation") || text.includes("tax") || text.includes("receipt") || text.includes("voucher")) {
-      return { label: "Donation & Tax Voucher Query", color: "bg-emerald-100 text-emerald-800 border-emerald-300", isWhistleblower: false };
+    if (
+      text.includes("donation") ||
+      text.includes("tax") ||
+      text.includes("receipt") ||
+      text.includes("voucher")
+    ) {
+      return {
+        label: "Donation & Tax Voucher Query",
+        color: "bg-emerald-100 text-emerald-800 border-emerald-300",
+        isWhistleblower: false,
+      };
     }
-    if (text.includes("medicine") || text.includes("vaccine") || text.includes("hospital") || text.includes("clinic")) {
-      return { label: "Health Commodity Alert", color: "bg-amber-100 text-amber-800 border-amber-300", isWhistleblower: false };
+    if (
+      text.includes("medicine") ||
+      text.includes("vaccine") ||
+      text.includes("hospital") ||
+      text.includes("clinic")
+    ) {
+      return {
+        label: "Health Commodity Alert",
+        color: "bg-amber-100 text-amber-800 border-amber-300",
+        isWhistleblower: false,
+      };
     }
-    return { label: "General Citizen Inquiry", color: "bg-blue-100 text-blue-800 border-blue-300", isWhistleblower: false };
+    return {
+      label: "General Citizen Inquiry",
+      color: "bg-blue-100 text-blue-800 border-blue-300",
+      isWhistleblower: false,
+    };
   };
 
   const filteredInquiries = inquiries.filter((iq) => {
@@ -219,7 +250,8 @@ export function AdminInquiriesPage() {
               Inquiries & Ombudsman Console
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Manage public citizen correspondence, partnership proposals, and confidential anti-corruption reports.
+              Manage public citizen correspondence, partnership proposals, and confidential
+              anti-corruption reports.
             </p>
           </div>
 
@@ -236,13 +268,17 @@ export function AdminInquiriesPage() {
         {/* Triage Overview Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-1">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Messages</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Total Messages
+            </span>
             <div className="text-2xl font-black text-slate-900 font-mono">{inquiries.length}</div>
             <span className="text-[11px] text-slate-400">All recorded communications</span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-1">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Unread Tickets</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Unread Tickets
+            </span>
             <div className="text-2xl font-black text-rose-700 font-mono">
               {inquiries.filter((i) => i.status === "UNREAD").length}
             </div>
@@ -250,7 +286,9 @@ export function AdminInquiriesPage() {
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-1">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">In Progress</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              In Progress
+            </span>
             <div className="text-2xl font-black text-amber-700 font-mono">
               {inquiries.filter((i) => i.status === "IN_PROGRESS").length}
             </div>
@@ -258,7 +296,9 @@ export function AdminInquiriesPage() {
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-1">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Resolved / Replied</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Resolved / Replied
+            </span>
             <div className="text-2xl font-black text-emerald-700 font-mono">
               {inquiries.filter((i) => i.status === "REPLIED" || i.status === "ARCHIVED").length}
             </div>
@@ -303,7 +343,9 @@ export function AdminInquiriesPage() {
         ) : filteredInquiries.length === 0 ? (
           <div className="bg-white rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
             <Mail className="h-10 w-10 text-slate-400 mx-auto" />
-            <h3 className="font-bold text-slate-800 text-sm">No inquiries match your filter criteria</h3>
+            <h3 className="font-bold text-slate-800 text-sm">
+              No inquiries match your filter criteria
+            </h3>
             <p className="text-xs text-slate-500">Try modifying your search query.</p>
           </div>
         ) : (
@@ -329,7 +371,7 @@ export function AdminInquiriesPage() {
                             <span className="font-extrabold text-slate-900">{iq.name}</span>
                             <span
                               className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${getChannelBadge(
-                                iq.channel
+                                iq.channel,
                               )}`}
                             >
                               {iq.channel || "WEB"}
@@ -344,9 +386,15 @@ export function AdminInquiriesPage() {
                         </td>
 
                         <td className="py-4 px-5 space-y-1 max-w-xs sm:max-w-md">
-                          <div className="font-bold text-slate-900 leading-snug line-clamp-1">{iq.subject}</div>
-                          <div className="text-[11px] text-slate-500 line-clamp-1">{iq.message}</div>
-                          <span className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${cat.color}`}>
+                          <div className="font-bold text-slate-900 leading-snug line-clamp-1">
+                            {iq.subject}
+                          </div>
+                          <div className="text-[11px] text-slate-500 line-clamp-1">
+                            {iq.message}
+                          </div>
+                          <span
+                            className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${cat.color}`}
+                          >
                             {cat.label}
                           </span>
                         </td>
@@ -361,8 +409,8 @@ export function AdminInquiriesPage() {
                               iq.status === "UNREAD"
                                 ? "bg-rose-100 text-rose-800"
                                 : iq.status === "IN_PROGRESS"
-                                ? "bg-amber-100 text-amber-800"
-                                : "bg-emerald-100 text-emerald-800"
+                                  ? "bg-amber-100 text-amber-800"
+                                  : "bg-emerald-100 text-emerald-800"
                             }`}
                           >
                             {iq.status}
@@ -421,18 +469,24 @@ export function AdminInquiriesPage() {
               <div className="space-y-4 text-xs">
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <span className="text-slate-400 font-medium block">Sender & Intake Channel:</span>
+                    <span className="text-slate-400 font-medium block">
+                      Sender & Intake Channel:
+                    </span>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <strong className="text-slate-900 text-sm font-black">{selectedInquiry.name}</strong>
+                      <strong className="text-slate-900 text-sm font-black">
+                        {selectedInquiry.name}
+                      </strong>
                       <span
                         className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${getChannelBadge(
-                          selectedInquiry.channel
+                          selectedInquiry.channel,
                         )}`}
                       >
                         {selectedInquiry.channel || "WEB"}
                       </span>
                     </div>
-                    <span className="text-slate-500 block font-mono mt-0.5">{selectedInquiry.email}</span>
+                    <span className="text-slate-500 block font-mono mt-0.5">
+                      {selectedInquiry.email}
+                    </span>
                     {selectedInquiry.loggedBy && (
                       <div className="text-[10px] font-bold text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded-md border border-purple-200 inline-block mt-1">
                         Secretariat Officer: {selectedInquiry.loggedBy}
@@ -441,7 +495,9 @@ export function AdminInquiriesPage() {
                   </div>
                   <div className="text-left sm:text-right">
                     <span className="text-slate-400 font-medium block">Received:</span>
-                    <span className="font-mono text-slate-700">{new Date(selectedInquiry.createdAt).toLocaleString()}</span>
+                    <span className="font-mono text-slate-700">
+                      {new Date(selectedInquiry.createdAt).toLocaleString()}
+                    </span>
                   </div>
                 </div>
 
@@ -554,8 +610,12 @@ export function AdminInquiriesPage() {
                     <Sparkles className="h-4 w-4" />
                   </div>
                   <div>
-                    <h3 className="font-black text-slate-900 text-base">Log Walk-in / Phone Inquiry</h3>
-                    <p className="text-[11px] text-slate-500 font-medium">Record in-person or telephone correspondence at the Secretariat</p>
+                    <h3 className="font-black text-slate-900 text-base">
+                      Log Walk-in / Phone Inquiry
+                    </h3>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      Record in-person or telephone correspondence at the Secretariat
+                    </p>
                   </div>
                 </div>
                 <button

@@ -14,6 +14,7 @@ The **Bhutan Health Trust Fund (BHTF)** web platform is built with **TanStack St
 ## 🚀 Key Features
 
 ### 1. 🌐 Public Portal
+
 - **Hero & Mission Section**: Overview of BHTF's Royal Mandate, key metrics (1.2M+ benefited, 120+ essential medicines, 20 Dzongkhags reached).
 - **Dynamic News & Media (`/news` & `/news/$slug`)**: Real-time searchable and categorized press releases with reading view and social sharing.
 - **Reports & Publications (`/reports`)**: Statutory annual reports, audit reports, research publications with download tracking.
@@ -23,6 +24,7 @@ The **Bhutan Health Trust Fund (BHTF)** web platform is built with **TanStack St
 - **Pledge & Donation Generator (`/get-involved`)**: Multi-channel payment options (MBOB, BNB Pay, RMA Gateway, Bank Transfer, International Card), anonymous toggle, and printable official donation vouchers with tracking references (`BHTF-DON-XXXXXX`).
 
 ### 2. 🛡️ Complete Executive Admin Suite (`/admin/*`)
+
 - **Executive Dashboard (`/admin/dashboard`)**: KPI metric cards, Recharts monthly financial trends, recent donation ledger, and unread inquiry alerts.
 - **Donation & Financial Ledger (`/admin/donations`)**: Verify mobile/bank payments, search by reference, and export ledger to **CSV**.
 - **Inquiries Inbox (`/admin/inquiries`)**: Read citizen inquiries, manage resolution states (`UNREAD`, `IN_PROGRESS`, `REPLIED`, `ARCHIVED`), and add internal notes.
@@ -38,7 +40,7 @@ The **Bhutan Health Trust Fund (BHTF)** web platform is built with **TanStack St
 You can test the entire admin suite without connecting a live database using the built-in local store:
 
 - **Login URL**: [`/admin/login`](http://localhost:3000/admin/login)
-- **Super Admin**: `admin@bhtf.bt` / `Admin@BHTF2026` *(or click the 1-Click Demo Login button)*
+- **Super Admin**: `admin@bhtf.bt` / `Admin@BHTF2026` _(or click the 1-Click Demo Login button)_
 - **Media Editor**: `media@bhtf.bt` / `Admin@BHTF2026`
 
 ---
@@ -46,23 +48,29 @@ You can test the entire admin suite without connecting a live database using the
 ## 🛠️ Quick Start Guide
 
 ### 1. Install Dependencies
+
 ```bash
 npm install --legacy-peer-deps
 ```
 
 ### 2. Configure Environment
+
 Copy `.env.example` to `.env`:
+
 ```bash
 cp .env.example .env
 ```
 
 ### 3. Run Development Server
+
 ```bash
 npm run dev
 ```
+
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### 4. Build for Production
+
 ```bash
 npm run build
 npm run preview
@@ -73,4 +81,4 @@ npm run preview
 ## 📜 License & Royal Charter
 
 © 2026 Bhutan Health Trust Fund. All Rights Reserved.  
-*Transparency · Accountability · Sustainability*
+_Transparency · Accountability · Sustainability_

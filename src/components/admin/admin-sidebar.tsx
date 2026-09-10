@@ -27,8 +27,18 @@ import logo from "@/assets/logo.png";
 
 const crmNavItems = [
   { to: "/admin/dashboard", label: "Dashboard & KPIs", icon: LayoutDashboard },
-  { to: "/admin/donations", label: "Donors & Pledges CRM", icon: HeartHandshake, badgeKey: "pendingDonations" },
-  { to: "/admin/inquiries", label: "Inquiries & Ombudsman", icon: Mail, badgeKey: "unreadInquiries" },
+  {
+    to: "/admin/donations",
+    label: "Donors & Pledges CRM",
+    icon: HeartHandshake,
+    badgeKey: "pendingDonations",
+  },
+  {
+    to: "/admin/inquiries",
+    label: "Inquiries & Ombudsman",
+    icon: Mail,
+    badgeKey: "unreadInquiries",
+  },
   { to: "/admin/subscribers", label: "Subscribers & Audiences", icon: Users },
   { to: "/admin/programs", label: "Commodity Streams", icon: Activity },
 ];
@@ -92,7 +102,9 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
         <div className="space-y-1">
           <div className="text-[10px] uppercase font-black tracking-widest text-slate-400 px-3 mb-2 flex items-center justify-between">
             <span>Executive CRM</span>
-            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">Fiduciary</span>
+            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">
+              Fiduciary
+            </span>
           </div>
           {crmNavItems.map((item) => {
             const isActive = location.pathname === item.to;
@@ -119,7 +131,9 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
                 {badgeCount > 0 && (
                   <span
                     className={`text-[10px] font-black px-2 py-0.5 rounded-full font-mono ${
-                      isActive ? "bg-white text-emerald-800" : "bg-amber-500 text-slate-950 shadow-xs"
+                      isActive
+                        ? "bg-white text-emerald-800"
+                        : "bg-amber-500 text-slate-950 shadow-xs"
                     }`}
                   >
                     {badgeCount}
@@ -134,7 +148,9 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
         <div className="space-y-1">
           <div className="text-[10px] uppercase font-black tracking-widest text-slate-400 px-3 mb-2 flex items-center justify-between">
             <span>Institutional CMS</span>
-            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">Publishing</span>
+            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">
+              Publishing
+            </span>
           </div>
           {cmsNavItems.map((item) => {
             const isActive = location.pathname === item.to;
@@ -166,7 +182,9 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
         <div className="space-y-1">
           <div className="text-[10px] uppercase font-black tracking-widest text-slate-400 px-3 mb-2 flex items-center justify-between">
             <span>Site Control</span>
-            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">Public</span>
+            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">
+              Public
+            </span>
           </div>
           {governanceNavItems.map((item) => {
             const isActive = location.pathname === item.to;

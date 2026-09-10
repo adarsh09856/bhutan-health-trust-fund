@@ -55,9 +55,26 @@ interface DonationRecord {
 
 function numberToWords(num: number): string {
   const a = [
-    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
-    "Seventeen", "Eighteen", "Nineteen"
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
   ];
   const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
@@ -65,10 +82,27 @@ function numberToWords(num: number): string {
     if (n === 0) return "Zero";
     if (n < 20) return a[n];
     if (n < 100) return b[Math.floor(n / 10)] + (n % 10 !== 0 ? " " + a[n % 10] : "");
-    if (n < 1000) return a[Math.floor(n / 100)] + " Hundred" + (n % 100 !== 0 ? " and " + inWords(n % 100) : "");
-    if (n < 100000) return inWords(Math.floor(n / 1000)) + " Thousand" + (n % 1000 !== 0 ? " " + inWords(n % 1000) : "");
-    if (n < 10000000) return inWords(Math.floor(n / 100000)) + " Lakh" + (n % 100000 !== 0 ? " " + inWords(n % 100000) : "");
-    return inWords(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 !== 0 ? " " + inWords(n % 10000000) : "");
+    if (n < 1000)
+      return (
+        a[Math.floor(n / 100)] + " Hundred" + (n % 100 !== 0 ? " and " + inWords(n % 100) : "")
+      );
+    if (n < 100000)
+      return (
+        inWords(Math.floor(n / 1000)) +
+        " Thousand" +
+        (n % 1000 !== 0 ? " " + inWords(n % 1000) : "")
+      );
+    if (n < 10000000)
+      return (
+        inWords(Math.floor(n / 100000)) +
+        " Lakh" +
+        (n % 100000 !== 0 ? " " + inWords(n % 100000) : "")
+      );
+    return (
+      inWords(Math.floor(n / 10000000)) +
+      " Crore" +
+      (n % 10000000 !== 0 ? " " + inWords(n % 10000000) : "")
+    );
   }
 
   return "Ngultrum " + inWords(Math.floor(num)) + " Only";
@@ -140,9 +174,7 @@ export function TrackDonationPage() {
               <span className="text-xs font-black text-emerald-700 uppercase tracking-widest flex items-center gap-1.5">
                 <Lock className="h-3.5 w-3.5" /> Confidential Verification
               </span>
-              <h2 className="text-xl font-black text-slate-900 mt-1">
-                Lookup Contribution Record
-              </h2>
+              <h2 className="text-xl font-black text-slate-900 mt-1">Lookup Contribution Record</h2>
             </div>
             <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
               RGOB Matching Model
@@ -166,7 +198,9 @@ export function TrackDonationPage() {
                     className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-mono font-bold uppercase focus:border-emerald-600 focus:outline-none transition"
                   />
                 </div>
-                <p className="text-[10px] text-slate-400">Found on your pledge slip or SMS remittance confirmation.</p>
+                <p className="text-[10px] text-slate-400">
+                  Found on your pledge slip or SMS remittance confirmation.
+                </p>
               </div>
 
               <div className="space-y-1.5">
@@ -184,7 +218,9 @@ export function TrackDonationPage() {
                     className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:border-emerald-600 focus:outline-none transition"
                   />
                 </div>
-                <p className="text-[10px] text-slate-400">Strictly required to verify identity and protect donor privacy.</p>
+                <p className="text-[10px] text-slate-400">
+                  Strictly required to verify identity and protect donor privacy.
+                </p>
               </div>
             </div>
 
@@ -235,7 +271,10 @@ export function TrackDonationPage() {
                 <div>
                   <h3 className="font-bold text-sm text-white">Sovereign Contribution Verified</h3>
                   <p className="text-xs text-emerald-200">
-                    Reference: <span className="font-mono font-bold text-amber-300">{donation.referenceNo}</span>
+                    Reference:{" "}
+                    <span className="font-mono font-bold text-amber-300">
+                      {donation.referenceNo}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -299,7 +338,9 @@ export function TrackDonationPage() {
                   <span className="text-2xl font-black text-slate-900 block mt-1">
                     Nu. {donation.amountNu.toLocaleString()}
                   </span>
-                  <span className="text-[10px] text-slate-500 mt-0.5 block">Direct Contribution</span>
+                  <span className="text-[10px] text-slate-500 mt-0.5 block">
+                    Direct Contribution
+                  </span>
                 </div>
 
                 <div className="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-5">
@@ -353,10 +394,11 @@ export function TrackDonationPage() {
               <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-900 text-xs flex items-start gap-3">
                 <Sparkles className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="leading-relaxed">
-                  <strong className="font-bold">DRC 100% Tax Exemption Clause:</strong> Under Section 10(b) of the
-                  Income Tax Act of the Kingdom of Bhutan, direct contributions to the Bhutan Health Trust Fund are
-                  fully deductible from gross taxable income. Click &quot;Print DRC Tax Certificate&quot; to obtain the official
-                  stamped documentation.
+                  <strong className="font-bold">DRC 100% Tax Exemption Clause:</strong> Under
+                  Section 10(b) of the Income Tax Act of the Kingdom of Bhutan, direct contributions
+                  to the Bhutan Health Trust Fund are fully deductible from gross taxable income.
+                  Click &quot;Print DRC Tax Certificate&quot; to obtain the official stamped
+                  documentation.
                 </div>
               </div>
             </div>
@@ -381,7 +423,8 @@ export function TrackDonationPage() {
                   Department of Revenue & Customs (DRC) Tax Exemption Certificate
                 </div>
                 <p className="text-[10px] text-slate-500 italic max-w-lg mx-auto mt-1">
-                  Issued pursuant to Section 10(b) of the Income Tax Act of the Kingdom of Bhutan for allowable deduction from Gross Personal / Corporate Taxable Income.
+                  Issued pursuant to Section 10(b) of the Income Tax Act of the Kingdom of Bhutan
+                  for allowable deduction from Gross Personal / Corporate Taxable Income.
                 </p>
               </div>
 
@@ -426,7 +469,9 @@ export function TrackDonationPage() {
                   <div>
                     <span className="text-slate-500">Remittance Verification:</span>
                     <p className="font-bold text-emerald-800 uppercase">
-                      {donation.status === "COMPLETED" ? "Verified & Reconciled" : "Registered Pledge"}
+                      {donation.status === "COMPLETED"
+                        ? "Verified & Reconciled"
+                        : "Registered Pledge"}
                     </p>
                   </div>
                 </div>
@@ -447,8 +492,12 @@ export function TrackDonationPage() {
                   <tbody className="divide-y divide-slate-200">
                     <tr>
                       <td className="p-3">
-                        <span className="font-bold text-slate-900">Public Healthcare Contribution Remittance</span>
-                        <p className="text-[10px] text-slate-500">100% Tax Deductible against DRC Assessment</p>
+                        <span className="font-bold text-slate-900">
+                          Public Healthcare Contribution Remittance
+                        </span>
+                        <p className="text-[10px] text-slate-500">
+                          100% Tax Deductible against DRC Assessment
+                        </p>
                       </td>
                       <td className="p-3 text-right font-mono font-bold text-slate-900">
                         Nu. {donation.amountNu.toLocaleString()}.00
@@ -456,8 +505,12 @@ export function TrackDonationPage() {
                     </tr>
                     <tr className="bg-slate-50/50">
                       <td className="p-3">
-                        <span className="font-bold text-emerald-800">RGOB 1:1 Sovereign Matching Component</span>
-                        <p className="text-[10px] text-slate-500">Allocated directly from Ministry of Finance</p>
+                        <span className="font-bold text-emerald-800">
+                          RGOB 1:1 Sovereign Matching Component
+                        </span>
+                        <p className="text-[10px] text-slate-500">
+                          Allocated directly from Ministry of Finance
+                        </p>
                       </td>
                       <td className="p-3 text-right font-mono font-bold text-emerald-800">
                         + Nu. {donation.amountNu.toLocaleString()}.00
@@ -482,10 +535,14 @@ export function TrackDonationPage() {
               {/* Statutory Attestation */}
               <div className="text-[11px] text-slate-600 leading-relaxed border-t border-slate-200 pt-4 space-y-2">
                 <p>
-                  <strong>Statutory Declaration:</strong> The Bhutan Health Trust Fund certifies that the above donation has been remitted to the permanent sovereign endowment corpus for the uninterrupted provision of primary healthcare vaccines and essential drugs across all 20 Dzongkhags.
+                  <strong>Statutory Declaration:</strong> The Bhutan Health Trust Fund certifies
+                  that the above donation has been remitted to the permanent sovereign endowment
+                  corpus for the uninterrupted provision of primary healthcare vaccines and
+                  essential drugs across all 20 Dzongkhags.
                 </p>
                 <p>
-                  This document serves as an authentic legal receipt recognized by the Department of Revenue & Customs (DRC), Ministry of Finance, Royal Government of Bhutan.
+                  This document serves as an authentic legal receipt recognized by the Department of
+                  Revenue & Customs (DRC), Ministry of Finance, Royal Government of Bhutan.
                 </p>
               </div>
 
@@ -500,7 +557,9 @@ export function TrackDonationPage() {
                 <div className="space-y-1 text-center">
                   <div className="border-b border-slate-400 w-48 mx-auto mb-2"></div>
                   <p className="font-bold text-xs text-slate-900">Authorized Officer</p>
-                  <p className="text-[10px] text-slate-500">Department of Revenue & Customs Endorsement</p>
+                  <p className="text-[10px] text-slate-500">
+                    Department of Revenue & Customs Endorsement
+                  </p>
                 </div>
               </div>
             </div>

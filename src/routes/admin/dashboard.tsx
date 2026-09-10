@@ -1,7 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { getDashboardAnalytics, updateDonationStatus, updateInquiryStatus } from "@/lib/api/admin.functions";
+import {
+  getDashboardAnalytics,
+  updateDonationStatus,
+  updateInquiryStatus,
+} from "@/lib/api/admin.functions";
 import {
   Coins,
   Mail,
@@ -147,7 +151,8 @@ export function AdminDashboardPage() {
               Executive Health Trust Overview
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
-              Supervising perpetual healthcare endowment allocations, public donation pledges, and the statutory 1:1 Royal Government matching fund for universal primary healthcare.
+              Supervising perpetual healthcare endowment allocations, public donation pledges, and
+              the statutory 1:1 Royal Government matching fund for universal primary healthcare.
             </p>
           </div>
 
@@ -161,7 +166,9 @@ export function AdminDashboardPage() {
               disabled={refreshing}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition cursor-pointer active:scale-95 disabled:opacity-50"
             >
-              <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin text-emerald-400" : ""}`} />
+              <RefreshCw
+                className={`h-4 w-4 ${refreshing ? "animate-spin text-emerald-400" : ""}`}
+              />
               <span>Sync Live Ledger</span>
             </button>
           </div>
@@ -179,7 +186,9 @@ export function AdminDashboardPage() {
               {/* Card 1: Public Contributions */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Public Contributions</span>
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Public Contributions
+                  </span>
                   <div className="h-10 w-10 rounded-2xl bg-emerald-50 text-emerald-700 grid place-items-center border border-emerald-200">
                     <Coins className="h-5 w-5" />
                   </div>
@@ -197,7 +206,9 @@ export function AdminDashboardPage() {
               {/* Card 2: 1:1 RGOB Matching Yield */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-amber-300 transition duration-200 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">1:1 RGOB Sovereign Match</span>
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    1:1 RGOB Sovereign Match
+                  </span>
                   <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-700 grid place-items-center border border-amber-200">
                     <Building2 className="h-5 w-5" />
                   </div>
@@ -215,7 +226,9 @@ export function AdminDashboardPage() {
               {/* Card 3: Combined Purchasing Yield */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-blue-300 transition duration-200 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Health Yield</span>
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Total Health Yield
+                  </span>
                   <div className="h-10 w-10 rounded-2xl bg-blue-50 text-blue-700 grid place-items-center border border-blue-200">
                     <TrendingUp className="h-5 w-5" />
                   </div>
@@ -233,14 +246,17 @@ export function AdminDashboardPage() {
               {/* Card 4: Actionable CRM Backlog */}
               <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-purple-300 transition duration-200 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Actionable Inbox</span>
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Actionable Inbox
+                  </span>
                   <div className="h-10 w-10 rounded-2xl bg-purple-50 text-purple-700 grid place-items-center border border-purple-200">
                     <Mail className="h-5 w-5" />
                   </div>
                 </div>
                 <div>
                   <div className="text-2xl font-black text-slate-900 font-mono">
-                    {data?.pendingDonationsCount || 0} Pledges · {data?.unreadInquiriesCount || 0} Inquiries
+                    {data?.pendingDonationsCount || 0} Pledges · {data?.unreadInquiriesCount || 0}{" "}
+                    Inquiries
                   </div>
                   <div className="text-xs text-purple-700 font-bold mt-1">
                     Pending Verification & Response
@@ -269,7 +285,10 @@ export function AdminDashboardPage() {
 
                 <div className="h-72 w-full pt-2">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <AreaChart
+                      data={chartData}
+                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                    >
                       <defs>
                         <linearGradient id="publicGrad" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#059669" stopOpacity={0.4} />
@@ -331,7 +350,10 @@ export function AdminDashboardPage() {
 
                   <div className="space-y-4 pt-4">
                     {regionalBufferData.map((reg, idx) => (
-                      <div key={idx} className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70 space-y-2">
+                      <div
+                        key={idx}
+                        className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70 space-y-2"
+                      >
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-extrabold text-slate-900">{reg.region}</span>
                           <span className="font-mono font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
@@ -373,7 +395,9 @@ export function AdminDashboardPage() {
                       <HeartHandshake className="h-4 w-4 text-emerald-700" />
                       <span>Recent Donation Pledges</span>
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Citizen and corporate contributions.</p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Citizen and corporate contributions.
+                    </p>
                   </div>
                   <Link
                     to="/admin/donations"
@@ -383,8 +407,10 @@ export function AdminDashboardPage() {
                   </Link>
                 </div>
 
-                {(!data?.recentDonations || data.recentDonations.length === 0) ? (
-                  <p className="text-xs text-slate-400 py-8 text-center">No recent donation pledges recorded.</p>
+                {!data?.recentDonations || data.recentDonations.length === 0 ? (
+                  <p className="text-xs text-slate-400 py-8 text-center">
+                    No recent donation pledges recorded.
+                  </p>
                 ) : (
                   <div className="space-y-3">
                     {data.recentDonations.slice(0, 5).map((d) => (
@@ -394,7 +420,9 @@ export function AdminDashboardPage() {
                       >
                         <div className="space-y-0.5">
                           <span className="font-extrabold text-slate-900 block">{d.donorName}</span>
-                          <span className="text-[11px] text-slate-400 font-mono block">{d.referenceNo} · {d.paymentMethod}</span>
+                          <span className="text-[11px] text-slate-400 font-mono block">
+                            {d.referenceNo} · {d.paymentMethod}
+                          </span>
                         </div>
 
                         <div className="text-right space-y-1">
@@ -429,7 +457,9 @@ export function AdminDashboardPage() {
                       <Mail className="h-4 w-4 text-purple-700" />
                       <span>Citizen Inquiries & Messages</span>
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Public inquiries and stakeholder correspondence.</p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Public inquiries and stakeholder correspondence.
+                    </p>
                   </div>
                   <Link
                     to="/admin/inquiries"
@@ -439,8 +469,10 @@ export function AdminDashboardPage() {
                   </Link>
                 </div>
 
-                {(!data?.recentInquiries || data.recentInquiries.length === 0) ? (
-                  <p className="text-xs text-slate-400 py-8 text-center">No citizen inquiries in inbox.</p>
+                {!data?.recentInquiries || data.recentInquiries.length === 0 ? (
+                  <p className="text-xs text-slate-400 py-8 text-center">
+                    No citizen inquiries in inbox.
+                  </p>
                 ) : (
                   <div className="space-y-3">
                     {data.recentInquiries.slice(0, 5).map((iq) => (
@@ -450,7 +482,9 @@ export function AdminDashboardPage() {
                       >
                         <div className="space-y-0.5">
                           <span className="font-extrabold text-slate-900 block">{iq.name}</span>
-                          <span className="text-[11px] text-slate-600 line-clamp-1">{iq.subject}</span>
+                          <span className="text-[11px] text-slate-600 line-clamp-1">
+                            {iq.subject}
+                          </span>
                         </div>
 
                         <div className="text-right space-y-1 shrink-0">

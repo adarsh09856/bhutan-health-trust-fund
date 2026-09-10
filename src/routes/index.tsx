@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { getPublicImpactMetrics, getPublicSettings, getPublicNews } from "@/lib/api/public.functions";
+import {
+  getPublicImpactMetrics,
+  getPublicSettings,
+  getPublicNews,
+} from "@/lib/api/public.functions";
 import type { ImpactMetric, NewsArticle } from "@/lib/db/schema";
 import {
   Users,
@@ -57,7 +61,8 @@ const quickAccess = [
     label: "Royal Mandate & About",
     desc: "Charter, Board of Trustees & Governance",
     to: "/about",
-    color: "bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20",
+    color:
+      "bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20",
     borderHover: "hover:border-emerald-400",
     bgHover: "hover:bg-emerald-50/50",
   },
@@ -66,7 +71,8 @@ const quickAccess = [
     label: "Essential Medicines",
     desc: "120+ Vital Primary Health Drugs",
     to: "/our-work",
-    color: "bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20",
+    color:
+      "bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20",
     borderHover: "hover:border-amber-400",
     bgHover: "hover:bg-amber-50/50",
   },
@@ -84,7 +90,8 @@ const quickAccess = [
     label: "Reports & Audits",
     desc: "Statutory Financial & RAA Audits",
     to: "/reports",
-    color: "bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-md shadow-purple-500/20",
+    color:
+      "bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-md shadow-purple-500/20",
     borderHover: "hover:border-purple-400",
     bgHover: "hover:bg-purple-50/50",
   },
@@ -114,7 +121,8 @@ const keyStats = [
     label: "Citizens Protected",
     desc: "Universal health coverage for every citizen across the Kingdom",
     icon: Users,
-    gradient: "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
+    gradient:
+      "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
     badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
   },
   {
@@ -175,7 +183,8 @@ const featuredNews = [
 
 const statStyles = [
   {
-    gradient: "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
+    gradient:
+      "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
     badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
   },
   {
@@ -230,33 +239,38 @@ function Index() {
       .catch(() => {});
   }, []);
 
-  const displayStats = liveMetrics.length > 0
-    ? liveMetrics.map((m, idx) => {
-        const style = statStyles[idx % statStyles.length];
-        return {
-          value: m.value,
-          label: m.label,
-          desc: m.description,
-          icon: metricIconMap[m.icon] || Users,
-          gradient: style.gradient,
-          badge: style.badge,
-        };
-      })
-    : keyStats;
+  const displayStats =
+    liveMetrics.length > 0
+      ? liveMetrics.map((m, idx) => {
+          const style = statStyles[idx % statStyles.length];
+          return {
+            value: m.value,
+            label: m.label,
+            desc: m.description,
+            icon: metricIconMap[m.icon] || Users,
+            gradient: style.gradient,
+            badge: style.badge,
+          };
+        })
+      : keyStats;
 
-  const displayNews = liveNews.length > 0
-    ? liveNews.map((n, idx) => ({
-        slug: n.slug,
-        img: n.coverImage || [newsVaccine, newsCommunity, newsReport][idx % 3],
-        category: n.category,
-        title: n.title,
-        desc: n.excerpt,
-        date: n.publishedAt
-          ? new Date(n.publishedAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })
-          : "Recent",
-        readTime: "4 min read",
-      }))
-    : featuredNews;
+  const displayNews =
+    liveNews.length > 0
+      ? liveNews.map((n, idx) => ({
+          slug: n.slug,
+          img: n.coverImage || [newsVaccine, newsCommunity, newsReport][idx % 3],
+          category: n.category,
+          title: n.title,
+          desc: n.excerpt,
+          date: n.publishedAt
+            ? new Date(n.publishedAt).toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })
+            : "Recent",
+          readTime: "4 min read",
+        }))
+      : featuredNews;
 
   return (
     <div className="flex flex-col gap-0">
@@ -307,8 +321,9 @@ function Index() {
 
               {/* Subheading */}
               <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
-                The Bhutan Health Trust Fund guarantees an uninterrupted, sustainable supply of essential
-                medicines and universal vaccines across all 20 Dzongkhags—protecting Gross National Happiness and health equity in perpetuity.
+                The Bhutan Health Trust Fund guarantees an uninterrupted, sustainable supply of
+                essential medicines and universal vaccines across all 20 Dzongkhags—protecting Gross
+                National Happiness and health equity in perpetuity.
               </p>
 
               {/* Action Buttons */}
@@ -362,7 +377,9 @@ function Index() {
 
                 {/* Corpus Main Number */}
                 <div className="space-y-1">
-                  <span className="text-xs text-slate-400 font-medium">Perpetual Health Endowment:</span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    Perpetual Health Endowment:
+                  </span>
                   <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-emerald-300 font-mono tracking-tight">
                     Nu. 3,248,500,000
                   </div>
@@ -379,8 +396,12 @@ function Index() {
                         <Syringe className="h-4 w-4" />
                       </div>
                       <div>
-                        <div className="text-xs font-black text-white">Universal Routine Vaccines</div>
-                        <div className="text-[11px] text-emerald-400">100% Childhood Coverage (14 Antigens)</div>
+                        <div className="text-xs font-black text-white">
+                          Universal Routine Vaccines
+                        </div>
+                        <div className="text-[11px] text-emerald-400">
+                          100% Childhood Coverage (14 Antigens)
+                        </div>
                       </div>
                     </div>
                     <span className="text-xs font-black text-white font-mono">Nu. 68.5M</span>
@@ -392,8 +413,12 @@ function Index() {
                         <Pill className="h-4 w-4" />
                       </div>
                       <div>
-                        <div className="text-xs font-black text-white">120+ Essential Medicines</div>
-                        <div className="text-[11px] text-amber-400">Zero Stockout Buffer across 205 Gewogs</div>
+                        <div className="text-xs font-black text-white">
+                          120+ Essential Medicines
+                        </div>
+                        <div className="text-[11px] text-amber-400">
+                          Zero Stockout Buffer across 205 Gewogs
+                        </div>
                       </div>
                     </div>
                     <span className="text-xs font-black text-white font-mono">Nu. 145.0M</span>
@@ -405,8 +430,12 @@ function Index() {
                         <ThermometerSnowflake className="h-4 w-4" />
                       </div>
                       <div>
-                        <div className="text-xs font-black text-white">Alpine Cold Chain Logistics</div>
-                        <div className="text-[11px] text-blue-400">High-Altitude Solar Refrigeration</div>
+                        <div className="text-xs font-black text-white">
+                          Alpine Cold Chain Logistics
+                        </div>
+                        <div className="text-[11px] text-blue-400">
+                          High-Altitude Solar Refrigeration
+                        </div>
                       </div>
                     </div>
                     <span className="text-xs font-black text-white font-mono">Nu. 24.2M</span>
@@ -466,7 +495,8 @@ function Index() {
                 Guaranteed Healthcare Sovereignty
               </h2>
               <p className="text-slate-300 text-xs sm:text-sm mt-2">
-                Delivering reliable funding for universal primary healthcare since establishment under Royal Vision.
+                Delivering reliable funding for universal primary healthcare since establishment
+                under Royal Vision.
               </p>
             </div>
 
@@ -476,7 +506,9 @@ function Index() {
                   key={idx}
                   className={`bg-gradient-to-b ${stat.gradient} rounded-2xl p-6 border flex flex-col items-center text-center space-y-2.5 shadow-lg transition duration-200 hover:scale-105`}
                 >
-                  <div className={`h-12 w-12 rounded-2xl border ${stat.badge} grid place-items-center mb-1 shadow-md`}>
+                  <div
+                    className={`h-12 w-12 rounded-2xl border ${stat.badge} grid place-items-center mb-1 shadow-md`}
+                  >
                     <stat.icon className="h-6 w-6" />
                   </div>
                   <div className="text-3xl sm:text-4xl font-black text-white tracking-tight font-mono">
@@ -634,8 +666,8 @@ function Index() {
             </h2>
 
             <p className="text-sm sm:text-base text-emerald-100 leading-relaxed max-w-2xl font-normal">
-              Your contribution directly builds the permanent endowment, ensuring that no hospital or remote
-              health clinic in Bhutan ever runs out of life-saving medicines or vaccines.
+              Your contribution directly builds the permanent endowment, ensuring that no hospital
+              or remote health clinic in Bhutan ever runs out of life-saving medicines or vaccines.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3.5">

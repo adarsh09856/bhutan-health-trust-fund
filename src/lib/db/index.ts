@@ -86,10 +86,7 @@ class BHTFDataStore {
 
   public async findUserById(id: number): Promise<User | null> {
     try {
-      const [user] = await drizzleDb
-        .select()
-        .from(schema.users)
-        .where(eq(schema.users.id, id));
+      const [user] = await drizzleDb.select().from(schema.users).where(eq(schema.users.id, id));
       if (user) return user;
     } catch (err: any) {
       console.warn("[PostgreSQL findUserById Warning]:", err?.message || err);
@@ -332,10 +329,7 @@ class BHTFDataStore {
   // --- Programs ---
   public async getAllPrograms(): Promise<Program[]> {
     try {
-      const res = await drizzleDb
-        .select()
-        .from(schema.programs)
-        .orderBy(asc(schema.programs.id));
+      const res = await drizzleDb.select().from(schema.programs).orderBy(asc(schema.programs.id));
       if (res.length > 0) return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllPrograms Warning]:", err?.message || err);
@@ -508,7 +502,7 @@ class BHTFDataStore {
   public async updateInquiryStatus(
     id: number,
     status: string,
-    replyNotes?: string
+    replyNotes?: string,
   ): Promise<Inquiry | null> {
     const updatePayload: Record<string, any> = { status };
     if (replyNotes !== undefined) {
@@ -729,10 +723,7 @@ class BHTFDataStore {
   }
 
   public async deleteFaq(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.faqs)
-      .where(eq(schema.faqs.id, id))
-      .returning();
+    const deleted = await drizzleDb.delete(schema.faqs).where(eq(schema.faqs.id, id)).returning();
     return deleted.length > 0;
   }
 
@@ -757,7 +748,9 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllImpactMetrics Warning]:", err?.message || err);
     }
 
-    const filtered = onlyActive ? initialImpactMetrics.filter((m) => m.isActive) : initialImpactMetrics;
+    const filtered = onlyActive
+      ? initialImpactMetrics.filter((m) => m.isActive)
+      : initialImpactMetrics;
     return filtered.map((m, idx) => ({
       id: idx + 1,
       label: m.label,
@@ -776,7 +769,10 @@ class BHTFDataStore {
     return created;
   }
 
-  public async updateImpactMetric(id: number, data: Partial<NewImpactMetric>): Promise<ImpactMetric | null> {
+  public async updateImpactMetric(
+    id: number,
+    data: Partial<NewImpactMetric>,
+  ): Promise<ImpactMetric | null> {
     const [updated] = await drizzleDb
       .update(schema.impactMetrics)
       .set(data)

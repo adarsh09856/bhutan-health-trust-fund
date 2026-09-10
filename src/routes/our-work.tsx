@@ -143,16 +143,17 @@ function OurWork() {
       .catch(() => {});
   }, []);
 
-  const displayPrograms = livePrograms.length > 0
-    ? livePrograms.map((p, idx) => ({
-        icon: progIconMap[p.icon] || Pill,
-        title: p.title,
-        badge: p.status === "ACTIVE" ? "Active Stream" : p.status,
-        text: p.summary,
-        stats: `${p.targetDzongkhags} • ${p.beneficiariesReached}`,
-        color: progColors[idx % progColors.length],
-      }))
-    : programs;
+  const displayPrograms =
+    livePrograms.length > 0
+      ? livePrograms.map((p, idx) => ({
+          icon: progIconMap[p.icon] || Pill,
+          title: p.title,
+          badge: p.status === "ACTIVE" ? "Active Stream" : p.status,
+          text: p.summary,
+          stats: `${p.targetDzongkhags} • ${p.beneficiariesReached}`,
+          color: progColors[idx % progColors.length],
+        }))
+      : programs;
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
@@ -177,7 +178,8 @@ function OurWork() {
             Health Commodities Financed by BHTF
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-3">
-            Every Ngultrum disbursed is earmarked for tangible, life-saving medical supplies that directly benefit patients.
+            Every Ngultrum disbursed is earmarked for tangible, life-saving medical supplies that
+            directly benefit patients.
           </p>
         </div>
 
@@ -253,9 +255,12 @@ function OurWork() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-emerald-800 to-slate-900 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-bold">Help Safeguard Essential Medicine Buffers</h3>
+            <h3 className="text-xl sm:text-2xl font-bold">
+              Help Safeguard Essential Medicine Buffers
+            </h3>
             <p className="text-xs sm:text-sm text-emerald-100 max-w-xl">
-              Your donations are directly multiplied 1:1 by the Royal Government of Bhutan to fund vital supplies.
+              Your donations are directly multiplied 1:1 by the Royal Government of Bhutan to fund
+              vital supplies.
             </p>
           </div>
           <Link

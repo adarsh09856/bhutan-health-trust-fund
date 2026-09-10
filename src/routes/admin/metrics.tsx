@@ -190,7 +190,7 @@ export function AdminMetricsPage() {
     (m) =>
       m.label.toLowerCase().includes(search.toLowerCase()) ||
       m.value.toLowerCase().includes(search.toLowerCase()) ||
-      m.description.toLowerCase().includes(search.toLowerCase())
+      m.description.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -211,7 +211,8 @@ export function AdminMetricsPage() {
               National Impact Statistics CMS
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Control the headline metrics, vaccine coverage percentages, and citizens protected displayed on the public portal.
+              Control the headline metrics, vaccine coverage percentages, and citizens protected
+              displayed on the public portal.
             </p>
           </div>
 
@@ -273,7 +274,11 @@ export function AdminMetricsPage() {
                       <button
                         type="button"
                         onClick={() => handleToggleActive(m)}
-                        title={m.isActive ? "Active (Click to Deactivate)" : "Inactive (Click to Activate)"}
+                        title={
+                          m.isActive
+                            ? "Active (Click to Deactivate)"
+                            : "Inactive (Click to Activate)"
+                        }
                         className="cursor-pointer"
                       >
                         {m.isActive ? (
@@ -377,7 +382,9 @@ export function AdminMetricsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-700">Metric Headline Label *</label>
+                  <label className="text-xs font-bold text-slate-700">
+                    Metric Headline Label *
+                  </label>
                   <input
                     type="text"
                     required
@@ -444,7 +451,10 @@ export function AdminMetricsPage() {
                       onChange={(e) => setIsActive(e.target.checked)}
                       className="h-4 w-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer"
                     />
-                    <label htmlFor="isActiveMetric" className="text-sm font-medium text-slate-700 cursor-pointer">
+                    <label
+                      htmlFor="isActiveMetric"
+                      className="text-sm font-medium text-slate-700 cursor-pointer"
+                    >
                       Live on Homepage
                     </label>
                   </div>

@@ -162,7 +162,8 @@ export function AdminReportsPage() {
               Reports & Audited Financials CMS
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Catalog and monitor official annual reports, Royal Audit Authority (RAA) statements, and research publications.
+              Catalog and monitor official annual reports, Royal Audit Authority (RAA) statements,
+              and research publications.
             </p>
           </div>
 
@@ -178,27 +179,39 @@ export function AdminReportsPage() {
         {/* Metrics Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Cataloged Publications</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Cataloged Publications
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
               {reports.length} Documents
             </div>
-            <span className="text-xs font-bold text-emerald-700 block">100% Unqualified RAA Audit Rating</span>
+            <span className="text-xs font-bold text-emerald-700 block">
+              100% Unqualified RAA Audit Rating
+            </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Archived Span</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Archived Span
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-amber-700 font-mono">
               2003 – 2026
             </div>
-            <span className="text-xs font-medium text-slate-500 block">23 Years of Public Accountability</span>
+            <span className="text-xs font-medium text-slate-500 block">
+              23 Years of Public Accountability
+            </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Public Downloads</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Public Downloads
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-blue-700 font-mono">
               {totalDownloads} Tracked
             </div>
-            <span className="text-xs font-medium text-blue-700 font-bold block">Telemetry Monitored</span>
+            <span className="text-xs font-medium text-blue-700 font-bold block">
+              Telemetry Monitored
+            </span>
           </div>
         </div>
 
@@ -274,9 +287,7 @@ export function AdminReportsPage() {
                         </span>
                       </td>
 
-                      <td className="py-4 px-5 font-mono text-slate-600">
-                        {r.fileSize} · PDF
-                      </td>
+                      <td className="py-4 px-5 font-mono text-slate-600">{r.fileSize} · PDF</td>
 
                       <td className="py-4 px-5 font-mono font-bold text-slate-800">
                         {r.downloadCount || 0} downloads
@@ -430,11 +441,13 @@ export function AdminReportsPage() {
                   >
                     {saving ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" /> {editingId ? "Saving..." : "Cataloging..."}
+                        <Loader2 className="h-4 w-4 animate-spin" />{" "}
+                        {editingId ? "Saving..." : "Cataloging..."}
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-4 w-4" /> {editingId ? "Save Changes" : "Catalog Report"}
+                        <Sparkles className="h-4 w-4" />{" "}
+                        {editingId ? "Save Changes" : "Catalog Report"}
                       </>
                     )}
                   </button>

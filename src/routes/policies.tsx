@@ -158,12 +158,16 @@ function Policies() {
               className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 space-y-6"
             >
               <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-                <div className={`h-11 w-11 rounded-2xl grid place-items-center border ${cat.color}`}>
+                <div
+                  className={`h-11 w-11 rounded-2xl grid place-items-center border ${cat.color}`}
+                >
                   <cat.icon className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-slate-900">{cat.category}</h3>
-                  <span className="text-xs text-slate-500 font-medium">Official Regulatory Instruments</span>
+                  <span className="text-xs text-slate-500 font-medium">
+                    Official Regulatory Instruments
+                  </span>
                 </div>
               </div>
 
@@ -174,13 +178,17 @@ function Policies() {
                     className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3 hover:bg-white hover:border-emerald-300 transition"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <h4 className="font-extrabold text-sm text-slate-900 leading-snug">{item.title}</h4>
+                      <h4 className="font-extrabold text-sm text-slate-900 leading-snug">
+                        {item.title}
+                      </h4>
                       <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 shrink-0">
                         {item.badge}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-600 leading-relaxed font-normal">{item.summary}</p>
+                    <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                      {item.summary}
+                    </p>
 
                     <div className="pt-2 flex items-center justify-between border-t border-slate-200/60 text-xs">
                       <span className="text-slate-400 font-mono text-[11px]">{item.docSize}</span>
@@ -220,7 +228,9 @@ function Policies() {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl font-normal">
-            Under the Anti-Corruption Act of the Kingdom of Bhutan and BHTF Trust Regulations, any citizen or contractor may confidentially report concerns regarding procurement irregularities, conflicts of interest, or misconduct with full legal protection.
+            Under the Anti-Corruption Act of the Kingdom of Bhutan and BHTF Trust Regulations, any
+            citizen or contractor may confidentially report concerns regarding procurement
+            irregularities, conflicts of interest, or misconduct with full legal protection.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
@@ -228,7 +238,10 @@ function Policies() {
               <span className="text-slate-400 font-medium flex items-center gap-1.5">
                 <Mail className="h-4 w-4 text-emerald-400" /> Confidential Ombudsman Email:
               </span>
-              <a href="mailto:integrity@bhtf.bt" className="text-sm font-bold text-white hover:text-emerald-400 transition font-mono">
+              <a
+                href="mailto:integrity@bhtf.bt"
+                className="text-sm font-bold text-white hover:text-emerald-400 transition font-mono"
+              >
                 integrity@bhtf.bt
               </a>
             </div>
@@ -237,7 +250,10 @@ function Policies() {
               <span className="text-slate-400 font-medium flex items-center gap-1.5">
                 <Phone className="h-4 w-4 text-amber-400" /> Direct Secretariat Hotline:
               </span>
-              <a href="tel:+9752328999" className="text-sm font-bold text-white hover:text-amber-400 transition font-mono">
+              <a
+                href="tel:+9752328999"
+                className="text-sm font-bold text-white hover:text-amber-400 transition font-mono"
+              >
                 +975 2 328999 (Ext 104)
               </a>
             </div>

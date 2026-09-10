@@ -36,8 +36,16 @@ export const Route = createFileRoute("/admin/news")({
 });
 
 const coverOptions = [
-  { label: "Routine Vaccines & Cold Chain", path: "/src/assets/news-vaccine.jpg", img: newsVaccine },
-  { label: "Community Healthcare Access", path: "/src/assets/news-community.jpg", img: newsCommunity },
+  {
+    label: "Routine Vaccines & Cold Chain",
+    path: "/src/assets/news-vaccine.jpg",
+    img: newsVaccine,
+  },
+  {
+    label: "Community Healthcare Access",
+    path: "/src/assets/news-community.jpg",
+    img: newsCommunity,
+  },
   { label: "Audited Reports & Governance", path: "/src/assets/news-report.jpg", img: newsReport },
 ];
 
@@ -77,7 +85,12 @@ export function AdminNewsPage() {
   const handleTitleChange = (val: string) => {
     setTitle(val);
     if (!editingId) {
-      setSlug(val.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""));
+      setSlug(
+        val
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, ""),
+      );
     }
   };
 
@@ -164,7 +177,7 @@ export function AdminNewsPage() {
     (a) =>
       a.title.toLowerCase().includes(search.toLowerCase()) ||
       a.excerpt.toLowerCase().includes(search.toLowerCase()) ||
-      a.category.toLowerCase().includes(search.toLowerCase())
+      a.category.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -182,7 +195,8 @@ export function AdminNewsPage() {
               Press Releases & Media CMS
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Draft, edit, and publish official communications, routine vaccination announcements, and partnership milestones.
+              Draft, edit, and publish official communications, routine vaccination announcements,
+              and partnership milestones.
             </p>
           </div>
 
@@ -255,7 +269,9 @@ export function AdminNewsPage() {
                       <td className="py-4 px-5">
                         <span
                           className={`text-[11px] font-extrabold px-2.5 py-1 rounded-full ${
-                            a.isPublished ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-600"
+                            a.isPublished
+                              ? "bg-emerald-100 text-emerald-800"
+                              : "bg-slate-100 text-slate-600"
                           }`}
                         >
                           {a.isPublished ? "Published" : "Draft"}
@@ -380,11 +396,19 @@ export function AdminNewsPage() {
                         key={opt.path}
                         onClick={() => setCoverImage(opt.path)}
                         className={`p-2 rounded-2xl border-2 transition cursor-pointer flex flex-col items-center gap-2 ${
-                          coverImage === opt.path ? "border-emerald-600 bg-emerald-50/50" : "border-slate-200 hover:border-slate-300"
+                          coverImage === opt.path
+                            ? "border-emerald-600 bg-emerald-50/50"
+                            : "border-slate-200 hover:border-slate-300"
                         }`}
                       >
-                        <img src={opt.img} alt={opt.label} className="h-16 w-full object-cover rounded-xl" />
-                        <span className="text-[10px] font-bold text-slate-700 text-center">{opt.label}</span>
+                        <img
+                          src={opt.img}
+                          alt={opt.label}
+                          className="h-16 w-full object-cover rounded-xl"
+                        />
+                        <span className="text-[10px] font-bold text-slate-700 text-center">
+                          {opt.label}
+                        </span>
                       </div>
                     ))}
                   </div>

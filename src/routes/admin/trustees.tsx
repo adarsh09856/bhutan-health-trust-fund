@@ -169,7 +169,7 @@ export function AdminTrusteesPage() {
       t.name.toLowerCase().includes(search.toLowerCase()) ||
       t.role.toLowerCase().includes(search.toLowerCase()) ||
       t.organization.toLowerCase().includes(search.toLowerCase()) ||
-      t.badge.toLowerCase().includes(search.toLowerCase())
+      t.badge.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -190,7 +190,8 @@ export function AdminTrusteesPage() {
               Board of Trustees Directory
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Manage high-level fiduciary governors, committee chairs, institutional affiliations, and public bios.
+              Manage high-level fiduciary governors, committee chairs, institutional affiliations,
+              and public bios.
             </p>
           </div>
 
@@ -264,14 +265,18 @@ export function AdminTrusteesPage() {
                         <span className="text-[10px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200/60 inline-block mb-1">
                           {t.badge}
                         </span>
-                        <h3 className="text-base font-bold text-slate-900 leading-snug">{t.name}</h3>
+                        <h3 className="text-base font-bold text-slate-900 leading-snug">
+                          {t.name}
+                        </h3>
                       </div>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => handleToggleStatus(t)}
-                      title={t.isActive ? "Active (Click to Deactivate)" : "Inactive (Click to Activate)"}
+                      title={
+                        t.isActive ? "Active (Click to Deactivate)" : "Inactive (Click to Activate)"
+                      }
                       className="cursor-pointer"
                     >
                       {t.isActive ? (
@@ -383,7 +388,9 @@ export function AdminTrusteesPage() {
                   </div>
 
                   <div className="space-y-1.5 sm:col-span-2">
-                    <label className="text-xs font-bold text-slate-700">Organization / Affiliation *</label>
+                    <label className="text-xs font-bold text-slate-700">
+                      Organization / Affiliation *
+                    </label>
                     <input
                       type="text"
                       required
@@ -435,7 +442,10 @@ export function AdminTrusteesPage() {
                       onChange={(e) => setIsActive(e.target.checked)}
                       className="h-4 w-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer"
                     />
-                    <label htmlFor="isActiveCheckbox" className="text-sm font-medium text-slate-700 cursor-pointer">
+                    <label
+                      htmlFor="isActiveCheckbox"
+                      className="text-sm font-medium text-slate-700 cursor-pointer"
+                    >
                       Publish member to the public Board directory (/about)
                     </label>
                   </div>

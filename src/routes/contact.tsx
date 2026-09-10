@@ -82,9 +82,8 @@ function ContactPage() {
       .catch(() => {});
   }, []);
 
-  const displayFaqs = liveFaqs.length > 0
-    ? liveFaqs.map((f) => ({ q: f.question, a: f.answer }))
-    : faqs;
+  const displayFaqs =
+    liveFaqs.length > 0 ? liveFaqs.map((f) => ({ q: f.question, a: f.answer })) : faqs;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,11 +137,15 @@ function ContactPage() {
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-extrabold text-slate-900 block">Secretariat Headquarters</span>
+                    <span className="font-extrabold text-slate-900 block">
+                      Secretariat Headquarters
+                    </span>
                     <span className="text-slate-600 leading-snug block mt-0.5">
                       {settings["secretariat_address"] || "Kawajangsa, Thimphu, Kingdom of Bhutan"}
                     </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">(Adjacent to Ministry of Health)</span>
+                    <span className="text-[11px] text-slate-400 block mt-0.5">
+                      (Adjacent to Ministry of Health)
+                    </span>
                   </div>
                 </div>
 
@@ -156,7 +159,8 @@ function ContactPage() {
                       {settings["secretariat_phone"] || "+975 2 328999 / 338999"}
                     </span>
                     <span className="text-[11px] text-emerald-700 font-bold block mt-0.5">
-                      Emergency Helpline: {settings["emergency_hotline"] || "112"} ({settings["emergency_hotline_label"] || "24/7"})
+                      Emergency Helpline: {settings["emergency_hotline"] || "112"} (
+                      {settings["emergency_hotline_label"] || "24/7"})
                     </span>
                   </div>
                 </div>
@@ -181,9 +185,15 @@ function ContactPage() {
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-extrabold text-slate-900 block">Secretariat Office Hours</span>
-                    <span className="text-slate-600 block mt-0.5">Monday – Friday: 9:00 AM – 5:00 PM</span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">(BST Bhutan Standard Time, UTC+6)</span>
+                    <span className="font-extrabold text-slate-900 block">
+                      Secretariat Office Hours
+                    </span>
+                    <span className="text-slate-600 block mt-0.5">
+                      Monday – Friday: 9:00 AM – 5:00 PM
+                    </span>
+                    <span className="text-[11px] text-slate-400 block mt-0.5">
+                      (BST Bhutan Standard Time, UTC+6)
+                    </span>
                   </div>
                 </div>
               </div>
@@ -195,7 +205,8 @@ function ContactPage() {
                 <ShieldCheck className="h-4 w-4" /> Royal Charter Fiduciary Oversight
               </span>
               <p className="text-xs text-slate-300 leading-relaxed font-normal">
-                All communications and partnership proposals are logged with the Executive Secretariat for official Trustee review.
+                All communications and partnership proposals are logged with the Executive
+                Secretariat for official Trustee review.
               </p>
             </div>
           </div>
@@ -208,7 +219,8 @@ function ContactPage() {
               </span>
               <h3 className="text-2xl font-black text-slate-900">Send an Official Inquiry</h3>
               <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                Please complete the form below. Official responses are typically dispatched within 2 business days.
+                Please complete the form below. Official responses are typically dispatched within 2
+                business days.
               </p>
             </div>
 
@@ -217,9 +229,12 @@ function ContactPage() {
                 <div className="h-14 w-14 rounded-full bg-emerald-600 text-white grid place-items-center mx-auto shadow-md">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <h4 className="text-xl font-black text-slate-900">Inquiry Successfully Transmitted</h4>
+                <h4 className="text-xl font-black text-slate-900">
+                  Inquiry Successfully Transmitted
+                </h4>
                 <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                  Thank you. Your message has been logged with the BHTF Secretariat. A representative will contact you via email shortly.
+                  Thank you. Your message has been logged with the BHTF Secretariat. A
+                  representative will contact you via email shortly.
                 </p>
                 <button
                   type="button"

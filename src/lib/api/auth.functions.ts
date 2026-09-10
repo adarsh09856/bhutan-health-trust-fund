@@ -7,7 +7,7 @@ export const adminLogin = createServerFn({ method: "POST" })
     z.object({
       email: z.string().email("Valid email required"),
       password: z.string().min(1, "Password is required"),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     try {

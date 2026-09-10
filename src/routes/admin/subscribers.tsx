@@ -85,9 +85,7 @@ export function AdminSubscribersPage() {
     try {
       await updateAdminSubscriberStatus({ data: { id, isActive: newStatus } });
       toast.success(`Subscriber status updated to ${newStatus ? "Active" : "Unsubscribed"}.`);
-      setSubscribers((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, isActive: newStatus } : s))
-      );
+      setSubscribers((prev) => prev.map((s) => (s.id === id ? { ...s, isActive: newStatus } : s)));
     } catch {
       toast.error("Failed to update subscriber status.");
     }
@@ -117,11 +115,15 @@ export function AdminSubscribersPage() {
     ]);
 
     const csvContent =
-      "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `bhtf_subscribers_list_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute(
+      "download",
+      `bhtf_subscribers_list_${new Date().toISOString().slice(0, 10)}.csv`,
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -137,13 +139,13 @@ export function AdminSubscribersPage() {
       setCampaignSubject("");
       setCampaignBody("");
       toast.success(
-        `Official newsletter broadcast successfully transmitted to all ${subscribers.length} active subscribers!`
+        `Official newsletter broadcast successfully transmitted to all ${subscribers.length} active subscribers!`,
       );
     }, 1200);
   };
 
   const filteredSubscribers = subscribers.filter((s) =>
-    s.email.toLowerCase().includes(search.toLowerCase())
+    s.email.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -161,7 +163,8 @@ export function AdminSubscribersPage() {
               Newsletter Subscribers & Campaigns
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Manage public bulletin subscribers, export audience data, and broadcast official healthcare newsletters.
+              Manage public bulletin subscribers, export audience data, and broadcast official
+              healthcare newsletters.
             </p>
           </div>
 
@@ -195,7 +198,9 @@ export function AdminSubscribersPage() {
         {/* Metric Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active Subscribers</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Active Subscribers
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
               {subscribers.filter((s) => s.isActive).length}
             </div>
@@ -205,19 +210,25 @@ export function AdminSubscribersPage() {
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Broadcast Reach</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Broadcast Reach
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-emerald-700 font-mono">
               All 20 Dzongkhags + Global
             </div>
-            <span className="text-xs font-medium text-slate-500 block">Quarterly Impact Dispatches</span>
+            <span className="text-xs font-medium text-slate-500 block">
+              Quarterly Impact Dispatches
+            </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Average Open Rate</span>
-            <div className="text-2xl sm:text-3xl font-black text-blue-700 font-mono">
-              74.2%
-            </div>
-            <span className="text-xs font-medium text-blue-700 font-bold block">High Institutional Engagement</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Average Open Rate
+            </span>
+            <div className="text-2xl sm:text-3xl font-black text-blue-700 font-mono">74.2%</div>
+            <span className="text-xs font-medium text-blue-700 font-bold block">
+              High Institutional Engagement
+            </span>
           </div>
         </div>
 
@@ -260,9 +271,7 @@ export function AdminSubscribersPage() {
                 <tbody className="divide-y divide-slate-100">
                   {filteredSubscribers.map((s) => (
                     <tr key={s.id} className="hover:bg-slate-50/80 transition">
-                      <td className="py-4 px-5 font-mono font-bold text-slate-900">
-                        {s.email}
-                      </td>
+                      <td className="py-4 px-5 font-mono font-bold text-slate-900">{s.email}</td>
 
                       <td className="py-4 px-5 font-mono text-slate-500">
                         {new Date(s.subscribedAt).toLocaleDateString()}
@@ -331,7 +340,9 @@ export function AdminSubscribersPage() {
                   <span className="font-bold flex items-center gap-1.5">
                     <Users className="h-4 w-4 text-emerald-700" /> Target Audience:
                   </span>
-                  <span className="font-black font-mono">{subscribers.length} Verified Recipients</span>
+                  <span className="font-black font-mono">
+                    {subscribers.length} Verified Recipients
+                  </span>
                 </div>
 
                 <div className="space-y-1.5">
@@ -360,7 +371,9 @@ export function AdminSubscribersPage() {
                     <option value="Quarterly Healthcare Impact">Quarterly Healthcare Impact</option>
                     <option value="Routine Immunization Update">Routine Immunization Update</option>
                     <option value="Annual Audited Financials">Annual Audited Financials</option>
-                    <option value="CSR Partnership Announcement">CSR Partnership Announcement</option>
+                    <option value="CSR Partnership Announcement">
+                      CSR Partnership Announcement
+                    </option>
                   </select>
                 </div>
 
@@ -419,7 +432,9 @@ export function AdminSubscribersPage() {
                   </div>
                   <div>
                     <h3 className="font-black text-slate-900 text-base">Add New Subscriber</h3>
-                    <p className="text-[11px] text-slate-500 font-medium">Add citizen or partner to official bulletin list</p>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      Add citizen or partner to official bulletin list
+                    </p>
                   </div>
                 </div>
                 <button
@@ -448,9 +463,13 @@ export function AdminSubscribersPage() {
 
                 <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
                   <div>
-                    <span className="text-xs font-bold text-slate-800 block">Subscription Status</span>
+                    <span className="text-xs font-bold text-slate-800 block">
+                      Subscription Status
+                    </span>
                     <span className="text-[11px] text-slate-500">
-                      {addIsActive ? "Active recipient (will receive bulletins)" : "Inactive / Unsubscribed"}
+                      {addIsActive
+                        ? "Active recipient (will receive bulletins)"
+                        : "Inactive / Unsubscribed"}
                     </span>
                   </div>
                   <button

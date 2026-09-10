@@ -41,7 +41,8 @@ export function EndowmentCalculator() {
           Interactive 1:1 Sovereign Health Multiplier
         </h3>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Slide below to see how every Ngultrum you pledge is doubled by the Royal Government of Bhutan to build a permanent, sovereign healthcare shield.
+          Slide below to see how every Ngultrum you pledge is doubled by the Royal Government of
+          Bhutan to build a permanent, sovereign healthcare shield.
         </p>
       </div>
 
@@ -180,7 +181,10 @@ export function EndowmentCalculator() {
               className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-xs shadow-lg shadow-emerald-700/25 transition cursor-pointer active:scale-95 border border-emerald-400/30"
             >
               <Heart className="h-4 w-4 fill-white" />
-              <span>Make This Pledge of Nu. {pledgeAmount.toLocaleString()} (Doubled to Nu. {totalValue.toLocaleString()}) →</span>
+              <span>
+                Make This Pledge of Nu. {pledgeAmount.toLocaleString()} (Doubled to Nu.{" "}
+                {totalValue.toLocaleString()}) →
+              </span>
             </Link>
           </div>
         </div>

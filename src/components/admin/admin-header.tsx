@@ -8,7 +8,8 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
   },
   "/admin/donations": {
     title: "Donors & Pledges CRM",
-    subtitle: "Citizen & corporate donations, payment verification & official DRC tax voucher generation.",
+    subtitle:
+      "Citizen & corporate donations, payment verification & official DRC tax voucher generation.",
   },
   "/admin/inquiries": {
     title: "Citizen Inquiries & Ombudsman Inbox",
@@ -16,7 +17,8 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
   },
   "/admin/subscribers": {
     title: "Subscribers & Campaign Desk",
-    subtitle: "Audience segmentation, email subscriber directory & newsletter broadcast simulation.",
+    subtitle:
+      "Audience segmentation, email subscriber directory & newsletter broadcast simulation.",
   },
   "/admin/programs": {
     title: "Healthcare Commodity Streams",
@@ -40,7 +42,8 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
   },
   "/admin/faqs": {
     title: "FAQs & Citizen Knowledge Base",
-    subtitle: "Manage public guidance on donation matching, medicine access, and healthcare programs.",
+    subtitle:
+      "Manage public guidance on donation matching, medicine access, and healthcare programs.",
   },
   "/admin/metrics": {
     title: "National Impact Statistics CMS",
@@ -48,11 +51,13 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
   },
   "/admin/milestones": {
     title: "Historical Timeline & Royal Decrees",
-    subtitle: "Curate institutional history, royal charter promulgations, and endowment milestones.",
+    subtitle:
+      "Curate institutional history, royal charter promulgations, and endowment milestones.",
   },
   "/admin/settings": {
     title: "Global Site Settings & Fiduciary Hub",
-    subtitle: "Sovereign matching ratio, emergency helplines, banking credentials, and public notices.",
+    subtitle:
+      "Sovereign matching ratio, emergency helplines, banking credentials, and public notices.",
   },
 };
 

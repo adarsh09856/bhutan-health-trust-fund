@@ -117,7 +117,8 @@ export function AdminMilestonesPage() {
   };
 
   const handleDelete = async (id: number, milestoneTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete the milestone "${milestoneTitle}"?`)) return;
+    if (!window.confirm(`Are you sure you want to delete the milestone "${milestoneTitle}"?`))
+      return;
     try {
       await deleteAdminMilestone({ data: { id } });
       toast.success("Milestone deleted.");
@@ -131,7 +132,7 @@ export function AdminMilestonesPage() {
     (m) =>
       m.year.toLowerCase().includes(search.toLowerCase()) ||
       m.title.toLowerCase().includes(search.toLowerCase()) ||
-      m.description.toLowerCase().includes(search.toLowerCase())
+      m.description.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -152,7 +153,8 @@ export function AdminMilestonesPage() {
               Historical Milestones Timeline CMS
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Curate the royal decrees, foundational charters, and endowment growth milestones presented on the /about timeline.
+              Curate the royal decrees, foundational charters, and endowment growth milestones
+              presented on the /about timeline.
             </p>
           </div>
 
@@ -203,7 +205,9 @@ export function AdminMilestonesPage() {
               >
                 <div className="flex items-start gap-4">
                   <div className="h-12 w-16 sm:w-20 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex flex-col items-center justify-center shrink-0 shadow-xs">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-200">Year</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-200">
+                      Year
+                    </span>
                     <span className="text-base sm:text-lg font-black">{m.year}</span>
                   </div>
 
@@ -276,7 +280,9 @@ export function AdminMilestonesPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-700">Chronological Sort Order</label>
+                    <label className="text-xs font-bold text-slate-700">
+                      Chronological Sort Order
+                    </label>
                     <input
                       type="number"
                       value={orderIndex}
@@ -299,7 +305,9 @@ export function AdminMilestonesPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-700">Historical Significance & Details *</label>
+                  <label className="text-xs font-bold text-slate-700">
+                    Historical Significance & Details *
+                  </label>
                   <textarea
                     required
                     rows={4}

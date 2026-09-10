@@ -67,7 +67,7 @@ export async function seedDatabase() {
           ...iq,
           channel: iq.channel || "WEB",
           loggedBy: iq.loggedBy || null,
-        }))
+        })),
       );
       console.log(`Seeded ${initialInquiries.length} initial inquiries.`);
     }

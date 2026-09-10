@@ -114,7 +114,11 @@ function NewsDetailPage() {
             onClick={handleCopyLink}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition shadow-xs cursor-pointer"
           >
-            {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Share2 className="h-3.5 w-3.5 text-slate-500" />}
+            {copied ? (
+              <Check className="h-3.5 w-3.5 text-emerald-600" />
+            ) : (
+              <Share2 className="h-3.5 w-3.5 text-slate-500" />
+            )}
             <span>{copied ? "Copied!" : "Share Link"}</span>
           </button>
         </div>
@@ -127,7 +131,8 @@ function NewsDetailPage() {
             </span>
             <span className="text-slate-400">•</span>
             <span className="text-slate-500 font-medium flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5 text-emerald-700" /> {new Date(article.publishedAt).toLocaleDateString()}
+              <Calendar className="h-3.5 w-3.5 text-emerald-700" />{" "}
+              {new Date(article.publishedAt).toLocaleDateString()}
             </span>
             <span className="text-slate-400">•</span>
             <span className="text-slate-500 font-medium">BHTF Official Secretariat</span>
@@ -159,14 +164,18 @@ function NewsDetailPage() {
                 "Under the visionary leadership of the Royal Government of Bhutan, the Bhutan Health Trust Fund continues to advance healthcare sustainability through targeted capital investments and sovereign health commodity procurement. Every child and community member across all 20 Dzongkhags is guaranteed uninterrupted access to life-saving medicines and universal vaccines without financial hardship."}
             </p>
             <p>
-              The Trust Fund Secretariat ensures that 100% of public and international contributions are matched 1:1 by the Royal Government, effectively multiplying the impact of every donation and reinforcing Bhutan's constitutional commitment to free primary healthcare.
+              The Trust Fund Secretariat ensures that 100% of public and international contributions
+              are matched 1:1 by the Royal Government, effectively multiplying the impact of every
+              donation and reinforcing Bhutan's constitutional commitment to free primary
+              healthcare.
             </p>
           </div>
 
           {/* Institutional Sign-off */}
           <div className="pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
             <span className="flex items-center gap-1.5 font-bold text-emerald-800">
-              <ShieldCheck className="h-4 w-4 text-emerald-600" /> Authorized Release • Royal Government of Bhutan
+              <ShieldCheck className="h-4 w-4 text-emerald-600" /> Authorized Release • Royal
+              Government of Bhutan
             </span>
             <span className="font-mono">Ref: BHTF-PR-{new Date().getFullYear()}</span>
           </div>
@@ -193,7 +202,8 @@ function NewsDetailPage() {
                     </h4>
                   </div>
                   <span className="text-[11px] text-emerald-700 font-bold mt-4 flex items-center gap-1">
-                    Read Story <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition" />
+                    Read Story{" "}
+                    <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition" />
                   </span>
                 </Link>
               ))}

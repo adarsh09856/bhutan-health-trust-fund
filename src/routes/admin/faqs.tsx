@@ -32,7 +32,14 @@ export const Route = createFileRoute("/admin/faqs")({
   component: AdminFaqsPage,
 });
 
-const defaultCategories = ["All", "General", "Contributions & Matching", "Procurement", "Governance", "Tax Exemption"];
+const defaultCategories = [
+  "All",
+  "General",
+  "Contributions & Matching",
+  "Procurement",
+  "Governance",
+  "Tax Exemption",
+];
 
 export function AdminFaqsPage() {
   const [faqs, setFaqs] = useState<Faq[]>([]);
@@ -180,7 +187,8 @@ export function AdminFaqsPage() {
               FAQs & Knowledge Base CMS
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Manage citizen inquiries, donation matching FAQs, and sovereign procurement explanations shown across the site and /contact.
+              Manage citizen inquiries, donation matching FAQs, and sovereign procurement
+              explanations shown across the site and /contact.
             </p>
           </div>
 
@@ -249,7 +257,9 @@ export function AdminFaqsPage() {
                 <div
                   key={f.id}
                   className={`bg-white rounded-2xl border transition hover:border-slate-300 ${
-                    f.isPublished ? "border-slate-200" : "border-slate-200 opacity-60 bg-slate-50/50"
+                    f.isPublished
+                      ? "border-slate-200"
+                      : "border-slate-200 opacity-60 bg-slate-50/50"
                   }`}
                 >
                   <div className="p-5 flex items-start justify-between gap-4">
@@ -278,7 +288,9 @@ export function AdminFaqsPage() {
                       <button
                         type="button"
                         onClick={() => handleTogglePublish(f)}
-                        title={f.isPublished ? "Published (Click to hide)" : "Hidden (Click to publish)"}
+                        title={
+                          f.isPublished ? "Published (Click to hide)" : "Hidden (Click to publish)"
+                        }
                         className="cursor-pointer"
                       >
                         {f.isPublished ? (
@@ -401,7 +413,10 @@ export function AdminFaqsPage() {
                       onChange={(e) => setIsPublished(e.target.checked)}
                       className="h-4 w-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer"
                     />
-                    <label htmlFor="isPublishedFaq" className="text-sm font-medium text-slate-700 cursor-pointer">
+                    <label
+                      htmlFor="isPublishedFaq"
+                      className="text-sm font-medium text-slate-700 cursor-pointer"
+                    >
                       Published Live
                     </label>
                   </div>

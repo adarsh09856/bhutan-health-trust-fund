@@ -17,7 +17,10 @@ export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) 
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
-        <nav className="flex items-center gap-1.5 text-xs text-slate-400 mb-4 font-medium" aria-label="Breadcrumb">
+        <nav
+          className="flex items-center gap-1.5 text-xs text-slate-400 mb-4 font-medium"
+          aria-label="Breadcrumb"
+        >
           <Link to="/" className="hover:text-amber-300 transition flex items-center gap-1">
             <Home className="h-3.5 w-3.5" />
             <span>Home</span>

@@ -88,7 +88,7 @@ export function AdminProgramsPage() {
         val
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "")
+          .replace(/(^-|-$)/g, ""),
       );
     }
   };
@@ -193,7 +193,7 @@ export function AdminProgramsPage() {
     (p) =>
       p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.summary.toLowerCase().includes(search.toLowerCase()) ||
-      p.targetDzongkhags.toLowerCase().includes(search.toLowerCase())
+      p.targetDzongkhags.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -211,7 +211,8 @@ export function AdminProgramsPage() {
               Healthcare Commodity Programs
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Supervise the 6 sovereign procurement streams, cold-chain distribution, and district buffer allocations.
+              Supervise the 6 sovereign procurement streams, cold-chain distribution, and district
+              buffer allocations.
             </p>
           </div>
 
@@ -232,8 +233,12 @@ export function AdminProgramsPage() {
               <Syringe className="h-6 w-6" />
             </div>
             <div>
-              <div className="text-2xl font-black text-slate-900 font-mono">{programs.length} Streams</div>
-              <div className="text-xs font-bold text-slate-500">Financed Healthcare Commodities</div>
+              <div className="text-2xl font-black text-slate-900 font-mono">
+                {programs.length} Streams
+              </div>
+              <div className="text-xs font-bold text-slate-500">
+                Financed Healthcare Commodities
+              </div>
             </div>
           </div>
 
@@ -299,7 +304,7 @@ export function AdminProgramsPage() {
                       <div className="flex items-center gap-2">
                         <span
                           className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${getStatusBadge(
-                            p.status
+                            p.status,
                           )}`}
                         >
                           {p.status}

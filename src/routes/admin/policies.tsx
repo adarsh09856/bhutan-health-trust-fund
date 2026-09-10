@@ -137,7 +137,7 @@ export function AdminPoliciesPage() {
     (p) =>
       p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.summary.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase())
+      p.category.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -155,7 +155,8 @@ export function AdminPoliciesPage() {
               Policies, Charters & Fiduciary Guidelines
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Supervise foundational legal decrees, pharmaceutical procurement guidelines, and anti-corruption frameworks.
+              Supervise foundational legal decrees, pharmaceutical procurement guidelines, and
+              anti-corruption frameworks.
             </p>
           </div>
 
@@ -190,7 +191,9 @@ export function AdminPoliciesPage() {
           <div className="bg-white rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
             <ShieldCheck className="h-10 w-10 text-slate-400 mx-auto" />
             <h3 className="font-bold text-slate-800 text-sm">No policies found</h3>
-            <p className="text-xs text-slate-500">Create a new governance instrument to get started.</p>
+            <p className="text-xs text-slate-500">
+              Create a new governance instrument to get started.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -24,15 +24,20 @@ async function check() {
     console.log(">> Successfully connected to PostgreSQL server!");
 
     const tablesRes = await client.query(
-      "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';"
+      "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';",
     );
-    console.log(">> Public tables found:", tablesRes.rows.map((r: any) => r.table_name));
+    console.log(
+      ">> Public tables found:",
+      tablesRes.rows.map((r: any) => r.table_name),
+    );
 
     const usersRes = await client.query("SELECT id, email, name, role, password_hash FROM users;");
     console.log(`>> Users in database (${usersRes.rows.length}):`);
     for (const u of usersRes.rows) {
       const isMatch = bcrypt.compareSync("Admin@BHTF2026", u.password_hash);
-      console.log(`  - [${u.role}] ${u.email} (Password 'Admin@BHTF2026' matches hash: ${isMatch})`);
+      console.log(
+        `  - [${u.role}] ${u.email} (Password 'Admin@BHTF2026' matches hash: ${isMatch})`,
+      );
     }
 
     client.release();
@@ -49,4 +54,3 @@ async function check() {
 }
 
 check();
-

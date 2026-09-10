@@ -23,4 +23,3 @@ pool.on("error", (err) => {
 });
 
 export const drizzleDb = drizzle(pool, { schema });
-

@@ -9,4 +9,3 @@ export default defineConfig({
     url: process.env.DATABASE_URL || "postgresql://newdb:newdb@127.0.0.1:5432/newdb",
   },
 });
-

@@ -241,7 +241,8 @@ export function CommodityTracker() {
             6 Core Health Streams Financed by BHTF
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 mt-1">
-            Click any commodity stream to explore budget allocations, quality assurance, and distribution logistics.
+            Click any commodity stream to explore budget allocations, quality assurance, and
+            distribution logistics.
           </p>
         </div>
       </div>
@@ -269,11 +270,15 @@ export function CommodityTracker() {
                 >
                   <Icon className="h-4 w-4" />
                 </div>
-                <span className="text-[10px] font-black text-emerald-800 tracking-wider">{c.dzongkha}</span>
+                <span className="text-[10px] font-black text-emerald-800 tracking-wider">
+                  {c.dzongkha}
+                </span>
               </div>
 
               <div className="mt-3">
-                <div className="font-extrabold text-xs text-slate-900 group-hover:text-emerald-700 transition line-clamp-1">{c.name}</div>
+                <div className="font-extrabold text-xs text-slate-900 group-hover:text-emerald-700 transition line-clamp-1">
+                  {c.name}
+                </div>
                 <span className="text-[10px] text-slate-500 font-bold block mt-0.5">
                   {c.annualBudgetNu.split(" / ")[0]}
                 </span>
@@ -289,7 +294,9 @@ export function CommodityTracker() {
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className={`text-xs font-extrabold uppercase tracking-wide px-3 py-0.5 rounded-full border ${activeTab.themeColor.badge}`}>
+              <span
+                className={`text-xs font-extrabold uppercase tracking-wide px-3 py-0.5 rounded-full border ${activeTab.themeColor.badge}`}
+              >
                 {activeTab.dzongkha} • Fiduciary Health Stream
               </span>
             </div>

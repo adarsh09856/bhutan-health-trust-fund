@@ -3,7 +3,17 @@ import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
 import { getPublicNews } from "@/lib/api/public.functions";
 import type { NewsArticle } from "@/lib/db/schema";
-import { Calendar, Search, ArrowRight, Loader2, Tag, Clock, ArrowUpRight, Sparkles, Newspaper } from "lucide-react";
+import {
+  Calendar,
+  Search,
+  ArrowRight,
+  Loader2,
+  Tag,
+  Clock,
+  ArrowUpRight,
+  Sparkles,
+  Newspaper,
+} from "lucide-react";
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
@@ -111,7 +121,9 @@ function NewsPage() {
           <div className="bg-slate-50 rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
             <Newspaper className="h-10 w-10 text-slate-400 mx-auto" />
             <h3 className="font-bold text-slate-800 text-sm">No press releases found</h3>
-            <p className="text-xs text-slate-500">Try modifying your search or clearing the category filter.</p>
+            <p className="text-xs text-slate-500">
+              Try modifying your search or clearing the category filter.
+            </p>
           </div>
         ) : (
           <div className="space-y-10">
@@ -137,7 +149,8 @@ function NewsPage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold">
                       <span className="flex items-center gap-1 text-emerald-700 font-bold">
-                        <Calendar className="h-3.5 w-3.5" /> {new Date(featured.publishedAt).toLocaleDateString()}
+                        <Calendar className="h-3.5 w-3.5" />{" "}
+                        {new Date(featured.publishedAt).toLocaleDateString()}
                       </span>
                       <span>•</span>
                       <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">

@@ -15,7 +15,8 @@ import type {
 } from "./schema";
 
 // Precomputed genuine bcrypt hash for password "Admin@BHTF2026"
-export const DEFAULT_ADMIN_PASSWORD_HASH = "$2b$10$.xtbHaRBEw.UtXl/l3FH0.NGBtoyZVOmvvcMw/KBJY.I.knfbv256";
+export const DEFAULT_ADMIN_PASSWORD_HASH =
+  "$2b$10$.xtbHaRBEw.UtXl/l3FH0.NGBtoyZVOmvvcMw/KBJY.I.knfbv256";
 
 export const initialAdminUsers: NewUser[] = [
   {
@@ -39,7 +40,8 @@ export const initialNewsArticles: NewNewsArticle[] = [
     category: "Immunization",
     author: "BHTF Communications",
     coverImage: "/src/assets/news-vaccine.jpg",
-    excerpt: "Over 200,000 doses of seasonal influenza vaccines are being deployed across all twenty dzongkhags to protect high-risk populations.",
+    excerpt:
+      "Over 200,000 doses of seasonal influenza vaccines are being deployed across all twenty dzongkhags to protect high-risk populations.",
     content: `The Bhutan Health Trust Fund (BHTF) has mobilized complete financial backing for the 2024-2025 Nationwide Seasonal Influenza Vaccination Campaign in close collaboration with the Department of Public Health, Ministry of Health.
 
 ### Protecting the Most Vulnerable
@@ -65,7 +67,8 @@ The vaccines are distributed via the National Cold Chain System, ensuring strict
     category: "Essential Medicines",
     author: "Program Operations Team",
     coverImage: "/src/assets/news-community.jpg",
-    excerpt: "BHTF expands financing to outreach clinics and Basic Health Units serving Bhutan's most geographically isolated settlements.",
+    excerpt:
+      "BHTF expands financing to outreach clinics and Basic Health Units serving Bhutan's most geographically isolated settlements.",
     content: `Ensuring equity in healthcare delivery is central to Gross National Happiness. This month, BHTF completed the second-quarter disbursement for essential commodity procurement, bolstering over 200 Basic Health Units (BHUs) and 450 Outreach Clinics (ORCs) across Bhutan.
 
 ### Bridging the Geographic Gap
@@ -81,7 +84,8 @@ Health workers in Zhemgang, Trashiyangtse, and Gasa have reported zero stockouts
     category: "Governance",
     author: "Governance & Planning",
     coverImage: "/src/assets/news-report.jpg",
-    excerpt: "Read our full report detailing program impacts, capital endowment growth, and audited financials for fiscal year 2023.",
+    excerpt:
+      "Read our full report detailing program impacts, capital endowment growth, and audited financials for fiscal year 2023.",
     content: `The Bhutan Health Trust Fund has officially published its Annual Report and Audited Financial Statements for the fiscal year ending December 2023.
 
 ### Key Highlights from 2023:
@@ -100,7 +104,8 @@ The complete publication is now available for public download in our Reports & P
     category: "Partnership",
     author: "BHTF Media",
     coverImage: "/src/assets/news-community.jpg",
-    excerpt: "Continued bilateral support reinforces sustainable co-financing for routine immunization and future vaccine introductions.",
+    excerpt:
+      "Continued bilateral support reinforces sustainable co-financing for routine immunization and future vaccine introductions.",
     content: `BHTF and Gavi, the Vaccine Alliance, have finalized an agreement extending their co-financing partnership through 2027. Under this framework, BHTF continues to assume an increasing share of national vaccine procurement costs, advancing Bhutan's journey toward full self-reliance in public health commodities.`,
     isPublished: true,
     viewsCount: 620,
@@ -111,7 +116,8 @@ The complete publication is now available for public download in our Reports & P
     category: "Immunization",
     author: "Public Health Desk",
     coverImage: "/src/assets/news-vaccine.jpg",
-    excerpt: "A landmark milestone in the global campaign against cervical cancer, safeguarding young girls across all schools.",
+    excerpt:
+      "A landmark milestone in the global campaign against cervical cancer, safeguarding young girls across all schools.",
     content: `Through school-based delivery mechanisms financed by BHTF and executed by the Ministry of Health, Bhutan has achieved over 95% first and second dose coverage for Human Papillomavirus (HPV) vaccination among eligible adolescent girls nationwide, positioning Bhutan as a regional leader in cervical cancer elimination.`,
     isPublished: true,
     viewsCount: 1140,
@@ -122,7 +128,8 @@ The complete publication is now available for public download in our Reports & P
     category: "Governance",
     author: "Secretariat",
     coverImage: "/src/assets/news-report.jpg",
-    excerpt: "Recognized for exemplary governance, fiduciary transparency, and sustainable public health endowment stewardship in South Asia.",
+    excerpt:
+      "Recognized for exemplary governance, fiduciary transparency, and sustainable public health endowment stewardship in South Asia.",
     content: `The South Asian Public Health Association has awarded BHTF the 2024 Excellence in Fiduciary Governance Citation, acknowledging BHTF's innovative trust fund model and transparency in tracking every Ngultrum directly to health outcomes.`,
     isPublished: true,
     viewsCount: 890,
@@ -136,7 +143,8 @@ export const initialReports: NewReport[] = [
     category: "Annual Report",
     fileUrl: "/documents/bhtf-annual-report-2023.pdf",
     fileSize: "4.8 MB",
-    description: "Comprehensive review of trust fund operations, program financing, capital growth, and healthcare metrics across Bhutan.",
+    description:
+      "Comprehensive review of trust fund operations, program financing, capital growth, and healthcare metrics across Bhutan.",
     downloadCount: 382,
   },
   {
@@ -145,7 +153,8 @@ export const initialReports: NewReport[] = [
     category: "Financial",
     fileUrl: "/documents/bhtf-audited-financials-2023.pdf",
     fileSize: "2.1 MB",
-    description: "Independent audit conducted by the Royal Audit Authority of Bhutan with unqualified clean compliance opinion.",
+    description:
+      "Independent audit conducted by the Royal Audit Authority of Bhutan with unqualified clean compliance opinion.",
     downloadCount: 294,
   },
   {
@@ -154,7 +163,8 @@ export const initialReports: NewReport[] = [
     category: "Research",
     fileUrl: "/documents/vaccine-financing-sustainability.pdf",
     fileSize: "3.5 MB",
-    description: "Long-term econometric analysis on transition from donor aid to sovereign trust fund self-reliance.",
+    description:
+      "Long-term econometric analysis on transition from donor aid to sovereign trust fund self-reliance.",
     downloadCount: 175,
   },
   {
@@ -163,7 +173,8 @@ export const initialReports: NewReport[] = [
     category: "Assessment",
     fileUrl: "/documents/phc-impact-assessment.pdf",
     fileSize: "1.9 MB",
-    description: "Field evaluation of medicine availability and patient satisfaction in remote Basic Health Units (BHUs).",
+    description:
+      "Field evaluation of medicine availability and patient satisfaction in remote Basic Health Units (BHUs).",
     downloadCount: 140,
   },
   {
@@ -172,7 +183,8 @@ export const initialReports: NewReport[] = [
     category: "Governance",
     fileUrl: "/documents/procurement-transparency-2023.pdf",
     fileSize: "1.4 MB",
-    description: "Detailed breakdown of international competitive bidding, medicine quality assurance, and supplier metrics.",
+    description:
+      "Detailed breakdown of international competitive bidding, medicine quality assurance, and supplier metrics.",
     downloadCount: 98,
   },
   {
@@ -181,7 +193,8 @@ export const initialReports: NewReport[] = [
     category: "Strategy",
     fileUrl: "/documents/bhtf-strategic-plan-2022-2027.pdf",
     fileSize: "5.2 MB",
-    description: "Five-year roadmap outlining endowment expansion, new vaccine introductions, and emergency reserve funds.",
+    description:
+      "Five-year roadmap outlining endowment expansion, new vaccine introductions, and emergency reserve funds.",
     downloadCount: 510,
   },
 ];
@@ -191,7 +204,8 @@ export const initialPolicies: NewPolicy[] = [
     title: "Royal Charter & Governance Bylaws",
     slug: "royal-charter-governance",
     category: "Governance",
-    summary: "Foundational legal instrument establishing BHTF's autonomy, Board of Trustees mandate, and fiduciary duties.",
+    summary:
+      "Foundational legal instrument establishing BHTF's autonomy, Board of Trustees mandate, and fiduciary duties.",
     content: `The Royal Charter defines the sovereign mandate of the Bhutan Health Trust Fund as an autonomous institution dedicated to the perpetual financing of essential medicines and vaccines for the people of Bhutan.`,
     effectiveDate: "2020 (Revised)",
     fileUrl: "/documents/bhtf-charter.pdf",
@@ -200,7 +214,8 @@ export const initialPolicies: NewPolicy[] = [
     title: "Medicine Procurement & Quality Assurance Policy",
     slug: "procurement-quality-assurance",
     category: "Procurement",
-    summary: "Standard operating procedures ensuring open competitive bidding, WHO pre-qualification compliance, and batch testing.",
+    summary:
+      "Standard operating procedures ensuring open competitive bidding, WHO pre-qualification compliance, and batch testing.",
     content: `All medicine procurements financed by BHTF follow transparent, open competitive international bidding in adherence to the Royal Government Procurement Rules and WHO Pre-Qualification guidelines.`,
     effectiveDate: "2023",
     fileUrl: "/documents/procurement-policy.pdf",
@@ -209,7 +224,8 @@ export const initialPolicies: NewPolicy[] = [
     title: "Anti-Corruption & Whistleblower Protection Policy",
     slug: "anti-corruption-whistleblower",
     category: "Ethics",
-    summary: "Zero-tolerance standard for corruption, fraud, or misuse of funds, with secure confidential reporting channels.",
+    summary:
+      "Zero-tolerance standard for corruption, fraud, or misuse of funds, with secure confidential reporting channels.",
     content: `BHTF maintains a zero-tolerance policy regarding bribery, fraud, embezzlement, or conflict of interest. Whistleblowers are protected under Bhutanese law with direct confidential access to the Board Ethics Committee and the Anti-Corruption Commission (ACC).`,
     effectiveDate: "2023",
     fileUrl: "/documents/whistleblower-policy.pdf",
@@ -218,7 +234,8 @@ export const initialPolicies: NewPolicy[] = [
     title: "Conflict of Interest & Ethics Code",
     slug: "conflict-of-interest-policy",
     category: "Ethics",
-    summary: "Mandatory annual declarations and recusal guidelines for Trustees, Secretariat executives, and procurement evaluators.",
+    summary:
+      "Mandatory annual declarations and recusal guidelines for Trustees, Secretariat executives, and procurement evaluators.",
     content: `All trustees, committee members, and staff must declare financial and personal interests annually. Any member with a potential conflict is legally required to recuse themselves from deliberations.`,
     effectiveDate: "2024",
     fileUrl: "/documents/conflict-of-interest.pdf",
@@ -227,7 +244,8 @@ export const initialPolicies: NewPolicy[] = [
     title: "Endowment Investment Policy Statement",
     slug: "endowment-investment-policy",
     category: "Finance",
-    summary: "Prudent guidelines governing asset allocation, risk management, and ethical investment of trust fund capital.",
+    summary:
+      "Prudent guidelines governing asset allocation, risk management, and ethical investment of trust fund capital.",
     content: `The Investment Policy Statement governs capital preservation, inflation hedging, and liquidity maintenance to ensure sustainable annual funding disbursements without eroding real endowment value.`,
     effectiveDate: "2024",
     fileUrl: "/documents/investment-policy.pdf",
@@ -236,7 +254,8 @@ export const initialPolicies: NewPolicy[] = [
     title: "Data Protection & Donor Privacy Policy",
     slug: "data-protection-privacy",
     category: "Privacy",
-    summary: "Rigorous standards protecting donor identities, financial transaction data, and organizational digital assets.",
+    summary:
+      "Rigorous standards protecting donor identities, financial transaction data, and organizational digital assets.",
     content: `We adhere to the highest standards of data security. Donor personal details and transaction records are encrypted and never sold, shared, or utilized for commercial purposes.`,
     effectiveDate: "2024",
     fileUrl: "/documents/privacy-policy.pdf",
@@ -247,8 +266,10 @@ export const initialPrograms: NewProgram[] = [
   {
     slug: "essential-medicines-financing",
     title: "Essential Medicines Program",
-    summary: "Procurement and uninterrupted supply of over 120 essential medicines distributed across all 20 dzongkhags.",
-    fullDescription: "Finances 100% of the National Essential Drugs List, covering primary care therapeutics from remote Basic Health Units to national referral hospitals.",
+    summary:
+      "Procurement and uninterrupted supply of over 120 essential medicines distributed across all 20 dzongkhags.",
+    fullDescription:
+      "Finances 100% of the National Essential Drugs List, covering primary care therapeutics from remote Basic Health Units to national referral hospitals.",
     icon: "Pill",
     targetDzongkhags: "All 20 Dzongkhags",
     beneficiariesReached: "780,000+ Citizens",
@@ -257,8 +278,10 @@ export const initialPrograms: NewProgram[] = [
   {
     slug: "routine-childhood-immunization",
     title: "National Immunization Program",
-    summary: "Financing routine childhood immunization and new vaccine introductions including HPV and seasonal influenza.",
-    fullDescription: "Ensures no child in Bhutan misses life-saving vaccines against measles, polio, hepatitis B, rotavirus, pneumococcal disease, and HPV.",
+    summary:
+      "Financing routine childhood immunization and new vaccine introductions including HPV and seasonal influenza.",
+    fullDescription:
+      "Ensures no child in Bhutan misses life-saving vaccines against measles, polio, hepatitis B, rotavirus, pneumococcal disease, and HPV.",
     icon: "Syringe",
     targetDzongkhags: "All 20 Dzongkhags",
     beneficiariesReached: "100,000+ Children & Adolescents",
@@ -267,8 +290,10 @@ export const initialPrograms: NewProgram[] = [
   {
     slug: "primary-healthcare-strengthening",
     title: "Primary Healthcare & Remote Outreach",
-    summary: "Strengthening Basic Health Units and outreach clinics that bring essential care to mountainous communities.",
-    fullDescription: "Equips rural health clinics with diagnostic test kits, cold-chain refrigeration, and emergency medical kits.",
+    summary:
+      "Strengthening Basic Health Units and outreach clinics that bring essential care to mountainous communities.",
+    fullDescription:
+      "Equips rural health clinics with diagnostic test kits, cold-chain refrigeration, and emergency medical kits.",
     icon: "Stethoscope",
     targetDzongkhags: "All 20 Dzongkhags",
     beneficiariesReached: "450+ Rural Villages",
@@ -277,8 +302,10 @@ export const initialPrograms: NewProgram[] = [
   {
     slug: "maternal-child-health",
     title: "Maternal & Child Health",
-    summary: "Investing in safer pregnancies, healthy births, and thriving children through specialized medicines and supplements.",
-    fullDescription: "Supplies antenatal vitamins, iron folic acid supplements, sterile delivery commodities, and neonatal resuscitation items.",
+    summary:
+      "Investing in safer pregnancies, healthy births, and thriving children through specialized medicines and supplements.",
+    fullDescription:
+      "Supplies antenatal vitamins, iron folic acid supplements, sterile delivery commodities, and neonatal resuscitation items.",
     icon: "HeartPulse",
     targetDzongkhags: "All 20 Dzongkhags",
     beneficiariesReached: "25,000+ Mothers & Infants",
@@ -287,8 +314,10 @@ export const initialPrograms: NewProgram[] = [
   {
     slug: "diagnostics-medical-supplies",
     title: "Diagnostics & Essential Supplies",
-    summary: "Reliable point-of-care rapid diagnostics and medical consumables supporting clinicians at every level.",
-    fullDescription: "Rapid test kits for malaria, dengue, HIV, diabetes screening, and standard laboratory reagents.",
+    summary:
+      "Reliable point-of-care rapid diagnostics and medical consumables supporting clinicians at every level.",
+    fullDescription:
+      "Rapid test kits for malaria, dengue, HIV, diabetes screening, and standard laboratory reagents.",
     icon: "Microscope",
     targetDzongkhags: "All 20 Dzongkhags",
     beneficiariesReached: "205 Health Centers",
@@ -297,8 +326,10 @@ export const initialPrograms: NewProgram[] = [
   {
     slug: "health-workforce-enablement",
     title: "Health Workforce Enablement",
-    summary: "Capacity-building programs and supply-chain training for health workers serving Bhutan's most remote communities.",
-    fullDescription: "Conducts pharmacovigilance, vaccine cold-chain management, and inventory logistics training for health assistants.",
+    summary:
+      "Capacity-building programs and supply-chain training for health workers serving Bhutan's most remote communities.",
+    fullDescription:
+      "Conducts pharmacovigilance, vaccine cold-chain management, and inventory logistics training for health assistants.",
     icon: "GraduationCap",
     targetDzongkhags: "All 20 Dzongkhags",
     beneficiariesReached: "1,200+ Health Workers",
@@ -358,7 +389,8 @@ export const initialInquiries: NewInquiry[] = [
     name: "Sonam Tobgay",
     email: "stobgay@moh.gov.bt",
     subject: "Procurement Schedule for Q3 2024 Essential Commodities",
-    message: "Greetings from the Dzongkhag Health Office, Mongar. We would like to inquire about the delivery timeline for the pediatric antibiotic replenishment batch.",
+    message:
+      "Greetings from the Dzongkhag Health Office, Mongar. We would like to inquire about the delivery timeline for the pediatric antibiotic replenishment batch.",
     status: "UNREAD",
     replyNotes: null,
     channel: "EMAIL",
@@ -368,7 +400,8 @@ export const initialInquiries: NewInquiry[] = [
     name: "Dr. Rachel Higgins",
     email: "rachel.higgins@globalhealth.org",
     subject: "Partnership Inquiry: Cold Chain Monitoring Pilot",
-    message: "We are developing IoT solar cold-chain data loggers and would love to discuss a pilot deployment with BHTF for remote outreach clinics.",
+    message:
+      "We are developing IoT solar cold-chain data loggers and would love to discuss a pilot deployment with BHTF for remote outreach clinics.",
     status: "IN_PROGRESS",
     replyNotes: "Director advised forwarding proposal to Technical Advisory Committee.",
     channel: "WEB",
@@ -378,7 +411,8 @@ export const initialInquiries: NewInquiry[] = [
     name: "Ugyen Pelzom",
     email: "upelzom@bhutanfound.bt",
     subject: "Volunteer & Community Engagement Inquiry",
-    message: "How can our university student association participate in the upcoming World Health Day awareness rallies in Thimphu?",
+    message:
+      "How can our university student association participate in the upcoming World Health Day awareness rallies in Thimphu?",
     status: "REPLIED",
     replyNotes: "Sent information brochure and contact of Communications Officer.",
     channel: "WALK_IN",
@@ -459,35 +493,40 @@ export const initialTrustees: NewTrustee[] = [
 export const initialFaqs: NewFaq[] = [
   {
     question: "How does the 1:1 RGOB Matching Fund work?",
-    answer: "Every single Ngultrum contributed by individuals, corporations, or international donors is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling your healthcare purchasing power.",
+    answer:
+      "Every single Ngultrum contributed by individuals, corporations, or international donors is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling your healthcare purchasing power.",
     category: "Matching Fund",
     orderIndex: 1,
     isPublished: true,
   },
   {
     question: "Are donations to BHTF tax-deductible in Bhutan?",
-    answer: "Yes. In accordance with Department of Revenue & Customs regulations, donations made to BHTF are eligible for corporate and personal income tax deduction upon receipt of our official stamped pledge certificate.",
+    answer:
+      "Yes. In accordance with Department of Revenue & Customs regulations, donations made to BHTF are eligible for corporate and personal income tax deduction upon receipt of our official stamped pledge certificate.",
     category: "Tax Deduction",
     orderIndex: 2,
     isPublished: true,
   },
   {
     question: "How does BHTF select which medicines and vaccines to finance?",
-    answer: "BHTF finances commodities from the National Essential Medicines List (NEML) approved by the Ministry of Health and Drug Regulatory Authority of Bhutan, strictly adhering to WHO prequalification standards.",
+    answer:
+      "BHTF finances commodities from the National Essential Medicines List (NEML) approved by the Ministry of Health and Drug Regulatory Authority of Bhutan, strictly adhering to WHO prequalification standards.",
     category: "Procurement",
     orderIndex: 3,
     isPublished: true,
   },
   {
     question: "Can international donors contribute in foreign currencies (USD, EUR, GBP)?",
-    answer: "Yes. BHTF maintains official foreign currency accounts with the Bank of Bhutan and Bhutan National Bank for direct international SWIFT wire transfers.",
+    answer:
+      "Yes. BHTF maintains official foreign currency accounts with the Bank of Bhutan and Bhutan National Bank for direct international SWIFT wire transfers.",
     category: "Donations",
     orderIndex: 4,
     isPublished: true,
   },
   {
     question: "How can remote gewog clinics report emergency stock alerts?",
-    answer: "Basic Health Units (BHUs) communicate through the National Emergency Health Logistics Channel and Dzongkhag Health Officers to trigger immediate replenishment.",
+    answer:
+      "Basic Health Units (BHUs) communicate through the National Emergency Health Logistics Channel and Dzongkhag Health Officers to trigger immediate replenishment.",
     category: "Logistics",
     orderIndex: 5,
     isPublished: true,
@@ -537,31 +576,36 @@ export const initialMilestones: NewMilestone[] = [
   {
     year: "1998",
     title: "Conception in Geneva (WHO World Health Assembly)",
-    description: "The Royal Government of Bhutan formally announced the vision of an autonomous health endowment fund to international partners in Geneva.",
+    description:
+      "The Royal Government of Bhutan formally announced the vision of an autonomous health endowment fund to international partners in Geneva.",
     orderIndex: 1,
   },
   {
     year: "2003",
     title: "Royal Charter & Statutory Establishment",
-    description: "Enacted under Royal Charter as a permanent statutory trust fund with ring-fenced capital grants from RGOB and bilateral partners.",
+    description:
+      "Enacted under Royal Charter as a permanent statutory trust fund with ring-fenced capital grants from RGOB and bilateral partners.",
     orderIndex: 2,
   },
   {
     year: "2011",
     title: "Target Endowment Corpus Realization",
-    description: "Reached primary target corpus of USD 24 Million, enabling full operational financing for routine national immunization schedules.",
+    description:
+      "Reached primary target corpus of USD 24 Million, enabling full operational financing for routine national immunization schedules.",
     orderIndex: 3,
   },
   {
     year: "2018",
     title: "Expansion to 120+ Essential Medicines",
-    description: "Royal Charter expanded to permanently cover 100% of essential medicines on the National Essential Drugs List.",
+    description:
+      "Royal Charter expanded to permanently cover 100% of essential medicines on the National Essential Drugs List.",
     orderIndex: 4,
   },
   {
     year: "2024",
     title: "Sovereign 1:1 RGOB Matching Campaign",
-    description: "His Majesty The King commands a perpetual 1:1 RGOB matching grant for every Ngultrum pledged to the fund.",
+    description:
+      "His Majesty The King commands a perpetual 1:1 RGOB matching grant for every Ngultrum pledged to the fund.",
     orderIndex: 5,
   },
 ];
@@ -629,7 +673,8 @@ export const initialSiteSettings: NewSiteSetting[] = [
   },
   {
     settingKey: "announcement_banner",
-    settingValue: "Universal Primary Health Coverage Guaranteed: 100% of Essential Drugs & Vaccines Ring-Fenced in Perpetuity.",
+    settingValue:
+      "Universal Primary Health Coverage Guaranteed: 100% of Essential Drugs & Vaccines Ring-Fenced in Perpetuity.",
     category: "general",
     description: "Top site-wide announcement broadcast",
   },
@@ -640,4 +685,3 @@ export const initialSiteSettings: NewSiteSetting[] = [
     description: "Whether top announcement bar is visible",
   },
 ];
-

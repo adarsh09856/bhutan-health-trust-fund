@@ -110,7 +110,9 @@ function ReportsPage() {
             </div>
             <div>
               <div className="text-2xl font-black text-slate-900 font-mono">100%</div>
-              <div className="text-xs font-bold text-slate-500 mt-0.5">Unqualified RAA Audit Rating</div>
+              <div className="text-xs font-bold text-slate-500 mt-0.5">
+                Unqualified RAA Audit Rating
+              </div>
             </div>
           </div>
 
@@ -120,7 +122,9 @@ function ReportsPage() {
             </div>
             <div>
               <div className="text-2xl font-black text-slate-900 font-mono">{reports.length}+</div>
-              <div className="text-xs font-bold text-slate-500 mt-0.5">Public Official Documents</div>
+              <div className="text-xs font-bold text-slate-500 mt-0.5">
+                Public Official Documents
+              </div>
             </div>
           </div>
 
@@ -130,7 +134,9 @@ function ReportsPage() {
             </div>
             <div>
               <div className="text-2xl font-black text-slate-900 font-mono">2003–2026</div>
-              <div className="text-xs font-bold text-slate-500 mt-0.5">Historical Archive Indexed</div>
+              <div className="text-xs font-bold text-slate-500 mt-0.5">
+                Historical Archive Indexed
+              </div>
             </div>
           </div>
         </div>
@@ -180,7 +186,9 @@ function ReportsPage() {
           <div className="bg-slate-50 rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
             <FileText className="h-10 w-10 text-slate-400 mx-auto" />
             <h3 className="font-bold text-slate-800 text-sm">No matching publications found</h3>
-            <p className="text-xs text-slate-500">Try adjusting your keyword search or category filter.</p>
+            <p className="text-xs text-slate-500">
+              Try adjusting your keyword search or category filter.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

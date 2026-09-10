@@ -2,7 +2,16 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { adminLogin } from "@/lib/api/auth.functions";
-import { Lock, Mail, ShieldCheck, ArrowRight, Loader2, Eye, EyeOff, ShieldAlert } from "lucide-react";
+import {
+  Lock,
+  Mail,
+  ShieldCheck,
+  ArrowRight,
+  Loader2,
+  Eye,
+  EyeOff,
+  ShieldAlert,
+} from "lucide-react";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
 
@@ -10,7 +19,10 @@ export const Route = createFileRoute("/admin/login")({
   head: () => ({
     meta: [
       { title: "Admin Login | Bhutan Health Trust Fund" },
-      { name: "description", content: "Official secretariat administrative portal for BHTF staff." },
+      {
+        name: "description",
+        content: "Official secretariat administrative portal for BHTF staff.",
+      },
     ],
   }),
   component: AdminLoginPage,
@@ -33,12 +45,18 @@ function AdminLoginPage() {
         toast.success(`Welcome back, ${res.user.name}!`);
         router.navigate({ to: "/admin/dashboard" });
       } else {
-        toast.error(res.error || "Authentication failed. Please check credentials.", { duration: 5000 });
+        toast.error(res.error || "Authentication failed. Please check credentials.", {
+          duration: 5000,
+        });
       }
     } catch (err: any) {
       let msg = err?.message || "Failed to connect to the authentication server.";
-      if (typeof msg === "string" && (msg.startsWith("<!") || msg.includes("<html") || msg.includes("This page didn't load"))) {
-        msg = "Server returned 500 error page. Please run 'npm run db:check' in terminal to inspect database connection.";
+      if (
+        typeof msg === "string" &&
+        (msg.startsWith("<!") || msg.includes("<html") || msg.includes("This page didn't load"))
+      ) {
+        msg =
+          "Server returned 500 error page. Please run 'npm run db:check' in terminal to inspect database connection.";
       }
       toast.error(msg, { duration: 8000 });
     } finally {
@@ -141,7 +159,10 @@ function AdminLoginPage() {
           <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-3">
             <div className="flex items-start gap-2 text-[11px] text-slate-400 leading-snug">
               <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-              <span>Royal Government of Bhutan IT Security Advisory: Unauthorized access attempts are monitored and logged.</span>
+              <span>
+                Royal Government of Bhutan IT Security Advisory: Unauthorized access attempts are
+                monitored and logged.
+              </span>
             </div>
             <div className="text-right">
               <a href="/" className="text-xs text-primary font-medium hover:underline">

@@ -61,7 +61,9 @@ export function AdminDonationsPage() {
   const [offlinePaymentMethod, setOfflinePaymentMethod] = useState<
     "CASH" | "CHEQUE" | "MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD"
   >("CASH");
-  const [offlineStatus, setOfflineStatus] = useState<"PENDING" | "VERIFIED" | "COMPLETED" | "CANCELLED">("VERIFIED");
+  const [offlineStatus, setOfflineStatus] = useState<
+    "PENDING" | "VERIFIED" | "COMPLETED" | "CANCELLED"
+  >("VERIFIED");
   const [offlineMessage, setOfflineMessage] = useState("");
   const [offlineIsAnonymous, setOfflineIsAnonymous] = useState(false);
   const [savingOffline, setSavingOffline] = useState(false);
@@ -78,7 +80,8 @@ export function AdminDonationsPage() {
   };
 
   const handleDeleteDonation = async (id: number, refNo: string) => {
-    if (!window.confirm(`Are you sure you want to permanently delete donation record ${refNo}?`)) return;
+    if (!window.confirm(`Are you sure you want to permanently delete donation record ${refNo}?`))
+      return;
     try {
       await deleteAdminDonation({ data: { id } });
       toast.success(`Donation record ${refNo} deleted.`);
@@ -133,7 +136,10 @@ export function AdminDonationsPage() {
     fetchDonations();
   }, []);
 
-  const handleStatusChange = async (id: number, status: "PENDING" | "VERIFIED" | "COMPLETED" | "CANCELLED") => {
+  const handleStatusChange = async (
+    id: number,
+    status: "PENDING" | "VERIFIED" | "COMPLETED" | "CANCELLED",
+  ) => {
     try {
       await updateDonationStatus({ data: { id, status } });
       toast.success(`Donation status updated to ${status}`);
@@ -147,10 +153,22 @@ export function AdminDonationsPage() {
   };
 
   const getDonorTier = (amount: number) => {
-    if (amount >= 100000) return { label: "Philanthropic Legacy / Bilateral", color: "bg-purple-100 text-purple-800 border-purple-300" };
-    if (amount >= 25000) return { label: "Corporate CSR Partner", color: "bg-amber-100 text-amber-800 border-amber-300" };
-    if (amount >= 5000) return { label: "Community Benefactor", color: "bg-blue-100 text-blue-800 border-blue-300" };
-    return { label: "Grassroots Citizen", color: "bg-emerald-100 text-emerald-800 border-emerald-300" };
+    if (amount >= 100000)
+      return {
+        label: "Philanthropic Legacy / Bilateral",
+        color: "bg-purple-100 text-purple-800 border-purple-300",
+      };
+    if (amount >= 25000)
+      return {
+        label: "Corporate CSR Partner",
+        color: "bg-amber-100 text-amber-800 border-amber-300",
+      };
+    if (amount >= 5000)
+      return { label: "Community Benefactor", color: "bg-blue-100 text-blue-800 border-blue-300" };
+    return {
+      label: "Grassroots Citizen",
+      color: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    };
   };
 
   const handleExportCSV = () => {
@@ -182,11 +200,15 @@ export function AdminDonationsPage() {
     ]);
 
     const csvContent =
-      "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `bhtf_fiduciary_ledger_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute(
+      "download",
+      `bhtf_fiduciary_ledger_${new Date().toISOString().slice(0, 10)}.csv`,
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -224,7 +246,8 @@ export function AdminDonationsPage() {
               Donors & Pledges CRM
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Verify incoming citizen and corporate pledges, audit sovereign matching yields, and generate official DRC tax vouchers.
+              Verify incoming citizen and corporate pledges, audit sovereign matching yields, and
+              generate official DRC tax vouchers.
             </p>
           </div>
 
@@ -250,27 +273,39 @@ export function AdminDonationsPage() {
         {/* Fiduciary Summary Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Filtered Public Pledges</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Filtered Public Pledges
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
               Nu. {totalPublicAmount.toLocaleString()}
             </div>
-            <span className="text-xs font-medium text-slate-500 block">From {filteredDonations.length} records</span>
+            <span className="text-xs font-medium text-slate-500 block">
+              From {filteredDonations.length} records
+            </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">1:1 RGOB Sovereign Match</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              1:1 RGOB Sovereign Match
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-amber-700 font-mono">
               + Nu. {totalPublicAmount.toLocaleString()}
             </div>
-            <span className="text-xs font-medium text-amber-800 font-bold block">100% Guaranteed by Ministry of Finance</span>
+            <span className="text-xs font-medium text-amber-800 font-bold block">
+              100% Guaranteed by Ministry of Finance
+            </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Combined Healthcare Yield</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Total Combined Healthcare Yield
+            </span>
             <div className="text-2xl sm:text-3xl font-black text-blue-700 font-mono">
               Nu. {totalYield.toLocaleString()}
             </div>
-            <span className="text-xs font-medium text-blue-700 font-bold block">Doubled Purchasing Power</span>
+            <span className="text-xs font-medium text-blue-700 font-bold block">
+              Doubled Purchasing Power
+            </span>
           </div>
         </div>
 
@@ -328,8 +363,12 @@ export function AdminDonationsPage() {
         ) : filteredDonations.length === 0 ? (
           <div className="bg-white rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
             <Coins className="h-10 w-10 text-slate-400 mx-auto" />
-            <h3 className="font-bold text-slate-800 text-sm">No donations match your filter criteria</h3>
-            <p className="text-xs text-slate-500">Try clearing the search or changing status filters.</p>
+            <h3 className="font-bold text-slate-800 text-sm">
+              No donations match your filter criteria
+            </h3>
+            <p className="text-xs text-slate-500">
+              Try clearing the search or changing status filters.
+            </p>
           </div>
         ) : (
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
@@ -358,7 +397,9 @@ export function AdminDonationsPage() {
                         <td className="py-4 px-5 space-y-1">
                           <div className="font-extrabold text-slate-900">{d.donorName}</div>
                           <div className="text-[11px] text-slate-500">{d.donorEmail}</div>
-                          <span className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${tier.color}`}>
+                          <span
+                            className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${tier.color}`}
+                          >
                             {tier.label}
                           </span>
                         </td>
@@ -383,8 +424,8 @@ export function AdminDonationsPage() {
                               d.status === "COMPLETED" || d.status === "VERIFIED"
                                 ? "bg-emerald-100 text-emerald-800"
                                 : d.status === "PENDING"
-                                ? "bg-amber-100 text-amber-800"
-                                : "bg-slate-100 text-slate-700"
+                                  ? "bg-amber-100 text-amber-800"
+                                  : "bg-slate-100 text-slate-700"
                             }`}
                           >
                             {d.status}
@@ -441,7 +482,9 @@ export function AdminDonationsPage() {
                   <span className="text-xs font-extrabold text-emerald-700 uppercase tracking-widest">
                     Donor CRM Record
                   </span>
-                  <h3 className="text-lg font-black text-slate-900">{selectedDonation.donorName}</h3>
+                  <h3 className="text-lg font-black text-slate-900">
+                    {selectedDonation.donorName}
+                  </h3>
                 </div>
                 <button
                   type="button"
@@ -456,19 +499,29 @@ export function AdminDonationsPage() {
                 <div className="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
                   <div>
                     <span className="text-slate-400 block font-medium">Tracking Ref:</span>
-                    <span className="font-mono font-black text-slate-900">{selectedDonation.referenceNo}</span>
+                    <span className="font-mono font-black text-slate-900">
+                      {selectedDonation.referenceNo}
+                    </span>
                   </div>
                   <div>
                     <span className="text-slate-400 block font-medium">Payment Mode:</span>
-                    <span className="font-bold text-slate-900">{selectedDonation.paymentMethod}</span>
+                    <span className="font-bold text-slate-900">
+                      {selectedDonation.paymentMethod}
+                    </span>
                   </div>
                   <div>
                     <span className="text-slate-400 block font-medium">Donation Amount:</span>
-                    <span className="font-mono font-black text-slate-900">Nu. {selectedDonation.amountNu.toLocaleString()}</span>
+                    <span className="font-mono font-black text-slate-900">
+                      Nu. {selectedDonation.amountNu.toLocaleString()}
+                    </span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block font-medium">1:1 RGOB Sovereign Match:</span>
-                    <span className="font-mono font-black text-emerald-700">+ Nu. {selectedDonation.amountNu.toLocaleString()}</span>
+                    <span className="text-slate-400 block font-medium">
+                      1:1 RGOB Sovereign Match:
+                    </span>
+                    <span className="font-mono font-black text-emerald-700">
+                      + Nu. {selectedDonation.amountNu.toLocaleString()}
+                    </span>
                   </div>
                 </div>
 
@@ -488,7 +541,9 @@ export function AdminDonationsPage() {
                 )}
 
                 <div className="pt-2">
-                  <span className="text-slate-700 font-bold block mb-2">Update Fiduciary Status:</span>
+                  <span className="text-slate-700 font-bold block mb-2">
+                    Update Fiduciary Status:
+                  </span>
                   <div className="flex flex-wrap gap-2">
                     {(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"] as const).map((st) => (
                       <button
@@ -520,7 +575,9 @@ export function AdminDonationsPage() {
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => handleDeleteDonation(selectedDonation.id, selectedDonation.referenceNo)}
+                    onClick={() =>
+                      handleDeleteDonation(selectedDonation.id, selectedDonation.referenceNo)
+                    }
                     className="px-3.5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
                   >
                     <Trash2 className="h-3.5 w-3.5" /> Delete Record
@@ -558,15 +615,24 @@ export function AdminDonationsPage() {
               </div>
 
               {/* Printable Stamped Official Certificate */}
-              <div id="printable-voucher" className="p-8 rounded-3xl bg-amber-50/40 border-2 border-amber-300 space-y-6 relative overflow-hidden text-slate-900">
+              <div
+                id="printable-voucher"
+                className="p-8 rounded-3xl bg-amber-50/40 border-2 border-amber-300 space-y-6 relative overflow-hidden text-slate-900"
+              >
                 {/* Crest & Heading */}
                 <div className="flex items-center justify-between border-b-2 border-amber-200 pb-4">
                   <div className="flex items-center gap-3">
                     <img src={logo} alt="BHTF Crest" className="h-14 w-14 object-contain" />
                     <div>
-                      <div className="text-xs font-black text-emerald-800">འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།</div>
-                      <h2 className="text-lg font-black text-slate-900 tracking-tight">Bhutan Health Trust Fund</h2>
-                      <div className="text-[11px] text-slate-600 font-medium">Royal Government of Bhutan · Thimphu</div>
+                      <div className="text-xs font-black text-emerald-800">
+                        འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
+                      </div>
+                      <h2 className="text-lg font-black text-slate-900 tracking-tight">
+                        Bhutan Health Trust Fund
+                      </h2>
+                      <div className="text-[11px] text-slate-600 font-medium">
+                        Royal Government of Bhutan · Thimphu
+                      </div>
                     </div>
                   </div>
 
@@ -574,49 +640,78 @@ export function AdminDonationsPage() {
                     <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded bg-amber-200/70 text-amber-900">
                       Official Tax Voucher
                     </span>
-                    <div className="text-xs font-mono font-bold text-slate-700 mt-1">{selectedDonation.referenceNo}</div>
+                    <div className="text-xs font-mono font-bold text-slate-700 mt-1">
+                      {selectedDonation.referenceNo}
+                    </div>
                   </div>
                 </div>
 
                 <div className="space-y-3 text-xs leading-relaxed">
                   <p>
-                    This is to officially certify that <strong className="text-slate-900 font-black">{selectedDonation.donorName}</strong> ({selectedDonation.donorEmail}) has contributed to the perpetual sovereign health endowment of the Kingdom of Bhutan.
+                    This is to officially certify that{" "}
+                    <strong className="text-slate-900 font-black">
+                      {selectedDonation.donorName}
+                    </strong>{" "}
+                    ({selectedDonation.donorEmail}) has contributed to the perpetual sovereign
+                    health endowment of the Kingdom of Bhutan.
                   </p>
 
                   <div className="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-white border border-amber-200">
                     <div>
-                      <span className="text-slate-500 text-[11px] block">Public Donation Amount:</span>
-                      <span className="text-base font-mono font-black text-slate-900">Nu. {selectedDonation.amountNu.toLocaleString()}</span>
+                      <span className="text-slate-500 text-[11px] block">
+                        Public Donation Amount:
+                      </span>
+                      <span className="text-base font-mono font-black text-slate-900">
+                        Nu. {selectedDonation.amountNu.toLocaleString()}
+                      </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 text-[11px] block">1:1 RGOB Sovereign Match:</span>
-                      <span className="text-base font-mono font-black text-emerald-700">+ Nu. {selectedDonation.amountNu.toLocaleString()}</span>
+                      <span className="text-slate-500 text-[11px] block">
+                        1:1 RGOB Sovereign Match:
+                      </span>
+                      <span className="text-base font-mono font-black text-emerald-700">
+                        + Nu. {selectedDonation.amountNu.toLocaleString()}
+                      </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 text-[11px] block">Total Healthcare Yield:</span>
-                      <span className="text-base font-mono font-black text-blue-700">Nu. {(selectedDonation.amountNu * 2).toLocaleString()}</span>
+                      <span className="text-slate-500 text-[11px] block">
+                        Total Healthcare Yield:
+                      </span>
+                      <span className="text-base font-mono font-black text-blue-700">
+                        Nu. {(selectedDonation.amountNu * 2).toLocaleString()}
+                      </span>
                     </div>
                     <div>
                       <span className="text-slate-500 text-[11px] block">Payment Instrument:</span>
-                      <span className="text-sm font-bold text-slate-800">{selectedDonation.paymentMethod}</span>
+                      <span className="text-sm font-bold text-slate-800">
+                        {selectedDonation.paymentMethod}
+                      </span>
                     </div>
                   </div>
 
                   <p className="text-[11px] text-slate-600">
-                    <strong>Tax Exemption Mandate:</strong> In accordance with the Income Tax Act of the Kingdom of Bhutan and DRC guidelines, 100% of this contribution qualifies for personal and corporate income tax deductions.
+                    <strong>Tax Exemption Mandate:</strong> In accordance with the Income Tax Act of
+                    the Kingdom of Bhutan and DRC guidelines, 100% of this contribution qualifies
+                    for personal and corporate income tax deductions.
                   </p>
                 </div>
 
                 {/* Institutional Stamp Signature */}
                 <div className="pt-4 border-t border-amber-200 flex items-center justify-between text-xs">
                   <div>
-                    <div className="font-mono text-[10px] text-slate-500">Issued: {new Date(selectedDonation.createdAt).toLocaleDateString()}</div>
-                    <div className="text-[10px] text-emerald-800 font-bold">Fiduciary Status: {selectedDonation.status}</div>
+                    <div className="font-mono text-[10px] text-slate-500">
+                      Issued: {new Date(selectedDonation.createdAt).toLocaleDateString()}
+                    </div>
+                    <div className="text-[10px] text-emerald-800 font-bold">
+                      Fiduciary Status: {selectedDonation.status}
+                    </div>
                   </div>
 
                   <div className="text-center">
                     <div className="h-10 w-24 border-b border-dashed border-slate-400 mx-auto" />
-                    <span className="text-[10px] font-bold text-slate-700 mt-1 block">Executive Director, BHTF</span>
+                    <span className="text-[10px] font-bold text-slate-700 mt-1 block">
+                      Executive Director, BHTF
+                    </span>
                   </div>
                 </div>
               </div>
@@ -652,8 +747,12 @@ export function AdminDonationsPage() {
                     <Sparkles className="h-4 w-4" />
                   </div>
                   <div>
-                    <h3 className="font-black text-slate-900 text-base">Register Offline Remittance</h3>
-                    <p className="text-[11px] text-slate-500 font-medium">Log bank deposits, cheques, or cash received at Secretariat</p>
+                    <h3 className="font-black text-slate-900 text-base">
+                      Register Offline Remittance
+                    </h3>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      Log bank deposits, cheques, or cash received at Secretariat
+                    </p>
                   </div>
                 </div>
                 <button
@@ -719,7 +818,9 @@ export function AdminDonationsPage() {
                       required
                       min={1}
                       value={offlineAmountNu}
-                      onChange={(e) => setOfflineAmountNu(e.target.value === "" ? "" : Number(e.target.value))}
+                      onChange={(e) =>
+                        setOfflineAmountNu(e.target.value === "" ? "" : Number(e.target.value))
+                      }
                       placeholder="e.g. 50000"
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     />
@@ -754,7 +855,9 @@ export function AdminDonationsPage() {
                     onChange={(e) => setOfflineStatus(e.target.value as any)}
                     className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white font-bold text-emerald-800"
                   >
-                    <option value="VERIFIED">VERIFIED (Physical Receipt / Statement Checked)</option>
+                    <option value="VERIFIED">
+                      VERIFIED (Physical Receipt / Statement Checked)
+                    </option>
                     <option value="COMPLETED">COMPLETED (Audited & Credited to Trust Fund)</option>
                     <option value="PENDING">PENDING (Cheque Clearance In Progress)</option>
                   </select>

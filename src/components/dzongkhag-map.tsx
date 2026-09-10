@@ -338,13 +338,13 @@ const dzongkhags: DzongkhagData[] = [
 ];
 
 export function DzongkhagExplorer() {
-  const [selectedRegion, setSelectedRegion] = useState<"All" | "Western" | "Central" | "Eastern">("All");
+  const [selectedRegion, setSelectedRegion] = useState<"All" | "Western" | "Central" | "Eastern">(
+    "All",
+  );
   const [activeDzongkhag, setActiveDzongkhag] = useState<DzongkhagData>(dzongkhags[0]);
 
   const filtered =
-    selectedRegion === "All"
-      ? dzongkhags
-      : dzongkhags.filter((d) => d.region === selectedRegion);
+    selectedRegion === "All" ? dzongkhags : dzongkhags.filter((d) => d.region === selectedRegion);
 
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-emerald-50/30 border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/50 space-y-8">
@@ -362,7 +362,8 @@ export function DzongkhagExplorer() {
             Interactive Dzongkhag Healthcare Coverage
           </h3>
           <p className="text-xs sm:text-sm text-slate-600">
-            Click any Dzongkhag to inspect live primary facilities, medicine buffer status, and annual funding.
+            Click any Dzongkhag to inspect live primary facilities, medicine buffer status, and
+            annual funding.
           </p>
         </div>
 
@@ -412,7 +413,9 @@ export function DzongkhagExplorer() {
                     <span className="text-[11px] font-black text-emerald-800 tracking-wider">
                       {d.dzongkha}
                     </span>
-                    <span className={`h-2 w-2 rounded-full ${isSelected ? "bg-emerald-500 animate-pulse" : "bg-slate-300"}`} />
+                    <span
+                      className={`h-2 w-2 rounded-full ${isSelected ? "bg-emerald-500 animate-pulse" : "bg-slate-300"}`}
+                    />
                   </div>
                   <div className="font-extrabold text-sm text-slate-900 mt-1 group-hover:text-emerald-700 transition">
                     {d.name}
@@ -492,9 +495,7 @@ export function DzongkhagExplorer() {
             <span className="text-amber-400 font-extrabold flex items-center gap-1.5">
               <Sparkles className="h-4 w-4" /> BHTF Sovereign Health Mandate:
             </span>
-            <p className="text-slate-200 leading-relaxed font-normal">
-              {activeDzongkhag.keyFocus}
-            </p>
+            <p className="text-slate-200 leading-relaxed font-normal">{activeDzongkhag.keyFocus}</p>
           </div>
 
           {/* Annual Allocation Total */}
