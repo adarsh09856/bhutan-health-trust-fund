@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
+import { getPublicPrograms } from "@/lib/api/public.functions";
+import type { Program } from "@/lib/db/schema";
 import {
   Pill,
   Syringe,
@@ -109,7 +112,48 @@ const procurementSteps = [
   },
 ];
 
+const progIconMap: Record<string, any> = {
+  Syringe,
+  Pill,
+  Microscope,
+  HeartPulse,
+  ThermometerSnowflake,
+  ShieldCheck,
+  Stethoscope,
+  GraduationCap,
+};
+
+const progColors = [
+  "bg-blue-50 text-blue-700 border-blue-200",
+  "bg-emerald-50 text-emerald-700 border-emerald-200",
+  "bg-purple-50 text-purple-700 border-purple-200",
+  "bg-rose-50 text-rose-700 border-rose-200",
+  "bg-amber-50 text-amber-700 border-amber-200",
+  "bg-teal-50 text-teal-700 border-teal-200",
+];
+
 function OurWork() {
+  const [livePrograms, setLivePrograms] = useState<Program[]>([]);
+
+  useEffect(() => {
+    getPublicPrograms()
+      .then((res) => {
+        if (res && res.length > 0) setLivePrograms(res);
+      })
+      .catch(() => {});
+  }, []);
+
+  const displayPrograms = livePrograms.length > 0
+    ? livePrograms.map((p, idx) => ({
+        icon: progIconMap[p.icon] || Pill,
+        title: p.title,
+        badge: p.status === "ACTIVE" ? "Active Stream" : p.status,
+        text: p.summary,
+        stats: `${p.targetDzongkhags} • ${p.beneficiariesReached}`,
+        color: progColors[idx % progColors.length],
+      }))
+    : programs;
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
       <PageHero
@@ -138,7 +182,7 @@ function OurWork() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {programs.map((p, idx) => (
+          {displayPrograms.map((p, idx) => (
             <div
               key={idx}
               className="bg-white border border-slate-200 rounded-2xl p-7 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-200 flex flex-col justify-between"

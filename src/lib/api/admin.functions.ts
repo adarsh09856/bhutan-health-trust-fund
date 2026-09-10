@@ -357,3 +357,220 @@ export const deleteAdminProgram = createServerFn({ method: "POST" })
     return await db.deleteProgram(data.id);
   });
 
+// --- Trustees Admin Functions ---
+export const getAdminTrustees = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllTrustees(false);
+});
+
+export const createAdminTrustee = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      name: z.string().min(2),
+      role: z.string().min(2),
+      organization: z.string().min(2),
+      badge: z.string().default("Trustee"),
+      bio: z.string().min(5),
+      photoUrl: z.string().optional(),
+      orderIndex: z.number().default(0),
+      isActive: z.boolean().default(true),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createTrustee({
+      name: data.name.trim(),
+      role: data.role.trim(),
+      organization: data.organization.trim(),
+      badge: data.badge.trim(),
+      bio: data.bio.trim(),
+      photoUrl: data.photoUrl?.trim() || "/src/assets/logo.png",
+      orderIndex: data.orderIndex,
+      isActive: data.isActive,
+    });
+  });
+
+export const updateAdminTrustee = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      name: z.string().optional(),
+      role: z.string().optional(),
+      organization: z.string().optional(),
+      badge: z.string().optional(),
+      bio: z.string().optional(),
+      photoUrl: z.string().optional(),
+      orderIndex: z.number().optional(),
+      isActive: z.boolean().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateTrustee(id, rest);
+  });
+
+export const deleteAdminTrustee = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteTrustee(data.id);
+  });
+
+// --- FAQs Admin Functions ---
+export const getAdminFaqs = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllFaqs(false);
+});
+
+export const createAdminFaq = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      question: z.string().min(3),
+      answer: z.string().min(5),
+      category: z.string().default("General"),
+      orderIndex: z.number().default(0),
+      isPublished: z.boolean().default(true),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createFaq({
+      question: data.question.trim(),
+      answer: data.answer.trim(),
+      category: data.category.trim(),
+      orderIndex: data.orderIndex,
+      isPublished: data.isPublished,
+    });
+  });
+
+export const updateAdminFaq = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      question: z.string().optional(),
+      answer: z.string().optional(),
+      category: z.string().optional(),
+      orderIndex: z.number().optional(),
+      isPublished: z.boolean().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateFaq(id, rest);
+  });
+
+export const deleteAdminFaq = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteFaq(data.id);
+  });
+
+// --- Impact Metrics Admin Functions ---
+export const getAdminMetrics = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllImpactMetrics(false);
+});
+
+export const createAdminMetric = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      label: z.string().min(2),
+      value: z.string().min(1),
+      description: z.string().min(5),
+      icon: z.string().default("Users"),
+      badge: z.string().default("Verified"),
+      orderIndex: z.number().default(0),
+      isActive: z.boolean().default(true),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createImpactMetric({
+      label: data.label.trim(),
+      value: data.value.trim(),
+      description: data.description.trim(),
+      icon: data.icon.trim(),
+      badge: data.badge.trim(),
+      orderIndex: data.orderIndex,
+      isActive: data.isActive,
+    });
+  });
+
+export const updateAdminMetric = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      label: z.string().optional(),
+      value: z.string().optional(),
+      description: z.string().optional(),
+      icon: z.string().optional(),
+      badge: z.string().optional(),
+      orderIndex: z.number().optional(),
+      isActive: z.boolean().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateImpactMetric(id, rest);
+  });
+
+export const deleteAdminMetric = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteImpactMetric(data.id);
+  });
+
+// --- Milestones Admin Functions ---
+export const getAdminMilestones = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllMilestones();
+});
+
+export const createAdminMilestone = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      year: z.string().min(4),
+      title: z.string().min(3),
+      description: z.string().min(5),
+      orderIndex: z.number().default(0),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.createMilestone({
+      year: data.year.trim(),
+      title: data.title.trim(),
+      description: data.description.trim(),
+      orderIndex: data.orderIndex,
+    });
+  });
+
+export const updateAdminMilestone = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      year: z.string().optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      orderIndex: z.number().optional(),
+    })
+  )
+  .handler(async ({ data }) => {
+    const { id, ...rest } = data;
+    return await db.updateMilestone(id, rest);
+  });
+
+export const deleteAdminMilestone = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteMilestone(data.id);
+  });
+
+// --- Site Settings Admin Functions ---
+export const getAdminSettings = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllSettings();
+});
+
+export const updateAdminSetting = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      key: z.string().min(1),
+      value: z.string(),
+    })
+  )
+  .handler(async ({ data }) => {
+    return await db.updateSetting(data.key.trim(), data.value.trim());
+  });
+
+

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { submitContactInquiry } from "@/lib/api/public.functions";
+import { submitContactInquiry, getPublicFaqs, getPublicSettings } from "@/lib/api/public.functions";
+import type { Faq } from "@/lib/db/schema";
 import {
   MapPin,
   Phone,
@@ -16,7 +17,7 @@ import {
   ShieldCheck,
   Award,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/contact")({
@@ -64,6 +65,26 @@ function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [liveFaqs, setLiveFaqs] = useState<Faq[]>([]);
+  const [settings, setSettings] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    getPublicFaqs()
+      .then((res) => {
+        if (res && res.length > 0) setLiveFaqs(res);
+      })
+      .catch(() => {});
+
+    getPublicSettings()
+      .then((res) => {
+        if (res) setSettings(res);
+      })
+      .catch(() => {});
+  }, []);
+
+  const displayFaqs = liveFaqs.length > 0
+    ? liveFaqs.map((f) => ({ q: f.question, a: f.answer }))
+    : faqs;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +139,9 @@ function ContactPage() {
                   </div>
                   <div>
                     <span className="font-extrabold text-slate-900 block">Secretariat Headquarters</span>
-                    <span className="text-slate-600 leading-snug block mt-0.5">Kawajangsa, Thimphu, Kingdom of Bhutan</span>
+                    <span className="text-slate-600 leading-snug block mt-0.5">
+                      {settings["secretariat_address"] || "Kawajangsa, Thimphu, Kingdom of Bhutan"}
+                    </span>
                     <span className="text-[11px] text-slate-400 block mt-0.5">(Adjacent to Ministry of Health)</span>
                   </div>
                 </div>
@@ -129,10 +152,12 @@ function ContactPage() {
                   </div>
                   <div>
                     <span className="font-extrabold text-slate-900 block">Telephone Desks</span>
-                    <a href="tel:+9752328999" className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono">
-                      +975 2 328999 / 338999
-                    </a>
-                    <span className="text-[11px] text-emerald-700 font-bold block mt-0.5">Emergency Helpline: 112 (24/7)</span>
+                    <span className="text-slate-600 block mt-0.5 font-mono">
+                      {settings["secretariat_phone"] || "+975 2 328999 / 338999"}
+                    </span>
+                    <span className="text-[11px] text-emerald-700 font-bold block mt-0.5">
+                      Emergency Helpline: {settings["emergency_hotline"] || "112"} ({settings["emergency_hotline_label"] || "24/7"})
+                    </span>
                   </div>
                 </div>
 
@@ -142,8 +167,11 @@ function ContactPage() {
                   </div>
                   <div>
                     <span className="font-extrabold text-slate-900 block">Official Inquiries</span>
-                    <a href="mailto:info@bhtf.bt" className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono">
-                      info@bhtf.bt / secretariat@bhtf.bt
+                    <a
+                      href={`mailto:${settings["secretariat_email"] || "info@bhtf.bt"}`}
+                      className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono"
+                    >
+                      {settings["secretariat_email"] || "info@bhtf.bt"}
                     </a>
                   </div>
                 </div>
@@ -294,7 +322,7 @@ function ContactPage() {
         </div>
 
         <div className="space-y-3">
-          {faqs.map((faq, idx) => {
+          {displayFaqs.map((faq, idx) => {
             const isOpen = openFaq === idx;
             return (
               <div

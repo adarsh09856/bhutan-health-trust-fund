@@ -16,6 +16,10 @@ import {
   Landmark,
   Shield,
   Coins,
+  HelpCircle,
+  BarChart3,
+  History,
+  Sliders,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { getDashboardAnalytics } from "@/lib/api/admin.functions";
@@ -33,6 +37,14 @@ const cmsNavItems = [
   { to: "/admin/news", label: "News & Press Releases", icon: Newspaper },
   { to: "/admin/reports", label: "Reports & RAA Audits", icon: FileText },
   { to: "/admin/policies", label: "Policies & Royal Charters", icon: ShieldCheck },
+];
+
+const governanceNavItems = [
+  { to: "/admin/trustees", label: "Board of Trustees", icon: Landmark },
+  { to: "/admin/faqs", label: "FAQs & Helpdesk", icon: HelpCircle },
+  { to: "/admin/metrics", label: "National Impact Stats", icon: BarChart3 },
+  { to: "/admin/milestones", label: "Historical Timeline", icon: History },
+  { to: "/admin/settings", label: "Site Settings & Config", icon: Sliders },
 ];
 
 export function AdminSidebar({ onClose }: { onClose?: () => void }) {
@@ -141,6 +153,38 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
                 <div className="flex items-center gap-3">
                   <item.icon
                     className={`h-4 w-4 shrink-0 ${isActive ? "text-white" : "text-amber-400"}`}
+                  />
+                  <span>{item.label}</span>
+                </div>
+                <ChevronRight className={`h-3 w-3 ${isActive ? "text-white" : "text-slate-600"}`} />
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Group 3: Governance & Public Control */}
+        <div className="space-y-1">
+          <div className="text-[10px] uppercase font-black tracking-widest text-slate-400 px-3 mb-2 flex items-center justify-between">
+            <span>Site Control</span>
+            <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded font-mono">Public</span>
+          </div>
+          {governanceNavItems.map((item) => {
+            const isActive = location.pathname === item.to;
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={onClose}
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition duration-150 ${
+                  isActive
+                    ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-900/30"
+                    : "text-slate-300 hover:text-white hover:bg-slate-900"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <item.icon
+                    className={`h-4 w-4 shrink-0 ${isActive ? "text-white" : "text-teal-400"}`}
                   />
                   <span>{item.label}</span>
                 </div>

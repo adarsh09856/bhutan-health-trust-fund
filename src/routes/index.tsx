@@ -1,4 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { getPublicImpactMetrics, getPublicSettings, getPublicNews } from "@/lib/api/public.functions";
+import type { ImpactMetric, NewsArticle } from "@/lib/db/schema";
 import {
   Users,
   ClipboardCheck,
@@ -170,9 +173,101 @@ const featuredNews = [
   },
 ];
 
+const statStyles = [
+  {
+    gradient: "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
+    badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+  },
+  {
+    gradient: "from-amber-950/80 via-slate-900 to-amber-950/60 border-amber-500/40 text-amber-400",
+    badge: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+  },
+  {
+    gradient: "from-blue-950/80 via-slate-900 to-blue-950/60 border-blue-500/40 text-blue-400",
+    badge: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+  },
+  {
+    gradient: "from-rose-950/80 via-slate-900 to-rose-950/60 border-rose-500/40 text-rose-400",
+    badge: "bg-rose-500/20 text-rose-300 border-rose-500/30",
+  },
+];
+
+const metricIconMap: Record<string, any> = {
+  Users,
+  Pill,
+  MapPin,
+  Syringe,
+  Activity,
+  Award,
+  ShieldCheck,
+  HeartHandshake,
+  TrendingUp,
+  BarChart3,
+};
+
 function Index() {
+  const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>([]);
+  const [settings, setSettings] = useState<Record<string, string>>({});
+  const [liveNews, setLiveNews] = useState<NewsArticle[]>([]);
+
+  useEffect(() => {
+    getPublicImpactMetrics()
+      .then((res) => {
+        if (res && res.length > 0) setLiveMetrics(res);
+      })
+      .catch(() => {});
+
+    getPublicSettings()
+      .then((res) => {
+        if (res) setSettings(res);
+      })
+      .catch(() => {});
+
+    getPublicNews()
+      .then((res) => {
+        if (res && res.length > 0) setLiveNews(res.slice(0, 3));
+      })
+      .catch(() => {});
+  }, []);
+
+  const displayStats = liveMetrics.length > 0
+    ? liveMetrics.map((m, idx) => {
+        const style = statStyles[idx % statStyles.length];
+        return {
+          value: m.value,
+          label: m.label,
+          desc: m.description,
+          icon: metricIconMap[m.icon] || Users,
+          gradient: style.gradient,
+          badge: style.badge,
+        };
+      })
+    : keyStats;
+
+  const displayNews = liveNews.length > 0
+    ? liveNews.map((n, idx) => ({
+        slug: n.slug,
+        img: n.coverImage || [newsVaccine, newsCommunity, newsReport][idx % 3],
+        category: n.category,
+        title: n.title,
+        desc: n.excerpt,
+        date: n.publishedAt
+          ? new Date(n.publishedAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })
+          : "Recent",
+        readTime: "4 min read",
+      }))
+    : featuredNews;
+
   return (
     <div className="flex flex-col gap-0">
+      {/* Top Sovereign Announcement Ribbon if Enabled */}
+      {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
+        <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-emerald-600 text-slate-950 text-xs font-bold py-2.5 px-4 text-center border-b border-amber-400/40 shadow-sm flex items-center justify-center gap-2">
+          <Sparkles className="h-4 w-4 shrink-0 text-slate-950" />
+          <span>{settings["announcement_banner"]}</span>
+        </div>
+      )}
+
       {/* 1. Ultra-Premium Colorful Hero Section with Floating Live Impact Showcase */}
       <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
         {/* Background Image with Ambient Saffron & Emerald Overlays */}
@@ -376,7 +471,7 @@ function Index() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {keyStats.map((stat, idx) => (
+              {displayStats.map((stat, idx) => (
                 <div
                   key={idx}
                   className={`bg-gradient-to-b ${stat.gradient} rounded-2xl p-6 border flex flex-col items-center text-center space-y-2.5 shadow-lg transition duration-200 hover:scale-105`}
@@ -439,7 +534,7 @@ function Index() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {featuredNews.map((item) => (
+            {displayNews.map((item) => (
               <article
                 key={item.slug}
                 className="group bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 flex flex-col"

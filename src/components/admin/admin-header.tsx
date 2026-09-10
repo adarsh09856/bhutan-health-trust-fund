@@ -34,6 +34,26 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
     title: "Policies & Royal Charters CMS",
     subtitle: "Manage foundational charters, procurement guidelines, and ethics policies.",
   },
+  "/admin/trustees": {
+    title: "Board of Trustees Governance",
+    subtitle: "Oversee high-level fiduciary governors, royal appointees, and leadership bios.",
+  },
+  "/admin/faqs": {
+    title: "FAQs & Citizen Knowledge Base",
+    subtitle: "Manage public guidance on donation matching, medicine access, and healthcare programs.",
+  },
+  "/admin/metrics": {
+    title: "National Impact Statistics CMS",
+    subtitle: "Control public homepage impact figures, vaccination stats, and citizens reached.",
+  },
+  "/admin/milestones": {
+    title: "Historical Timeline & Royal Decrees",
+    subtitle: "Curate institutional history, royal charter promulgations, and endowment milestones.",
+  },
+  "/admin/settings": {
+    title: "Global Site Settings & Fiduciary Hub",
+    subtitle: "Sovereign matching ratio, emergency helplines, banking credentials, and public notices.",
+  },
 };
 
 export function AdminHeader({ onToggleMenu }: { onToggleMenu: () => void }) {

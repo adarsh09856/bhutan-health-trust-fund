@@ -42,9 +42,6 @@ export default defineConfig({
     tailwindcss(),
     nitro({
       devServer: { port: PORT },
-      externals: {
-        external: ["pg", "pg-native"],
-      },
     }),
   ],
 });

@@ -99,6 +99,59 @@ export const programs = pgTable("programs", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const trustees = pgTable("trustees", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
+  organization: text("organization").notNull(),
+  badge: text("badge").notNull().default("Trustee"),
+  bio: text("bio").notNull(),
+  photoUrl: text("photo_url"),
+  orderIndex: integer("order_index").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const faqs = pgTable("faqs", {
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  category: text("category").notNull().default("General"),
+  orderIndex: integer("order_index").notNull().default(0),
+  isPublished: boolean("is_published").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const impactMetrics = pgTable("impact_metrics", {
+  id: serial("id").primaryKey(),
+  label: text("label").notNull(),
+  value: text("value").notNull(),
+  description: text("description").notNull(),
+  icon: text("icon").notNull().default("Users"),
+  badge: text("badge").notNull().default("Verified"),
+  orderIndex: integer("order_index").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const milestones = pgTable("milestones", {
+  id: serial("id").primaryKey(),
+  year: text("year").notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  orderIndex: integer("order_index").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const siteSettings = pgTable("site_settings", {
+  id: serial("id").primaryKey(),
+  settingKey: text("setting_key").notNull().unique(),
+  settingValue: text("setting_value").notNull(),
+  category: text("category").notNull().default("general"),
+  description: text("description"),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type NewsArticle = typeof newsArticles.$inferSelect;
@@ -115,3 +168,13 @@ export type Subscriber = typeof subscribers.$inferSelect;
 export type NewSubscriber = typeof subscribers.$inferInsert;
 export type Program = typeof programs.$inferSelect;
 export type NewProgram = typeof programs.$inferInsert;
+export type Trustee = typeof trustees.$inferSelect;
+export type NewTrustee = typeof trustees.$inferInsert;
+export type Faq = typeof faqs.$inferSelect;
+export type NewFaq = typeof faqs.$inferInsert;
+export type ImpactMetric = typeof impactMetrics.$inferSelect;
+export type NewImpactMetric = typeof impactMetrics.$inferInsert;
+export type Milestone = typeof milestones.$inferSelect;
+export type NewMilestone = typeof milestones.$inferInsert;
+export type SiteSetting = typeof siteSettings.$inferSelect;
+export type NewSiteSetting = typeof siteSettings.$inferInsert;

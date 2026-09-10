@@ -1,4 +1,18 @@
-import type { NewUser, NewNewsArticle, NewReport, NewPolicy, NewProgram, NewDonation, NewInquiry, NewSubscriber } from "./schema";
+import type {
+  NewUser,
+  NewNewsArticle,
+  NewReport,
+  NewPolicy,
+  NewProgram,
+  NewDonation,
+  NewInquiry,
+  NewSubscriber,
+  NewTrustee,
+  NewFaq,
+  NewImpactMetric,
+  NewMilestone,
+  NewSiteSetting,
+} from "./schema";
 
 // Precomputed genuine bcrypt hash for password "Admin@BHTF2026"
 export const DEFAULT_ADMIN_PASSWORD_HASH = "$2b$10$.xtbHaRBEw.UtXl/l3FH0.NGBtoyZVOmvvcMw/KBJY.I.knfbv256";
@@ -377,5 +391,253 @@ export const initialSubscribers: NewSubscriber[] = [
   { email: "sangay.c@rub.edu.bt", isActive: true },
   { email: "pema.choden@undp.org", isActive: true },
   { email: "tshering.penjor@bhtf.bt", isActive: true },
+];
+
+export const initialTrustees: NewTrustee[] = [
+  {
+    name: "Lyonpo Tandin Wangchuk",
+    role: "Chairperson of the Board",
+    organization: "Ministry of Health, RGOB",
+    badge: "Government Trustee",
+    bio: "Oversees strategic alignment with national healthcare policies, Five-Year Plans, and universal primary coverage across the Kingdom.",
+    photoUrl: "/src/assets/logo.png",
+    orderIndex: 1,
+    isActive: true,
+  },
+  {
+    name: "Dasho Leki Wangmo",
+    role: "Secretary of Finance",
+    organization: "Ministry of Finance, RGOB",
+    badge: "Fiscal Trustee",
+    bio: "Directs endowment investment policies, 1:1 RGOB matching disbursements, and statutory fiscal governance.",
+    photoUrl: "/src/assets/logo.png",
+    orderIndex: 2,
+    isActive: true,
+  },
+  {
+    name: "Dr. Bhupinder Kaur Aulakh",
+    role: "Country Representative",
+    organization: "World Health Organization (WHO)",
+    badge: "Multilateral Partner",
+    bio: "Advises on international pooled vaccine procurement, WHO prequalification standards, and cold chain safety.",
+    photoUrl: "/src/assets/logo.png",
+    orderIndex: 3,
+    isActive: true,
+  },
+  {
+    name: "Dasho Ugyen Tsewang",
+    role: "Civil Society & Private Sector Trustee",
+    organization: "Eminent Public Representative",
+    badge: "Public Oversight",
+    bio: "Ensures citizen representation, societal accountability, ethical fiduciary stewardship, and community donor engagement.",
+    photoUrl: "/src/assets/logo.png",
+    orderIndex: 4,
+    isActive: true,
+  },
+  {
+    name: "Dr. Pandup Tshering",
+    role: "Director of Medical Services",
+    organization: "Department of Medical Services, RGOB",
+    badge: "Clinical Technical",
+    bio: "Monitors national essential drug formularies, consumption rates, and 6-month buffer stock requirements across all 20 Dzongkhags.",
+    photoUrl: "/src/assets/logo.png",
+    orderIndex: 5,
+    isActive: true,
+  },
+  {
+    name: "Dr. Sithar Dorjee",
+    role: "Secretariat Director",
+    organization: "BHTF Executive Secretariat",
+    badge: "Executive Leadership",
+    bio: "Leads day-to-day capital endowment management, international tender financing, and statutory Royal Audit Authority compliance.",
+    photoUrl: "/src/assets/logo.png",
+    orderIndex: 6,
+    isActive: true,
+  },
+];
+
+export const initialFaqs: NewFaq[] = [
+  {
+    question: "How does the 1:1 RGOB Matching Fund work?",
+    answer: "Every single Ngultrum contributed by individuals, corporations, or international donors is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling your healthcare purchasing power.",
+    category: "Matching Fund",
+    orderIndex: 1,
+    isPublished: true,
+  },
+  {
+    question: "Are donations to BHTF tax-deductible in Bhutan?",
+    answer: "Yes. In accordance with Department of Revenue & Customs regulations, donations made to BHTF are eligible for corporate and personal income tax deduction upon receipt of our official stamped pledge certificate.",
+    category: "Tax Deduction",
+    orderIndex: 2,
+    isPublished: true,
+  },
+  {
+    question: "How does BHTF select which medicines and vaccines to finance?",
+    answer: "BHTF finances commodities from the National Essential Medicines List (NEML) approved by the Ministry of Health and Drug Regulatory Authority of Bhutan, strictly adhering to WHO prequalification standards.",
+    category: "Procurement",
+    orderIndex: 3,
+    isPublished: true,
+  },
+  {
+    question: "Can international donors contribute in foreign currencies (USD, EUR, GBP)?",
+    answer: "Yes. BHTF maintains official foreign currency accounts with the Bank of Bhutan and Bhutan National Bank for direct international SWIFT wire transfers.",
+    category: "Donations",
+    orderIndex: 4,
+    isPublished: true,
+  },
+  {
+    question: "How can remote gewog clinics report emergency stock alerts?",
+    answer: "Basic Health Units (BHUs) communicate through the National Emergency Health Logistics Channel and Dzongkhag Health Officers to trigger immediate replenishment.",
+    category: "Logistics",
+    orderIndex: 5,
+    isPublished: true,
+  },
+];
+
+export const initialImpactMetrics: NewImpactMetric[] = [
+  {
+    label: "Citizens Protected",
+    value: "780,000+",
+    description: "Universal health coverage for every citizen across the Kingdom",
+    icon: "Users",
+    badge: "Universal Access",
+    orderIndex: 1,
+    isActive: true,
+  },
+  {
+    label: "Essential Medicines",
+    value: "120+",
+    description: "Uninterrupted national supply of primary and emergency drugs",
+    icon: "Pill",
+    badge: "Formulary Approved",
+    orderIndex: 2,
+    isActive: true,
+  },
+  {
+    label: "Dzongkhags Covered",
+    value: "20 / 20",
+    description: "Direct supply line to all remote Primary Health Units (BHUs)",
+    icon: "MapPin",
+    badge: "Nationwide Reach",
+    orderIndex: 3,
+    isActive: true,
+  },
+  {
+    label: "Childhood Vaccines",
+    value: "100%",
+    description: "Routine infant immunizations fully guaranteed in perpetuity",
+    icon: "Syringe",
+    badge: "100% Guaranteed",
+    orderIndex: 4,
+    isActive: true,
+  },
+];
+
+export const initialMilestones: NewMilestone[] = [
+  {
+    year: "1998",
+    title: "Conception in Geneva (WHO World Health Assembly)",
+    description: "The Royal Government of Bhutan formally announced the vision of an autonomous health endowment fund to international partners in Geneva.",
+    orderIndex: 1,
+  },
+  {
+    year: "2003",
+    title: "Royal Charter & Statutory Establishment",
+    description: "Enacted under Royal Charter as a permanent statutory trust fund with ring-fenced capital grants from RGOB and bilateral partners.",
+    orderIndex: 2,
+  },
+  {
+    year: "2011",
+    title: "Target Endowment Corpus Realization",
+    description: "Reached primary target corpus of USD 24 Million, enabling full operational financing for routine national immunization schedules.",
+    orderIndex: 3,
+  },
+  {
+    year: "2018",
+    title: "Expansion to 120+ Essential Medicines",
+    description: "Royal Charter expanded to permanently cover 100% of essential medicines on the National Essential Drugs List.",
+    orderIndex: 4,
+  },
+  {
+    year: "2024",
+    title: "Sovereign 1:1 RGOB Matching Campaign",
+    description: "His Majesty The King commands a perpetual 1:1 RGOB matching grant for every Ngultrum pledged to the fund.",
+    orderIndex: 5,
+  },
+];
+
+export const initialSiteSettings: NewSiteSetting[] = [
+  {
+    settingKey: "emergency_hotline",
+    settingValue: "112",
+    category: "general",
+    description: "National emergency health helpline number",
+  },
+  {
+    settingKey: "emergency_hotline_label",
+    settingValue: "Toll-Free, 24/7 Nationwide",
+    category: "general",
+    description: "Helpline availability text",
+  },
+  {
+    settingKey: "secretariat_phone",
+    settingValue: "+975 2 328999 / 338999",
+    category: "contact",
+    description: "Secretariat official telephone contact",
+  },
+  {
+    settingKey: "secretariat_email",
+    settingValue: "info@bhtf.bt",
+    category: "contact",
+    description: "Secretariat primary contact email",
+  },
+  {
+    settingKey: "secretariat_address",
+    settingValue: "BHTF Secretariat, Kawajangsa, Thimphu, Kingdom of Bhutan",
+    category: "contact",
+    description: "Secretariat physical headquarters address",
+  },
+  {
+    settingKey: "bob_account_no",
+    settingValue: "100984572",
+    category: "banking",
+    description: "Bank of Bhutan official donation account number",
+  },
+  {
+    settingKey: "bob_account_title",
+    settingValue: "Bhutan Health Trust Fund",
+    category: "banking",
+    description: "Bank of Bhutan account title",
+  },
+  {
+    settingKey: "bob_swift_code",
+    settingValue: "BOBKBTBT",
+    category: "banking",
+    description: "Bank of Bhutan SWIFT code for wire transfers",
+  },
+  {
+    settingKey: "bnb_account_no",
+    settingValue: "0000023485",
+    category: "banking",
+    description: "Bhutan National Bank account number",
+  },
+  {
+    settingKey: "matching_ratio",
+    settingValue: "1:1",
+    category: "matching",
+    description: "Sovereign government matching multiplier",
+  },
+  {
+    settingKey: "announcement_banner",
+    settingValue: "Universal Primary Health Coverage Guaranteed: 100% of Essential Drugs & Vaccines Ring-Fenced in Perpetuity.",
+    category: "general",
+    description: "Top site-wide announcement broadcast",
+  },
+  {
+    settingKey: "announcement_banner_enabled",
+    settingValue: "true",
+    category: "general",
+    description: "Whether top announcement bar is visible",
+  },
 ];
 

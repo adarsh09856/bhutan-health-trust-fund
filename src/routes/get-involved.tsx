@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { submitDonationPledge } from "@/lib/api/public.functions";
+import { submitDonationPledge, getPublicSettings } from "@/lib/api/public.functions";
 import {
   Heart,
   Handshake,
@@ -20,7 +20,7 @@ import {
   TrendingUp,
   Landmark,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { EndowmentCalculator } from "@/components/endowment-calculator";
 
@@ -101,6 +101,15 @@ function GetInvolvedPage() {
     paymentMethod: string;
     message: string;
   } | null>(null);
+  const [settings, setSettings] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    getPublicSettings()
+      .then((res) => {
+        if (res) setSettings(res);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -250,32 +259,32 @@ function GetInvolvedPage() {
                     </div>
                   </div>
 
-                  {/* Bank Deposit Box */}
-                  <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
-                    <div className="font-bold text-slate-900 flex items-center gap-2 border-b pb-2">
-                      <Building className="h-4 w-4 text-emerald-700" />
-                      <span>Bank of Bhutan Official Account</span>
-                    </div>
+                    {/* Bank Deposit Box */}
+                    <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
+                      <div className="font-bold text-slate-900 flex items-center gap-2 border-b pb-2">
+                        <Building className="h-4 w-4 text-emerald-700" />
+                        <span>Bank of Bhutan Official Account</span>
+                      </div>
 
-                    <div className="space-y-2 font-mono text-slate-700">
-                      <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
-                        <span>Account: 100984572</span>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy("100984572")}
-                          className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
-                          title="Copy Account Number"
-                        >
-                          <Copy className="h-4 w-4" />
-                        </button>
+                      <div className="space-y-2 font-mono text-slate-700">
+                        <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
+                          <span>Account: {settings["bob_account_no"] || "100984572"}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(settings["bob_account_no"] || "100984572")}
+                            className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
+                            title="Copy Account Number"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                          Title: {settings["bob_account_title"] || "Bhutan Health Trust Fund"}
+                        </div>
+                        <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
+                          Branch: Thimphu Main Branch (SWIFT: {settings["bob_swift_code"] || "BOBKBTBT"})
+                        </div>
                       </div>
-                      <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                        Title: Bhutan Health Trust Fund
-                      </div>
-                      <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                        Branch: Thimphu Main Branch (SWIFT: BOBKBTBT)
-                      </div>
-                    </div>
 
                     <p className="text-[11px] text-slate-500 leading-relaxed pt-1">
                       ⚠️ Please enter your Reference{" "}

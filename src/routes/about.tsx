@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
+import { getPublicTrustees, getPublicMilestones } from "@/lib/api/public.functions";
+import type { Trustee, Milestone } from "@/lib/db/schema";
 import {
   Target,
   Eye,
@@ -69,7 +72,7 @@ const values = [
   },
 ];
 
-const trustees = [
+const trustees: { name?: string; role: string; organization: string; badge: string; desc: string }[] = [
   {
     role: "Chairperson of the Board",
     organization: "Ministry of Health, RGOB",
@@ -137,6 +140,41 @@ const milestones = [
 ];
 
 function About() {
+  const [liveTrustees, setLiveTrustees] = useState<Trustee[]>([]);
+  const [liveMilestones, setLiveMilestones] = useState<Milestone[]>([]);
+
+  useEffect(() => {
+    getPublicTrustees()
+      .then((res) => {
+        if (res && res.length > 0) setLiveTrustees(res);
+      })
+      .catch(() => {});
+
+    getPublicMilestones()
+      .then((res) => {
+        if (res && res.length > 0) setLiveMilestones(res);
+      })
+      .catch(() => {});
+  }, []);
+
+  const displayTrustees = liveTrustees.length > 0
+    ? liveTrustees.map((t) => ({
+        role: t.role,
+        organization: t.organization,
+        badge: t.badge,
+        desc: t.bio,
+        name: t.name,
+      }))
+    : trustees;
+
+  const displayMilestones = liveMilestones.length > 0
+    ? liveMilestones.map((m) => ({
+        year: m.year,
+        title: m.title,
+        desc: m.description,
+      }))
+    : milestones;
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
       <PageHero
@@ -225,7 +263,7 @@ function About() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {trustees.map((t, idx) => (
+            {displayTrustees.map((t, idx) => (
               <div
                 key={idx}
                 className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:border-emerald-400 hover:shadow-xl transition duration-200 flex flex-col justify-between space-y-4 group"
@@ -241,6 +279,11 @@ function About() {
                   </div>
 
                   <div>
+                    {t.name && (
+                      <span className="text-xs font-black uppercase tracking-wider text-slate-500 block mb-0.5">
+                        {t.name}
+                      </span>
+                    )}
                     <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition">{t.role}</h3>
                     <span className="text-xs font-bold text-emerald-700 block mt-0.5">
                       {t.organization}
@@ -275,7 +318,7 @@ function About() {
         </div>
 
         <div className="relative border-l-2 border-emerald-300 ml-4 sm:ml-32 space-y-10">
-          {milestones.map((m, idx) => (
+          {displayMilestones.map((m, idx) => (
             <div key={idx} className="relative pl-6 sm:pl-10 group">
               {/* Year badge on left for desktop */}
               <div className="hidden sm:block absolute -left-32 top-0 text-right w-24 font-black text-xl text-emerald-800 font-mono">

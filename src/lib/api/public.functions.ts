@@ -156,3 +156,33 @@ export const lookupDonation = createServerFn({ method: "POST" })
     };
   });
 
+// --- Get Public Trustees ---
+export const getPublicTrustees = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllTrustees(true);
+});
+
+// --- Get Public FAQs ---
+export const getPublicFaqs = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllFaqs(true);
+});
+
+// --- Get Public Impact Metrics ---
+export const getPublicImpactMetrics = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllImpactMetrics(true);
+});
+
+// --- Get Public Milestones ---
+export const getPublicMilestones = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllMilestones();
+});
+
+// --- Get Public Site Settings ---
+export const getPublicSettings = createServerFn({ method: "GET" }).handler(async () => {
+  const settings = await db.getAllSettings();
+  const map: Record<string, string> = {};
+  for (const s of settings) {
+    map[s.settingKey] = s.settingValue;
+  }
+  return map;
+});
+

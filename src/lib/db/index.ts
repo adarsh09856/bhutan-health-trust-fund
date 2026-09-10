@@ -10,6 +10,11 @@ import {
   initialDonations,
   initialInquiries,
   initialSubscribers,
+  initialTrustees,
+  initialFaqs,
+  initialImpactMetrics,
+  initialMilestones,
+  initialSiteSettings,
 } from "./seed-data";
 import type {
   User,
@@ -20,6 +25,11 @@ import type {
   Donation,
   Inquiry,
   Subscriber,
+  Trustee,
+  Faq,
+  ImpactMetric,
+  Milestone,
+  SiteSetting,
   NewUser,
   NewNewsArticle,
   NewReport,
@@ -28,6 +38,11 @@ import type {
   NewDonation,
   NewInquiry,
   NewSubscriber,
+  NewTrustee,
+  NewFaq,
+  NewImpactMetric,
+  NewMilestone,
+  NewSiteSetting,
 } from "./schema";
 
 /**
@@ -606,6 +621,285 @@ class BHTFDataStore {
       .where(eq(schema.subscribers.id, id))
       .returning();
     return deleted.length > 0;
+  }
+
+  // --- Trustees ---
+  public async getAllTrustees(onlyActive = false): Promise<Trustee[]> {
+    try {
+      if (onlyActive) {
+        const res = await drizzleDb
+          .select()
+          .from(schema.trustees)
+          .where(eq(schema.trustees.isActive, true))
+          .orderBy(asc(schema.trustees.orderIndex), asc(schema.trustees.id));
+        if (res.length > 0) return res;
+      } else {
+        const res = await drizzleDb
+          .select()
+          .from(schema.trustees)
+          .orderBy(asc(schema.trustees.orderIndex), asc(schema.trustees.id));
+        if (res.length > 0) return res;
+      }
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllTrustees Warning]:", err?.message || err);
+    }
+
+    const filtered = onlyActive ? initialTrustees.filter((t) => t.isActive) : initialTrustees;
+    return filtered.map((t, idx) => ({
+      id: idx + 1,
+      name: t.name,
+      role: t.role,
+      organization: t.organization,
+      badge: t.badge || "Trustee",
+      bio: t.bio,
+      photoUrl: t.photoUrl || "/src/assets/logo.png",
+      orderIndex: t.orderIndex || idx + 1,
+      isActive: t.isActive !== undefined ? t.isActive : true,
+      createdAt: new Date(),
+    }));
+  }
+
+  public async createTrustee(data: NewTrustee): Promise<Trustee> {
+    const [created] = await drizzleDb.insert(schema.trustees).values(data).returning();
+    return created;
+  }
+
+  public async updateTrustee(id: number, data: Partial<NewTrustee>): Promise<Trustee | null> {
+    const [updated] = await drizzleDb
+      .update(schema.trustees)
+      .set(data)
+      .where(eq(schema.trustees.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteTrustee(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.trustees)
+      .where(eq(schema.trustees.id, id))
+      .returning();
+    return deleted.length > 0;
+  }
+
+  // --- FAQs ---
+  public async getAllFaqs(onlyPublished = false): Promise<Faq[]> {
+    try {
+      if (onlyPublished) {
+        const res = await drizzleDb
+          .select()
+          .from(schema.faqs)
+          .where(eq(schema.faqs.isPublished, true))
+          .orderBy(asc(schema.faqs.orderIndex), asc(schema.faqs.id));
+        if (res.length > 0) return res;
+      } else {
+        const res = await drizzleDb
+          .select()
+          .from(schema.faqs)
+          .orderBy(asc(schema.faqs.orderIndex), asc(schema.faqs.id));
+        if (res.length > 0) return res;
+      }
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllFaqs Warning]:", err?.message || err);
+    }
+
+    const filtered = onlyPublished ? initialFaqs.filter((f) => f.isPublished) : initialFaqs;
+    return filtered.map((f, idx) => ({
+      id: idx + 1,
+      question: f.question,
+      answer: f.answer,
+      category: f.category || "General",
+      orderIndex: f.orderIndex || idx + 1,
+      isPublished: f.isPublished !== undefined ? f.isPublished : true,
+      createdAt: new Date(),
+    }));
+  }
+
+  public async createFaq(data: NewFaq): Promise<Faq> {
+    const [created] = await drizzleDb.insert(schema.faqs).values(data).returning();
+    return created;
+  }
+
+  public async updateFaq(id: number, data: Partial<NewFaq>): Promise<Faq | null> {
+    const [updated] = await drizzleDb
+      .update(schema.faqs)
+      .set(data)
+      .where(eq(schema.faqs.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteFaq(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.faqs)
+      .where(eq(schema.faqs.id, id))
+      .returning();
+    return deleted.length > 0;
+  }
+
+  // --- Impact Metrics ---
+  public async getAllImpactMetrics(onlyActive = false): Promise<ImpactMetric[]> {
+    try {
+      if (onlyActive) {
+        const res = await drizzleDb
+          .select()
+          .from(schema.impactMetrics)
+          .where(eq(schema.impactMetrics.isActive, true))
+          .orderBy(asc(schema.impactMetrics.orderIndex), asc(schema.impactMetrics.id));
+        if (res.length > 0) return res;
+      } else {
+        const res = await drizzleDb
+          .select()
+          .from(schema.impactMetrics)
+          .orderBy(asc(schema.impactMetrics.orderIndex), asc(schema.impactMetrics.id));
+        if (res.length > 0) return res;
+      }
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllImpactMetrics Warning]:", err?.message || err);
+    }
+
+    const filtered = onlyActive ? initialImpactMetrics.filter((m) => m.isActive) : initialImpactMetrics;
+    return filtered.map((m, idx) => ({
+      id: idx + 1,
+      label: m.label,
+      value: m.value,
+      description: m.description,
+      icon: m.icon || "Users",
+      badge: m.badge || "Verified",
+      orderIndex: m.orderIndex || idx + 1,
+      isActive: m.isActive !== undefined ? m.isActive : true,
+      createdAt: new Date(),
+    }));
+  }
+
+  public async createImpactMetric(data: NewImpactMetric): Promise<ImpactMetric> {
+    const [created] = await drizzleDb.insert(schema.impactMetrics).values(data).returning();
+    return created;
+  }
+
+  public async updateImpactMetric(id: number, data: Partial<NewImpactMetric>): Promise<ImpactMetric | null> {
+    const [updated] = await drizzleDb
+      .update(schema.impactMetrics)
+      .set(data)
+      .where(eq(schema.impactMetrics.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteImpactMetric(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.impactMetrics)
+      .where(eq(schema.impactMetrics.id, id))
+      .returning();
+    return deleted.length > 0;
+  }
+
+  // --- Milestones ---
+  public async getAllMilestones(): Promise<Milestone[]> {
+    try {
+      const res = await drizzleDb
+        .select()
+        .from(schema.milestones)
+        .orderBy(asc(schema.milestones.orderIndex), asc(schema.milestones.year));
+      if (res.length > 0) return res;
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllMilestones Warning]:", err?.message || err);
+    }
+
+    return initialMilestones.map((ms, idx) => ({
+      id: idx + 1,
+      year: ms.year,
+      title: ms.title,
+      description: ms.description,
+      orderIndex: ms.orderIndex || idx + 1,
+      createdAt: new Date(),
+    }));
+  }
+
+  public async createMilestone(data: NewMilestone): Promise<Milestone> {
+    const [created] = await drizzleDb.insert(schema.milestones).values(data).returning();
+    return created;
+  }
+
+  public async updateMilestone(id: number, data: Partial<NewMilestone>): Promise<Milestone | null> {
+    const [updated] = await drizzleDb
+      .update(schema.milestones)
+      .set(data)
+      .where(eq(schema.milestones.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteMilestone(id: number): Promise<boolean> {
+    const deleted = await drizzleDb
+      .delete(schema.milestones)
+      .where(eq(schema.milestones.id, id))
+      .returning();
+    return deleted.length > 0;
+  }
+
+  // --- Site Settings ---
+  public async getAllSettings(): Promise<SiteSetting[]> {
+    try {
+      const res = await drizzleDb.select().from(schema.siteSettings);
+      if (res.length > 0) return res;
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllSettings Warning]:", err?.message || err);
+    }
+
+    return initialSiteSettings.map((s, idx) => ({
+      id: idx + 1,
+      settingKey: s.settingKey,
+      settingValue: s.settingValue,
+      category: s.category || "general",
+      description: s.description || null,
+      updatedAt: new Date(),
+    }));
+  }
+
+  public async getSetting(key: string): Promise<string | null> {
+    try {
+      const [res] = await drizzleDb
+        .select()
+        .from(schema.siteSettings)
+        .where(eq(schema.siteSettings.settingKey, key));
+      if (res) return res.settingValue;
+    } catch (err: any) {
+      console.warn(`[PostgreSQL getSetting(${key}) Warning]:`, err?.message || err);
+    }
+
+    const fallback = initialSiteSettings.find((s) => s.settingKey === key);
+    return fallback ? fallback.settingValue : null;
+  }
+
+  public async updateSetting(key: string, value: string): Promise<SiteSetting | null> {
+    try {
+      const [existing] = await drizzleDb
+        .select()
+        .from(schema.siteSettings)
+        .where(eq(schema.siteSettings.settingKey, key));
+
+      if (existing) {
+        const [updated] = await drizzleDb
+          .update(schema.siteSettings)
+          .set({ settingValue: value, updatedAt: new Date() })
+          .where(eq(schema.siteSettings.settingKey, key))
+          .returning();
+        return updated;
+      } else {
+        const [created] = await drizzleDb
+          .insert(schema.siteSettings)
+          .values({
+            settingKey: key,
+            settingValue: value,
+            updatedAt: new Date(),
+          })
+          .returning();
+        return created;
+      }
+    } catch (err: any) {
+      console.error(`[PostgreSQL updateSetting(${key}) Error]:`, err?.message || err);
+      return null;
+    }
   }
 
   // --- Dashboard Aggregations ---
