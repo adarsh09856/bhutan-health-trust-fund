@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { submitDonationPledge, getPublicSettings } from "@/lib/api/public.functions";
+import {
+  submitDonationPledge,
+  getPublicSettings,
+  getPublicFinancialSettings,
+} from "@/lib/api/public.functions";
 import {
   Heart,
   Handshake,
@@ -103,13 +107,22 @@ function GetInvolvedPage() {
     message: string;
   } | null>(null);
   const [settings, setSettings] = useState<Record<string, string>>({});
+  const [finSettings, setFinSettings] = useState<{
+    bankAccountBOB: string;
+    swiftCodeBOB: string;
+    bankName: string;
+    accountTitle: string;
+    taxExemptionId: string;
+  } | null>(null);
 
   useEffect(() => {
-    getPublicSettings()
-      .then((res) => {
-        if (res) setSettings(res);
-      })
-      .catch(() => {});
+    Promise.all([
+      getPublicSettings().catch(() => ({})),
+      getPublicFinancialSettings().catch(() => null),
+    ]).then(([s, f]) => {
+      if (s) setSettings(s);
+      if (f) setFinSettings(f);
+    });
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -273,17 +286,29 @@ function GetInvolvedPage() {
                     </div>
 
                     <div className="space-y-2 font-mono text-slate-700">
+                      {/* Section 0A/0B Hard Constraint: Institutional Placeholder // TODO-VERIFY */}
+                      {(finSettings?.bankAccountBOB || "").includes("PLACEHOLDER") && (
+                        <div className="bg-amber-50 border border-amber-300 text-amber-900 p-2.5 rounded-lg text-[11px] font-sans font-medium">
+                          ⚠️ <strong>Institutional Verification:</strong> Bank routing parameters
+                          are currently pending confirmation by the Secretariat through the Tier 2
+                          restricted settings flow. Direct inquiries may also be confirmed with the
+                          Secretariat. // TODO-VERIFY
+                        </div>
+                      )}
                       <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
-                        {/* Section 0 Hard Constraint: Institutional Placeholder // TODO-VERIFY */}
                         <span>
                           Account:{" "}
-                          {settings["bob_account_no"] || institutionalConfig.bankAccountBOB}
+                          {finSettings?.bankAccountBOB ||
+                            settings["bob_account_no"] ||
+                            institutionalConfig.bankAccountBOB}
                         </span>
                         <button
                           type="button"
                           onClick={() =>
                             handleCopy(
-                              settings["bob_account_no"] || institutionalConfig.bankAccountBOB,
+                              finSettings?.bankAccountBOB ||
+                                settings["bob_account_no"] ||
+                                institutionalConfig.bankAccountBOB,
                             )
                           }
                           className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
@@ -293,12 +318,18 @@ function GetInvolvedPage() {
                         </button>
                       </div>
                       <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                        Title: {settings["bob_account_title"] || institutionalConfig.siteName}
+                        Title:{" "}
+                        {finSettings?.accountTitle ||
+                          settings["bob_account_title"] ||
+                          institutionalConfig.siteName}
                       </div>
                       <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
-                        {/* Section 0 Hard Constraint: SWIFT Placeholder // TODO-VERIFY */}
-                        Branch: Thimphu Main Branch (SWIFT:{" "}
-                        {settings["bob_swift_code"] || institutionalConfig.swiftCodeBOB})
+                        {finSettings?.bankName || "Bank of Bhutan Limited"}, Thimphu Main Branch
+                        (SWIFT:{" "}
+                        {finSettings?.swiftCodeBOB ||
+                          settings["bob_swift_code"] ||
+                          institutionalConfig.swiftCodeBOB}
+                        )
                       </div>
                     </div>
 

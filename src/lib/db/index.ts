@@ -51,6 +51,8 @@ import type {
   NewImpactMetric,
   NewMilestone,
   NewSiteSetting,
+  FinancialSetting,
+  NewFinancialSetting,
 } from "./schema";
 
 /**
@@ -1029,6 +1031,9 @@ class BHTFDataStore {
     entity: string;
     entityId?: string | null;
     details?: string | null;
+    oldValue?: string | null;
+    newValue?: string | null;
+    reason?: string | null;
     ipAddress?: string | null;
     userAgent?: string | null;
   }): Promise<void> {
@@ -1040,6 +1045,9 @@ class BHTFDataStore {
         entity: data.entity,
         entityId: data.entityId || null,
         details: data.details || null,
+        oldValue: data.oldValue || null,
+        newValue: data.newValue || null,
+        reason: data.reason || null,
         ipAddress: data.ipAddress || null,
         userAgent: data.userAgent || null,
       });
@@ -1235,6 +1243,127 @@ class BHTFDataStore {
       .where(eq(schema.procurementSteps.id, id))
       .returning();
     return deleted.length > 0;
+  }
+
+  // --- Tier 2 Financial Settings ---
+  public async getFinancialSettings(): Promise<FinancialSetting> {
+    try {
+      const [settings] = await drizzleDb
+        .select()
+        .from(schema.financialSettings)
+        .where(eq(schema.financialSettings.id, 1));
+      if (settings) return settings;
+    } catch (err: any) {
+      console.warn("[PostgreSQL getFinancialSettings Warning]:", err?.message || err);
+    }
+
+    // Default institutional placeholder fallback
+    return {
+      id: 1,
+      bankAccountBOB: "[BANK_ACCOUNT_PLACEHOLDER]", // TODO-VERIFY
+      swiftCodeBOB: "[SWIFT_PLACEHOLDER]", // TODO-VERIFY
+      bankName: "Bank of Bhutan Limited",
+      accountTitle: "Bhutan Health Trust Fund",
+      taxExemptionId: "[TAX_ID_PLACEHOLDER]", // TODO-VERIFY
+      taxCertificateValid: false,
+      legalSignoffBy: null,
+      legalSignoffAt: null,
+      legalSignoffNotes: null,
+      updatedAt: new Date(),
+      updatedBy: "system",
+    };
+  }
+
+  public async updateFinancialSettings(
+    data: Partial<NewFinancialSetting>,
+    actorEmail: string,
+    reason: string,
+    ipAddress?: string,
+    userAgent?: string,
+  ): Promise<FinancialSetting> {
+    const current = await this.getFinancialSettings();
+
+    const [updated] = await drizzleDb
+      .update(schema.financialSettings)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+        updatedBy: actorEmail,
+      })
+      .where(eq(schema.financialSettings.id, 1))
+      .returning();
+
+    const changedFields: string[] = [];
+    const oldValues: Record<string, any> = {};
+    const newValues: Record<string, any> = {};
+
+    for (const key of Object.keys(data) as (keyof typeof data)[]) {
+      if (data[key] !== undefined && (current as any)[key] !== data[key]) {
+        changedFields.push(key);
+        oldValues[key] = (current as any)[key];
+        newValues[key] = data[key];
+      }
+    }
+
+    await this.logAuditEvent({
+      userEmail: actorEmail,
+      action: "FINANCIAL_SETTINGS_UPDATE",
+      entity: "FINANCIAL_SETTINGS",
+      entityId: "1",
+      details: `Updated restricted fields: ${changedFields.join(", ")}`,
+      oldValue: JSON.stringify(oldValues),
+      newValue: JSON.stringify(newValues),
+      reason,
+      ipAddress,
+      userAgent,
+    });
+
+    return updated || current;
+  }
+
+  public async recordLegalSignoff(
+    officerName: string,
+    notes: string | undefined,
+    actorEmail: string,
+    ipAddress?: string,
+    userAgent?: string,
+  ): Promise<FinancialSetting> {
+    const current = await this.getFinancialSettings();
+    const signoffTimestamp = new Date();
+
+    const [updated] = await drizzleDb
+      .update(schema.financialSettings)
+      .set({
+        legalSignoffBy: officerName,
+        legalSignoffAt: signoffTimestamp,
+        legalSignoffNotes: notes || null,
+        updatedAt: signoffTimestamp,
+        updatedBy: actorEmail,
+      })
+      .where(eq(schema.financialSettings.id, 1))
+      .returning();
+
+    await this.logAuditEvent({
+      userEmail: actorEmail,
+      action: "LEGAL_SIGNOFF",
+      entity: "FINANCIAL_SETTINGS",
+      entityId: "1",
+      details: `Legal statutory sign-off recorded by ${officerName}. DRC exemption watermark clearance authorized.`,
+      oldValue: JSON.stringify({
+        legalSignoffBy: current.legalSignoffBy,
+        legalSignoffAt: current.legalSignoffAt,
+      }),
+      newValue: JSON.stringify({
+        legalSignoffBy: officerName,
+        legalSignoffAt: signoffTimestamp,
+        notes,
+      }),
+      reason: `Official legal statutory sign-off for tax certificate validity: ${notes || "Verified by authorized legal officer"}`,
+      ipAddress,
+      userAgent,
+    });
+
+    return updated || current;
   }
 }
 

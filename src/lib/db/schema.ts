@@ -175,18 +175,41 @@ export const userSessions = pgTable("user_sessions", {
 /**
  * Immutable Fiduciary Audit Logs Table
  * Strictly append-only — NO DELETE, NO UPDATE permitted.
+ * In v3: captures old_value, new_value, and mandatory reason for Tier 2 operations.
  */
 export const auditLogs = pgTable("audit_logs", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id, { onDelete: "set null" }),
   userEmail: text("user_email").notNull(),
-  action: text("action").notNull(), // CREATE, UPDATE, DELETE, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, SESSION_REVOKED, SYSTEM_SETTING_CHANGED
-  entity: text("entity").notNull(), // NEWS, REPORT, POLICY, DONATION, USER, SETTING, SESSION, FAQ, TRUSTEE, PROGRAM, SYSTEM
+  action: text("action").notNull(), // CREATE, UPDATE, DELETE, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, SESSION_REVOKED, FINANCIAL_SETTINGS_UPDATE, LEGAL_SIGNOFF
+  entity: text("entity").notNull(), // NEWS, REPORT, POLICY, DONATION, USER, SETTING, FINANCIAL_SETTINGS, SESSION, FAQ, TRUSTEE, PROGRAM, SYSTEM
   entityId: text("entity_id"),
   details: text("details"),
+  oldValue: text("old_value"),
+  newValue: text("new_value"),
+  reason: text("reason"), // Mandatory min 10 chars for Tier 2 mutations
   ipAddress: text("ip_address"),
   userAgent: text("user_agent"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/**
+ * Tier 2 Restricted Financial & Statutory Settings Table
+ * Strictly super_admin controlled with mandatory audit logging and confirm-to-save.
+ */
+export const financialSettings = pgTable("financial_settings", {
+  id: serial("id").primaryKey(),
+  bankAccountBOB: text("bank_account_bob").notNull().default("[BANK_ACCOUNT_PLACEHOLDER]"),
+  swiftCodeBOB: text("swift_code_bob").notNull().default("[SWIFT_PLACEHOLDER]"),
+  bankName: text("bank_name").notNull().default("Bank of Bhutan Limited"),
+  accountTitle: text("account_title").notNull().default("Bhutan Health Trust Fund"),
+  taxExemptionId: text("tax_exemption_id").notNull().default("[TAX_ID_PLACEHOLDER]"),
+  taxCertificateValid: boolean("tax_certificate_valid").notNull().default(false),
+  legalSignoffBy: text("legal_signoff_by"),
+  legalSignoffAt: timestamp("legal_signoff_at"),
+  legalSignoffNotes: text("legal_signoff_notes"),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  updatedBy: text("updated_by"),
 });
 
 /**
@@ -222,6 +245,8 @@ export type UserSession = typeof userSessions.$inferSelect;
 export type NewUserSession = typeof userSessions.$inferInsert;
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type NewAuditLog = typeof auditLogs.$inferInsert;
+export type FinancialSetting = typeof financialSettings.$inferSelect;
+export type NewFinancialSetting = typeof financialSettings.$inferInsert;
 export type SystemEvent = typeof systemEvents.$inferSelect;
 export type NewSystemEvent = typeof systemEvents.$inferInsert;
 export type ProcurementStep = typeof procurementSteps.$inferSelect;

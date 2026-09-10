@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { lookupDonation } from "@/lib/api/public.functions";
+import { lookupDonation, getPublicFinancialSettings } from "@/lib/api/public.functions";
 import {
   Search,
   CheckCircle2,
@@ -116,6 +116,20 @@ export function TrackDonationPage() {
   const [donation, setDonation] = useState<DonationRecord | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [finSettings, setFinSettings] = useState<{
+    taxCertificateValid: boolean;
+    legalSignoffBy?: string | null;
+    legalSignoffAt?: string | Date | null;
+    taxExemptionId?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    getPublicFinancialSettings()
+      .then((res) => {
+        if (res) setFinSettings(res);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleLookup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -409,8 +423,12 @@ export function TrackDonationPage() {
               id="printable-voucher"
               className="relative overflow-hidden bg-white border-2 border-slate-800 p-8 sm:p-12 rounded-3xl shadow-xl space-y-8 print:border-none print:shadow-none print:p-4 print:rounded-none print:m-0"
             >
-              {/* Hard Constraint (Section 0): Prominent Sample Watermark (Screen and Print) */}
-              {!institutionalConfig.isTaxCertificateValid && (
+              {/* Hard Constraint (Section 0A/0B): Prominent Sample Watermark (Screen and Print) until both taxCertificateValid AND legal signoff exist */}
+              {!(
+                finSettings?.taxCertificateValid &&
+                finSettings?.legalSignoffBy &&
+                finSettings?.legalSignoffAt
+              ) && (
                 <>
                   <div className="bg-rose-50 border-2 border-dashed border-rose-500 text-rose-800 p-3.5 rounded-2xl text-center text-xs font-black uppercase tracking-widest shadow-xs print:bg-slate-100 print:text-black print:border-slate-800">
                     ⚠️ {institutionalConfig.sampleWatermarkText} — PENDING OFFICIAL STATUTORY
@@ -560,7 +578,11 @@ export function TrackDonationPage() {
                   essential drugs across all 20 Dzongkhags.
                 </p>
                 <p>
-                  {!institutionalConfig.isTaxCertificateValid ? (
+                  {!(
+                    finSettings?.taxCertificateValid &&
+                    finSettings?.legalSignoffBy &&
+                    finSettings?.legalSignoffAt
+                  ) ? (
                     <span className="text-rose-700 font-semibold block bg-rose-50 p-2.5 rounded-lg border border-rose-200 mt-2 print:border-slate-400 print:bg-slate-50 print:text-slate-900">
                       <strong>Statutory Notice ({institutionalConfig.sampleWatermarkText}):</strong>{" "}
                       This voucher is a demonstration display and is not valid for official tax
@@ -570,10 +592,17 @@ export function TrackDonationPage() {
                       audit reconciliation. // TODO-VERIFY
                     </span>
                   ) : (
-                    <span>
-                      This document serves as an authentic legal receipt recognized by the
-                      Department of Revenue & Customs (DRC), Ministry of Finance, Royal Government
-                      of Bhutan.
+                    <span className="text-emerald-800 font-semibold block bg-emerald-50 p-2.5 rounded-lg border border-emerald-200 mt-2">
+                      ✓ Authentic DRC Tax Exemption Certificate. Legally cleared and signed off by{" "}
+                      <strong>{finSettings?.legalSignoffBy}</strong> on{" "}
+                      {finSettings?.legalSignoffAt
+                        ? new Date(finSettings.legalSignoffAt).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })
+                        : "N/A"}
+                      .
                     </span>
                   )}
                 </p>

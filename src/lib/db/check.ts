@@ -34,9 +34,7 @@ async function check() {
     const usersRes = await client.query("SELECT id, email, name, role, is_active FROM users;");
     console.log(`>> Users in database (${usersRes.rows.length}):`);
     for (const u of usersRes.rows) {
-      console.log(
-        `  - [${u.role}] ${u.email} (${u.name}) — Active: ${u.is_active}`,
-      );
+      console.log(`  - [${u.role}] ${u.email} (${u.name}) — Active: ${u.is_active}`);
     }
 
     client.release();

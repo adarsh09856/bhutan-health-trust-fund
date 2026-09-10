@@ -68,6 +68,7 @@ export function AdminUsersPage() {
     email: "",
     password: "",
     role: "EDITOR" as "SUPER_ADMIN" | "EDITOR",
+    reason: "",
   });
   const [editUser, setEditUser] = useState<SafeUser | null>(null);
   const [editFormData, setEditFormData] = useState({
@@ -75,6 +76,7 @@ export function AdminUsersPage() {
     role: "EDITOR" as "SUPER_ADMIN" | "EDITOR",
     isActive: true,
     newPassword: "",
+    reason: "",
   });
 
   // Sessions state
@@ -100,6 +102,10 @@ export function AdminUsersPage() {
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.reason.trim().length < 10) {
+      toast.error("Mandatory reason must be at least 10 characters.");
+      return;
+    }
     setProcessing(true);
     try {
       const res = await createAdminUser({
@@ -108,12 +114,13 @@ export function AdminUsersPage() {
           email: formData.email,
           password: formData.password,
           role: formData.role,
+          reason: formData.reason.trim(),
         },
       });
 
       toast.success(`Administrator ${res.email} created successfully.`);
       setShowCreateModal(false);
-      setFormData({ name: "", email: "", password: "", role: "EDITOR" });
+      setFormData({ name: "", email: "", password: "", role: "EDITOR", reason: "" });
       fetchUsers();
     } catch (err: any) {
       toast.error(err?.message || "Failed to create user.");
@@ -129,6 +136,7 @@ export function AdminUsersPage() {
       role: u.role as "SUPER_ADMIN" | "EDITOR",
       isActive: u.isActive,
       newPassword: "",
+      reason: "",
     });
     setShowEditModal(true);
   };
@@ -136,6 +144,10 @@ export function AdminUsersPage() {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editUser) return;
+    if (editFormData.reason.trim().length < 10) {
+      toast.error("Mandatory justification reason must be at least 10 characters.");
+      return;
+    }
     setProcessing(true);
     try {
       await updateAdminUser({
@@ -145,6 +157,7 @@ export function AdminUsersPage() {
           role: editFormData.role,
           isActive: editFormData.isActive,
           password: editFormData.newPassword || undefined,
+          reason: editFormData.reason.trim(),
         },
       });
 
@@ -164,16 +177,17 @@ export function AdminUsersPage() {
       return;
     }
 
-    if (
-      !confirm(
-        `Are you sure you want to permanently delete administrator "${u.name}" (${u.email})?`,
-      )
-    ) {
+    const reason = window.prompt(
+      `Enter mandatory audit justification for deleting administrator "${u.name}" (${u.email}) [min 10 chars]:`,
+    );
+
+    if (!reason || reason.trim().length < 10) {
+      toast.error("Deletion cancelled: A reason of at least 10 characters is mandatory.");
       return;
     }
 
     try {
-      await deleteAdminUser({ data: { id: u.id } });
+      await deleteAdminUser({ data: { id: u.id, reason: reason.trim() } });
       toast.success(`User ${u.email} permanently removed.`);
       fetchUsers();
     } catch (err: any) {
@@ -197,7 +211,12 @@ export function AdminUsersPage() {
 
   const handleRevokeSession = async (sessionId: number) => {
     try {
-      await revokeUserSession({ data: { sessionId } });
+      await revokeUserSession({
+        data: {
+          sessionId,
+          reason: `Session #${sessionId} revoked by Super Admin ${currentUser?.email} via User Management CRM`,
+        },
+      });
       toast.success(`Session #${sessionId} revoked with 0ms delay.`);
       if (selectedUserForSessions) {
         const sessions = await getUserSessions({ data: { userId: selectedUserForSessions.id } });
@@ -472,6 +491,24 @@ export function AdminUsersPage() {
                   </select>
                 </div>
 
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-700 block">
+                    Mandatory Audit Justification (Min 10 chars)
+                  </label>
+                  <textarea
+                    rows={2}
+                    required
+                    minLength={10}
+                    value={formData.reason}
+                    onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+                    placeholder="State the official rationale for creating this administrator..."
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:border-emerald-600 focus:outline-none"
+                  />
+                  <span className="text-[10px] text-slate-400">
+                    Characters: {formData.reason.length} / 10 required
+                  </span>
+                </div>
+
                 <div className="pt-4 border-t flex justify-end gap-2.5">
                   <button
                     type="button"
@@ -573,6 +610,24 @@ export function AdminUsersPage() {
                   >
                     Account Active (Uncheck to immediately deactivate)
                   </label>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-700 block">
+                    Mandatory Audit Justification (Min 10 chars)
+                  </label>
+                  <textarea
+                    rows={2}
+                    required
+                    minLength={10}
+                    value={editFormData.reason}
+                    onChange={(e) => setEditFormData({ ...editFormData, reason: e.target.value })}
+                    placeholder="State the official rationale for modifying this user account..."
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:border-emerald-600 focus:outline-none"
+                  />
+                  <span className="text-[10px] text-slate-400">
+                    Characters: {editFormData.reason.length} / 10 required
+                  </span>
                 </div>
 
                 <div className="pt-4 border-t flex justify-end gap-2.5">

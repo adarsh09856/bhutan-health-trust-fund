@@ -52,13 +52,49 @@ export async function ensureDatabaseSchema() {
         entity TEXT NOT NULL,
         entity_id TEXT,
         details TEXT,
+        old_value TEXT,
+        new_value TEXT,
+        reason TEXT,
         ip_address TEXT,
         user_agent TEXT,
         created_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
+      ALTER TABLE audit_logs ADD COLUMN IF NOT EXISTS old_value TEXT;
+      ALTER TABLE audit_logs ADD COLUMN IF NOT EXISTS new_value TEXT;
+      ALTER TABLE audit_logs ADD COLUMN IF NOT EXISTS reason TEXT;
       CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DESC);
       CREATE INDEX IF NOT EXISTS idx_audit_logs_entity ON audit_logs(entity);
     `);
+
+    // 3b. Ensure financial_settings table (Tier 2 restricted financial & statutory settings)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS financial_settings (
+        id SERIAL PRIMARY KEY,
+        bank_account_bob TEXT NOT NULL DEFAULT '[BANK_ACCOUNT_PLACEHOLDER]',
+        swift_code_bob TEXT NOT NULL DEFAULT '[SWIFT_PLACEHOLDER]',
+        bank_name TEXT NOT NULL DEFAULT 'Bank of Bhutan Limited',
+        account_title TEXT NOT NULL DEFAULT 'Bhutan Health Trust Fund',
+        tax_exemption_id TEXT NOT NULL DEFAULT '[TAX_ID_PLACEHOLDER]',
+        tax_certificate_valid BOOLEAN NOT NULL DEFAULT false,
+        legal_signoff_by TEXT,
+        legal_signoff_at TIMESTAMP,
+        legal_signoff_notes TEXT,
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_by TEXT
+      );
+    `);
+
+    // Seed default financial_settings row if empty
+    const finCheck = await client.query("SELECT COUNT(*) FROM financial_settings");
+    if (parseInt(finCheck.rows[0].count, 10) === 0) {
+      await client.query(`
+        INSERT INTO financial_settings (
+          id, bank_account_bob, swift_code_bob, bank_name, account_title, tax_exemption_id, tax_certificate_valid
+        ) VALUES (
+          1, '[BANK_ACCOUNT_PLACEHOLDER]', '[SWIFT_PLACEHOLDER]', 'Bank of Bhutan Limited', 'Bhutan Health Trust Fund', '[TAX_ID_PLACEHOLDER]', false
+        );
+      `);
+    }
 
     // 4. Ensure system_events table
     await client.query(`

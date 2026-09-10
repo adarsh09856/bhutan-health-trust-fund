@@ -1,7 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicTrustees, getPublicMilestones } from "@/lib/api/public.functions";
+import {
+  getPublicTrustees,
+  getPublicMilestones,
+  getPublicSettings,
+} from "@/lib/api/public.functions";
 import type { Trustee, Milestone } from "@/lib/db/schema";
 import {
   Target,
@@ -148,19 +152,18 @@ const milestones = [
 function About() {
   const [liveTrustees, setLiveTrustees] = useState<Trustee[]>([]);
   const [liveMilestones, setLiveMilestones] = useState<Milestone[]>([]);
+  const [settings, setSettings] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    getPublicTrustees()
-      .then((res) => {
-        if (res && res.length > 0) setLiveTrustees(res);
-      })
-      .catch(() => {});
-
-    getPublicMilestones()
-      .then((res) => {
-        if (res && res.length > 0) setLiveMilestones(res);
-      })
-      .catch(() => {});
+    Promise.all([
+      getPublicTrustees().catch(() => []),
+      getPublicMilestones().catch(() => []),
+      getPublicSettings().catch(() => ({})),
+    ]).then(([t, m, s]) => {
+      if (t && t.length > 0) setLiveTrustees(t);
+      if (m && m.length > 0) setLiveMilestones(m);
+      if (s) setSettings(s);
+    });
   }, []);
 
   const displayTrustees =
@@ -182,6 +185,25 @@ function About() {
           desc: m.description,
         }))
       : milestones;
+
+  const dynamicValues = [
+    {
+      ...values[0],
+      text: settings["about_mission"] || values[0].text,
+    },
+    {
+      ...values[1],
+      text: settings["about_vision"] || values[1].text,
+    },
+    {
+      ...values[2],
+      text: settings["about_values"] || values[2].text,
+    },
+    {
+      ...values[3],
+      text: settings["about_mandate"] || values[3].text,
+    },
+  ];
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
@@ -235,7 +257,7 @@ function About() {
           </div>
 
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            {values.map((v) => (
+            {dynamicValues.map((v) => (
               <div
                 key={v.title}
                 className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 group"

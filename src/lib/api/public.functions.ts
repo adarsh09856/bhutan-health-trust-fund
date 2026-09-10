@@ -197,3 +197,18 @@ export const getPublicSettings = createServerFn({ method: "GET" }).handler(async
 export const getPublicProcurementSteps = createServerFn({ method: "GET" }).handler(async () => {
   return await db.getProcurementSteps();
 });
+
+// --- Get Public Financial Settings (Sanitized Tier 2 Read) ---
+export const getPublicFinancialSettings = createServerFn({ method: "GET" }).handler(async () => {
+  const fin = await db.getFinancialSettings();
+  return {
+    bankAccountBOB: fin.bankAccountBOB,
+    swiftCodeBOB: fin.swiftCodeBOB,
+    bankName: fin.bankName,
+    accountTitle: fin.accountTitle,
+    taxExemptionId: fin.taxExemptionId,
+    taxCertificateValid: fin.taxCertificateValid,
+    legalSignoffBy: fin.legalSignoffBy,
+    legalSignoffAt: fin.legalSignoffAt,
+  };
+});

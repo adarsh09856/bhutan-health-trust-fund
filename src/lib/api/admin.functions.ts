@@ -587,7 +587,59 @@ export const updateAdminSetting = createServerFn({ method: "POST" })
     return res;
   });
 
-// --- User Management & Session Revocation Functions (Super Admin Only) ---
+// --- Tier 2 Restricted Financial & Statutory Settings Functions (Super Admin Only) ---
+export const getAdminFinancialSettings = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
+  return await db.getFinancialSettings();
+});
+
+export const updateAdminFinancialSettings = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      bankAccountBOB: z.string().optional(),
+      swiftCodeBOB: z.string().optional(),
+      bankName: z.string().optional(),
+      accountTitle: z.string().optional(),
+      taxExemptionId: z.string().optional(),
+      taxCertificateValid: z.boolean().optional(),
+      reason: z
+        .string()
+        .min(10, "Mandatory reason must be at least 10 characters justifying this Tier 2 mutation"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    const current = await db.getFinancialSettings();
+
+    // Enforce Rule 5: tax_certificate_valid may only be flipped to true if legal_signoff_by and legal_signoff_at are already populated
+    if (data.taxCertificateValid === true) {
+      if (!current.legalSignoffBy || !current.legalSignoffAt) {
+        throw new Error(
+          "FORBIDDEN: DRC tax exemption certificate watermark cannot be cleared without prior statutory legal sign-off recorded by an authorized Secretariat officer.",
+        );
+      }
+    }
+
+    const { reason, ...updateData } = data;
+    return await db.updateFinancialSettings(updateData, admin.email, reason);
+  });
+
+export const recordAdminLegalSignoff = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      officerName: z.string().min(2, "Authorizing officer name and designation required"),
+      notes: z.string().optional(),
+      reason: z
+        .string()
+        .min(10, "Mandatory reason must be at least 10 characters justifying legal clearance"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    return await db.recordLegalSignoff(data.officerName.trim(), data.notes?.trim(), admin.email);
+  });
+
+// --- User Management & Session Revocation Functions (Super Admin Only, Tier 2) ---
 export const getAdminUsers = createServerFn({ method: "GET" }).handler(async () => {
   await requireSuperAdminFromRequest();
   return await db.getAllUsers();
@@ -600,6 +652,7 @@ export const createAdminUser = createServerFn({ method: "POST" })
       email: z.string().email("Valid email required"),
       password: z.string().min(8, "Password must be at least 8 characters"),
       role: z.enum(["SUPER_ADMIN", "EDITOR"]).default("EDITOR"),
+      reason: z.string().min(10, "Reason must be at least 10 characters"),
     }),
   )
   .handler(async ({ data }) => {
@@ -619,6 +672,8 @@ export const createAdminUser = createServerFn({ method: "POST" })
       entity: "USER",
       entityId: String(user.id),
       details: `Created user ${user.email} with role ${user.role}.`,
+      newValue: JSON.stringify({ name: user.name, email: user.email, role: user.role }),
+      reason: data.reason,
     });
 
     return {
@@ -639,6 +694,7 @@ export const updateAdminUser = createServerFn({ method: "POST" })
       role: z.enum(["SUPER_ADMIN", "EDITOR"]).optional(),
       isActive: z.boolean().optional(),
       password: z.string().min(8).optional(),
+      reason: z.string().min(10, "Reason must be at least 10 characters"),
     }),
   )
   .handler(async ({ data }) => {
@@ -668,13 +724,20 @@ export const updateAdminUser = createServerFn({ method: "POST" })
       entity: "USER",
       entityId: String(data.id),
       details: `Updated parameters: ${Object.keys(updateData).join(", ")}`,
+      newValue: JSON.stringify(updateData),
+      reason: data.reason,
     });
 
     return updated;
   });
 
 export const deleteAdminUser = createServerFn({ method: "POST" })
-  .validator(z.object({ id: z.number() }))
+  .validator(
+    z.object({
+      id: z.number(),
+      reason: z.string().min(10, "Reason must be at least 10 characters"),
+    }),
+  )
   .handler(async ({ data }) => {
     const admin = await requireSuperAdminFromRequest();
     if (admin.id === data.id) {
@@ -690,6 +753,7 @@ export const deleteAdminUser = createServerFn({ method: "POST" })
       entity: "USER",
       entityId: String(data.id),
       details: `Permanently deleted user #${data.id}`,
+      reason: data.reason,
     });
 
     return { success };
@@ -703,7 +767,12 @@ export const getUserSessions = createServerFn({ method: "GET" })
   });
 
 export const revokeUserSession = createServerFn({ method: "POST" })
-  .validator(z.object({ sessionId: z.number() }))
+  .validator(
+    z.object({
+      sessionId: z.number(),
+      reason: z.string().min(10, "Reason must be at least 10 characters").optional(),
+    }),
+  )
   .handler(async ({ data }) => {
     const admin = await requireSuperAdminFromRequest();
     const success = await db.revokeSession(data.sessionId);
@@ -715,6 +784,7 @@ export const revokeUserSession = createServerFn({ method: "POST" })
       entity: "SESSION",
       entityId: String(data.sessionId),
       details: `Session #${data.sessionId} revoked by super admin.`,
+      reason: data.reason || "Manual session termination by super administrator",
     });
 
     return { success };
