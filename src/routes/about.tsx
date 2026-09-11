@@ -47,32 +47,28 @@ const values = [
     title: "Our Mission",
     dzongkha: "དམིགས་ཡུལ།",
     text: "To sustainably finance essential drugs and universal vaccines, guaranteeing uninterrupted, equitable access to primary healthcare for every citizen in Bhutan.",
-    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    gradient: "from-emerald-500 to-teal-600",
+    color: "bg-[#FAF8F3] text-emerald-800 border-slate-200/80",
   },
   {
     icon: Eye,
     title: "Our Vision",
     dzongkha: "མཐོང་སྣང་།",
     text: "A self-reliant, resilient, and sovereign national health financing system where no Bhutanese is ever denied life-saving medicines or vaccines.",
-    color: "bg-blue-50 text-blue-700 border-blue-200",
-    gradient: "from-blue-500 to-indigo-600",
+    color: "bg-[#FAF8F3] text-emerald-800 border-slate-200/80",
   },
   {
     icon: Heart,
     title: "Core Values",
     dzongkha: "གཞི་རྩའི་བརྩི་མཐོང་།",
     text: "Gross National Happiness, universal equity, absolute transparency, zero procurement waste, compassion, and fiduciary integrity guide all operations.",
-    color: "bg-rose-50 text-rose-700 border-rose-200",
-    gradient: "from-rose-500 to-pink-600",
+    color: "bg-[#FAF8F3] text-emerald-800 border-slate-200/80",
   },
   {
     icon: Award,
     title: "Royal Charter Mandate",
     dzongkha: "རྒྱལ་པོའི་བཀའ་ཤོག",
     text: "Established under Royal Charter as an autonomous statutory trust fund with permanent corpus protection and ring-fenced health procurement power.",
-    color: "bg-amber-50 text-amber-700 border-amber-200",
-    gradient: "from-amber-500 to-orange-600",
+    color: "bg-[#FAF8F3] text-emerald-800 border-slate-200/80",
   },
 ];
 
@@ -221,10 +217,10 @@ function About() {
               <Sparkles className="h-3.5 w-3.5 text-amber-500" />
               <span>Founding Philosophy & Royal Vision</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl font-normal text-slate-900 leading-tight tracking-tight">
               A Permanent Safety Net for the Health of the Nation
             </h2>
-            <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+            <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed font-sans font-light">
               <p>
                 In the Kingdom of Bhutan, healthcare is recognized by the Constitution as a
                 fundamental human right. Under the visionary leadership of His Majesty the King, the
@@ -241,15 +237,15 @@ function About() {
             </div>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 shadow-xs">
-                <div className="text-3xl font-black text-emerald-800 font-mono">100% Free</div>
-                <div className="text-xs text-emerald-700 font-bold mt-1">
+              <div className="p-5 rounded-2xl bg-[#FAF8F3] border border-slate-200/80 shadow-xs">
+                <div className="font-serif text-3xl font-normal text-emerald-900">100% Free</div>
+                <div className="text-xs text-emerald-800 font-medium mt-1 font-sans">
                   Primary healthcare and essential medicines guaranteed for all citizens
                 </div>
               </div>
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 shadow-xs">
-                <div className="text-3xl font-black text-amber-800 font-mono">1:1 Matched</div>
-                <div className="text-xs text-amber-700 font-bold mt-1">
+              <div className="p-5 rounded-2xl bg-[#FAF8F3] border border-amber-300/50 shadow-xs">
+                <div className="font-serif text-3xl font-normal text-amber-800">1:1 Matched</div>
+                <div className="text-xs text-amber-800 font-medium mt-1 font-sans">
                   Every donor contribution doubled by the Royal Government of Bhutan
                 </div>
               </div>
@@ -260,7 +256,7 @@ function About() {
             {dynamicValues.map((v) => (
               <div
                 key={v.title}
-                className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 group"
+                className="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-lg hover:border-amber-400/50 transition duration-200 group"
               >
                 <div className="flex items-center justify-between mb-2.5">
                   <div className="flex items-center gap-3">
@@ -269,15 +265,15 @@ function About() {
                     >
                       <v.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition">
+                    <h3 className="font-serif text-base font-semibold text-slate-900 group-hover:text-emerald-900 transition">
                       {v.title}
                     </h3>
                   </div>
-                  <span className="text-[10px] font-black text-emerald-800 tracking-wider">
+                  <span className="text-[10px] font-semibold text-emerald-800 tracking-wider font-sans">
                     {v.dzongkha}
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans font-light">
                   {v.text}
                 </p>
               </div>
