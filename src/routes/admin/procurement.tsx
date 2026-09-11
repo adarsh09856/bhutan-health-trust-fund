@@ -74,7 +74,7 @@ export function AdminProcurementPage() {
   const [tenderClosingDate, setTenderClosingDate] = useState(
     new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   );
-  const [tenderDocUrl, setTenderDocUrl] = useState("/documents/sample-report.pdf");
+  const [tenderDocUrl, setTenderDocUrl] = useState("");
   const [tenderDocSize, setTenderDocSize] = useState("2.4 MB");
   const [tenderDesc, setTenderDesc] = useState("");
   const [savingTender, setSavingTender] = useState(false);
@@ -132,7 +132,7 @@ export function AdminProcurementPage() {
     setTenderClosingDate(
       new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
     );
-    setTenderDocUrl("/documents/sample-report.pdf");
+    setTenderDocUrl("");
     setTenderDocSize("2.4 MB");
     setTenderDesc("");
     setTenderModalOpen(true);

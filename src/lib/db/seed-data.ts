@@ -758,7 +758,7 @@ export const initialMediaVideos: NewMediaVideo[] = [
   {
     title: "25 Years of Free Healthcare: The Royal Sovereign Mandate",
     category: "Documentary",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    videoUrl: "https://www.youtube.com/@bhtf_bhutan",
     duration: "14:20",
     thumbnailUrl: "/src/assets/news-report.jpg",
     description:
@@ -769,7 +769,7 @@ export const initialMediaVideos: NewMediaVideo[] = [
   {
     title: "Behind the Cold Chain: Delivering Vaccines to Laya & Lunana",
     category: "Field Report",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    videoUrl: "https://www.youtube.com/@bhtf_bhutan",
     duration: "08:15",
     thumbnailUrl: "/src/assets/news-vaccine.jpg",
     description:
@@ -787,7 +787,7 @@ export const initialProcurementTenders: NewProcurementTender[] = [
     category: "Essential Drugs",
     status: "OPEN",
     closingDate: new Date("2026-11-30T17:00:00Z"),
-    documentUrl: "/documents/sample-report.pdf",
+    documentUrl: "",
     documentSize: "2.4 MB",
     description:
       "International competitive bidding for GMP-certified manufacturers supplying antibiotics, cardiovascular, and maternal health commodities.",
@@ -798,7 +798,7 @@ export const initialProcurementTenders: NewProcurementTender[] = [
     category: "Vaccines",
     status: "EVALUATING",
     closingDate: new Date("2026-10-15T17:00:00Z"),
-    documentUrl: "/documents/sample-report.pdf",
+    documentUrl: "",
     documentSize: "3.1 MB",
     description:
       "Annual sovereign procurement of routine childhood immunization antigens with cold-chain transit temperature validation.",

@@ -134,11 +134,11 @@ export function AdminDashboardPage() {
     TotalYield: item.amount * 2,
   }));
 
-  const regionalBufferData = [
-    { region: "Western (6 Dzongkhags)", bufferMonths: 8.5, facilities: 64 },
-    { region: "Central (4 Dzongkhags)", bufferMonths: 7.8, facilities: 48 },
-    { region: "Eastern (6 Dzongkhags)", bufferMonths: 9.2, facilities: 68 },
-    { region: "Southern (4 Dzongkhags)", bufferMonths: 8.0, facilities: 40 },
+  const statutoryZones = [
+    { zone: "Western Zone (6 Dzongkhags)", desc: "Thimphu, Paro, Haa, Samtse, Chhukha, Gasa", coverage: "100% Statutory Coverage" },
+    { zone: "Central Zone (4 Dzongkhags)", desc: "Punakha, Wangdue Phodrang, Trongsa, Bumthang", coverage: "100% Statutory Coverage" },
+    { zone: "Southern Zone (4 Dzongkhags)", desc: "Sarpang, Tsirang, Dagana, Zhemgang", coverage: "100% Statutory Coverage" },
+    { zone: "Eastern Zone (6 Dzongkhags)", desc: "Mongar, Lhuentse, Trashigang, Yangtse, Pemagatshel, S/Jongkhar", coverage: "100% Statutory Coverage" },
   ];
 
   return (
@@ -347,7 +347,20 @@ export function AdminDashboardPage() {
                   </span>
                 </div>
 
-                <div className="h-72 w-full pt-2">
+                <div className="h-72 w-full pt-2 relative">
+                  {publicDonations === 0 && (
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 backdrop-blur-2xs rounded-2xl p-6 text-center">
+                      <div className="h-10 w-10 rounded-2xl bg-emerald-50 text-emerald-600 grid place-items-center mb-2">
+                        <Coins className="h-5 w-5" />
+                      </div>
+                      <p className="text-xs font-bold text-slate-800">
+                        No Verified Pledges Recorded Yet for FY 2026
+                      </p>
+                      <p className="text-[11px] text-slate-500 max-w-sm mt-1 leading-relaxed">
+                        Public donations and automatic 1:1 RGOB sovereign doubling will plot dynamically as contributions are verified.
+                      </p>
+                    </div>
+                  )}
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                       data={chartData}
@@ -400,40 +413,33 @@ export function AdminDashboardPage() {
                 </div>
               </div>
 
-              {/* Regional Buffer Allocation Breakdown (5 Cols) */}
+              {/* Statutory Healthcare Zone Universal Coverage (5 Cols) */}
               <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-4 flex flex-col justify-between">
                 <div>
                   <div className="border-b pb-4">
                     <h3 className="text-base font-extrabold text-slate-900">
-                      Regional Medicine Buffer Stocks
+                      Sovereign Healthcare Coverage
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Supply pipeline duration across the 4 healthcare zones.
+                      Statutory universal health financing across all 4 zones.
                     </p>
                   </div>
 
-                  <div className="space-y-4 pt-4">
-                    {regionalBufferData.map((reg, idx) => (
+                  <div className="space-y-3 pt-4">
+                    {statutoryZones.map((sz, idx) => (
                       <div
                         key={idx}
-                        className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70 space-y-2"
+                        className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/70 space-y-1.5"
                       >
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-extrabold text-slate-900">{reg.region}</span>
-                          <span className="font-mono font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
-                            {reg.bufferMonths} Months Buffer
+                          <span className="font-extrabold text-slate-900">{sz.zone}</span>
+                          <span className="font-mono text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full">
+                            {sz.coverage}
                           </span>
                         </div>
-                        <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-emerald-600 h-full rounded-full transition-all duration-500"
-                            style={{ width: `${(reg.bufferMonths / 12) * 100}%` }}
-                          />
-                        </div>
-                        <div className="flex items-center justify-between text-[11px] text-slate-400">
-                          <span>Target: 6.0 Months Minimum</span>
-                          <span>{reg.facilities} Primary Health Centers</span>
-                        </div>
+                        <p className="text-[11px] text-slate-600 leading-tight">
+                          {sz.desc}
+                        </p>
                       </div>
                     ))}
                   </div>

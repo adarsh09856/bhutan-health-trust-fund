@@ -945,20 +945,36 @@ class BHTFDataStore {
     const activeSubscribersCount = allSubscribers.filter((s) => s.isActive).length;
     const totalReportsCount = allReports.length;
 
-    const monthlyStats = [
-      { month: "Jan", amount: 145000, donors: 18 },
-      { month: "Feb", amount: 210000, donors: 24 },
-      { month: "Mar", amount: 185000, donors: 21 },
-      { month: "Apr", amount: 320000, donors: 35 },
-      { month: "May", amount: 290000, donors: 28 },
-      { month: "Jun", amount: 410000, donors: 42 },
-      { month: "Jul", amount: 380000, donors: 39 },
-      {
-        month: "Aug",
-        amount: totalDonationsNu > 0 ? totalDonationsNu : 450000,
-        donors: allDonations.length + 30,
-      },
-    ];
+    // Compute genuine monthly statistics dynamically from real database donations
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const currentYear = new Date().getFullYear();
+    const currentMonthIndex = new Date().getMonth();
+
+    const monthlyMap = new Map<string, { amount: number; donors: number }>();
+    for (let i = 0; i <= currentMonthIndex; i++) {
+      monthlyMap.set(months[i], { amount: 0, donors: 0 });
+    }
+
+    allDonations.forEach((d) => {
+      const dDate = new Date(d.createdAt);
+      if (
+        dDate.getFullYear() === currentYear &&
+        (d.status === "COMPLETED" || d.status === "VERIFIED")
+      ) {
+        const mName = months[dDate.getMonth()];
+        const entry = monthlyMap.get(mName);
+        if (entry) {
+          entry.amount += d.amountNu;
+          entry.donors += 1;
+        }
+      }
+    });
+
+    const monthlyStats = Array.from(monthlyMap.entries()).map(([month, stats]) => ({
+      month,
+      amount: stats.amount,
+      donors: stats.donors,
+    }));
 
     return {
       totalDonationsNu,

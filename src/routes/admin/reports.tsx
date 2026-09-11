@@ -44,7 +44,7 @@ export function AdminReportsPage() {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState(new Date().getFullYear().toString());
   const [category, setCategory] = useState("Annual Report");
-  const [fileUrl, setFileUrl] = useState("/documents/sample-report.pdf");
+  const [fileUrl, setFileUrl] = useState("");
   const [fileSize, setFileSize] = useState("2.8 MB");
   const [description, setDescription] = useState("");
   const [saving, setSaving] = useState(false);
@@ -69,7 +69,7 @@ export function AdminReportsPage() {
     setTitle("");
     setYear(new Date().getFullYear().toString());
     setCategory("Annual Report");
-    setFileUrl("/documents/sample-report.pdf");
+    setFileUrl("");
     setFileSize("2.8 MB");
     setDescription("");
     setModalOpen(true);

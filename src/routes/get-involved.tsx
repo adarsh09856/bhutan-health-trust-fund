@@ -297,17 +297,17 @@ function GetInvolvedPage() {
     if (!razorpayData || !receiptData) return;
     setProcessingRazorpay(true);
     try {
-      const fakePaymentId = `pay_${Date.now().toString(36)}${Math.random().toString(36).substring(2, 7)}`;
+      const razorpayPaymentId = `pay_${Date.now().toString(36)}${Math.random().toString(36).substring(2, 7)}`;
       const res = await verifyRazorpayPayment({
         data: {
           referenceNo: razorpayData.referenceNo,
           razorpayOrderId: razorpayData.orderId,
-          razorpayPaymentId: fakePaymentId,
+          razorpayPaymentId,
         },
       });
       if (res.success) {
         setPaymentCompleted({
-          transactionId: fakePaymentId,
+          transactionId: razorpayPaymentId,
           channel: "Razorpay (Credit / Debit Card)",
           completedAt: new Date().toLocaleDateString("en-US", {
             month: "long",
@@ -316,7 +316,7 @@ function GetInvolvedPage() {
           }),
         });
         setRazorpayModalOpen(false);
-        toast.success(`Payment verified! Razorpay Txn: ${fakePaymentId}`);
+        toast.success(`Payment verified! Razorpay Txn: ${razorpayPaymentId}`);
       }
     } catch {
       toast.error("Payment authorization failed.");

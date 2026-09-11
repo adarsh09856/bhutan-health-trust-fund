@@ -373,8 +373,8 @@ export async function ensureDatabaseSchema() {
       await client.query(`
         INSERT INTO media_videos (title, category, video_url, duration, thumbnail_url, description, order_index, is_published)
         VALUES
-          ('25 Years of Free Healthcare: The Royal Sovereign Mandate', 'Documentary', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', '14:20', '/src/assets/news-report.jpg', 'Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.', 1, true),
-          ('Behind the Cold Chain: Delivering Vaccines to Laya & Lunana', 'Field Report', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', '08:15', '/src/assets/news-vaccine.jpg', 'Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.', 2, true);
+          ('25 Years of Free Healthcare: The Royal Sovereign Mandate', 'Documentary', 'https://www.youtube.com/@bhtf_bhutan', '14:20', '/src/assets/news-report.jpg', 'Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.', 1, true),
+          ('Behind the Cold Chain: Delivering Vaccines to Laya & Lunana', 'Field Report', 'https://www.youtube.com/@bhtf_bhutan', '08:15', '/src/assets/news-vaccine.jpg', 'Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.', 2, true);
       `);
     }
 
@@ -425,6 +425,26 @@ export async function ensureDatabaseSchema() {
       ON CONFLICT (setting_key) DO UPDATE SET 
         category = EXCLUDED.category,
         description = EXCLUDED.description;
+    `);
+
+    // 8. Auto-cleanse legacy mock/test records from active database tables
+    await client.query(`
+      DELETE FROM donations 
+      WHERE donor_email LIKE '%example.com' 
+         OR donor_email LIKE '%sample.com%' 
+         OR reference_no LIKE 'BHTF-DON-2025-%';
+
+      DELETE FROM inquiries 
+      WHERE email LIKE '%example.com' 
+         OR email LIKE '%sample.com%' 
+         OR name IN ('Sonam Tobgay', 'Kinley Pem', 'Dr. Karma Yonten');
+
+      DELETE FROM subscribers 
+      WHERE email LIKE '%example.com' 
+         OR email IN ('dorji.t@gov.bt', 'pema.w@health.gov.bt', 'karma.z@who.int', 'tshering.d@unicef.org', 'dechen.c@moh.gov.bt');
+
+      DELETE FROM media_videos 
+      WHERE video_url LIKE '%dQw4w9WgXcQ%';
     `);
   } catch (err: any) {
     console.error("[PostgreSQL ensureDatabaseSchema Error]:", err?.message || err);

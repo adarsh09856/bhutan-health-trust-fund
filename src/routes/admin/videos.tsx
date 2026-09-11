@@ -73,7 +73,7 @@ export function AdminVideosPage() {
   // Form State
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Documentary");
-  const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+  const [videoUrl, setVideoUrl] = useState("");
   const [duration, setDuration] = useState("10:00");
   const [thumbnailUrl, setThumbnailUrl] = useState("/src/assets/news-report.jpg");
   const [description, setDescription] = useState("");
@@ -101,7 +101,7 @@ export function AdminVideosPage() {
     setEditingId(null);
     setTitle("");
     setCategory("Documentary");
-    setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    setVideoUrl("");
     setDuration("10:00");
     setThumbnailUrl("/src/assets/news-report.jpg");
     setDescription("");
