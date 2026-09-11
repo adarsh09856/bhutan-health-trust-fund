@@ -265,6 +265,48 @@ export async function ensureDatabaseSchema() {
         description TEXT,
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS media_gallery (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        category TEXT NOT NULL DEFAULT 'Field Operations',
+        image_url TEXT NOT NULL,
+        caption TEXT,
+        dzongkhag TEXT NOT NULL DEFAULT 'All 20 Dzongkhags',
+        order_index INTEGER NOT NULL DEFAULT 0,
+        is_published BOOLEAN NOT NULL DEFAULT true,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS media_videos (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        category TEXT NOT NULL DEFAULT 'Documentary',
+        video_url TEXT NOT NULL,
+        duration TEXT NOT NULL DEFAULT '05:00',
+        thumbnail_url TEXT,
+        description TEXT,
+        order_index INTEGER NOT NULL DEFAULT 0,
+        is_published BOOLEAN NOT NULL DEFAULT true,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS procurement_tenders (
+        id SERIAL PRIMARY KEY,
+        tender_no TEXT NOT NULL UNIQUE,
+        title TEXT NOT NULL,
+        category TEXT NOT NULL DEFAULT 'Essential Drugs',
+        status TEXT NOT NULL DEFAULT 'OPEN',
+        closing_date TIMESTAMP NOT NULL,
+        document_url TEXT NOT NULL,
+        document_size TEXT NOT NULL DEFAULT '1.8 MB',
+        download_count INTEGER NOT NULL DEFAULT 0,
+        description TEXT,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
     `);
 
     // Seed default procurement steps if empty
@@ -279,6 +321,78 @@ export async function ensureDatabaseSchema() {
           ('04', 'Last-Mile Distribution', 'Direct delivery to Central Medical Stores and distribution across all 20 Dzongkhags.', 4, true);
       `);
     }
+
+    // Seed default media gallery if empty
+    const galCheck = await client.query("SELECT COUNT(*) FROM media_gallery");
+    if (parseInt(galCheck.rows[0].count, 10) === 0) {
+      await client.query(`
+        INSERT INTO media_gallery (title, category, image_url, caption, dzongkhag, order_index, is_published)
+        VALUES
+          ('Cold-Chain Porterage to Lunana Basic Health Unit', 'Highlands Outreach', '/src/assets/news-community.jpg', 'Health workers carrying solar-powered vaccine carrier boxes across 4,500m Himalayan passes to ensure zero children miss immunizations.', 'Gasa', 1, true),
+          ('Nationwide Influenza Vaccine Arrival at Paro International', 'Cold Chain', '/src/assets/news-vaccine.jpg', 'Over 200,000 doses of quadrivalent seasonal influenza vaccines arriving under strict digital temperature logging.', 'Paro', 2, true),
+          ('Outreach Clinic Primary Care in Trashigang', 'Clinics', '/src/assets/news-report.jpg', 'Primary health technicians administering life-saving essential medicines to elderly villagers at an outreach clinic.', 'Trashigang', 3, true);
+      `);
+    }
+
+    // Seed default media videos if empty
+    const vidCheck = await client.query("SELECT COUNT(*) FROM media_videos");
+    if (parseInt(vidCheck.rows[0].count, 10) === 0) {
+      await client.query(`
+        INSERT INTO media_videos (title, category, video_url, duration, thumbnail_url, description, order_index, is_published)
+        VALUES
+          ('25 Years of Free Healthcare: The Royal Sovereign Mandate', 'Documentary', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', '14:20', '/src/assets/news-report.jpg', 'Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.', 1, true),
+          ('Behind the Cold Chain: Delivering Vaccines to Laya & Lunana', 'Field Report', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', '08:15', '/src/assets/news-vaccine.jpg', 'Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.', 2, true);
+      `);
+    }
+
+    // Seed default procurement tenders if empty
+    const tendCheck = await client.query("SELECT COUNT(*) FROM procurement_tenders");
+    if (parseInt(tendCheck.rows[0].count, 10) === 0) {
+      await client.query(`
+        INSERT INTO procurement_tenders (tender_no, title, category, status, closing_date, document_url, document_size, description)
+        VALUES
+          ('BHTF/TEND-2025/001', 'Supply of 124 National Essential Drugs List (NEDL) Commodities for Fiscal Year 2025-2026', 'Essential Drugs', 'OPEN', '2026-11-30 17:00:00', '/documents/sample-report.pdf', '2.4 MB', 'International competitive bidding for GMP-certified manufacturers supplying antibiotics, cardiovascular, and maternal health commodities.'),
+          ('BHTF/TEND-2025/002', 'Procurement of WHO-Prequalified Pentavalent and Measles-Rubella Vaccines', 'Vaccines', 'EVALUATING', '2026-10-15 17:00:00', '/documents/sample-report.pdf', '3.1 MB', 'Annual sovereign procurement of routine childhood immunization antigens with cold-chain transit temperature validation.');
+      `);
+    }
+
+    // Ensure all critical site settings are populated across all 6 categories
+    await client.query(`
+      INSERT INTO site_settings (setting_key, setting_value, category, description)
+      VALUES
+        ('site_title', 'Bhutan Health Trust Fund | འབྲུག་གི་གསོ་བའི་བཅོལ་དངུལ།', 'general', 'Official institutional website title in English and Dzongkha'),
+        ('site_tagline', 'Universal Primary Healthcare in Perpetuity for All Citizens of Bhutan', 'general', 'Institutional motto and sovereign health mandate tagline'),
+        ('founding_year', '1998', 'general', 'Royal Charter establishment year by His Majesty the Fourth Druk Gyalpo'),
+        ('emergency_hotline', '112', 'general', 'National emergency health helpline number'),
+        ('emergency_hotline_label', 'Toll-Free, 24/7 Nationwide Emergency Medical Helpline', 'general', 'Helpline availability and service coverage text'),
+        ('announcement_banner_enabled', 'true', 'announcement', 'Toggle site-wide emergency/statutory announcement broadcast'),
+        ('announcement_banner', 'Universal Primary Health Coverage Guaranteed: 100% of Essential Drugs & Vaccines Ring-Fenced in Perpetuity.', 'announcement', 'Top site-wide announcement broadcast text'),
+        ('announcement_badge', 'SOVEREIGN HEALTH MANDATE', 'announcement', 'Uppercase label badge accompanying the announcement ribbon'),
+        ('announcement_link', '/our-work', 'announcement', 'Destination URL when visitors click the announcement ribbon'),
+        ('secretariat_phone', '+975 2 [PHONE_PLACEHOLDER]', 'contact', 'Secretariat official telephone contact'),
+        ('secretariat_email', 'info@bhtf.bt', 'contact', 'Secretariat primary contact email'),
+        ('secretariat_address', 'Kawajangsa, Thimphu, Kingdom of Bhutan', 'contact', 'Secretariat physical headquarters address in Thimphu'),
+        ('office_hours', 'Monday – Friday: 9:00 AM – 5:00 PM (BST)', 'contact', 'Public working hours for administrative visits and ombudsman queries'),
+        ('ombudsman_email', 'grievance@bhtf.bt', 'contact', 'Official public grievance and ombudsman contact desk'),
+        ('matching_enabled', 'true', 'fiduciary', 'Enable sovereign 1:1 government matching grant display'),
+        ('matching_ratio', '1:1 Sovereign Multiplier', 'fiduciary', 'Sovereign government matching multiplier on qualified donations'),
+        ('capital_endowment_target_nu', 'Nu. 5.0 Billion', 'fiduciary', 'Statutory target endowment corpus for perpetual health security'),
+        ('current_endowment_corpus_nu', 'Nu. 4.2 Billion', 'fiduciary', 'Current audited capital endowment corpus managed under Royal Charter'),
+        ('annual_disbursement_nu', 'Nu. 180 Million', 'fiduciary', 'Annual fund disbursement for essential medicines and vaccines'),
+        ('mission_statement', 'To secure sustainable financial resources in perpetuity to guarantee uninterrupted supply of essential drugs and vaccines for all Bhutanese citizens.', 'pillars', 'Official statutory mission statement'),
+        ('vision_statement', 'A resilient, self-reliant, and healthy Bhutan where no citizen is deprived of basic primary healthcare due to financial constraints.', 'pillars', 'Official statutory vision statement'),
+        ('pillar_1_title', '100% Essential Medicines', 'pillars', 'Pillar 1: Financing all 124+ life-saving primary medicines'),
+        ('pillar_2_title', 'Universal Immunization', 'pillars', 'Pillar 2: Guaranteeing 11 national routine childhood and seasonal antigens'),
+        ('pillar_3_title', 'Cold-Chain Integrity', 'pillars', 'Pillar 3: Highland porterage and temperature-controlled air logistics'),
+        ('pillar_4_title', 'Sovereign Self-Reliance', 'pillars', 'Pillar 4: Perpetual endowment buffer insulating national health security'),
+        ('social_facebook', 'https://facebook.com/bhtf.bhutan', 'social', 'Official Facebook page URL'),
+        ('social_twitter', 'https://twitter.com/bhtf_bhutan', 'social', 'Official X / Twitter account URL'),
+        ('social_youtube', 'https://youtube.com/@bhtf_bhutan', 'social', 'Official YouTube documentary and briefing channel'),
+        ('social_linkedin', 'https://linkedin.com/company/bhutan-health-trust-fund', 'social', 'Official LinkedIn institutional presence')
+      ON CONFLICT (setting_key) DO UPDATE SET 
+        category = EXCLUDED.category,
+        description = EXCLUDED.description;
+    `);
   } catch (err: any) {
     console.error("[PostgreSQL ensureDatabaseSchema Error]:", err?.message || err);
   } finally {

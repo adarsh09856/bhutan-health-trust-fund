@@ -239,6 +239,60 @@ export const procurementSteps = pgTable("procurement_steps", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+/**
+ * Media Gallery Table
+ * Visual evidence of highland cold-chain logistics, vaccine air-drops, and community health units.
+ */
+export const mediaGallery = pgTable("media_gallery", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  category: text("category").notNull().default("Field Operations"), // Cold Chain, Immunization, Highlands Outreach, Clinics, Royal Visits
+  imageUrl: text("image_url").notNull(),
+  caption: text("caption"),
+  dzongkhag: text("dzongkhag").notNull().default("All 20 Dzongkhags"),
+  orderIndex: integer("order_index").notNull().default(0),
+  isPublished: boolean("is_published").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+/**
+ * Media Videos Table
+ * Public documentaries, King's addresses, healthcare worker interviews.
+ */
+export const mediaVideos = pgTable("media_videos", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  category: text("category").notNull().default("Documentary"), // Documentary, Field Report, Royal Address, Impact Story
+  videoUrl: text("video_url").notNull(), // YouTube / Vimeo embed or link
+  duration: text("duration").notNull().default("05:00"),
+  thumbnailUrl: text("thumbnail_url"),
+  description: text("description"),
+  orderIndex: integer("order_index").notNull().default(0),
+  isPublished: boolean("is_published").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+/**
+ * Procurement Tenders Table
+ * Active and archived tenders, Requests for Proposal (RFPs), and Bidding Documents.
+ */
+export const procurementTenders = pgTable("procurement_tenders", {
+  id: serial("id").primaryKey(),
+  tenderNo: text("tender_no").notNull().unique(), // e.g. BHTF/TEND-2025/001
+  title: text("title").notNull(),
+  category: text("category").notNull().default("Essential Drugs"), // Essential Drugs, Vaccines, Cold Chain, Diagnostics, Medical Devices
+  status: text("status").notNull().default("OPEN"), // OPEN, EVALUATING, AWARDED, CLOSED
+  closingDate: timestamp("closing_date").notNull(),
+  documentUrl: text("document_url").notNull(),
+  documentSize: text("document_size").notNull().default("1.8 MB"),
+  downloadCount: integer("download_count").notNull().default(0),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type UserSession = typeof userSessions.$inferSelect;
@@ -275,3 +329,9 @@ export type Milestone = typeof milestones.$inferSelect;
 export type NewMilestone = typeof milestones.$inferInsert;
 export type SiteSetting = typeof siteSettings.$inferSelect;
 export type NewSiteSetting = typeof siteSettings.$inferInsert;
+export type MediaGalleryItem = typeof mediaGallery.$inferSelect;
+export type NewMediaGalleryItem = typeof mediaGallery.$inferInsert;
+export type MediaVideo = typeof mediaVideos.$inferSelect;
+export type NewMediaVideo = typeof mediaVideos.$inferInsert;
+export type ProcurementTender = typeof procurementTenders.$inferSelect;
+export type NewProcurementTender = typeof procurementTenders.$inferInsert;

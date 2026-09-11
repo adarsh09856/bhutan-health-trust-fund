@@ -23,6 +23,7 @@ import { Route as AdminAuditLogsRouteImport } from './routes/admin/audit-logs'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminDonationsRouteImport } from './routes/admin/donations'
 import { Route as AdminFaqsRouteImport } from './routes/admin/faqs'
+import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminInquiriesRouteImport } from './routes/admin/inquiries'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminMetricsRouteImport } from './routes/admin/metrics'
@@ -37,6 +38,7 @@ import { Route as AdminSetupRouteImport } from './routes/admin/setup'
 import { Route as AdminSubscribersRouteImport } from './routes/admin/subscribers'
 import { Route as AdminTrusteesRouteImport } from './routes/admin/trustees'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminVideosRouteImport } from './routes/admin/videos'
 import { Route as NewsSlugRouteImport } from './routes/news/$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -109,6 +111,11 @@ const AdminFaqsRoute = AdminFaqsRouteImport.update({
   path: '/admin/faqs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/admin/gallery',
+  path: '/admin/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
   id: '/admin/inquiries',
   path: '/admin/inquiries',
@@ -179,6 +186,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminVideosRoute = AdminVideosRouteImport.update({
+  id: '/admin/videos',
+  path: '/admin/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -199,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/metrics': typeof AdminMetricsRoute
@@ -213,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/admin/subscribers': typeof AdminSubscribersRoute
   '/admin/trustees': typeof AdminTrusteesRoute
   '/admin/users': typeof AdminUsersRoute
+  '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -230,6 +244,7 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/metrics': typeof AdminMetricsRoute
@@ -244,6 +259,7 @@ export interface FileRoutesByTo {
   '/admin/subscribers': typeof AdminSubscribersRoute
   '/admin/trustees': typeof AdminTrusteesRoute
   '/admin/users': typeof AdminUsersRoute
+  '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -262,6 +278,7 @@ export interface FileRoutesById {
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/metrics': typeof AdminMetricsRoute
@@ -276,6 +293,7 @@ export interface FileRoutesById {
   '/admin/subscribers': typeof AdminSubscribersRoute
   '/admin/trustees': typeof AdminTrusteesRoute
   '/admin/users': typeof AdminUsersRoute
+  '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -295,6 +313,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/faqs'
+    | '/admin/gallery'
     | '/admin/inquiries'
     | '/admin/login'
     | '/admin/metrics'
@@ -309,6 +328,7 @@ export interface FileRouteTypes {
     | '/admin/subscribers'
     | '/admin/trustees'
     | '/admin/users'
+    | '/admin/videos'
     | '/news/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -326,6 +346,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/faqs'
+    | '/admin/gallery'
     | '/admin/inquiries'
     | '/admin/login'
     | '/admin/metrics'
@@ -340,6 +361,7 @@ export interface FileRouteTypes {
     | '/admin/subscribers'
     | '/admin/trustees'
     | '/admin/users'
+    | '/admin/videos'
     | '/news/$slug'
     | '/admin'
   id:
@@ -357,6 +379,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/donations'
     | '/admin/faqs'
+    | '/admin/gallery'
     | '/admin/inquiries'
     | '/admin/login'
     | '/admin/metrics'
@@ -371,6 +394,7 @@ export interface FileRouteTypes {
     | '/admin/subscribers'
     | '/admin/trustees'
     | '/admin/users'
+    | '/admin/videos'
     | '/news/$slug'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -389,6 +413,7 @@ export interface RootRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDonationsRoute: typeof AdminDonationsRoute
   AdminFaqsRoute: typeof AdminFaqsRoute
+  AdminGalleryRoute: typeof AdminGalleryRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminMetricsRoute: typeof AdminMetricsRoute
@@ -403,6 +428,7 @@ export interface RootRouteChildren {
   AdminSubscribersRoute: typeof AdminSubscribersRoute
   AdminTrusteesRoute: typeof AdminTrusteesRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  AdminVideosRoute: typeof AdminVideosRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -506,6 +532,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFaqsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/admin/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/inquiries': {
       id: '/admin/inquiries'
       path: '/admin/inquiries'
@@ -604,6 +637,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/videos': {
+      id: '/admin/videos'
+      path: '/admin/videos'
+      fullPath: '/admin/videos'
+      preLoaderRoute: typeof AdminVideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news/$slug': {
       id: '/news/$slug'
       path: '/$slug'
@@ -638,6 +678,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDonationsRoute: AdminDonationsRoute,
   AdminFaqsRoute: AdminFaqsRoute,
+  AdminGalleryRoute: AdminGalleryRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminMetricsRoute: AdminMetricsRoute,
@@ -652,6 +693,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminSubscribersRoute: AdminSubscribersRoute,
   AdminTrusteesRoute: AdminTrusteesRoute,
   AdminUsersRoute: AdminUsersRoute,
+  AdminVideosRoute: AdminVideosRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport

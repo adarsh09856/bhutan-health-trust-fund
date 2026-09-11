@@ -12,6 +12,9 @@ import type {
   NewImpactMetric,
   NewMilestone,
   NewSiteSetting,
+  NewMediaGalleryItem,
+  NewMediaVideo,
+  NewProcurementTender,
 } from "./schema";
 import { institutionalConfig } from "../../config/institutional";
 
@@ -612,6 +615,25 @@ export const initialMilestones: NewMilestone[] = [
 ];
 
 export const initialSiteSettings: NewSiteSetting[] = [
+  // 1. General & Sovereign Branding
+  {
+    settingKey: "site_title",
+    settingValue: "Bhutan Health Trust Fund | འབྲུག་གི་གསོ་བའི་བཅོལ་དངུལ།",
+    category: "general",
+    description: "Official institutional website title in English and Dzongkha",
+  },
+  {
+    settingKey: "site_tagline",
+    settingValue: "Universal Primary Healthcare in Perpetuity for All Citizens of Bhutan",
+    category: "general",
+    description: "Institutional motto and sovereign health mandate tagline",
+  },
+  {
+    settingKey: "founding_year",
+    settingValue: "1998",
+    category: "general",
+    description: "Royal Charter establishment year by His Majesty the Fourth Druk Gyalpo",
+  },
   {
     settingKey: "emergency_hotline",
     settingValue: "112",
@@ -620,10 +642,39 @@ export const initialSiteSettings: NewSiteSetting[] = [
   },
   {
     settingKey: "emergency_hotline_label",
-    settingValue: "Toll-Free, 24/7 Nationwide",
+    settingValue: "Toll-Free, 24/7 Nationwide Emergency Medical Helpline",
     category: "general",
-    description: "Helpline availability text",
+    description: "Helpline availability and service coverage text",
   },
+
+  // 2. Announcement Banner
+  {
+    settingKey: "announcement_banner_enabled",
+    settingValue: "true",
+    category: "announcement",
+    description: "Toggle site-wide emergency/statutory announcement broadcast",
+  },
+  {
+    settingKey: "announcement_banner",
+    settingValue:
+      "Universal Primary Health Coverage Guaranteed: 100% of Essential Drugs & Vaccines Ring-Fenced in Perpetuity.",
+    category: "announcement",
+    description: "Top site-wide announcement broadcast text",
+  },
+  {
+    settingKey: "announcement_badge",
+    settingValue: "SOVEREIGN HEALTH MANDATE",
+    category: "announcement",
+    description: "Uppercase label badge accompanying the announcement ribbon",
+  },
+  {
+    settingKey: "announcement_link",
+    settingValue: "/our-work",
+    category: "announcement",
+    description: "Destination URL when visitors click the announcement ribbon",
+  },
+
+  // 3. Contact & Secretariat HQ
   {
     settingKey: "secretariat_phone",
     settingValue: institutionalConfig.secretariatPhone, // TODO-VERIFY
@@ -640,61 +691,200 @@ export const initialSiteSettings: NewSiteSetting[] = [
     settingKey: "secretariat_address",
     settingValue: institutionalConfig.secretariatAddress, // TODO-VERIFY
     category: "contact",
-    description: "Secretariat physical headquarters address",
+    description: "Secretariat physical headquarters address in Thimphu",
   },
   {
-    settingKey: "bob_account_no",
-    settingValue: institutionalConfig.bankAccountBOB, // TODO-VERIFY
-    category: "banking",
-    description: "Bank of Bhutan official donation account number",
+    settingKey: "office_hours",
+    settingValue: "Monday – Friday: 9:00 AM – 5:00 PM (Bhutan Standard Time)",
+    category: "contact",
+    description: "Public working hours for administrative visits and ombudsman queries",
   },
   {
-    settingKey: "bob_account_title",
-    settingValue: institutionalConfig.siteName,
-    category: "banking",
-    description: "Bank of Bhutan account title",
+    settingKey: "ombudsman_email",
+    settingValue: "grievance@bhtf.bt",
+    category: "contact",
+    description: "Official public grievance and ombudsman contact desk",
   },
+
+  // 4. Fiduciary, Endowment & Matching
   {
-    settingKey: "bob_swift_code",
-    settingValue: institutionalConfig.swiftCodeBOB, // TODO-VERIFY
-    category: "banking",
-    description: "Bank of Bhutan SWIFT code for wire transfers",
-  },
-  {
-    settingKey: "bnb_account_no",
-    settingValue: institutionalConfig.bankAccountBNB, // TODO-VERIFY
-    category: "banking",
-    description: "Bhutan National Bank account number",
-  },
-  {
-    settingKey: "bnb_swift_code",
-    settingValue: institutionalConfig.swiftCodeBNB, // TODO-VERIFY
-    category: "banking",
-    description: "Bhutan National Bank SWIFT code for wire transfers",
-  },
-  {
-    settingKey: "tax_exemption_id",
-    settingValue: institutionalConfig.taxExemptionId, // TODO-VERIFY
-    category: "statutory",
-    description: "Department of Revenue & Customs 100% Tax Exemption Reference ID",
+    settingKey: "matching_enabled",
+    settingValue: "true",
+    category: "fiduciary",
+    description: "Enable sovereign 1:1 government matching grant display",
   },
   {
     settingKey: "matching_ratio",
-    settingValue: "1:1",
-    category: "matching",
-    description: "Sovereign government matching multiplier",
+    settingValue: "1:1 Sovereign Multiplier",
+    category: "fiduciary",
+    description: "Sovereign government matching multiplier on qualified donations",
   },
   {
-    settingKey: "announcement_banner",
+    settingKey: "capital_endowment_target_nu",
+    settingValue: "Nu. 5.0 Billion",
+    category: "fiduciary",
+    description: "Statutory target endowment corpus for perpetual health security",
+  },
+  {
+    settingKey: "current_endowment_corpus_nu",
+    settingValue: "Nu. 4.2 Billion",
+    category: "fiduciary",
+    description: "Current audited capital endowment corpus managed under Royal Charter",
+  },
+  {
+    settingKey: "annual_disbursement_nu",
+    settingValue: "Nu. 180 Million",
+    category: "fiduciary",
+    description: "Annual fund disbursement for essential medicines and vaccines",
+  },
+
+  // 5. Mission & Royal Charter Pillars
+  {
+    settingKey: "mission_statement",
     settingValue:
-      "Universal Primary Health Coverage Guaranteed: 100% of Essential Drugs & Vaccines Ring-Fenced in Perpetuity.",
-    category: "general",
-    description: "Top site-wide announcement broadcast",
+      "To secure sustainable financial resources in perpetuity to guarantee uninterrupted supply of essential drugs and vaccines for all Bhutanese citizens.",
+    category: "pillars",
+    description: "Official statutory mission statement",
   },
   {
-    settingKey: "announcement_banner_enabled",
-    settingValue: "true",
-    category: "general",
-    description: "Whether top announcement bar is visible",
+    settingKey: "vision_statement",
+    settingValue:
+      "A resilient, self-reliant, and healthy Bhutan where no citizen is deprived of basic primary healthcare due to financial constraints.",
+    category: "pillars",
+    description: "Official statutory vision statement",
+  },
+  {
+    settingKey: "pillar_1_title",
+    settingValue: "100% Essential Medicines",
+    category: "pillars",
+    description: "Pillar 1: Financing all 124+ life-saving primary medicines",
+  },
+  {
+    settingKey: "pillar_2_title",
+    settingValue: "Universal Immunization",
+    category: "pillars",
+    description: "Pillar 2: Guaranteeing 11 national routine childhood and seasonal antigens",
+  },
+  {
+    settingKey: "pillar_3_title",
+    settingValue: "Cold-Chain Integrity",
+    category: "pillars",
+    description: "Pillar 3: Highland porterage and temperature-controlled air logistics",
+  },
+  {
+    settingKey: "pillar_4_title",
+    settingValue: "Sovereign Self-Reliance",
+    category: "pillars",
+    description: "Pillar 4: Perpetual endowment buffer insulating national health security",
+  },
+
+  // 6. Social Channels
+  {
+    settingKey: "social_facebook",
+    settingValue: "https://facebook.com/bhtf.bhutan",
+    category: "social",
+    description: "Official Facebook page URL",
+  },
+  {
+    settingKey: "social_twitter",
+    settingValue: "https://twitter.com/bhtf_bhutan",
+    category: "social",
+    description: "Official X / Twitter account URL",
+  },
+  {
+    settingKey: "social_youtube",
+    settingValue: "https://youtube.com/@bhtf_bhutan",
+    category: "social",
+    description: "Official YouTube documentary and briefing channel",
+  },
+  {
+    settingKey: "social_linkedin",
+    settingValue: "https://linkedin.com/company/bhutan-health-trust-fund",
+    category: "social",
+    description: "Official LinkedIn institutional presence",
+  },
+];
+
+export const initialMediaGallery: NewMediaGalleryItem[] = [
+  {
+    title: "Cold-Chain Porterage to Lunana Basic Health Unit",
+    category: "Highlands Outreach",
+    imageUrl: "/src/assets/news-community.jpg",
+    caption:
+      "Health workers carrying solar-powered vaccine carrier boxes across 4,500m Himalayan passes to ensure zero children miss immunizations.",
+    dzongkhag: "Gasa",
+    orderIndex: 1,
+    isPublished: true,
+  },
+  {
+    title: "Nationwide Influenza Vaccine Arrival at Paro International",
+    category: "Cold Chain",
+    imageUrl: "/src/assets/news-vaccine.jpg",
+    caption:
+      "Over 200,000 doses of quadrivalent seasonal influenza vaccines arriving under strict digital temperature logging.",
+    dzongkhag: "Paro",
+    orderIndex: 2,
+    isPublished: true,
+  },
+  {
+    title: "Outreach Clinic Primary Care in Trashigang",
+    category: "Clinics",
+    imageUrl: "/src/assets/news-report.jpg",
+    caption:
+      "Primary health technicians administering life-saving essential medicines to elderly villagers at an outreach clinic.",
+    dzongkhag: "Trashigang",
+    orderIndex: 3,
+    isPublished: true,
+  },
+];
+
+export const initialMediaVideos: NewMediaVideo[] = [
+  {
+    title: "25 Years of Free Healthcare: The Royal Sovereign Mandate",
+    category: "Documentary",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    duration: "14:20",
+    thumbnailUrl: "/src/assets/news-report.jpg",
+    description:
+      "Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.",
+    orderIndex: 1,
+    isPublished: true,
+  },
+  {
+    title: "Behind the Cold Chain: Delivering Vaccines to Laya & Lunana",
+    category: "Field Report",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    duration: "08:15",
+    thumbnailUrl: "/src/assets/news-vaccine.jpg",
+    description:
+      "Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.",
+    orderIndex: 2,
+    isPublished: true,
+  },
+];
+
+export const initialProcurementTenders: NewProcurementTender[] = [
+  {
+    tenderNo: "BHTF/TEND-2025/001",
+    title:
+      "Supply of 124 National Essential Drugs List (NEDL) Commodities for Fiscal Year 2025-2026",
+    category: "Essential Drugs",
+    status: "OPEN",
+    closingDate: new Date("2026-11-30T17:00:00Z"),
+    documentUrl: "/documents/sample-report.pdf",
+    documentSize: "2.4 MB",
+    description:
+      "International competitive bidding for GMP-certified manufacturers supplying antibiotics, cardiovascular, and maternal health commodities.",
+  },
+  {
+    tenderNo: "BHTF/TEND-2025/002",
+    title: "Procurement of WHO-Prequalified Pentavalent and Measles-Rubella Vaccines",
+    category: "Vaccines",
+    status: "EVALUATING",
+    closingDate: new Date("2026-10-15T17:00:00Z"),
+    documentUrl: "/documents/sample-report.pdf",
+    documentSize: "3.1 MB",
+    description:
+      "Annual sovereign procurement of routine childhood immunization antigens with cold-chain transit temperature validation.",
   },
 ];

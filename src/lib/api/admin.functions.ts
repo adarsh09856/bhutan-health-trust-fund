@@ -889,3 +889,298 @@ export const deleteAdminProcurementStep = createServerFn({ method: "POST" })
 
     return { success };
   });
+
+// ==========================================
+// Field Operations Gallery Management
+// ==========================================
+export const getAdminGallery = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
+  return db.getGallery(false);
+});
+
+export const createAdminGalleryItem = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      title: z.string().min(1, "Title is required"),
+      category: z.string().default("Field Operations"),
+      imageUrl: z.string().min(1, "Image URL is required"),
+      caption: z.string().optional(),
+      dzongkhag: z.string().default("All 20 Dzongkhags"),
+      orderIndex: z.number().default(0),
+      isPublished: z.boolean().default(true),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const item = await db.createGalleryItem(data);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "CREATE_GALLERY_ITEM",
+      entity: "GALLERY",
+      entityId: String(item.id),
+      details: `Created gallery image: ${item.title}`,
+    });
+
+    return item;
+  });
+
+export const updateAdminGalleryItem = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      title: z.string().optional(),
+      category: z.string().optional(),
+      imageUrl: z.string().optional(),
+      caption: z.string().optional(),
+      dzongkhag: z.string().optional(),
+      orderIndex: z.number().optional(),
+      isPublished: z.boolean().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const { id, ...rest } = data;
+    const item = await db.updateGalleryItem(id, rest);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "UPDATE_GALLERY_ITEM",
+      entity: "GALLERY",
+      entityId: String(id),
+      details: `Updated gallery image #${id}`,
+    });
+
+    return item;
+  });
+
+export const deleteAdminGalleryItem = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const success = await db.deleteGalleryItem(data.id);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "DELETE_GALLERY_ITEM",
+      entity: "GALLERY",
+      entityId: String(data.id),
+      details: `Deleted gallery image #${data.id}`,
+    });
+
+    return { success };
+  });
+
+// ==========================================
+// Public Media & Videos Management
+// ==========================================
+export const getAdminVideos = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
+  return db.getVideos(false);
+});
+
+export const createAdminVideo = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      title: z.string().min(1, "Title is required"),
+      category: z.string().default("Documentary"),
+      videoUrl: z.string().min(1, "Video URL is required"),
+      duration: z.string().default("05:00"),
+      thumbnailUrl: z.string().optional(),
+      description: z.string().optional(),
+      orderIndex: z.number().default(0),
+      isPublished: z.boolean().default(true),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const video = await db.createVideo(data);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "CREATE_VIDEO",
+      entity: "VIDEO",
+      entityId: String(video.id),
+      details: `Created video embed: ${video.title}`,
+    });
+
+    return video;
+  });
+
+export const updateAdminVideo = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      title: z.string().optional(),
+      category: z.string().optional(),
+      videoUrl: z.string().optional(),
+      duration: z.string().optional(),
+      thumbnailUrl: z.string().optional(),
+      description: z.string().optional(),
+      orderIndex: z.number().optional(),
+      isPublished: z.boolean().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const { id, ...rest } = data;
+    const video = await db.updateVideo(id, rest);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "UPDATE_VIDEO",
+      entity: "VIDEO",
+      entityId: String(id),
+      details: `Updated video #${id}`,
+    });
+
+    return video;
+  });
+
+export const deleteAdminVideo = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const success = await db.deleteVideo(data.id);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "DELETE_VIDEO",
+      entity: "VIDEO",
+      entityId: String(data.id),
+      details: `Deleted video #${data.id}`,
+    });
+
+    return { success };
+  });
+
+// ==========================================
+// Procurement Tenders Management
+// ==========================================
+export const getAdminProcurementTenders = createServerFn({ method: "GET" })
+  .validator(z.object({ status: z.string().optional() }).optional())
+  .handler(async ({ data }) => {
+    await requireAdminFromRequest();
+    return db.getProcurementTenders(data?.status);
+  });
+
+export const createAdminProcurementTender = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      tenderNo: z.string().min(1, "Tender number is required"),
+      title: z.string().min(1, "Title is required"),
+      category: z.string().default("Essential Drugs"),
+      status: z.enum(["OPEN", "EVALUATING", "AWARDED", "CLOSED"]).default("OPEN"),
+      closingDate: z.string().or(z.date()),
+      documentUrl: z.string().min(1, "Document URL is required"),
+      documentSize: z.string().default("1.8 MB"),
+      description: z.string().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const closingDate =
+      typeof data.closingDate === "string" ? new Date(data.closingDate) : data.closingDate;
+    const tender = await db.createProcurementTender({
+      ...data,
+      closingDate,
+    });
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "CREATE_TENDER",
+      entity: "PROCUREMENT",
+      entityId: String(tender.id),
+      details: `Created procurement tender: ${tender.tenderNo} - ${tender.title}`,
+    });
+
+    return tender;
+  });
+
+export const updateAdminProcurementTender = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      id: z.number(),
+      tenderNo: z.string().optional(),
+      title: z.string().optional(),
+      category: z.string().optional(),
+      status: z.enum(["OPEN", "EVALUATING", "AWARDED", "CLOSED"]).optional(),
+      closingDate: z.string().or(z.date()).optional(),
+      documentUrl: z.string().optional(),
+      documentSize: z.string().optional(),
+      description: z.string().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const { id, closingDate, ...rest } = data;
+    const updatePayload: any = { ...rest };
+    if (closingDate) {
+      updatePayload.closingDate =
+        typeof closingDate === "string" ? new Date(closingDate) : closingDate;
+    }
+    const tender = await db.updateProcurementTender(id, updatePayload);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "UPDATE_TENDER",
+      entity: "PROCUREMENT",
+      entityId: String(id),
+      details: `Updated procurement tender #${id}`,
+    });
+
+    return tender;
+  });
+
+export const deleteAdminProcurementTender = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const success = await db.deleteProcurementTender(data.id);
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "DELETE_TENDER",
+      entity: "PROCUREMENT",
+      entityId: String(data.id),
+      details: `Deleted procurement tender #${data.id}`,
+    });
+
+    return { success };
+  });
+
+// ==========================================
+// Batch / Bulk Operations
+// ==========================================
+export const bulkUpdateDonationsStatus = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      ids: z.array(z.number()),
+      status: z.enum(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"]),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    for (const id of data.ids) {
+      await db.updateDonationStatus(id, data.status);
+    }
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "BULK_UPDATE_DONATIONS",
+      entity: "DONATION",
+      details: `Bulk updated ${data.ids.length} donations to status ${data.status}`,
+    });
+
+    return { success: true, count: data.ids.length };
+  });

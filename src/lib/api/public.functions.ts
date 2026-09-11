@@ -212,3 +212,18 @@ export const getPublicFinancialSettings = createServerFn({ method: "GET" }).hand
     legalSignoffAt: fin.legalSignoffAt,
   };
 });
+
+// --- Get Public Field Operations Gallery ---
+export const getPublicGallery = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getGallery(true);
+});
+
+// --- Get Public Videos & Documentaries ---
+export const getPublicVideos = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getVideos(true);
+});
+
+// --- Get Public Procurement Tenders & RFPs ---
+export const getPublicProcurementTenders = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getProcurementTenders();
+});

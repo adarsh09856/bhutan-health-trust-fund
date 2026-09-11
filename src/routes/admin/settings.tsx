@@ -29,6 +29,9 @@ import {
   FileCheck,
   Scale,
   KeyRound,
+  Globe2,
+  Eye,
+  ExternalLink,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -260,12 +263,47 @@ export function AdminSettingsPage() {
   };
 
   const categories = [
-    { id: "general", label: "General & Branding", icon: Sliders },
-    { id: "announcement", label: "Announcement Banner", icon: Bell },
-    { id: "contact", label: "Contact & Secretariat HQ", icon: Phone },
-    { id: "fiduciary", label: "Fiduciary & Matching", icon: Coins },
-    { id: "pillars", label: "Mission & Pillars", icon: Sparkles },
+    {
+      id: "general",
+      label: "General & Sovereign Branding",
+      icon: Sliders,
+      desc: "Primary site title, Dzongkha name, tagline, founding year, and nationwide emergency hotline.",
+    },
+    {
+      id: "announcement",
+      label: "Announcement Ribbon & Broadcast",
+      icon: Bell,
+      desc: "High-priority alert banner displayed across every public web page.",
+    },
+    {
+      id: "contact",
+      label: "Contact & Secretariat HQ",
+      icon: Phone,
+      desc: "Official telephone lines, email desks, physical headquarters address, and public visiting hours.",
+    },
+    {
+      id: "fiduciary",
+      label: "Fiduciary, Endowment & Matching",
+      icon: Coins,
+      desc: "Sovereign 1:1 RGOB matching parameters, capital endowment goals, and annual healthcare disbursement.",
+    },
+    {
+      id: "pillars",
+      label: "Mission & Royal Charter Pillars",
+      icon: Sparkles,
+      desc: "Core statutory mandate pillars, mission statement, and visionary goals commanded by Royal Charter.",
+    },
+    {
+      id: "social",
+      label: "Social Media & Public Channels",
+      icon: Globe2,
+      desc: "Official links to BHTF Facebook, YouTube briefings, Twitter/X, and professional LinkedIn.",
+    },
   ];
+
+  const formatKeyLabel = (key: string) => {
+    return key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  };
 
   return (
     <AdminShell>
@@ -325,7 +363,7 @@ export function AdminSettingsPage() {
             }`}
           >
             <Sliders className="h-4 w-4" />
-            <span>Tier 1 — General Settings</span>
+            <span>Tier 1 — General CMS Settings</span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-mono">
               Editor / Admin
             </span>
@@ -354,7 +392,8 @@ export function AdminSettingsPage() {
             {categories.map((cat) => {
               const catSettings = settings.filter(
                 (s) =>
-                  s.category?.toLowerCase() === cat.id || (cat.id === "general" && !s.category),
+                  s.category?.toLowerCase() === cat.id ||
+                  (cat.id === "general" && (!s.category || s.category === "general")),
               );
 
               return (
@@ -362,72 +401,125 @@ export function AdminSettingsPage() {
                   key={cat.id}
                   className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
                 >
-                  <div className="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex items-center gap-2.5">
-                    <cat.icon className="h-4 w-4 text-emerald-700" />
-                    <h2 className="text-xs font-black uppercase tracking-wider text-slate-800">
-                      {cat.label}
-                    </h2>
+                  <div className="bg-slate-50/80 px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 grid place-items-center">
+                        <cat.icon className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <h2 className="text-xs font-black uppercase tracking-wider text-slate-800">
+                          {cat.label}
+                        </h2>
+                        <p className="text-[11px] text-slate-500">{cat.desc}</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full self-start sm:self-auto">
+                      {catSettings.length} Parameters
+                    </span>
                   </div>
 
-                  <div className="p-6 space-y-4 divide-y divide-slate-100">
-                    {catSettings.map((s) => {
-                      const isSaving = savingKey === s.settingKey;
-                      const val = formValues[s.settingKey] ?? s.settingValue;
-
-                      return (
-                        <div
-                          key={s.settingKey}
-                          className="pt-4 first:pt-0 grid grid-cols-1 sm:grid-cols-12 gap-4 items-start"
-                        >
-                          <div className="sm:col-span-4 space-y-1">
-                            <label className="text-xs font-bold text-slate-800 font-mono">
-                              {s.settingKey}
-                            </label>
-                            {s.description && (
-                              <p className="text-[11px] text-slate-500 leading-snug">
-                                {s.description}
-                              </p>
-                            )}
-                          </div>
-
-                          <div className="sm:col-span-8 flex items-center gap-3">
-                            {s.settingKey === "announcement_banner_enabled" ? (
-                              <select
-                                value={val}
-                                onChange={(e) => handleChange(s.settingKey, e.target.value)}
-                                className="w-full text-xs font-mono rounded-xl border border-slate-300 p-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                              >
-                                <option value="true">Active (Displayed site-wide)</option>
-                                <option value="false">Inactive (Hidden)</option>
-                              </select>
-                            ) : val.length > 80 || s.settingKey.includes("text") ? (
-                              <textarea
-                                rows={2}
-                                value={val}
-                                onChange={(e) => handleChange(s.settingKey, e.target.value)}
-                                className="w-full text-xs rounded-xl border border-slate-300 p-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                              />
-                            ) : (
-                              <input
-                                type="text"
-                                value={val}
-                                onChange={(e) => handleChange(s.settingKey, e.target.value)}
-                                className="w-full text-xs font-mono rounded-xl border border-slate-300 p-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                              />
-                            )}
-
-                            <button
-                              type="button"
-                              onClick={() => handleSaveTier1Field(s.settingKey)}
-                              disabled={isSaving}
-                              className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shrink-0 transition cursor-pointer disabled:opacity-50"
-                            >
-                              {isSaving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Save"}
-                            </button>
-                          </div>
+                  {/* Announcement Live Preview Box */}
+                  {cat.id === "announcement" && (
+                    <div className="mx-6 mt-5 p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-emerald-500/10 border border-amber-300/40">
+                      <div className="flex items-center gap-2 text-[10px] font-bold text-amber-800 uppercase tracking-wider mb-2">
+                        <Eye className="h-3.5 w-3.5 text-amber-600" />
+                        <span>Real-Time Visitor Preview</span>
+                      </div>
+                      <div className="bg-slate-900 text-white rounded-lg p-3 text-xs flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black text-[10px] shrink-0">
+                            {formValues["announcement_badge"] || "BROADCAST"}
+                          </span>
+                          <span className="truncate text-slate-200">
+                            {formValues["announcement_banner"] ||
+                              "Site-wide announcement headline..."}
+                          </span>
                         </div>
-                      );
-                    })}
+                        <span className="text-[10px] text-amber-300 font-bold shrink-0">
+                          {formValues["announcement_banner_enabled"] === "false"
+                            ? "🔴 (HIDDEN)"
+                            : "🟢 (LIVE SITEWIDE)"}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="p-6 space-y-4 divide-y divide-slate-100">
+                    {catSettings.length === 0 ? (
+                      <div className="py-6 text-center text-slate-400 text-xs">
+                        No custom settings in this category yet. Default fallback values are active.
+                      </div>
+                    ) : (
+                      catSettings.map((s) => {
+                        const isSaving = savingKey === s.settingKey;
+                        const val = formValues[s.settingKey] ?? s.settingValue;
+
+                        return (
+                          <div
+                            key={s.settingKey}
+                            className="pt-4 first:pt-0 grid grid-cols-1 sm:grid-cols-12 gap-4 items-start"
+                          >
+                            <div className="sm:col-span-4 space-y-1">
+                              <label className="text-xs font-black text-slate-900">
+                                {formatKeyLabel(s.settingKey)}
+                              </label>
+                              <div className="font-mono text-[10px] text-slate-400">
+                                {s.settingKey}
+                              </div>
+                              {s.description && (
+                                <p className="text-[11px] text-slate-500 leading-snug">
+                                  {s.description}
+                                </p>
+                              )}
+                            </div>
+
+                            <div className="sm:col-span-8 flex items-center gap-3">
+                              {s.settingKey.endsWith("_enabled") ? (
+                                <select
+                                  value={val}
+                                  onChange={(e) => handleChange(s.settingKey, e.target.value)}
+                                  className="w-full text-xs font-bold rounded-xl border border-slate-300 p-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                >
+                                  <option value="true">Active (Enabled Site-Wide)</option>
+                                  <option value="false">Disabled (Hidden)</option>
+                                </select>
+                              ) : val.length > 80 ||
+                                s.settingKey.includes("statement") ||
+                                s.settingKey.includes("address") ||
+                                s.settingKey.includes("desc") ? (
+                                <textarea
+                                  rows={3}
+                                  value={val}
+                                  onChange={(e) => handleChange(s.settingKey, e.target.value)}
+                                  className="w-full text-xs rounded-xl border border-slate-300 p-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-sans"
+                                />
+                              ) : (
+                                <input
+                                  type="text"
+                                  value={val}
+                                  onChange={(e) => handleChange(s.settingKey, e.target.value)}
+                                  className="w-full text-xs rounded-xl border border-slate-300 p-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-sans font-medium"
+                                />
+                              )}
+
+                              <button
+                                type="button"
+                                onClick={() => handleSaveTier1Field(s.settingKey)}
+                                disabled={isSaving}
+                                className="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shrink-0 transition cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                              >
+                                {isSaving ? (
+                                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                ) : (
+                                  <Save className="h-3.5 w-3.5" />
+                                )}
+                                <span>Save</span>
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
                   </div>
                 </div>
               );

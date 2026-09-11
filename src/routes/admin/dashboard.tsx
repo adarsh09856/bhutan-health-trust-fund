@@ -27,6 +27,10 @@ import {
   Sparkles,
   ArrowRight,
   Layers,
+  Sliders,
+  Camera,
+  Scale,
+  Video,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -171,6 +175,66 @@ export function AdminDashboardPage() {
               />
               <span>Sync Live Ledger</span>
             </button>
+          </div>
+        </div>
+
+        {/* Executive Quick Actions Bar */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="text-xs font-black uppercase tracking-wider text-slate-800">
+              Executive Fast Actions
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              to="/admin/donations"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-xs"
+            >
+              <HeartHandshake className="h-3.5 w-3.5 text-amber-400" />
+              <span>Log Offline Pledge</span>
+            </Link>
+
+            <Link
+              to="/admin/news"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition"
+            >
+              <Newspaper className="h-3.5 w-3.5 text-emerald-600" />
+              <span>Post Press Release</span>
+            </Link>
+
+            <Link
+              to="/admin/procurement"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition"
+            >
+              <Scale className="h-3.5 w-3.5 text-amber-600" />
+              <span>Publish Tender</span>
+            </Link>
+
+            <Link
+              to="/admin/gallery"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition"
+            >
+              <Camera className="h-3.5 w-3.5 text-teal-600" />
+              <span>Field Photo</span>
+            </Link>
+
+            <Link
+              to="/admin/videos"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition"
+            >
+              <Video className="h-3.5 w-3.5 text-indigo-600" />
+              <span>Video Briefing</span>
+            </Link>
+
+            <Link
+              to="/admin/settings"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition"
+            >
+              <Sliders className="h-3.5 w-3.5 text-amber-700" />
+              <span>Site Settings</span>
+            </Link>
           </div>
         </div>
 

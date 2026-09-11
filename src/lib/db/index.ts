@@ -50,9 +50,14 @@ import type {
   NewFaq,
   NewImpactMetric,
   NewMilestone,
-  NewSiteSetting,
   FinancialSetting,
   NewFinancialSetting,
+  MediaGalleryItem,
+  NewMediaGalleryItem,
+  MediaVideo,
+  NewMediaVideo,
+  ProcurementTender,
+  NewProcurementTender,
 } from "./schema";
 
 /**
@@ -1364,6 +1369,138 @@ class BHTFDataStore {
     });
 
     return updated || current;
+  }
+
+  // --- Media Gallery ---
+  public async getGallery(onlyPublished = false): Promise<MediaGalleryItem[]> {
+    try {
+      if (onlyPublished) {
+        return await drizzleDb
+          .select()
+          .from(schema.mediaGallery)
+          .where(eq(schema.mediaGallery.isPublished, true))
+          .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
+      }
+      return await drizzleDb
+        .select()
+        .from(schema.mediaGallery)
+        .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
+    } catch (err: any) {
+      console.warn("[PostgreSQL getGallery Error]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async createGalleryItem(item: NewMediaGalleryItem): Promise<MediaGalleryItem> {
+    const [inserted] = await drizzleDb.insert(schema.mediaGallery).values(item).returning();
+    return inserted;
+  }
+
+  public async updateGalleryItem(
+    id: number,
+    data: Partial<NewMediaGalleryItem>,
+  ): Promise<MediaGalleryItem | null> {
+    const [updated] = await drizzleDb
+      .update(schema.mediaGallery)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(schema.mediaGallery.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteGalleryItem(id: number): Promise<boolean> {
+    const result = await drizzleDb
+      .delete(schema.mediaGallery)
+      .where(eq(schema.mediaGallery.id, id))
+      .returning();
+    return result.length > 0;
+  }
+
+  // --- Media Videos ---
+  public async getVideos(onlyPublished = false): Promise<MediaVideo[]> {
+    try {
+      if (onlyPublished) {
+        return await drizzleDb
+          .select()
+          .from(schema.mediaVideos)
+          .where(eq(schema.mediaVideos.isPublished, true))
+          .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
+      }
+      return await drizzleDb
+        .select()
+        .from(schema.mediaVideos)
+        .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
+    } catch (err: any) {
+      console.warn("[PostgreSQL getVideos Error]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async createVideo(item: NewMediaVideo): Promise<MediaVideo> {
+    const [inserted] = await drizzleDb.insert(schema.mediaVideos).values(item).returning();
+    return inserted;
+  }
+
+  public async updateVideo(id: number, data: Partial<NewMediaVideo>): Promise<MediaVideo | null> {
+    const [updated] = await drizzleDb
+      .update(schema.mediaVideos)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(schema.mediaVideos.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteVideo(id: number): Promise<boolean> {
+    const result = await drizzleDb
+      .delete(schema.mediaVideos)
+      .where(eq(schema.mediaVideos.id, id))
+      .returning();
+    return result.length > 0;
+  }
+
+  // --- Procurement Tenders ---
+  public async getProcurementTenders(statusFilter?: string): Promise<ProcurementTender[]> {
+    try {
+      if (statusFilter && statusFilter !== "ALL") {
+        return await drizzleDb
+          .select()
+          .from(schema.procurementTenders)
+          .where(eq(schema.procurementTenders.status, statusFilter))
+          .orderBy(desc(schema.procurementTenders.closingDate));
+      }
+      return await drizzleDb
+        .select()
+        .from(schema.procurementTenders)
+        .orderBy(desc(schema.procurementTenders.closingDate));
+    } catch (err: any) {
+      console.warn("[PostgreSQL getProcurementTenders Error]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async createProcurementTender(item: NewProcurementTender): Promise<ProcurementTender> {
+    const [inserted] = await drizzleDb.insert(schema.procurementTenders).values(item).returning();
+    return inserted;
+  }
+
+  public async updateProcurementTender(
+    id: number,
+    data: Partial<NewProcurementTender>,
+  ): Promise<ProcurementTender | null> {
+    const [updated] = await drizzleDb
+      .update(schema.procurementTenders)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(schema.procurementTenders.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  public async deleteProcurementTender(id: number): Promise<boolean> {
+    const result = await drizzleDb
+      .delete(schema.procurementTenders)
+      .where(eq(schema.procurementTenders.id, id))
+      .returning();
+    return result.length > 0;
   }
 }
 
