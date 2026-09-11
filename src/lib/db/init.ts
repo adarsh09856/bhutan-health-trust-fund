@@ -177,8 +177,19 @@ export async function ensureDatabaseSchema() {
         status TEXT NOT NULL DEFAULT 'PENDING',
         message TEXT,
         is_anonymous BOOLEAN NOT NULL DEFAULT false,
+        gateway_transaction_id TEXT,
+        gateway_session_id TEXT,
+        gateway_status TEXT,
+        payment_metadata TEXT,
+        completed_at TIMESTAMP,
         created_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
+
+      ALTER TABLE donations ADD COLUMN IF NOT EXISTS gateway_transaction_id TEXT;
+      ALTER TABLE donations ADD COLUMN IF NOT EXISTS gateway_session_id TEXT;
+      ALTER TABLE donations ADD COLUMN IF NOT EXISTS gateway_status TEXT;
+      ALTER TABLE donations ADD COLUMN IF NOT EXISTS payment_metadata TEXT;
+      ALTER TABLE donations ADD COLUMN IF NOT EXISTS completed_at TIMESTAMP;
 
       CREATE TABLE IF NOT EXISTS inquiries (
         id SERIAL PRIMARY KEY,
@@ -307,6 +318,28 @@ export async function ensureDatabaseSchema() {
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS payment_gateways (
+        gateway_key TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        is_enabled BOOLEAN NOT NULL DEFAULT false,
+        is_live_mode BOOLEAN NOT NULL DEFAULT false,
+        key_id TEXT,
+        key_secret TEXT,
+        webhook_secret TEXT,
+        merchant_id TEXT,
+        terminal_id TEXT,
+        gateway_url TEXT,
+        currency TEXT NOT NULL DEFAULT 'BTN',
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_by TEXT
+      );
+
+      INSERT INTO payment_gateways (gateway_key, name, is_enabled, is_live_mode, key_id, key_secret, merchant_id, terminal_id, gateway_url, currency)
+      VALUES
+        ('RMA_BFS', 'RMA Payment Gateway / Bhutan Financial Switch', true, false, NULL, 'BHTF_BFS_SECRET_TEST_KEY', 'BHTF_RMA_MERCHANT', 'BHTF_TERM_01', 'https://bfstest.rma.org.bt/bfsgateway', 'BTN'),
+        ('RAZORPAY', 'Razorpay Regional & International Gateway', false, false, 'rzp_test_placeholder', 'SAMPLE_SECRET_PLACEHOLDER', NULL, NULL, NULL, 'BTN')
+      ON CONFLICT (gateway_key) DO NOTHING;
     `);
 
     // Seed default procurement steps if empty

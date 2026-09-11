@@ -8,8 +8,12 @@ import {
   getAdminFinancialSettings,
   updateAdminFinancialSettings,
   recordAdminLegalSignoff,
+  getAdminPaymentGateways,
+  updateAdminPaymentGateway,
+  testGatewayConnection,
+  purgeDemoData,
 } from "@/lib/api/admin.functions";
-import type { SiteSetting, FinancialSetting } from "@/lib/db/schema";
+import type { SiteSetting, FinancialSetting, PaymentGateway } from "@/lib/db/schema";
 import {
   Sliders,
   Save,
@@ -32,6 +36,14 @@ import {
   Globe2,
   Eye,
   ExternalLink,
+  CreditCard,
+  Trash2,
+  CheckCircle,
+  XCircle,
+  Key,
+  Terminal,
+  Send,
+  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -46,7 +58,7 @@ export function AdminSettingsPage() {
   const { user } = useAdminAuth();
   const isSuperAdmin = user?.role === "SUPER_ADMIN";
 
-  const [activeTab, setActiveTab] = useState<"tier1" | "tier2">("tier1");
+  const [activeTab, setActiveTab] = useState<"tier1" | "tier2" | "gateways" | "hygiene">("tier1");
 
   // Tier 1 State
   const [settings, setSettings] = useState<SiteSetting[]>([]);
@@ -79,6 +91,35 @@ export function AdminSettingsPage() {
   const [signoffReason, setSignoffReason] = useState("");
   const [recordingSignoff, setRecordingSignoff] = useState(false);
 
+  // Payment Gateways State
+  const [gateways, setGateways] = useState<PaymentGateway[]>([]);
+  const [gatewaysLoading, setGatewaysLoading] = useState(false);
+  const [testingGateway, setTestingGateway] = useState<string | null>(null);
+  const [testResult, setTestResult] = useState<{
+    gatewayKey: string;
+    success: boolean;
+    message: string;
+    latencyMs: number;
+  } | null>(null);
+
+  // Edit Gateway Modal State
+  const [editingGateway, setEditingGateway] = useState<PaymentGateway | null>(null);
+  const [gwName, setGwName] = useState("");
+  const [gwEnabled, setGwEnabled] = useState(false);
+  const [gwLiveMode, setGwLiveMode] = useState(false);
+  const [gwKeyId, setGwKeyId] = useState("");
+  const [gwKeySecret, setGwKeySecret] = useState("");
+  const [gwMerchantId, setGwMerchantId] = useState("");
+  const [gwTerminalId, setGwTerminalId] = useState("");
+  const [gwGatewayUrl, setGwGatewayUrl] = useState("");
+  const [gwReason, setGwReason] = useState("");
+  const [savingGateway, setSavingGateway] = useState(false);
+
+  // Data Hygiene / Purge Demo Data State
+  const [purgeDialogOpen, setPurgeDialogOpen] = useState(false);
+  const [purgeReason, setPurgeReason] = useState("");
+  const [purging, setPurging] = useState(false);
+
   const fetchTier1Settings = async () => {
     try {
       const res = await getAdminSettings();
@@ -106,12 +147,126 @@ export function AdminSettingsPage() {
     }
   };
 
+  const fetchGateways = async () => {
+    setGatewaysLoading(true);
+    try {
+      const res = await getAdminPaymentGateways();
+      setGateways(res);
+    } catch {
+      toast.error("Failed to load payment gateways.");
+    } finally {
+      setGatewaysLoading(false);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
-    Promise.all([fetchTier1Settings(), fetchTier2Settings()]).finally(() => {
+    Promise.all([fetchTier1Settings(), fetchTier2Settings(), fetchGateways()]).finally(() => {
       setLoading(false);
     });
   }, [isSuperAdmin]);
+
+  const openEditGatewayModal = (gw: PaymentGateway) => {
+    setEditingGateway(gw);
+    setGwName(gw.name);
+    setGwEnabled(gw.isEnabled);
+    setGwLiveMode(gw.isLiveMode);
+    setGwKeyId(gw.keyId || "");
+    setGwKeySecret(gw.keySecret || "");
+    setGwMerchantId(gw.merchantId || "");
+    setGwTerminalId(gw.terminalId || "");
+    setGwGatewayUrl(gw.gatewayUrl || "");
+    setGwReason("");
+  };
+
+  const handleSaveGateway = async () => {
+    if (!editingGateway) return;
+    if (gwReason.trim().length < 10) {
+      toast.error("Mandatory justification reason must be at least 10 characters.");
+      return;
+    }
+    setSavingGateway(true);
+    try {
+      await updateAdminPaymentGateway({
+        data: {
+          gatewayKey: editingGateway.gatewayKey as any,
+          name: gwName.trim() || undefined,
+          isEnabled: gwEnabled,
+          isLiveMode: gwLiveMode,
+          keyId: gwKeyId.trim() || undefined,
+          keySecret: gwKeySecret.trim() || undefined,
+          merchantId: gwMerchantId.trim() || undefined,
+          terminalId: gwTerminalId.trim() || undefined,
+          gatewayUrl: gwGatewayUrl.trim() || undefined,
+          reason: gwReason.trim(),
+        },
+      });
+      toast.success(`Payment gateway ${editingGateway.gatewayKey} updated successfully.`);
+      setEditingGateway(null);
+      setGwReason("");
+      setGwKeySecret("");
+      fetchGateways();
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to update payment gateway.");
+    } finally {
+      setSavingGateway(false);
+    }
+  };
+
+  const handleTestConnection = async (gatewayKey: "RMA_BFS" | "RAZORPAY") => {
+    setTestingGateway(gatewayKey);
+    setTestResult(null);
+    try {
+      const res = await testGatewayConnection({
+        data: { gatewayKey },
+      });
+      setTestResult({
+        gatewayKey,
+        success: res.success,
+        message: res.message,
+        latencyMs: res.latencyMs,
+      });
+      if (res.success) {
+        toast.success(`${gatewayKey} connection verified (${res.latencyMs}ms)!`);
+      } else {
+        toast.error(`${gatewayKey} test failed: ${res.message}`);
+      }
+    } catch (err: any) {
+      const msg = err?.message || "Connection test failed.";
+      setTestResult({
+        gatewayKey,
+        success: false,
+        message: msg,
+        latencyMs: 0,
+      });
+      toast.error(msg);
+    } finally {
+      setTestingGateway(null);
+    }
+  };
+
+  const handlePurgeDemoData = async () => {
+    if (purgeReason.trim().length < 10) {
+      toast.error("Mandatory justification reason must be at least 10 characters.");
+      return;
+    }
+    setPurging(true);
+    try {
+      const res = await purgeDemoData({
+        data: { reason: purgeReason.trim() },
+      });
+      toast.success(
+        `Demo data purged! Removed ${res.deletedDonations} test donations, ${res.deletedInquiries} test inquiries, and ${res.deletedSubscribers} test subscribers.`,
+        { duration: 8000 },
+      );
+      setPurgeDialogOpen(false);
+      setPurgeReason("");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to purge demo data.");
+    } finally {
+      setPurging(false);
+    }
+  };
 
   const handleChange = (key: string, val: string) => {
     setFormValues((prev) => ({ ...prev, [key]: val }));
@@ -352,11 +507,11 @@ export function AdminSettingsPage() {
         </div>
 
         {/* Tier Tabs */}
-        <div className="flex border-b border-slate-200 gap-6 text-sm font-bold">
+        <div className="flex border-b border-slate-200 gap-4 sm:gap-6 text-xs sm:text-sm font-bold overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveTab("tier1")}
-            className={`pb-3 border-b-2 transition flex items-center gap-2 cursor-pointer ${
+            className={`pb-3 border-b-2 transition flex items-center gap-2 cursor-pointer shrink-0 ${
               activeTab === "tier1"
                 ? "border-emerald-600 text-emerald-800"
                 : "border-transparent text-slate-500 hover:text-slate-800"
@@ -372,16 +527,48 @@ export function AdminSettingsPage() {
           <button
             type="button"
             onClick={() => setActiveTab("tier2")}
-            className={`pb-3 border-b-2 transition flex items-center gap-2 cursor-pointer ${
+            className={`pb-3 border-b-2 transition flex items-center gap-2 cursor-pointer shrink-0 ${
               activeTab === "tier2"
                 ? "border-amber-600 text-amber-900"
                 : "border-transparent text-slate-500 hover:text-slate-800"
             }`}
           >
             <Lock className="h-4 w-4 text-amber-600" />
-            <span>Tier 2 — Restricted Settings (Section 0B)</span>
+            <span>Tier 2 — Fiduciary Settings (Section 0B)</span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-mono">
               Super Admin Only
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("gateways")}
+            className={`pb-3 border-b-2 transition flex items-center gap-2 cursor-pointer shrink-0 ${
+              activeTab === "gateways"
+                ? "border-emerald-600 text-emerald-800"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+          >
+            <CreditCard className="h-4 w-4 text-emerald-600" />
+            <span>Payment Gateways & Fiduciary APIs</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono">
+              RMA & Razorpay
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("hygiene")}
+            className={`pb-3 border-b-2 transition flex items-center gap-2 cursor-pointer shrink-0 ${
+              activeTab === "hygiene"
+                ? "border-rose-600 text-rose-900"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+          >
+            <Trash2 className="h-4 w-4 text-rose-600" />
+            <span>Data Hygiene & Purge</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-mono">
+              Sanitize DB
             </span>
           </button>
         </div>
@@ -760,6 +947,452 @@ export function AdminSettingsPage() {
           </div>
         )}
 
+        {/* TAB 3: PAYMENT GATEWAYS & FIDUCIARY APIS */}
+        {activeTab === "gateways" && (
+          <div className="space-y-6">
+            {/* Banner */}
+            <div className="bg-emerald-950 text-emerald-100 p-5 rounded-2xl border border-emerald-800/60 flex items-start gap-4">
+              <CreditCard className="h-6 w-6 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="space-y-1 text-xs">
+                <div className="font-bold text-sm text-white flex items-center gap-2">
+                  <span>Sovereign Fiduciary Payment Gateway Hub</span>
+                  <span className="bg-emerald-800/80 text-emerald-200 text-[10px] px-2 py-0.5 rounded-full font-mono uppercase">
+                    Tier 2 Security Guarded
+                  </span>
+                </div>
+                <p className="text-emerald-200/90 leading-relaxed">
+                  Configure domestic Bhutan central banking (RMA BFS) and international low-cost gateways (Razorpay). 
+                  In adherence with Section 0B security directives, private secret keys are permanently masked. 
+                  Mutations require Super Administrator authentication, minimum 10-character justification reasons, and are recorded to the immutable ledger.
+                </p>
+              </div>
+            </div>
+
+            {/* Test Connection Banner (if test ran) */}
+            {testResult && (
+              <div
+                className={`p-4 rounded-2xl border flex items-start gap-3 text-xs ${
+                  testResult.success
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+                    : "bg-rose-50 border-rose-200 text-rose-900"
+                }`}
+              >
+                {testResult.success ? (
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
+                ) : (
+                  <AlertTriangle className="h-5 w-5 text-rose-600 shrink-0" />
+                )}
+                <div className="space-y-0.5">
+                  <div className="font-bold">
+                    Gateway Connection Test: {testResult.gatewayKey} ({testResult.latencyMs}ms)
+                  </div>
+                  <p>{testResult.message}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Gateways Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Card 1: RMA Payment Gateway / BFS */}
+              {(() => {
+                const rma = gateways.find((g) => g.gatewayKey === "RMA_BFS") || {
+                  gatewayKey: "RMA_BFS",
+                  name: "RMA Payment Gateway / Bhutan Financial Switch",
+                  isEnabled: true,
+                  isLiveMode: false,
+                  merchantId: "BHTF_RMA_MERCHANT",
+                  terminalId: "BHTF_TERM_01",
+                  gatewayUrl: "https://bfstest.rma.org.bt/bfsgateway",
+                  keySecret: "••••••••••••",
+                  currency: "BTN",
+                };
+
+                return (
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden flex flex-col justify-between">
+                    <div>
+                      <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 grid place-items-center font-bold">
+                            <Building2 className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+                              RMA BFS Gateway (Bhutan Domestic)
+                            </h2>
+                            <p className="text-[11px] text-slate-500">
+                              Royal Monetary Authority Switch (BoB, BNB, Druk PNB, TBank, BDBL)
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              rma.isEnabled
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-slate-100 text-slate-600"
+                            }`}
+                          >
+                            {rma.isEnabled ? "ENABLED" : "DISABLED"}
+                          </span>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              rma.isLiveMode
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-amber-100 text-amber-800"
+                            }`}
+                          >
+                            {rma.isLiveMode ? "LIVE" : "SANDBOX"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="p-6 space-y-3.5 text-xs">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                              BFS Merchant ID
+                            </span>
+                            <span className="font-mono font-bold text-slate-800">
+                              {rma.merchantId || "Not Configured"}
+                            </span>
+                          </div>
+                          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                              Terminal ID
+                            </span>
+                            <span className="font-mono font-bold text-slate-800">
+                              {rma.terminalId || "Not Configured"}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                          <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                            BFS Gateway URL
+                          </span>
+                          <span className="font-mono text-[11px] text-slate-700 truncate block">
+                            {rma.gatewayUrl || "https://bfstest.rma.org.bt/bfsgateway"}
+                          </span>
+                        </div>
+
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                          <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                            HMAC-SHA256 Encryption Secret
+                          </span>
+                          <div className="flex items-center justify-between">
+                            <span className="font-mono text-slate-600">
+                              {rma.keySecret || "••••••••••••"}
+                            </span>
+                            <span className="text-[10px] text-amber-700 font-medium bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                              Masked
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-6 py-4 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between gap-3">
+                      <button
+                        type="button"
+                        onClick={() => handleTestConnection("RMA_BFS")}
+                        disabled={testingGateway === "RMA_BFS"}
+                        className="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-white text-slate-700 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      >
+                        {testingGateway === "RMA_BFS" ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Zap className="h-3.5 w-3.5 text-amber-600" />
+                        )}
+                        <span>Test Checksum</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => openEditGatewayModal(rma as any)}
+                        disabled={!isSuperAdmin}
+                        className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      >
+                        <Key className="h-3.5 w-3.5 text-amber-400" />
+                        <span>Configure RMA Gateway</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Card 2: Razorpay Regional & International */}
+              {(() => {
+                const rzp = gateways.find((g) => g.gatewayKey === "RAZORPAY") || {
+                  gatewayKey: "RAZORPAY",
+                  name: "Razorpay Regional & International Gateway",
+                  isEnabled: false,
+                  isLiveMode: false,
+                  keyId: "",
+                  keySecret: "••••••••••••",
+                  currency: "BTN",
+                };
+
+                return (
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden flex flex-col justify-between">
+                    <div>
+                      <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 grid place-items-center font-bold">
+                            <CreditCard className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+                              Razorpay (International & Regional)
+                            </h2>
+                            <p className="text-[11px] text-slate-500">
+                              Low-Fee Cards (Visa, Mastercard, Amex), UPI & NetBanking
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              rzp.isEnabled
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-slate-100 text-slate-600"
+                            }`}
+                          >
+                            {rzp.isEnabled ? "ENABLED" : "DISABLED"}
+                          </span>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              rzp.isLiveMode
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-amber-100 text-amber-800"
+                            }`}
+                          >
+                            {rzp.isLiveMode ? "LIVE" : "TEST"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="p-6 space-y-3.5 text-xs">
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                          <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                            Razorpay Key ID
+                          </span>
+                          <span className="font-mono font-bold text-slate-800">
+                            {rzp.keyId || "Not Configured (e.g. rzp_test_...)"}
+                          </span>
+                        </div>
+
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                          <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                            Key Secret
+                          </span>
+                          <div className="flex items-center justify-between">
+                            <span className="font-mono text-slate-600">
+                              {rzp.keySecret || "••••••••••••"}
+                            </span>
+                            <span className="text-[10px] text-amber-700 font-medium bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                              Masked
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between">
+                          <div>
+                            <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                              Operating Currency Peg
+                            </span>
+                            <span className="font-bold text-slate-800">
+                              Bhutanese Ngultrum (BTN) / INR (1:1 Parity)
+                            </span>
+                          </div>
+                          <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] px-2 py-1 rounded-lg font-bold">
+                            ~2% Low NGO Rate
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-6 py-4 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between gap-3">
+                      <button
+                        type="button"
+                        onClick={() => handleTestConnection("RAZORPAY")}
+                        disabled={testingGateway === "RAZORPAY" || !rzp.keyId}
+                        className="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-white text-slate-700 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      >
+                        {testingGateway === "RAZORPAY" ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Zap className="h-3.5 w-3.5 text-blue-600" />
+                        )}
+                        <span>Ping Razorpay API</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => openEditGatewayModal(rzp as any)}
+                        disabled={!isSuperAdmin}
+                        className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      >
+                        <Key className="h-3.5 w-3.5 text-amber-400" />
+                        <span>Configure Razorpay</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Card 3: Bhutan Domestic Mobile Banking QR & Accounts */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+              <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Landmark className="h-5 w-5 text-emerald-700" />
+                  <div>
+                    <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+                      Bhutan Mobile Banking Accounts & Remittance Verification (0% Fee)
+                    </h2>
+                    <p className="text-[11px] text-slate-500">
+                      Direct mBoB and BNB Pay transfers verified by Bank Journal / Remittance numbers
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("tier2")}
+                  className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer"
+                >
+                  Manage Bank Routing Parameters →
+                </button>
+              </div>
+
+              <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold uppercase text-slate-500">
+                    Bank of Bhutan (mBoB)
+                  </span>
+                  <p className="font-mono font-bold text-slate-900 text-sm">
+                    {finSettings?.bankAccountBOB || formValues["bob_account_no"] || "BHTF-BOB-XXXXXX"}
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    SWIFT: {finSettings?.swiftCodeBOB || formValues["bob_swift_code"] || "BOBTBT2X"}
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold uppercase text-slate-500">
+                    Bhutan National Bank (BNB Pay)
+                  </span>
+                  <p className="font-mono font-bold text-slate-900 text-sm">
+                    {formValues["bnb_account_no"] || "BHTF-BNB-XXXXXX"}
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    Thimphu Main Branch (mPay Integrated)
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                  <span className="text-[10px] font-bold uppercase text-slate-500">
+                    Remittance Verification Protocol
+                  </span>
+                  <p className="text-slate-700 text-[11px] leading-relaxed">
+                    Donors input their 6+ digit Bank Journal No. on the receipt screen. Secretariat accounts desk stamps approval in <strong className="text-slate-900">Donations CRM</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: DATA HYGIENE & PURGE */}
+        {activeTab === "hygiene" && (
+          <div className="space-y-6">
+            <div className="bg-rose-950 text-rose-100 p-5 rounded-2xl border border-rose-800/60 flex items-start gap-4">
+              <ShieldAlert className="h-6 w-6 text-rose-400 shrink-0 mt-0.5" />
+              <div className="space-y-1 text-xs">
+                <div className="font-bold text-sm text-white flex items-center gap-2">
+                  <span>Database Sanitation & Test Record Eradication</span>
+                  <span className="bg-rose-800/80 text-rose-200 text-[10px] px-2 py-0.5 rounded-full font-mono uppercase">
+                    Destructive Maintenance Operation
+                  </span>
+                </div>
+                <p className="text-rose-200/90 leading-relaxed">
+                  Purge all mock transaction records, test inquiries, and dummy newsletter subscriptions from the active PostgreSQL database instance. 
+                  Genuine sovereign records including Board of Trustees, Royal Charter documents, Impact Metrics, Milestones, and Procurement Tenders are strictly protected and never touched.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden p-6 space-y-6">
+              <div className="border-b pb-4">
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                  Target Cleanse Scope
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  The following legacy demo entries will be deleted permanently across all environments:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                  <div className="font-bold text-slate-900 flex items-center gap-2">
+                    <Trash2 className="h-4 w-4 text-rose-600" />
+                    <span>Demo Donations</span>
+                  </div>
+                  <ul className="text-[11px] text-slate-600 space-y-1 list-disc list-inside font-mono">
+                    <li>BHTF-DON-928174 (Tashi Dorji)</li>
+                    <li>BHTF-DON-741920 (Dechen Wangmo)</li>
+                    <li>BHTF-DON-551029 (Karma Yangzom)</li>
+                    <li>BHTF-DON-318492 (Well-wisher)</li>
+                  </ul>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                  <div className="font-bold text-slate-900 flex items-center gap-2">
+                    <Trash2 className="h-4 w-4 text-rose-600" />
+                    <span>Mock Inquiries</span>
+                  </div>
+                  <ul className="text-[11px] text-slate-600 space-y-1 list-disc list-inside">
+                    <li>Sonam Tobgay (Procurement Inquiry)</li>
+                    <li>Dr. Rachel Higgins (Cold Chain IoT)</li>
+                    <li>Ugyen Pelzom (Volunteer Inquiry)</li>
+                  </ul>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                  <div className="font-bold text-slate-900 flex items-center gap-2">
+                    <Trash2 className="h-4 w-4 text-rose-600" />
+                    <span>Mock Subscribers</span>
+                  </div>
+                  <ul className="text-[11px] text-slate-600 space-y-1 list-disc list-inside font-mono">
+                    <li>info@drukhealth.bt</li>
+                    <li>sangay.c@rub.edu.bt</li>
+                    <li>pema.choden@undp.org</li>
+                    <li>tshering.penjor@bhtf.bt</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t flex items-center justify-between">
+                <div className="text-xs text-slate-500">
+                  ⚠️ Action is recorded in immutable <strong>audit_logs</strong> with actor email, timestamp, and mandatory justification reason.
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPurgeReason("");
+                    setPurgeDialogOpen(true);
+                  }}
+                  disabled={!isSuperAdmin}
+                  className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-2 transition cursor-pointer disabled:opacity-50"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span>Purge Demo / Test Records...</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* MODAL: TIER 2 DOUBLE-ENTRY CONFIRMATION */}
         {editingField && (
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
@@ -986,6 +1619,256 @@ export function AdminSettingsPage() {
                   ) : (
                     "Record Sign-Off"
                   )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MODAL: CONFIGURE PAYMENT GATEWAY (TIER 2) */}
+        {editingGateway && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between border-b pb-3">
+                <div className="flex items-center gap-2">
+                  <CreditCard className="h-5 w-5 text-emerald-600" />
+                  <div>
+                    <h3 className="text-sm font-extrabold text-slate-900">
+                      Configure Gateway: {editingGateway.name}
+                    </h3>
+                    <span className="text-[10px] font-mono text-slate-500 uppercase">
+                      {editingGateway.gatewayKey} • Section 0B Tier 2 Controlled
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setEditingGateway(null)}
+                  className="text-slate-400 hover:text-slate-600 p-1 text-sm font-bold cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-4 text-xs">
+                {/* Toggles */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                  <label className="flex items-center gap-2.5 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={gwEnabled}
+                      onChange={(e) => setGwEnabled(e.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <div>
+                      <span className="font-bold text-slate-800 block">Enable Gateway</span>
+                      <span className="text-[10px] text-slate-500">Public checkout option</span>
+                    </div>
+                  </label>
+
+                  <label className="flex items-center gap-2.5 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={gwLiveMode}
+                      onChange={(e) => setGwLiveMode(e.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <div>
+                      <span className="font-bold text-slate-800 block">Live Production</span>
+                      <span className="text-[10px] text-slate-500">
+                        {gwLiveMode ? "Real transactions" : "Sandbox / Test mode"}
+                      </span>
+                    </div>
+                  </label>
+                </div>
+
+                {/* Gateway-specific Fields */}
+                {editingGateway.gatewayKey === "RMA_BFS" && (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                          BFS Merchant ID
+                        </label>
+                        <input
+                          type="text"
+                          value={gwMerchantId}
+                          onChange={(e) => setGwMerchantId(e.target.value)}
+                          placeholder="e.g. BHTF_MERCHANT"
+                          className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                          BFS Terminal ID
+                        </label>
+                        <input
+                          type="text"
+                          value={gwTerminalId}
+                          onChange={(e) => setGwTerminalId(e.target.value)}
+                          placeholder="e.g. BHTF_TERM_01"
+                          className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        BFS Gateway Endpoint URL
+                      </label>
+                      <input
+                        type="url"
+                        value={gwGatewayUrl}
+                        onChange={(e) => setGwGatewayUrl(e.target.value)}
+                        placeholder="https://bfstest.rma.org.bt/bfsgateway"
+                        className="w-full p-2.5 rounded-xl border border-slate-300 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        HMAC Secret / Encryption Key
+                      </label>
+                      <input
+                        type="password"
+                        value={gwKeySecret}
+                        onChange={(e) => setGwKeySecret(e.target.value)}
+                        placeholder="Leave unchanged or enter new BFS secret..."
+                        className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      />
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        Secret is masked. Enter a new key to update, or leave as is to preserve existing key.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {editingGateway.gatewayKey === "RAZORPAY" && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        Razorpay Key ID
+                      </label>
+                      <input
+                        type="text"
+                        value={gwKeyId}
+                        onChange={(e) => setGwKeyId(e.target.value)}
+                        placeholder="e.g. rzp_test_... or rzp_live_..."
+                        className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        Razorpay Key Secret
+                      </label>
+                      <input
+                        type="password"
+                        value={gwKeySecret}
+                        onChange={(e) => setGwKeySecret(e.target.value)}
+                        placeholder="Leave unchanged or enter new Key Secret..."
+                        className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      />
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        Secret is masked. Enter a new key to update, or leave as is to preserve existing key.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mandatory Audit Reason */}
+                <div className="pt-2 border-t border-slate-200">
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Mandatory Reason for Mutation (Min 10 Characters)
+                  </label>
+                  <textarea
+                    rows={2}
+                    required
+                    value={gwReason}
+                    onChange={(e) => setGwReason(e.target.value)}
+                    placeholder="Provide statutory operational reason for this gateway mutation..."
+                    className="w-full p-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setEditingGateway(null)}
+                  className="px-4 py-2 rounded-xl border text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveGateway}
+                  disabled={savingGateway || gwReason.trim().length < 10}
+                  className="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold disabled:opacity-50 cursor-pointer flex items-center gap-2"
+                >
+                  {savingGateway ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Save className="h-3.5 w-3.5 text-amber-400" />
+                  )}
+                  <span>Save Gateway Credentials</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MODAL: PURGE DEMO DATA CONFIRMATION */}
+        {purgeDialogOpen && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4">
+              <div className="flex items-center gap-2 text-rose-700 font-extrabold text-sm border-b pb-3">
+                <Trash2 className="h-5 w-5" />
+                <span>Confirm Database Demo Data Purge</span>
+              </div>
+
+              <p className="text-xs text-slate-600 leading-relaxed">
+                You are about to permanently delete all mock donations ("Tashi Dorji", "Dechen Wangmo", etc.), mock inquiries, and demo subscribers. 
+                Genuine institutional programs, charter narrative, board trustees, and policies are strictly protected.
+              </p>
+
+              <div className="space-y-3 text-xs">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Mandatory Reason for Purge (Min 10 chars)
+                  </label>
+                  <textarea
+                    rows={2}
+                    required
+                    value={purgeReason}
+                    onChange={(e) => setPurgeReason(e.target.value)}
+                    placeholder="e.g. Institutional sanitation before production deployment..."
+                    className="w-full p-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setPurgeDialogOpen(false)}
+                  className="px-4 py-2 rounded-xl border text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handlePurgeDemoData}
+                  disabled={purging || purgeReason.trim().length < 10}
+                  className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold disabled:opacity-50 cursor-pointer flex items-center gap-2"
+                >
+                  {purging ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Trash2 className="h-3.5 w-3.5" />
+                  )}
+                  <span>Permanently Purge Demo Data</span>
                 </button>
               </div>
             </div>

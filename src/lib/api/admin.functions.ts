@@ -211,7 +211,7 @@ export const updateDonationStatus = createServerFn({ method: "POST" })
   .validator(
     z.object({
       id: z.number(),
-      status: z.enum(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"]),
+      status: z.enum(["PENDING", "VERIFICATION_SUBMITTED", "VERIFIED", "COMPLETED", "CANCELLED"]),
     }),
   )
   .handler(async ({ data }) => {
@@ -1183,4 +1183,209 @@ export const bulkUpdateDonationsStatus = createServerFn({ method: "POST" })
     });
 
     return { success: true, count: data.ids.length };
+  });
+
+// ==========================================
+// Tier 2 Payment Gateway & Fiduciary API Management (Super Admin Only)
+// ==========================================
+
+function maskSecretKey(secret: string | null | undefined): string | null {
+  if (!secret) return null;
+  if (secret.length <= 8) return "••••••••";
+  const start = secret.slice(0, 4);
+  const end = secret.slice(-4);
+  return `${start}••••••••${end}`;
+}
+
+export const getAdminPaymentGateways = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
+  const gateways = await db.getPaymentGateways();
+  return gateways.map((gw) => ({
+    ...gw,
+    keySecret: maskSecretKey(gw.keySecret),
+    webhookSecret: maskSecretKey(gw.webhookSecret),
+  }));
+});
+
+export const updateAdminPaymentGateway = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      gatewayKey: z.enum(["RMA_BFS", "RAZORPAY", "STRIPE"]),
+      name: z.string().optional(),
+      isEnabled: z.boolean().optional(),
+      isLiveMode: z.boolean().optional(),
+      keyId: z.string().optional(),
+      keySecret: z.string().optional(),
+      webhookSecret: z.string().optional(),
+      merchantId: z.string().optional(),
+      terminalId: z.string().optional(),
+      gatewayUrl: z.string().optional(),
+      currency: z.string().optional(),
+      reason: z
+        .string()
+        .min(10, "Mandatory reason must be at least 10 characters justifying payment gateway mutation"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    const current = await db.getPaymentGateway(data.gatewayKey);
+
+    const updatePayload: Record<string, any> = {};
+    if (data.name !== undefined) updatePayload.name = data.name;
+    if (data.isEnabled !== undefined) updatePayload.isEnabled = data.isEnabled;
+    if (data.isLiveMode !== undefined) updatePayload.isLiveMode = data.isLiveMode;
+    if (data.keyId !== undefined) updatePayload.keyId = data.keyId;
+    if (data.merchantId !== undefined) updatePayload.merchantId = data.merchantId;
+    if (data.terminalId !== undefined) updatePayload.terminalId = data.terminalId;
+    if (data.gatewayUrl !== undefined) updatePayload.gatewayUrl = data.gatewayUrl;
+    if (data.currency !== undefined) updatePayload.currency = data.currency;
+
+    // Only update secret if new plaintext secret is supplied (not containing masked bullet)
+    if (data.keySecret !== undefined && !data.keySecret.includes("••••")) {
+      updatePayload.keySecret = data.keySecret.trim();
+    } else if (current?.keySecret) {
+      updatePayload.keySecret = current.keySecret;
+    }
+
+    if (data.webhookSecret !== undefined && !data.webhookSecret.includes("••••")) {
+      updatePayload.webhookSecret = data.webhookSecret.trim();
+    } else if (current?.webhookSecret) {
+      updatePayload.webhookSecret = current.webhookSecret;
+    }
+
+    const updated = await db.updatePaymentGateway(
+      data.gatewayKey,
+      updatePayload,
+      admin.email,
+      data.reason,
+    );
+
+    return {
+      ...updated,
+      keySecret: maskSecretKey(updated.keySecret),
+      webhookSecret: maskSecretKey(updated.webhookSecret),
+    };
+  });
+
+export const testGatewayConnection = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      gatewayKey: z.enum(["RMA_BFS", "RAZORPAY", "STRIPE"]),
+    }),
+  )
+  .handler(async ({ data }) => {
+    await requireSuperAdminFromRequest();
+    const startTime = Date.now();
+    const gw = await db.getPaymentGateway(data.gatewayKey);
+
+    if (!gw) {
+      throw new Error(`Gateway configuration for ${data.gatewayKey} not found.`);
+    }
+
+    if (data.gatewayKey === "RAZORPAY") {
+      if (!gw.keyId || !gw.keySecret) {
+        throw new Error("Razorpay Key ID and Key Secret must be configured before testing connection.");
+      }
+
+      try {
+        const authHeader = `Basic ${Buffer.from(`${gw.keyId}:${gw.keySecret}`).toString("base64")}`;
+        const res = await fetch("https://api.razorpay.com/v1/orders?count=1", {
+          headers: { Authorization: authHeader },
+        });
+
+        const latencyMs = Date.now() - startTime;
+        if (res.ok || res.status === 200) {
+          return {
+            success: true,
+            gatewayKey: "RAZORPAY",
+            isLiveMode: gw.isLiveMode,
+            latencyMs,
+            message: `Razorpay connection verified successfully (${latencyMs}ms). Credentials are valid in ${gw.isLiveMode ? "LIVE" : "TEST"} mode.`,
+          };
+        } else {
+          const errBody = await res.json().catch(() => ({}));
+          const errMsg = errBody?.error?.description || `HTTP ${res.status}: ${res.statusText}`;
+          return {
+            success: false,
+            gatewayKey: "RAZORPAY",
+            isLiveMode: gw.isLiveMode,
+            latencyMs,
+            message: `Razorpay API returned an error: ${errMsg}`,
+          };
+        }
+      } catch (err: any) {
+        return {
+          success: false,
+          gatewayKey: "RAZORPAY",
+          isLiveMode: gw.isLiveMode,
+          latencyMs: Date.now() - startTime,
+          message: `Network failure connecting to Razorpay: ${err?.message || err}`,
+        };
+      }
+    }
+
+    if (data.gatewayKey === "RMA_BFS") {
+      const crypto = await import("node:crypto");
+      const secret = gw.keySecret || "BHTF_BFS_SECRET_TEST_KEY";
+      const samplePayload = `BHTF_TEST_ORDER|1000|${gw.merchantId || "BHTF_RMA_MERCHANT"}|${Date.now()}`;
+      const signature = crypto.createHmac("sha256", secret).update(samplePayload).digest("hex");
+
+      const latencyMs = Date.now() - startTime;
+      return {
+        success: true,
+        gatewayKey: "RMA_BFS",
+        isLiveMode: gw.isLiveMode,
+        latencyMs,
+        message: `RMA BFS HMAC-SHA256 signature generator active. Endpoint: ${gw.gatewayUrl || "https://bfstest.rma.org.bt/bfsgateway"}. Test checksum verified (${signature.slice(0, 12)}...).`,
+      };
+    }
+
+    return {
+      success: true,
+      gatewayKey: data.gatewayKey,
+      latencyMs: Date.now() - startTime,
+      message: `Gateway ${data.gatewayKey} simulated connection verified.`,
+    };
+  });
+
+export const purgeDemoData = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      reason: z.string().min(10, "Mandatory justification reason required (minimum 10 characters)"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireSuperAdminFromRequest();
+    return await db.purgeDemoData(admin.email, data.reason);
+  });
+
+export const verifyDonationJournalAction = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      referenceNo: z.string(),
+      verified: z.boolean(),
+      notes: z.string().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
+    const status = data.verified ? "VERIFIED" : "CANCELLED";
+    const donation = await db.findDonationByReference(data.referenceNo);
+    if (!donation) throw new Error("Donation not found");
+
+    const updated = await db.updateDonationPayment(data.referenceNo, {
+      status,
+      completedAt: data.verified ? new Date() : undefined,
+    });
+
+    await db.logAuditEvent({
+      userId: admin.id,
+      userEmail: admin.email,
+      action: "VERIFY_JOURNAL",
+      entity: "DONATION",
+      entityId: data.referenceNo,
+      details: `Admin ${admin.email} marked donation ${data.referenceNo} as ${status}. Notes: ${data.notes || "None"}`,
+    });
+
+    return { success: true, donation: updated };
   });

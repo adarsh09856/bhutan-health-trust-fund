@@ -341,95 +341,11 @@ export const initialPrograms: NewProgram[] = [
   },
 ];
 
-export const initialDonations: NewDonation[] = [
-  {
-    referenceNo: "BHTF-DON-928174",
-    donorName: "Tashi Dorji",
-    donorEmail: "tashi.dorji@druknet.bt",
-    donorPhone: "+975 17112233",
-    amountNu: 10000,
-    paymentMethod: "MBOB",
-    status: "COMPLETED",
-    message: "In honour of His Majesty's vision for universal healthcare.",
-    isAnonymous: false,
-  },
-  {
-    referenceNo: "BHTF-DON-741920",
-    donorName: "Dechen Wangmo",
-    donorEmail: "dechen.w@gmail.com",
-    donorPhone: "+975 77665544",
-    amountNu: 5000,
-    paymentMethod: "BNB_PAY",
-    status: "COMPLETED",
-    message: "Supporting essential medicines for our rural elders.",
-    isAnonymous: false,
-  },
-  {
-    referenceNo: "BHTF-DON-551029",
-    donorName: "Karma Yangzom",
-    donorEmail: "karmay@hotmail.com",
-    donorPhone: "+975 17889900",
-    amountNu: 25000,
-    paymentMethod: "RMA_GATEWAY",
-    status: "VERIFIED",
-    message: "Generous corporate match contribution.",
-    isAnonymous: false,
-  },
-  {
-    referenceNo: "BHTF-DON-318492",
-    donorName: "Well-wisher",
-    donorEmail: "anonymous@bhutan.bt",
-    donorPhone: null,
-    amountNu: 1000,
-    paymentMethod: "MBOB",
-    status: "COMPLETED",
-    message: "May all sentient beings be free from illness.",
-    isAnonymous: true,
-  },
-];
+export const initialDonations: NewDonation[] = [];
 
-export const initialInquiries: NewInquiry[] = [
-  {
-    name: "Sonam Tobgay",
-    email: "stobgay@moh.gov.bt",
-    subject: "Procurement Schedule for Q3 2024 Essential Commodities",
-    message:
-      "Greetings from the Dzongkhag Health Office, Mongar. We would like to inquire about the delivery timeline for the pediatric antibiotic replenishment batch.",
-    status: "UNREAD",
-    replyNotes: null,
-    channel: "EMAIL",
-    loggedBy: "Sonam Dorji, Desk Officer",
-  },
-  {
-    name: "Dr. Rachel Higgins",
-    email: "rachel.higgins@globalhealth.org",
-    subject: "Partnership Inquiry: Cold Chain Monitoring Pilot",
-    message:
-      "We are developing IoT solar cold-chain data loggers and would love to discuss a pilot deployment with BHTF for remote outreach clinics.",
-    status: "IN_PROGRESS",
-    replyNotes: "Director advised forwarding proposal to Technical Advisory Committee.",
-    channel: "WEB",
-    loggedBy: null,
-  },
-  {
-    name: "Ugyen Pelzom",
-    email: "upelzom@bhutanfound.bt",
-    subject: "Volunteer & Community Engagement Inquiry",
-    message:
-      "How can our university student association participate in the upcoming World Health Day awareness rallies in Thimphu?",
-    status: "REPLIED",
-    replyNotes: "Sent information brochure and contact of Communications Officer.",
-    channel: "WALK_IN",
-    loggedBy: "Tenzin Wangchuk, Reception",
-  },
-];
+export const initialInquiries: NewInquiry[] = [];
 
-export const initialSubscribers: NewSubscriber[] = [
-  { email: "info@drukhealth.bt", isActive: true },
-  { email: "sangay.c@rub.edu.bt", isActive: true },
-  { email: "pema.choden@undp.org", isActive: true },
-  { email: "tshering.penjor@bhtf.bt", isActive: true },
-];
+export const initialSubscribers: NewSubscriber[] = [];
 
 export const initialTrustees: NewTrustee[] = [
   {

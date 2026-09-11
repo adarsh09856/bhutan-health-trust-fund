@@ -138,7 +138,7 @@ export function AdminDonationsPage() {
 
   const handleStatusChange = async (
     id: number,
-    status: "PENDING" | "VERIFIED" | "COMPLETED" | "CANCELLED",
+    status: "PENDING" | "VERIFICATION_SUBMITTED" | "VERIFIED" | "COMPLETED" | "CANCELLED",
   ) => {
     try {
       await updateDonationStatus({ data: { id, status } });
@@ -413,9 +413,14 @@ export function AdminDonationsPage() {
                         </td>
 
                         <td className="py-4 px-5">
-                          <span className="font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">
+                          <span className="font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg text-xs">
                             {d.paymentMethod}
                           </span>
+                          {d.gatewayTransactionId && (
+                            <div className="text-[10px] font-mono text-slate-500 mt-1 truncate max-w-[140px]" title={d.gatewayTransactionId}>
+                              Ref: {d.gatewayTransactionId}
+                            </div>
+                          )}
                         </td>
 
                         <td className="py-4 px-5">
@@ -423,12 +428,14 @@ export function AdminDonationsPage() {
                             className={`text-[11px] font-extrabold px-2.5 py-1 rounded-full ${
                               d.status === "COMPLETED" || d.status === "VERIFIED"
                                 ? "bg-emerald-100 text-emerald-800"
-                                : d.status === "PENDING"
-                                  ? "bg-amber-100 text-amber-800"
-                                  : "bg-slate-100 text-slate-700"
+                                : d.status === "VERIFICATION_SUBMITTED"
+                                  ? "bg-blue-100 text-blue-800 animate-pulse"
+                                  : d.status === "PENDING"
+                                    ? "bg-amber-100 text-amber-800"
+                                    : "bg-slate-100 text-slate-700"
                             }`}
                           >
-                            {d.status}
+                            {d.status === "VERIFICATION_SUBMITTED" ? "JOURNAL PENDING" : d.status}
                           </span>
                         </td>
 
@@ -540,12 +547,28 @@ export function AdminDonationsPage() {
                   </div>
                 )}
 
+                {selectedDonation.gatewayTransactionId && (
+                  <div className="p-3 bg-blue-50 rounded-2xl border border-blue-200 text-xs space-y-1">
+                    <span className="font-bold text-blue-900 block">
+                      Bank Journal / Gateway Transaction ID:
+                    </span>
+                    <span className="font-mono font-bold text-blue-800 text-sm block">
+                      {selectedDonation.gatewayTransactionId}
+                    </span>
+                    {selectedDonation.status === "VERIFICATION_SUBMITTED" && (
+                      <p className="text-[11px] text-blue-700 font-medium pt-1">
+                        ⚠️ Donor submitted mobile banking remittance. Cross-check your bank statement and click "VERIFIED" below to approve.
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 <div className="pt-2">
                   <span className="text-slate-700 font-bold block mb-2">
                     Update Fiduciary Status:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {(["PENDING", "VERIFIED", "COMPLETED", "CANCELLED"] as const).map((st) => (
+                    {(["PENDING", "VERIFICATION_SUBMITTED", "VERIFIED", "COMPLETED", "CANCELLED"] as const).map((st) => (
                       <button
                         key={st}
                         type="button"
@@ -556,7 +579,7 @@ export function AdminDonationsPage() {
                             : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                         }`}
                       >
-                        {st}
+                        {st === "VERIFICATION_SUBMITTED" ? "JOURNAL PENDING" : st}
                       </button>
                     ))}
                   </div>

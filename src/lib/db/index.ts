@@ -58,6 +58,8 @@ import type {
   NewMediaVideo,
   ProcurementTender,
   NewProcurementTender,
+  PaymentGateway,
+  NewPaymentGateway,
 } from "./schema";
 
 /**
@@ -392,25 +394,11 @@ class BHTFDataStore {
         .select()
         .from(schema.donations)
         .orderBy(desc(schema.donations.createdAt));
-      if (res.length > 0) return res;
+      return res || [];
     } catch (err: any) {
       console.warn("[PostgreSQL getAllDonations Warning]:", err?.message || err);
+      return [];
     }
-
-    return initialDonations.map((d, idx) => ({
-      id: idx + 1,
-      referenceNo: d.referenceNo || `BHTF-DON-10000${idx + 1}`,
-      donorName: d.donorName,
-      donorEmail: d.donorEmail,
-      donorPhone: d.donorPhone || null,
-      amountNu: d.amountNu,
-      currency: d.currency || "BTN",
-      paymentMethod: d.paymentMethod || "MBOB",
-      status: d.status || "VERIFIED",
-      message: d.message || null,
-      isAnonymous: d.isAnonymous || false,
-      createdAt: new Date(),
-    }));
   }
 
   public async createDonation(data: NewDonation): Promise<Donation> {
@@ -460,6 +448,65 @@ class BHTFDataStore {
     return deleted.length > 0;
   }
 
+  public async updateDonationPayment(
+    referenceNo: string,
+    updates: {
+      status?: string;
+      gatewayTransactionId?: string;
+      gatewaySessionId?: string;
+      gatewayStatus?: string;
+      paymentMetadata?: string;
+      completedAt?: Date;
+    },
+  ): Promise<Donation | null> {
+    const normalized = referenceNo.trim().toUpperCase();
+    const [updated] = await drizzleDb
+      .update(schema.donations)
+      .set(updates)
+      .where(eq(schema.donations.referenceNo, normalized))
+      .returning();
+    return updated || null;
+  }
+
+  public async submitDonationJournal(
+    referenceNo: string,
+    journalNo: string,
+    bankName?: string,
+  ): Promise<Donation | null> {
+    const normalized = referenceNo.trim().toUpperCase();
+    const current = await this.findDonationByReference(normalized);
+    if (!current) return null;
+
+    let existingMeta: Record<string, any> = {};
+    if (current.paymentMetadata) {
+      try {
+        existingMeta = JSON.parse(current.paymentMetadata);
+      } catch {
+        existingMeta = {};
+      }
+    }
+
+    const updatedMeta = JSON.stringify({
+      ...existingMeta,
+      journalNo: journalNo.trim(),
+      bankName: bankName || current.paymentMethod,
+      submittedAt: new Date().toISOString(),
+    });
+
+    const [updated] = await drizzleDb
+      .update(schema.donations)
+      .set({
+        gatewayTransactionId: journalNo.trim(),
+        gatewayStatus: "VERIFICATION_SUBMITTED",
+        status: "VERIFICATION_SUBMITTED",
+        paymentMetadata: updatedMeta,
+      })
+      .where(eq(schema.donations.referenceNo, normalized))
+      .returning();
+
+    return updated || null;
+  }
+
   // --- Inquiries ---
   public async getAllInquiries(): Promise<Inquiry[]> {
     try {
@@ -467,24 +514,11 @@ class BHTFDataStore {
         .select()
         .from(schema.inquiries)
         .orderBy(desc(schema.inquiries.createdAt));
-      if (res.length > 0) return res;
+      return res || [];
     } catch (err: any) {
       console.warn("[PostgreSQL getAllInquiries Warning]:", err?.message || err);
+      return [];
     }
-
-    return initialInquiries.map((iq, idx) => ({
-      id: idx + 1,
-      name: iq.name,
-      email: iq.email,
-      subject: iq.subject,
-      message: iq.message,
-      status: iq.status || "UNREAD",
-      channel: iq.channel || "WEB",
-      loggedBy: iq.loggedBy || null,
-      replyNotes: null,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
   }
 
   public async createInquiry(data: NewInquiry): Promise<Inquiry> {
@@ -533,17 +567,11 @@ class BHTFDataStore {
         .select()
         .from(schema.subscribers)
         .orderBy(desc(schema.subscribers.subscribedAt));
-      if (res.length > 0) return res;
+      return res || [];
     } catch (err: any) {
       console.warn("[PostgreSQL getAllSubscribers Warning]:", err?.message || err);
+      return [];
     }
-
-    return initialSubscribers.map((s, idx) => ({
-      id: idx + 1,
-      email: s.email,
-      isActive: s.isActive !== undefined ? s.isActive : true,
-      subscribedAt: new Date(),
-    }));
   }
 
   public async addSubscriber(email: string): Promise<Subscriber> {
@@ -1501,6 +1529,124 @@ class BHTFDataStore {
       .where(eq(schema.procurementTenders.id, id))
       .returning();
     return result.length > 0;
+  }
+
+  // --- Payment Gateways & Fiduciary APIs ---
+  public async getPaymentGateways(): Promise<PaymentGateway[]> {
+    try {
+      const res = await drizzleDb
+        .select()
+        .from(schema.paymentGateways)
+        .orderBy(asc(schema.paymentGateways.gatewayKey));
+      return res || [];
+    } catch (err: any) {
+      console.warn("[PostgreSQL getPaymentGateways Error]:", err?.message || err);
+      return [];
+    }
+  }
+
+  public async getPaymentGateway(gatewayKey: string): Promise<PaymentGateway | null> {
+    try {
+      const [gw] = await drizzleDb
+        .select()
+        .from(schema.paymentGateways)
+        .where(eq(schema.paymentGateways.gatewayKey, gatewayKey));
+      return gw || null;
+    } catch (err: any) {
+      console.warn("[PostgreSQL getPaymentGateway Error]:", err?.message || err);
+      return null;
+    }
+  }
+
+  public async updatePaymentGateway(
+    gatewayKey: string,
+    data: Partial<NewPaymentGateway>,
+    actorEmail: string,
+    reason: string,
+  ): Promise<PaymentGateway> {
+    const payload: Partial<NewPaymentGateway> = {
+      ...data,
+      updatedAt: new Date(),
+      updatedBy: actorEmail,
+    };
+
+    const [updated] = await drizzleDb
+      .insert(schema.paymentGateways)
+      .values({
+        gatewayKey,
+        name: data.name || gatewayKey,
+        isEnabled: data.isEnabled ?? false,
+        isLiveMode: data.isLiveMode ?? false,
+        keyId: data.keyId ?? null,
+        keySecret: data.keySecret ?? null,
+        webhookSecret: data.webhookSecret ?? null,
+        merchantId: data.merchantId ?? null,
+        terminalId: data.terminalId ?? null,
+        gatewayUrl: data.gatewayUrl ?? null,
+        currency: data.currency || "BTN",
+        updatedAt: new Date(),
+        updatedBy: actorEmail,
+      })
+      .onConflictDoUpdate({
+        target: schema.paymentGateways.gatewayKey,
+        set: payload,
+      })
+      .returning();
+
+    await this.logAuditEvent({
+      userEmail: actorEmail,
+      action: "UPDATE",
+      entity: "PAYMENT_GATEWAY",
+      entityId: gatewayKey,
+      details: `Updated gateway ${gatewayKey} fields: ${Object.keys(data).join(", ")}`,
+      reason,
+    });
+
+    return updated;
+  }
+
+  // --- Data Hygiene & Purge Demo Records ---
+  public async purgeDemoData(actorEmail: string, reason: string) {
+    try {
+      const deletedDonations = await drizzleDb
+        .delete(schema.donations)
+        .where(
+          sql`${schema.donations.referenceNo} IN ('BHTF-DON-928174', 'BHTF-DON-741920', 'BHTF-DON-551029', 'BHTF-DON-318492') OR ${schema.donations.donorName} ILIKE '%test%' OR ${schema.donations.donorEmail} ILIKE '%@druknet.bt%' OR ${schema.donations.donorEmail} ILIKE '%anonymous@bhutan.bt%'`
+        )
+        .returning();
+
+      const deletedInquiries = await drizzleDb
+        .delete(schema.inquiries)
+        .where(
+          sql`${schema.inquiries.email} IN ('stobgay@moh.gov.bt', 'rachel.higgins@globalhealth.org', 'upelzom@bhutanfound.bt') OR ${schema.inquiries.name} ILIKE '%test%'`
+        )
+        .returning();
+
+      const deletedSubscribers = await drizzleDb
+        .delete(schema.subscribers)
+        .where(
+          sql`${schema.subscribers.email} IN ('info@drukhealth.bt', 'sangay.c@rub.edu.bt', 'pema.choden@undp.org', 'tshering.penjor@bhtf.bt')`
+        )
+        .returning();
+
+      await this.logAuditEvent({
+        userEmail: actorEmail,
+        action: "DELETE",
+        entity: "DATA_HYGIENE",
+        entityId: "DEMO_DATA_PURGE",
+        details: `Purged demo data: ${deletedDonations.length} donations, ${deletedInquiries.length} inquiries, ${deletedSubscribers.length} subscribers`,
+        reason,
+      });
+
+      return {
+        deletedDonations: deletedDonations.length,
+        deletedInquiries: deletedInquiries.length,
+        deletedSubscribers: deletedSubscribers.length,
+      };
+    } catch (err: any) {
+      console.error("[PostgreSQL purgeDemoData Error]:", err?.message || err);
+      throw new Error(`Failed to purge demo data: ${err?.message || err}`);
+    }
   }
 }
 

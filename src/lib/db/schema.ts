@@ -62,10 +62,15 @@ export const donations = pgTable("donations", {
   donorPhone: text("donor_phone"),
   amountNu: integer("amount_nu").notNull(),
   currency: text("currency").notNull().default("BTN"),
-  paymentMethod: text("payment_method").notNull().default("MBOB"), // MBOB, BNB_PAY, RMA_GATEWAY, BANK_TRANSFER, INTERNATIONAL_CARD
-  status: text("status").notNull().default("PENDING"), // PENDING, VERIFIED, COMPLETED, CANCELLED
+  paymentMethod: text("payment_method").notNull().default("MBOB"), // MBOB, BNB_PAY, RMA_GATEWAY, BANK_TRANSFER, INTERNATIONAL_CARD, RAZORPAY
+  status: text("status").notNull().default("PENDING"), // PENDING, VERIFICATION_SUBMITTED, VERIFIED, COMPLETED, CANCELLED
   message: text("message"),
   isAnonymous: boolean("is_anonymous").notNull().default(false),
+  gatewayTransactionId: text("gateway_transaction_id"),
+  gatewaySessionId: text("gateway_session_id"),
+  gatewayStatus: text("gateway_status"),
+  paymentMetadata: text("payment_metadata"),
+  completedAt: timestamp("completed_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -293,6 +298,22 @@ export const procurementTenders = pgTable("procurement_tenders", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const paymentGateways = pgTable("payment_gateways", {
+  gatewayKey: text("gateway_key").primaryKey(), // 'RMA_BFS', 'RAZORPAY', 'STRIPE'
+  name: text("name").notNull(),
+  isEnabled: boolean("is_enabled").notNull().default(false),
+  isLiveMode: boolean("is_live_mode").notNull().default(false),
+  keyId: text("key_id"), // Razorpay Key ID or Stripe publishable key
+  keySecret: text("key_secret"), // Razorpay Key Secret, Stripe secret key, or RMA HMAC secret
+  webhookSecret: text("webhook_secret"),
+  merchantId: text("merchant_id"), // RMA BFS Merchant ID
+  terminalId: text("terminal_id"), // RMA BFS Terminal ID
+  gatewayUrl: text("gateway_url"), // RMA BFS endpoint URL
+  currency: text("currency").notNull().default("BTN"),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  updatedBy: text("updated_by"),
+});
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type UserSession = typeof userSessions.$inferSelect;
@@ -335,3 +356,6 @@ export type MediaVideo = typeof mediaVideos.$inferSelect;
 export type NewMediaVideo = typeof mediaVideos.$inferInsert;
 export type ProcurementTender = typeof procurementTenders.$inferSelect;
 export type NewProcurementTender = typeof procurementTenders.$inferInsert;
+export type PaymentGateway = typeof paymentGateways.$inferSelect;
+export type NewPaymentGateway = typeof paymentGateways.$inferInsert;
+
