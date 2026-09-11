@@ -8,10 +8,8 @@ import {
 import type { ImpactMetric, NewsArticle } from "@/lib/db/schema";
 import {
   Users,
-  ClipboardCheck,
   FileText,
   ShieldCheck,
-  Megaphone,
   HandHeart,
   ArrowRight,
   BarChart3,
@@ -25,13 +23,11 @@ import {
   HeartHandshake,
   CheckCircle2,
   TrendingUp,
-  Download,
-  Building,
-  ArrowUpRight,
   Award,
-  Zap,
-  Globe2,
   ThermometerSnowflake,
+  Heart,
+  Globe,
+  Building2,
 } from "lucide-react";
 import hero from "@/assets/hero-bhutan.jpg";
 import newsVaccine from "@/assets/news-vaccine.jpg";
@@ -40,6 +36,7 @@ import newsReport from "@/assets/news-report.jpg";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
 import { EndowmentCalculator } from "@/components/endowment-calculator";
 import { CommodityTracker } from "@/components/commodity-tracker";
+import { useCountUp } from "@/hooks/use-count-up";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,96 +55,66 @@ export const Route = createFileRoute("/")({
 const quickAccess = [
   {
     icon: Users,
-    label: "Royal Mandate & About",
-    desc: "Charter, Board of Trustees & Governance",
+    label: "Royal Mandate & Charter",
+    desc: "Founding history, Board of Trustees & fiduciary oversight",
     to: "/about",
-    color:
-      "bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20",
-    borderHover: "hover:border-emerald-400",
-    bgHover: "hover:bg-emerald-50/50",
   },
   {
     icon: Pill,
-    label: "Essential Medicines",
-    desc: "120+ Vital Primary Health Drugs",
+    label: "120+ Essential Medicines",
+    desc: "Zero-stockout primary and emergency healthcare formulary",
     to: "/our-work",
-    color:
-      "bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20",
-    borderHover: "hover:border-amber-400",
-    bgHover: "hover:bg-amber-50/50",
   },
   {
     icon: Syringe,
-    label: "Universal Vaccines",
-    desc: "100% Childhood & Routine Coverage",
+    label: "Universal Routine Vaccines",
+    desc: "100% Childhood immunization coverage across all 20 Dzongkhags",
     to: "/our-work",
-    color: "bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/20",
-    borderHover: "hover:border-blue-400",
-    bgHover: "hover:bg-blue-50/50",
   },
   {
     icon: FileText,
-    label: "Reports & Audits",
-    desc: "Statutory Financial & RAA Audits",
+    label: "Reports & Certified Audits",
+    desc: "Royal Audit Authority (RAA) statutory financial statements",
     to: "/reports",
-    color:
-      "bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-md shadow-purple-500/20",
-    borderHover: "hover:border-purple-400",
-    bgHover: "hover:bg-purple-50/50",
   },
   {
     icon: ShieldCheck,
     label: "Governance & Policies",
-    desc: "Trust Regulations & Ethics Policies",
+    desc: "Trust regulations, procurement ethics & whistleblower protections",
     to: "/policies",
-    color: "bg-gradient-to-br from-teal-500 to-cyan-600 text-white shadow-md shadow-teal-500/20",
-    borderHover: "hover:border-teal-400",
-    bgHover: "hover:bg-teal-50/50",
   },
   {
     icon: HandHeart,
-    label: "Donate & Double (1:1)",
-    desc: "Every 1 Nu. Matched by Royal Government",
+    label: "Contribute (1:1 Matched)",
+    desc: "Every Ngultrum matched by the Royal Government of Bhutan",
     to: "/get-involved",
-    color: "bg-gradient-to-br from-rose-500 to-pink-600 text-white shadow-md shadow-rose-500/20",
-    borderHover: "hover:border-rose-400",
-    bgHover: "hover:bg-rose-50/50",
   },
 ];
 
-const keyStats = [
+const defaultStats = [
   {
     value: "780,000+",
     label: "Citizens Protected",
-    desc: "Universal health coverage for every citizen across the Kingdom",
+    desc: "Universal healthcare coverage guaranteed across all 20 Dzongkhags",
     icon: Users,
-    gradient:
-      "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
-    badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
   },
   {
     value: "120+",
     label: "Essential Medicines",
-    desc: "Uninterrupted national supply of primary and emergency drugs",
+    desc: "Continuous national buffer for vital primary and emergency drugs",
     icon: Pill,
-    gradient: "from-amber-950/80 via-slate-900 to-amber-950/60 border-amber-500/40 text-amber-400",
-    badge: "bg-amber-500/20 text-amber-300 border-amber-500/30",
   },
   {
     value: "20 / 20",
     label: "Dzongkhags Covered",
-    desc: "Direct supply line to all remote Primary Health Units (BHUs)",
+    desc: "Direct supply line to all 205 remote gewog Primary Health Units",
     icon: MapPin,
-    gradient: "from-blue-950/80 via-slate-900 to-blue-950/60 border-blue-500/40 text-blue-400",
-    badge: "bg-blue-500/20 text-blue-300 border-blue-500/30",
   },
   {
     value: "100%",
-    label: "Childhood Vaccines",
-    desc: "Routine infant immunizations fully guaranteed in perpetuity",
+    label: "Routine Vaccines",
+    desc: "14 pediatric antigens fully financed and sustained in perpetuity",
     icon: Syringe,
-    gradient: "from-rose-950/80 via-slate-900 to-rose-950/60 border-rose-500/40 text-rose-400",
-    badge: "bg-rose-500/20 text-rose-300 border-rose-500/30",
   },
 ];
 
@@ -155,7 +122,7 @@ const featuredNews = [
   {
     slug: "nationwide-vaccination-2024",
     img: newsVaccine,
-    category: "Vaccines",
+    category: "Immunization",
     title: "BHTF Secures Full Financing for Nationwide Immunization Drive",
     desc: "Securing uninterrupted supply chains for pediatric vaccines and seasonal boosters across remote high-altitude communities in Gasa and Trashiyangtse.",
     date: "August 2026",
@@ -164,7 +131,7 @@ const featuredNews = [
   {
     slug: "primary-healthcare-expansion",
     img: newsCommunity,
-    category: "Healthcare",
+    category: "Primary Health",
     title: "Strengthening Primary Health Units Across All 20 Dzongkhags",
     desc: "Over Nu. 180M disbursed to guarantee essential medicine buffers in remote health posts before winter seasonal isolations.",
     date: "July 2026",
@@ -181,26 +148,6 @@ const featuredNews = [
   },
 ];
 
-const statStyles = [
-  {
-    gradient:
-      "from-emerald-950/80 via-slate-900 to-emerald-950/60 border-emerald-500/40 text-emerald-400",
-    badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
-  },
-  {
-    gradient: "from-amber-950/80 via-slate-900 to-amber-950/60 border-amber-500/40 text-amber-400",
-    badge: "bg-amber-500/20 text-amber-300 border-amber-500/30",
-  },
-  {
-    gradient: "from-blue-950/80 via-slate-900 to-blue-950/60 border-blue-500/40 text-blue-400",
-    badge: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  },
-  {
-    gradient: "from-rose-950/80 via-slate-900 to-rose-950/60 border-rose-500/40 text-rose-400",
-    badge: "bg-rose-500/20 text-rose-300 border-rose-500/30",
-  },
-];
-
 const metricIconMap: Record<string, any> = {
   Users,
   Pill,
@@ -213,6 +160,141 @@ const metricIconMap: Record<string, any> = {
   TrendingUp,
   BarChart3,
 };
+
+// Minimal Stat Item with Viewport Count-Up Animation
+function MinimalStatItem({
+  value,
+  label,
+  desc,
+  icon: Icon,
+}: {
+  value: string;
+  label: string;
+  desc: string;
+  icon: any;
+}) {
+  const numericMatch = value.match(/^([\d,]+)/);
+  const rawNumber = numericMatch ? parseInt(numericMatch[1].replace(/,/g, ""), 10) : null;
+  const suffix = value.replace(/^[\d,]+/, "");
+
+  const counter = useCountUp({
+    end: rawNumber ?? 0,
+    suffix: suffix,
+    duration: 1900,
+  });
+
+  return (
+    <div ref={counter.ref} className="flex flex-col space-y-3 p-6 sm:p-8">
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4 text-amber-600 stroke-[1.75]" />
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-sans">
+          {label}
+        </span>
+      </div>
+      <div className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-slate-900 tracking-tight">
+        {rawNumber !== null ? counter.formatted : value}
+      </div>
+      <p className="text-xs text-slate-600 leading-relaxed font-sans max-w-xs">
+        {desc}
+      </p>
+    </div>
+  );
+}
+
+// Slim Glass Sovereign Corpus Card in Hero
+function HeroCorpusCard() {
+  const corpusCounter = useCountUp({
+    end: 3248500000,
+    prefix: "Nu. ",
+    duration: 2200,
+  });
+
+  return (
+    <div
+      ref={corpusCounter.ref}
+      className="relative rounded-3xl bg-[#0B1F1A]/90 border border-amber-400/25 p-6 sm:p-8 shadow-2xl backdrop-blur-2xl space-y-6 overflow-hidden animate-float"
+    >
+      {/* Top Status Header */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span className="text-[10px] font-mono tracking-widest text-emerald-300 uppercase">
+            Sovereign Health Corpus
+          </span>
+        </div>
+        <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30">
+          1:1 RGOB Matched
+        </span>
+      </div>
+
+      {/* Main Numeral */}
+      <div className="space-y-1">
+        <span className="text-[11px] uppercase tracking-wider text-slate-400 font-medium font-sans block">
+          Perpetual Health Endowment
+        </span>
+        <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-normal text-white tracking-tight leading-tight">
+          {corpusCounter.formatted}
+        </div>
+        <p className="text-xs text-slate-300/80 font-sans leading-relaxed pt-1">
+          Invested capital yielding permanent annual returns to fund Bhutan's primary healthcare commodities.
+        </p>
+      </div>
+
+      {/* 3 Editorial Supply Rows */}
+      <div className="space-y-2.5 pt-1">
+        <div className="flex items-center justify-between bg-white/[0.04] p-3 rounded-2xl border border-white/10 hover:border-amber-400/30 transition">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-emerald-900/60 text-emerald-300 grid place-items-center shrink-0 border border-emerald-700/40">
+              <Syringe className="h-4 w-4" />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-white">Universal Routine Vaccines</div>
+              <div className="text-[11px] text-slate-400">100% Childhood Coverage (14 Antigens)</div>
+            </div>
+          </div>
+          <span className="font-serif text-sm text-amber-200 font-normal">Nu. 68.5M</span>
+        </div>
+
+        <div className="flex items-center justify-between bg-white/[0.04] p-3 rounded-2xl border border-white/10 hover:border-amber-400/30 transition">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-amber-900/60 text-amber-300 grid place-items-center shrink-0 border border-amber-700/40">
+              <Pill className="h-4 w-4" />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-white">120+ Essential Medicines</div>
+              <div className="text-[11px] text-slate-400">Zero Stockout Buffer across 205 Gewogs</div>
+            </div>
+          </div>
+          <span className="font-serif text-sm text-amber-200 font-normal">Nu. 145.0M</span>
+        </div>
+
+        <div className="flex items-center justify-between bg-white/[0.04] p-3 rounded-2xl border border-white/10 hover:border-amber-400/30 transition">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-teal-900/60 text-teal-300 grid place-items-center shrink-0 border border-teal-700/40">
+              <ThermometerSnowflake className="h-4 w-4" />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-white">Alpine Cold Chain Logistics</div>
+              <div className="text-[11px] text-slate-400">High-Altitude Solar Refrigeration</div>
+            </div>
+          </div>
+          <span className="font-serif text-sm text-amber-200 font-normal">Nu. 24.2M</span>
+        </div>
+      </div>
+
+      {/* Simulator Link */}
+      <div className="pt-2">
+        <Link
+          to="/get-involved"
+          className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold text-xs shadow-md transition active:scale-95"
+        >
+          <Sparkles className="h-3.5 w-3.5 fill-slate-950" />
+          <span>Simulate Your 1:1 Matched Contribution →</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function Index() {
   const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>([]);
@@ -241,18 +323,13 @@ function Index() {
 
   const displayStats =
     liveMetrics.length > 0
-      ? liveMetrics.map((m, idx) => {
-          const style = statStyles[idx % statStyles.length];
-          return {
-            value: m.value,
-            label: m.label,
-            desc: m.description,
-            icon: metricIconMap[m.icon] || Users,
-            gradient: style.gradient,
-            badge: style.badge,
-          };
-        })
-      : keyStats;
+      ? liveMetrics.map((m) => ({
+          value: m.value,
+          label: m.label,
+          desc: m.description,
+          icon: metricIconMap[m.icon] || Users,
+        }))
+      : defaultStats;
 
   const displayNews =
     liveNews.length > 0
@@ -273,55 +350,56 @@ function Index() {
       : featuredNews;
 
   return (
-    <div className="flex flex-col gap-0">
+    <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
       {/* Top Sovereign Announcement Ribbon if Enabled */}
       {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
-        <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-emerald-600 text-slate-950 text-xs font-bold py-2.5 px-4 text-center border-b border-amber-400/40 shadow-sm flex items-center justify-center gap-2">
-          <Sparkles className="h-4 w-4 shrink-0 text-slate-950" />
+        <div className="bg-[#0B1F1A] text-amber-200 text-xs font-medium py-2.5 px-4 text-center border-b border-amber-500/20 flex items-center justify-center gap-2">
+          <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
           <span>{settings["announcement_banner"]}</span>
         </div>
       )}
 
-      {/* 1. Ultra-Premium Colorful Hero Section with Floating Live Impact Showcase */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
-        {/* Background Image with Ambient Saffron & Emerald Overlays */}
+      {/* 1. Atmospheric Editorial Hero Section */}
+      <section className="relative overflow-hidden bg-[#071512] text-white">
+        {/* Photographic Backdrop with Vignette */}
         <div className="absolute inset-0 z-0">
           <img
             src={hero}
-            alt="Bhutan Himalayas & Monasteries"
+            alt="Bhutan Himalayas and Mountain Valleys"
             width={1920}
             height={1080}
-            className="h-full w-full object-cover object-center opacity-30 pointer-events-none"
+            className="h-full w-full object-cover object-center opacity-35 pointer-events-none filter brightness-95"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071512] via-[#071512]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071512] via-transparent to-[#071512]/60" />
         </div>
 
-        {/* Ambient Glowing Orbs */}
-        <div className="absolute top-10 left-1/4 h-96 w-96 bg-gradient-to-br from-amber-500/15 via-emerald-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-10 right-10 h-96 w-96 bg-gradient-to-br from-emerald-500/15 via-teal-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        {/* Ambient Subtle Light Orbs */}
+        <div className="absolute top-10 left-1/3 h-96 w-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-10 right-10 h-96 w-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 pb-28 sm:pt-36 sm:pb-36 lg:pt-40 lg:pb-44">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Headline, Subtitle & Action CTAs (7 Cols) */}
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-32 pb-24 sm:pt-40 sm:pb-32 lg:pt-44 lg:pb-36">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+            {/* Left Column: Monumental Editorial Typography */}
             <div className="lg:col-span-7 space-y-6">
-              {/* Royal Badge with Glow */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/25 via-emerald-500/20 to-teal-500/20 border border-amber-400/40 text-amber-300 text-xs font-extrabold shadow-md shadow-amber-500/10 backdrop-blur-md">
-                <Sparkles className="h-4 w-4 text-amber-400" />
-                <span>Royal Charter Sovereign Health Trust of Bhutan</span>
+              {/* Royal Charter Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-amber-400/30 text-amber-300 text-xs font-medium backdrop-blur-md">
+                <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                <span>Autonomous Statutory Trust • Royal Charter Mandate</span>
               </div>
 
-              {/* Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
+              {/* Monumental Headline */}
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl xl:text-[4.75rem] font-normal tracking-tight text-white leading-[1.08]">
                 Sustaining Life-Saving Healthcare for{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-teal-200">
-                  Every Citizen of Bhutan
-                </span>
+                <span className="font-serif italic font-normal text-amber-300/95">
+                  Every Citizen
+                </span>{" "}
+                of Bhutan
               </h1>
 
-              {/* Subheading */}
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
-                The Bhutan Health Trust Fund guarantees an uninterrupted, sustainable supply of
+              {/* Editorial Deck */}
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans font-light max-w-2xl">
+                The Bhutan Health Trust Fund guarantees an uninterrupted, perpetual supply of
                 essential medicines and universal vaccines across all 20 Dzongkhags—protecting Gross
                 National Happiness and health equity in perpetuity.
               </p>
@@ -330,238 +408,133 @@ function Index() {
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   to="/get-involved"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-600 hover:from-emerald-600 hover:to-teal-700 text-white text-sm font-black shadow-xl shadow-emerald-700/30 hover:shadow-2xl transition-all duration-150 cursor-pointer active:scale-95 border border-emerald-400/40"
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-sm font-semibold shadow-lg shadow-amber-400/15 transition-all duration-150 cursor-pointer active:scale-95"
                 >
-                  <HandHeart className="h-4 w-4 fill-white" />
-                  <span>Support & Double Your Pledge (1:1)</span>
+                  <Heart className="h-4 w-4 fill-slate-950 text-slate-950" />
+                  <span>Contribute (1:1 Matched Pledge)</span>
                 </Link>
 
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-bold border border-white/25 backdrop-blur-md transition cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white text-sm font-medium border border-white/20 backdrop-blur-md transition cursor-pointer"
                 >
-                  <span>Royal Charter Mandate</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <span>The Royal Charter Mandate</span>
+                  <ArrowRight className="h-4 w-4 text-slate-400" />
                 </Link>
               </div>
 
-              {/* Trust Badges */}
-              <div className="pt-6 border-t border-slate-800/90 flex flex-wrap items-center gap-6 text-xs text-slate-300 font-bold">
-                <span className="flex items-center gap-1.5">
+              {/* Trust Credentials */}
+              <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-6 text-xs text-slate-300 font-medium">
+                <span className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-emerald-400" /> Statutory Sovereign Trust
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <Lock className="h-4 w-4 text-amber-400" /> Ring-Fenced Health Corpus
+                <span className="flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-amber-400" /> 100% Ring-Fenced Health Corpus
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <BarChart3 className="h-4 w-4 text-teal-400" /> Royal Audit Authority Certified
+                <span className="flex items-center gap-2">
+                  <Award className="h-4 w-4 text-teal-300" /> Royal Audit Authority Certified
                 </span>
               </div>
             </div>
 
-            {/* Right Column: Floating Majestic Glass Live Impact Corridor (5 Cols) */}
+            {/* Right Column: Floating Glass Sovereign Corpus Card */}
             <div className="lg:col-span-5 relative">
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-emerald-950/90 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-2xl space-y-5 relative overflow-hidden animate-float">
-                {/* Header Strip inside Floating Box */}
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span className="text-xs font-black uppercase tracking-widest text-emerald-400">
-                      Sovereign Health Corpus
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    1:1 RGOB Matched
-                  </span>
-                </div>
-
-                {/* Corpus Main Number */}
-                <div className="space-y-1">
-                  <span className="text-xs text-slate-400 font-medium">
-                    Perpetual Health Endowment:
-                  </span>
-                  <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-emerald-300 font-mono tracking-tight">
-                    Nu. 3,248,500,000
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    Capital invested to generate permanent annual health procurement yields.
-                  </p>
-                </div>
-
-                {/* 3 Floating Live Stream Cards */}
-                <div className="space-y-2.5 pt-2">
-                  <div className="flex items-center justify-between bg-slate-800/80 p-3 rounded-2xl border border-emerald-500/30 hover:border-emerald-400 transition">
-                    <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-emerald-500/20 text-emerald-400 grid place-items-center shrink-0">
-                        <Syringe className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-black text-white">
-                          Universal Routine Vaccines
-                        </div>
-                        <div className="text-[11px] text-emerald-400">
-                          100% Childhood Coverage (14 Antigens)
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-black text-white font-mono">Nu. 68.5M</span>
-                  </div>
-
-                  <div className="flex items-center justify-between bg-slate-800/80 p-3 rounded-2xl border border-amber-500/30 hover:border-amber-400 transition">
-                    <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-amber-500/20 text-amber-400 grid place-items-center shrink-0">
-                        <Pill className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-black text-white">
-                          120+ Essential Medicines
-                        </div>
-                        <div className="text-[11px] text-amber-400">
-                          Zero Stockout Buffer across 205 Gewogs
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-black text-white font-mono">Nu. 145.0M</span>
-                  </div>
-
-                  <div className="flex items-center justify-between bg-slate-800/80 p-3 rounded-2xl border border-blue-500/30 hover:border-blue-400 transition">
-                    <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-blue-500/20 text-blue-400 grid place-items-center shrink-0">
-                        <ThermometerSnowflake className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-black text-white">
-                          Alpine Cold Chain Logistics
-                        </div>
-                        <div className="text-[11px] text-blue-400">
-                          High-Altitude Solar Refrigeration
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-black text-white font-mono">Nu. 24.2M</span>
-                  </div>
-                </div>
-
-                {/* Instant Action */}
-                <div className="pt-2">
-                  <Link
-                    to="/get-involved"
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-xs shadow-md transition active:scale-95"
-                  >
-                    <Sparkles className="h-4 w-4 fill-slate-950" />
-                    <span>Explore Sovereign Doubler Simulator →</span>
-                  </Link>
-                </div>
-              </div>
+              <HeroCorpusCard />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Floating Quick Access Navigation Matrix with Colorful Glow */}
-      <section className="relative z-20 -mt-12 sm:-mt-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-white/98 rounded-3xl shadow-2xl shadow-slate-300/50 border border-slate-200/90 p-5 sm:p-7 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 backdrop-blur-xl">
+      {/* 2. Minimal Stat Numerals Bar (Gates / Endowus Style) */}
+      <section className="border-b border-slate-200/70 bg-[#FAF8F3]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80">
+            {displayStats.map((stat, idx) => (
+              <MinimalStatItem
+                key={idx}
+                value={stat.value}
+                label={stat.label}
+                desc={stat.desc}
+                icon={stat.icon}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Refined Quick Access Navigation */}
+      <section className="py-16 sm:py-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-700 block mb-2 font-sans">
+            Institutional Directory
+          </span>
+          <h2 className="font-serif text-2xl sm:text-4xl font-normal text-slate-900 tracking-tight">
+            Governance, Stewardship & Public Portals
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {quickAccess.map((item) => (
             <Link
               key={item.label}
               to={item.to}
-              className={`group flex flex-col items-center text-center p-4 rounded-2xl border border-slate-200/60 ${item.borderHover} ${item.bgHover} transition-all duration-200 hover:shadow-md hover:-translate-y-1`}
+              className="group bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-lg hover:-translate-y-0.5 hover:border-amber-400/60 transition-all duration-200 flex items-start gap-4"
             >
-              <div
-                className={`h-12 w-12 rounded-2xl grid place-items-center mb-3 ${item.color} group-hover:scale-110 transition duration-200`}
-              >
-                <item.icon className="h-6 w-6" />
+              <div className="h-11 w-11 rounded-xl bg-[#FAF8F3] border border-slate-200/80 text-emerald-800 group-hover:bg-amber-50 group-hover:border-amber-300 group-hover:text-amber-700 transition grid place-items-center shrink-0 mt-0.5">
+                <item.icon className="h-5 w-5 stroke-[1.75]" />
               </div>
-              <h2 className="text-xs sm:text-sm font-extrabold text-slate-900 group-hover:text-emerald-700 transition leading-snug">
-                {item.label}
-              </h2>
-              <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-tight hidden sm:block">
-                {item.desc}
-              </p>
+              <div className="space-y-1">
+                <h3 className="font-serif text-base font-semibold text-slate-900 group-hover:text-emerald-900 transition leading-snug">
+                  {item.label}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  {item.desc}
+                </p>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* 3. National Impact Metrics Bar with 4 Vibrant Thematic Gradients */}
-      <section className="mt-16 sm:mt-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <span className="text-xs font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-emerald-400 block mb-2">
-                Measurable Impact & Royal Stewardship
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                Guaranteed Healthcare Sovereignty
-              </h2>
-              <p className="text-slate-300 text-xs sm:text-sm mt-2">
-                Delivering reliable funding for universal primary healthcare since establishment
-                under Royal Vision.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {displayStats.map((stat, idx) => (
-                <div
-                  key={idx}
-                  className={`bg-gradient-to-b ${stat.gradient} rounded-2xl p-6 border flex flex-col items-center text-center space-y-2.5 shadow-lg transition duration-200 hover:scale-105`}
-                >
-                  <div
-                    className={`h-12 w-12 rounded-2xl border ${stat.badge} grid place-items-center mb-1 shadow-md`}
-                  >
-                    <stat.icon className="h-6 w-6" />
-                  </div>
-                  <div className="text-3xl sm:text-4xl font-black text-white tracking-tight font-mono">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm font-extrabold">{stat.label}</div>
-                  <p className="text-xs text-slate-300 leading-relaxed font-normal">{stat.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 4. Interactive 6 Health Commodities Pipeline */}
-      <section className="mt-20 sm:mt-28">
+      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <CommodityTracker />
         </div>
       </section>
 
       {/* 5. Interactive 20 Dzongkhags Health District Explorer */}
-      <section className="mt-20 sm:mt-28">
+      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-[#FAF8F3]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <DzongkhagExplorer />
         </div>
       </section>
 
       {/* 6. Interactive 1:1 RGOB Matching Simulator */}
-      <section className="mt-20 sm:mt-28 bg-slate-50/70 border-y border-slate-200/80 py-16 sm:py-20">
+      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <EndowmentCalculator />
         </div>
       </section>
 
-      {/* 7. Latest News & Announcements Spotlight */}
-      <section className="mt-20 sm:mt-28">
+      {/* 7. Editorial News & Press Spotlight */}
+      <section className="py-16 sm:py-24 border-t border-slate-200/80 bg-[#FAF8F3]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
             <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-emerald-700 block mb-2">
-                Press Releases & Updates
+              <span className="text-xs font-bold uppercase tracking-widest text-amber-700 block mb-2 font-sans">
+                Official Updates & Press Releases
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Latest News & Announcements
+              <h2 className="font-serif text-2xl sm:text-4xl font-normal text-slate-900 tracking-tight">
+                Latest Publications & Bulletins
               </h2>
             </div>
             <Link
               to="/news"
-              className="inline-flex items-center gap-1.5 text-sm font-extrabold text-emerald-700 hover:text-emerald-800 transition"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 hover:text-emerald-900 transition"
             >
-              <span>View all media articles</span>
-              <ArrowRight className="h-4 w-4" />
+              <span>View all media archives</span>
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
@@ -569,7 +542,7 @@ function Index() {
             {displayNews.map((item) => (
               <article
                 key={item.slug}
-                className="group bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 flex flex-col"
+                className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl hover:border-amber-400/50 transition-all duration-300 flex flex-col"
               >
                 <div className="aspect-[16/10] overflow-hidden relative bg-slate-100">
                   <img
@@ -578,10 +551,10 @@ function Index() {
                     loading="lazy"
                     width={800}
                     height={500}
-                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="px-3 py-1 rounded-full bg-slate-900/90 backdrop-blur-md text-white text-[11px] font-bold shadow-md">
+                    <span className="px-2.5 py-1 rounded-full bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-semibold tracking-wide uppercase">
                       {item.category}
                     </span>
                   </div>
@@ -589,21 +562,21 @@ function Index() {
 
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold">
-                      <span className="flex items-center gap-1 text-emerald-700">
-                        <Calendar className="h-3 w-3" /> {item.date}
+                    <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+                      <span className="flex items-center gap-1 text-slate-600">
+                        <Calendar className="h-3 w-3 text-amber-600" /> {item.date}
                       </span>
                       <span>•</span>
                       <span>{item.readTime}</span>
                     </div>
 
-                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition leading-snug line-clamp-2">
+                    <h3 className="font-serif text-base sm:text-lg font-semibold text-slate-900 group-hover:text-emerald-900 transition leading-snug line-clamp-2">
                       <Link to="/news/$slug" params={{ slug: item.slug }}>
                         {item.title}
                       </Link>
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
+                    <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 font-sans">
                       {item.desc}
                     </p>
                   </div>
@@ -612,10 +585,10 @@ function Index() {
                     <Link
                       to="/news/$slug"
                       params={{ slug: item.slug }}
-                      className="inline-flex items-center gap-1.5 text-xs font-extrabold text-emerald-700 hover:text-emerald-800 transition"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 hover:text-emerald-900 transition"
                     >
-                      <span>Read Full Press Release</span>
-                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition duration-150" />
+                      <span>Read Full Document</span>
+                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-150" />
                     </Link>
                   </div>
                 </div>
@@ -625,65 +598,66 @@ function Index() {
         </div>
       </section>
 
-      {/* 8. Institutional Partners & International Collaborations */}
-      <section className="mt-20 sm:mt-28 border-t border-slate-200/80 bg-white py-14">
+      {/* 8. Institutional Partners Bar (Grayscale to Color) */}
+      <section className="border-t border-slate-200/80 bg-white py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-slate-400 block mb-6">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 block mb-6 font-sans">
             Institutional Partners & Global Collaborators
           </span>
 
-          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 text-slate-700 font-bold text-xs sm:text-sm">
-            <span className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/50 transition">
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-slate-700 text-xs sm:text-sm font-medium">
+            <div className="px-5 py-2.5 rounded-xl bg-[#FAF8F3] border border-slate-200/80 text-slate-600 hover:text-slate-900 hover:border-amber-400/60 transition cursor-default">
               World Health Organization (WHO)
-            </span>
-            <span className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/50 transition">
-              UNICEF Bhutan
-            </span>
-            <span className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/50 transition">
+            </div>
+            <div className="px-5 py-2.5 rounded-xl bg-[#FAF8F3] border border-slate-200/80 text-slate-600 hover:text-slate-900 hover:border-amber-400/60 transition cursor-default">
+              UNICEF Bhutan Country Office
+            </div>
+            <div className="px-5 py-2.5 rounded-xl bg-[#FAF8F3] border border-slate-200/80 text-slate-600 hover:text-slate-900 hover:border-amber-400/60 transition cursor-default">
               The World Bank
-            </span>
-            <span className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/50 transition">
+            </div>
+            <div className="px-5 py-2.5 rounded-xl bg-[#FAF8F3] border border-slate-200/80 text-slate-600 hover:text-slate-900 hover:border-amber-400/60 transition cursor-default">
               Gavi, The Vaccine Alliance
-            </span>
-            <span className="px-5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/50 transition">
+            </div>
+            <div className="px-5 py-2.5 rounded-xl bg-[#FAF8F3] border border-slate-200/80 text-slate-600 hover:text-slate-900 hover:border-amber-400/60 transition cursor-default">
               Ministry of Health, RGOB
-            </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 9. Modern Call To Action Banner */}
-      <section className="mt-6 mb-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-950 rounded-3xl p-8 sm:p-14 text-white shadow-2xl border border-emerald-500/30">
+      {/* 9. Sovereign Call to Action Banner */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="relative overflow-hidden bg-[#071512] rounded-3xl p-8 sm:p-14 text-white shadow-2xl border border-amber-400/25">
           <div className="relative z-10 max-w-3xl space-y-5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold backdrop-blur-md border border-white/20">
-              <HandHeart className="h-3.5 w-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/[0.08] text-amber-300 text-xs font-medium border border-amber-400/30">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
               <span>Gross National Happiness in Action</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
-              Invest in the Eternal Health of the Kingdom of Bhutan
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-tight">
+              Invest in the Permanent Healthcare Shield of the Kingdom
             </h2>
 
-            <p className="text-sm sm:text-base text-emerald-100 leading-relaxed max-w-2xl font-normal">
-              Your contribution directly builds the permanent endowment, ensuring that no hospital
-              or remote health clinic in Bhutan ever runs out of life-saving medicines or vaccines.
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl font-sans font-light">
+              Your contribution directly builds the ring-fenced health corpus, ensuring that no
+              hospital or remote gewog Primary Health Unit in Bhutan ever faces a stockout of
+              life-saving vaccines or essential medicines.
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center gap-3.5">
+            <div className="pt-2 flex flex-wrap items-center gap-4">
               <Link
                 to="/get-involved"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-sm shadow-xl transition active:scale-95"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold text-sm shadow-xl transition active:scale-95"
               >
-                <HandHeart className="h-4 w-4 fill-slate-950" />
-                <span>Make a Donation Now (1:1 Matched)</span>
+                <Heart className="h-4 w-4 fill-slate-950 text-slate-950" />
+                <span>Make a 1:1 Matched Contribution</span>
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 backdrop-blur-md transition"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-white font-medium text-sm border border-white/20 backdrop-blur-md transition"
               >
-                <span>Inquire with Secretariat</span>
-                <ArrowRight className="h-4 w-4" />
+                <span>Direct Secretariat Inquiry</span>
+                <ArrowRight className="h-4 w-4 text-slate-400" />
               </Link>
             </div>
           </div>

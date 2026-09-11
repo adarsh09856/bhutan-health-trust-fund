@@ -30,9 +30,19 @@ import logo from "@/assets/logo.png";
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const { user } = useAdminAuth();
   const location = useLocation();
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Scroll listener for sticky glass elevation
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close mobile menu & dropdown on route change
   useEffect(() => {
@@ -53,14 +63,20 @@ export function SiteHeader() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full pt-3 px-3 sm:px-6 lg:px-8 pointer-events-none">
-      {/* Floating Glass Capsule Navigation Island */}
-      <div className="mx-auto max-w-7xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.12)] px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-200 hover:border-emerald-500/40 hover:shadow-[0_14px_45px_rgba(0,0,0,0.16)]">
-        {/* Logo & Dzongkha Title in Capsule */}
+      {/* Editorial Glass Capsule Navigation Island */}
+      <div
+        className={`mx-auto max-w-7xl rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
+          scrolled
+            ? "bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_36px_rgba(11,31,26,0.12)]"
+            : "bg-white/90 backdrop-blur-xl border border-slate-200/70 shadow-xs"
+        }`}
+      >
+        {/* Logo & Dzongkha Title with Editorial Serif */}
         <Link
           to="/"
           className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 whitespace-nowrap"
         >
-          <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 border border-amber-200/60 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105">
+          <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-emerald-50/80 border border-amber-300/40 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105">
             <img
               src={logo}
               alt="Bhutan Health Trust Fund Emblem"
@@ -68,24 +84,24 @@ export function SiteHeader() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] sm:text-[11px] font-extrabold text-emerald-700 tracking-wider flex items-center gap-1">
+            <span className="text-[10px] sm:text-[11px] font-bold text-emerald-800 tracking-wider flex items-center gap-1 font-sans">
               འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
             </span>
-            <span className="text-xs sm:text-sm md:text-base font-black text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition">
+            <span className="font-serif text-sm sm:text-base md:text-lg font-bold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-900 transition">
               Bhutan Health Trust Fund
             </span>
           </div>
         </Link>
 
         {/* Desktop Capsule Grouped Dropdown Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 backdrop-blur-md p-1 rounded-full border border-slate-200 shadow-inner shrink-0">
+        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 backdrop-blur-md p-1 rounded-full border border-slate-200/80 shadow-inner shrink-0">
           {/* Home */}
           <Link
             to="/"
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
               location.pathname === "/"
-                ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                ? "bg-slate-900 text-white shadow-xs"
+                : "text-slate-700 hover:text-slate-950 hover:bg-white"
             }`}
           >
             Home
@@ -327,10 +343,10 @@ export function SiteHeader() {
         <div className="hidden sm:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
           <Link
             to="/get-involved"
-            className="whitespace-nowrap inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-extrabold shadow-md shadow-emerald-700/25 hover:shadow-lg transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-400/30"
+            className="whitespace-nowrap inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-700/60 ring-1 ring-amber-400/30"
           >
-            <Heart className="h-3.5 w-3.5 fill-white text-white shrink-0" />
-            <span>Donate (1:1 Matched)</span>
+            <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400 shrink-0" />
+            <span>Contribute (1:1 Matched)</span>
           </Link>
 
           {user && (
@@ -348,9 +364,9 @@ export function SiteHeader() {
         <div className="flex lg:hidden items-center gap-2">
           <Link
             to="/get-involved"
-            className="sm:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold shadow-xs whitespace-nowrap"
+            className="sm:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-900 text-white text-xs font-semibold shadow-xs whitespace-nowrap border border-emerald-700/50"
           >
-            <Heart className="h-3 w-3 fill-white" />
+            <Heart className="h-3 w-3 fill-amber-400 text-amber-400" />
             <span>Donate</span>
           </Link>
 

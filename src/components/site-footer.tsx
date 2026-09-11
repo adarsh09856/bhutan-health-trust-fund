@@ -12,10 +12,8 @@ import {
   Heart,
   ShieldCheck,
   Building2,
-  ExternalLink,
   ArrowUpRight,
   Sparkles,
-  Award,
 } from "lucide-react";
 import { subscribeNewsletter } from "@/lib/api/public.functions";
 import logo from "@/assets/logo.png";
@@ -45,28 +43,24 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-300 mt-24 border-t border-amber-500/20 relative overflow-hidden">
-      {/* Ambient Saffron & Emerald Background Glows */}
-      <div className="absolute -top-24 left-1/4 h-80 w-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 right-10 h-80 w-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      {/* Upper Banner: Emergency & Healthcare Hotline Awareness */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border-b border-slate-800 px-4 py-4 relative z-10">
-        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4 text-xs">
+    <footer className="bg-[#071512] text-slate-300 mt-20 border-t border-amber-400/20 relative overflow-hidden">
+      {/* Upper Banner: Emergency Helpline Awareness */}
+      <div className="bg-[#0B1F1A] border-b border-white/10 px-4 py-3.5 relative z-10">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4 text-xs font-sans">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-slate-300 font-medium">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="text-slate-300">
               National Emergency Health Helpline:{" "}
-              <strong className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-emerald-400 font-black text-sm ml-1 font-mono">
+              <strong className="text-amber-300 font-serif text-sm ml-1">
                 112
               </strong>{" "}
               (Toll-Free, 24/7 Nationwide)
             </span>
           </div>
-          <div className="flex items-center gap-4 text-slate-400 text-xs font-medium">
-            <span className="text-emerald-400 font-bold">Royal Government of Bhutan Partner</span>
-            <span className="hidden sm:inline">•</span>
-            <span className="hidden sm:inline text-amber-400 font-bold">
+          <div className="flex items-center gap-4 text-slate-400 text-xs">
+            <span className="text-emerald-400 font-medium">Royal Government of Bhutan Partner</span>
+            <span className="hidden sm:inline text-slate-600">•</span>
+            <span className="hidden sm:inline text-amber-300/90 font-medium">
               WHO Collaborating Sovereign Trust
             </span>
           </div>
@@ -78,24 +72,24 @@ export function SiteFooter() {
         {/* Column 1: Institutional Overview */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="h-13 w-13 rounded-2xl bg-gradient-to-br from-amber-50 to-emerald-50 p-1.5 shadow-md shrink-0 border border-amber-300/40">
+            <div className="h-12 w-12 rounded-2xl bg-white/[0.08] p-1.5 shadow-sm shrink-0 border border-amber-300/30">
               <img src={logo} alt="BHTF Emblem" className="h-full w-full object-contain" />
             </div>
             <div>
-              <span className="text-[10px] text-amber-400 font-extrabold uppercase tracking-wider block">
+              <span className="text-[10px] text-amber-400 font-semibold tracking-wider block font-sans">
                 འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
               </span>
-              <h3 className="font-black text-base text-white">Bhutan Health Trust Fund</h3>
+              <h3 className="font-serif text-base font-normal text-white">Bhutan Health Trust Fund</h3>
             </div>
           </div>
 
-          <p className="text-xs text-slate-400 leading-relaxed font-normal">
+          <p className="text-xs text-slate-400 leading-relaxed font-sans font-light">
             Established under Royal Charter to guarantee perpetual sovereign financing for essential
             medicines, life-saving vaccines, and primary healthcare commodities across all 20
             Dzongkhags in the Kingdom of Bhutan.
           </p>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-emerald-400 font-bold">
+          <div className="pt-2 flex items-center gap-2 text-xs text-emerald-400 font-medium font-sans">
             <ShieldCheck className="h-4 w-4 text-emerald-400" />
             <span>Autonomous & Fully Audited Entity</span>
           </div>
@@ -103,17 +97,17 @@ export function SiteFooter() {
 
         {/* Column 2: Quick Links */}
         <div>
-          <h4 className="font-extrabold text-white mb-4 uppercase tracking-wider text-xs flex items-center gap-2">
+          <h4 className="font-serif text-sm font-semibold text-white mb-4 tracking-wide flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5 text-amber-400" />
             <span>Institutional Portals</span>
           </h4>
-          <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
+          <ul className="space-y-2.5 text-xs text-slate-400 font-sans">
             <li>
               <Link
                 to="/about"
                 className="hover:text-amber-300 transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> About Mission & Royal Mandate
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Mission & Royal Mandate
               </Link>
             </li>
             <li>
@@ -127,7 +121,7 @@ export function SiteFooter() {
             <li>
               <Link
                 to="/reports"
-                className="hover:text-blue-400 transition flex items-center gap-1.5"
+                className="hover:text-blue-300 transition flex items-center gap-1.5"
               >
                 <ArrowUpRight className="h-3 w-3 text-slate-500" /> Statutory Annual Reports &
                 Audits
@@ -136,7 +130,7 @@ export function SiteFooter() {
             <li>
               <Link
                 to="/policies"
-                className="hover:text-teal-400 transition flex items-center gap-1.5"
+                className="hover:text-teal-300 transition flex items-center gap-1.5"
               >
                 <ArrowUpRight className="h-3 w-3 text-slate-500" /> Governance & Fiduciary Policies
               </Link>
@@ -144,7 +138,7 @@ export function SiteFooter() {
             <li>
               <Link
                 to="/track-donation"
-                className="hover:text-emerald-300 transition flex items-center gap-1.5 font-medium"
+                className="hover:text-amber-300 transition flex items-center gap-1.5"
               >
                 <ArrowUpRight className="h-3 w-3 text-slate-500" /> Track My Donation / Tax Voucher
               </Link>
@@ -152,7 +146,7 @@ export function SiteFooter() {
             <li>
               <Link
                 to="/news"
-                className="hover:text-purple-400 transition flex items-center gap-1.5"
+                className="hover:text-slate-200 transition flex items-center gap-1.5"
               >
                 <ArrowUpRight className="h-3 w-3 text-slate-500" /> Press Releases & Media Room
               </Link>
@@ -160,9 +154,9 @@ export function SiteFooter() {
             <li>
               <Link
                 to="/get-involved"
-                className="hover:text-amber-300 transition flex items-center gap-1.5 font-bold text-amber-400"
+                className="hover:text-amber-300 transition flex items-center gap-1.5 font-semibold text-amber-400"
               >
-                <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> Donate Nu. (1:1 RGOB
+                <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> Donate (1:1 RGOB
                 Matched)
               </Link>
             </li>
@@ -171,19 +165,17 @@ export function SiteFooter() {
 
         {/* Column 3: Secretariat Contact */}
         <div>
-          <h4 className="font-extrabold text-white mb-4 uppercase tracking-wider text-xs flex items-center gap-2">
+          <h4 className="font-serif text-sm font-semibold text-white mb-4 tracking-wide flex items-center gap-2">
             <Building2 className="h-3.5 w-3.5 text-emerald-400" />
             <span>Secretariat Directory</span>
           </h4>
-          <ul className="space-y-3.5 text-xs text-slate-400 font-medium">
+          <ul className="space-y-3.5 text-xs text-slate-400 font-sans">
             <li className="flex items-start gap-2.5">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-amber-400" />
-              {/* Section 0 Institutional Config // TODO-VERIFY */}
               <span>{institutionalConfig.secretariatAddress}</span>
             </li>
             <li className="flex items-center gap-2.5">
               <Phone className="h-4 w-4 shrink-0 text-emerald-400" />
-              {/* Section 0 Institutional Config // TODO-VERIFY */}
               <a
                 href={`tel:${institutionalConfig.secretariatPhone.replace(/[^0-9+]/g, "")}`}
                 className="hover:text-white transition"
@@ -193,7 +185,6 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2.5">
               <Mail className="h-4 w-4 shrink-0 text-emerald-400" />
-              {/* Section 0 Institutional Config // TODO-VERIFY */}
               <a
                 href={`mailto:${institutionalConfig.secretariatEmail}`}
                 className="hover:text-white transition"
@@ -204,7 +195,7 @@ export function SiteFooter() {
             <li className="pt-1">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-1.5 text-amber-400 font-bold hover:text-amber-300 transition"
+                className="inline-flex items-center gap-1.5 text-amber-400 font-medium hover:text-amber-300 transition"
               >
                 Send Citizen Message →
               </Link>
@@ -214,10 +205,10 @@ export function SiteFooter() {
 
         {/* Column 4: Newsletter & Socials */}
         <div>
-          <h4 className="font-extrabold text-white mb-4 uppercase tracking-wider text-xs">
+          <h4 className="font-serif text-sm font-semibold text-white mb-4 tracking-wide">
             Official Bulletins
           </h4>
-          <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+          <p className="text-xs text-slate-400 mb-3 leading-relaxed font-sans font-light">
             Subscribe to receive audited financial statements, procurement notices, and national
             health milestones.
           </p>
@@ -230,13 +221,13 @@ export function SiteFooter() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="official.email@organization.bt"
-                className="w-full bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+                className="w-full bg-white/[0.06] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition font-sans"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold py-2.5 px-4 rounded-xl text-xs transition duration-150 flex items-center justify-center gap-1.5 shadow-md shadow-emerald-700/20 cursor-pointer disabled:opacity-50"
+              className="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold py-2.5 px-4 rounded-xl text-xs transition duration-150 flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-50 font-sans"
             >
               {loading ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -248,8 +239,8 @@ export function SiteFooter() {
 
           {/* Social Links */}
           <div className="space-y-2">
-            <span className="text-[11px] text-slate-400 font-semibold block">
-              Follow Official Updates:
+            <span className="text-[11px] text-slate-400 font-sans block">
+              Follow Official Channels:
             </span>
             <div className="flex gap-2">
               {[
@@ -264,7 +255,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  className="h-8 w-8 grid place-items-center rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-amber-400 border border-slate-800 transition"
+                  className="h-8 w-8 grid place-items-center rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-amber-300 border border-white/10 transition"
                 >
                   <s.icon className="h-4 w-4" />
                 </a>
@@ -275,20 +266,20 @@ export function SiteFooter() {
       </div>
 
       {/* Copyright & Legal Bar */}
-      <div className="border-t border-slate-800/80 bg-slate-950/90 px-4 py-6 relative z-10">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
+      <div className="border-t border-white/10 bg-[#071512] px-4 py-6 relative z-10">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left font-sans">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <span>© {new Date().getFullYear()} Bhutan Health Trust Fund.</span>
             <span className="hidden sm:inline">•</span>
             <span>Royal Charter Autonomous Statutory Entity.</span>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400 font-medium">
-            <Link to="/policies" className="hover:text-emerald-400 transition">
+          <div className="flex items-center gap-4 text-slate-400">
+            <Link to="/policies" className="hover:text-amber-300 transition">
               Anti-Corruption Policy
             </Link>
             <span>•</span>
-            <Link to="/policies" className="hover:text-emerald-400 transition">
+            <Link to="/policies" className="hover:text-amber-300 transition">
               Whistleblower Protection
             </Link>
           </div>
