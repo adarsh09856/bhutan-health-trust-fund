@@ -31,6 +31,9 @@ import {
   Heart,
   Globe,
   Building2,
+  Quote,
+  Clock,
+  Scale,
 } from "lucide-react";
 import hero from "@/assets/hero-bhutan.jpg";
 import newsVaccine from "@/assets/news-vaccine.jpg";
@@ -467,11 +470,14 @@ function Index() {
 
       {/* 1. Atmospheric Modern Sovereign Dark Hero Section */}
       <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
-        {/* Subtle royal pattern overlay */}
+        {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner */}
         <div
-          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.05] mix-blend-luminosity"
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-30"
           style={{ backgroundImage: `url(${hero})` }}
         />
+        {/* Multi-stop sovereign dark vignette overlay to preserve high readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/95 via-[#061713]/82 to-[#061713]/95 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/70 via-transparent to-[#061713] pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
@@ -545,6 +551,20 @@ function Index() {
                   <span>Explore 6 Commodity Streams</span>
                 </Link>
               </div>
+
+              {/* Institutional Endorsement Bar */}
+              <div className="pt-3 flex flex-wrap items-center gap-3 text-xs text-slate-400 border-t border-white/10">
+                <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold font-mono">
+                  Sovereign Partners:
+                </span>
+                <span className="text-slate-300 font-medium">World Health Organization (WHO)</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-300 font-medium">UNICEF</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-300 font-medium">Gavi, The Vaccine Alliance</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-300 font-medium">World Bank</span>
+              </div>
             </div>
 
             {/* Right Column: Sovereign Corpus Endowment Card */}
@@ -615,14 +635,178 @@ function Index() {
         </div>
       </section>
 
-      {/* 4. Interactive 6 Health Commodities Pipeline */}
+      {/* 4. National Primary Healthcare Strategic Buffer Gauge (Live Transparency Strip) */}
+      <section className="py-14 sm:py-18 bg-[#091f19] text-white border-b border-amber-400/20 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 h-80 w-80 bg-emerald-500/[0.08] rounded-full blur-3xl pointer-events-none" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-2 border border-emerald-500/30">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Live National Strategic Buffer Status</span>
+              </div>
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold tracking-tight text-white">
+                Primary Healthcare Commodity Reserves
+              </h2>
+            </div>
+            <div className="text-xs text-slate-400 font-mono">
+              Certified Active • All 20 Dzongkhags & 205 Gewogs
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="bg-white/[0.05] border border-white/10 rounded-2xl p-5 backdrop-blur-md space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Universal Vaccines</span>
+                <span className="text-xs font-mono font-bold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded">12 Months</span>
+              </div>
+              <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-full rounded-full" />
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                Continuous 1-year buffer maintained for all 14 childhood and maternal antigens.
+              </p>
+            </div>
+
+            <div className="bg-white/[0.05] border border-white/10 rounded-2xl p-5 backdrop-blur-md space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Essential Medicines</span>
+                <span className="text-xs font-mono font-bold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded">6 Months</span>
+              </div>
+              <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-amber-500 to-amber-400 w-[88%] rounded-full" />
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                Zero-stockout national buffer across 120+ vital drugs and emergency infusions.
+              </p>
+            </div>
+
+            <div className="bg-white/[0.05] border border-white/10 rounded-2xl p-5 backdrop-blur-md space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Alpine Solar Cold Chain</span>
+                <span className="text-xs font-mono font-bold text-teal-300 bg-teal-500/20 px-2 py-0.5 rounded">100% Uptime</span>
+              </div>
+              <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-teal-500 to-teal-400 w-full rounded-full" />
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                Solar-powered off-grid refrigeration operating continuously at high altitudes.
+              </p>
+            </div>
+
+            <div className="bg-white/[0.05] border border-white/10 rounded-2xl p-5 backdrop-blur-md space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Gewog Delivery Coverage</span>
+                <span className="text-xs font-mono font-bold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded">205 / 205</span>
+              </div>
+              <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-amber-400 to-emerald-400 w-full rounded-full" />
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                All primary health units in remote valleys restocked before seasonal passes close.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Interactive 6 Health Commodities Pipeline */}
       <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <CommodityTracker />
         </div>
       </section>
 
-      {/* 5. Interactive 20 Dzongkhags Health District Explorer */}
+      {/* 6. Field Voices from 205 Remote Gewogs (Frontline Ground Impact) */}
+      <section className="py-20 sm:py-24 bg-white border-t border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-300/60 text-amber-900 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="h-3.5 w-3.5 text-amber-600" />
+              <span>Voices from the Frontline</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+              Healthcare Self-Reliance in Action
+            </h2>
+            <p className="text-base text-slate-600 font-sans leading-relaxed">
+              How the Bhutan Health Trust Fund safeguards mothers, children, and remote communities across the Kingdom's most rugged terrain.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#FAF8F3] border border-slate-200/80 rounded-3xl p-7 flex flex-col justify-between space-y-6 shadow-xs hover:shadow-lg hover:border-amber-400/50 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
+                    Laya Gewog (3,800m)
+                  </span>
+                  <MapPin className="h-4 w-4 text-emerald-600" />
+                </div>
+                <blockquote className="font-serif text-base text-slate-800 italic leading-relaxed">
+                  "Winter snow closes our high passes for five months. Because BHTF pre-positions our full vaccine and medicine quota in autumn, not a single newborn in Laya missed their immunization schedule."
+                </blockquote>
+              </div>
+              <div className="pt-4 border-t border-slate-200/60 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-emerald-700 text-white font-bold grid place-items-center text-xs">
+                  KD
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900">Karma Dema</div>
+                  <div className="text-[11px] text-slate-500">Senior Health Assistant, Laya PHU</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] border border-slate-200/80 rounded-3xl p-7 flex flex-col justify-between space-y-6 shadow-xs hover:shadow-lg hover:border-amber-400/50 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">
+                    Trashiyangtse Outpost
+                  </span>
+                  <MapPin className="h-4 w-4 text-amber-600" />
+                </div>
+                <blockquote className="font-serif text-base text-slate-800 italic leading-relaxed">
+                  "The zero-stockout policy is a sacred promise. When patients walk for two days to reach our clinic, having guaranteed, free essential medicines preserves both their health and their dignity."
+                </blockquote>
+              </div>
+              <div className="pt-4 border-t border-slate-200/60 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-amber-600 text-white font-bold grid place-items-center text-xs">
+                  TW
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900">Dr. Tashi Wangchuk</div>
+                  <div className="text-[11px] text-slate-500">District Medical Officer, Eastern Region</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] border border-slate-200/80 rounded-3xl p-7 flex flex-col justify-between space-y-6 shadow-xs hover:shadow-lg hover:border-amber-400/50 transition-all duration-300">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-100 text-teal-800">
+                    Lingzhi Primary Unit
+                  </span>
+                  <MapPin className="h-4 w-4 text-teal-600" />
+                </div>
+                <blockquote className="font-serif text-base text-slate-800 italic leading-relaxed">
+                  "High-altitude solar refrigerators funded by BHTF hold vaccine potency steady despite sub-zero blizzards. Our cold-chain link to Thimphu has never failed."
+                </blockquote>
+              </div>
+              <div className="pt-4 border-t border-slate-200/60 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-teal-700 text-white font-bold grid place-items-center text-xs">
+                  PD
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-900">Passang Dorji</div>
+                  <div className="text-[11px] text-slate-500">Cold Chain Logistics Coordinator</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Interactive 20 Dzongkhags Health District Explorer */}
       <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-[#FAF8F3]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <DzongkhagExplorer />
@@ -636,7 +820,60 @@ function Index() {
         </div>
       </section>
 
-      {/* 7. Editorial News & Press Spotlight */}
+      {/* 8. Royal Sovereign Health Milestones (1998-2026 Timeline) */}
+      <section className="py-20 sm:py-24 bg-[#061713] text-white border-t border-amber-400/20 relative overflow-hidden">
+        <div className="absolute top-0 left-1/3 h-96 w-96 bg-amber-400/[0.06] rounded-full blur-3xl pointer-events-none" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 text-amber-300 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+              <span>Sovereign Fiduciary Legacy</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-black text-white tracking-tight">
+              A Journey of Healthcare Self-Reliance
+            </h2>
+            <p className="text-base text-slate-300 font-sans leading-relaxed font-light">
+              From Royal vision to a permanent statutory endowment protecting every generation of Bhutanese citizens.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 space-y-3 hover:border-amber-400/40 hover:bg-white/[0.07] transition-all duration-300">
+              <span className="font-serif text-3xl font-black text-amber-400 block">1998</span>
+              <h3 className="font-serif text-base font-bold text-white">Royal Vision Proclaimed</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                His Majesty the Fourth Druk Gyalpo initiates the endowment to insulate primary healthcare from donor volatility.
+              </p>
+            </div>
+
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 space-y-3 hover:border-amber-400/40 hover:bg-white/[0.07] transition-all duration-300">
+              <span className="font-serif text-3xl font-black text-amber-400 block">2003</span>
+              <h3 className="font-serif text-base font-bold text-white">Royal Charter Enacted</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Formal statutory establishment with permanent ring-fenced protection and governance under the Board of Trustees.
+              </p>
+            </div>
+
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 space-y-3 hover:border-amber-400/40 hover:bg-white/[0.07] transition-all duration-300">
+              <span className="font-serif text-3xl font-black text-amber-400 block">2014</span>
+              <h3 className="font-serif text-base font-bold text-white">1:1 RGOB Sovereign Match</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Royal Government of Bhutan cements perpetual dollar-for-dollar matching commitment for all citizen contributions.
+              </p>
+            </div>
+
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 space-y-3 hover:border-amber-400/40 hover:bg-white/[0.07] transition-all duration-300">
+              <span className="font-serif text-3xl font-black text-amber-400 block">2026</span>
+              <h3 className="font-serif text-base font-bold text-white">Nu. 3.2B+ Endowment</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Permanent sovereign corpus generating Nu. 145M+ annual procurement yields without touching sovereign principal.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Editorial News & Press Spotlight */}
       <section className="py-16 sm:py-24 border-t border-slate-200/80 bg-[#FAF8F3]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
@@ -768,7 +1005,97 @@ function Index() {
         </div>
       </section>
 
-      {/* 9. Institutional Partners Bar (Grayscale to Color) */}
+      {/* 11. DRC 100% Tax Exemption & Corporate CSR Matching Portal */}
+      <section className="py-20 sm:py-24 bg-[#FAF8F3] border-t border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-14 shadow-sm relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7 space-y-5">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-300/60 text-emerald-900 text-xs font-bold uppercase tracking-wider font-mono">
+                  <Scale className="h-3.5 w-3.5 text-emerald-600" />
+                  <span>DRC Income Tax Act Section 10(f)</span>
+                </div>
+
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                  100% Tax Deductible Corporate & Citizen Giving
+                </h2>
+
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
+                  Under statutory proclamation by the Ministry of Finance, every contribution made to the Bhutan Health Trust Fund qualifies for an immediate 100% deduction against personal income tax (PIT) and corporate income tax (CIT), matched Nu. 1:1 by the Royal Government.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className="p-4 rounded-2xl bg-[#FAF8F3] border border-slate-200/70 space-y-1.5">
+                    <div className="text-xs font-bold text-slate-900">Instant Digital Tax Voucher</div>
+                    <p className="text-[11px] text-slate-500">
+                      Automated issuance of DRC-recognized tax exemption receipts instantly upon contribution.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-[#FAF8F3] border border-slate-200/70 space-y-1.5">
+                    <div className="text-xs font-bold text-slate-900">Nu. 1:1 Sovereign Multiplier</div>
+                    <p className="text-[11px] text-slate-500">
+                      Every Nu. 1,000 you donate releases an additional Nu. 1,000 from the Treasury match.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex flex-wrap items-center gap-4">
+                  <Link
+                    to="/get-involved"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-sm hover:shadow-md transition-all active:scale-95"
+                  >
+                    <span>Calculate Your Tax Shield & Donate</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    to="/track-donation"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs transition"
+                  >
+                    <span>Verify Past Receipt</span>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 bg-gradient-to-br from-[#061713] to-[#0d2d24] text-white p-7 sm:p-9 rounded-3xl border border-amber-400/20 shadow-xl space-y-6">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div className="text-xs font-bold font-mono text-amber-300 uppercase tracking-widest">
+                    Pledge Impact Example
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    Sovereign Formula
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-slate-300">Your Contribution:</span>
+                    <span className="font-serif font-bold text-base text-white">Nu. 50,000</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-amber-300">+ RGOB 1:1 Sovereign Match:</span>
+                    <span className="font-serif font-bold text-base text-amber-300">Nu. 50,000</span>
+                  </div>
+                  <div className="h-px bg-white/10 my-2" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-bold text-slate-200">Total Endowment Impact:</span>
+                    <span className="font-serif font-black text-xl text-emerald-300">Nu. 100,000</span>
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] text-slate-400 pt-1">
+                    <span>DRC Tax Deduction (30% bracket):</span>
+                    <span className="font-mono text-emerald-400">Save Nu. 15,000 PIT</span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-[11px] text-slate-300 leading-relaxed font-light">
+                  "Your net cost is only Nu. 35,000, while delivering Nu. 100,000 in permanent health purchasing power for universal vaccines."
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 12. Institutional Partners Bar (Grayscale to Color) */}
       <section className="border-t border-slate-200/80 bg-white py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 block mb-6 font-sans">

@@ -74,7 +74,8 @@ const navGroups: NavGroup[] = [
     groupName: "Institutional CMS & Media",
     badge: "Public",
     items: [
-      { to: "/admin/pages", label: "Pages & Live Editor", icon: Layers },
+      { to: "/admin/pages", label: "Pages & Templates", icon: Layers },
+      { to: "/admin/page-editor", label: "⚡ Live Page Studio", icon: Sparkles },
       { to: "/admin/news", label: "News & Press Releases", icon: Newspaper },
       { to: "/admin/reports", label: "Reports & RAA Audits", icon: FileText },
       { to: "/admin/policies", label: "Policies & Royal Charters", icon: ShieldCheck },

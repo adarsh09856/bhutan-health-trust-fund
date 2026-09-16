@@ -154,131 +154,260 @@ function renderSection(sec: PageBlockSection) {
   }
 }
 
-// 1. Hero Block (Modern White & Sovereign Theme)
-function HeroBlock({ section }: { section: PageBlockSection }) {
-  const isDark = section.bgVariant === "dark";
-
-  const rawTitle = section.title || "";
-  const titleParts = rawTitle ? rawTitle.split(/(Stronger Bhutan\.?)/i) : [""];
+// Dedicated Sovereign Glass Hero Corpus Card for PageRenderer
+function RendererHeroCorpusCard() {
+  const corpusCounter = useCountUp({
+    end: 3248500000,
+    prefix: "Nu. ",
+    duration: 2200,
+  });
 
   return (
-    <section
-      className={`relative overflow-hidden pt-36 sm:pt-44 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 ${
-        isDark ? "bg-mesh-dark text-white" : "bg-mesh-white text-slate-900 border-b border-slate-200/80"
-      }`}
-    >
-      {/* Background Graphic overlay with delicate opacity */}
+    <div className="relative space-y-3">
+      {/* Main Glassmorphic Corpus Card */}
       <div
-        className={`absolute inset-0 bg-cover bg-center pointer-events-none mix-blend-multiply ${
-          isDark ? "opacity-10 mix-blend-luminosity" : "opacity-[0.035]"
-        }`}
+        ref={corpusCounter.ref}
+        className="relative rounded-3xl bg-[#091b16]/90 border border-white/15 p-5 sm:p-7 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.65)] backdrop-blur-2xl space-y-5 overflow-hidden md:animate-float text-white text-left"
+      >
+        {/* Subtle Top Gold Hairline Accent */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+
+        {/* Top Status Header */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-3.5">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            <span className="text-[10px] font-mono tracking-widest text-emerald-300 uppercase font-bold">
+              Sovereign Health Corpus
+            </span>
+          </div>
+          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30">
+            Nu. 1:1 RGOB Matched
+          </span>
+        </div>
+
+        {/* Main Numeral */}
+        <div className="space-y-1">
+          <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold font-sans block">
+            Perpetual Health Endowment
+          </span>
+          <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-white tracking-tight leading-tight">
+            {corpusCounter.formatted}
+          </div>
+          <p className="text-xs text-slate-300 font-sans leading-relaxed pt-0.5 font-light">
+            Invested sovereign capital yielding permanent annual returns to fund Bhutan's primary healthcare commodities.
+          </p>
+        </div>
+
+        {/* 3 Editorial Supply Rows */}
+        <div className="space-y-2 pt-0.5">
+          <div className="flex items-center justify-between bg-white/[0.05] hover:bg-white/[0.08] p-3 rounded-2xl border border-white/10 hover:border-emerald-500/40 transition">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-300 grid place-items-center shrink-0 border border-emerald-500/30">
+                <Syringe className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-xs font-bold text-white">Universal Routine Vaccines</div>
+                <div className="text-[11px] text-slate-400">100% Childhood Coverage (14 Antigens)</div>
+              </div>
+            </div>
+            <span className="font-serif text-xs font-bold text-emerald-300">Nu. 68.5M</span>
+          </div>
+
+          <div className="flex items-center justify-between bg-white/[0.05] hover:bg-white/[0.08] p-3 rounded-2xl border border-white/10 hover:border-amber-500/40 transition">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-xl bg-amber-500/20 text-amber-300 grid place-items-center shrink-0 border border-amber-500/30">
+                <Pill className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-xs font-bold text-white">120+ Essential Medicines</div>
+                <div className="text-[11px] text-slate-400">Zero Stockout Buffer across 205 Gewogs</div>
+              </div>
+            </div>
+            <span className="font-serif text-xs font-bold text-amber-300">Nu. 145.0M</span>
+          </div>
+
+          <div className="flex items-center justify-between bg-white/[0.05] hover:bg-white/[0.08] p-3 rounded-2xl border border-white/10 hover:border-teal-500/40 transition">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-xl bg-teal-500/20 text-teal-300 grid place-items-center shrink-0 border border-teal-500/30">
+                <ThermometerSnowflake className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-xs font-bold text-white">Alpine Cold Chain Logistics</div>
+                <div className="text-[11px] text-slate-400">High-Altitude Solar Refrigeration</div>
+              </div>
+            </div>
+            <span className="font-serif text-xs font-bold text-teal-300">Nu. 24.2M</span>
+          </div>
+        </div>
+
+        {/* Simulator Link */}
+        <div className="pt-1">
+          <Link
+            to="/get-involved"
+            className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-[0_10px_25px_rgba(212,162,55,0.35)] hover:shadow-[0_14px_32px_rgba(212,162,55,0.5)] hover:-translate-y-0.5 transition-all active:translate-y-0"
+          >
+            <Sparkles className="h-3.5 w-3.5 fill-slate-950" />
+            <span>Simulate Your 1:1 Matched Contribution →</span>
+          </Link>
+        </div>
+
+        {/* Trust Seal Badges */}
+        <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[10px] text-slate-400 font-sans">
+          <div className="flex items-center gap-1 text-emerald-300">
+            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+            <span>100% Ring-Fenced Healthcare Corpus</span>
+          </div>
+          <div className="flex items-center gap-1 text-amber-300">
+            <ShieldCheck className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+            <span>RAA Clean Audit Certified</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Operational Status Satellite Micro-Card */}
+      <div className="flex items-center justify-between bg-[#061410]/95 border border-amber-400/25 rounded-2xl p-3.5 shadow-xl backdrop-blur-xl text-xs text-left">
+        <div className="flex items-center gap-2.5">
+          <div className="h-7 w-7 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 grid place-items-center shrink-0">
+            <MapPin className="h-3.5 w-3.5" />
+          </div>
+          <div>
+            <div className="text-[11px] font-bold text-white">20/20 Dzongkhags Buffer Active</div>
+            <div className="text-[10px] text-slate-400">Zero Stockouts across 205 remote Gewog clinics</div>
+          </div>
+        </div>
+        <span className="text-[10px] font-mono font-bold text-amber-300 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
+          100% Funded
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// 1. Hero Block (Modern Sovereign Dark Theme with Scenic Banner & 2-Column Card)
+function HeroBlock({ section }: { section: PageBlockSection }) {
+  const rawTitle = section.title || "Healthy People. Stronger Bhutan.";
+  const titleParts = rawTitle.split(/(Stronger Bhutan\.?)/i);
+
+  return (
+    <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
+      {/* Authentic Bhutanese Himalayan Scenic Background Banner */}
+      <div
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-30"
         style={{ backgroundImage: `url(${heroBhutan})` }}
       />
-      
+      {/* Multi-stop sovereign dark vignette overlay to preserve high readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/95 via-[#061713]/82 to-[#061713]/95 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/70 via-transparent to-[#061713] pointer-events-none" />
+
       {/* Ambient subtle light glows */}
-      <div className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] rounded-full blur-[100px] pointer-events-none ${
-        isDark ? "bg-emerald-500/10" : "bg-emerald-500/5"
-      }`} />
-      <div className={`absolute top-1/3 right-1/4 w-[450px] h-[250px] rounded-full blur-[90px] pointer-events-none ${
-        isDark ? "bg-amber-500/10" : "bg-amber-500/5"
-      }`} />
+      <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 h-96 w-96 bg-emerald-500/[0.09] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 right-1/3 h-72 w-72 bg-teal-500/[0.06] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
 
-      <div className="relative max-w-5xl mx-auto text-center space-y-7">
-        {/* Live Status Beacon Pill */}
-        <div className={`inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full backdrop-blur-xl text-xs font-semibold tracking-wide shadow-sm ${
-          isDark
-            ? "bg-white/10 border border-amber-400/30 text-amber-300"
-            : "bg-amber-50/90 border border-amber-300/60 text-amber-900"
-        }`}>
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-          </span>
-          <span>{section.badge || "Royal Charter Statutory Trust Fund"}</span>
-        </div>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Left Column: Monumental Editorial Typography */}
+          <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
+            {/* Royal Charter & Live Status Badge */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold backdrop-blur-xl shadow-xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                </span>
+                <span>{section.badge || "Royal Charter Mandate • 100% Guaranteed"}</span>
+              </div>
 
-        {/* Dzongkha Seal Header */}
-        {section.dzongkhaText && (
-          <div className={`font-serif text-xl sm:text-2xl font-bold tracking-wide flex items-center justify-center gap-2 ${
-            isDark ? "text-amber-300/90" : "text-emerald-800"
-          }`}>
-            <Sparkles className="h-4 w-4 text-amber-500 opacity-80" />
-            <span>{section.dzongkhaText}</span>
-            <Sparkles className="h-4 w-4 text-amber-500 opacity-80" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30 text-xs font-bold font-mono">
+                <Sparkles className="h-3 w-3 text-amber-400" />
+                <span>Nu. 1:1 RGOB Sovereign Match</span>
+              </div>
+            </div>
+
+            {/* Dzongkha Seal Header if provided */}
+            {section.dzongkhaText && (
+              <div className="font-serif text-lg sm:text-xl font-bold tracking-wide flex items-center gap-2 text-amber-300/90">
+                <Sparkles className="h-3.5 w-3.5 text-amber-400 opacity-80" />
+                <span>{section.dzongkhaText}</span>
+              </div>
+            )}
+
+            {/* Main Headline with Modern Gradient Typography */}
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06]">
+              {titleParts.length > 1 ? (
+                <>
+                  <span>{titleParts[0]}</span>
+                  <span className="text-gradient-gold drop-shadow-xs">{titleParts[1]}</span>
+                  <span>{titleParts[2]}</span>
+                </>
+              ) : (
+                section.title || "Healthy People. Stronger Bhutan."
+              )}
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans max-w-2xl font-light">
+              {section.subtitle ||
+                "Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance."}
+            </p>
+
+            {/* Feature Highlights Pills */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs">
+              <div className="flex items-center gap-2 bg-white/[0.05] p-2.5 rounded-xl border border-white/10">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span className="font-medium text-slate-200">Zero Stockout Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/[0.05] p-2.5 rounded-xl border border-white/10">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span className="font-medium text-slate-200">205 Remote Gewogs</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/[0.05] p-2.5 rounded-xl border border-white/10 col-span-2 sm:col-span-1">
+                <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
+                <span className="font-medium text-slate-200">100% Tax Exempt (DRC)</span>
+              </div>
+            </div>
+
+            {/* Modern Action Buttons */}
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <Link
+                to={section.primaryCtaUrl || "/get-involved"}
+                className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.45)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
+              >
+                <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
+                <span>{section.primaryCtaText || "Contribute (1:1 Matched)"}</span>
+                <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+              </Link>
+
+              <Link
+                to={section.secondaryCtaUrl || "/our-work"}
+                className="inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 text-white shadow-xs hover:-translate-y-0.5 transition-all text-sm tracking-wide backdrop-blur-sm"
+              >
+                <span>{section.secondaryCtaText || "Explore 6 Commodity Streams"}</span>
+              </Link>
+            </div>
+
+            {/* Institutional Endorsement Bar */}
+            <div className="pt-3 flex flex-wrap items-center gap-3 text-xs text-slate-400 border-t border-white/10">
+              <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold font-mono">
+                Sovereign Partners:
+              </span>
+              <span className="text-slate-300 font-medium">World Health Organization (WHO)</span>
+              <span className="text-slate-600">•</span>
+              <span className="text-slate-300 font-medium">UNICEF</span>
+              <span className="text-slate-600">•</span>
+              <span className="text-slate-300 font-medium">Gavi, The Vaccine Alliance</span>
+              <span className="text-slate-600">•</span>
+              <span className="text-slate-300 font-medium">World Bank</span>
+            </div>
           </div>
-        )}
 
-        {/* Main Headline with Modern Gradient Typography */}
-        <h1 className={`text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight leading-[1.08] ${
-          isDark ? "text-white" : "text-slate-900"
-        }`}>
-          {titleParts.length > 1 ? (
-            <>
-              <span>{titleParts[0]}</span>
-              <span className="text-gradient-gold drop-shadow-xs">{titleParts[1]}</span>
-              <span>{titleParts[2]}</span>
-            </>
-          ) : (
-            section.title
-          )}
-        </h1>
-
-        {/* Subtitle */}
-        {section.subtitle && (
-          <p
-            className={`max-w-3xl mx-auto text-lg sm:text-xl font-normal leading-relaxed font-sans ${
-              isDark ? "text-slate-300" : "text-slate-600"
-            }`}
-          >
-            {section.subtitle}
-          </p>
-        )}
-
-        {/* Modern Action Buttons */}
-        <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
-          {section.primaryCtaText && (
-            <Link
-              to={section.primaryCtaUrl || "/get-involved"}
-              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.25)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
-            >
-              <span>{section.primaryCtaText}</span>
-              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
-            </Link>
-          )}
-
-          {section.secondaryCtaText && (
-            <Link
-              to={section.secondaryCtaUrl || "/our-work"}
-              className={`inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full backdrop-blur-xl shadow-xs hover:-translate-y-0.5 transition-all text-sm tracking-wide ${
-                isDark
-                  ? "bg-white/10 hover:bg-white/15 border border-white/25 text-white"
-                  : "bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
-              }`}
-            >
-              <span>{section.secondaryCtaText}</span>
-            </Link>
-          )}
-        </div>
-
-        {/* Floating Trust Indicators Bar */}
-        <div className={`pt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 border-t max-w-4xl mx-auto text-xs font-semibold ${
-          isDark ? "border-white/10 text-slate-300" : "border-slate-200 text-slate-600"
-        }`}>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-600" />
-            <span>RAA Clean Statutory Audit</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-amber-600" />
-            <span>1:1 RGOB Matching Fund</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-teal-600" />
-            <span>20/20 Dzongkhags Covered</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <HeartHandshake className="h-4 w-4 text-amber-600" />
-            <span>Perpetual Corpus Endowment</span>
+          {/* Right Column: Sovereign Corpus Endowment Card */}
+          <div className="lg:col-span-5">
+            <RendererHeroCorpusCard />
           </div>
         </div>
       </div>

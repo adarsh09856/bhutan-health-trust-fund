@@ -26,7 +26,7 @@ export const defaultCorePages: DefaultPageDef[] = [
           "Sovereign healthcare financing guaranteeing uninterrupted essential medicines and universal vaccines for every citizen across all 20 Dzongkhags.",
         dzongkhaText: "མི་སེར་གཟུགས་ཁམས་བཟང་པོ་དང་ རྒྱལ་ཁབ་སྟོབས་ཤུགས་ཅན།",
         badge: "Royal Charter Statutory Trust Fund",
-        bgVariant: "white",
+        bgVariant: "dark",
         primaryCtaText: "Contribute to Corpus (1:1 Matched)",
         primaryCtaUrl: "/get-involved",
         secondaryCtaText: "Explore Commodities Formulary",

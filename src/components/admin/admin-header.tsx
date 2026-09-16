@@ -119,6 +119,16 @@ export function AdminHeader({ onToggleMenu }: { onToggleMenu: () => void }) {
 
       <div className="flex items-center gap-2 sm:gap-3">
         <Link
+          to="/admin/page-editor"
+          search={{ slug: "home" }}
+          className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-xs hover:shadow-md transition-all active:scale-95"
+          title="Open Visual Live Page Customizer"
+        >
+          <Sparkles className="h-3.5 w-3.5 fill-slate-950" />
+          <span>⚡ Live Page Studio</span>
+        </Link>
+
+        <Link
           to="/"
           target="_blank"
           className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
