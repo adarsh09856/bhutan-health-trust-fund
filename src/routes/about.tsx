@@ -31,6 +31,38 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
+  loader: async () => {
+    try {
+      const [page, trustees, milestones, settings] = await Promise.all([
+        getPublicPage({ data: { slug: "about" } }).catch(() => null),
+        getPublicTrustees().catch(() => []),
+        getPublicMilestones().catch(() => []),
+        getPublicSettings().catch(() => ({})),
+      ]);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return {
+        customSections: sections,
+        liveTrustees: trustees || [],
+        liveMilestones: milestones || [],
+        settings: settings || {},
+      };
+    } catch {
+      return {
+        customSections: null,
+        liveTrustees: [],
+        liveMilestones: [],
+        settings: {},
+      };
+    }
+  },
   head: () => ({
     meta: [
       { title: "About Us & Royal Mandate | Bhutan Health Trust Fund" },
@@ -149,10 +181,13 @@ const milestones = [
 ];
 
 function About() {
-  const [liveTrustees, setLiveTrustees] = useState<Trustee[]>([]);
-  const [liveMilestones, setLiveMilestones] = useState<Milestone[]>([]);
-  const [settings, setSettings] = useState<Record<string, string>>({});
-  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(null);
+  const loaderData = Route.useLoaderData();
+  const [liveTrustees, setLiveTrustees] = useState<Trustee[]>(loaderData?.liveTrustees || []);
+  const [liveMilestones, setLiveMilestones] = useState<Milestone[]>(loaderData?.liveMilestones || []);
+  const [settings, setSettings] = useState<Record<string, string>>(loaderData?.settings || {});
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
+    loaderData?.customSections || null,
+  );
 
   useEffect(() => {
     getPublicPage({ data: { slug: "about" } })

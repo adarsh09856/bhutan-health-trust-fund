@@ -27,6 +27,35 @@ import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
 
 export const Route = createFileRoute("/our-work")({
+  loader: async () => {
+    try {
+      const [page, programs, steps] = await Promise.all([
+        getPublicPage({ data: { slug: "our-work" } }).catch(() => null),
+        getPublicPrograms().catch(() => []),
+        getPublicProcurementSteps().catch(() => []),
+      ]);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return {
+        customSections: sections,
+        livePrograms: programs || [],
+        liveSteps: steps || [],
+      };
+    } catch {
+      return {
+        customSections: null,
+        livePrograms: [],
+        liveSteps: [],
+      };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Programs & Health Commodities | Bhutan Health Trust Fund" },
@@ -61,10 +90,15 @@ const progColors = [
 ];
 
 function OurWork() {
-  const [livePrograms, setLivePrograms] = useState<Program[]>([]);
-  const [procurementSteps, setProcurementSteps] = useState<ProcurementStep[]>([]);
-  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  const loaderData = Route.useLoaderData();
+  const [livePrograms, setLivePrograms] = useState<Program[]>(loaderData?.livePrograms || []);
+  const [procurementSteps, setProcurementSteps] = useState<ProcurementStep[]>(
+    loaderData?.liveSteps || [],
+  );
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
+    loaderData?.customSections || null,
+  );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getPublicPage({ data: { slug: "our-work" } })
@@ -85,6 +119,7 @@ function OurWork() {
         if (progs) setLivePrograms(progs);
         if (steps) setProcurementSteps(steps);
       })
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
