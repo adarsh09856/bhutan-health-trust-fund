@@ -62,7 +62,11 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full pt-3 px-3 sm:px-6 lg:px-8 pointer-events-none">
+    <header
+      className={`fixed left-0 right-0 z-40 w-full px-3 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300 ${
+        user ? "top-10 pt-2" : "top-0 pt-3"
+      }`}
+    >
       {/* Editorial Glass Capsule Navigation Island */}
       <div
         className={`mx-auto max-w-7xl rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${

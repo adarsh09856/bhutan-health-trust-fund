@@ -42,6 +42,38 @@ import { CommodityTracker } from "@/components/commodity-tracker";
 import { useCountUp } from "@/hooks/use-count-up";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      const [page, metrics, settings, news] = await Promise.all([
+        getPublicPage({ data: { slug: "home" } }).catch(() => null),
+        getPublicImpactMetrics().catch(() => []),
+        getPublicSettings().catch(() => ({})),
+        getPublicNews().catch(() => []),
+      ]);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return {
+        customSections: sections,
+        liveMetrics: metrics || [],
+        settings: settings || {},
+        liveNews: (news || []).slice(0, 3),
+      };
+    } catch {
+      return {
+        customSections: null,
+        liveMetrics: [],
+        settings: {},
+        liveNews: [],
+      };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
@@ -300,10 +332,13 @@ function HeroCorpusCard() {
 }
 
 function Index() {
-  const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>([]);
-  const [settings, setSettings] = useState<Record<string, string>>({});
-  const [liveNews, setLiveNews] = useState<NewsArticle[]>([]);
-  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(null);
+  const loaderData = Route.useLoaderData();
+  const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>(loaderData?.liveMetrics || []);
+  const [settings, setSettings] = useState<Record<string, string>>(loaderData?.settings || {});
+  const [liveNews, setLiveNews] = useState<NewsArticle[]>(loaderData?.liveNews || []);
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
+    loaderData?.customSections || null,
+  );
 
   useEffect(() => {
     getPublicPage({ data: { slug: "home" } })
