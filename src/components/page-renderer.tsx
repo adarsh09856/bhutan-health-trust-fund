@@ -72,6 +72,14 @@ export function PageRenderer({
       {visibleSections.map((sec) => (
         <div
           key={sec.id}
+          onClickCapture={(e) => {
+            if (interactive) {
+              const target = e.target as HTMLElement;
+              if (target.closest("a") || target.closest("button")) {
+                e.preventDefault();
+              }
+            }
+          }}
           onClick={(e) => {
             if (interactive && onSelectSection) {
               e.stopPropagation();
@@ -84,19 +92,27 @@ export function PageRenderer({
               : ""
           } ${
             interactive && activeSectionId === sec.id
-              ? "outline outline-3 outline-amber-600 ring-4 ring-amber-500/20 z-10"
+              ? "outline outline-3 outline-amber-500 ring-4 ring-amber-500/20 z-10"
               : ""
           } ${!sec.isVisible && interactive ? "opacity-50 grayscale" : ""}`}
         >
           {/* Admin Block Label Overlay in Interactive Mode */}
           {interactive && (
-            <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 bg-slate-900/90 text-amber-400 backdrop-blur-md px-2.5 py-1 rounded-md text-[11px] font-mono shadow-md border border-amber-500/30">
-              <span className="capitalize">{sec.type.replace("_", " ")}</span>
+            <div className="absolute top-3 left-3 z-20 flex items-center gap-2 bg-slate-900/95 text-amber-400 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono shadow-lg border border-amber-500/40">
+              <span className="capitalize font-bold">{sec.type.replace("_", " ")}</span>
               {!sec.isVisible && (
-                <span className="bg-red-900/80 text-red-200 px-1.5 py-0.2 rounded text-[9px] uppercase font-bold">
+                <span className="bg-red-900/80 text-red-200 px-1.5 py-0.5 rounded text-[9px] uppercase font-bold">
                   Hidden
                 </span>
               )}
+            </div>
+          )}
+
+          {/* Active Editing Indicator in Interactive Mode */}
+          {interactive && activeSectionId === sec.id && (
+            <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+              <Sparkles className="h-3 w-3" />
+              <span>Editing in Inspector →</span>
             </div>
           )}
 
@@ -136,8 +152,8 @@ function renderSection(sec: PageBlockSection) {
 function HeroBlock({ section }: { section: PageBlockSection }) {
   const isDark = section.bgVariant !== "warm" && section.bgVariant !== "white";
 
-  // Split title if it contains "Stronger Bhutan." to give it an opulent gold gradient highlight
-  const titleParts = section.title.split(/(Stronger Bhutan\.?)/i);
+  const rawTitle = section.title || "";
+  const titleParts = rawTitle ? rawTitle.split(/(Stronger Bhutan\.?)/i) : [""];
 
   return (
     <section

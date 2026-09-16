@@ -14,6 +14,7 @@ import { Toaster } from "sonner";
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { AdminTopBar } from "@/components/admin/admin-topbar";
 
 function NotFoundComponent() {
   return (
@@ -156,6 +157,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AdminAuthProvider>
         <div className="flex min-h-screen flex-col bg-background text-foreground">
+          <AdminTopBar />
           {!isAdminRoute && <SiteHeader />}
           <main className="flex-1">
             <Outlet />
