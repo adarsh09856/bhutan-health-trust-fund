@@ -37,6 +37,18 @@ interface EditorSearch {
   slug?: string;
 }
 
+const DEFAULT_CORE_PAGES_MENU = [
+  { slug: "home", title: "Home Page", path: "/" },
+  { slug: "about", title: "About Us & Royal Charter", path: "/about" },
+  { slug: "our-work", title: "Our Programs & Commodities", path: "/our-work" },
+  { slug: "reports", title: "Reports & Certified Audits", path: "/reports" },
+  { slug: "policies", title: "Governance & Policies", path: "/policies" },
+  { slug: "get-involved", title: "Contribute & Get Involved", path: "/get-involved" },
+  { slug: "contact", title: "Contact Secretariat", path: "/contact" },
+  { slug: "news", title: "News & Media Releases", path: "/news" },
+  { slug: "track-donation", title: "Track Donation & Tax Voucher", path: "/track-donation" },
+];
+
 export const Route = createFileRoute("/admin/page-editor")({
   validateSearch: (search: Record<string, unknown>): EditorSearch => ({
     slug: typeof search.slug === "string" ? search.slug : "home",
@@ -239,6 +251,24 @@ export function AdminPageEditor() {
   const selectedSection = sections.find((s) => s.id === selectedBlockId);
   const selectedIndex = sections.findIndex((s) => s.id === selectedBlockId);
 
+  // Guarantee that all 9 core pages are always available in the dropdown
+  const displayedPages: CustomPage[] = [...allPages];
+  DEFAULT_CORE_PAGES_MENU.forEach((dp) => {
+    if (!displayedPages.some((p) => p.slug.toLowerCase() === dp.slug.toLowerCase())) {
+      displayedPages.push({
+        id: -1,
+        slug: dp.slug,
+        title: dp.title,
+        metaDescription: "",
+        sectionsJson: "[]",
+        status: "published",
+        isSystemPage: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+  });
+
   const publicUrl =
     activeSlug === "home"
       ? "/"
@@ -278,7 +308,7 @@ export function AdminPageEditor() {
               onChange={(e) => handlePageSwitch(e.target.value)}
               className="bg-slate-800 border border-slate-700 text-white font-bold text-xs rounded-lg px-3 py-1.5 focus:outline-hidden focus:border-amber-500 cursor-pointer"
             >
-              {allPages.map((p) => (
+              {displayedPages.map((p) => (
                 <option key={p.slug} value={p.slug}>
                   {p.title} ({p.slug === "home" ? "/" : p.isSystemPage ? `/${p.slug}` : `/p/${p.slug}`})
                 </option>

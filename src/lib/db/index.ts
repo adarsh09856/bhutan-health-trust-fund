@@ -64,6 +64,7 @@ import type {
   NewCustomPage,
 } from "./schema";
 import { persistentStore } from "./persistent-store";
+import { defaultCorePages } from "./default-pages";
 
 
 /**
@@ -1000,6 +1001,34 @@ class BHTFDataStore {
         .select()
         .from(schema.customPages)
         .orderBy(asc(schema.customPages.id));
+
+      const existingSlugs = new Set(res.map((p) => p.slug.toLowerCase()));
+      const missingDefaults = defaultCorePages.filter(
+        (dp) => !existingSlugs.has(dp.slug.toLowerCase()),
+      );
+
+      if (missingDefaults.length > 0) {
+        for (const dp of missingDefaults) {
+          try {
+            const [created] = await drizzleDb
+              .insert(schema.customPages)
+              .values({
+                slug: dp.slug.toLowerCase(),
+                title: dp.title,
+                metaDescription: dp.metaDescription,
+                sectionsJson: JSON.stringify(dp.sections),
+                status: "published",
+                isSystemPage: dp.isSystemPage,
+                updatedAt: new Date(),
+              })
+              .returning();
+            if (created) res.push(created);
+          } catch (seedErr) {
+            console.warn(`[Auto-seed page ${dp.slug} error]:`, seedErr);
+          }
+        }
+      }
+
       if (res.length > 0) return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllPages Warning]:", err?.message || err);
@@ -1015,6 +1044,28 @@ class BHTFDataStore {
         .from(schema.customPages)
         .where(eq(schema.customPages.slug, normalized));
       if (page) return page;
+
+      // If not in database yet, but is a default master page, auto-seed it into PostgreSQL
+      const defaultPage = defaultCorePages.find((dp) => dp.slug.toLowerCase() === normalized);
+      if (defaultPage) {
+        try {
+          const [created] = await drizzleDb
+            .insert(schema.customPages)
+            .values({
+              slug: defaultPage.slug.toLowerCase(),
+              title: defaultPage.title,
+              metaDescription: defaultPage.metaDescription,
+              sectionsJson: JSON.stringify(defaultPage.sections),
+              status: "published",
+              isSystemPage: defaultPage.isSystemPage,
+              updatedAt: new Date(),
+            })
+            .returning();
+          if (created) return created;
+        } catch (seedErr) {
+          console.warn(`[Auto-seed single page ${normalized} error]:`, seedErr);
+        }
+      }
     } catch (err: any) {
       console.warn(`[PostgreSQL getPageBySlug(${normalized}) Warning]:`, err?.message || err);
     }

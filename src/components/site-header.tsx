@@ -63,16 +63,20 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed left-0 right-0 z-40 w-full px-3 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300 ${
-        user ? "top-12 pt-1 sm:top-11" : "top-0 pt-3 sm:pt-4"
+      className={`fixed left-0 right-0 z-40 w-full pointer-events-none transition-all duration-300 ${
+        scrolled
+          ? "top-0 pt-0 px-0 sm:px-4 lg:px-6"
+          : user
+            ? "top-11 pt-1 px-3 sm:px-6 lg:px-8"
+            : "top-0 pt-3 sm:pt-4 px-3 sm:px-6 lg:px-8"
       }`}
     >
-      {/* Editorial Glass Capsule Navigation Island */}
+      {/* Editorial Glass Capsule Navigation Island - Docks Flush to Top When Scrolled */}
       <div
-        className={`mx-auto max-w-7xl rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
+        className={`mx-auto max-w-7xl flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_rgba(11,31,26,0.12)]"
-            : "bg-white/90 backdrop-blur-xl border border-slate-200/80 shadow-xs"
+            ? "w-full rounded-none sm:rounded-b-2xl bg-white/98 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,31,26,0.12)] px-4 sm:px-7 py-2 sm:py-2.5"
+            : "w-full rounded-full bg-white/90 backdrop-blur-xl border border-slate-200/80 shadow-xs px-4 sm:px-6 py-2 sm:py-2.5"
         }`}
       >
         {/* Logo & Dzongkha Title with Editorial Serif */}
@@ -111,14 +115,14 @@ export function SiteHeader() {
             Home
           </Link>
 
-          {/* About Us Dropdown */}
+          {/* About Us Dropdown with Direct Link */}
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("about")}
             onMouseLeave={handleMouseLeave}
           >
-            <button
-              type="button"
+            <Link
+              to="/about"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/about")
                   ? "bg-slate-900 text-white shadow-md"
@@ -127,7 +131,7 @@ export function SiteHeader() {
             >
               <span>About Us</span>
               <ChevronDown className="h-3.5 w-3.5" />
-            </button>
+            </Link>
 
             {openDropdown === "about" && (
               <div className="absolute top-full left-0 mt-3 w-72 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
@@ -248,8 +252,8 @@ export function SiteHeader() {
             onMouseEnter={() => handleMouseEnter("transparency")}
             onMouseLeave={handleMouseLeave}
           >
-            <button
-              type="button"
+            <Link
+              to="/reports"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/reports") ||
                 location.pathname.startsWith("/policies") ||
@@ -260,7 +264,7 @@ export function SiteHeader() {
             >
               <span>Transparency</span>
               <ChevronDown className="h-3.5 w-3.5" />
-            </button>
+            </Link>
 
             {openDropdown === "transparency" && (
               <div className="absolute top-full left-0 mt-3 w-72 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">

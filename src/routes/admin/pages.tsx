@@ -115,7 +115,36 @@ export function AdminPagesList() {
     }
   };
 
-  const filtered = pages.filter(
+  const DEFAULT_CORE_PAGES_FALLBACK = [
+    { slug: "home", title: "Home Page", metaDescription: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
+    { slug: "about", title: "About Us & Royal Charter", metaDescription: "Founding history, Royal Charter mandate & Board of Trustees" },
+    { slug: "our-work", title: "Our Programs & Commodities", metaDescription: "120+ Essential Medicines, Universal Vaccines & 20 Dzongkhags Reach" },
+    { slug: "reports", title: "Reports & Financial Audits", metaDescription: "Annual reports and RAA certified statutory financial statements" },
+    { slug: "policies", title: "Governance & Policies", metaDescription: "Trust regulations, procurement ethics & whistleblower protections" },
+    { slug: "get-involved", title: "Contribute & Get Involved", metaDescription: "Every Ngultrum matched 1:1 by the Royal Government of Bhutan" },
+    { slug: "contact", title: "Contact Secretariat", metaDescription: "Citizen inquiries, donor consultations & Thimphu HQ contact" },
+    { slug: "news", title: "News & Media Bulletins", metaDescription: "Official press releases, field dispatches & procurement communiqués" },
+    { slug: "track-donation", title: "Track Donation & Tax Voucher", metaDescription: "1:1 matching verification and DRC 100% tax exemption vouchers" },
+  ];
+
+  const allDisplayPages = [...pages];
+  DEFAULT_CORE_PAGES_FALLBACK.forEach((dp) => {
+    if (!allDisplayPages.some((p) => p.slug.toLowerCase() === dp.slug.toLowerCase())) {
+      allDisplayPages.push({
+        id: -1,
+        slug: dp.slug,
+        title: dp.title,
+        metaDescription: dp.metaDescription,
+        sectionsJson: "[]",
+        status: "published",
+        isSystemPage: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+  });
+
+  const filtered = allDisplayPages.filter(
     (p) =>
       p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.slug.toLowerCase().includes(search.toLowerCase()),
