@@ -4,8 +4,11 @@ import {
   getPublicImpactMetrics,
   getPublicSettings,
   getPublicNews,
+  getPublicPage,
 } from "@/lib/api/public.functions";
-import type { ImpactMetric, NewsArticle } from "@/lib/db/schema";
+import type { ImpactMetric, NewsArticle, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
+
 import {
   Users,
   FileText,
@@ -300,8 +303,22 @@ function Index() {
   const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>([]);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [liveNews, setLiveNews] = useState<NewsArticle[]>([]);
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(null);
 
   useEffect(() => {
+    getPublicPage({ data: { slug: "home" } })
+      .then((page) => {
+        if (page && page.status === "published") {
+          try {
+            const parsed = JSON.parse(page.sectionsJson);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setCustomSections(parsed);
+            }
+          } catch {}
+        }
+      })
+      .catch(() => {});
+
     getPublicImpactMetrics()
       .then((res) => {
         if (res && res.length > 0) setLiveMetrics(res);
@@ -320,6 +337,21 @@ function Index() {
       })
       .catch(() => {});
   }, []);
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen">
+        {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
+          <div className="bg-[#0B1F1A] text-amber-200 text-xs font-medium py-2.5 px-4 text-center border-b border-amber-500/20 flex items-center justify-center gap-2">
+            <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
+            <span>{settings["announcement_banner"]}</span>
+          </div>
+        )}
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
 
   const displayStats =
     liveMetrics.length > 0

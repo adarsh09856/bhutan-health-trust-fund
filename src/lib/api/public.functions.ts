@@ -459,3 +459,13 @@ export const getPublicVideos = createServerFn({ method: "GET" }).handler(async (
 export const getPublicProcurementTenders = createServerFn({ method: "GET" }).handler(async () => {
   return await db.getProcurementTenders();
 });
+
+// --- Get Public Customized Page ---
+export const getPublicPage = createServerFn({ method: "GET" })
+  .validator(z.object({ slug: z.string() }))
+  .handler(async ({ data }) => {
+    const page = await db.getPageBySlug(data.slug);
+    if (!page || page.status !== "published") return null;
+    return page;
+  });
+

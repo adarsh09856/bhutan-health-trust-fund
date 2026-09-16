@@ -23,6 +23,7 @@ import {
   UserCheck,
   Camera,
   Video,
+  Layers,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { getDashboardAnalytics } from "@/lib/api/admin.functions";
@@ -73,6 +74,7 @@ const navGroups: NavGroup[] = [
     groupName: "Institutional CMS & Media",
     badge: "Public",
     items: [
+      { to: "/admin/pages", label: "Pages & Live Editor", icon: Layers },
       { to: "/admin/news", label: "News & Press Releases", icon: Newspaper },
       { to: "/admin/reports", label: "Reports & RAA Audits", icon: FileText },
       { to: "/admin/policies", label: "Policies & Royal Charters", icon: ShieldCheck },
@@ -80,6 +82,7 @@ const navGroups: NavGroup[] = [
       { to: "/admin/videos", label: "Public Media & Videos", icon: Video },
     ],
   },
+
   {
     groupName: "Sovereign Governance",
     badge: "Charter",

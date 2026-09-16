@@ -60,7 +60,11 @@ import type {
   NewProcurementTender,
   PaymentGateway,
   NewPaymentGateway,
+  CustomPage,
+  NewCustomPage,
 } from "./schema";
+import { persistentStore } from "./persistent-store";
+
 
 /**
  * Enterprise Production PostgreSQL Database Layer for BHTF
@@ -118,21 +122,8 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllNews Warning]:", err?.message || err);
     }
 
-    return initialNewsArticles.map((n, idx) => ({
-      id: idx + 1,
-      slug: n.slug || `article-${idx + 1}`,
-      title: n.title,
-      category: n.category || "General",
-      author: n.author || "BHTF Media",
-      coverImage: n.coverImage,
-      excerpt: n.excerpt,
-      content: n.content,
-      isPublished: n.isPublished !== undefined ? n.isPublished : true,
-      viewsCount: n.viewsCount || 100,
-      publishedAt: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
+    const all = persistentStore.getNews();
+    return onlyPublished ? all.filter((a) => a.isPublished) : all;
   }
 
   public async getNewsBySlug(slug: string): Promise<NewsArticle | null> {
@@ -154,7 +145,7 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getNewsBySlug Warning]:", err?.message || err);
     }
 
-    const all = await this.getAllNews(false);
+    const all = persistentStore.getNews();
     return all.find((a) => a.slug === slug) || null;
   }
 
@@ -166,37 +157,74 @@ class BHTFDataStore {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    const [created] = await drizzleDb
-      .insert(schema.newsArticles)
-      .values({
-        ...data,
-        slug,
-        viewsCount: 0,
-        publishedAt: new Date(),
-        updatedAt: new Date(),
-      })
-      .returning();
-    return created;
+    const payload: NewsArticle = {
+      id: 0,
+      slug,
+      title: data.title,
+      category: data.category || "General",
+      author: data.author || "BHTF Media",
+      coverImage: data.coverImage,
+      excerpt: data.excerpt,
+      content: data.content,
+      isPublished: data.isPublished !== undefined ? data.isPublished : true,
+      viewsCount: 0,
+      publishedAt: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    const localCreated = persistentStore.saveNews(payload);
+
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.newsArticles)
+        .values({
+          ...data,
+          slug,
+          viewsCount: 0,
+          publishedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createNews Warning]:", err?.message || err);
+    }
+
+    return localCreated;
   }
 
   public async updateNews(id: number, data: Partial<NewNewsArticle>): Promise<NewsArticle | null> {
-    const [updated] = await drizzleDb
-      .update(schema.newsArticles)
-      .set({
-        ...data,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.newsArticles.id, id))
-      .returning();
-    return updated || null;
+    const existing = persistentStore.getNews().find((a) => a.id === id);
+    if (existing) {
+      persistentStore.saveNews({ ...existing, ...data } as NewsArticle);
+    }
+
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.newsArticles)
+        .set({
+          ...data,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.newsArticles.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateNews Warning]:", err?.message || err);
+    }
+
+    return persistentStore.getNews().find((a) => a.id === id) || null;
   }
 
   public async deleteNews(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.newsArticles)
-      .where(eq(schema.newsArticles.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteNews(id);
+    try {
+      await drizzleDb.delete(schema.newsArticles).where(eq(schema.newsArticles.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteNews Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   // --- Reports & Publications ---
@@ -211,45 +239,49 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllReports Warning]:", err?.message || err);
     }
 
-    return initialReports.map((r, idx) => ({
-      id: idx + 1,
-      title: r.title,
-      year: r.year,
-      category: r.category || "Annual Report",
-      fileUrl: r.fileUrl,
-      fileSize: r.fileSize || "2.5 MB",
-      downloadCount: r.downloadCount || 50,
-      description: r.description,
-      createdAt: new Date(),
-    }));
+    return persistentStore.getReports();
   }
 
   public async createReport(data: NewReport): Promise<Report> {
-    const [created] = await drizzleDb
-      .insert(schema.reports)
-      .values({
-        ...data,
-        downloadCount: 0,
-      })
-      .returning();
-    return created;
+    const localCreated = persistentStore.saveReport(data);
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.reports)
+        .values({
+          ...data,
+          downloadCount: 0,
+        })
+        .returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createReport Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updateReport(id: number, data: Partial<NewReport>): Promise<Report | null> {
-    const [updated] = await drizzleDb
-      .update(schema.reports)
-      .set(data)
-      .where(eq(schema.reports.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.saveReport({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.reports)
+        .set(data)
+        .where(eq(schema.reports.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateReport Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deleteReport(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.reports)
-      .where(eq(schema.reports.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteReport(id);
+    try {
+      await drizzleDb.delete(schema.reports).where(eq(schema.reports.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteReport Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   public async incrementReportDownload(id: number): Promise<boolean> {
@@ -258,10 +290,12 @@ class BHTFDataStore {
         .update(schema.reports)
         .set({ downloadCount: sql`${schema.reports.downloadCount} + 1` })
         .where(eq(schema.reports.id, id));
-      return true;
-    } catch {
-      return true;
+    } catch {}
+    const rep = persistentStore.getReports().find((r) => r.id === id);
+    if (rep) {
+      rep.downloadCount = (rep.downloadCount || 0) + 1;
     }
+    return true;
   }
 
   // --- Policies ---
@@ -276,18 +310,17 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllPolicies Warning]:", err?.message || err);
     }
 
-    return initialPolicies.map((p, idx) => ({
-      id: idx + 1,
-      slug: p.slug,
-      title: p.title,
-      category: p.category || "Governance",
-      summary: p.summary,
-      content: p.content,
-      fileUrl: p.fileUrl || null,
-      effectiveDate: p.effectiveDate || "2024",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
+    return persistentStore.getPolicies();
+  }
+
+  public async getPolicyBySlug(slug: string): Promise<Policy | null> {
+    try {
+      const [p] = await drizzleDb.select().from(schema.policies).where(eq(schema.policies.slug, slug));
+      if (p) return p;
+    } catch (err: any) {
+      console.warn("[PostgreSQL getPolicyBySlug Warning]:", err?.message || err);
+    }
+    return persistentStore.getPolicies().find((p) => p.slug === slug) || null;
   }
 
   public async createPolicy(data: NewPolicy): Promise<Policy> {
@@ -298,35 +331,49 @@ class BHTFDataStore {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    const [created] = await drizzleDb
-      .insert(schema.policies)
-      .values({
-        ...data,
-        slug,
-        updatedAt: new Date(),
-      })
-      .returning();
-    return created;
+    const localCreated = persistentStore.savePolicy({ ...data, slug });
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.policies)
+        .values({
+          ...data,
+          slug,
+          updatedAt: new Date(),
+        })
+        .returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createPolicy Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updatePolicy(id: number, data: Partial<NewPolicy>): Promise<Policy | null> {
-    const [updated] = await drizzleDb
-      .update(schema.policies)
-      .set({
-        ...data,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.policies.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.savePolicy({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.policies)
+        .set({
+          ...data,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.policies.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updatePolicy Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deletePolicy(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.policies)
-      .where(eq(schema.policies.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deletePolicy(id);
+    try {
+      await drizzleDb.delete(schema.policies).where(eq(schema.policies.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deletePolicy Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   // --- Programs ---
@@ -338,18 +385,7 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllPrograms Warning]:", err?.message || err);
     }
 
-    return initialPrograms.map((pr, idx) => ({
-      id: idx + 1,
-      slug: pr.slug,
-      title: pr.title,
-      summary: pr.summary,
-      fullDescription: pr.fullDescription,
-      icon: pr.icon || "Pill",
-      targetDzongkhags: pr.targetDzongkhags || "All 20 Dzongkhags",
-      beneficiariesReached: pr.beneficiariesReached || "780,000+ citizens",
-      status: pr.status || "ACTIVE",
-      createdAt: new Date(),
-    }));
+    return persistentStore.getPrograms();
   }
 
   public async createProgram(data: NewProgram): Promise<Program> {
@@ -360,32 +396,47 @@ class BHTFDataStore {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    const [created] = await drizzleDb
-      .insert(schema.programs)
-      .values({
-        ...data,
-        slug,
-      })
-      .returning();
-    return created;
+    const localCreated = persistentStore.saveProgram({ ...data, slug });
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.programs)
+        .values({
+          ...data,
+          slug,
+        })
+        .returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createProgram Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updateProgram(id: number, data: Partial<NewProgram>): Promise<Program | null> {
-    const [updated] = await drizzleDb
-      .update(schema.programs)
-      .set(data)
-      .where(eq(schema.programs.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.saveProgram({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.programs)
+        .set(data)
+        .where(eq(schema.programs.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateProgram Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deleteProgram(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.programs)
-      .where(eq(schema.programs.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteProgram(id);
+    try {
+      await drizzleDb.delete(schema.programs).where(eq(schema.programs.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteProgram Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
+
 
   // --- Donations ---
   public async getAllDonations(): Promise<Donation[]> {
@@ -667,41 +718,44 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllTrustees Warning]:", err?.message || err);
     }
 
-    const filtered = onlyActive ? initialTrustees.filter((t) => t.isActive) : initialTrustees;
-    return filtered.map((t, idx) => ({
-      id: idx + 1,
-      name: t.name,
-      role: t.role,
-      organization: t.organization,
-      badge: t.badge || "Trustee",
-      bio: t.bio,
-      photoUrl: t.photoUrl || "/src/assets/logo.png",
-      orderIndex: t.orderIndex || idx + 1,
-      isActive: t.isActive !== undefined ? t.isActive : true,
-      createdAt: new Date(),
-    }));
+    const all = persistentStore.getTrustees();
+    return onlyActive ? all.filter((t) => t.isActive) : all;
   }
 
   public async createTrustee(data: NewTrustee): Promise<Trustee> {
-    const [created] = await drizzleDb.insert(schema.trustees).values(data).returning();
-    return created;
+    const localCreated = persistentStore.saveTrustee(data as any);
+    try {
+      const [created] = await drizzleDb.insert(schema.trustees).values(data).returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createTrustee Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updateTrustee(id: number, data: Partial<NewTrustee>): Promise<Trustee | null> {
-    const [updated] = await drizzleDb
-      .update(schema.trustees)
-      .set(data)
-      .where(eq(schema.trustees.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.saveTrustee({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.trustees)
+        .set(data)
+        .where(eq(schema.trustees.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateTrustee Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deleteTrustee(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.trustees)
-      .where(eq(schema.trustees.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteTrustee(id);
+    try {
+      await drizzleDb.delete(schema.trustees).where(eq(schema.trustees.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteTrustee Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   // --- FAQs ---
@@ -725,35 +779,44 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllFaqs Warning]:", err?.message || err);
     }
 
-    const filtered = onlyPublished ? initialFaqs.filter((f) => f.isPublished) : initialFaqs;
-    return filtered.map((f, idx) => ({
-      id: idx + 1,
-      question: f.question,
-      answer: f.answer,
-      category: f.category || "General",
-      orderIndex: f.orderIndex || idx + 1,
-      isPublished: f.isPublished !== undefined ? f.isPublished : true,
-      createdAt: new Date(),
-    }));
+    const all = persistentStore.getFaqs();
+    return onlyPublished ? all.filter((f) => f.isPublished) : all;
   }
 
   public async createFaq(data: NewFaq): Promise<Faq> {
-    const [created] = await drizzleDb.insert(schema.faqs).values(data).returning();
-    return created;
+    const localCreated = persistentStore.saveFaq(data as any);
+    try {
+      const [created] = await drizzleDb.insert(schema.faqs).values(data).returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createFaq Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updateFaq(id: number, data: Partial<NewFaq>): Promise<Faq | null> {
-    const [updated] = await drizzleDb
-      .update(schema.faqs)
-      .set(data)
-      .where(eq(schema.faqs.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.saveFaq({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.faqs)
+        .set(data)
+        .where(eq(schema.faqs.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateFaq Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deleteFaq(id: number): Promise<boolean> {
-    const deleted = await drizzleDb.delete(schema.faqs).where(eq(schema.faqs.id, id)).returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteFaq(id);
+    try {
+      await drizzleDb.delete(schema.faqs).where(eq(schema.faqs.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteFaq Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   // --- Impact Metrics ---
@@ -777,45 +840,47 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllImpactMetrics Warning]:", err?.message || err);
     }
 
-    const filtered = onlyActive
-      ? initialImpactMetrics.filter((m) => m.isActive)
-      : initialImpactMetrics;
-    return filtered.map((m, idx) => ({
-      id: idx + 1,
-      label: m.label,
-      value: m.value,
-      description: m.description,
-      icon: m.icon || "Users",
-      badge: m.badge || "Verified",
-      orderIndex: m.orderIndex || idx + 1,
-      isActive: m.isActive !== undefined ? m.isActive : true,
-      createdAt: new Date(),
-    }));
+    const all = persistentStore.getImpactMetrics();
+    return onlyActive ? all.filter((m) => m.isActive) : all;
   }
 
   public async createImpactMetric(data: NewImpactMetric): Promise<ImpactMetric> {
-    const [created] = await drizzleDb.insert(schema.impactMetrics).values(data).returning();
-    return created;
+    const localCreated = persistentStore.saveImpactMetric(data as any);
+    try {
+      const [created] = await drizzleDb.insert(schema.impactMetrics).values(data).returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createImpactMetric Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updateImpactMetric(
     id: number,
     data: Partial<NewImpactMetric>,
   ): Promise<ImpactMetric | null> {
-    const [updated] = await drizzleDb
-      .update(schema.impactMetrics)
-      .set(data)
-      .where(eq(schema.impactMetrics.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.saveImpactMetric({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.impactMetrics)
+        .set(data)
+        .where(eq(schema.impactMetrics.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateImpactMetric Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deleteImpactMetric(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.impactMetrics)
-      .where(eq(schema.impactMetrics.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteImpactMetric(id);
+    try {
+      await drizzleDb.delete(schema.impactMetrics).where(eq(schema.impactMetrics.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteImpactMetric Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   // --- Milestones ---
@@ -830,36 +895,43 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllMilestones Warning]:", err?.message || err);
     }
 
-    return initialMilestones.map((ms, idx) => ({
-      id: idx + 1,
-      year: ms.year,
-      title: ms.title,
-      description: ms.description,
-      orderIndex: ms.orderIndex || idx + 1,
-      createdAt: new Date(),
-    }));
+    return persistentStore.getMilestones();
   }
 
   public async createMilestone(data: NewMilestone): Promise<Milestone> {
-    const [created] = await drizzleDb.insert(schema.milestones).values(data).returning();
-    return created;
+    const localCreated = persistentStore.saveMilestone(data as any);
+    try {
+      const [created] = await drizzleDb.insert(schema.milestones).values(data).returning();
+      if (created) return created;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createMilestone Warning]:", err?.message || err);
+    }
+    return localCreated;
   }
 
   public async updateMilestone(id: number, data: Partial<NewMilestone>): Promise<Milestone | null> {
-    const [updated] = await drizzleDb
-      .update(schema.milestones)
-      .set(data)
-      .where(eq(schema.milestones.id, id))
-      .returning();
-    return updated || null;
+    const localUpdated = persistentStore.saveMilestone({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.milestones)
+        .set(data)
+        .where(eq(schema.milestones.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateMilestone Warning]:", err?.message || err);
+    }
+    return localUpdated;
   }
 
   public async deleteMilestone(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.milestones)
-      .where(eq(schema.milestones.id, id))
-      .returning();
-    return deleted.length > 0;
+    const localDeleted = persistentStore.deleteMilestone(id);
+    try {
+      await drizzleDb.delete(schema.milestones).where(eq(schema.milestones.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteMilestone Warning]:", err?.message || err);
+    }
+    return localDeleted;
   }
 
   // --- Site Settings ---
@@ -871,14 +943,7 @@ class BHTFDataStore {
       console.warn("[PostgreSQL getAllSettings Warning]:", err?.message || err);
     }
 
-    return initialSiteSettings.map((s, idx) => ({
-      id: idx + 1,
-      settingKey: s.settingKey,
-      settingValue: s.settingValue,
-      category: s.category || "general",
-      description: s.description || null,
-      updatedAt: new Date(),
-    }));
+    return persistentStore.getSiteSettings();
   }
 
   public async getSetting(key: string): Promise<string | null> {
@@ -892,11 +957,12 @@ class BHTFDataStore {
       console.warn(`[PostgreSQL getSetting(${key}) Warning]:`, err?.message || err);
     }
 
-    const fallback = initialSiteSettings.find((s) => s.settingKey === key);
+    const fallback = persistentStore.getSiteSettings().find((s) => s.settingKey === key);
     return fallback ? fallback.settingValue : null;
   }
 
   public async updateSetting(key: string, value: string): Promise<SiteSetting | null> {
+    const localSaved = persistentStore.updateSiteSetting(key, value);
     try {
       const [existing] = await drizzleDb
         .select()
@@ -909,7 +975,7 @@ class BHTFDataStore {
           .set({ settingValue: value, updatedAt: new Date() })
           .where(eq(schema.siteSettings.settingKey, key))
           .returning();
-        return updated;
+        if (updated) return updated;
       } else {
         const [created] = await drizzleDb
           .insert(schema.siteSettings)
@@ -919,13 +985,129 @@ class BHTFDataStore {
             updatedAt: new Date(),
           })
           .returning();
-        return created;
+        if (created) return created;
       }
     } catch (err: any) {
       console.error(`[PostgreSQL updateSetting(${key}) Error]:`, err?.message || err);
-      return null;
     }
+    return localSaved;
   }
+
+  // --- WordPress-Style Custom Pages CRUD ---
+  public async getAllPages(): Promise<CustomPage[]> {
+    try {
+      const res = await drizzleDb
+        .select()
+        .from(schema.customPages)
+        .orderBy(asc(schema.customPages.id));
+      if (res.length > 0) return res;
+    } catch (err: any) {
+      console.warn("[PostgreSQL getAllPages Warning]:", err?.message || err);
+    }
+    return persistentStore.getCustomPages();
+  }
+
+  public async getPageBySlug(slug: string): Promise<CustomPage | null> {
+    const normalized = slug.trim().toLowerCase();
+    try {
+      const [page] = await drizzleDb
+        .select()
+        .from(schema.customPages)
+        .where(eq(schema.customPages.slug, normalized));
+      if (page) return page;
+    } catch (err: any) {
+      console.warn(`[PostgreSQL getPageBySlug(${normalized}) Warning]:`, err?.message || err);
+    }
+    return persistentStore.getCustomPageBySlug(normalized);
+  }
+
+  public async savePage(
+    slug: string,
+    payload: {
+      title?: string;
+      metaDescription?: string;
+      sectionsJson?: string;
+      status?: string;
+      isSystemPage?: boolean;
+    },
+  ): Promise<CustomPage> {
+    const normalized = slug.trim().toLowerCase();
+    const localSaved = persistentStore.saveCustomPage(normalized, payload);
+
+    try {
+      const [existing] = await drizzleDb
+        .select()
+        .from(schema.customPages)
+        .where(eq(schema.customPages.slug, normalized));
+
+      if (existing) {
+        const [updated] = await drizzleDb
+          .update(schema.customPages)
+          .set({
+            ...payload,
+            updatedAt: new Date(),
+          })
+          .where(eq(schema.customPages.slug, normalized))
+          .returning();
+        if (updated) return updated;
+      } else {
+        const [created] = await drizzleDb
+          .insert(schema.customPages)
+          .values({
+            slug: normalized,
+            title: payload.title || `Page - ${normalized}`,
+            metaDescription: payload.metaDescription || null,
+            sectionsJson: payload.sectionsJson || "[]",
+            status: payload.status || "published",
+            isSystemPage: payload.isSystemPage || false,
+            updatedAt: new Date(),
+          })
+          .returning();
+        if (created) return created;
+      }
+    } catch (err: any) {
+      console.warn(`[PostgreSQL savePage(${normalized}) Warning]:`, err?.message || err);
+    }
+
+    return localSaved;
+  }
+
+  public async resetPageToDefault(slug: string): Promise<CustomPage | null> {
+    const normalized = slug.trim().toLowerCase();
+    const resetLocal = persistentStore.resetCustomPageToDefault(normalized);
+    if (!resetLocal) return null;
+
+    try {
+      await drizzleDb
+        .update(schema.customPages)
+        .set({
+          title: resetLocal.title,
+          metaDescription: resetLocal.metaDescription,
+          sectionsJson: resetLocal.sectionsJson,
+          status: resetLocal.status,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.customPages.slug, normalized));
+    } catch (err: any) {
+      console.warn(`[PostgreSQL resetPageToDefault(${normalized}) Warning]:`, err?.message || err);
+    }
+
+    return resetLocal;
+  }
+
+  public async deletePage(slug: string): Promise<boolean> {
+    const normalized = slug.trim().toLowerCase();
+    const localDeleted = persistentStore.deleteCustomPage(normalized);
+    try {
+      await drizzleDb
+        .delete(schema.customPages)
+        .where(and(eq(schema.customPages.slug, normalized), eq(schema.customPages.isSystemPage, false)));
+    } catch (err: any) {
+      console.warn(`[PostgreSQL deletePage(${normalized}) Warning]:`, err?.message || err);
+    }
+    return localDeleted;
+  }
+
 
   // --- Dashboard Aggregations ---
   public async getDashboardMetrics() {
@@ -1259,40 +1441,58 @@ class BHTFDataStore {
   // --- Procurement Steps CMS ---
   public async getProcurementSteps(): Promise<ProcurementStep[]> {
     try {
-      return await drizzleDb
+      const res = await drizzleDb
         .select()
         .from(schema.procurementSteps)
         .orderBy(asc(schema.procurementSteps.orderIndex));
+      if (res && res.length > 0) return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getProcurementSteps Warning]:", err?.message || err);
-      return [];
     }
+    return persistentStore.getProcurementSteps();
   }
 
   public async createProcurementStep(data: NewProcurementStep): Promise<ProcurementStep> {
-    const [step] = await drizzleDb.insert(schema.procurementSteps).values(data).returning();
-    return step;
+    const local = persistentStore.saveProcurementStep(data as any);
+    try {
+      const [step] = await drizzleDb.insert(schema.procurementSteps).values(data).returning();
+      if (step) return step;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createProcurementStep Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async updateProcurementStep(
     id: number,
     data: Partial<NewProcurementStep>,
   ): Promise<ProcurementStep | null> {
-    const [updated] = await drizzleDb
-      .update(schema.procurementSteps)
-      .set({ ...data, updatedAt: new Date() })
-      .where(eq(schema.procurementSteps.id, id))
-      .returning();
-    return updated || null;
+    const local = persistentStore.saveProcurementStep({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.procurementSteps)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(schema.procurementSteps.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateProcurementStep Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async deleteProcurementStep(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.procurementSteps)
-      .where(eq(schema.procurementSteps.id, id))
-      .returning();
-    return deleted.length > 0;
+    const local = persistentStore.deleteProcurementStep(id);
+    try {
+      await drizzleDb
+        .delete(schema.procurementSteps)
+        .where(eq(schema.procurementSteps.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteProcurementStep Warning]:", err?.message || err);
+    }
+    return local;
   }
+
 
   // --- Tier 2 Financial Settings ---
   public async getFinancialSettings(): Promise<FinancialSetting> {
@@ -1419,133 +1619,196 @@ class BHTFDataStore {
   public async getGallery(onlyPublished = false): Promise<MediaGalleryItem[]> {
     try {
       if (onlyPublished) {
-        return await drizzleDb
+        const res = await drizzleDb
           .select()
           .from(schema.mediaGallery)
           .where(eq(schema.mediaGallery.isPublished, true))
           .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
+        if (res && res.length > 0) return res;
+      } else {
+        const res = await drizzleDb
+          .select()
+          .from(schema.mediaGallery)
+          .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
+        if (res && res.length > 0) return res;
       }
-      return await drizzleDb
-        .select()
-        .from(schema.mediaGallery)
-        .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
     } catch (err: any) {
       console.warn("[PostgreSQL getGallery Error]:", err?.message || err);
-      return [];
     }
+    const all = persistentStore.getGallery();
+    return onlyPublished ? all.filter((g) => g.isPublished) : all;
   }
 
   public async createGalleryItem(item: NewMediaGalleryItem): Promise<MediaGalleryItem> {
-    const [inserted] = await drizzleDb.insert(schema.mediaGallery).values(item).returning();
-    return inserted;
+    const local = persistentStore.saveGalleryItem(item as any);
+    try {
+      const [inserted] = await drizzleDb.insert(schema.mediaGallery).values(item).returning();
+      if (inserted) return inserted;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createGalleryItem Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async updateGalleryItem(
     id: number,
     data: Partial<NewMediaGalleryItem>,
   ): Promise<MediaGalleryItem | null> {
-    const [updated] = await drizzleDb
-      .update(schema.mediaGallery)
-      .set({ ...data, updatedAt: new Date() })
-      .where(eq(schema.mediaGallery.id, id))
-      .returning();
-    return updated || null;
+    const local = persistentStore.saveGalleryItem({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.mediaGallery)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(schema.mediaGallery.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateGalleryItem Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async deleteGalleryItem(id: number): Promise<boolean> {
-    const result = await drizzleDb
-      .delete(schema.mediaGallery)
-      .where(eq(schema.mediaGallery.id, id))
-      .returning();
-    return result.length > 0;
+    const local = persistentStore.deleteGalleryItem(id);
+    try {
+      await drizzleDb
+        .delete(schema.mediaGallery)
+        .where(eq(schema.mediaGallery.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteGalleryItem Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   // --- Media Videos ---
   public async getVideos(onlyPublished = false): Promise<MediaVideo[]> {
     try {
       if (onlyPublished) {
-        return await drizzleDb
+        const res = await drizzleDb
           .select()
           .from(schema.mediaVideos)
           .where(eq(schema.mediaVideos.isPublished, true))
           .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
+        if (res && res.length > 0) return res;
+      } else {
+        const res = await drizzleDb
+          .select()
+          .from(schema.mediaVideos)
+          .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
+        if (res && res.length > 0) return res;
       }
-      return await drizzleDb
-        .select()
-        .from(schema.mediaVideos)
-        .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
     } catch (err: any) {
       console.warn("[PostgreSQL getVideos Error]:", err?.message || err);
-      return [];
     }
+    const all = persistentStore.getVideos();
+    return onlyPublished ? all.filter((v) => v.isPublished) : all;
   }
 
   public async createVideo(item: NewMediaVideo): Promise<MediaVideo> {
-    const [inserted] = await drizzleDb.insert(schema.mediaVideos).values(item).returning();
-    return inserted;
+    const local = persistentStore.saveVideo(item as any);
+    try {
+      const [inserted] = await drizzleDb.insert(schema.mediaVideos).values(item).returning();
+      if (inserted) return inserted;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createVideo Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async updateVideo(id: number, data: Partial<NewMediaVideo>): Promise<MediaVideo | null> {
-    const [updated] = await drizzleDb
-      .update(schema.mediaVideos)
-      .set({ ...data, updatedAt: new Date() })
-      .where(eq(schema.mediaVideos.id, id))
-      .returning();
-    return updated || null;
+    const local = persistentStore.saveVideo({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.mediaVideos)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(schema.mediaVideos.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateVideo Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async deleteVideo(id: number): Promise<boolean> {
-    const result = await drizzleDb
-      .delete(schema.mediaVideos)
-      .where(eq(schema.mediaVideos.id, id))
-      .returning();
-    return result.length > 0;
+    const local = persistentStore.deleteVideo(id);
+    try {
+      await drizzleDb
+        .delete(schema.mediaVideos)
+        .where(eq(schema.mediaVideos.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteVideo Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   // --- Procurement Tenders ---
   public async getProcurementTenders(statusFilter?: string): Promise<ProcurementTender[]> {
     try {
       if (statusFilter && statusFilter !== "ALL") {
-        return await drizzleDb
+        const res = await drizzleDb
           .select()
           .from(schema.procurementTenders)
           .where(eq(schema.procurementTenders.status, statusFilter))
           .orderBy(desc(schema.procurementTenders.closingDate));
+        if (res && res.length > 0) return res;
+      } else {
+        const res = await drizzleDb
+          .select()
+          .from(schema.procurementTenders)
+          .orderBy(desc(schema.procurementTenders.closingDate));
+        if (res && res.length > 0) return res;
       }
-      return await drizzleDb
-        .select()
-        .from(schema.procurementTenders)
-        .orderBy(desc(schema.procurementTenders.closingDate));
     } catch (err: any) {
       console.warn("[PostgreSQL getProcurementTenders Error]:", err?.message || err);
-      return [];
     }
+    const all = persistentStore.getProcurementTenders();
+    return statusFilter && statusFilter !== "ALL"
+      ? all.filter((t) => t.status === statusFilter)
+      : all;
   }
 
   public async createProcurementTender(item: NewProcurementTender): Promise<ProcurementTender> {
-    const [inserted] = await drizzleDb.insert(schema.procurementTenders).values(item).returning();
-    return inserted;
+    const local = persistentStore.saveProcurementTender(item as any);
+    try {
+      const [inserted] = await drizzleDb.insert(schema.procurementTenders).values(item).returning();
+      if (inserted) return inserted;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createProcurementTender Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async updateProcurementTender(
     id: number,
     data: Partial<NewProcurementTender>,
   ): Promise<ProcurementTender | null> {
-    const [updated] = await drizzleDb
-      .update(schema.procurementTenders)
-      .set({ ...data, updatedAt: new Date() })
-      .where(eq(schema.procurementTenders.id, id))
-      .returning();
-    return updated || null;
+    const local = persistentStore.saveProcurementTender({ ...data, id } as any);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.procurementTenders)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(schema.procurementTenders.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateProcurementTender Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async deleteProcurementTender(id: number): Promise<boolean> {
-    const result = await drizzleDb
-      .delete(schema.procurementTenders)
-      .where(eq(schema.procurementTenders.id, id))
-      .returning();
-    return result.length > 0;
+    const local = persistentStore.deleteProcurementTender(id);
+    try {
+      await drizzleDb
+        .delete(schema.procurementTenders)
+        .where(eq(schema.procurementTenders.id, id));
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteProcurementTender Warning]:", err?.message || err);
+    }
+    return local;
   }
+
 
   // --- Payment Gateways & Fiduciary APIs ---
   public async getPaymentGateways(): Promise<PaymentGateway[]> {

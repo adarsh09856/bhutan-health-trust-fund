@@ -1,8 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicPrograms, getPublicProcurementSteps } from "@/lib/api/public.functions";
-import type { Program, ProcurementStep } from "@/lib/db/schema";
+import {
+  getPublicPrograms,
+  getPublicProcurementSteps,
+  getPublicPage,
+} from "@/lib/api/public.functions";
+import type { Program, ProcurementStep, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
+
 import {
   Pill,
   Syringe,
@@ -57,9 +63,23 @@ const progColors = [
 function OurWork() {
   const [livePrograms, setLivePrograms] = useState<Program[]>([]);
   const [procurementSteps, setProcurementSteps] = useState<ProcurementStep[]>([]);
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    getPublicPage({ data: { slug: "our-work" } })
+      .then((page) => {
+        if (page && page.status === "published") {
+          try {
+            const parsed = JSON.parse(page.sectionsJson);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setCustomSections(parsed);
+            }
+          } catch {}
+        }
+      })
+      .catch(() => {});
+
     Promise.all([getPublicPrograms().catch(() => []), getPublicProcurementSteps().catch(() => [])])
       .then(([progs, steps]) => {
         if (progs) setLivePrograms(progs);
@@ -67,6 +87,15 @@ function OurWork() {
       })
       .finally(() => setLoading(false));
   }, []);
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="min-h-screen bg-white">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
 
   const displayPrograms = livePrograms.map((p, idx) => ({
     icon: progIconMap[p.icon] || Pill,

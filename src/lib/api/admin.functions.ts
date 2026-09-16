@@ -1389,3 +1389,111 @@ export const verifyDonationJournalAction = createServerFn({ method: "POST" })
 
     return { success: true, donation: updated };
   });
+
+// --- WordPress-Style Live Page Editor Server Functions ---
+
+export const getAdminPages = createServerFn({ method: "GET" }).handler(async () => {
+  return await db.getAllPages();
+});
+
+export const getAdminPage = createServerFn({ method: "GET" })
+  .validator(z.object({ slug: z.string() }))
+  .handler(async ({ data }) => {
+    return await db.getPageBySlug(data.slug);
+  });
+
+export const createAdminPage = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      slug: z.string().min(2),
+      title: z.string().min(2),
+      metaDescription: z.string().optional(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const slug = data.slug
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+    const initialSections = [
+      {
+        id: `hero-${Date.now()}`,
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: data.title,
+        subtitle: "A custom sovereign initiative supported by Bhutan Health Trust Fund.",
+        badge: "Special Mandate",
+        bgVariant: "dark",
+        primaryCtaText: "Support This Initiative",
+        primaryCtaUrl: "/get-involved",
+      },
+      {
+        id: `content-${Date.now()}`,
+        type: "rich_text",
+        order: 2,
+        isVisible: true,
+        title: "About This Initiative",
+        content: "Provide background information, healthcare impact details, and community benefits here.",
+        bgVariant: "white",
+      },
+    ];
+
+    return await db.savePage(slug, {
+      title: data.title,
+      metaDescription: data.metaDescription || "",
+      sectionsJson: JSON.stringify(initialSections),
+      status: "published",
+      isSystemPage: false,
+    });
+  });
+
+export const saveAdminPageDraft = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      slug: z.string(),
+      title: z.string().optional(),
+      metaDescription: z.string().optional(),
+      sectionsJson: z.string(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    return await db.savePage(data.slug, {
+      title: data.title,
+      metaDescription: data.metaDescription,
+      sectionsJson: data.sectionsJson,
+      status: "draft",
+    });
+  });
+
+export const publishAdminPage = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      slug: z.string(),
+      title: z.string().optional(),
+      metaDescription: z.string().optional(),
+      sectionsJson: z.string(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    return await db.savePage(data.slug, {
+      title: data.title,
+      metaDescription: data.metaDescription,
+      sectionsJson: data.sectionsJson,
+      status: "published",
+    });
+  });
+
+export const resetAdminPageToDefault = createServerFn({ method: "POST" })
+  .validator(z.object({ slug: z.string() }))
+  .handler(async ({ data }) => {
+    return await db.resetPageToDefault(data.slug);
+  });
+
+export const deleteAdminPage = createServerFn({ method: "POST" })
+  .validator(z.object({ slug: z.string() }))
+  .handler(async ({ data }) => {
+    return await db.deletePage(data.slug);
+  });
+

@@ -29,6 +29,8 @@ import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminMetricsRouteImport } from './routes/admin/metrics'
 import { Route as AdminMilestonesRouteImport } from './routes/admin/milestones'
 import { Route as AdminNewsRouteImport } from './routes/admin/news'
+import { Route as AdminPageEditorRouteImport } from './routes/admin/page-editor'
+import { Route as AdminPagesRouteImport } from './routes/admin/pages'
 import { Route as AdminPoliciesRouteImport } from './routes/admin/policies'
 import { Route as AdminProcurementRouteImport } from './routes/admin/procurement'
 import { Route as AdminProgramsRouteImport } from './routes/admin/programs'
@@ -40,6 +42,7 @@ import { Route as AdminTrusteesRouteImport } from './routes/admin/trustees'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminVideosRouteImport } from './routes/admin/videos'
 import { Route as NewsSlugRouteImport } from './routes/news/$slug'
+import { Route as PSlugRouteImport } from './routes/p.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -141,6 +144,16 @@ const AdminNewsRoute = AdminNewsRouteImport.update({
   path: '/admin/news',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPageEditorRoute = AdminPageEditorRouteImport.update({
+  id: '/admin/page-editor',
+  path: '/admin/page-editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/admin/pages',
+  path: '/admin/pages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPoliciesRoute = AdminPoliciesRouteImport.update({
   id: '/admin/policies',
   path: '/admin/policies',
@@ -196,6 +209,11 @@ const NewsSlugRoute = NewsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => NewsRoute,
 } as any)
+const PSlugRoute = PSlugRouteImport.update({
+  id: '/p/$slug',
+  path: '/p/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -217,6 +235,8 @@ export interface FileRoutesByFullPath {
   '/admin/metrics': typeof AdminMetricsRoute
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
+  '/admin/page-editor': typeof AdminPageEditorRoute
+  '/admin/pages': typeof AdminPagesRoute
   '/admin/policies': typeof AdminPoliciesRoute
   '/admin/procurement': typeof AdminProcurementRoute
   '/admin/programs': typeof AdminProgramsRoute
@@ -228,6 +248,7 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/p/$slug': typeof PSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -250,6 +271,8 @@ export interface FileRoutesByTo {
   '/admin/metrics': typeof AdminMetricsRoute
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
+  '/admin/page-editor': typeof AdminPageEditorRoute
+  '/admin/pages': typeof AdminPagesRoute
   '/admin/policies': typeof AdminPoliciesRoute
   '/admin/procurement': typeof AdminProcurementRoute
   '/admin/programs': typeof AdminProgramsRoute
@@ -261,6 +284,7 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/p/$slug': typeof PSlugRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -284,6 +308,8 @@ export interface FileRoutesById {
   '/admin/metrics': typeof AdminMetricsRoute
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
+  '/admin/page-editor': typeof AdminPageEditorRoute
+  '/admin/pages': typeof AdminPagesRoute
   '/admin/policies': typeof AdminPoliciesRoute
   '/admin/procurement': typeof AdminProcurementRoute
   '/admin/programs': typeof AdminProgramsRoute
@@ -295,6 +321,7 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/p/$slug': typeof PSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -319,6 +346,8 @@ export interface FileRouteTypes {
     | '/admin/metrics'
     | '/admin/milestones'
     | '/admin/news'
+    | '/admin/page-editor'
+    | '/admin/pages'
     | '/admin/policies'
     | '/admin/procurement'
     | '/admin/programs'
@@ -330,6 +359,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/videos'
     | '/news/$slug'
+    | '/p/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -352,6 +382,8 @@ export interface FileRouteTypes {
     | '/admin/metrics'
     | '/admin/milestones'
     | '/admin/news'
+    | '/admin/page-editor'
+    | '/admin/pages'
     | '/admin/policies'
     | '/admin/procurement'
     | '/admin/programs'
@@ -363,6 +395,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/videos'
     | '/news/$slug'
+    | '/p/$slug'
     | '/admin'
   id:
     | '__root__'
@@ -385,6 +418,8 @@ export interface FileRouteTypes {
     | '/admin/metrics'
     | '/admin/milestones'
     | '/admin/news'
+    | '/admin/page-editor'
+    | '/admin/pages'
     | '/admin/policies'
     | '/admin/procurement'
     | '/admin/programs'
@@ -396,6 +431,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/videos'
     | '/news/$slug'
+    | '/p/$slug'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -419,6 +455,8 @@ export interface RootRouteChildren {
   AdminMetricsRoute: typeof AdminMetricsRoute
   AdminMilestonesRoute: typeof AdminMilestonesRoute
   AdminNewsRoute: typeof AdminNewsRoute
+  AdminPageEditorRoute: typeof AdminPageEditorRoute
+  AdminPagesRoute: typeof AdminPagesRoute
   AdminPoliciesRoute: typeof AdminPoliciesRoute
   AdminProcurementRoute: typeof AdminProcurementRoute
   AdminProgramsRoute: typeof AdminProgramsRoute
@@ -429,6 +467,7 @@ export interface RootRouteChildren {
   AdminTrusteesRoute: typeof AdminTrusteesRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminVideosRoute: typeof AdminVideosRoute
+  PSlugRoute: typeof PSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -574,6 +613,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/page-editor': {
+      id: '/admin/page-editor'
+      path: '/admin/page-editor'
+      fullPath: '/admin/page-editor'
+      preLoaderRoute: typeof AdminPageEditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/admin/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/policies': {
       id: '/admin/policies'
       path: '/admin/policies'
@@ -651,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof NewsRoute
     }
+    '/p/$slug': {
+      id: '/p/$slug'
+      path: '/p/$slug'
+      fullPath: '/p/$slug'
+      preLoaderRoute: typeof PSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -684,6 +744,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminMetricsRoute: AdminMetricsRoute,
   AdminMilestonesRoute: AdminMilestonesRoute,
   AdminNewsRoute: AdminNewsRoute,
+  AdminPageEditorRoute: AdminPageEditorRoute,
+  AdminPagesRoute: AdminPagesRoute,
   AdminPoliciesRoute: AdminPoliciesRoute,
   AdminProcurementRoute: AdminProcurementRoute,
   AdminProgramsRoute: AdminProgramsRoute,
@@ -694,6 +756,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminTrusteesRoute: AdminTrusteesRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminVideosRoute: AdminVideosRoute,
+  PSlugRoute: PSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport

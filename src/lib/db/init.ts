@@ -446,9 +446,26 @@ export async function ensureDatabaseSchema() {
       DELETE FROM media_videos 
       WHERE video_url LIKE '%dQw4w9WgXcQ%';
     `);
+
+    // 9. Ensure custom_pages table (WordPress-style dynamic page editor)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS custom_pages (
+        id SERIAL PRIMARY KEY,
+        slug TEXT NOT NULL UNIQUE,
+        title TEXT NOT NULL,
+        meta_description TEXT,
+        sections_json TEXT NOT NULL DEFAULT '[]',
+        status TEXT NOT NULL DEFAULT 'published',
+        is_system_page BOOLEAN NOT NULL DEFAULT false,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+      CREATE INDEX IF NOT EXISTS idx_custom_pages_slug ON custom_pages(slug);
+    `);
   } catch (err: any) {
     console.error("[PostgreSQL ensureDatabaseSchema Error]:", err?.message || err);
   } finally {
     client.release();
   }
 }
+

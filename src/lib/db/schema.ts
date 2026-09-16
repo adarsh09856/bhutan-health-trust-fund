@@ -314,6 +314,61 @@ export const paymentGateways = pgTable("payment_gateways", {
   updatedBy: text("updated_by"),
 });
 
+export const customPages = pgTable("custom_pages", {
+  id: serial("id").primaryKey(),
+  slug: text("slug").notNull().unique(), // "home", "about", "our-work", "reports", "policies", "contact", "get-involved", or custom slug
+  title: text("title").notNull(),
+  metaDescription: text("meta_description"),
+  sectionsJson: text("sections_json").notNull().default("[]"), // serialized JSON array of PageBlockSection
+  status: text("status").notNull().default("published"), // 'published' | 'draft'
+  isSystemPage: boolean("is_system_page").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export interface PageBlockItem {
+  id?: string;
+  title?: string;
+  description?: string;
+  value?: string;
+  icon?: string;
+  badge?: string;
+  url?: string;
+  question?: string;
+  answer?: string;
+}
+
+export interface PageBlockSection {
+  id: string;
+  type:
+    | "hero"
+    | "stats"
+    | "rich_text"
+    | "feature_cards"
+    | "royal_decree"
+    | "media_showcase"
+    | "accordion_faq"
+    | "cta_banner";
+  title?: string;
+  subtitle?: string;
+  dzongkhaText?: string;
+  badge?: string;
+  content?: string;
+  bgVariant?: "white" | "warm" | "dark" | "emerald" | "gold";
+  padding?: "compact" | "normal" | "relaxed";
+  isVisible: boolean;
+  order: number;
+  primaryCtaText?: string;
+  primaryCtaUrl?: string;
+  secondaryCtaText?: string;
+  secondaryCtaUrl?: string;
+  mediaUrl?: string;
+  items?: PageBlockItem[];
+}
+
+export type CustomPage = typeof customPages.$inferSelect;
+export type NewCustomPage = typeof customPages.$inferInsert;
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type UserSession = typeof userSessions.$inferSelect;
@@ -358,4 +413,5 @@ export type ProcurementTender = typeof procurementTenders.$inferSelect;
 export type NewProcurementTender = typeof procurementTenders.$inferInsert;
 export type PaymentGateway = typeof paymentGateways.$inferSelect;
 export type NewPaymentGateway = typeof paymentGateways.$inferInsert;
+
 

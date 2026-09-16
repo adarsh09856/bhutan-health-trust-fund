@@ -5,8 +5,11 @@ import {
   getPublicTrustees,
   getPublicMilestones,
   getPublicSettings,
+  getPublicPage,
 } from "@/lib/api/public.functions";
-import type { Trustee, Milestone } from "@/lib/db/schema";
+import type { Trustee, Milestone, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
+
 import {
   Target,
   Eye,
@@ -149,8 +152,22 @@ function About() {
   const [liveTrustees, setLiveTrustees] = useState<Trustee[]>([]);
   const [liveMilestones, setLiveMilestones] = useState<Milestone[]>([]);
   const [settings, setSettings] = useState<Record<string, string>>({});
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(null);
 
   useEffect(() => {
+    getPublicPage({ data: { slug: "about" } })
+      .then((page) => {
+        if (page && page.status === "published") {
+          try {
+            const parsed = JSON.parse(page.sectionsJson);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setCustomSections(parsed);
+            }
+          } catch {}
+        }
+      })
+      .catch(() => {});
+
     Promise.all([
       getPublicTrustees().catch(() => []),
       getPublicMilestones().catch(() => []),
@@ -161,6 +178,15 @@ function About() {
       if (s) setSettings(s);
     });
   }, []);
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="min-h-screen bg-[#FAF8F3]">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
 
   const displayTrustees =
     liveTrustees.length > 0
