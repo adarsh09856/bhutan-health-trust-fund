@@ -295,12 +295,12 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
     <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
       {/* Authentic Bhutanese Himalayan Scenic Background Banner (Isolated to Hero Section) */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-35"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
         style={{ backgroundImage: `url(${heroBhutan})` }}
       />
-      {/* Multi-stop sovereign dark vignette overlay for 100% crisp visibility of text & cards */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/96 via-[#061713]/85 to-[#061713]/96 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/75 via-[#061713]/35 to-[#061713] pointer-events-none" />
+      {/* Cinematic split vignette: high contrast on left for typography, open on right for Dzong & snowy peaks */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/92 via-[#061713]/60 to-black/35 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/50 via-transparent to-[#061713] pointer-events-none" />
 
       {/* Ambient subtle light glows */}
       <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />

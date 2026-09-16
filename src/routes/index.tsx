@@ -417,7 +417,9 @@ function Index() {
       .catch(() => {});
   }, []);
 
-  if (customSections && customSections.length > 0) {
+  // Only override the rich home page layout if custom sections were explicitly created beyond the basic seeds
+  const isCustomEdited = customSections && customSections.length > 5;
+  if (isCustomEdited) {
     return (
       <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen">
         {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
@@ -474,12 +476,12 @@ function Index() {
       <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
         {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner (Isolated to Hero Section) */}
         <div
-          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-35"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
           style={{ backgroundImage: `url(${hero})` }}
         />
-        {/* Multi-stop sovereign dark vignette overlay for 100% crisp visibility of text & cards */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/96 via-[#061713]/85 to-[#061713]/96 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/75 via-[#061713]/35 to-[#061713] pointer-events-none" />
+        {/* Cinematic split vignette: high contrast on left for typography, open on right for Dzong & snowy peaks */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/92 via-[#061713]/60 to-black/35 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/50 via-transparent to-[#061713] pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
