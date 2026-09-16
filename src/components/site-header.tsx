@@ -64,15 +64,15 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed left-0 right-0 z-40 w-full px-3 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300 ${
-        user ? "top-10 pt-2" : "top-0 pt-3"
+        user ? "top-12 pt-1 sm:top-11" : "top-0 pt-3 sm:pt-4"
       }`}
     >
       {/* Editorial Glass Capsule Navigation Island */}
       <div
-        className={`mx-auto max-w-7xl rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
+        className={`mx-auto max-w-7xl rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_36px_rgba(11,31,26,0.12)]"
-            : "bg-white/90 backdrop-blur-xl border border-slate-200/70 shadow-xs"
+            ? "bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_16px_40px_rgba(11,31,26,0.12)]"
+            : "bg-white/90 backdrop-blur-xl border border-slate-200/80 shadow-xs"
         }`}
       >
         {/* Logo & Dzongkha Title with Editorial Serif */}

@@ -125,10 +125,10 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
   }, [location.pathname]);
 
   return (
-    <aside className="w-72 bg-[#071410] text-slate-100 flex flex-col h-full shrink-0 border-r border-emerald-950/80 shadow-2xl">
+    <aside className="w-72 bg-[#061410] text-slate-100 flex flex-col h-full shrink-0 border-r border-emerald-950/80 shadow-2xl">
       {/* Brand Header */}
-      <div className="p-4 sm:p-5 border-b border-emerald-950/80 flex items-center gap-3 bg-[#040e0b]">
-        <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-slate-900 p-1 shadow-md border-2 border-amber-400 grid place-items-center shrink-0">
+      <div className="p-4 sm:p-5 border-b border-emerald-950/80 flex items-center gap-3 bg-[#040d0a]">
+        <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-emerald-500/10 p-1 shadow-md border border-amber-400/60 grid place-items-center shrink-0">
           <img src={logo} alt="BHTF Emblem" className="h-full w-full object-contain" />
         </div>
         <div>
@@ -147,10 +147,10 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
         {navGroups.map((group) => (
           <div key={group.groupName} className="space-y-1">
             {/* Group Header */}
-            <div className="text-[10px] uppercase font-black tracking-widest text-amber-400/90 px-3 mb-1.5 flex items-center justify-between">
+            <div className="text-[10px] uppercase font-black tracking-widest text-amber-400/80 px-3 mb-1.5 flex items-center justify-between">
               <span>{group.groupName}</span>
               {group.badge && (
-                <span className="text-[9px] bg-emerald-950/80 text-amber-300/80 px-1.5 py-0.5 rounded font-mono border border-emerald-900/50">
+                <span className="text-[9px] bg-emerald-950/90 text-amber-300/90 px-1.5 py-0.5 rounded font-mono border border-emerald-900/60">
                   {group.badge}
                 </span>
               )}
@@ -166,10 +166,10 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
                   key={item.to}
                   to={item.to}
                   onClick={onClose}
-                  className={`group relative flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition duration-150 ${
+                  className={`group relative flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
                     isActive
-                      ? "bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-transparent text-white border-l-4 border-amber-400 pl-2.5 shadow-md shadow-black/40 font-bold"
-                      : "text-slate-300 hover:text-white hover:bg-white/[0.04] border-l-4 border-transparent"
+                      ? "bg-gradient-to-r from-amber-500/20 via-emerald-500/15 to-transparent text-white border-l-4 border-amber-400 pl-2.5 shadow-md shadow-black/30 font-bold"
+                      : "text-slate-300 hover:text-white hover:bg-white/[0.05] border-l-4 border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -208,17 +208,17 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
         ))}
       </nav>
 
-      {/* User Profile Footer (Matching Image 2) */}
-      <div className="p-3.5 border-t border-slate-800/80 bg-[#080E18] space-y-2.5">
+      {/* User Profile Footer */}
+      <div className="p-3.5 border-t border-emerald-950/80 bg-[#040d0a] space-y-2.5">
         {user && (
-          <div className="p-2.5 bg-[#0D1527] rounded-xl border border-slate-800/90 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-slate-900 border-2 border-amber-400 grid place-items-center text-amber-400 font-black text-xs shrink-0 shadow-xs">
+          <div className="p-2.5 bg-[#081813] rounded-xl border border-emerald-900/60 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-emerald-950 border border-amber-400/80 grid place-items-center text-amber-400 font-black text-xs shrink-0 shadow-xs">
               {user.name.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
               <div className="font-extrabold text-white text-xs truncate">{user.name}</div>
-              <div className="text-[10px] text-amber-400 font-semibold tracking-wide flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <div className="text-[10px] text-amber-400/90 font-semibold tracking-wide flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                 {user.role === "SUPER_ADMIN" ? "Super Administrator" : "Editor & CMS Manager"}
               </div>
             </div>
@@ -229,7 +229,7 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
           <Link
             to="/"
             target="_blank"
-            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-slate-300 bg-slate-900 hover:bg-slate-800 hover:text-white transition border border-slate-800"
+            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-slate-300 bg-white/5 hover:bg-white/10 hover:text-white transition border border-white/10"
           >
             <ExternalLink className="h-3 w-3 text-amber-400" />
             <span>Public Site ↗</span>
@@ -238,7 +238,7 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
           <button
             type="button"
             onClick={logout}
-            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-rose-300 bg-rose-950/30 hover:bg-rose-900/50 hover:text-rose-200 transition cursor-pointer border border-rose-900/30"
+            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-rose-300 bg-rose-950/30 hover:bg-rose-900/50 hover:text-rose-200 transition cursor-pointer border border-rose-900/40"
           >
             <LogOut className="h-3 w-3" />
             <span>Sign Out</span>

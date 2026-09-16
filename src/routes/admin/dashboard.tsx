@@ -248,82 +248,81 @@ export function AdminDashboardPage() {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {/* Card 1: Public Contributions */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-emerald-300 transition duration-200 space-y-4">
+              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-lg hover:border-emerald-400/50 transition-all duration-200 space-y-3 relative overflow-hidden">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-sans">
                     Public Contributions
                   </span>
-                  <div className="h-10 w-10 rounded-2xl bg-emerald-50 text-emerald-700 grid place-items-center border border-emerald-200">
-                    <Coins className="h-5 w-5" />
+                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center border border-emerald-200/70">
+                    <Coins className="h-4 w-4" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">
+                  <div className="text-2xl font-black text-slate-900 font-mono tracking-tight">
                     Nu. {publicDonations.toLocaleString()}
                   </div>
-                  <div className="text-xs text-emerald-700 font-bold mt-1 flex items-center gap-1">
-                    <Sparkles className="h-3.5 w-3.5" /> Direct Pledges Received
+                  <div className="text-[11px] text-emerald-700 font-bold mt-1 flex items-center gap-1">
+                    <Sparkles className="h-3 w-3" /> Direct Citizen & CSR Pledges
                   </div>
                 </div>
               </div>
 
               {/* Card 2: 1:1 RGOB Matching Yield */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-amber-300 transition duration-200 space-y-4">
+              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-lg hover:border-amber-400/50 transition-all duration-200 space-y-3 relative overflow-hidden">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-sans">
                     1:1 RGOB Sovereign Match
                   </span>
-                  <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-700 grid place-items-center border border-amber-200">
-                    <Building2 className="h-5 w-5" />
+                  <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-700 grid place-items-center border border-amber-200/70">
+                    <Building2 className="h-4 w-4" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-amber-700 font-mono">
+                  <div className="text-2xl font-black text-amber-700 font-mono tracking-tight">
                     + Nu. {rgobMatch.toLocaleString()}
                   </div>
-                  <div className="text-xs text-amber-800 font-bold mt-1">
-                    Ministry of Finance Sovereign Multiplier
+                  <div className="text-[11px] text-amber-800 font-bold mt-1 flex items-center gap-1">
+                    <ShieldCheck className="h-3 w-3 text-amber-600" /> MoF Statutory Doubling
                   </div>
                 </div>
               </div>
 
               {/* Card 3: Combined Purchasing Yield */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-blue-300 transition duration-200 space-y-4">
+              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-lg hover:border-blue-400/50 transition-all duration-200 space-y-3 relative overflow-hidden">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-sans">
                     Total Health Yield
                   </span>
-                  <div className="h-10 w-10 rounded-2xl bg-blue-50 text-blue-700 grid place-items-center border border-blue-200">
-                    <TrendingUp className="h-5 w-5" />
+                  <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-700 grid place-items-center border border-blue-200/70">
+                    <TrendingUp className="h-4 w-4" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-blue-700 font-mono">
+                  <div className="text-2xl font-black text-blue-700 font-mono tracking-tight">
                     Nu. {totalCombinedYield.toLocaleString()}
                   </div>
-                  <div className="text-xs text-slate-500 font-bold mt-1">
-                    Effective Healthcare Purchasing Power
+                  <div className="text-[11px] text-slate-500 font-medium mt-1">
+                    Combined Purchasing Power
                   </div>
                 </div>
               </div>
 
               {/* Card 4: Actionable CRM Backlog */}
-              <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:shadow-xl hover:border-purple-300 transition duration-200 space-y-4">
+              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-lg hover:border-purple-400/50 transition-all duration-200 space-y-3 relative overflow-hidden">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-sans">
                     Actionable Inbox
                   </span>
-                  <div className="h-10 w-10 rounded-2xl bg-purple-50 text-purple-700 grid place-items-center border border-purple-200">
-                    <Mail className="h-5 w-5" />
+                  <div className="h-9 w-9 rounded-xl bg-purple-50 text-purple-700 grid place-items-center border border-purple-200/70">
+                    <Mail className="h-4 w-4" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">
-                    {data?.pendingDonationsCount || 0} Pledges · {data?.unreadInquiriesCount || 0}{" "}
-                    Inquiries
+                  <div className="text-2xl font-black text-slate-900 font-mono tracking-tight">
+                    {data?.pendingDonationsCount || 0} Pledges · {data?.unreadInquiriesCount || 0} Inquiries
                   </div>
-                  <div className="text-xs text-purple-700 font-bold mt-1">
-                    Pending Verification & Response
+                  <div className="text-[11px] text-purple-700 font-bold mt-1">
+                    Pending Verification
                   </div>
                 </div>
               </div>

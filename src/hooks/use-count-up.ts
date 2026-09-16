@@ -19,13 +19,14 @@ export function useCountUp({
   separator = ",",
   startOnView = true,
 }: UseCountUpOptions) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(end);
   const [hasAnimated, setHasAnimated] = useState(false);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const el = elementRef.current;
     if (!startOnView) {
+      setValue(0);
       startAnimation();
       return;
     }
@@ -35,10 +36,19 @@ export function useCountUp({
       return;
     }
 
+    // If already in viewport on mount (e.g. hero card), maintain end value without flash
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setValue(end);
+      setHasAnimated(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
+          setValue(0);
           startAnimation();
         }
       },

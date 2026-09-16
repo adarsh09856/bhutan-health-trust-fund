@@ -223,17 +223,25 @@
 
 /* Modern Ambient Background Light Gradients */
 .bg-mesh-dark {
-  background-color: #071512;
+  background-color: #061713;
   background-image: 
-    radial-gradient(at 20% 15%, rgba(212, 162, 55, 0.12) 0px, transparent 50%),
-    radial-gradient(at 80% 25%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
-    radial-gradient(at 50% 85%, rgba(5, 150, 105, 0.08) 0px, transparent 60%);
+    radial-gradient(at 20% 15%, rgba(212, 162, 55, 0.14) 0px, transparent 50%),
+    radial-gradient(at 80% 25%, rgba(16, 185, 129, 0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, rgba(5, 150, 105, 0.10) 0px, transparent 60%);
+}
+
+.bg-mesh-sovereign {
+  background-color: #061713;
+  background-image: 
+    radial-gradient(at 15% 20%, rgba(212, 162, 55, 0.16) 0px, transparent 48%),
+    radial-gradient(at 85% 15%, rgba(16, 185, 129, 0.15) 0px, transparent 52%),
+    radial-gradient(at 50% 90%, rgba(5, 150, 105, 0.12) 0px, transparent 65%);
 }
 
 .bg-mesh-light {
   background-color: #FAF8F3;
   background-image: 
-    radial-gradient(at 15% 10%, rgba(212, 162, 55, 0.08) 0px, transparent 45%),
+    radial-gradient(at 15% 10%, rgba(212, 162, 55, 0.09) 0px, transparent 45%),
     radial-gradient(at 85% 20%, rgba(16, 185, 129, 0.08) 0px, transparent 45%),
     radial-gradient(at 50% 90%, rgba(244, 241, 234, 0.9) 0px, transparent 50%);
 }
@@ -241,9 +249,9 @@
 .bg-mesh-white {
   background-color: #FFFFFF;
   background-image: 
-    radial-gradient(at 10% 15%, rgba(212, 162, 55, 0.06) 0px, transparent 40%),
-    radial-gradient(at 90% 15%, rgba(16, 185, 129, 0.06) 0px, transparent 40%),
-    radial-gradient(at 50% 85%, rgba(250, 248, 243, 0.7) 0px, transparent 50%);
+    radial-gradient(at 10% 10%, rgba(212, 162, 55, 0.06) 0px, transparent 40%),
+    radial-gradient(at 90% 12%, rgba(16, 185, 129, 0.07) 0px, transparent 45%),
+    radial-gradient(at 50% 85%, rgba(250, 248, 243, 0.8) 0px, transparent 55%);
 }
 
 /* Ultra-Premium Glassmorphic Surfaces */

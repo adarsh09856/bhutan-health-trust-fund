@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BHTF Sovereign Portal & Super Admin — Complete Operations & CRUD Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --spruce-dark: #040d0a;
+      --spruce: #061410;
+      --spruce-card: #0c201a;
+      --gold-primary: #d4a237;
+      --gold-light: #f5d78e;
+      --emerald-accent: #10b981;
+      --paper: #fcfbf9;
+      --slate-muted: #64748b;
+      --slate-body: #334155;
+      --border-color: rgba(212, 162, 55, 0.2);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: var(--slate-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header.hero {
+      background: linear-gradient(135deg, #040d0a 0%, #071914 60%, #0c2820 100%);
+      color: white;
+      padding: 3rem 1.5rem;
+      border-bottom: 2px solid var(--gold-primary);
+      position: relative;
+      overflow: hidden;
+    }
+    header.hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(212, 162, 55, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .badge-royal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(212, 162, 55, 0.15);
+      border: 1px solid rgba(212, 162, 55, 0.4);
+      color: var(--gold-light);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    h1.title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+    h1.title span {
+      background: linear-gradient(135deg, #d4a237, #fef08a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      font-size: 1rem;
+      color: #94a3b8;
+      max-width: 750px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: white;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .tab-btn {
+      padding: 0.55rem 1.15rem;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .tab-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .tab-btn.active {
+      background: var(--spruce);
+      color: white;
+      border-color: var(--spruce);
+      box-shadow: 0 4px 12px rgba(6, 20, 16, 0.2);
+    }
+    .content-area {
+      padding: 2.5rem 0 4rem;
+    }
+    .section-card {
+      background: white;
+      border-radius: 1.25rem;
+      border: 1px solid #e2e8f0;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+    .section-card h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-card h2::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 24px;
+      background: var(--gold-primary);
+      border-radius: 4px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+    .feature-box {
+      background: #fafafa;
+      border-radius: 0.85rem;
+      border: 1px solid #e5e7eb;
+      padding: 1.25rem;
+      transition: all 0.2s;
+    }
+    .feature-box:hover {
+      border-color: var(--gold-primary);
+      background: white;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
+    }
+    .feature-box h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .feature-box p {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    .code-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+    }
+    .badge-crud {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    .badge-c { background: #dcfce7; color: #166534; }
+    .badge-r { background: #e0f2fe; color: #0369a1; }
+    .badge-u { background: #fef9c3; color: #854d0e; }
+    .badge-d { background: #fee2e2; color: #991b1b; }
+    
+    table.manual-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.875rem;
+    }
+    table.manual-table th {
+      background: #f8fafc;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      color: #334155;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    table.manual-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: #475569;
+      vertical-align: top;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      color: #040d0a;
+      font-weight: 800;
+      font-size: 0.75rem;
+      margin-right: 0.4rem;
+    }
+    footer {
+      background: #040d0a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(212, 162, 55, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Royal Institutional Header -->
+  <header class="hero">
+    <div class="container">
+      <div class="badge-royal">
+        <span>⚡ Royal Charter Statutory Trust Fund</span>
+        <span>•</span>
+        <span>Complete Operations & CRUD Reference</span>
+      </div>
+      <h1 class="title">Bhutan Health Trust Fund <span>System Operations Manual</span></h1>
+      <p class="lead">
+        A complete guide detailing how each feature is operated in the Admin Panel, how data creates/updates/deletes (CRUD) function, and where changes instantly appear across the public portal.
+      </p>
+    </div>
+  </header>
+
+  <!-- Sticky Tabs Navigation -->
+  <nav class="nav-tabs">
+    <div class="container" style="display: flex; gap: 0.5rem; width: 100%;">
+      <button class="tab-btn active" onclick="switchTab('crud-matrix')">1. Complete CRUD & Public Reflection Matrix</button>
+      <button class="tab-btn" onclick="switchTab('public-portal')">2. Public Portal & All Devices</button>
+      <button class="tab-btn" onclick="switchTab('admin-cms')">3. Super Admin Panel Guide</button>
+      <button class="tab-btn" onclick="switchTab('customizer')">4. Visual Page Editor</button>
+      <button class="tab-btn" onclick="switchTab('operations')">5. Daily Workflows & Verification</button>
+    </div>
+  </nav>
+
+  <div class="container content-area">
+
+    <!-- TAB 1: CRUD & PUBLIC REFLECTION MATRIX -->
+    <div id="crud-matrix" class="tab-content">
+      <div class="section-card">
+        <h2>Complete CRUD & Live Public Reflection Matrix</h2>
+        <p>This reference matrix maps every administrative action to its corresponding public portal presentation, showing exactly where changes go live.</p>
+
+        <table class="manual-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Feature / Entity</th>
+              <th style="width: 16%;">Admin Route (Where CRUD Happens)</th>
+              <th style="width: 14%;">Operations Supported</th>
+              <th style="width: 26%;">Public Site Location (Where It Shows)</th>
+              <th style="width: 26%;">Impact & Business Logic</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>News & Press Releases</strong></td>
+              <td><span class="code-pill">/admin/news</span></td>
+              <td>
+                <span class="badge-crud badge-c">Create</span>
+                <span class="badge-crud badge-u">Update</span>
+                <span class="badge-crud badge-d">Delete</span>
+              </td>
+              <td>
+                • Homepage News Spotlight (<span class="code-pill">/</span>)<br>
+                • Media Room Grid (<span class="code-pill">/news</span>)<br>
+                • Article Detail (<span class="code-pill">/news/:slug</span>)
+              </td>
+              <td>Publishing pushes to top of homepage immediately. Setting status to <em>Draft</em> hides it from the public immediately.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Reports & RAA Audits</strong></td>
+              <td><span class="code-pill">/admin/reports</span></td>
+              <td>
+                <span class="badge-crud badge-c">Upload</span>
+                <span class="badge-crud badge-u">Edit</span>
+                <span class="badge-crud badge-d">Delete</span>
+              </td>
+              <td>
+                • Annual Audit Card (<span class="code-pill">/</span>)<br>
+                • Statutory Reports Library (<span class="code-pill">/reports</span>)
+              </td>
+              <td>Allows public citizens, WHO, and RAA to view and download certified audit PDFs with live download count increments.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Procurement Tenders</strong></td>
+              <td><span class="code-pill">/admin/procurement</span></td>
+              <td>
+                <span class="badge-crud badge-c">Publish</span>
+                <span class="badge-crud badge-u">Extend</span>
+                <span class="badge-crud badge-d">Archive</span>
+              </td>
+              <td>
+                • Transparency & Tenders Tab (<span class="code-pill">/policies</span> or Tender archive)
+              </td>
+              <td>International suppliers download bidding documents. Admins can update closing dates and award statuses (OPEN, EVALUATING, AWARDED, CLOSED).</td>
+            </tr>
+
+            <tr>
+              <td><strong>Donations & Tax Vouchers</strong></td>
+              <td><span class="code-pill">/admin/donations</span></td>
+              <td>
+                <span class="badge-crud badge-c">Offline Pledge</span>
+                <span class="badge-crud badge-u">Verify Status</span>
+              </td>
+              <td>
+                • Homepage Endowment Yield Ticker (<span class="code-pill">/</span>)<br>
+                • Citizen Tracker (<span class="code-pill">/track-donation</span>)
+              </td>
+              <td>When marked <strong>"VERIFIED"</strong>, the public donation total increases, 1:1 RGOB match doubles, and the donor can download official DRC tax vouchers using their Reference No.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Citizen Inquiries & Ombudsman</strong></td>
+              <td><span class="code-pill">/admin/inquiries</span></td>
+              <td>
+                <span class="badge-crud badge-r">Read</span>
+                <span class="badge-crud badge-u">Status</span>
+                <span class="badge-crud badge-d">Archive</span>
+              </td>
+              <td>
+                • Submitted via Public Contact Form (<span class="code-pill">/contact</span>)
+              </td>
+              <td>Public citizens submit feedback or confidential whistleblower reports. Admin triages from <em>Unread</em> to <em>Resolved</em>.</td>
+            </tr>
+
+            <tr>
+              <td><strong>National Impact Metrics</strong></td>
+              <td><span class="code-pill">/admin/metrics</span></td>
+              <td>
+                <span class="badge-crud badge-c">Add</span>
+                <span class="badge-crud badge-u">Edit Numbers</span>
+                <span class="badge-crud badge-d">Hide</span>
+              </td>
+              <td>
+                • Homepage 4 Stat Bento Numerals (<span class="code-pill">/</span>)<br>
+                • Our Work Impact Summary (<span class="code-pill">/our-work</span>)
+              </td>
+              <td>Changes numbers like "780,000+ Citizens Protected" or "120+ Essential Medicines" across the public home page with auto animated count-ups.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Commodity Streams & Programs</strong></td>
+              <td><span class="code-pill">/admin/programs</span></td>
+              <td>
+                <span class="badge-crud badge-u">Edit Formulations</span>
+              </td>
+              <td>
+                • Interactive Commodity Tracker (<span class="code-pill">/</span> & <span class="code-pill">/our-work</span>)
+              </td>
+              <td>Updates annual budgets, WHO prequalification standards, and remote gewog supply logistics.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Board of Trustees</strong></td>
+              <td><span class="code-pill">/admin/trustees</span></td>
+              <td>
+                <span class="badge-crud badge-c">Add</span>
+                <span class="badge-crud badge-u">Update Bio</span>
+                <span class="badge-crud badge-d">Reorder</span>
+              </td>
+              <td>
+                • About Us Page (<span class="code-pill">/about</span>)
+              </td>
+              <td>Keeps the official list of royal appointees and government ministers up to date for public transparency.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Site Settings & Announcement Banner</strong></td>
+              <td><span class="code-pill">/admin/settings</span></td>
+              <td>
+                <span class="badge-crud badge-u">Global Config</span>
+              </td>
+              <td>
+                • Top Emergency Ribbon (<span class="code-pill">All Public Pages</span>)<br>
+                • Footer Banking Details (<span class="code-pill">Footer</span>)
+              </td>
+              <td>Enables the emergency banner (e.g., vaccine drive alert), toggles 1:1 matching multiplier, and updates Bank of Bhutan account info.</td>
+            </tr>
+
+            <tr>
+              <td><strong>Visual Page Blocks</strong></td>
+              <td><span class="code-pill">/admin/page-editor</span></td>
+              <td>
+                <span class="badge-crud badge-c">Add Block</span>
+                <span class="badge-crud badge-u">Reorder/Edit</span>
+                <span class="badge-crud badge-d">Hide/Delete</span>
+              </td>
+              <td>
+                • Any CMS Managed Page (<span class="code-pill">/</span>, <span class="code-pill">/about</span>, <span class="code-pill">/p/:slug</span>)
+              </td>
+              <td>Real-time WordPress-style builder. Changes reflect instantly upon clicking "Publish".</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: PUBLIC PORTAL & ALL DEVICES -->
+    <div id="public-portal" class="tab-content" style="display: none;">
+      <div class="section-card">
+        <h2>Mobile, Tablet & Desktop Responsiveness</h2>
+        <p>The entire public site has been engineered to be 100% device-friendly across phones (iOS/Android), tablets, and widescreen desktop monitors.</p>
+        
+        <div class="grid-2">
+          <div class="feature-box">
+            <h4>📱 Mobile View (360px - 640px)</h4>
+            <p>• Floating Header shrinks gracefully with an instant-tap slide-out drawer.<br>• Heavy animations auto-disable on mobile to save battery and ensure silky-smooth 60fps scrolling.<br>• All stat numerals and commodity tabs reflow into vertical, touch-friendly swipe blocks.</p>
+          </div>
+          <div class="feature-box">
+            <h4>💻 Tablet View (641px - 1024px)</h4>
+            <p>• 2-column bento grids for statistics and news items.<br>• Dzongkhag region selector wraps smoothly with full finger-tap targets.<br>• Dual action buttons format horizontally without text truncation.</p>
+          </div>
+          <div class="feature-box">
+            <h4>🖥️ Desktop View (1025px+)</h4>
+            <p>• Full panoramic layout with monumental Fraunces serif typography.<br>• Interactive floating sovereign endowment corpus card.<br>• Full multi-level dropdowns for institutional governance archives.</p>
+          </div>
+          <div class="feature-box">
+            <h4>⚡ Sticky Admin Bar Responsiveness</h4>
+            <p>• Features a collapse chevron (<span class="code-pill">ChevronUp</span>) that tucks the bar away into a neat bubble on small screens so admins can preview real mobile phone layouts effortlessly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SUPER ADMIN CMS -->
+    <div id="admin-cms" class="tab-content" style="display: none;">
+      <div class="section-card">
+        <h2>Admin Portal Workflow & Navigation</h2>
+        <p>Sign in at <span class="code-pill">/admin/login</span> using your authorized email and password.</p>
+        
+        <div class="grid-2">
+          <div class="feature-box">
+            <h4>1. Executive Telemetry</h4>
+            <p>The dashboard displays 4 key cards: verified public contributions, statutory RGOB doubling, combined purchasing yield, and unverified backlogs.</p>
+          </div>
+          <div class="feature-box">
+            <h4>2. Reconciling Pledges</h4>
+            <p>Go to <strong>Donors & Pledges CRM</strong>. When an offline bank transfer is confirmed by Bank of Bhutan, click <em>Verify</em>. The system automatically issues a DRC tax voucher link.</p>
+          </div>
+          <div class="feature-box">
+            <h4>3. Answering Citizen Inquiries</h4>
+            <p>Navigate to <strong>Citizen Ombudsman</strong>. Read messages from gewog health clinics or citizens, click <em>Mark In Progress</em> or <em>Resolved</em>.</p>
+          </div>
+          <div class="feature-box">
+            <h4>4. Security Audit Logs</h4>
+            <p>Every admin update (login, publish, policy change) creates an immutable record in <strong>Security Audit Trail</strong> with IP address and timestamp.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: VISUAL PAGE BUILDER -->
+    <div id="customizer" class="tab-content" style="display: none;">
+      <div class="section-card">
+        <h2>Live Visual Page Customizer Guide</h2>
+        <p>Empowers non-technical staff to build and modify pages dynamically.</p>
+        
+        <div class="grid-2">
+          <div class="feature-box">
+            <h4>⚡ Launch from Public Site</h4>
+            <p>While signed in as an admin, click <strong>"⚡ Live Edit"</strong> on the top bar of any page. You are immediately taken to the customizer for that specific page.</p>
+          </div>
+          <div class="feature-box">
+            <h4>📱 Viewport Preview Switcher</h4>
+            <p>Switch between <strong>Desktop (100%)</strong>, <strong>Tablet (768px)</strong>, and <strong>Mobile (375px)</strong> in real time to verify responsiveness before publishing.</p>
+          </div>
+          <div class="feature-box">
+            <h4>🧱 Managing Blocks</h4>
+            <p>Use the Inspector sidebar to edit headlines, Dzongkha subtitles, button URLs, and background styles (Modern White vs Sovereign Dark).</p>
+          </div>
+          <div class="feature-box">
+            <h4>💾 Instant Live Save</h4>
+            <p>Clicking <strong>Save & Publish</strong> pushes changes to the PostgreSQL database, which renders immediately for all citizens.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: DAILY WORKFLOWS -->
+    <div id="operations" class="tab-content" style="display: none;">
+      <div class="section-card">
+        <h2>Daily Operations Checklist</h2>
+        <div class="grid-2">
+          <div class="feature-box">
+            <h4>Morning Routine</h4>
+            <p>1. Check Dashboard for unread inquiries from remote gewogs.<br>2. Reconcile overnight donations against banking ledger.<br>3. Verify that the announcement ribbon shows current campaigns.</p>
+          </div>
+          <div class="feature-box">
+            <h4>Publishing Tenders</h4>
+            <p>1. Open <strong>Procurement CMS</strong>.<br>2. Upload tender package PDF with official BHTF tender number.<br>3. Set closing date — the system will automatically display a countdown.</p>
+          </div>
+          <div class="feature-box">
+            <h4>Code Deployment</h4>
+            <p>Run <span class="code-pill">npm run build</span> before production release to ensure Nitro server and client bundles pass all TanStack type checks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>Bhutan Health Trust Fund (BHTF) • Royal Charter Statutory Entity • Thimphu, Kingdom of Bhutan</p>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
