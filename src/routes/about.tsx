@@ -214,13 +214,6 @@ function About() {
     });
   }, []);
 
-  if (customSections && customSections.length > 0) {
-    return (
-      <div className="min-h-screen bg-[#FAF8F3]">
-        <PageRenderer sections={customSections} interactive={false} />
-      </div>
-    );
-  }
 
 
   const displayTrustees =

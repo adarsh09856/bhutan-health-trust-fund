@@ -403,4 +403,25 @@ export const defaultCorePages: DefaultPageDef[] = [
       },
     ],
   },
+  {
+    slug: "get-involved",
+    title: "Contribute & Get Involved | Bhutan Health Trust Fund",
+    metaDescription: "Every Ngultrum matched 1:1 by the Royal Government of Bhutan. Tax deductible under DRC Bhutan regulations.",
+    isSystemPage: true,
+    sections: [
+      {
+        id: "get-involved-hero",
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: "Sovereign Health Philanthropy & 1:1 Royal Matching",
+        subtitle: "Every Ngultrum you contribute is matched 1:1 by the Royal Government of Bhutan to finance essential medicines and vaccines in perpetuity.",
+        dzongkhaText: "ཞལ་འདེབས་དང་ རྒྱབ་སྐྱོར།",
+        badge: "1:1 Sovereign Matching Guaranteed",
+        bgVariant: "dark",
+        primaryCtaText: "Contribute Online",
+        primaryCtaUrl: "/get-involved",
+      },
+    ],
+  },
 ];

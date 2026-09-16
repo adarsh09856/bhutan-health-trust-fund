@@ -83,9 +83,6 @@ function ContactPage() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
-  if (customSections && customSections.length > 0) {
-    return <PageRenderer sections={customSections} interactive={false} />;
-  }
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);

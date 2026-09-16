@@ -58,9 +58,6 @@ function ReportsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
-  if (customSections && customSections.length > 0) {
-    return <PageRenderer sections={customSections} interactive={false} />;
-  }
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
 

@@ -128,10 +128,10 @@ export function AdminPagesList() {
   ];
 
   const allDisplayPages = [...pages];
-  DEFAULT_CORE_PAGES_FALLBACK.forEach((dp) => {
+  DEFAULT_CORE_PAGES_FALLBACK.forEach((dp, idx) => {
     if (!allDisplayPages.some((p) => p.slug.toLowerCase() === dp.slug.toLowerCase())) {
       allDisplayPages.push({
-        id: -1,
+        id: -100 - idx,
         slug: dp.slug,
         title: dp.title,
         metaDescription: dp.metaDescription,
@@ -144,15 +144,141 @@ export function AdminPagesList() {
     }
   });
 
+  const isCorePageSlug = (slug: string) =>
+    DEFAULT_CORE_PAGES_FALLBACK.some((dp) => dp.slug.toLowerCase() === slug.toLowerCase());
+
   const filtered = allDisplayPages.filter(
     (p) =>
       p.title.toLowerCase().includes(search.toLowerCase()) ||
       p.slug.toLowerCase().includes(search.toLowerCase()),
   );
 
+  const corePages = filtered.filter((p) => p.isSystemPage || isCorePageSlug(p.slug));
+  const customPages = filtered.filter((p) => !p.isSystemPage && !isCorePageSlug(p.slug));
+
+  const renderPageCard = (page: CustomPage) => {
+    let sectionCount = 0;
+    try {
+      const parsed = JSON.parse(page.sectionsJson);
+      sectionCount = parsed.length;
+    } catch {}
+
+    const isCore = page.isSystemPage || isCorePageSlug(page.slug);
+    const publicUrl =
+      page.slug === "home"
+        ? "/"
+        : isCore
+          ? `/${page.slug}`
+          : `/p/${page.slug}`;
+
+    return (
+      <div
+        key={page.slug}
+        className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-amber-500/40 transition-all flex flex-col justify-between overflow-hidden"
+      >
+        <div className="p-5 space-y-3">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <div className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 ${isCore ? "bg-emerald-500/10 text-emerald-700" : "bg-amber-500/10 text-amber-600"}`}>
+                <Layers className="h-4 w-4" />
+              </div>
+              <div>
+                <span className="text-[11px] font-mono text-slate-500">
+                  {publicUrl}
+                </span>
+                <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                  {page.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-end gap-1">
+              <span
+                className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                  isCore
+                    ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                    : "bg-blue-100 text-blue-800 border border-blue-200"
+                }`}
+              >
+                {isCore ? "System Core" : "Custom Landing"}
+              </span>
+              <span
+                className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                  page.status === "published"
+                    ? "bg-slate-100 text-slate-700"
+                    : "bg-amber-100 text-amber-800"
+                }`}
+              >
+                {page.status}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 text-xs text-slate-500 pt-2 border-t border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <FileCode2 className="h-3.5 w-3.5 text-slate-400" />
+              <span>{sectionCount} Sections</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-3.5 w-3.5 text-slate-400" />
+              <span>Updated recently</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Actions Footer */}
+        <div className="bg-slate-50/80 px-5 py-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <Link
+              to={publicUrl}
+              target="_blank"
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 text-xs font-medium px-2.5 py-1.5 rounded-md hover:bg-slate-200/60 transition-colors"
+              title="View Live Public Route"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              <span>View</span>
+            </Link>
+
+            {isCore && (
+              <button
+                type="button"
+                onClick={() => handleReset(page.slug)}
+                className="inline-flex items-center gap-1 text-slate-500 hover:text-amber-700 text-xs font-medium px-2 py-1.5 rounded-md hover:bg-amber-100/50 transition-colors"
+                title="Reset to Default Master Template"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Reset</span>
+              </button>
+            )}
+
+            {!isCore && (
+              <button
+                type="button"
+                onClick={() => handleDelete(page.slug)}
+                className="inline-flex items-center gap-1 text-slate-400 hover:text-red-600 text-xs font-medium px-2 py-1.5 rounded-md hover:bg-red-50 transition-colors"
+                title="Delete Custom Page"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+
+          <Link
+            to="/admin/page-editor"
+            search={{ slug: page.slug }}
+            className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-lg text-xs transition-all shadow-2xs"
+          >
+            <Edit3 className="h-3.5 w-3.5" />
+            <span>Live Customizer</span>
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <AdminShell>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header Ribbon */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/80 text-white shadow-xl">
           <div>
@@ -172,7 +298,7 @@ export function AdminPagesList() {
             <button
               type="button"
               onClick={() => setCreateModalOpen(true)}
-              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl shadow-lg hover:shadow-amber-500/20 transition-all text-xs uppercase tracking-wide"
+              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl shadow-lg hover:shadow-amber-500/20 transition-all text-xs uppercase tracking-wide cursor-pointer"
             >
               <Plus className="h-4 w-4" />
               <span>Add Custom Page</span>
@@ -197,121 +323,83 @@ export function AdminPagesList() {
           </span>
         </div>
 
-        {/* Pages Grid */}
+        {/* Pages Content */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-slate-400 gap-3">
             <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
             <span className="text-xs">Loading page directory...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((page) => {
-              let sectionCount = 0;
-              try {
-                const parsed = JSON.parse(page.sectionsJson);
-                sectionCount = parsed.length;
-              } catch {}
+          <div className="space-y-8">
+            {/* Section 1: Core System Pages */}
+            <div className="space-y-3">
+              <div>
+                <h2 className="text-base font-serif font-bold text-slate-900 flex items-center gap-2">
+                  <span>Core Sovereign System Routes</span>
+                  <span className="text-[11px] font-sans font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                    {corePages.length} Core Pages
+                  </span>
+                </h2>
+                <p className="text-xs text-slate-500">
+                  Primary statutory public routes guaranteed under BHTF Royal Charter mandate.
+                </p>
+              </div>
 
-              const publicUrl =
-                page.slug === "home"
-                  ? "/"
-                  : page.isSystemPage
-                    ? `/${page.slug}`
-                    : `/p/${page.slug}`;
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {corePages.map((page) => renderPageCard(page))}
+              </div>
+            </div>
 
-              return (
-                <div
-                  key={page.id}
-                  className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-amber-500/40 transition-all flex flex-col justify-between overflow-hidden"
-                >
-                  <div className="p-5 space-y-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-center gap-2">
-                        <div className="h-9 w-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
-                          <Layers className="h-4 w-4" />
-                        </div>
-                        <div>
-                          <span className="text-[11px] font-mono text-slate-500">
-                            {publicUrl}
-                          </span>
-                          <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
-                            {page.title}
-                          </h3>
-                        </div>
-                      </div>
-
-                      <span
-                        className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                          page.status === "published"
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-amber-100 text-amber-800"
-                        }`}
-                      >
-                        {page.status}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-xs text-slate-500 pt-2 border-t border-slate-100">
-                      <div className="flex items-center gap-1.5">
-                        <FileCode2 className="h-3.5 w-3.5 text-slate-400" />
-                        <span>{sectionCount} Sections</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5 text-slate-400" />
-                        <span>Updated recently</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Actions Footer */}
-                  <div className="bg-slate-50/80 px-5 py-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1">
-                      <Link
-                        to={publicUrl}
-                        target="_blank"
-                        className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 text-xs font-medium px-2.5 py-1.5 rounded-md hover:bg-slate-200/60 transition-colors"
-                        title="View Live Public Route"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                        <span>View</span>
-                      </Link>
-
-                      {page.isSystemPage && (
-                        <button
-                          type="button"
-                          onClick={() => handleReset(page.slug)}
-                          className="inline-flex items-center gap-1 text-slate-500 hover:text-amber-700 text-xs font-medium px-2 py-1.5 rounded-md hover:bg-amber-100/50 transition-colors"
-                          title="Reset to Default Master Template"
-                        >
-                          <RotateCcw className="h-3.5 w-3.5" />
-                          <span className="hidden sm:inline">Reset</span>
-                        </button>
-                      )}
-
-                      {!page.isSystemPage && (
-                        <button
-                          type="button"
-                          onClick={() => handleDelete(page.slug)}
-                          className="inline-flex items-center gap-1 text-slate-400 hover:text-red-600 text-xs font-medium px-2 py-1.5 rounded-md hover:bg-red-50 transition-colors"
-                          title="Delete Custom Page"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      )}
-                    </div>
-
-                    <Link
-                      to="/admin/page-editor"
-                      search={{ slug: page.slug }}
-                      className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-lg text-xs transition-all shadow-2xs"
-                    >
-                      <Edit3 className="h-3.5 w-3.5" />
-                      <span>Live Customizer</span>
-                    </Link>
-                  </div>
+            {/* Section 2: Custom Campaign Pages */}
+            <div className="space-y-3 pt-4 border-t border-slate-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-base font-serif font-bold text-slate-900 flex items-center gap-2">
+                    <span>Custom Campaign Landing Pages</span>
+                    <span className="text-[11px] font-sans font-semibold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">
+                      {customPages.length} Custom
+                    </span>
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Bespoke thematic portals, anniversary campaigns, and emergency appeals hosted under /p/:slug.
+                  </p>
                 </div>
-              );
-            })}
+                <button
+                  type="button"
+                  onClick={() => setCreateModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-200 transition cursor-pointer"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  <span>New Campaign Page</span>
+                </button>
+              </div>
+
+              {customPages.length === 0 ? (
+                <div className="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center space-y-3 bg-slate-50/50">
+                  <div className="h-12 w-12 rounded-full bg-amber-100 text-amber-600 mx-auto flex items-center justify-center">
+                    <Layers className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-serif font-bold text-slate-900">No Custom Pages Created Yet</h3>
+                    <p className="text-xs text-slate-500 max-w-sm mx-auto mt-0.5">
+                      Launch bespoke public campaign landing pages, anniversary specials, or emergency appeals with visual live blocks.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCreateModalOpen(true)}
+                    className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wide transition shadow-xs cursor-pointer"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span>Create First Custom Page</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {customPages.map((page) => renderPageCard(page))}
+                </div>
+              )}
+            </div>
           </div>
         )}
 

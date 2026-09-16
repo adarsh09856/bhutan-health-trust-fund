@@ -123,13 +123,6 @@ function OurWork() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (customSections && customSections.length > 0) {
-    return (
-      <div className="min-h-screen bg-white">
-        <PageRenderer sections={customSections} interactive={false} />
-      </div>
-    );
-  }
 
 
   const displayPrograms = livePrograms.map((p, idx) => ({

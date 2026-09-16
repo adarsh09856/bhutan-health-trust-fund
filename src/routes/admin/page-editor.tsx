@@ -4,6 +4,7 @@ import { useAdminAuth } from "@/lib/admin-auth";
 import {
   getAdminPages,
   getAdminPage,
+  createAdminPage,
   saveAdminPageDraft,
   publishAdminPage,
   resetAdminPageToDefault,
@@ -75,6 +76,39 @@ export function AdminPageEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [addBlockModalOpen, setAddBlockModalOpen] = useState(false);
+  const [newPageModalOpen, setNewPageModalOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newSlug, setNewSlug] = useState("");
+  const [creatingPage, setCreatingPage] = useState(false);
+
+  const handleCreateNewPage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTitle.trim() || !newSlug.trim()) {
+      toast.error("Please provide both title and slug.");
+      return;
+    }
+    setCreatingPage(true);
+    try {
+      const created = await createAdminPage({
+        data: {
+          title: newTitle.trim(),
+          slug: newSlug.trim().toLowerCase(),
+        },
+      });
+      toast.success(`Page "${created.title}" created successfully!`);
+      setNewPageModalOpen(false);
+      setNewTitle("");
+      setNewSlug("");
+      router.navigate({
+        to: "/admin/page-editor",
+        search: { slug: created.slug },
+      });
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to create page.");
+    } finally {
+      setCreatingPage(false);
+    }
+  };
 
   // Load all pages list and current page details
   const loadPageData = async (targetSlug: string) => {
@@ -308,13 +342,42 @@ export function AdminPageEditor() {
               onChange={(e) => handlePageSwitch(e.target.value)}
               className="bg-slate-800 border border-slate-700 text-white font-bold text-xs rounded-lg px-3 py-1.5 focus:outline-hidden focus:border-amber-500 cursor-pointer"
             >
-              {displayedPages.map((p) => (
-                <option key={p.slug} value={p.slug}>
-                  {p.title} ({p.slug === "home" ? "/" : p.isSystemPage ? `/${p.slug}` : `/p/${p.slug}`})
-                </option>
-              ))}
+              <optgroup label="Core Sovereign System Pages">
+                {displayedPages
+                  .filter((p) => p.isSystemPage || DEFAULT_CORE_PAGES_MENU.some((dp) => dp.slug === p.slug))
+                  .map((p) => (
+                    <option key={p.slug} value={p.slug}>
+                      {p.title} ({p.slug === "home" ? "/" : `/${p.slug}`})
+                    </option>
+                  ))}
+              </optgroup>
+              {displayedPages.some(
+                (p) => !p.isSystemPage && !DEFAULT_CORE_PAGES_MENU.some((dp) => dp.slug === p.slug),
+              ) && (
+                <optgroup label="Custom Campaign Landing Pages">
+                  {displayedPages
+                    .filter(
+                      (p) => !p.isSystemPage && !DEFAULT_CORE_PAGES_MENU.some((dp) => dp.slug === p.slug),
+                    )
+                    .map((p) => (
+                      <option key={p.slug} value={p.slug}>
+                        {p.title} (/p/{p.slug})
+                      </option>
+                    ))}
+                </optgroup>
+              )}
             </select>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setNewPageModalOpen(true)}
+            className="inline-flex items-center gap-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition-all shadow-xs cursor-pointer shrink-0"
+            title="Create a new custom landing page"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            <span className="hidden xl:inline">New Page</span>
+          </button>
 
           {/* Unsaved Badge */}
           {isDirty && (
@@ -523,6 +586,97 @@ export function AdminPageEditor() {
                 );
               })}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Create Custom Page */}
+      {newPageModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white text-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2 text-slate-900 font-serif font-bold text-lg">
+                <Plus className="h-5 w-5 text-amber-500" />
+                <span>Create Custom Landing Page</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setNewPageModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateNewPage} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Page Title
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newTitle}
+                  onChange={(e) => {
+                    setNewTitle(e.target.value);
+                    if (!newSlug) {
+                      setNewSlug(
+                        e.target.value
+                          .toLowerCase()
+                          .replace(/[^a-z0-9]+/g, "-")
+                          .replace(/(^-|-$)/g, ""),
+                      );
+                    }
+                  }}
+                  placeholder="e.g. 25th Royal Charter Anniversary"
+                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-hidden focus:border-amber-500"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  URL Slug
+                </label>
+                <div className="flex items-center">
+                  <span className="bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg px-3 py-2 text-xs text-slate-500 font-mono">
+                    /p/
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    value={newSlug}
+                    onChange={(e) =>
+                      setNewSlug(
+                        e.target.value
+                          .toLowerCase()
+                          .replace(/[^a-z0-9-]+/g, "-")
+                          .replace(/(^-|-$)/g, ""),
+                      )
+                    }
+                    placeholder="anniversary-25"
+                    className="w-full border border-slate-300 rounded-r-lg px-3 py-2 text-sm text-slate-900 font-mono focus:outline-hidden focus:border-amber-500"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setNewPageModalOpen(false)}
+                  className="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={creatingPage}
+                  className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2 rounded-lg text-xs uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer"
+                >
+                  {creatingPage && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                  <span>Create & Launch</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

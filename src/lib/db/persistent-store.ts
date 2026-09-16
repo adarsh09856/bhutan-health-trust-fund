@@ -297,7 +297,17 @@ class PersistentStore {
       impactMetrics: parsed.impactMetrics?.length ? parsed.impactMetrics : fresh.impactMetrics,
       milestones: parsed.milestones?.length ? parsed.milestones : fresh.milestones,
       siteSettings: parsed.siteSettings?.length ? parsed.siteSettings : fresh.siteSettings,
-      customPages: parsed.customPages?.length ? parsed.customPages : fresh.customPages,
+      customPages: (() => {
+        const existing = parsed.customPages || [];
+        const existingSlugs = new Set(existing.map((p: any) => p.slug?.toLowerCase()));
+        const merged = [...existing];
+        fresh.customPages.forEach((fp) => {
+          if (!existingSlugs.has(fp.slug.toLowerCase())) {
+            merged.push(fp);
+          }
+        });
+        return merged;
+      })(),
       mediaGallery: parsed.mediaGallery || [],
       mediaVideos: parsed.mediaVideos || [],
       procurementSteps: parsed.procurementSteps || [],

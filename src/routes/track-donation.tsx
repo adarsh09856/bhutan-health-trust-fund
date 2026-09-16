@@ -134,9 +134,6 @@ export function TrackDonationPage() {
   const [donorEmail, setDonorEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  if (customSections && customSections.length > 0) {
-    return <PageRenderer sections={customSections} interactive={false} />;
-  }
   const [donation, setDonation] = useState<DonationRecord | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
