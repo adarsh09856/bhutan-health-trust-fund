@@ -26,7 +26,7 @@ export const defaultCorePages: DefaultPageDef[] = [
           "Sovereign healthcare financing guaranteeing uninterrupted essential medicines and universal vaccines for every citizen across all 20 Dzongkhags.",
         dzongkhaText: "མི་སེར་གཟུགས་ཁམས་བཟང་པོ་དང་ རྒྱལ་ཁབ་སྟོབས་ཤུགས་ཅན།",
         badge: "Royal Charter Statutory Trust Fund",
-        bgVariant: "dark",
+        bgVariant: "white",
         primaryCtaText: "Contribute to Corpus (1:1 Matched)",
         primaryCtaUrl: "/get-involved",
         secondaryCtaText: "Explore Commodities Formulary",
@@ -39,7 +39,7 @@ export const defaultCorePages: DefaultPageDef[] = [
         isVisible: true,
         title: "Sovereign Health Impact at a Glance",
         subtitle: "Verified national metrics monitored under Royal Audit Authority oversight",
-        bgVariant: "warm",
+        bgVariant: "light",
         items: [
           {
             value: "780,000+",
@@ -78,7 +78,7 @@ export const defaultCorePages: DefaultPageDef[] = [
           "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come.",
         badge: "Royal Charter",
         subtitle: "His Majesty The King of Bhutan",
-        bgVariant: "gold",
+        bgVariant: "light",
       },
       {
         id: "home-features",

@@ -154,9 +154,9 @@ function renderSection(sec: PageBlockSection) {
   }
 }
 
-// 1. Hero Block
+// 1. Hero Block (Modern White & Sovereign Theme)
 function HeroBlock({ section }: { section: PageBlockSection }) {
-  const isDark = section.bgVariant !== "warm" && section.bgVariant !== "white";
+  const isDark = section.bgVariant === "dark";
 
   const rawTitle = section.title || "";
   const titleParts = rawTitle ? rawTitle.split(/(Stronger Bhutan\.?)/i) : [""];
@@ -164,44 +164,58 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
   return (
     <section
       className={`relative overflow-hidden pt-36 sm:pt-44 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 ${
-        isDark ? "bg-mesh-dark text-white" : "bg-mesh-light text-slate-900 border-b border-slate-200"
+        isDark ? "bg-mesh-dark text-white" : "bg-mesh-white text-slate-900 border-b border-slate-200/80"
       }`}
     >
       {/* Background Graphic overlay with delicate opacity */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none mix-blend-luminosity"
+        className={`absolute inset-0 bg-cover bg-center pointer-events-none mix-blend-multiply ${
+          isDark ? "opacity-10 mix-blend-luminosity" : "opacity-[0.035]"
+        }`}
         style={{ backgroundImage: `url(${heroBhutan})` }}
       />
       
       {/* Ambient subtle light glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[400px] h-[250px] bg-amber-500/10 rounded-full blur-[90px] pointer-events-none" />
+      <div className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] rounded-full blur-[100px] pointer-events-none ${
+        isDark ? "bg-emerald-500/10" : "bg-emerald-500/5"
+      }`} />
+      <div className={`absolute top-1/3 right-1/4 w-[450px] h-[250px] rounded-full blur-[90px] pointer-events-none ${
+        isDark ? "bg-amber-500/10" : "bg-amber-500/5"
+      }`} />
 
       <div className="relative max-w-5xl mx-auto text-center space-y-7">
         {/* Live Status Beacon Pill */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wide shadow-lg">
+        <div className={`inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full backdrop-blur-xl text-xs font-semibold tracking-wide shadow-sm ${
+          isDark
+            ? "bg-white/10 border border-amber-400/30 text-amber-300"
+            : "bg-amber-50/90 border border-amber-300/60 text-amber-900"
+        }`}>
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
           </span>
           <span>{section.badge || "Royal Charter Statutory Trust Fund"}</span>
         </div>
 
         {/* Dzongkha Seal Header */}
         {section.dzongkhaText && (
-          <div className="font-serif text-xl sm:text-2xl text-amber-300/90 font-medium tracking-wide flex items-center justify-center gap-2">
-            <Sparkles className="h-4 w-4 text-amber-400 opacity-80" />
+          <div className={`font-serif text-xl sm:text-2xl font-bold tracking-wide flex items-center justify-center gap-2 ${
+            isDark ? "text-amber-300/90" : "text-emerald-800"
+          }`}>
+            <Sparkles className="h-4 w-4 text-amber-500 opacity-80" />
             <span>{section.dzongkhaText}</span>
-            <Sparkles className="h-4 w-4 text-amber-400 opacity-80" />
+            <Sparkles className="h-4 w-4 text-amber-500 opacity-80" />
           </div>
         )}
 
         {/* Main Headline with Modern Gradient Typography */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight leading-[1.08] text-white">
+        <h1 className={`text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight leading-[1.08] ${
+          isDark ? "text-white" : "text-slate-900"
+        }`}>
           {titleParts.length > 1 ? (
             <>
               <span>{titleParts[0]}</span>
-              <span className="text-gradient-gold drop-shadow-sm">{titleParts[1]}</span>
+              <span className="text-gradient-gold drop-shadow-xs">{titleParts[1]}</span>
               <span>{titleParts[2]}</span>
             </>
           ) : (
@@ -213,7 +227,7 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
         {section.subtitle && (
           <p
             className={`max-w-3xl mx-auto text-lg sm:text-xl font-normal leading-relaxed font-sans ${
-              isDark ? "text-slate-300" : "text-slate-700"
+              isDark ? "text-slate-300" : "text-slate-600"
             }`}
           >
             {section.subtitle}
@@ -225,7 +239,7 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
           {section.primaryCtaText && (
             <Link
               to={section.primaryCtaUrl || "/get-involved"}
-              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.45)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.25)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
             >
               <span>{section.primaryCtaText}</span>
               <ArrowRight className="h-4 w-4 stroke-[2.5]" />
@@ -235,7 +249,11 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
           {section.secondaryCtaText && (
             <Link
               to={section.secondaryCtaUrl || "/our-work"}
-              className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/25 text-white shadow-lg hover:-translate-y-0.5 transition-all text-sm tracking-wide"
+              className={`inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full backdrop-blur-xl shadow-xs hover:-translate-y-0.5 transition-all text-sm tracking-wide ${
+                isDark
+                  ? "bg-white/10 hover:bg-white/15 border border-white/25 text-white"
+                  : "bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
+              }`}
             >
               <span>{section.secondaryCtaText}</span>
             </Link>
@@ -243,21 +261,23 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
         </div>
 
         {/* Floating Trust Indicators Bar */}
-        <div className="pt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 border-t border-white/10 max-w-4xl mx-auto text-xs font-medium text-slate-300">
+        <div className={`pt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 border-t max-w-4xl mx-auto text-xs font-semibold ${
+          isDark ? "border-white/10 text-slate-300" : "border-slate-200 text-slate-600"
+        }`}>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+            <ShieldCheck className="h-4 w-4 text-emerald-600" />
             <span>RAA Clean Statutory Audit</span>
           </div>
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-amber-400" />
+            <Sparkles className="h-4 w-4 text-amber-600" />
             <span>1:1 RGOB Matching Fund</span>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-teal-400" />
+            <MapPin className="h-4 w-4 text-teal-600" />
             <span>20/20 Dzongkhags Covered</span>
           </div>
           <div className="flex items-center gap-2">
-            <HeartHandshake className="h-4 w-4 text-amber-300" />
+            <HeartHandshake className="h-4 w-4 text-amber-600" />
             <span>Perpetual Corpus Endowment</span>
           </div>
         </div>
@@ -512,45 +532,63 @@ function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
 
 // 4. Royal Decree / Proclamation Showcase
 function RoyalDecreeBlock({ section }: { section: PageBlockSection }) {
+  const isDark = section.bgVariant === "dark";
+
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#061410] relative overflow-hidden">
+    <section className={`py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${
+      isDark ? "bg-[#061410] text-white" : "bg-mesh-light border-y border-slate-200/80 text-slate-900"
+    }`}>
       {/* Ambient Royal Gold Backlighting */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.15)_0,transparent_65%)] pointer-events-none" />
+      <div className={`absolute inset-0 pointer-events-none ${
+        isDark 
+          ? "bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.15)_0,transparent_65%)]" 
+          : "bg-[radial-gradient(circle_at_center,rgba(212,162,55,0.08)_0,transparent_60%)]"
+      }`} />
 
       <div className="relative max-w-4xl mx-auto">
         {/* Royal Decree Framed Showcase */}
-        <div className="relative rounded-3xl bg-gradient-to-b from-[#0b241d] via-[#071914] to-[#040e0b] border-2 border-amber-500/40 p-8 sm:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.8)] ring-1 ring-amber-400/20 text-center space-y-8">
+        <div className={`relative rounded-3xl p-8 sm:p-14 text-center space-y-8 shadow-xl transition-all ${
+          isDark
+            ? "bg-gradient-to-b from-[#0b241d] via-[#071914] to-[#040e0b] border-2 border-amber-500/40 ring-1 ring-amber-400/20"
+            : "bg-white border-2 border-amber-400/40 ring-4 ring-amber-400/5 shadow-[0_20px_50px_rgba(212,162,55,0.08)]"
+        }`}>
           {/* Royal Crest Header */}
           <div className="flex flex-col items-center gap-3">
-            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 p-0.5 shadow-lg flex items-center justify-center">
-              <div className="h-full w-full rounded-full bg-[#071914] flex items-center justify-center text-amber-400">
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-amber-400 via-amber-300 to-amber-500 p-0.5 shadow-md flex items-center justify-center">
+              <div className={`h-full w-full rounded-full flex items-center justify-center ${
+                isDark ? "bg-[#071914] text-amber-400" : "bg-white text-amber-600"
+              }`}>
                 <Quote className="h-7 w-7" />
               </div>
             </div>
 
             {section.dzongkhaText && (
-              <div className="font-serif text-2xl sm:text-3xl text-amber-300 font-bold tracking-widest pt-1">
+              <div className={`font-serif text-2xl sm:text-3xl font-bold tracking-widest pt-1 ${
+                isDark ? "text-amber-300" : "text-emerald-900"
+              }`}>
                 {section.dzongkhaText}
               </div>
             )}
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[11px] font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-800 dark:text-amber-300 text-[11px] font-bold uppercase tracking-widest">
               <span>{section.badge || "The Royal Mandate of Sustainable Healthcare"}</span>
             </div>
           </div>
 
           {/* Quote Body */}
-          <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-amber-50/95 leading-relaxed tracking-tight italic max-w-3xl mx-auto">
+          <blockquote className={`font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-relaxed tracking-tight italic max-w-3xl mx-auto ${
+            isDark ? "text-amber-50/95" : "text-slate-800"
+          }`}>
             "{section.content || section.title}"
           </blockquote>
 
           {/* Royal Attribution */}
           <div className="pt-4 border-t border-amber-500/20 max-w-md mx-auto">
-            <div className="text-sm font-black tracking-widest uppercase text-amber-400 font-sans">
+            <div className="text-sm font-black tracking-widest uppercase text-amber-600 font-sans">
               {section.subtitle || "His Majesty The King of Bhutan"}
             </div>
-            <div className="text-xs text-slate-400 font-sans mt-0.5">
-              Royal Charter • Sovereign Health Protection
+            <div className="text-xs text-slate-500 font-sans mt-0.5 font-medium">
+              Royal Charter • Sovereign Healthcare Guarantee
             </div>
           </div>
         </div>

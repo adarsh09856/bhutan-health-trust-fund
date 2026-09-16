@@ -247,73 +247,73 @@ function HeroCorpusCard() {
   return (
     <div
       ref={corpusCounter.ref}
-      className="relative rounded-3xl bg-[#0B1F1A]/90 border border-amber-400/25 p-6 sm:p-8 shadow-2xl backdrop-blur-2xl space-y-6 overflow-hidden animate-float"
+      className="relative rounded-3xl bg-white/95 border border-slate-200/90 p-6 sm:p-8 shadow-[0_20px_60px_-15px_rgba(11,31,26,0.08)] backdrop-blur-2xl space-y-6 overflow-hidden animate-float"
     >
       {/* Top Status Header */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-4">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="text-[10px] font-mono tracking-widest text-emerald-300 uppercase">
+          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span className="text-[10px] font-mono tracking-widest text-emerald-800 uppercase font-bold">
             Sovereign Health Corpus
           </span>
         </div>
-        <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30">
+        <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300/60">
           1:1 RGOB Matched
         </span>
       </div>
 
       {/* Main Numeral */}
       <div className="space-y-1">
-        <span className="text-[11px] uppercase tracking-wider text-slate-400 font-medium font-sans block">
+        <span className="text-[11px] uppercase tracking-wider text-slate-500 font-bold font-sans block">
           Perpetual Health Endowment
         </span>
-        <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-normal text-white tracking-tight leading-tight">
+        <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-slate-900 tracking-tight leading-tight">
           {corpusCounter.formatted}
         </div>
-        <p className="text-xs text-slate-300/80 font-sans leading-relaxed pt-1">
+        <p className="text-xs text-slate-600 font-sans leading-relaxed pt-1">
           Invested capital yielding permanent annual returns to fund Bhutan's primary healthcare commodities.
         </p>
       </div>
 
       {/* 3 Editorial Supply Rows */}
       <div className="space-y-2.5 pt-1">
-        <div className="flex items-center justify-between bg-white/[0.04] p-3 rounded-2xl border border-white/10 hover:border-amber-400/30 transition">
+        <div className="flex items-center justify-between bg-slate-50/80 p-3 rounded-2xl border border-slate-200/70 hover:border-emerald-500/40 transition">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-emerald-900/60 text-emerald-300 grid place-items-center shrink-0 border border-emerald-700/40">
+            <div className="h-9 w-9 rounded-xl bg-emerald-100 text-emerald-800 grid place-items-center shrink-0 border border-emerald-200">
               <Syringe className="h-4 w-4" />
             </div>
             <div>
-              <div className="text-xs font-semibold text-white">Universal Routine Vaccines</div>
-              <div className="text-[11px] text-slate-400">100% Childhood Coverage (14 Antigens)</div>
+              <div className="text-xs font-bold text-slate-900">Universal Routine Vaccines</div>
+              <div className="text-[11px] text-slate-500">100% Childhood Coverage (14 Antigens)</div>
             </div>
           </div>
-          <span className="font-serif text-sm text-amber-200 font-normal">Nu. 68.5M</span>
+          <span className="font-serif text-sm text-emerald-800 font-bold">Nu. 68.5M</span>
         </div>
 
-        <div className="flex items-center justify-between bg-white/[0.04] p-3 rounded-2xl border border-white/10 hover:border-amber-400/30 transition">
+        <div className="flex items-center justify-between bg-slate-50/80 p-3 rounded-2xl border border-slate-200/70 hover:border-amber-500/40 transition">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-amber-900/60 text-amber-300 grid place-items-center shrink-0 border border-amber-700/40">
+            <div className="h-9 w-9 rounded-xl bg-amber-100 text-amber-800 grid place-items-center shrink-0 border border-amber-200">
               <Pill className="h-4 w-4" />
             </div>
             <div>
-              <div className="text-xs font-semibold text-white">120+ Essential Medicines</div>
-              <div className="text-[11px] text-slate-400">Zero Stockout Buffer across 205 Gewogs</div>
+              <div className="text-xs font-bold text-slate-900">120+ Essential Medicines</div>
+              <div className="text-[11px] text-slate-500">Zero Stockout Buffer across 205 Gewogs</div>
             </div>
           </div>
-          <span className="font-serif text-sm text-amber-200 font-normal">Nu. 145.0M</span>
+          <span className="font-serif text-sm text-amber-800 font-bold">Nu. 145.0M</span>
         </div>
 
-        <div className="flex items-center justify-between bg-white/[0.04] p-3 rounded-2xl border border-white/10 hover:border-amber-400/30 transition">
+        <div className="flex items-center justify-between bg-slate-50/80 p-3 rounded-2xl border border-slate-200/70 hover:border-teal-500/40 transition">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-teal-900/60 text-teal-300 grid place-items-center shrink-0 border border-teal-700/40">
+            <div className="h-9 w-9 rounded-xl bg-teal-100 text-teal-800 grid place-items-center shrink-0 border border-teal-200">
               <ThermometerSnowflake className="h-4 w-4" />
             </div>
             <div>
-              <div className="text-xs font-semibold text-white">Alpine Cold Chain Logistics</div>
-              <div className="text-[11px] text-slate-400">High-Altitude Solar Refrigeration</div>
+              <div className="text-xs font-bold text-slate-900">Alpine Cold Chain Logistics</div>
+              <div className="text-[11px] text-slate-500">High-Altitude Solar Refrigeration</div>
             </div>
           </div>
-          <span className="font-serif text-sm text-amber-200 font-normal">Nu. 24.2M</span>
+          <span className="font-serif text-sm text-teal-800 font-bold">Nu. 24.2M</span>
         </div>
       </div>
 
@@ -321,7 +321,7 @@ function HeroCorpusCard() {
       <div className="pt-2">
         <Link
           to="/get-involved"
-          className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold text-xs shadow-md transition active:scale-95"
+          className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-xs hover:shadow-md transition active:scale-95"
         >
           <Sparkles className="h-3.5 w-3.5 fill-slate-950" />
           <span>Simulate Your 1:1 Matched Contribution →</span>
@@ -426,47 +426,40 @@ function Index() {
         </div>
       )}
 
-      {/* 1. Atmospheric Editorial Hero Section */}
-      <section className="relative overflow-hidden bg-[#071512] text-white pt-36 sm:pt-44 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8">
-        {/* Photographic Backdrop with Vignette */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={hero}
-            alt="Bhutan Himalayas and Mountain Valleys"
-            width={1920}
-            height={1080}
-            className="h-full w-full object-cover object-center opacity-30 pointer-events-none filter brightness-95"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#071512] via-[#071512]/90 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#071512] via-transparent to-[#071512]/70" />
-        </div>
+      {/* 1. Atmospheric Modern White Hero Section */}
+      <section className="relative overflow-hidden bg-mesh-white text-slate-900 pt-36 sm:pt-44 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 border-b border-slate-200/80">
+        {/* Background Graphic overlay with delicate opacity */}
+        <div
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.035] mix-blend-multiply"
+          style={{ backgroundImage: `url(${hero})` }}
+        />
 
         {/* Ambient Subtle Light Orbs */}
-        <div className="absolute top-10 left-1/3 h-96 w-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-10 right-10 h-96 w-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-10 left-1/3 h-96 w-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-10 right-10 h-96 w-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative z-10 mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
             {/* Left Column: Monumental Editorial Typography */}
             <div className="lg:col-span-7 space-y-7">
               {/* Royal Charter Badge */}
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-amber-400/30 text-amber-300 text-xs font-semibold backdrop-blur-xl shadow-lg">
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-50/90 border border-amber-300/60 text-amber-900 text-xs font-semibold backdrop-blur-xl shadow-xs">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
                 </span>
                 <span>Autonomous Statutory Trust • Royal Charter Mandate</span>
               </div>
 
               {/* Monumental Headline */}
-              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.08]">
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.08]">
                 Healthy People.{" "}
-                <span className="text-gradient-gold drop-shadow-sm">
+                <span className="text-gradient-gold drop-shadow-xs">
                   Stronger Bhutan.
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans max-w-2xl font-light">
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-sans max-w-2xl font-normal">
                 Financing essential medicines and universal childhood vaccines to strengthen primary healthcare for every Bhutanese citizen across all 20 Dzongkhags.
               </p>
 
@@ -474,7 +467,7 @@ function Index() {
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   to="/get-involved"
-                  className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.45)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
+                  className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.25)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
                 >
                   <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
                   <span>Contribute (1:1 Matched)</span>
@@ -483,7 +476,7 @@ function Index() {
 
                 <Link
                   to="/our-work"
-                  className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/25 text-white shadow-lg hover:-translate-y-0.5 transition-all text-sm tracking-wide"
+                  className="inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all text-sm tracking-wide"
                 >
                   <span>Explore Commodities</span>
                 </Link>
