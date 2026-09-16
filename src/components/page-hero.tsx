@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, Home } from "lucide-react";
 
+import heroBhutan from "@/assets/hero-bhutan.jpg";
+
 interface PageHeroProps {
   title: string;
   subtitle?: string;
@@ -11,6 +13,15 @@ interface PageHeroProps {
 export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) {
   return (
     <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-14 sm:pt-28 sm:pb-18 border-b border-amber-400/20">
+      {/* Authentic Scenic Bhutan Himalayan Mountain Background Banner */}
+      <div
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-30"
+        style={{ backgroundImage: `url(${heroBhutan})` }}
+      />
+      {/* Sovereign Dark Vignette Overlays for Maximum Contrast & Readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/95 via-[#061713]/85 to-[#061713]/95 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/70 via-transparent to-[#061713] pointer-events-none" />
+
       {/* Background Subtle Ambient Glows */}
       <div className="absolute top-0 right-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-10 h-80 w-80 bg-emerald-500/[0.08] rounded-full blur-3xl pointer-events-none"></div>

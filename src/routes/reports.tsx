@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicReports, trackReportDownload } from "@/lib/api/public.functions";
-import type { Report } from "@/lib/db/schema";
+import { getPublicReports, trackReportDownload, getPublicPage } from "@/lib/api/public.functions";
+import type { Report, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   FileText,
   Download,
@@ -21,6 +22,23 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/reports")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "reports" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Statutory Reports & Publications | Bhutan Health Trust Fund" },
@@ -35,9 +53,14 @@ export const Route = createFileRoute("/reports")({
 });
 
 function ReportsPage() {
+  const { customSections } = Route.useLoaderData();
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+
+  if (customSections && customSections.length > 0) {
+    return <PageRenderer sections={customSections} interactive={false} />;
+  }
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
 

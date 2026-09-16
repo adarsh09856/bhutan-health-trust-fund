@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { lookupDonation, getPublicFinancialSettings } from "@/lib/api/public.functions";
+import { lookupDonation, getPublicFinancialSettings, getPublicPage } from "@/lib/api/public.functions";
+import type { PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   Search,
   CheckCircle2,
@@ -26,6 +28,23 @@ import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
 
 export const Route = createFileRoute("/track-donation")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "track-donation" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Track Donation & DRC Tax Certificate | Bhutan Health Trust Fund" },
@@ -110,9 +129,14 @@ function numberToWords(num: number): string {
 }
 
 export function TrackDonationPage() {
+  const { customSections } = Route.useLoaderData();
   const [referenceNo, setReferenceNo] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  if (customSections && customSections.length > 0) {
+    return <PageRenderer sections={customSections} interactive={false} />;
+  }
   const [donation, setDonation] = useState<DonationRecord | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);

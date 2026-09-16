@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { submitContactInquiry, getPublicFaqs, getPublicSettings } from "@/lib/api/public.functions";
-import type { Faq } from "@/lib/db/schema";
+import { submitContactInquiry, getPublicFaqs, getPublicSettings, getPublicPage } from "@/lib/api/public.functions";
+import type { Faq, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   MapPin,
   Phone,
@@ -22,6 +23,23 @@ import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
 
 export const Route = createFileRoute("/contact")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "contact" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Contact Secretariat | Bhutan Health Trust Fund" },
@@ -59,10 +77,15 @@ const faqs = [
 ];
 
 function ContactPage() {
+  const { customSections } = Route.useLoaderData();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+
+  if (customSections && customSections.length > 0) {
+    return <PageRenderer sections={customSections} interactive={false} />;
+  }
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);

@@ -34,6 +34,8 @@ import {
   Quote,
   Clock,
   Scale,
+  Stethoscope,
+  Zap,
 } from "lucide-react";
 import hero from "@/assets/hero-bhutan.jpg";
 import newsVaccine from "@/assets/news-vaccine.jpg";
@@ -472,12 +474,12 @@ function Index() {
       <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
         {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner */}
         <div
-          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-30"
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-40"
           style={{ backgroundImage: `url(${hero})` }}
         />
         {/* Multi-stop sovereign dark vignette overlay to preserve high readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/95 via-[#061713]/82 to-[#061713]/95 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/70 via-transparent to-[#061713] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/92 via-[#061713]/75 to-[#061713]/92 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/60 via-transparent to-[#061713] pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
@@ -710,6 +712,130 @@ function Index() {
         </div>
       </section>
 
+      {/* Universal Routine Childhood & Maternal Immunization Matrix (14 Antigens) */}
+      <section className="py-20 sm:py-24 bg-[#FAF8F3] border-t border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-300/60 text-emerald-900 text-xs font-bold uppercase tracking-wider">
+              <Syringe className="h-3.5 w-3.5 text-emerald-600" />
+              <span>National Immunization Schedule</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+              14 Universal Routine Antigens
+            </h2>
+            <p className="text-base text-slate-600 font-sans leading-relaxed">
+              Every child born in the Kingdom of Bhutan receives 100% free, uninterrupted vaccines financed permanently through the Bhutan Health Trust Fund.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">At Birth</span>
+                <span className="text-xs font-bold text-slate-900">99.8%</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">BCG (Tuberculosis)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Administered within 24 hours of birth in all district hospitals and remote gewog maternity units.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">6, 10, 14 Wks</span>
+                <span className="text-xs font-bold text-slate-900">99.4%</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">Pentavalent (DTP-HepB-Hib)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                5-in-1 pediatric protection against Diphtheria, Tetanus, Pertussis, Hepatitis B, and Hib pneumonia.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">6 &amp; 14 Wks</span>
+                <span className="text-xs font-bold text-slate-900">Polio-Free</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">Polio (IPV &amp; bOPV)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Dual mucosal and systemic immunity safeguarding Bhutan's wild poliovirus elimination status since 2014.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">6, 10, 14 Wks</span>
+                <span className="text-xs font-bold text-slate-900">98.9%</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">PCV (Pneumococcal)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Shields infants against invasive pneumococcal meningitis, bacteremia, and acute respiratory infections.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">6 &amp; 10 Wks</span>
+                <span className="text-xs font-bold text-slate-900">99.1%</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">Rotavirus Oral Vaccine</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Prevents severe pediatric diarrhea and winter gastroenteritis hospitalizations among mountain communities.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">9 &amp; 24 Mos</span>
+                <span className="text-xs font-bold text-slate-900">Eliminated</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">Measles-Rubella (MR)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                WHO-certified measles and rubella elimination achieved through zero stockouts in cold-chain depots.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">9-14 Years</span>
+                <span className="text-xs font-bold text-slate-900">96.5%</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">HPV (Cervical Cancer)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                First nation in South Asia to introduce gender-neutral school HPV vaccination, eliminating cervical cancer risks.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Pregnancy</span>
+                <span className="text-xs font-bold text-slate-900">99.7%</span>
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">Td (Tetanus-Diphtheria)</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Universal maternal immunization ensuring complete elimination of neonatal and maternal tetanus mortality.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 p-4 rounded-2xl bg-[#061713] text-white flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-2.5">
+              <Award className="h-5 w-5 text-amber-400 shrink-0" />
+              <span className="text-slate-200">
+                WHO Regional Verification: Bhutan maintains unbroken national coverage above 95% for all routine antigens.
+              </span>
+            </div>
+            <Link
+              to="/our-work"
+              className="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 font-bold whitespace-nowrap"
+            >
+              <span>Explore Cold Chain Logistics Formulary</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 5. Interactive 6 Health Commodities Pipeline */}
       <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -800,6 +926,104 @@ function Index() {
                   <div className="text-xs font-bold text-slate-900">Passang Dorji</div>
                   <div className="text-[11px] text-slate-500">Cold Chain Logistics Coordinator</div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Essential Medicines Life-Saving Formulary Classes */}
+      <section className="py-20 sm:py-24 bg-white border-t border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-300/60 text-amber-900 text-xs font-bold uppercase tracking-wider">
+              <Pill className="h-3.5 w-3.5 text-amber-600" />
+              <span>National Essential Drugs List</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+              Life-Saving Formulary Classes
+            </h2>
+            <p className="text-base text-slate-600 font-sans leading-relaxed">
+              Every basic health unit and district hospital in Bhutan dispenses WHO-standard pharmaceuticals free of charge, permanently sustained through BHTF endowment yields.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/80 p-7 space-y-4 hover:border-amber-400/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-amber-100 text-amber-800 grid place-items-center">
+                <Activity className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Cardiovascular &amp; Hypertension</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                Amlodipine, Enalapril, Losartan, Atenolol, and Atorvastatin. Sustains daily non-communicable disease therapy across all 20 Dzongkhags.
+              </p>
+              <div className="text-[11px] font-mono text-amber-800 font-semibold pt-1">
+                Zero Out-of-Pocket Cost for Citizens
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/80 p-7 space-y-4 hover:border-emerald-500/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-100 text-emerald-800 grid place-items-center">
+                <Pill className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Diabetes &amp; Endocrine Health</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                Human Recombinant Insulin (Regular &amp; NPH), Metformin, and Glimepiride. Guaranteed cold-chain storage from Thimphu to remote gewogs.
+              </p>
+              <div className="text-[11px] font-mono text-emerald-800 font-semibold pt-1">
+                Continuous 6-Month National Reserve
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/80 p-7 space-y-4 hover:border-teal-500/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-teal-100 text-teal-800 grid place-items-center">
+                <ShieldCheck className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Broad-Spectrum Anti-Infectives</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                Amoxicillin-Clavulanic Acid, Ceftriaxone, Azithromycin, and Doxycycline. First-line treatments for mountain respiratory and bacterial infections.
+              </p>
+              <div className="text-[11px] font-mono text-teal-800 font-semibold pt-1">
+                WHO Pre-Qualified Procurement
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/80 p-7 space-y-4 hover:border-rose-400/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-rose-100 text-rose-800 grid place-items-center">
+                <Heart className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Maternal Obstetric Survival</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                Injectable Oxytocin, Magnesium Sulphate, Tranexamic Acid, and Misoprostol. Critical emergency interventions protecting mothers during childbirth.
+              </p>
+              <div className="text-[11px] font-mono text-rose-800 font-semibold pt-1">
+                100% Delivery Room Availability
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/80 p-7 space-y-4 hover:border-blue-400/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-blue-100 text-blue-800 grid place-items-center">
+                <Stethoscope className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Respiratory &amp; Resuscitation</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                Salbutamol Nebulizer Solution, Budesonide Inhalers, Adrenaline, and Hydrocortisone. Essential for severe pediatric asthma and highland exposure.
+              </p>
+              <div className="text-[11px] font-mono text-blue-800 font-semibold pt-1">
+                Supplied to all 205 Gewog PHUs
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/80 p-7 space-y-4 hover:border-amber-400/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-amber-100 text-amber-800 grid place-items-center">
+                <Zap className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Critical Emergency Infusions</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                Ringer's Lactate, Normal Saline (0.9%), Dextrose 5%, and WHO Oral Rehydration Salts. Trauma fluid replacement for road accidents and acute dehydrations.
+              </p>
+              <div className="text-[11px] font-mono text-amber-800 font-semibold pt-1">
+                Pre-Stocked Before Winter Closures
               </div>
             </div>
           </div>
@@ -954,6 +1178,66 @@ function Index() {
         </div>
       </section>
 
+      {/* Fiduciary Triple-Lock Governance & Capital Ring-Fencing */}
+      <section className="py-20 sm:py-24 bg-[#FAF8F3] border-t border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-300/60 text-amber-900 text-xs font-bold uppercase tracking-wider">
+              <Lock className="h-3.5 w-3.5 text-amber-600" />
+              <span>Sovereign Fiduciary Safeguards</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+              The Fiduciary Triple-Lock
+            </h2>
+            <p className="text-base text-slate-600 font-sans leading-relaxed">
+              Institutional mechanisms designed so that your contributions remain permanently protected, growing in value to protect Bhutanese citizens forever.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 space-y-4 shadow-xs hover:border-amber-400/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-amber-100 text-amber-800 grid place-items-center">
+                <Lock className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-lg font-bold text-slate-900">1. Statutory Ring-Fencing</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                Protected by Royal Charter. The endowment principal can never be withdrawn, borrowed against, or absorbed into general treasury operations.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 space-y-4 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-100 text-emerald-800 grid place-items-center">
+                <TrendingUp className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-lg font-bold text-slate-900">2. Pure Yield Financing</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                Essential medicines are procured exclusively from dividend and interest yields. The core Nu. 3.2B+ principal remains untouched and grows continuously.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 space-y-4 shadow-xs hover:border-teal-500/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-teal-100 text-teal-800 grid place-items-center">
+                <Globe className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-lg font-bold text-slate-900">3. WHO-Prequalified Bidding</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                Zero middleman markups. International competitive tenders secure the lowest global institutional prices for vaccines and cold chain equipment.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 space-y-4 shadow-xs hover:border-amber-400/50 hover:shadow-md transition-all">
+              <div className="h-12 w-12 rounded-2xl bg-amber-100 text-amber-800 grid place-items-center">
+                <ShieldCheck className="h-6 w-6 stroke-[1.75]" />
+              </div>
+              <h3 className="font-serif text-lg font-bold text-slate-900">4. Constitutional RAA Audit</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                Annual statutory audits conducted by the Royal Audit Authority of Bhutan, published unedited to Parliament and available to any citizen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 8. Statutory Governance & RAA Clean Audit Assurance */}
       <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -1091,6 +1375,117 @@ function Index() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Philanthropic Impact Giving Tiers (1:1 Sovereign Multiplier) */}
+      <section className="py-20 sm:py-24 bg-white border-t border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-300/60 text-amber-900 text-xs font-bold uppercase tracking-wider">
+              <HeartHandshake className="h-3.5 w-3.5 text-amber-600" />
+              <span>Nu. 1:1 RGOB Sovereign Multiplier</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+              Tangible Health Outcomes per Pledge
+            </h2>
+            <p className="text-base text-slate-600 font-sans leading-relaxed">
+              When you contribute, the Royal Government immediately releases an equal sum from the Treasury, doubling your healthcare purchasing power for the nation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/90 p-7 flex flex-col justify-between space-y-5 hover:border-amber-400/50 hover:shadow-md transition-all">
+              <div className="space-y-3">
+                <span className="text-[11px] font-mono font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase">
+                  Pledge Nu. 1,000
+                </span>
+                <div className="font-serif text-3xl font-black text-slate-900">
+                  Nu. 2,000 <span className="text-xs font-sans font-normal text-slate-500">Value</span>
+                </div>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
+                  Universal Vaccines for 5 Newborns
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Covers complete 14-antigen childhood immunizations from birth BCG through 24-month Measles-Rubella boosters.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200/60 text-[11px] text-emerald-700 font-mono font-semibold">
+                DRC Tax Shield: Save Nu. 300
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/90 p-7 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:shadow-md transition-all">
+              <div className="space-y-3">
+                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full uppercase">
+                  Pledge Nu. 5,000
+                </span>
+                <div className="font-serif text-3xl font-black text-slate-900">
+                  Nu. 10,000 <span className="text-xs font-sans font-normal text-slate-500">Value</span>
+                </div>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
+                  6-Month Pediatric Antibiotic Supply
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Guarantees zero stockouts of oral amoxicillin, ORS salts, and emergency nebulizer solutions in a remote gewog clinic.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200/60 text-[11px] text-emerald-700 font-mono font-semibold">
+                DRC Tax Shield: Save Nu. 1,500
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/90 p-7 flex flex-col justify-between space-y-5 hover:border-teal-500/50 hover:shadow-md transition-all">
+              <div className="space-y-3">
+                <span className="text-[11px] font-mono font-bold text-teal-700 bg-teal-100 px-2.5 py-1 rounded-full uppercase">
+                  Pledge Nu. 25,000
+                </span>
+                <div className="font-serif text-3xl font-black text-slate-900">
+                  Nu. 50,000 <span className="text-xs font-sans font-normal text-slate-500">Value</span>
+                </div>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
+                  Alpine Solar Cold-Chain Battery Pack
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Equips a high-altitude primary health unit with deep-cycle solar backup, maintaining vaccine potency during sub-zero blizzards.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200/60 text-[11px] text-emerald-700 font-mono font-semibold">
+                DRC Tax Shield: Save Nu. 7,500
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] rounded-3xl border border-slate-200/90 p-7 flex flex-col justify-between space-y-5 hover:border-amber-400/50 hover:shadow-md transition-all">
+              <div className="space-y-3">
+                <span className="text-[11px] font-mono font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase">
+                  Pledge Nu. 100,000
+                </span>
+                <div className="font-serif text-3xl font-black text-slate-900">
+                  Nu. 200,000 <span className="text-xs font-sans font-normal text-slate-500">Value</span>
+                </div>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
+                  District Emergency Resuscitation Reserve
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Pre-positions a full year of emergency trauma infusions, cardiac drugs, and maternal hemorrhage kits for an entire Dzongkhag.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200/60 text-[11px] text-emerald-700 font-mono font-semibold">
+                DRC Tax Shield: Save Nu. 30,000 (CIT/PIT)
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              to="/get-involved"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-9 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all text-xs uppercase tracking-wider"
+            >
+              <Heart className="h-4 w-4 fill-slate-950 shrink-0" />
+              <span>Make a 1:1 Matched Contribution Now</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>

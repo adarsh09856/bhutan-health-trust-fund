@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicNews } from "@/lib/api/public.functions";
-import type { NewsArticle } from "@/lib/db/schema";
+import { getPublicNews, getPublicPage } from "@/lib/api/public.functions";
+import type { NewsArticle, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   Calendar,
   Search,
@@ -19,6 +20,23 @@ import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
 
 export const Route = createFileRoute("/news")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "news" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "News & Press Releases | Bhutan Health Trust Fund" },
@@ -33,9 +51,14 @@ export const Route = createFileRoute("/news")({
 });
 
 function NewsPage() {
+  const { customSections } = Route.useLoaderData();
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+
+  if (customSections && customSections.length > 0) {
+    return <PageRenderer sections={customSections} interactive={false} />;
+  }
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
   useEffect(() => {
