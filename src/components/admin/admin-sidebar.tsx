@@ -125,9 +125,9 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
   }, [location.pathname]);
 
   return (
-    <aside className="w-72 bg-[#0B1220] text-slate-100 flex flex-col h-full shrink-0 border-r border-slate-800/90 shadow-2xl">
+    <aside className="w-72 bg-[#071410] text-slate-100 flex flex-col h-full shrink-0 border-r border-emerald-950/80 shadow-2xl">
       {/* Brand Header */}
-      <div className="p-4 sm:p-5 border-b border-slate-800/80 flex items-center gap-3 bg-[#080E18]">
+      <div className="p-4 sm:p-5 border-b border-emerald-950/80 flex items-center gap-3 bg-[#040e0b]">
         <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-slate-900 p-1 shadow-md border-2 border-amber-400 grid place-items-center shrink-0">
           <img src={logo} alt="BHTF Emblem" className="h-full w-full object-contain" />
         </div>
@@ -143,14 +143,14 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
       </div>
 
       {/* Navigation Groups */}
-      <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
+      <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-950">
         {navGroups.map((group) => (
           <div key={group.groupName} className="space-y-1">
             {/* Group Header */}
             <div className="text-[10px] uppercase font-black tracking-widest text-amber-400/90 px-3 mb-1.5 flex items-center justify-between">
               <span>{group.groupName}</span>
               {group.badge && (
-                <span className="text-[9px] bg-slate-800/80 text-amber-300/80 px-1.5 py-0.5 rounded font-mono border border-slate-700/50">
+                <span className="text-[9px] bg-emerald-950/80 text-amber-300/80 px-1.5 py-0.5 rounded font-mono border border-emerald-900/50">
                   {group.badge}
                 </span>
               )}
@@ -168,8 +168,8 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
                   onClick={onClose}
                   className={`group relative flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition duration-150 ${
                     isActive
-                      ? "bg-[#141F36] text-white border-l-4 border-amber-400 pl-2.5 shadow-md shadow-black/40 font-bold"
-                      : "text-slate-300 hover:text-white hover:bg-slate-900/70 border-l-4 border-transparent"
+                      ? "bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-transparent text-white border-l-4 border-amber-400 pl-2.5 shadow-md shadow-black/40 font-bold"
+                      : "text-slate-300 hover:text-white hover:bg-white/[0.04] border-l-4 border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">

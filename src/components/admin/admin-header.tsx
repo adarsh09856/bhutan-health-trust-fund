@@ -59,6 +59,31 @@ const routeTitles: Record<string, { title: string; subtitle: string }> = {
     subtitle:
       "Sovereign matching ratio, emergency helplines, banking credentials, and public notices.",
   },
+  "/admin/pages": {
+    title: "Institutional Pages & Live Visual Editor",
+    subtitle:
+      "WordPress-style visual page builder, block hierarchy, responsive device frames & publishing control.",
+  },
+  "/admin/page-editor": {
+    title: "Sovereign Page Studio & Live Customizer",
+    subtitle:
+      "Real-time block inspector, responsive canvas (Desktop / Tablet / Mobile), and live preview.",
+  },
+  "/admin/procurement": {
+    title: "Sovereign Procurement & Tenders CMS",
+    subtitle:
+      "Manage international bidding tenders, cold-chain handover steps & statutory procurement documents.",
+  },
+  "/admin/gallery": {
+    title: "Field Operations Media Gallery",
+    subtitle:
+      "High-resolution photo journalism from all 20 Dzongkhags and alpine logistics hubs.",
+  },
+  "/admin/videos": {
+    title: "Official Media & Video Broadcasts",
+    subtitle:
+      "National documentary broadcasts, Royal address streams & health campaign video library.",
+  },
 };
 
 export function AdminHeader({ onToggleMenu }: { onToggleMenu: () => void }) {

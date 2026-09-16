@@ -343,9 +343,9 @@ export function SiteHeader() {
         <div className="hidden sm:flex items-center gap-2.5 shrink-0 whitespace-nowrap">
           <Link
             to="/get-involved"
-            className="whitespace-nowrap inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-900 hover:bg-emerald-950 text-white text-xs font-semibold shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95 shrink-0 border border-emerald-700/60 ring-1 ring-amber-400/30"
+            className="whitespace-nowrap inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-xs font-black shadow-[0_4px_14px_rgba(245,158,11,0.3)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shrink-0"
           >
-            <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400 shrink-0" />
+            <Heart className="h-3.5 w-3.5 fill-slate-950 text-slate-950 shrink-0" />
             <span>Contribute (1:1 Matched)</span>
           </Link>
 

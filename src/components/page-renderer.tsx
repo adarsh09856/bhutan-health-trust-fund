@@ -134,48 +134,63 @@ function renderSection(sec: PageBlockSection) {
 
 // 1. Hero Block
 function HeroBlock({ section }: { section: PageBlockSection }) {
-  const isDark = section.bgVariant === "dark";
+  const isDark = section.bgVariant !== "warm" && section.bgVariant !== "white";
+
+  // Split title if it contains "Stronger Bhutan." to give it an opulent gold gradient highlight
+  const titleParts = section.title.split(/(Stronger Bhutan\.?)/i);
 
   return (
     <section
-      className={`relative overflow-hidden py-20 sm:py-28 px-4 sm:px-6 lg:px-8 ${
-        isDark
-          ? "bg-slate-950 text-white"
-          : section.bgVariant === "emerald"
-            ? "bg-emerald-950 text-white"
-            : section.bgVariant === "warm"
-              ? "bg-[#FAF8F3] text-slate-900"
-              : "bg-white text-slate-900"
+      className={`relative overflow-hidden py-24 sm:py-32 px-4 sm:px-6 lg:px-8 ${
+        isDark ? "bg-mesh-dark text-white" : "bg-mesh-light text-slate-900 border-b border-slate-200"
       }`}
     >
-      {/* Background Graphic overlay */}
+      {/* Background Graphic overlay with delicate opacity */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-15 pointer-events-none mix-blend-overlay"
+        className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none mix-blend-luminosity"
         style={{ backgroundImage: `url(${heroBhutan})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
+      
+      {/* Ambient subtle light glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[400px] h-[250px] bg-amber-500/10 rounded-full blur-[90px] pointer-events-none" />
 
-      <div className="relative max-w-5xl mx-auto text-center space-y-6">
-        {section.badge && (
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-500 text-xs font-semibold uppercase tracking-wider">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>{section.badge}</span>
-          </div>
-        )}
+      <div className="relative max-w-5xl mx-auto text-center space-y-7">
+        {/* Live Status Beacon Pill */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wide shadow-lg">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span>{section.badge || "Royal Charter Statutory Trust Fund"}</span>
+        </div>
 
+        {/* Dzongkha Seal Header */}
         {section.dzongkhaText && (
-          <div className="font-serif text-lg sm:text-xl text-amber-500/90 font-medium tracking-wide">
-            {section.dzongkhaText}
+          <div className="font-serif text-xl sm:text-2xl text-amber-300/90 font-medium tracking-wide flex items-center justify-center gap-2">
+            <Sparkles className="h-4 w-4 text-amber-400 opacity-80" />
+            <span>{section.dzongkhaText}</span>
+            <Sparkles className="h-4 w-4 text-amber-400 opacity-80" />
           </div>
         )}
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight leading-[1.1]">
-          {section.title}
+        {/* Main Headline with Modern Gradient Typography */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight leading-[1.08] text-white">
+          {titleParts.length > 1 ? (
+            <>
+              <span>{titleParts[0]}</span>
+              <span className="text-gradient-gold drop-shadow-sm">{titleParts[1]}</span>
+              <span>{titleParts[2]}</span>
+            </>
+          ) : (
+            section.title
+          )}
         </h1>
 
+        {/* Subtitle */}
         {section.subtitle && (
           <p
-            className={`max-w-3xl mx-auto text-lg sm:text-xl font-normal leading-relaxed ${
+            className={`max-w-3xl mx-auto text-lg sm:text-xl font-normal leading-relaxed font-sans ${
               isDark ? "text-slate-300" : "text-slate-700"
             }`}
           >
@@ -183,51 +198,70 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
           </p>
         )}
 
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+        {/* Modern Action Buttons */}
+        <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
           {section.primaryCtaText && (
             <Link
               to={section.primaryCtaUrl || "/get-involved"}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold px-7 py-3.5 rounded-lg shadow-lg hover:shadow-amber-500/20 transition-all text-sm uppercase tracking-wide"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.45)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
             >
               <span>{section.primaryCtaText}</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
             </Link>
           )}
 
           {section.secondaryCtaText && (
             <Link
               to={section.secondaryCtaUrl || "/our-work"}
-              className={`inline-flex items-center gap-2 font-medium px-6 py-3.5 rounded-lg border transition-all text-sm ${
-                isDark
-                  ? "border-slate-700 hover:bg-white/10 text-white"
-                  : "border-slate-300 hover:bg-slate-100 text-slate-800"
-              }`}
+              className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/25 text-white shadow-lg hover:-translate-y-0.5 transition-all text-sm tracking-wide"
             >
               <span>{section.secondaryCtaText}</span>
             </Link>
           )}
+        </div>
+
+        {/* Floating Trust Indicators Bar */}
+        <div className="pt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 border-t border-white/10 max-w-4xl mx-auto text-xs font-medium text-slate-300">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+            <span>RAA Clean Statutory Audit</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-amber-400" />
+            <span>1:1 RGOB Matching Fund</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-teal-400" />
+            <span>20/20 Dzongkhags Covered</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <HeartHandshake className="h-4 w-4 text-amber-300" />
+            <span>Perpetual Corpus Endowment</span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// 2. Stats Block
+// 2. Stats Block (Modern Bento Grid)
 function StatsBlock({ section }: { section: PageBlockSection }) {
   const items = section.items || [];
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FAF8F3] border-y border-slate-200/80">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-mesh-light border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto">
         {(section.title || section.subtitle) && (
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
             {section.title && (
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-serif font-black text-slate-900 tracking-tight">
                 {section.title}
               </h2>
             )}
             {section.subtitle && (
-              <p className="text-sm text-slate-600 leading-relaxed">{section.subtitle}</p>
+              <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
+                {section.subtitle}
+              </p>
             )}
           </div>
         )}
@@ -238,23 +272,26 @@ function StatsBlock({ section }: { section: PageBlockSection }) {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-xl p-6 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                className="card-modern rounded-3xl p-7 border border-slate-200/80 hover:border-amber-500/40 relative overflow-hidden group flex flex-col justify-between"
               >
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-emerald-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-sans">
                       {item.title}
                     </span>
-                    <div className="h-9 w-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600">
-                      <Icon className="h-5 w-5 stroke-[1.75]" />
+                    <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-amber-500/10 to-emerald-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="h-6 w-6 stroke-[1.75]" />
                     </div>
                   </div>
-                  <div className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight mb-2">
+                  <div className="text-4xl sm:text-5xl font-serif font-black text-slate-900 tracking-tight mb-2">
                     {item.value}
                   </div>
                 </div>
                 {item.description && (
-                  <p className="text-xs text-slate-600 leading-relaxed">{item.description}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed font-sans pt-2 border-t border-slate-100 mt-2">
+                    {item.description}
+                  </p>
                 )}
               </div>
             );
@@ -265,17 +302,24 @@ function StatsBlock({ section }: { section: PageBlockSection }) {
   );
 }
 
-// 3. Feature Cards Block
+// 3. Feature Cards Block (Modern Bento Stream Showcase)
 function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
   const items = section.items || [];
 
+  const accentThemes = [
+    { bg: "bg-emerald-500/10", border: "border-emerald-500/30", text: "text-emerald-700", badge: "bg-emerald-100 text-emerald-800" },
+    { bg: "bg-teal-500/10", border: "border-teal-500/30", text: "text-teal-700", badge: "bg-teal-100 text-teal-800" },
+    { bg: "bg-amber-500/10", border: "border-amber-500/30", text: "text-amber-700", badge: "bg-amber-100 text-amber-800" },
+    { bg: "bg-indigo-500/10", border: "border-indigo-500/30", text: "text-indigo-700", badge: "bg-indigo-100 text-indigo-800" },
+  ];
+
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto">
         {(section.title || section.subtitle) && (
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             {section.title && (
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-serif font-black text-slate-900 tracking-tight">
                 {section.title}
               </h2>
             )}
@@ -287,21 +331,23 @@ function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
           {items.map((item, idx) => {
             const Icon = getIcon(item.icon);
+            const theme = accentThemes[idx % accentThemes.length];
+
             return (
               <div
                 key={idx}
-                className="group relative bg-[#FAF8F3] rounded-2xl p-8 border border-slate-200/80 hover:border-amber-500/50 hover:shadow-xl transition-all flex flex-col justify-between"
+                className="card-modern rounded-3xl p-8 flex flex-col justify-between group hover:-translate-y-2 transition-all duration-300 relative border border-slate-200/90 hover:border-amber-500/40"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="h-12 w-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-                      <Icon className="h-6 w-6 stroke-[1.75]" />
+                    <div className={`h-14 w-14 rounded-2xl ${theme.bg} ${theme.border} ${theme.text} border flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs`}>
+                      <Icon className="h-7 w-7 stroke-[1.75]" />
                     </div>
                     {item.badge && (
-                      <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-200/70 text-slate-700">
+                      <span className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${theme.badge}`}>
                         {item.badge}
                       </span>
                     )}
@@ -319,10 +365,10 @@ function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
                 {item.url && (
                   <Link
                     to={item.url}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 group-hover:text-amber-700 uppercase tracking-wider pt-4 border-t border-slate-200/60"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-800 group-hover:text-amber-600 transition-colors pt-4 border-t border-slate-100"
                   >
                     <span>Explore Stream</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1.5 transition-transform" />
                   </Link>
                 )}
               </div>
@@ -334,37 +380,50 @@ function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
   );
 }
 
-// 4. Royal Decree / Quote Callout
+// 4. Royal Decree / Proclamation Showcase
 function RoyalDecreeBlock({ section }: { section: PageBlockSection }) {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-950 via-slate-950 to-slate-950 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#061410] relative overflow-hidden">
+      {/* Ambient Royal Gold Backlighting */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.15)_0,transparent_65%)] pointer-events-none" />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-6">
-        <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 shadow-inner">
-          <Quote className="h-6 w-6" />
-        </div>
-
-        {section.dzongkhaText && (
-          <div className="font-serif text-xl sm:text-2xl text-amber-400/90 font-medium tracking-wide">
-            {section.dzongkhaText}
-          </div>
-        )}
-
-        <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-100 leading-relaxed tracking-tight italic">
-          "{section.content || section.title}"
-        </blockquote>
-
-        {section.subtitle && (
-          <div className="pt-4">
-            <div className="text-sm font-bold tracking-wider uppercase text-amber-400 font-sans">
-              {section.subtitle}
+      <div className="relative max-w-4xl mx-auto">
+        {/* Royal Decree Framed Showcase */}
+        <div className="relative rounded-3xl bg-gradient-to-b from-[#0b241d] via-[#071914] to-[#040e0b] border-2 border-amber-500/40 p-8 sm:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.8)] ring-1 ring-amber-400/20 text-center space-y-8">
+          {/* Royal Crest Header */}
+          <div className="flex flex-col items-center gap-3">
+            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 p-0.5 shadow-lg flex items-center justify-center">
+              <div className="h-full w-full rounded-full bg-[#071914] flex items-center justify-center text-amber-400">
+                <Quote className="h-7 w-7" />
+              </div>
             </div>
-            {section.badge && (
-              <div className="text-xs text-slate-400 font-sans mt-0.5">{section.badge}</div>
+
+            {section.dzongkhaText && (
+              <div className="font-serif text-2xl sm:text-3xl text-amber-300 font-bold tracking-widest pt-1">
+                {section.dzongkhaText}
+              </div>
             )}
+
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[11px] font-bold uppercase tracking-widest">
+              <span>{section.badge || "The Royal Mandate of Sustainable Healthcare"}</span>
+            </div>
           </div>
-        )}
+
+          {/* Quote Body */}
+          <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-amber-50/95 leading-relaxed tracking-tight italic max-w-3xl mx-auto">
+            "{section.content || section.title}"
+          </blockquote>
+
+          {/* Royal Attribution */}
+          <div className="pt-4 border-t border-amber-500/20 max-w-md mx-auto">
+            <div className="text-sm font-black tracking-widest uppercase text-amber-400 font-sans">
+              {section.subtitle || "His Majesty The King of Bhutan"}
+            </div>
+            <div className="text-xs text-slate-400 font-sans mt-0.5">
+              Royal Charter • Sovereign Health Protection
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -373,10 +432,10 @@ function RoyalDecreeBlock({ section }: { section: PageBlockSection }) {
 // 5. Rich Text Block
 function RichTextBlock({ section }: { section: PageBlockSection }) {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-4xl mx-auto space-y-6">
         {section.badge && (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-amber-500/10 text-amber-700 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-700 text-xs font-bold uppercase tracking-wider">
             <span>{section.badge}</span>
           </div>
         )}
@@ -409,17 +468,19 @@ function FaqAccordionBlock({ section }: { section: PageBlockSection }) {
   const items = section.items || [];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#FAF8F3] border-y border-slate-200/80">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-mesh-light border-y border-slate-200/80">
       <div className="max-w-3xl mx-auto">
         {(section.title || section.subtitle) && (
-          <div className="text-center mb-12 space-y-2">
+          <div className="text-center mb-14 space-y-3">
             {section.title && (
-              <h2 className="text-3xl font-serif font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-serif font-black text-slate-900 tracking-tight">
                 {section.title}
               </h2>
             )}
             {section.subtitle && (
-              <p className="text-sm text-slate-600 font-sans">{section.subtitle}</p>
+              <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
+                {section.subtitle}
+              </p>
             )}
           </div>
         )}
@@ -430,24 +491,24 @@ function FaqAccordionBlock({ section }: { section: PageBlockSection }) {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs transition-all"
+                className="bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-amber-500/40 transition-all"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full text-left px-6 py-4 flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors"
+                  className="w-full text-left px-7 py-5 flex items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
                 >
-                  <span className="font-serif font-bold text-base text-slate-900">
+                  <span className="font-serif font-bold text-base sm:text-lg text-slate-900">
                     {item.question || item.title}
                   </span>
                   <ChevronDown
-                    className={`h-4 w-4 text-slate-500 shrink-0 transition-transform duration-200 ${
+                    className={`h-5 w-5 text-slate-400 shrink-0 transition-transform duration-200 ${
                       isOpen ? "rotate-180 text-amber-600" : ""
                     }`}
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100 font-sans">
+                  <div className="px-7 pb-6 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100 font-sans">
                     {item.answer || item.description}
                   </div>
                 )}
@@ -460,51 +521,43 @@ function FaqAccordionBlock({ section }: { section: PageBlockSection }) {
   );
 }
 
-// 7. CTA Banner Block
+// 7. CTA Banner Block (Corpus Matching Banner)
 function CtaBannerBlock({ section }: { section: PageBlockSection }) {
-  const isEmerald = section.bgVariant === "emerald";
-
   return (
-    <section
-      className={`py-16 px-4 sm:px-6 lg:px-8 ${
-        isEmerald
-          ? "bg-gradient-to-r from-emerald-950 via-slate-950 to-emerald-950 text-white"
-          : "bg-gradient-to-r from-slate-950 via-amber-950 to-slate-950 text-white"
-      } border-y border-amber-500/20`}
-    >
-      <div className="max-w-5xl mx-auto text-center space-y-6">
-        {section.badge && (
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>{section.badge}</span>
-          </div>
-        )}
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#06241b] via-[#0a382c] to-[#041912] text-white relative overflow-hidden border-y border-emerald-500/30">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.15)_0,transparent_50%)]" />
 
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight">
+      <div className="relative max-w-5xl mx-auto text-center space-y-7">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-300 text-xs font-bold uppercase tracking-wider shadow-sm">
+          <Sparkles className="h-3.5 w-3.5" />
+          <span>{section.badge || "Permanent Corpus Endowment"}</span>
+        </div>
+
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight leading-tight">
           {section.title}
         </h2>
 
         {section.subtitle && (
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-emerald-100/90 font-sans leading-relaxed">
             {section.subtitle}
           </p>
         )}
 
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+        <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
           {section.primaryCtaText && (
             <Link
               to={section.primaryCtaUrl || "/get-involved"}
-              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-7 py-3.5 rounded-lg shadow-lg hover:shadow-amber-500/20 transition-all text-sm uppercase tracking-wide"
+              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-xl hover:shadow-amber-500/30 transition-all text-sm uppercase tracking-wide hover:-translate-y-0.5"
             >
               <span>{section.primaryCtaText}</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
             </Link>
           )}
 
           {section.secondaryCtaText && (
             <Link
               to={section.secondaryCtaUrl || "/track-donation"}
-              className="inline-flex items-center gap-2 border border-slate-700 hover:bg-white/10 text-white font-medium px-6 py-3.5 rounded-lg transition-all text-sm"
+              className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 text-white text-sm hover:-translate-y-0.5 transition-all"
             >
               <span>{section.secondaryCtaText}</span>
             </Link>
