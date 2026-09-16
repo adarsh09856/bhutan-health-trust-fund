@@ -348,7 +348,8 @@ export interface PageBlockSection {
     | "royal_decree"
     | "media_showcase"
     | "accordion_faq"
-    | "cta_banner";
+    | "cta_banner"
+    | "interactive_tools";
   title?: string;
   subtitle?: string;
   dzongkhaText?: string;

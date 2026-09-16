@@ -24,6 +24,10 @@ import {
   Globe,
   Award,
 } from "lucide-react";
+import { CommodityTracker } from "@/components/commodity-tracker";
+import { DzongkhagExplorer } from "@/components/dzongkhag-map";
+import { EndowmentCalculator } from "@/components/endowment-calculator";
+import { useCountUp } from "@/hooks/use-count-up";
 import heroBhutan from "@/assets/hero-bhutan.jpg";
 
 const iconMap: Record<string, any> = {
@@ -139,6 +143,8 @@ function renderSection(sec: PageBlockSection) {
       return <FaqAccordionBlock section={sec} />;
     case "cta_banner":
       return <CtaBannerBlock section={sec} />;
+    case "interactive_tools":
+      return <InteractiveToolsBlock section={sec} />;
     default:
       return (
         <div className="p-8 text-center text-slate-400 bg-slate-100 dark:bg-slate-800 text-sm">
@@ -260,7 +266,58 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
   );
 }
 
-// 2. Stats Block (Modern Bento Grid)
+// Animated Stat Item Card
+function AnimatedBentoStat({
+  title,
+  value,
+  description,
+  icon,
+}: {
+  title: string;
+  value: string;
+  description?: string;
+  icon: any;
+}) {
+  const Icon = getIcon(icon);
+  const numericMatch = (value || "").match(/^([\d,]+)/);
+  const rawNumber = numericMatch ? parseInt(numericMatch[1].replace(/,/g, ""), 10) : null;
+  const suffix = (value || "").replace(/^[\d,]+/, "");
+
+  const counter = useCountUp({
+    end: rawNumber ?? 0,
+    suffix: suffix,
+    duration: 1900,
+  });
+
+  return (
+    <div
+      ref={counter.ref}
+      className="card-modern rounded-3xl p-7 border border-slate-200/80 hover:border-amber-500/40 relative overflow-hidden group flex flex-col justify-between"
+    >
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-emerald-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div>
+        <div className="flex items-center justify-between mb-5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-sans">
+            {title}
+          </span>
+          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-amber-500/10 to-emerald-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <Icon className="h-6 w-6 stroke-[1.75]" />
+          </div>
+        </div>
+        <div className="text-4xl sm:text-5xl font-serif font-black text-slate-900 tracking-tight mb-2">
+          {rawNumber !== null ? counter.formatted : value}
+        </div>
+      </div>
+      {description && (
+        <p className="text-xs text-slate-600 leading-relaxed font-sans pt-2 border-t border-slate-100 mt-2">
+          {description}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// 2. Stats Block (Modern Bento Grid with Animated Count-Up)
 function StatsBlock({ section }: { section: PageBlockSection }) {
   const items = section.items || [];
 
@@ -283,35 +340,92 @@ function StatsBlock({ section }: { section: PageBlockSection }) {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {items.map((item, idx) => {
-            const Icon = getIcon(item.icon);
-            return (
-              <div
-                key={idx}
-                className="card-modern rounded-3xl p-7 border border-slate-200/80 hover:border-amber-500/40 relative overflow-hidden group flex flex-col justify-between"
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-emerald-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-sans">
-                      {item.title}
-                    </span>
-                    <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-amber-500/10 to-emerald-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Icon className="h-6 w-6 stroke-[1.75]" />
-                    </div>
-                  </div>
-                  <div className="text-4xl sm:text-5xl font-serif font-black text-slate-900 tracking-tight mb-2">
-                    {item.value}
-                  </div>
-                </div>
-                {item.description && (
-                  <p className="text-xs text-slate-600 leading-relaxed font-sans pt-2 border-t border-slate-100 mt-2">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-            );
-          })}
+          {items.map((item, idx) => (
+            <AnimatedBentoStat
+              key={idx}
+              title={item.title || ""}
+              value={item.value || ""}
+              description={item.description}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 8. Interactive Tools Block (Dzongkhag Map, Commodities, Endowment Calculator)
+function InteractiveToolsBlock({ section }: { section: PageBlockSection }) {
+  const [activeTab, setActiveTab] = useState<"map" | "commodities" | "calculator">("map");
+
+  return (
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200/80">
+      <div className="max-w-7xl mx-auto space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          {section.badge && (
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+              <span>{section.badge}</span>
+            </div>
+          )}
+          <h2 className="text-3xl sm:text-5xl font-serif font-black text-slate-900 tracking-tight">
+            {section.title || "Interactive Sovereign Portals & Transparency Tools"}
+          </h2>
+          <p className="text-base text-slate-600 font-sans leading-relaxed">
+            {section.subtitle || "Explore national health commodity supply chains, all 20 Dzongkhags cold-chain coverage, and simulate your 1:1 RGOB matched pledge."}
+          </p>
+        </div>
+
+        {/* Tab Switcher Pills */}
+        <div className="flex items-center justify-center">
+          <div className="inline-flex items-center gap-1.5 p-1.5 rounded-full bg-slate-100 border border-slate-200 shadow-inner">
+            <button
+              type="button"
+              onClick={() => setActiveTab("map")}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                activeTab === "map"
+                  ? "bg-emerald-900 text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white"
+              }`}
+            >
+              <MapPin className="h-4 w-4" />
+              <span>20 Dzongkhags Explorer</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab("commodities")}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                activeTab === "commodities"
+                  ? "bg-emerald-900 text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white"
+              }`}
+            >
+              <Pill className="h-4 w-4" />
+              <span>Commodities Pipeline</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab("calculator")}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                activeTab === "calculator"
+                  ? "bg-emerald-900 text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white"
+              }`}
+            >
+              <HeartHandshake className="h-4 w-4" />
+              <span>1:1 Matching Simulator</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Widget Viewport */}
+        <div className="pt-2">
+          {activeTab === "map" && <DzongkhagExplorer />}
+          {activeTab === "commodities" && <CommodityTracker />}
+          {activeTab === "calculator" && <EndowmentCalculator />}
         </div>
       </div>
     </section>

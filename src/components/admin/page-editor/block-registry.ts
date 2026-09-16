@@ -201,4 +201,19 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
       secondaryCtaUrl: "/track-donation",
     },
   },
+  {
+    type: "interactive_tools",
+    name: "Interactive Sovereign Portals",
+    description: "Interactive tools including 20 Dzongkhags Explorer, Commodities Pipeline, and 1:1 Matching Simulator.",
+    icon: Sparkles,
+    defaultData: {
+      type: "interactive_tools",
+      title: "National Health District Coverage & Matching Tools",
+      subtitle: "Explore national health commodity supply chains, all 20 Dzongkhags cold-chain coverage, and simulate your 1:1 RGOB matched pledge.",
+      badge: "Interactive Portals & Simulations",
+      bgVariant: "white",
+      padding: "normal",
+      isVisible: true,
+    },
+  },
 ];

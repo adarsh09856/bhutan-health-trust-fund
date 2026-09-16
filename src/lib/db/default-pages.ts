@@ -120,9 +120,18 @@ export const defaultCorePages: DefaultPageDef[] = [
         ],
       },
       {
+        id: "home-tools",
+        type: "interactive_tools",
+        order: 5,
+        isVisible: true,
+        badge: "Interactive Portals & Simulations",
+        title: "National Health District Coverage & Matching Tools",
+        subtitle: "Direct access to our 20 Dzongkhags cold-chain data, commodities distribution, and contribution matching.",
+      },
+      {
         id: "home-cta",
         type: "cta_banner",
-        order: 5,
+        order: 6,
         isVisible: true,
         title: "Every Ngultrum is Matched 1:1 by the Royal Government",
         subtitle:
