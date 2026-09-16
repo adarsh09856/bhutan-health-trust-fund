@@ -163,7 +163,7 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
 
   return (
     <section
-      className={`relative overflow-hidden py-24 sm:py-32 px-4 sm:px-6 lg:px-8 ${
+      className={`relative overflow-hidden pt-36 sm:pt-44 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 ${
         isDark ? "bg-mesh-dark text-white" : "bg-mesh-light text-slate-900 border-b border-slate-200"
       }`}
     >

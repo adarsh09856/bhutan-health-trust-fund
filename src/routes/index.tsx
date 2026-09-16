@@ -427,7 +427,7 @@ function Index() {
       )}
 
       {/* 1. Atmospheric Editorial Hero Section */}
-      <section className="relative overflow-hidden bg-[#071512] text-white">
+      <section className="relative overflow-hidden bg-[#071512] text-white pt-36 sm:pt-44 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8">
         {/* Photographic Backdrop with Vignette */}
         <div className="absolute inset-0 z-0">
           <img
@@ -435,83 +435,68 @@ function Index() {
             alt="Bhutan Himalayas and Mountain Valleys"
             width={1920}
             height={1080}
-            className="h-full w-full object-cover object-center opacity-35 pointer-events-none filter brightness-95"
+            className="h-full w-full object-cover object-center opacity-30 pointer-events-none filter brightness-95"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#071512] via-[#071512]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#071512] via-transparent to-[#071512]/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#071512] via-[#071512]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071512] via-transparent to-[#071512]/70" />
         </div>
 
         {/* Ambient Subtle Light Orbs */}
         <div className="absolute top-10 left-1/3 h-96 w-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-10 right-10 h-96 w-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-32 pb-24 sm:pt-40 sm:pb-32 lg:pt-44 lg:pb-36">
+        <div className="relative z-10 mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
             {/* Left Column: Monumental Editorial Typography */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-7">
               {/* Royal Charter Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-amber-400/30 text-amber-300 text-xs font-medium backdrop-blur-md">
-                <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-amber-400/30 text-amber-300 text-xs font-semibold backdrop-blur-xl shadow-lg">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
                 <span>Autonomous Statutory Trust • Royal Charter Mandate</span>
               </div>
 
               {/* Monumental Headline */}
-              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl xl:text-[4.75rem] font-normal tracking-tight text-white leading-[1.08]">
-                Sustaining Life-Saving Healthcare for{" "}
-                <span className="font-serif italic font-normal text-amber-300/95">
-                  Every Citizen
-                </span>{" "}
-                of Bhutan
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.08]">
+                Healthy People.{" "}
+                <span className="text-gradient-gold drop-shadow-sm">
+                  Stronger Bhutan.
+                </span>
               </h1>
 
-              {/* Editorial Deck */}
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans font-light max-w-2xl">
-                The Bhutan Health Trust Fund guarantees an uninterrupted, perpetual supply of
-                essential medicines and universal vaccines across all 20 Dzongkhags—protecting Gross
-                National Happiness and health equity in perpetuity.
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans max-w-2xl font-light">
+                Financing essential medicines and universal childhood vaccines to strengthen primary healthcare for every Bhutanese citizen across all 20 Dzongkhags.
               </p>
 
-              {/* Action Buttons */}
+              {/* Modern Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   to="/get-involved"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-sm font-semibold shadow-lg shadow-amber-400/15 transition-all duration-150 cursor-pointer active:scale-95"
+                  className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_25px_rgba(245,158,11,0.3)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.45)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
                 >
-                  <Heart className="h-4 w-4 fill-slate-950 text-slate-950" />
-                  <span>Contribute (1:1 Matched Pledge)</span>
+                  <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
+                  <span>Contribute (1:1 Matched)</span>
+                  <ArrowRight className="h-4 w-4 stroke-[2.5]" />
                 </Link>
 
                 <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white text-sm font-medium border border-white/20 backdrop-blur-md transition cursor-pointer"
+                  to="/our-work"
+                  className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/25 text-white shadow-lg hover:-translate-y-0.5 transition-all text-sm tracking-wide"
                 >
-                  <span>The Royal Charter Mandate</span>
-                  <ArrowRight className="h-4 w-4 text-slate-400" />
+                  <span>Explore Commodities</span>
                 </Link>
-              </div>
-
-              {/* Trust Credentials */}
-              <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-6 text-xs text-slate-300 font-medium">
-                <span className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-emerald-400" /> Statutory Sovereign Trust
-                </span>
-                <span className="flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-amber-400" /> 100% Ring-Fenced Health Corpus
-                </span>
-                <span className="flex items-center gap-2">
-                  <Award className="h-4 w-4 text-teal-300" /> Royal Audit Authority Certified
-                </span>
               </div>
             </div>
 
-            {/* Right Column: Floating Glass Sovereign Corpus Card */}
-            <div className="lg:col-span-5 relative">
+            {/* Right Column: Sovereign Corpus Endowment Card */}
+            <div className="lg:col-span-5">
               <HeroCorpusCard />
             </div>
           </div>
         </div>
       </section>
-
       {/* 2. Minimal Stat Numerals Bar (Gates / Endowus Style) */}
       <section className="border-b border-slate-200/70 bg-[#FAF8F3]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">

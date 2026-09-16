@@ -352,16 +352,6 @@ export function SiteHeader() {
             <Heart className="h-3.5 w-3.5 fill-slate-950 text-slate-950 shrink-0" />
             <span>Contribute (1:1 Matched)</span>
           </Link>
-
-          {user && (
-            <Link
-              to="/admin/dashboard"
-              className="whitespace-nowrap inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition duration-150 cursor-pointer shrink-0 border border-slate-700"
-            >
-              <LayoutDashboard className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-              <span>Admin Panel</span>
-            </Link>
-          )}
         </div>
 
         {/* Mobile Actions: Donate + Hamburger Toggle */}
