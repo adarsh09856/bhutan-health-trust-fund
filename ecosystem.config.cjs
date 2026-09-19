@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "bhtf-portal",
-      script: ".output/server/index.mjs",
+      script: "./.output/server/index.mjs",
       instances: "max",
       exec_mode: "cluster",
       env: {
