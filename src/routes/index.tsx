@@ -421,11 +421,13 @@ function Index() {
   const isCustomEdited = customSections && customSections.length > 5;
   if (isCustomEdited) {
     return (
-      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen">
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen pt-24 sm:pt-28">
         {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
-          <div className="bg-[#0B1F1A] text-amber-200 text-xs font-medium py-2.5 px-4 text-center border-b border-amber-500/20 flex items-center justify-center gap-2">
-            <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
-            <span>{settings["announcement_banner"]}</span>
+          <div className="mx-auto max-w-7xl w-full px-4 mb-6">
+            <div className="bg-[#0B1F1A] text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl text-center border border-amber-500/30 flex items-center justify-center gap-2.5 shadow-md">
+              <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
+              <span>{settings["announcement_banner"]}</span>
+            </div>
           </div>
         )}
         <PageRenderer sections={customSections} interactive={false} />
@@ -464,14 +466,6 @@ function Index() {
 
   return (
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
-      {/* Top Sovereign Announcement Ribbon if Enabled */}
-      {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
-        <div className="bg-[#0B1F1A] text-amber-200 text-xs font-medium py-2.5 px-4 text-center border-b border-amber-500/20 flex items-center justify-center gap-2">
-          <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
-          <span>{settings["announcement_banner"]}</span>
-        </div>
-      )}
-
       {/* 1. Atmospheric Modern Sovereign Dark Hero Section */}
       <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
         {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner (Isolated to Hero Section) */}
@@ -490,6 +484,14 @@ function Index() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
 
         <div className="relative z-10 mx-auto max-w-7xl">
+          {/* Top Sovereign Announcement Ribbon - Positioned Down After Header Menu Bar */}
+          {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
+            <div className="mb-6 sm:mb-8 bg-[#09221b]/95 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-xl shadow-xl animate-in fade-in slide-in-from-top-2">
+              <Sparkles className="h-4 w-4 shrink-0 text-amber-400 animate-pulse" />
+              <span className="leading-snug text-center">{settings["announcement_banner"]}</span>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Column: Monumental Editorial Typography with High Contrast */}
             <div className="lg:col-span-7 space-y-6 sm:space-y-7">
