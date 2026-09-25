@@ -650,7 +650,22 @@ class PersistentStore {
     this.init();
     const normalized = slug.trim().toLowerCase();
     const found = this.data!.customPages.find((p) => p.slug.toLowerCase() === normalized);
-    return found || null;
+    if (found) return found;
+
+    // Fallback: Check defaultCorePages and auto-instantiate if found
+    const def = defaultCorePages.find((dp) => dp.slug.toLowerCase() === normalized);
+    if (def) {
+      const created = this.saveCustomPage(normalized, {
+        title: def.title,
+        metaDescription: def.metaDescription,
+        sectionsJson: JSON.stringify(def.sections),
+        status: "published",
+        isSystemPage: def.isSystemPage,
+      });
+      return created;
+    }
+
+    return null;
   }
 
   public saveCustomPage(

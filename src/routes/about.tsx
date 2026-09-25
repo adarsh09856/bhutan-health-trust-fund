@@ -264,7 +264,7 @@ function About() {
       />
 
       {/* 1. Who We Are & Royal Mandate */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="organization" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-extrabold border border-emerald-200">
@@ -306,7 +306,7 @@ function About() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+          <div id="vision-mission" className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
             {dynamicValues.map((v) => (
               <div
                 key={v.title}
@@ -337,7 +337,7 @@ function About() {
       </section>
 
       {/* 2. Board of Trustees & Governance Structure */}
-      <section className="bg-gradient-to-b from-slate-50 via-white to-slate-50 border-y border-slate-200/80 py-16 sm:py-24">
+      <section id="trustees" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 border-y border-slate-200/80 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-2">
@@ -397,7 +397,7 @@ function About() {
       </section>
 
       {/* 3. Annexure 1: Organizational Structure of the Secretariat (Official Organogram) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="organogram" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-2 font-mono">
             Annexure 1 • Institutional Structure

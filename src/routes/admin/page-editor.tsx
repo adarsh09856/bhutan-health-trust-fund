@@ -304,10 +304,13 @@ export function AdminPageEditor() {
     }
   });
 
+  const isCoreActiveSlug =
+    DEFAULT_CORE_PAGES_MENU.some((cp) => cp.slug === activeSlug) || currentPage?.isSystemPage;
+
   const publicUrl =
     activeSlug === "home"
       ? "/"
-      : currentPage?.isSystemPage
+      : isCoreActiveSlug
         ? `/${activeSlug}`
         : `/p/${activeSlug}`;
 
@@ -407,15 +410,16 @@ export function AdminPageEditor() {
             </button>
           )}
 
-          <Link
-            to={publicUrl}
+          <a
+            href={publicUrl}
             target="_blank"
+            rel="noopener noreferrer"
             className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-colors flex items-center gap-1.5"
             title="Preview Live Page in New Tab"
           >
             <ExternalLink className="h-3.5 w-3.5" />
             <span className="hidden lg:inline">View Live</span>
-          </Link>
+          </a>
 
           <button
             type="button"

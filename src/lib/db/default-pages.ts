@@ -236,6 +236,29 @@ export const defaultCorePages: DefaultPageDef[] = [
     ],
   },
   {
+    slug: "our-story",
+    title: "Our Story & Historical Milestones | Bhutan Health Trust Fund",
+    metaDescription:
+      "The founding chronicle of Bhutan Health Trust Fund from the 1998 WHO Geneva launch, Royal Charter enactment by His Majesty the Fourth Druk Gyalpo, to universal healthcare security.",
+    isSystemPage: true,
+    sections: [
+      {
+        id: "our-story-hero",
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: "Our Story & Founding Vision",
+        subtitle:
+          "Over more than two decades, BHTF has grown from a visionary pledge in Geneva into an enduring national endowment sustaining primary healthcare for every Bhutanese citizen.",
+        dzongkhaText: "བྱུང་རབས་དང་ རྒྱལ་པོའི་མཐོང་སྣང་།",
+        badge: "The Chronicle of Health Sovereignty • 1998–2026",
+        bgVariant: "dark",
+        primaryCtaText: "Explore Milestones",
+        primaryCtaUrl: "/our-story#milestones",
+      },
+    ],
+  },
+  {
     slug: "our-work",
     title: "Healthcare Programs & Essential Medicines | BHTF",
     metaDescription:

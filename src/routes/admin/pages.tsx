@@ -118,6 +118,7 @@ export function AdminPagesList() {
   const DEFAULT_CORE_PAGES_FALLBACK = [
     { slug: "home", title: "Home Page", metaDescription: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
     { slug: "about", title: "About Us & Royal Charter", metaDescription: "Founding history, Royal Charter mandate & Board of Trustees" },
+    { slug: "our-story", title: "Our Story & Historical Milestones", metaDescription: "The founding chronicle of Bhutan Health Trust Fund and official milestones" },
     { slug: "our-work", title: "Our Programs & Commodities", metaDescription: "120+ Essential Medicines, Universal Vaccines & 20 Dzongkhags Reach" },
     { slug: "reports", title: "Reports & Financial Audits", metaDescription: "Annual reports and RAA certified statutory financial statements" },
     { slug: "policies", title: "Governance & Policies", metaDescription: "Trust regulations, procurement ethics & whistleblower protections" },
@@ -229,15 +230,16 @@ export function AdminPagesList() {
         {/* Actions Footer */}
         <div className="bg-slate-50/80 px-5 py-3 border-t border-slate-100 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1">
-            <Link
-              to={publicUrl}
+            <a
+              href={publicUrl}
               target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 text-xs font-medium px-2.5 py-1.5 rounded-md hover:bg-slate-200/60 transition-colors"
               title="View Live Public Route"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               <span>View</span>
-            </Link>
+            </a>
 
             {isCore && (
               <button

@@ -268,7 +268,7 @@ function ReportsPage() {
       </section>
 
       {/* Dedicated Section: Window Financing (MOF Requisition & Quarterly Releases) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="window-financing" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-br from-slate-900 via-[#071914] to-emerald-950 text-white rounded-3xl p-6 sm:p-10 border border-emerald-500/30 shadow-xl space-y-8">
           <div className="max-w-3xl space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300 font-bold px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 inline-block">

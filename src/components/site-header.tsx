@@ -124,9 +124,10 @@ export function SiteHeader() {
             </Link>
 
             {openDropdown === "about" && (
-              <div className="absolute top-full left-0 mt-2 w-72 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+              <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
                 <Link
                   to="/about"
+                  hash="organization"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -144,6 +145,7 @@ export function SiteHeader() {
 
                 <Link
                   to="/about"
+                  hash="vision-mission"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-500 group-hover:text-white transition">
@@ -161,6 +163,7 @@ export function SiteHeader() {
 
                 <Link
                   to="/about"
+                  hash="trustees"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-teal-50 text-teal-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-teal-600 group-hover:text-white transition">
@@ -168,10 +171,28 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-teal-700 transition">
-                      Who is Who & Organogram
+                      Board of Trustees & Oversight
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Board of Directors, AMC, Secretariat & 3 Divisions
+                      High-level multi-sectoral fiduciary governance
+                    </p>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/about"
+                  hash="organogram"
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <Landmark className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
+                      Secretariat & Organogram
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Annexure 1: AMC, Directorate & 3 Operational Divisions
                     </p>
                   </div>
                 </Link>
@@ -304,6 +325,7 @@ export function SiteHeader() {
 
                 <Link
                   to="/reports"
+                  hash="window-financing"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
