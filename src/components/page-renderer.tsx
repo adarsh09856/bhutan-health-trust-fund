@@ -243,14 +243,14 @@ function RendererHeroCorpusCard() {
           </div>
         </div>
 
-        {/* Simulator Link */}
+        {/* Donate Link */}
         <div className="pt-1">
           <Link
             to="/get-involved"
-            className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-[0_10px_25px_rgba(212,162,55,0.4)] hover:shadow-[0_14px_32px_rgba(212,162,55,0.55)] hover:-translate-y-0.5 transition-all active:translate-y-0"
+            className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-[0_10px_25px_rgba(212,162,55,0.4)] hover:shadow-[0_14px_32px_rgba(212,162,55,0.55)] hover:-translate-y-0.5 transition-all active:translate-y-0"
           >
-            <Sparkles className="h-3.5 w-3.5 fill-slate-950" />
-            <span>Simulate Your 1:1 Matched Contribution →</span>
+            <HeartHandshake className="h-4 w-4 text-slate-950" />
+            <span>Donate to Healthcare Endowment →</span>
           </Link>
         </div>
 
