@@ -125,6 +125,7 @@ export function SiteHeader() {
 
             {openDropdown === "about" && (
               <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                {/* 1. Organization */}
                 <Link
                   to="/about"
                   hash="organization"
@@ -135,17 +136,17 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      Our Organization & Mandate
+                      Organization
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Royal Charter statutory governance & GNH foundation
+                      Royal Charter mandate & statutory founding
                     </p>
                   </div>
                 </Link>
 
+                {/* 2. Our History */}
                 <Link
-                  to="/about"
-                  hash="vision-mission"
+                  to="/our-story"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-500 group-hover:text-white transition">
@@ -153,17 +154,67 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
-                      Vision & Mission
+                      Our History
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Approved July 17, 2026 Sovereign health charter
+                      Chronicle from 1998 Geneva launch to 2026
                     </p>
                   </div>
                 </Link>
 
+                {/* 3. Programs & Projects Portfolio */}
+                <Link
+                  to="/our-work"
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <Pill className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
+                      Programs & Projects Portfolio
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Essential medicines, vaccines & cold chain
+                    </p>
+                  </div>
+                </Link>
+
+                {/* 4. Governance (With Direct BTF Submenu Links) */}
+                <div className="pt-1 border-t border-slate-100">
+                  <div className="px-2.5 py-1 text-[10px] font-mono uppercase tracking-widest text-emerald-800 font-extrabold flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 inline-block" />
+                    Governance & Oversight
+                  </div>
+
+                  <div className="pl-3 space-y-0.5 border-l-2 border-emerald-100 ml-3 my-1">
+                    <Link
+                      to="/about"
+                      hash="trustees"
+                      className="block px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition"
+                    >
+                      • Board of Trustees
+                    </Link>
+                    <Link
+                      to="/about"
+                      hash="organogram"
+                      className="block px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition"
+                    >
+                      • Asset Management Committee
+                    </Link>
+                    <Link
+                      to="/policies"
+                      className="block px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition"
+                    >
+                      • Governance & Audit Committee
+                    </Link>
+                  </div>
+                </div>
+
+                {/* 5. Secretariat */}
                 <Link
                   to="/about"
-                  hash="trustees"
+                  hash="organogram"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-teal-50 text-teal-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-teal-600 group-hover:text-white transition">
@@ -171,28 +222,10 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-teal-700 transition">
-                      Board of Trustees & Oversight
+                      Secretariat
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      High-level multi-sectoral fiduciary governance
-                    </p>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/about"
-                  hash="organogram"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <Landmark className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
-                      Secretariat & Organogram
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Annexure 1: AMC, Directorate & 3 Operational Divisions
+                      Directorate & 3 Operational Divisions
                     </p>
                   </div>
                 </Link>

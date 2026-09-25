@@ -38,6 +38,7 @@ import {
   Zap,
 } from "lucide-react";
 import hero from "@/assets/hero-bhutan.jpg";
+import kingPortrait from "@/assets/king_portrait_fourth.jpg";
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
@@ -470,12 +471,21 @@ function Index() {
       <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
         {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner (Isolated to Hero Section) */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-40 mix-blend-luminosity"
           style={{ backgroundImage: `url(${hero})` }}
         />
-        {/* Cinematic split vignette: high contrast on left for typography, open on right for Dzong & snowy peaks */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/92 via-[#061713]/60 to-black/35 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/50 via-transparent to-[#061713] pointer-events-none" />
+        {/* Authentic Horizontal Portrait of His Majesty The Fourth Druk Gyalpo blended on right side */}
+        <div
+          className="absolute inset-0 bg-no-repeat pointer-events-none opacity-55"
+          style={{
+            backgroundImage: `url(${kingPortrait})`,
+            backgroundPosition: "right 5% top 15%",
+            backgroundSize: "contain",
+          }}
+        />
+        {/* Cinematic split vignette: high contrast on left for typography, open on right for King & snowy peaks */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713] via-[#061713]/75 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/70 via-transparent to-[#061713] pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
