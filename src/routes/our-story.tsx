@@ -17,6 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import heroBhutan from "@/assets/hero-bhutan.jpg";
+import kingPortrait from "@/assets/king_portrait_fourth.jpg";
 
 export const Route = createFileRoute("/our-story")({
   loader: async () => {
@@ -193,18 +194,35 @@ function OurStoryPage() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-gradient-to-br from-emerald-950 via-[#0a231c] to-slate-900 p-8 text-white space-y-4 text-center">
-              <div className="h-16 w-16 mx-auto rounded-2xl bg-amber-400/20 border border-amber-400/40 text-amber-300 grid place-items-center">
-                <Award className="h-8 w-8" />
+            <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl bg-gradient-to-br from-[#071914] via-[#0B251E] to-slate-950 text-white">
+              {/* Blended Fourth King Portrait Snapshot */}
+              <div className="relative h-72 sm:h-80 w-full overflow-hidden">
+                <img
+                  src={kingPortrait}
+                  alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
+                  className="w-full h-full object-cover object-top opacity-90 transition-transform duration-500 hover:scale-105"
+                />
+                {/* Elegant dark fade overlay at bottom and sides so snapshot blends seamlessly */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071914] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#071914]/40 via-transparent to-[#071914]/40" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-amber-200">
-                The Geneva Founding Charter
-              </h3>
-              <p className="text-xs text-slate-200 leading-relaxed font-light">
-                "No citizen should ever have to choose between their life and their livelihood. The Health Trust Fund represents Bhutan's commitment to self-reliance and collective compassion."
-              </p>
-              <div className="pt-2 text-[11px] font-mono text-emerald-300 uppercase tracking-widest font-bold">
-                WHO Geneva • 12 May 1998
+
+              {/* Caption & Geneva Quote Below Image */}
+              <div className="p-6 sm:p-7 space-y-3 relative z-10 -mt-6">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <span className="text-[10px] font-mono text-amber-300 font-bold uppercase tracking-wider">
+                    Royal Visionary & Benefactor
+                  </span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/30">
+                    Royal Charter 2000
+                  </span>
+                </div>
+                <h3 className="font-serif text-lg font-bold text-white leading-snug">
+                  His Majesty the Fourth Druk Gyalpo
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-light">
+                  "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. BHTF stands as a sacred trust of self-reliance for generations to come."
+                </p>
               </div>
             </div>
           </div>

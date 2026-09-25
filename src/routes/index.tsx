@@ -243,7 +243,7 @@ function MinimalStatItem({
   );
 }
 
-// Sovereign Glass Hero Corpus Card with Ultra-Crisp High Contrast
+// Sovereign Glass Hero Corpus Card with Translucent Pure Glassmorphism
 function HeroCorpusCard() {
   const corpusCounter = useCountUp({
     end: 3248500000,
@@ -253,10 +253,10 @@ function HeroCorpusCard() {
 
   return (
     <div className="relative space-y-3">
-      {/* Main Glassmorphic Corpus Card with Deep Opaque Chassis */}
+      {/* Translucent Pure Glass Chassis Over Authentic Scenic Background */}
       <div
         ref={corpusCounter.ref}
-        className="relative rounded-3xl bg-[#061813]/95 border border-white/20 ring-1 ring-white/10 p-5 sm:p-7 shadow-[0_32px_80px_-10px_rgba(0,0,0,0.9)] backdrop-blur-2xl space-y-5 overflow-hidden md:animate-float text-white"
+        className="relative rounded-3xl bg-white/[0.08] hover:bg-white/[0.11] border border-white/20 p-5 sm:p-7 shadow-[0_24px_60px_-10px_rgba(0,0,0,0.6)] backdrop-blur-xl space-y-5 overflow-hidden md:animate-float text-white transition-all"
       >
         {/* Subtle Top Gold Hairline Accent */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
@@ -356,8 +356,8 @@ function HeroCorpusCard() {
         </div>
       </div>
 
-      {/* Floating Operational Status Satellite Micro-Card with Solid Backing */}
-      <div className="flex items-center justify-between bg-[#061713]/98 border border-amber-400/35 ring-1 ring-amber-400/20 rounded-2xl p-3.5 shadow-2xl backdrop-blur-2xl text-xs">
+      {/* Floating Operational Status Satellite Micro-Card with Translucent Glass */}
+      <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 rounded-2xl p-3.5 shadow-xl backdrop-blur-xl text-xs">
         <div className="flex items-center gap-2.5">
           <div className="h-7 w-7 rounded-lg bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 grid place-items-center shrink-0">
             <MapPin className="h-3.5 w-3.5" />
