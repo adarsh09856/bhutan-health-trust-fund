@@ -81,14 +81,14 @@ const values = [
     icon: Target,
     title: "Our Mission",
     dzongkha: "དམིགས་ཡུལ།",
-    text: "To sustainably finance essential drugs and universal vaccines, guaranteeing uninterrupted, equitable access to primary healthcare for every citizen in Bhutan.",
+    text: "To mobilise, invest, and prudently manage a dedicated health endowment to generate sustainable income for the financing of essential medicines, vaccines, and related health supplies.",
     color: "bg-[#FAF8F3] text-emerald-800 border-slate-200/80",
   },
   {
     icon: Eye,
     title: "Our Vision",
     dzongkha: "མཐོང་སྣང་།",
-    text: "A self-reliant, resilient, and sovereign national health financing system where no Bhutanese is ever denied life-saving medicines or vaccines.",
+    text: "A Bhutan where every citizen has uninterrupted access to essential medicines and vaccines, now and for generations to come.",
     color: "bg-[#FAF8F3] text-emerald-800 border-slate-200/80",
   },
   {
@@ -392,6 +392,168 @@ function About() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Annexure 1: Organizational Structure of the Secretariat (Official Organogram) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-2 font-mono">
+            Annexure 1 • Institutional Structure
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-serif">
+            Organizational Structure of the Secretariat
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed">
+            Approved statutory reporting hierarchy linking the Board of Trustees, Asset Management Committee, Executive Directorate, and 3 specialized operational divisions.
+          </p>
+        </div>
+
+        {/* Interactive Visual Organogram Tree */}
+        <div className="bg-slate-50/70 border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
+          {/* Top Level: Board of Directors */}
+          <div className="flex justify-center">
+            <div className="w-full max-w-md bg-white border-2 border-emerald-800/80 rounded-2xl p-4 text-center shadow-md">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-800 font-extrabold block mb-1">
+                Apex Statutory Governance
+              </span>
+              <h3 className="font-serif text-lg font-black text-slate-900">
+                Board of Trustees
+              </h3>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                Chaired by Lyonpo, Ministry of Health, RGOB
+              </p>
+            </div>
+          </div>
+
+          {/* Connecting Vertical Stem */}
+          <div className="w-px h-8 bg-slate-300 mx-auto" />
+
+          {/* Mid Level: AMC & Director */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <div className="bg-white border border-amber-300/80 rounded-2xl p-4 text-center shadow-xs">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-800 font-bold block mb-1">
+                Fiduciary Advisory
+              </span>
+              <h4 className="font-serif text-base font-bold text-slate-900">
+                Asset Management Committee (AMC)
+              </h4>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                Direct statutory advisory to the Board
+              </p>
+            </div>
+
+            <div className="bg-white border-2 border-emerald-700 rounded-2xl p-4 text-center shadow-xs">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 font-bold block mb-1">
+                Executive Leadership
+              </span>
+              <h4 className="font-serif text-base font-bold text-slate-900">
+                Director / Executive Secretary
+              </h4>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                Executive head of Secretariat operations
+              </p>
+            </div>
+          </div>
+
+          {/* Connecting Vertical Stem */}
+          <div className="w-px h-8 bg-slate-300 mx-auto" />
+
+          {/* 3 Secretariat Divisions (Annexure 1 Specification) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            {/* Division 1: Investment Management */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="h-9 w-9 rounded-xl bg-teal-50 text-teal-800 grid place-items-center mb-3">
+                  <TrendingUp className="h-4 w-4" />
+                </div>
+                <h4 className="font-serif text-base font-bold text-slate-900">
+                  Investment Management Division
+                </h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Responsible for capital endowment preservation, asset diversification, and yield optimization.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs text-slate-700">
+                <div className="font-bold text-[11px] text-slate-500 uppercase tracking-wider">Approved Cadre</div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Chief of Division</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Investment Officer</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Division 2: Administration & Finance */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-800 grid place-items-center mb-3">
+                  <Building2 className="h-4 w-4" />
+                </div>
+                <h4 className="font-serif text-base font-bold text-slate-900">
+                  Administration & Finance Division
+                </h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Directs statutory accounting, audit compliance, general secretariat administration, and HR logistics.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1 text-xs text-slate-700">
+                <div className="font-bold text-[11px] text-slate-500 uppercase tracking-wider">Approved Cadre</div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Personal Assistant (PA)</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Accountant</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Administrative Assistant</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Driver / Peon</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Security Guard / Sweeper</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Division 3: Programme Division */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center mb-3">
+                  <ShieldCheck className="h-4 w-4" />
+                </div>
+                <h4 className="font-serif text-base font-bold text-slate-900">
+                  Programme Division
+                </h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Monitors health commodity procurement, 20 Dzongkhags cold chain, vaccine buffers, and primary health financing.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs text-slate-700">
+                <div className="font-bold text-[11px] text-slate-500 uppercase tracking-wider">Approved Cadre</div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Chief Programme Officer</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+                <div className="flex items-center justify-between font-medium">
+                  <span>• Programme Officer</span>
+                  <span className="font-mono text-slate-500 font-bold">1</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

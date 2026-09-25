@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
@@ -67,6 +68,11 @@ const GetInvolvedRoute = GetInvolvedRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurStoryRoute = OurStoryRouteImport.update({
+  id: '/our-story',
+  path: '/our-story',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OurWorkRoute = OurWorkRouteImport.update({
@@ -221,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
+  '/our-story': typeof OurStoryRoute
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
@@ -257,6 +264,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
+  '/our-story': typeof OurStoryRoute
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
@@ -294,6 +302,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
+  '/our-story': typeof OurStoryRoute
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
@@ -332,6 +341,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/get-involved'
     | '/news'
+    | '/our-story'
     | '/our-work'
     | '/policies'
     | '/reports'
@@ -368,6 +378,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/get-involved'
     | '/news'
+    | '/our-story'
     | '/our-work'
     | '/policies'
     | '/reports'
@@ -404,6 +415,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/get-involved'
     | '/news'
+    | '/our-story'
     | '/our-work'
     | '/policies'
     | '/reports'
@@ -441,6 +453,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
   NewsRoute: typeof NewsRouteWithChildren
+  OurStoryRoute: typeof OurStoryRoute
   OurWorkRoute: typeof OurWorkRoute
   PoliciesRoute: typeof PoliciesRoute
   ReportsRoute: typeof ReportsRoute
@@ -506,6 +519,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-story': {
+      id: '/our-story'
+      path: '/our-story'
+      fullPath: '/our-story'
+      preLoaderRoute: typeof OurStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/our-work': {
@@ -730,6 +750,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   GetInvolvedRoute: GetInvolvedRoute,
   NewsRoute: NewsRouteWithChildren,
+  OurStoryRoute: OurStoryRoute,
   OurWorkRoute: OurWorkRoute,
   PoliciesRoute: PoliciesRoute,
   ReportsRoute: ReportsRoute,

@@ -266,6 +266,93 @@ function ReportsPage() {
           </div>
         )}
       </section>
+
+      {/* Dedicated Section: Window Financing (MOF Requisition & Quarterly Releases) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-slate-900 via-[#071914] to-emerald-950 text-white rounded-3xl p-6 sm:p-10 border border-emerald-500/30 shadow-xl space-y-8">
+          <div className="max-w-3xl space-y-3">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300 font-bold px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 inline-block">
+              Statutory Mechanism • Window Financing
+            </span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-black text-white">
+              Ministry of Finance Window Financing & Quarterly Releases
+            </h2>
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-light font-sans">
+              Window Financing is the formal statutory channel through which BHTF disburses endowment yields to the Royal Government's Department of Medical Services (DMS) via the Ministry of Finance (MOF) for essential primary healthcare procurement.
+            </p>
+          </div>
+
+          {/* 4 Quarterly Releases Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                quarter: "First Quarter (Q1)",
+                period: "July – September",
+                focus: "Pediatric Routine Antigens & Cold Chain Replenishment",
+                status: "Executed & Reconciled",
+                statusColor: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
+              },
+              {
+                quarter: "Second Quarter (Q2)",
+                period: "October – December",
+                focus: "Winter Essential Drug Buffer Stock across 205 Gewogs",
+                status: "Executed & Reconciled",
+                statusColor: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
+              },
+              {
+                quarter: "Third Quarter (Q3)",
+                period: "January – March",
+                focus: "Annual Formula Review & International Tender Indents",
+                status: "Active Disbursement",
+                statusColor: "text-amber-300 border-amber-400/40 bg-amber-400/10",
+              },
+              {
+                quarter: "Fourth Quarter (Q4)",
+                period: "April – June",
+                focus: "Year-End Audit Verification & Fiscal Reconciliation",
+                status: "Scheduled",
+                statusColor: "text-slate-300 border-slate-500/40 bg-white/5",
+              },
+            ].map((q) => (
+              <div key={q.quarter} className="bg-white/5 border border-white/10 rounded-2xl p-5 space-y-3 backdrop-blur-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-serif text-sm font-bold text-white">{q.quarter}</span>
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${q.statusColor}`}>
+                    {q.status}
+                  </span>
+                </div>
+                <div className="text-[11px] text-amber-200/90 font-mono">{q.period}</div>
+                <p className="text-xs text-slate-300 leading-relaxed font-light">
+                  {q.focus}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Process & Compliance Accordion/Note */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t border-white/10 text-xs">
+            <div className="space-y-2">
+              <h4 className="font-bold text-white text-sm flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                <span>Requisition & Fund-Release Procedures</span>
+              </h4>
+              <p className="text-slate-300 leading-relaxed font-light">
+                Disbursements are contingent upon statutory requisition submitted by the Department of Medical Services through the Ministry of Finance. All procurement indent schedules must comply with the approved National Essential Drugs List (NEDL).
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-bold text-white text-sm flex items-center gap-2">
+                <Award className="h-4 w-4 text-amber-400" />
+                <span>Reporting Compliance & Non-Submission Rule</span>
+              </h4>
+              <p className="text-slate-300 leading-relaxed font-light">
+                Subsequent quarterly releases require verified physical stock receipt reconciliation. Non-submission or late filing of utilization reports triggers statutory holdbacks until cleared by the Asset Management Committee.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

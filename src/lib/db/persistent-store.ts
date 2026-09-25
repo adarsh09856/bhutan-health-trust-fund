@@ -232,7 +232,7 @@ class PersistentStore {
       donorPhone: d.donorPhone || null,
       amountNu: d.amountNu,
       currency: d.currency || "BTN",
-      paymentMethod: d.paymentMethod,
+      paymentMethod: d.paymentMethod || "MBOB",
       status: d.status || "PENDING",
       message: d.message || null,
       isAnonymous: d.isAnonymous || false,

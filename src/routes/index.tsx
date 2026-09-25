@@ -523,51 +523,32 @@ function Index() {
                 Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance.
               </p>
 
-              {/* Feature Highlights Pills with Solid High-Contrast Contrast */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs">
-                <div className="flex items-center gap-2 bg-[#091f1a]/85 p-2.5 rounded-xl border border-white/20 backdrop-blur-md shadow-sm">
+              {/* Clean Transparent Highlights Grid (De-AI, Authentic Institutional) */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
+                <div className="flex items-center gap-2.5 bg-white/[0.08] hover:bg-white/[0.12] p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-semibold text-white">Zero Stockout Guarantee</span>
                 </div>
-                <div className="flex items-center gap-2 bg-[#091f1a]/85 p-2.5 rounded-xl border border-white/20 backdrop-blur-md shadow-sm">
+                <div className="flex items-center gap-2.5 bg-white/[0.08] hover:bg-white/[0.12] p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-semibold text-white">205 Remote Gewogs</span>
                 </div>
-                <div className="flex items-center gap-2 bg-[#091f1a]/85 p-2.5 rounded-xl border border-white/20 col-span-2 sm:col-span-1 backdrop-blur-md shadow-sm">
+                <div className="flex items-center gap-2.5 bg-white/[0.08] hover:bg-white/[0.12] p-3 rounded-2xl border border-white/15 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-semibold text-white">100% Tax Exempt (DRC)</span>
+                  <span className="font-semibold text-white">100% DRC Tax Exempt</span>
                 </div>
               </div>
 
-              {/* Modern Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/get-involved"
-                  className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_28px_rgba(245,158,11,0.4)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.55)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
-                >
-                  <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
-                  <span>Contribute (1:1 Matched)</span>
-                  <ArrowRight className="h-4 w-4 stroke-[2.5]" />
-                </Link>
-
-                <Link
-                  to="/our-work"
-                  className="inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full bg-[#061a15]/85 hover:bg-[#061a15] border border-white/30 text-white shadow-md hover:-translate-y-0.5 transition-all text-sm tracking-wide backdrop-blur-md"
-                >
-                  <span>Explore 6 Commodity Streams</span>
-                </Link>
-              </div>
-
               {/* Institutional Endorsement Bar */}
-              <div className="pt-3.5 flex flex-wrap items-center gap-3 text-xs border-t border-white/15">
+              <div className="pt-4 flex flex-wrap items-center gap-3 text-xs border-t border-white/15">
                 <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold font-mono">
-                  Sovereign Partners:
+                  Sovereign Multilateral Partners:
                 </span>
-                <span className="text-slate-200 font-semibold">World Health Organization (WHO)</span>
+                <span className="text-slate-200 font-semibold">WHO</span>
                 <span className="text-slate-500">•</span>
                 <span className="text-slate-200 font-semibold">UNICEF</span>
                 <span className="text-slate-500">•</span>
-                <span className="text-slate-200 font-semibold">Gavi, The Vaccine Alliance</span>
+                <span className="text-slate-200 font-semibold">Gavi Alliance</span>
                 <span className="text-slate-500">•</span>
                 <span className="text-slate-200 font-semibold">World Bank</span>
               </div>

@@ -1,0 +1,8 @@
+Add a picture of fourth king and make the snapshot blend with the background.
+This all should be in main menu except for donation should have separate section on top with significant design.
+Take the reference for organogram from Bhutan trust fund and use the existing photos from their previous website.
+These are what should come under window financing.
+Reasons why resources is given , it should come inside the resource home page.
+Activities can either placed under news and event or in footers if preferred
+These are the things that should be in donation page explaining all of these.
+All of this should be dynamic  and editables.

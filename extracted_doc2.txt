@@ -1,0 +1,202 @@
+BHUTAN HEALTH TRUST FUNDWEBSITE REMARKS, CHANGES & ACTION PLAN
+Consolidated requirements, final navigation structure and reference websites
+1. General Design & Content
+Keep the website clean, professional, natural, consistent and easy to navigate.
+Maintain uniformity in wording, terminology, headings, fonts, spacing, image sizing and presentation.
+Do not unnecessarily change information already provided and approved.
+Avoid too many main menu items; group related information logically.
+Make frequently updated sections dynamic/editable.
+Use high-resolution, natural-looking, relevant photographs; source suitable high-quality images online when needed.
+Avoid overly artificial or AI-looking photographs.
+Keep content concise and visually organized rather than using large blocks of text.
+2. Final Main Navigation
+ABOUT US  |  OUR STORY  |  OUR IMPACT  |  RESOURCES  |  NEWS & EVENTS  |  DONATE
+3. About Us
+Our Organization
+Use the existing organizational information already provided. No unnecessary changes where approved information is correct.
+Mandate & Vision
+Include the organization's mandate.
+Include the organization's vision and relevant organizational information.
+Who Is Who
+Current Board of Directors
+Asset Management Committee
+Secretary
+Photos
+Use existing photos where the people are still the same.
+Do not retake photos unnecessarily when the existing photo is correct.
+Use updated photos where a person has changed.
+Use the previously provided Asset Management Committee photo where applicable.
+Use the existing Secretary photo where suitable.
+Replace a photo only where it is not visually suitable and a better available photo exists.
+Maintain uniform sizing, positioning and presentation.
+4. Our Story
+Keep Our Story separate from Our Impact.
+Use this section for the Bhutan Health Trust Fund's history and development.
+Include history, milestones and important dates, including the relevant 2005–2025 period.
+The detailed historical write-up will be provided separately.
+Make dates and milestones dynamic/editable.
+5. Our Impact
+Keep Our Impact separate from Our Story.
+Explain how the Fund's work affects people's lives.
+Cover vaccination, immunization, saving lives, procurement of medicines and other major health interventions.
+Include significant achievements, impact information and measurable figures where available.
+Use relevant high-resolution photographs.
+Focus on results and impact rather than repeating the organization's history.
+6. Resources
+Create one dedicated Resources section for official documents and materials.
+Keep resources together and make them individually accessible/downloadable where applicable.
+Resources to Include
+Royal Charter
+Investment Policy
+Financial Management documents
+Fund Mobilization Strategy
+Annual Reports
+Audit Reports
+Advocacy Materials
+Other official documents
+Window Financing
+Explain what Window Financing is, the Ministry of Finance requisition process and fund-release procedure.
+Include quarterly releases: First, Second, Third and Fourth Quarter.
+Include release request, reporting requirements and non-submission/reporting requirements.
+Include other applicable procedures.
+Keep this information dynamic because procedures may change.
+transparency & Accountability
+Make relevant historical and official documents publicly accessible where appropriate.
+Provide access to applicable 2005–2025 records/documents.
+Use accessible formats such as HTML/PDF where appropriate.
+Support transparency, accountability and public access to official information.
+9. News & Events
+News
+Official announcements
+Organizational updates
+Institutional developments
+Major updates
+Other official news
+Events
+Fundraising events
+National events
+Campaigns
+Awareness programs
+Conferences
+Commemorations
+Other public events
+Activities
+Activities should not become a separate main menu item.
+Place Activities under Events, or use the footer if preferred.
+10. Donate
+Provide both Domestic and International donation options.
+Make donation/payment information dynamic/editable.
+Domestic
+Donation/payment information
+QR code
+Donation instructions
+Tax exemption
+One-to-One Golden Matching
+Capital preservation
+Return/interest
+Dedication options
+International
+Separate international donation option and applicable payment method.
+Update international details when the appropriate system/information is available.
+Donation Messages & Content
+Use concise, meaningful messages.
+“Your gift protects the health of every Bhutanese forever.”
+“No Buddhist should ever have to choose between their health and their livelihood.”
+Present these messages visually and avoid making the page text-heavy.
+Tax Exemption
+Include a concise explanation of applicable tax exemption.
+Refer to relevant Department of Revenue and Customs (DRC) guidance.
+Possible caption: “Give generously, save on tax.”
+Use the officially applicable percentage/rule and keep it editable if requirements change.
+One-to-One Golden Matching
+Include a concise explanation of the initiative and how matching works, using officially approved wording.
+Capital Preservation
+Explain the capital-preservation concept simply.
+The intended explanation is that the principal donation is preserved while the applicable return/interest supports the intended purpose.
+Example discussed: a Nu. 500 contribution preserves the principal while applicable interest/return is utilized according to the established mechanism.
+Confirm final financial wording before publication.
+Return on Investment
+Include a short, clear explanation of the applicable return/interest associated with the donation mechanism.
+Dedication
+Allow donations for birthdays, celebrations, in memory of someone, and other meaningful occasions.
+Dynamic / Editable Sections
+Who Is Who and Board/Committee information
+Our Story and milestones
+Our Impact
+Resources/documents
+Window Financing
+News
+Events
+Donation/payment information
+QR code/payment details
+Tax-related information
+Other periodically changing information
+The goal is for authorized staff to update information without redesigning the website for every small change.
+18. Footer
+Activities, if not placed under Events
+Contact
+Privacy Policy
+Terms & Conditions
+Other secondary/institutional links
+19. Final Navigation Hierarchy
+ABOUT US
+Our Organization
+Mandate
+Vision and mission
+Who Is Who → Board of Directors
+Who Is Who → Asset Management Committee
+Who Is Who → Secretary
+OUR STORY
+History
+Milestones
+2005–2025
+OUR IMPACT
+Vaccination & Immunization
+Medicines / Procurement
+Saving Lives
+Other major health interventions
+Achievements & Impact
+RESOURCES
+Royal Charter
+Investment Policy
+Financial Management
+Fund Mobilization Strategy
+Annual Reports
+Audit Reports
+Advocacy Materials
+Window Financing
+Other official documents
+NEWS & EVENTS
+News
+Events
+Activities
+DONATE
+Domestic
+International
+20. Reference Websites / Design Benchmarks
+Use the following Bhutanese organizations as reference points for structure, content presentation, navigation, governance/institutional information, resources, stories/impact, news, and donation/get-involved presentation. These are references only; do not copy their branding or content.
+Bhutan Trust Fund for Environmental Conservation
+https://www.bhutantrustfund.bt
+Useful reference for trust-fund institutional presentation, governance, organizational information, announcements and downloadable reports. The current site presents About Us information, governance and News & Stories.
+Bhutan Kidney Foundation
+https://bkfbhutan.org
+Useful reference for About Us, programmes/services, News & Announcements, Downloads, Reports, donation/get-involved options, and success-story/impact presentation.
+Bhutan Toilet Organization
+https://www.bhutantoilet.org
+Useful reference for organizational storytelling, history/milestones, activities/projects, campaigns, impact and public-facing presentation.
+21. Final Action Checklist
+Keep the top navigation limited to the six approved main items.
+Keep Our Story and Our Impact separate.
+Move Window Financing under Resources.
+Keep News and Events separate categories under one News & Events menu.
+Place Activities under Events or in the footer; do not create a separate main menu item.
+Provide Domestic and International donation options.
+Add domestic QR/payment information.
+Include tax exemption, Golden Matching, capital preservation, return/interest and dedication information.
+Use existing approved photographs where applicable and update only those that need changing.
+Maintain uniformity in wording, photographs, layout and presentation.
+Make frequently changing sections dynamic/editable.
+Make relevant official resources and historical records publicly accessible/downloadable.
+Use the three reference websites as design/content benchmarks without copying their branding or content.
+22. Overall Objective
+The website should be simple, professional, consistent, transparent, accountable, easy to navigate and easy to maintain. Related information should be grouped together; the main navigation should not be overcrowded; Our Story and Our Impact should remain separate; Window Financing should remain under Resources; and frequently changing information should be dynamic/editable.

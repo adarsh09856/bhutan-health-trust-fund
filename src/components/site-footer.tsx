@@ -107,7 +107,15 @@ export function SiteFooter() {
                 to="/about"
                 className="hover:text-amber-300 transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Mission & Royal Mandate
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> About Us & Secretariat Organogram
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/our-story"
+                className="hover:text-emerald-400 transition flex items-center gap-1.5"
+              >
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Our Story & Milestones (1998–2026)
               </Link>
             </li>
             <li>
@@ -115,7 +123,7 @@ export function SiteFooter() {
                 to="/our-work"
                 className="hover:text-emerald-400 transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Healthcare Programs & Impact
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Our Impact & 20 Dzongkhags Reach
               </Link>
             </li>
             <li>
@@ -123,24 +131,7 @@ export function SiteFooter() {
                 to="/reports"
                 className="hover:text-blue-300 transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Statutory Annual Reports &
-                Audits
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/policies"
-                className="hover:text-teal-300 transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Governance & Fiduciary Policies
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/track-donation"
-                className="hover:text-amber-300 transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Track My Donation / Tax Voucher
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Resources & Window Financing
               </Link>
             </li>
             <li>
@@ -148,16 +139,23 @@ export function SiteFooter() {
                 to="/news"
                 className="hover:text-slate-200 transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Press Releases & Media Room
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> News, Events & Announcements
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/track-donation"
+                className="hover:text-amber-300 transition flex items-center gap-1.5"
+              >
+                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Track Donation / Tax Voucher
               </Link>
             </li>
             <li>
               <Link
                 to="/get-involved"
-                className="hover:text-amber-300 transition flex items-center gap-1.5 font-semibold text-amber-400"
+                className="hover:text-amber-300 transition flex items-center gap-1.5 font-bold text-amber-400"
               >
-                <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> Donate (1:1 RGOB
-                Matched)
+                <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> Donate Now
               </Link>
             </li>
           </ul>

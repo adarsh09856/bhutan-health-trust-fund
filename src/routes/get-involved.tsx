@@ -106,6 +106,9 @@ function GetInvolvedPage() {
   const [paymentMethod, setPaymentMethod] = useState<
     "MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD"
   >("MBOB");
+  const [dedicationType, setDedicationType] = useState<
+    "GENERAL" | "BIRTHDAY" | "MEMORIAL" | "ANNIVERSARY" | "MERIT"
+  >("GENERAL");
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -840,6 +843,36 @@ function GetInvolvedPage() {
                 </div>
               </div>
 
+              {/* Meaningful Occasion Dedication Options */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Donation Dedication (Occasion / Merit)
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {[
+                    { id: "GENERAL", label: "National Health", icon: "🏥" },
+                    { id: "BIRTHDAY", label: "Birthday Gift", icon: "🎂" },
+                    { id: "MEMORIAL", label: "In Memory Of", icon: "🕊️" },
+                    { id: "ANNIVERSARY", label: "Anniversary", icon: "🎊" },
+                    { id: "MERIT", label: "Auspicious Merit", icon: "🌿" },
+                  ].map((occ) => (
+                    <button
+                      type="button"
+                      key={occ.id}
+                      onClick={() => setDedicationType(occ.id as any)}
+                      className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                        dedicationType === occ.id
+                          ? "bg-amber-400 text-slate-950 border-amber-500 shadow-xs"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-white"
+                      }`}
+                    >
+                      <span>{occ.icon}</span>
+                      <span>{occ.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
@@ -856,16 +889,37 @@ function GetInvolvedPage() {
 
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Dedication Note (Optional)
+                    {dedicationType === "MEMORIAL"
+                      ? "In Memory Of (Name)"
+                      : dedicationType === "BIRTHDAY"
+                      ? "Birthday Dedication (Name)"
+                      : "Dedication Note (Optional)"}
                   </label>
                   <input
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="e.g. For pediatric vaccines in Gasa"
+                    placeholder={
+                      dedicationType === "MEMORIAL"
+                        ? "e.g. In loving memory of Late Aum Karma"
+                        : dedicationType === "BIRTHDAY"
+                        ? "e.g. In honor of Tenzin's 1st Birthday"
+                        : "e.g. For pediatric vaccines in remote gewogs"
+                    }
                     className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
                 </div>
+              </div>
+
+              {/* Capital Preservation Explanatory Callout */}
+              <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4 text-xs text-amber-950 space-y-1">
+                <div className="font-bold flex items-center gap-1.5 text-amber-900">
+                  <ShieldCheck className="h-4 w-4 text-amber-600" />
+                  <span>The Capital Preservation Model</span>
+                </div>
+                <p className="text-[11px] text-amber-900/90 leading-relaxed font-light">
+                  100% of your principal donation of <strong>Nu. {amount.toLocaleString()}</strong> remains permanently preserved and untouched within the sovereign endowment corpus. Only the annual returns and interest are spent on life-saving medicines and universal childhood vaccines — protecting generations in perpetuity.
+                </p>
               </div>
 
               {/* Anonymous Checkbox */}

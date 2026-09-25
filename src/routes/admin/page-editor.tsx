@@ -41,12 +41,13 @@ interface EditorSearch {
 const DEFAULT_CORE_PAGES_MENU = [
   { slug: "home", title: "Home Page", path: "/" },
   { slug: "about", title: "About Us & Royal Charter", path: "/about" },
-  { slug: "our-work", title: "Our Programs & Commodities", path: "/our-work" },
-  { slug: "reports", title: "Reports & Certified Audits", path: "/reports" },
+  { slug: "our-story", title: "Our Story & Historical Milestones", path: "/our-story" },
+  { slug: "our-work", title: "Our Impact & Programs", path: "/our-work" },
+  { slug: "reports", title: "Resources & Window Financing", path: "/reports" },
   { slug: "policies", title: "Governance & Policies", path: "/policies" },
-  { slug: "get-involved", title: "Contribute & Get Involved", path: "/get-involved" },
+  { slug: "get-involved", title: "Donate & Support", path: "/get-involved" },
   { slug: "contact", title: "Contact Secretariat", path: "/contact" },
-  { slug: "news", title: "News & Media Releases", path: "/news" },
+  { slug: "news", title: "News & Events", path: "/news" },
   { slug: "track-donation", title: "Track Donation & Tax Voucher", path: "/track-donation" },
 ];
 
@@ -504,7 +505,9 @@ export function AdminPageEditor() {
 
                       <div className="flex items-center gap-1 shrink-0">
                         {!sec.isVisible && (
-                          <EyeOff className="h-3.5 w-3.5 text-slate-500" title="Hidden" />
+                          <span title="Hidden">
+                            <EyeOff className="h-3.5 w-3.5 text-slate-500" />
+                          </span>
                         )}
                         <ChevronRight className="h-4 w-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                       </div>

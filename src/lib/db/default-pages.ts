@@ -39,7 +39,7 @@ export const defaultCorePages: DefaultPageDef[] = [
         isVisible: true,
         title: "Sovereign Health Impact at a Glance",
         subtitle: "Verified national metrics monitored under Royal Audit Authority oversight",
-        bgVariant: "light",
+        bgVariant: "warm",
         items: [
           {
             value: "780,000+",
@@ -78,7 +78,7 @@ export const defaultCorePages: DefaultPageDef[] = [
           "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come.",
         badge: "Royal Charter",
         subtitle: "His Majesty The King of Bhutan",
-        bgVariant: "light",
+        bgVariant: "warm",
       },
       {
         id: "home-features",

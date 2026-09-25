@@ -69,6 +69,15 @@
   --color-paper: #f4f1ea;
   --color-charcoal: #121816;
 
+  /* Official BHTF Emblem Brand Palette (Traditional Medicine Pot & Lotus/Blue Poppy) */
+  --color-aquamarine: #00a896;
+  --color-aquamarine-dark: #026c5f;
+  --color-aquamarine-light: #e0f7f4;
+  --color-lotus-pink: #ee6c8a;
+  --color-lotus-pink-light: #f7cad0;
+  --color-lotus-pink-subtle: #fdf2f4;
+  --color-bhtf-forest: #071914;
+
   /* Legacy BHTF color mappings */
   --color-bhtf-pine-dark: #0b1f1a;
   --color-bhtf-pine: #143d32;
