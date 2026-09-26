@@ -33,10 +33,9 @@ The **Bhutan Health Trust Fund (BHTF)** platform is an institutional web portal 
 3. **Institutional Directory**: Fast access to Royal Mandates, Formularies, RAA Audits, and Policies.
 4. **Interactive Commodity Pipeline Tracker**: Visualizes the flow of pediatric vaccines, emergency drugs, and alpine solar cold chain equipment.
 5. **Interactive 20 Dzongkhags Explorer**: Regional breakdown displaying distribution across Western, Central, Southern, and Eastern administrative zones.
-6. **1:1 RGOB Matching Simulator**: Interactive donor calculator displaying how personal or corporate donations are doubled by the Royal Government of Bhutan.
-7. **Official Publications & News Grid**: Press releases and media advisories.
-8. **Statutory Governance & RAA Clean Audit**: Displays unqualified audit certificates issued by the Royal Audit Authority (RAA).
-9. **Global Partners**: WHO, UNICEF, World Bank, Gavi, and Ministry of Health.
+6. **Official Publications & News Grid**: Press releases and media advisories.
+7. **Statutory Governance & RAA Clean Audit**: Displays unqualified audit certificates issued by the Royal Audit Authority (RAA).
+8. **Global Partners**: WHO, UNICEF, World Bank, Gavi, and Ministry of Health.
 
 ---
 

@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bhutan Health Trust Fund — Site Operations Manual</title>
+<title>Bhutan Health Trust Fund (BHTF) — Complete Site Operations Manual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+
   :root {
     --ink: #061713;
     --paper: #FAF8F3;
@@ -20,7 +21,7 @@
     --gold: #D4A237;
     --line: #E2D9C8;
     --line-dark: #163E33;
-    --sans: 'Inter', -apple-system, sans-serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --serif: 'Source Serif 4', Georgia, serif;
     --mono: 'JetBrains Mono', monospace;
   }
@@ -35,18 +36,19 @@
     line-height: 1.6;
   }
 
-  /* LAYOUT */
+  /* ============ LAYOUT ============ */
   .shell {
     display: grid;
     grid-template-columns: 320px 1fr;
     min-height: 100vh;
   }
+
   @media (max-width: 960px) {
     .shell { grid-template-columns: 1fr; }
     .sidebar { position: static; height: auto; }
   }
 
-  /* SIDEBAR */
+  /* ============ SIDEBAR ============ */
   .sidebar {
     background: var(--indigo);
     color: #D6E4DF;
@@ -57,82 +59,92 @@
     padding: 0 0 40px;
     border-right: 1px solid var(--line-dark);
   }
-  .sidebar::-webkit-scrollbar { width: 7px; }
+
+  .sidebar::-webkit-scrollbar { width: 8px; }
   .sidebar::-webkit-scrollbar-thumb { background: var(--indigo-2); border-radius: 4px; }
 
   .brand {
-    padding: 30px 24px 22px;
+    padding: 32px 28px 24px;
     border-bottom: 1px solid var(--line-dark);
   }
+
   .brand .mark {
     width: 44px; height: 44px;
     border: 1.5px solid var(--gold);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--serif);
-    font-size: 18px;
+    font-size: 19px;
     color: var(--gold);
     margin-bottom: 14px;
-    background: rgba(212, 162, 55, 0.08);
+    background: rgba(212, 162, 55, 0.1);
   }
+
   .brand h1 {
     font-family: var(--serif);
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 600;
     color: #F8F5EE;
     margin: 0 0 6px;
     line-height: 1.3;
   }
+
   .brand p {
-    font-size: 12px;
+    font-size: 12.5px;
     color: #7E9E94;
     margin: 0;
     letter-spacing: 0.02em;
   }
 
-  .nav-groups { padding: 16px 0; }
+  .nav-groups { padding: 18px 0; }
+
   .nav-group-title {
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #74968C;
     text-transform: uppercase;
-    padding: 14px 24px 8px;
+    color: #74968C;
+    padding: 16px 28px 8px;
   }
+
   .nav-item {
     display: flex;
     align-items: baseline;
-    gap: 10px;
-    padding: 7px 24px;
-    color: #B2C7C0;
+    gap: 11px;
+    padding: 8px 28px;
+    color: #C3D5CE;
     text-decoration: none;
-    font-size: 13px;
-    border-left: 2px solid transparent;
-    transition: background 0.12s ease, color 0.12s ease;
+    font-size: 13.5px;
+    border-left: 3px solid transparent;
+    transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
   }
+
   .nav-item:hover {
     background: var(--indigo-2);
     color: #FFF;
   }
+
   .nav-item.active {
     background: var(--indigo-2);
     border-left-color: var(--gold);
     color: #F8F5EE;
     font-weight: 500;
   }
+
   .nav-item .num {
     font-family: var(--mono);
     font-size: 11px;
-    color: #61857A;
+    color: #7E9E94;
     min-width: 18px;
   }
 
-  /* MAIN CONTENT */
+  /* ============ MAIN ============ */
   main {
     padding: 56px 64px 120px;
-    max-width: 880px;
+    max-width: 900px;
   }
-  @media (max-width: 900px) {
+
+  @media (max-width: 960px) {
     main { padding: 40px 24px 100px; }
   }
 
@@ -141,23 +153,26 @@
     padding-bottom: 36px;
     border-bottom: 1px solid var(--line);
   }
+
   .doc-header .kicker {
     font-family: var(--mono);
     font-size: 12px;
-    color: var(--madder);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
+    color: var(--madder);
     margin-bottom: 16px;
     font-weight: 600;
   }
+
   .doc-header h1 {
     font-family: var(--serif);
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 700;
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 600;
     line-height: 1.18;
     margin: 0 0 14px;
     color: var(--ink);
   }
+
   .doc-header .sub {
     font-size: 16px;
     color: #554838;
@@ -165,11 +180,13 @@
     max-width: 60ch;
     line-height: 1.6;
   }
+
   .meta-row {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
   }
+
   .meta-chip {
     font-size: 12px;
     padding: 5px 12px;
@@ -178,32 +195,34 @@
     border-radius: 4px;
     color: #554838;
     font-family: var(--mono);
+    font-weight: 500;
   }
 
-  /* CHAPTERS */
   section.chapter {
-    margin-bottom: 64px;
+    margin-bottom: 72px;
     scroll-margin-top: 32px;
   }
+
   .chapter-head {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 18px;
+    gap: 18px;
+    margin-bottom: 22px;
   }
+
   .chapter-head .cnum {
     font-family: var(--serif);
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
     color: var(--madder);
-    background: transparent;
-    border: 1px solid var(--madder);
-    width: 36px; height: 36px;
+    border: 1.5px solid var(--madder);
+    width: 40px; height: 40px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     margin-top: 2px;
+    font-weight: 600;
   }
+
   .chapter-head h2 {
     font-family: var(--serif);
     font-size: 24px;
@@ -216,60 +235,96 @@
   .route-tag {
     display: inline-block;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 12.5px;
     background: var(--paper-2);
     border: 1px solid var(--line);
     color: var(--madder-dark);
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 4px;
-    margin: 0 0 18px 52px;
+    margin: 0 0 22px 58px;
+    font-weight: 500;
   }
 
   h3 {
     font-family: var(--serif);
-    font-size: 17px;
+    font-size: 17.5px;
     font-weight: 600;
     color: var(--juniper);
-    margin: 26px 0 12px 52px;
+    margin: 32px 0 14px 58px;
   }
+
+  h4 {
+    font-family: var(--sans);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 22px 0 10px 58px;
+  }
+
   .chapter > p, .chapter > ol, .chapter > ul {
-    margin-left: 52px;
+    margin-left: 58px;
     max-width: 68ch;
   }
+
   p {
     margin: 0 0 14px;
     color: #384A43;
     font-size: 14.5px;
   }
+
   ol, ul {
     padding-left: 20px;
     margin: 0 0 16px;
     color: #384A43;
     font-size: 14.5px;
   }
-  li { margin-bottom: 7px; }
+
+  li {
+    margin-bottom: 9px;
+  }
   li strong { color: var(--ink); font-weight: 600; }
   li em { color: var(--juniper); font-style: italic; }
 
   code {
     font-family: var(--mono);
-    font-size: 0.88em;
+    font-size: 12.5px;
     background: var(--paper-2);
-    padding: 1px 6px;
+    padding: 2px 6px;
     border-radius: 3px;
-    color: var(--madder-dark);
     border: 1px solid var(--line);
+    color: var(--madder-dark);
+  }
+
+  pre {
+    margin: 16px 0 20px 58px;
+    max-width: 68ch;
+    background: #081C17;
+    color: #F1F5F9;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    border: 1px solid #163E33;
+  }
+
+  pre code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
   }
 
   /* REFLECTION MATRIX BOX */
   .reflection-box {
-    margin: 18px 0 20px 52px;
+    margin: 20px 0 22px 58px;
     background: #FFFFFF;
     border: 1px solid var(--line);
     border-left: 4px solid var(--juniper);
     border-radius: 6px;
     padding: 16px 20px;
-    max-width: 66ch;
+    max-width: 68ch;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
   .reflection-title {
@@ -287,82 +342,169 @@
   .reflection-content {
     font-size: 13.5px;
     color: #384A43;
-    line-height: 1.55;
+    line-height: 1.6;
   }
   .reflection-content strong { color: var(--ink); }
 
   .callout {
-    margin: 16px 0 18px 52px;
-    max-width: 66ch;
+    margin: 20px 0 22px 58px;
+    max-width: 68ch;
     background: var(--paper-2);
-    border-left: 3px solid var(--gold);
-    padding: 12px 18px;
-    font-size: 13.5px;
+    border-left: 4px solid var(--gold);
+    padding: 14px 20px;
+    font-size: 14px;
     color: #4D4233;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 5px 5px 0;
+    line-height: 1.6;
   }
+
   .callout.warn {
     border-left-color: #B9382E;
     color: #68231C;
     background: #FDF1EF;
   }
 
+  .callout.info {
+    border-left-color: var(--juniper);
+    color: #1F4C3B;
+    background: rgba(14, 107, 86, 0.08);
+  }
+
+  .callout strong {
+    color: var(--ink);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+    margin-left: 58px;
+    max-width: 68ch;
+  }
+
+  @media (max-width: 640px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .grid-box {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+  }
+
+  .grid-box strong {
+    color: var(--madder-dark);
+    display: block;
+    margin-bottom: 3px;
+  }
+
   .role-cards {
-    margin-left: 52px;
-    max-width: 66ch;
+    margin-left: 58px;
+    max-width: 68ch;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
+
   .role-card {
     border: 1px solid var(--line);
     background: #FFFFFF;
     border-radius: 6px;
-    padding: 12px 16px;
+    padding: 14px 18px;
   }
+
   .role-card .rname {
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink);
-    font-size: 13.5px;
-    margin-bottom: 2px;
+    font-size: 14px;
+    margin-bottom: 4px;
   }
+
   .role-card .rdesc {
     font-size: 13px;
-    color: #556B63;
+    color: #4D5E57;
+  }
+
+  .table-wrap {
+    margin: 18px 0 24px 58px;
+    max-width: 68ch;
+    overflow-x: auto;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #FFF;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+  }
+
+  table.data-table th {
+    background: var(--paper-2);
+    border-bottom: 1.5px solid var(--line);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  table.data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    color: #384A43;
+    vertical-align: top;
+  }
+
+  table.data-table tr:last-child td {
+    border-bottom: none;
   }
 
   footer {
-    margin-top: 80px;
-    padding-top: 28px;
+    margin-top: 90px;
+    padding-top: 32px;
     border-top: 1px solid var(--line);
-    font-size: 12.5px;
+    font-size: 13px;
     color: #7E8D86;
-    max-width: 66ch;
+    max-width: 68ch;
+    line-height: 1.6;
   }
 
   .back-top {
     position: fixed;
     bottom: 28px;
     right: 28px;
-    width: 40px; height: 40px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: var(--indigo);
     color: var(--gold);
     border: 1px solid var(--gold);
     display: flex; align-items: center; justify-content: center;
     text-decoration: none;
-    font-size: 16px;
-    box-shadow: 0 4px 14px rgba(6,23,19,0.3);
+    font-size: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 0.2s ease, transform 0.2s ease;
     pointer-events: none;
+    z-index: 100;
   }
+
   .back-top.show {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
+
+  a:focus-visible, .nav-item:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  
 </style>
 </head>
 <body>
@@ -373,7 +515,7 @@
     <div class="brand">
       <div class="mark">༄</div>
       <h1>Bhutan Health Trust Fund<br>Operations Manual</h1>
-      <p>Official Administrator &amp; Public Reflection Guide</p>
+      <p>2026 Production Edition</p>
     </div>
     <div class="nav-groups" id="navGroups"></div>
   </nav>
@@ -381,13 +523,15 @@
   <!-- MAIN MANUAL -->
   <main>
     <header class="doc-header">
-      <div class="kicker">Official Administrator &amp; Site Operations Reference</div>
+      <div class="kicker">Complete Site Operations Manual &amp; Administrator Guide</div>
       <h1>Bhutan Health Trust Fund (BHTF)</h1>
-      <p class="sub">A complete procedural guide for Secretariat staff, Finance Officers, Medical Procurement Coordinators, and Content Managers operating the sovereign BHTF digital platform.</p>
+      <p class="sub">Audited section-by-section operational reference matching the live TanStack Start architecture, 5-tier admin control center, visual live customizer, and sovereign public healthcare portal.</p>
       <div class="meta-row">
-        <span class="meta-chip">Statutory Royal Charter v2026</span>
-        <span class="meta-chip">DRC 100% Tax Deductible (Sec 10f)</span>
-        <span class="meta-chip">RAA Clean Statutory Audit Certified</span>
+        <span class="meta-chip">TanStack Start (SSR)</span>
+        <span class="meta-chip">Drizzle ORM &amp; PostgreSQL</span>
+        <span class="meta-chip">Statutory Royal Charter 2026</span>
+        <span class="meta-chip">DRC 100% Tax Deductible</span>
+        <span class="meta-chip">RAA Clean Statutory Audit</span>
       </div>
     </header>
 
@@ -395,191 +539,262 @@
 
 <!-- CHAPTER 01 -->
 <section class="chapter" id="ch1" data-num="1">
-  <div class="chapter-head"><div class="cnum">01</div><h2>Platform Architecture &amp; Executive Overview</h2></div>
-  <p>The Bhutan Health Trust Fund platform is a sovereign financial and public transparency portal established to sustainably finance 120+ essential medicines, universal childhood vaccines, and alpine cold-chain logistics across all 20 Dzongkhags.</p>
-  <p>The platform operates on two interconnected layers:</p>
+  <div class="chapter-head">
+    <div class="cnum">01</div>
+    <h2>Platform Architecture &amp; Executive Overview</h2>
+  </div>
+  <div class="route-tag">TanStack Start · React 19 · Vite · Drizzle ORM · PostgreSQL</div>
+  
+  <p>The Bhutan Health Trust Fund (BHTF) platform is the official apex digital sovereign repository for primary healthcare endowment financing, essential medicines security, universal routine immunization, and cold-chain resilience across the Kingdom of Bhutan. Established pursuant to the Royal Charter granted by His Majesty the Fourth Druk Gyalpo, it sustainably protects all 780,000+ citizens across 205 Gewogs in all 20 Dzongkhags.</p>
+
+  <h3>Core Architecture &amp; Technical Capabilities</h3>
   <ol>
-    <li><strong>Public Sovereign Web Portal</strong> — provides citizens, international donors, and healthcare providers with live impact metrics, 6-stream procurement tracking, interactive Dzongkhag maps, DRC tax deduction calculators, and instant donation verification.</li>
-    <li><strong>Admin Control Studios</strong> — a secure back-office suite of specialized studios for managing pledges, confirming bank deposits, monitoring cold-chain inventory, issuing tax receipts, publishing audits, and configuring website pages.</li>
+    <li><strong>Full-Stack Architecture</strong>: Built with TanStack Start (full-stack React with Server-Side Rendering), TanStack Router, Tailwind CSS v4, and Drizzle ORM on PostgreSQL. Guarantees instantaneous first-contentful paint, zero cumulative layout shift, and complete search engine indexation.</li>
+    <li><strong>Zero-Lag Live Synchronization</strong>: Content updates made in administrative studios write directly to the database and revalidate server endpoints. Public pages update in real-time without caching lag or manual deployments.</li>
+    <li><strong>5-Tier Admin Suite</strong>: Organized into five distinct operational divisions (Executive CRM &amp; Donors, Commodities &amp; Procurement, Institutional CMS &amp; Media, Sovereign Governance, and System Administration) with strict Role-Based Access Control (RBAC).</li>
+    <li><strong>Editorial Floating Glass Navigation Island</strong>: An adaptive glassmorphic capsule that elevates seamlessly on scroll (<code>backdrop-blur-2xl</code>), auto-adjusts its top offset when an administrator is logged in, and delivers streamlined dropdown menus for About Us, Our Impact, and Resources.</li>
+    <li><strong>Verified Sovereign Fiduciary Ledger</strong>: Full reconciliation workflow for online payments (RMA BFS, Razorpay) and direct bank deposits (Bank of Bhutan, Bhutan National Bank, Druk PNB) with automated DRC 100% Tax Exemption certificate issuance.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Architecture</div>
     <div class="reflection-content">
-      All admin actions commit directly to the central PostgreSQL database. When a record is updated (e.g. a donation is verified or a news release published), server cache tags are immediately revalidated. Changes reflect instantaneously across all public routes without needing a manual build or code deployment.
+      All database writes execute with atomic transactions. When an administrative record is saved (e.g. an offline pledge is reconciled or an annual RAA audit report is uploaded), the corresponding public endpoints re-render live data across all public routes immediately.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 02 -->
 <section class="chapter" id="ch2" data-num="2">
-  <div class="chapter-head"><div class="cnum">02</div><h2>Accessing the Admin Control Center</h2></div>
-  <div class="route-tag">/admin/login · /admin/dashboard</div>
-  <h3>Logging into the Admin Suite</h3>
+  <div class="chapter-head">
+    <div class="cnum">02</div>
+    <h2>Admin Control Center &amp; Navigation Layout</h2>
+  </div>
+  <div class="route-tag">/admin · /admin/login</div>
+
+  <h3>Staff Authentication &amp; Security Guard</h3>
   <ol>
-    <li>Open your browser and navigate to <code>https://your-domain.com/admin/login</code>.</li>
-    <li>Enter your Secretariat email address (e.g. <code>admin@bhtf.bt</code>) and secure password.</li>
+    <li>Open your browser and navigate to <code>/admin/login</code>.</li>
+    <li>Enter your authorized administrative email (e.g. <code>admin@bhtf.bt</code>) and secure password.</li>
     <li>Click <strong>Authenticate &amp; Access Studio</strong>.</li>
-    <li>Upon verification, you are routed directly to the Executive CRM Dashboard.</li>
+    <li>Upon bcrypt-verified credential match, the server generates an encrypted session token and redirects to the Executive CRM Dashboard (<code>/admin/dashboard</code>).</li>
   </ol>
-  <h3>Admin Navigation Layout</h3>
-  <p>All administrative tools are structured within a 4-tier navigation sidebar:</p>
+
+  <h3>The 5 Administrative Divisions</h3>
+  <p>All administrative studios are structured within a standardized sidebar hierarchy:</p>
   <ul>
-    <li><strong>Executive &amp; Operations</strong> — CRM Dashboard, Donors &amp; Pledges, Citizen Inquiries, Subscribers Desk, Commodities &amp; Formularies, Procurement Tenders, National Impact Metrics.</li>
-    <li><strong>Institutional CMS &amp; Media</strong> — Pages &amp; Templates, Live Page Studio, News &amp; Bulletins, Reports &amp; Audits, Policies &amp; Charters, Field Operations Gallery, Public Videos.</li>
-    <li><strong>Governance &amp; Community</strong> — Board of Trustees, Sovereign Milestones, FAQs Helpdesk.</li>
-    <li><strong>Platform Infrastructure</strong> — Staff Logins &amp; RBAC, Security Audit Logs, System &amp; Emergency Settings.</li>
+    <li><strong>1. Executive CRM &amp; Donors</strong>: Dashboard Overview, Donors &amp; Pledges CRM, Citizen Inquiries &amp; Ombudsman Desk, Subscribers &amp; Audiences.</li>
+    <li><strong>2. Commodities &amp; Procurement</strong>: Essential Medicines &amp; 6 Streams, Procurement Tenders &amp; Steps, National Impact Statistics.</li>
+    <li><strong>3. Institutional CMS &amp; Media</strong>: Pages &amp; Templates, Live Page Studio, News &amp; Press Releases, Reports &amp; RAA Audits, Policies &amp; Royal Charters, Field Operations Gallery, Public Media &amp; Videos.</li>
+    <li><strong>4. Sovereign Governance</strong>: Board of Trustees Directory, Historical Milestones Timeline, FAQs &amp; Citizen Helpdesk.</li>
+    <li><strong>5. System Administration</strong>: Users &amp; Roles (RBAC), Security Audit Trail, Sovereign Site Settings.</li>
   </ul>
 </section>
 
 <!-- CHAPTER 03 -->
 <section class="chapter" id="ch3" data-num="3">
-  <div class="chapter-head"><div class="cnum">03</div><h2>Visual Live Edit Mode &amp; Admin TopBar</h2></div>
-  <div class="route-tag">/admin/page-editor?slug=[page]</div>
-  <p>Staff members with content editing privileges can edit public pages while browsing the live website.</p>
+  <div class="chapter-head">
+    <div class="cnum">03</div>
+    <h2>Visual Live Edit Mode &amp; Front-End Studio</h2>
+  </div>
+  <div class="route-tag">Admin Live Bar · In-Context Front-End Customizer</div>
+
+  <p>Visual Live Edit Mode enables secretariat editors to browse public pages and make real-time updates directly on the front-end layout without navigating complex back-office database tables.</p>
+
   <h3>Using the Sticky Admin TopBar</h3>
   <ol>
-    <li>Log into the Admin Panel, then browse to any public page (e.g. <code>/</code>, <code>/about</code>, <code>/our-work</code>, <code>/reports</code>).</li>
-    <li>Notice the dark Sovereign Admin Bar pinned to the top of your screen displaying your active slug.</li>
+    <li>Log into the Admin Panel, then browse any public page (e.g. <code>/</code>, <code>/about</code>, <code>/our-story</code>, <code>/our-work</code>, <code>/reports</code>).</li>
+    <li>A dark Sovereign Admin Bar appears pinned at the top of your screen showing your active slug.</li>
     <li>Click the golden button: <strong>⚡ Live Edit This Page</strong>.</li>
-    <li>The system launches the <strong>Visual Live Page Studio</strong> with that page preloaded in the visual editor.</li>
+    <li>The system launches the <strong>Visual Live Page Studio</strong> (<code>/admin/page-editor?slug=[page]</code>) with that page loaded in the interactive canvas.</li>
   </ol>
-  <h3>In-Studio Controls</h3>
+
+  <h3>Studio Controls &amp; Responsive Viewports</h3>
   <ul>
-    <li><strong>Device Preview Bar</strong> — Switch between Desktop (100%), Tablet (768px), and Mobile (375px) viewports to verify responsive appearance.</li>
-    <li><strong>Block Reordering</strong> — Drag blocks up or down to rearrange layout sections.</li>
-    <li><strong>Visibility Toggle</strong> — Eye icon allows hiding a section temporarily without deleting its content.</li>
-    <li><strong>Publish vs Draft</strong> — Changes remain in draft mode until you click <strong>Save &amp; Publish Live</strong>.</li>
+    <li><strong>Responsive Device Switcher</strong>: Toggle between Desktop (100%), Tablet (768px), and Mobile (375px) viewports to verify layouts across all screen form factors.</li>
+    <li><strong>Block Reordering</strong>: Drag section blocks up or down to modify the visual hierarchy.</li>
+    <li><strong>Section Visibility Toggle</strong>: Eye icon enables toggling blocks between published and hidden states.</li>
   </ul>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Point</div>
     <div class="reflection-content">
-      Clicking <strong>Save &amp; Publish Live</strong> in the studio writes directly to the <code>custom_pages</code> table. The public page (e.g. <code>/</code> or <code>/about</code>) instantly updates to serve the new section blocks.
+      Clicking <strong>Save &amp; Publish Live</strong> in the studio writes directly to the <code>custom_pages</code> schema. The public route instantly updates to render the modified section layout and copy.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 04 -->
 <section class="chapter" id="ch4" data-num="4">
-  <div class="chapter-head"><div class="cnum">04</div><h2>Executive CRM Dashboard &amp; Fiduciary Analytics</h2></div>
+  <div class="chapter-head">
+    <div class="cnum">04</div>
+    <h2>Executive CRM Dashboard &amp; Telemetry</h2>
+  </div>
   <div class="route-tag">/admin/dashboard</div>
-  <p>The Executive Dashboard provides secretariat leadership with real-time operational analytics.</p>
-  <h3>Key Performance Indicator (KPI) Cards</h3>
-  <ol>
-    <li><strong>Total Health Corpus</strong> — displays accumulated statutory capital and current annual investment yields.</li>
-    <li><strong>Total Donors Registered</strong> — citizen and institutional contributors recorded in the registry.</li>
-    <li><strong>Pending Donation Inflows</strong> — offline bank transfers awaiting secretariat verification.</li>
-    <li><strong>Citizen Inquiries Inbox</strong> — unread inquiries and ombudsman reports requiring follow-up.</li>
-  </ol>
-  <h3>Quick Action Launchers</h3>
-  <p>From the dashboard, one-click action cards allow administrators to:</p>
+
+  <p>The Executive CRM Dashboard gives the Director and Secretariat leadership high-level operational visibility over all contributions, active pledges, commodity distribution pipelines, and pending inquiries.</p>
+
+  <h3>Key Telemetry Cards</h3>
+  <div class="grid-2">
+    <div class="grid-box">
+      <strong>Total Health Endowment</strong>
+      Real-time valuation of the permanent health endowment corpus and projected annual yields.
+    </div>
+    <div class="grid-box">
+      <strong>Total Registered Contributors</strong>
+      Verified citizen, corporate CSR, and bilateral philanthropic donors in the registry.
+    </div>
+    <div class="grid-box">
+      <strong>Pending Verification Queue</strong>
+      Offline bank wire deposits awaiting BoB / BNB bank reconciliation before certificate release.
+    </div>
+    <div class="grid-box">
+      <strong>Citizen Ombudsman Inbox</strong>
+      Unread citizen inquiries and remote gewog medical clinic reports requiring triage.
+    </div>
+  </div>
+
+  <h3>Executive Fast Actions Bar</h3>
+  <p>Direct shortcuts located across the top of the dashboard allow staff to:</p>
   <ul>
-    <li>Verify offline bank wire transfers.</li>
-    <li>Launch the Live Visual Page Studio.</li>
-    <li>Publish an official procurement tender.</li>
-    <li>Upload an RAA statutory audit report.</li>
+    <li><strong>Log Offline Pledge</strong>: Record incoming bank remittances or corporate cheques.</li>
+    <li><strong>Post Press Bulletin</strong>: Announce health communiqués or vaccine shipments.</li>
+    <li><strong>Publish Tender</strong>: Issue international procurement bidding notices.</li>
+    <li><strong>Sync Live Ledger</strong>: Force an on-demand database cache sync.</li>
   </ul>
 </section>
 
 <!-- CHAPTER 05 -->
 <section class="chapter" id="ch5" data-num="5">
-  <div class="chapter-head"><div class="cnum">05</div><h2>Donors &amp; Pledges CRM (1:1 RGOB Sovereign Match)</h2></div>
-  <div class="route-tag">/admin/donations</div>
-  <p>Manages all public and corporate contributions made via RMA BFS gateway, Razorpay, or direct Bank of Bhutan / Druk PNB / BNB bank transfers.</p>
+  <div class="chapter-head">
+    <div class="cnum">05</div>
+    <h2>Donors &amp; Pledges CRM &amp; DRC Tax Verification</h2>
+  </div>
+  <div class="route-tag">/admin/donations · /track-donation</div>
+
+  <p>Administers all public and corporate contributions made via RMA BFS gateway, Razorpay, or direct Bank of Bhutan / Druk PNB / BNB bank transfers.</p>
+
   <h3>Verifying Offline Bank Transfers</h3>
   <ol>
-    <li>Navigate to <strong>Executive &amp; Operations → Donors &amp; Pledges</strong>.</li>
-    <li>Filter by <strong>Pending Verification</strong>.</li>
-    <li>Click on the donor's transaction entry to view bank deposit slip, journal number, and donor details.</li>
+    <li>Navigate to <strong>Executive CRM &amp; Donors → Donors &amp; Pledges CRM</strong>.</li>
+    <li>Filter transactions by <strong>Pending Verification</strong>.</li>
+    <li>Click on the donor's transaction entry to inspect the payment slip, bank journal reference number, and donor citizen identity details.</li>
     <li>Cross-verify the payment with the Secretariat's Bank of Bhutan (BoB) deposit ledger.</li>
     <li>Click <strong>Approve &amp; Reconcile Donation</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
-      When a donation status changes from <em>Pending</em> to <em>Verified</em>:
-      <br>1. <strong>Corpus Numeral Increases:</strong> The public counter on the homepage and hero card automatically adds the donor's amount + the 1:1 RGOB matching sum.
-      <br>2. <strong>Public Receipt Verification:</strong> The donor can immediately enter their Journal/Reference ID on <code>/track-donation</code> to download their official sealed <strong>DRC 100% Tax Exemption Certificate</strong>.
+      When a contribution status transitions to <em>Verified</em>:
+      <br>1. <strong>Corpus Accumulation:</strong> The public counter and Sovereign Health Corpus Card on the homepage automatically include the new verified amount.
+      <br>2. <strong>Instant Certificate Generation:</strong> The donor can immediately enter their Journal/Reference ID on <code>/track-donation</code> to download their official sealed <strong>Department of Revenue &amp; Customs (DRC) 100% Tax Exemption Certificate</strong>.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 06 -->
 <section class="chapter" id="ch6" data-num="6">
-  <div class="chapter-head"><div class="cnum">06</div><h2>Citizen Inquiries, Patient Requests &amp; Ombudsman Desk</h2></div>
-  <div class="route-tag">/admin/inquiries</div>
+  <div class="chapter-head">
+    <div class="cnum">06</div>
+    <h2>Citizen Inquiries &amp; Ombudsman Helpdesk</h2>
+  </div>
+  <div class="route-tag">/admin/inquiries · /contact</div>
+
   <p>Processes public messages submitted through the contact form, medical assistance inquiries from remote gewogs, and confidential ombudsman submissions.</p>
-  <h3>Managing Public Inquiries</h3>
+
+  <h3>Managing Inquiries</h3>
   <ol>
-    <li>Go to <strong>Executive &amp; Operations → Citizen Inquiries</strong>.</li>
-    <li>Inquiries are tagged by category: <em>General Inquiry</em>, <em>Medicines Stockout Report</em>, <em>Whistleblower/Ombudsman</em>, or <em>Corporate CSR</em>.</li>
-    <li>Click an inquiry to read the citizen's message, telephone number, and Dzongkhag origin.</li>
-    <li>Change status from <code>New</code> to <code>In Progress</code> or <code>Resolved</code>.</li>
-    <li>Type an official response notes log for institutional record-keeping.</li>
+    <li>Go to <strong>Executive CRM &amp; Donors → Citizen Inquiries &amp; Ombudsman</strong>.</li>
+    <li>Inquiries are organized by operational tag: <em>General Inquiry</em>, <em>Medicines Stockout Report</em>, <em>Whistleblower/Ombudsman</em>, or <em>Corporate CSR Inquiry</em>.</li>
+    <li>Open any inquiry to read citizen message details, phone number, and originating Dzongkhag.</li>
+    <li>Update status from <code>New</code> to <code>In Progress</code> or <code>Replied</code>.</li>
+    <li>Record internal administrative notes for institutional audit trails.</li>
   </ol>
 </section>
 
 <!-- CHAPTER 07 -->
 <section class="chapter" id="ch7" data-num="7">
-  <div class="chapter-head"><div class="cnum">07</div><h2>Subscriber Directory &amp; Health Bulletins Desk</h2></div>
+  <div class="chapter-head">
+    <div class="cnum">07</div>
+    <h2>Subscribers &amp; Audience Desk</h2>
+  </div>
   <div class="route-tag">/admin/subscribers</div>
-  <p>Collects and organizes email subscribers who sign up for quarterly health reports, procurement updates, and immunization dispatches.</p>
+
+  <p>Maintains the subscriber audience list of healthcare workers, international partners, and citizens receiving quarterly health reports, procurement updates, and immunization dispatches.</p>
+
   <h3>Operations</h3>
   <ol>
-    <li>Navigate to <strong>Executive &amp; Operations → Subscribers &amp; Campaign Desk</strong>.</li>
-    <li>View all verified email addresses, subscription dates, and active status.</li>
-    <li>Click <strong>Export CSV Directory</strong> to export lists for external mailings.</li>
+    <li>Navigate to <strong>Executive CRM &amp; Donors → Subscribers &amp; Audiences</strong>.</li>
+    <li>View verified email addresses, subscription dates, and subscriber activity status.</li>
+    <li>Click <strong>Export CSV Directory</strong> to export mailing lists for official newsletters.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Point</div>
     <div class="reflection-content">
-      When visitors enter their email into the public footer newsletter box across any route on the site, their record appears here in real-time.
+      When visitors enter their email into the public footer newsletter subscription input across any route on the site, their record appears here in real-time.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 08 -->
 <section class="chapter" id="ch8" data-num="8">
-  <div class="chapter-head"><div class="cnum">08</div><h2>Essential Medicines &amp; 6 Commodity Procurement Streams</h2></div>
-  <div class="route-tag">/admin/programs</div>
-  <p>Maintains the primary health formulary and funding allocations across Bhutan's six statutory healthcare commodity streams.</p>
+  <div class="chapter-head">
+    <div class="cnum">08</div>
+    <h2>Essential Medicines &amp; 6 Commodity Procurement Streams</h2>
+  </div>
+  <div class="route-tag">/admin/programs · /our-work</div>
+
+  <p>Maintains the national essential health formulary and funding allocations across Bhutan's six statutory commodity streams.</p>
+
   <h3>The 6 Statutory Streams</h3>
   <ul>
     <li><strong>Stream 1: Universal Childhood &amp; Maternal Vaccines</strong> (14 National Antigens).</li>
-    <li><strong>Stream 2: 120+ Vital Essential Medicines Formulary</strong> (Zero stockout buffer).</li>
-    <li><strong>Stream 3: Alpine Solar Cold Chain Logistics</strong> (Solar refrigeration &amp; temperature loggers).</li>
+    <li><strong>Stream 2: 120+ Vital Essential Medicines Formulary</strong> (Zero stockout buffer guarantee).</li>
+    <li><strong>Stream 3: Alpine Solar Cold Chain Logistics</strong> (Solar refrigeration &amp; temperature monitoring).</li>
     <li><strong>Stream 4: Primary Diagnostic Reagents &amp; Screenings</strong> (Blood glucose, Hepatitis, Pap/HPV).</li>
     <li><strong>Stream 5: Clean Delivery Kits &amp; Maternal Survival Packs</strong> (Remote obstetric health).</li>
-    <li><strong>Stream 6: Emergency Disaster Stockpile &amp; Infusion Reserves</strong> (Critical IV fluids).</li>
+    <li><strong>Stream 6: Emergency Disaster Stockpile &amp; Infusion Reserves</strong> (Critical IV fluids &amp; trauma buffer).</li>
   </ul>
+
   <h3>Editing a Commodity Stream</h3>
   <ol>
+    <li>Navigate to <strong>Commodities &amp; Procurement → Essential Medicines &amp; Streams</strong>.</li>
     <li>Click <strong>Edit Stream</strong> on any commodity card.</li>
-    <li>Update the annual allocated amount (e.g. <code>Nu. 68,500,000</code>), beneficiaries count, or gewog coverage.</li>
+    <li>Update allocated funds (e.g. <code>Nu. 68,500,000</code>), beneficiaries count, or gewog coverage metrics.</li>
     <li>Click <strong>Save Stream Changes</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
-      Updates made here reflect on:
-      <br>1. <code>/our-work</code> — full interactive commodity formulary cards.
-      <br>2. <code>/</code> (Homepage) — Commodity Tracker pipeline &amp; Hero Corpus Card supply stream rows.
+      Modifications made here reflect immediately on:
+      <br>1. <code>/our-work</code> — full interactive commodity formulary cards and supply breakdowns.
+      <br>2. <code>/</code> (Homepage) — Commodity Tracker pipeline and Hero Corpus Card supply allocation rows.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 09 -->
 <section class="chapter" id="ch9" data-num="9">
-  <div class="chapter-head"><div class="cnum">09</div><h2>International Procurement Bidding &amp; Tenders</h2></div>
-  <div class="route-tag">/admin/procurement</div>
+  <div class="chapter-head">
+    <div class="cnum">09</div>
+    <h2>International Procurement Bidding &amp; Tenders</h2>
+  </div>
+  <div class="route-tag">/admin/procurement · /our-work</div>
+
   <p>Publishes WHO pre-qualified international tenders for vaccine procurement, cold chain equipment tenders, and pharmaceutical freight shipping.</p>
+
   <h3>Publishing a New Tender Notice</h3>
   <ol>
-    <li>Go to <strong>Executive &amp; Operations → Procurement Tenders</strong>.</li>
+    <li>Go to <strong>Commodities &amp; Procurement → Procurement Tenders &amp; Steps</strong>.</li>
     <li>Click <strong>+ Publish New Tender Notice</strong>.</li>
     <li>Enter Tender Reference Number, Title (e.g. <em>BHTF/2026/COLD-04</em>), Submission Deadline, and Eligibility Criteria (e.g. <em>WHO-Prequalified Manufacturers</em>).</li>
     <li>Upload official bidding document (PDF).</li>
     <li>Click <strong>Publish Tender</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Point</div>
     <div class="reflection-content">
@@ -590,12 +805,17 @@
 
 <!-- CHAPTER 10 -->
 <section class="chapter" id="ch10" data-num="10">
-  <div class="chapter-head"><div class="cnum">10</div><h2>National Impact Statistics &amp; Dzongkhag Buffer Metrics</h2></div>
-  <div class="route-tag">/admin/metrics</div>
+  <div class="chapter-head">
+    <div class="cnum">10</div>
+    <h2>National Impact Statistics &amp; Coverage Counters</h2>
+  </div>
+  <div class="route-tag">/admin/metrics · / · /about</div>
+
   <p>Controls the headline verified statistics that represent BHTF's nationwide healthcare security.</p>
+
   <h3>Updating Headline Stat Numerals</h3>
   <ol>
-    <li>Navigate to <strong>Executive &amp; Operations → National Impact Statistics</strong>.</li>
+    <li>Navigate to <strong>Commodities &amp; Procurement → National Impact Statistics</strong>.</li>
     <li>Edit key figures:
       <ul>
         <li>Citizens Covered (e.g. <code>780,000+</code>)</li>
@@ -606,6 +826,7 @@
     </li>
     <li>Click <strong>Update National Metrics</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
@@ -618,43 +839,55 @@
 
 <!-- CHAPTER 11 -->
 <section class="chapter" id="ch11" data-num="11">
-  <div class="chapter-head"><div class="cnum">11</div><h2>Pages Directory &amp; Drag-and-Drop Visual Studio</h2></div>
+  <div class="chapter-head">
+    <div class="cnum">11</div>
+    <h2>Pages Directory &amp; Drag-and-Drop Visual Studio</h2>
+  </div>
   <div class="route-tag">/admin/pages · /admin/page-editor</div>
+
   <p>Central management directory for all website pages and visual section layouts.</p>
+
   <h3>Managing Custom Pages</h3>
   <ol>
-    <li>Go to <strong>Institutional CMS → Pages &amp; Templates</strong>.</li>
-    <li>You will see all core system pages: <em>Home (/)</em>, <em>About Us (/about)</em>, <em>Our Work (/our-work)</em>, <em>Reports (/reports)</em>, <em>Policies (/policies)</em>, <em>Get Involved (/get-involved)</em>.</li>
+    <li>Go to <strong>Institutional CMS &amp; Media → Pages &amp; Templates</strong>.</li>
+    <li>Review all core system pages: <em>Home (/)</em>, <em>About Us (/about)</em>, <em>Our Story (/our-story)</em>, <em>Our Work (/our-work)</em>, <em>Reports (/reports)</em>, <em>Policies (/policies)</em>, <em>Get Involved (/get-involved)</em>.</li>
     <li>Click <strong>Live Customizer</strong> on any page card to launch the Visual Page Studio.</li>
   </ol>
+
   <h3>Available Content Blocks</h3>
-  <p>When building or modifying a page, staff can add any of the 8 certified Sovereign blocks:</p>
+  <p>When building or modifying a page, staff can add any of the certified Sovereign blocks:</p>
   <ul>
-    <li><strong>Hero Block</strong> — 2-column scenic mountain banner with live status badge and Hero Corpus Card.</li>
-    <li><strong>Stats Bento Block</strong> — animated impact numerals with verified credentials.</li>
-    <li><strong>Feature Cards Block</strong> — grid showcasing commodity streams or operational programs.</li>
-    <li><strong>Royal Decree Block</strong> — gold-framed Royal proclamation showcase with Dzongkha seal.</li>
-    <li><strong>Interactive Tools Block</strong> — Dzongkhag map explorer, commodity formulary, or 1:1 calculator.</li>
-    <li><strong>Rich Text Block</strong> — editorial typography for narratives, institutional history, or legal text.</li>
-    <li><strong>Accordion FAQ Block</strong> — collapsible questions and answers for citizen guidance.</li>
-    <li><strong>CTA Banner Block</strong> — full-bleed sovereign dark banner for donation appeals.</li>
+    <li><strong>Hero Block</strong> — Majestic portrait banner with live status badge and Hero Corpus Card.</li>
+    <li><strong>Stats Bento Block</strong> — Animated impact numerals with verified credentials.</li>
+    <li><strong>Feature Cards Block</strong> — Grid showcasing commodity streams or operational programs.</li>
+    <li><strong>Royal Decree Block</strong> — Gold-framed Royal proclamation showcase with Dzongkha seal.</li>
+    <li><strong>Interactive Tools Block</strong> — Dzongkhag map explorer and commodity formulary pipelines.</li>
+    <li><strong>Rich Text Block</strong> — Editorial typography for narratives, institutional history, or legal text.</li>
+    <li><strong>Accordion FAQ Block</strong> — Collapsible questions and answers for citizen guidance.</li>
+    <li><strong>CTA Banner Block</strong> — Full-bleed sovereign dark banner for donation appeals.</li>
   </ul>
 </section>
 
 <!-- CHAPTER 12 -->
 <section class="chapter" id="ch12" data-num="12">
-  <div class="chapter-head"><div class="cnum">12</div><h2>News, Press Bulletins &amp; Field Operational Dispatches</h2></div>
-  <div class="route-tag">/admin/news</div>
+  <div class="chapter-head">
+    <div class="cnum">12</div>
+    <h2>News, Press Bulletins &amp; Field Operational Dispatches</h2>
+  </div>
+  <div class="route-tag">/admin/news · /news · /</div>
+
   <p>Publishes official press releases, cold chain field dispatches from remote gewogs, and health ministry joint communiqués.</p>
+
   <h3>Publishing a News Article</h3>
   <ol>
-    <li>Go to <strong>Institutional CMS → News &amp; Press Releases</strong>.</li>
+    <li>Go to <strong>Institutional CMS &amp; Media → News &amp; Press Releases</strong>.</li>
     <li>Click <strong>+ Add New Article</strong>.</li>
     <li>Enter Article Title, Category (<em>Cold Chain</em>, <em>Vaccine Procurement</em>, <em>Royal Charter</em>, <em>Annual Audit</em>), Publication Date, and Reading Time.</li>
     <li>Upload Featured Cover Photograph.</li>
     <li>Type or paste the article content using formatted paragraphs.</li>
     <li>Click <strong>Publish Article</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
@@ -666,18 +899,24 @@
 
 <!-- CHAPTER 13 -->
 <section class="chapter" id="ch13" data-num="13">
-  <div class="chapter-head"><div class="cnum">13</div><h2>Statutory Reports, Financials &amp; Certified RAA Audits</h2></div>
-  <div class="route-tag">/admin/reports</div>
+  <div class="chapter-head">
+    <div class="cnum">13</div>
+    <h2>Statutory Reports, Financials &amp; Certified RAA Audits</h2>
+  </div>
+  <div class="route-tag">/admin/reports · /reports · /</div>
+
   <p>Maintains absolute fiduciary transparency by publishing Royal Audit Authority (RAA) audited financial statements and annual operational performance reports.</p>
+
   <h3>Adding an Audited Report</h3>
   <ol>
-    <li>Navigate to <strong>Institutional CMS → Reports &amp; RAA Audits</strong>.</li>
+    <li>Navigate to <strong>Institutional CMS &amp; Media → Reports &amp; RAA Audits</strong>.</li>
     <li>Click <strong>+ Add New Report</strong>.</li>
     <li>Select Document Category: <em>Statutory RAA Audit</em>, <em>Annual Financial Statement</em>, or <em>Clinical Procurement Review</em>.</li>
     <li>Enter Report Title, Fiscal Year (e.g. <em>FY 2024-2025</em>), Audit Rating (e.g. <em>Unqualified Clean Certification</em>), and brief executive summary.</li>
     <li>Upload official PDF file and preview thumbnail.</li>
     <li>Click <strong>Publish Report</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
@@ -689,16 +928,22 @@
 
 <!-- CHAPTER 14 -->
 <section class="chapter" id="ch14" data-num="14">
-  <div class="chapter-head"><div class="cnum">14</div><h2>Royal Charters, Statutory Policies &amp; Whistleblower Rules</h2></div>
-  <div class="route-tag">/admin/policies</div>
+  <div class="chapter-head">
+    <div class="cnum">14</div>
+    <h2>Royal Charters, Statutory Policies &amp; Whistleblower Rules</h2>
+  </div>
+  <div class="route-tag">/admin/policies · /policies</div>
+
   <p>Publishes the official governance documents of the Trust Fund including the Royal Charter, Conflict of Interest Regulations, and Investment Guidelines.</p>
+
   <h3>Editing Institutional Policies</h3>
   <ol>
-    <li>Go to <strong>Institutional CMS → Policies &amp; Royal Charters</strong>.</li>
+    <li>Go to <strong>Institutional CMS &amp; Media → Policies &amp; Royal Charters</strong>.</li>
     <li>Click <strong>Edit Document</strong> on any policy.</li>
     <li>Update articles, regulatory provisions, or legal citations.</li>
     <li>Click <strong>Save Policy</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Point</div>
     <div class="reflection-content">
@@ -709,12 +954,17 @@
 
 <!-- CHAPTER 15 -->
 <section class="chapter" id="ch15" data-num="15">
-  <div class="chapter-head"><div class="cnum">15</div><h2>Field Operations Photojournalism Gallery</h2></div>
-  <div class="route-tag">/admin/gallery</div>
+  <div class="chapter-head">
+    <div class="cnum">15</div>
+    <h2>Field Operations Photojournalism Gallery</h2>
+  </div>
+  <div class="route-tag">/admin/gallery · /our-work</div>
+
   <p>Visual repository documenting vaccine delivery over high Himalayan passes, solar cold chain installations, and clinic stocking in all 205 gewogs.</p>
+
   <h3>Uploading Field Imagery</h3>
   <ol>
-    <li>Go to <strong>Institutional CMS → Field Operations Gallery</strong>.</li>
+    <li>Go to <strong>Institutional CMS &amp; Media → Field Operations Gallery</strong>.</li>
     <li>Click <strong>+ Upload Field Imagery</strong>.</li>
     <li>Select high-resolution photography file.</li>
     <li>Enter Caption, Dzongkhag Location (e.g. <em>Laya Gewog, Gasa</em>), and Operational Tag (e.g. <em>Cold Chain Logistics</em>).</li>
@@ -724,12 +974,17 @@
 
 <!-- CHAPTER 16 -->
 <section class="chapter" id="ch16" data-num="16">
-  <div class="chapter-head"><div class="cnum">16</div><h2>Official Media Broadcasts &amp; Documentary Videos</h2></div>
-  <div class="route-tag">/admin/videos</div>
+  <div class="chapter-head">
+    <div class="cnum">16</div>
+    <h2>Official Media Broadcasts &amp; Documentary Videos</h2>
+  </div>
+  <div class="route-tag">/admin/videos · /our-story</div>
+
   <p>Embeds public health documentaries, Royal address recordings, and national immunization television campaigns.</p>
+
   <h3>Adding a Video Stream</h3>
   <ol>
-    <li>Go to <strong>Institutional CMS → Public Media &amp; Videos</strong>.</li>
+    <li>Go to <strong>Institutional CMS &amp; Media → Public Media &amp; Videos</strong>.</li>
     <li>Click <strong>+ Add Video Stream</strong>.</li>
     <li>Paste the YouTube or Vimeo URL, Title, Duration, and Description.</li>
     <li>Click <strong>Publish Video</strong>.</li>
@@ -738,64 +993,83 @@
 
 <!-- CHAPTER 17 -->
 <section class="chapter" id="ch17" data-num="17">
-  <div class="chapter-head"><div class="cnum">17</div><h2>Board of Trustees Directory &amp; Ministerial Governance</h2></div>
-  <div class="route-tag">/admin/trustees</div>
-  <p>Maintains the governance roster of the statutory Board of Trustees as mandated by Royal Charter.</p>
+  <div class="chapter-head">
+    <div class="cnum">17</div>
+    <h2>Board of Trustees Directory &amp; Governance Roster</h2>
+  </div>
+  <div class="route-tag">/admin/trustees · /about</div>
+
+  <p>Maintains the governance roster of the statutory Board of Trustees as mandated by Royal Charter, featuring high-resolution authentic portraits and bios.</p>
+
   <h3>Updating Trustee Profiles</h3>
   <ol>
-    <li>Go to <strong>Governance &amp; Community → Board of Trustees</strong>.</li>
+    <li>Go to <strong>Sovereign Governance → Board of Trustees</strong>.</li>
     <li>Edit official profiles:
       <ul>
-        <li><strong>Chairperson:</strong> Hon'ble Minister for Health</li>
-        <li><strong>Trustee:</strong> Finance Secretary, Ministry of Finance</li>
-        <li><strong>Trustee:</strong> WHO Country Representative for Bhutan</li>
-        <li><strong>Trustee:</strong> Eminent Civil Society Philanthropic Leader</li>
+        <li><strong>Chairperson:</strong> Hon'ble Minister for Health, Lyonpo Tandin Wangchuk</li>
+        <li><strong>Trustee:</strong> Finance Secretary, Ministry of Finance (Mr. Tshering Dorji)</li>
+        <li><strong>Trustee:</strong> Representative from Civil Society / Private Sector (Mr. Ujjwal Deep Dahal)</li>
+        <li><strong>Trustee:</strong> Eminent Health Experts &amp; Philanthropic Leaders</li>
+        <li><strong>Director:</strong> Secretariat Director (Dr. Karma Tshering)</li>
       </ul>
     </li>
-    <li>Upload formal portrait, update bio, and save.</li>
+    <li>Upload formal portrait, update bio and committee designations, and save.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Point</div>
     <div class="reflection-content">
-      Trustee cards and ministerial designations update immediately on <code>/about</code> under the <strong>Board of Trustees &amp; Statutory Governance</strong> section.
+      Trustee cards and ministerial designations update immediately on <code>/about</code> under the <strong>Board of Trustees &amp; Statutory Governance</strong> section with verified photography.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 18 -->
 <section class="chapter" id="ch18" data-num="18">
-  <div class="chapter-head"><div class="cnum">18</div><h2>Historical Milestones &amp; Sovereign Endowment Timeline</h2></div>
-  <div class="route-tag">/admin/milestones</div>
-  <p>Manages the chronological story of the Bhutan Health Trust Fund from its 1998 conception to modern day.</p>
+  <div class="chapter-head">
+    <div class="cnum">18</div>
+    <h2>Historical Milestones &amp; Archival Decrees</h2>
+  </div>
+  <div class="route-tag">/admin/milestones · /our-story · /</div>
+
+  <p>Manages the chronological story and authentic archival decrees of the Bhutan Health Trust Fund from its 1998 Geneva launch to modern times.</p>
+
   <h3>Adding or Editing Milestones</h3>
   <ol>
-    <li>Navigate to <strong>Governance &amp; Community → Sovereign Milestones</strong>.</li>
-    <li>Click <strong>+ Add Milestone</strong> or edit an existing era (e.g. <em>1998 Royal Initiative</em>, <em>2003 Charter Enacted</em>, <em>2014 Sovereign Match</em>, <em>2026 Nu. 3.2B+ Corpus</em>).</li>
+    <li>Navigate to <strong>Sovereign Governance → Historical Timeline</strong>.</li>
+    <li>Click <strong>+ Add Milestone</strong> or edit an existing era (e.g. <em>1998 Royal Initiative</em>, <em>2003 Charter Enacted</em>, <em>2014 Sustainable Health Financing</em>, <em>2026 Nu. 3.2B+ Corpus</em>).</li>
     <li>Enter Year, Milestone Title, and Narrative Summary.</li>
     <li>Click <strong>Save Timeline</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
       1. Updates the <strong>Royal Sovereign Health Milestones (1998-2026 Timeline)</strong> on the homepage.
-      <br>2. Updates the institutional heritage timeline on <code>/about</code>.
+      <br>2. Updates the institutional heritage timeline and Official Archival Manuscripts Gallery on <code>/our-story</code>.
     </div>
   </div>
 </section>
 
 <!-- CHAPTER 19 -->
 <section class="chapter" id="ch19" data-num="19">
-  <div class="chapter-head"><div class="cnum">19</div><h2>Citizen FAQs, Helpdesk &amp; Dzongkhag Guidance</h2></div>
-  <div class="route-tag">/admin/faqs</div>
+  <div class="chapter-head">
+    <div class="cnum">19</div>
+    <h2>Citizen FAQs, Helpdesk &amp; Dzongkhag Guidance</h2>
+  </div>
+  <div class="route-tag">/admin/faqs · /get-involved · /contact</div>
+
   <p>Maintains answers to common questions regarding free essential medicines, vaccine safety, donor tax exemptions, and overseas contributions.</p>
+
   <h3>Managing FAQ Items</h3>
   <ol>
-    <li>Go to <strong>Governance &amp; Community → FAQs Helpdesk</strong>.</li>
+    <li>Go to <strong>Sovereign Governance → FAQs &amp; Citizen Helpdesk</strong>.</li>
     <li>Click <strong>+ Add New FAQ</strong>.</li>
     <li>Select Category (<em>Donations &amp; Taxes</em>, <em>Medicines &amp; Vaccines</em>, <em>Governance &amp; Audit</em>).</li>
     <li>Type the Question and formatted Answer.</li>
     <li>Click <strong>Publish FAQ</strong>.</li>
   </ol>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
@@ -806,24 +1080,31 @@
 
 <!-- CHAPTER 20 -->
 <section class="chapter" id="ch20" data-num="20">
-  <div class="chapter-head"><div class="cnum">20</div><h2>System Settings, Emergency Helplines &amp; Announcement Ribbons</h2></div>
-  <div class="route-tag">/admin/settings</div>
+  <div class="chapter-head">
+    <div class="cnum">20</div>
+    <h2>System Settings, Emergency Helplines &amp; Announcement Ribbons</h2>
+  </div>
+  <div class="route-tag">/admin/settings · Global Header / Footer</div>
+
   <p>Controls global portal configurations, emergency banners, banking details, and official secretariat contacts.</p>
+
   <h3>Top Announcement Ribbon</h3>
   <ol>
-    <li>Go to <strong>Platform Infrastructure → System Settings</strong>.</li>
+    <li>Go to <strong>System Administration → Sovereign Site Settings</strong>.</li>
     <li>Locate the <strong>Sovereign Announcement Ribbon</strong> section.</li>
     <li>Set toggle to <strong>Enabled</strong>.</li>
-    <li>Enter announcement text (e.g. <em>"Royal Government matches all health contributions Nu. 1:1 under Royal Charter"</em>).</li>
+    <li>Enter announcement text (e.g. <em>"Universal routine childhood vaccination campaigns active nationwide in all 20 Dzongkhags"</em>).</li>
     <li>Click <strong>Save Global Settings</strong>.</li>
   </ol>
+
   <h3>Official Banking &amp; Tax Credentials</h3>
   <p>Under the <strong>Banking &amp; Tax</strong> tab, verify the official deposit accounts for Bank of Bhutan (Nu.), Bhutan National Bank (Nu.), and Druk PNB (USD/EUR). These details render directly on the public donation forms on <code>/get-involved</code>.</p>
+
   <div class="reflection-box">
     <div class="reflection-title">⚡ Public Reflection Points</div>
     <div class="reflection-content">
-      1. <strong>Top Ribbon:</strong> Displays a gold banner at the very top of all public pages.
-      <br>2. <strong>Bank Accounts:</strong> Updates payment instructions on <code>/get-involved</code>.
+      1. <strong>Top Ribbon:</strong> Displays an amber announcement banner at the very top of all public pages.
+      <br>2. <strong>Bank Accounts:</strong> Updates direct wire payment instructions on <code>/get-involved</code>.
       <br>3. <strong>Helplines:</strong> Updates the 112 Emergency and +975 contact numbers in the header and footer.
     </div>
   </div>
@@ -831,20 +1112,26 @@
 
 <!-- CHAPTER 21 -->
 <section class="chapter" id="ch21" data-num="21">
-  <div class="chapter-head"><div class="cnum">21</div><h2>Staff Logins, Security RBAC &amp; Role Permissions</h2></div>
+  <div class="chapter-head">
+    <div class="cnum">21</div>
+    <h2>Staff Logins, Security RBAC &amp; Role Permissions</h2>
+  </div>
   <div class="route-tag">/admin/users</div>
+
   <p>Administers staff credentials with strict Role-Based Access Control (RBAC) to ensure fiduciary separation of duties.</p>
+
   <h3>Adding a Staff Member</h3>
   <ol>
-    <li>Go to <strong>Platform Infrastructure → Staff Logins &amp; RBAC</strong>.</li>
+    <li>Go to <strong>System Administration → Users &amp; Roles (RBAC)</strong>.</li>
     <li>Click <strong>+ Add New Staff Account</strong>.</li>
     <li>Enter Full Name, Official Secretariat Email, and strong initial password.</li>
     <li>Assign the appropriate role:</li>
   </ol>
+
   <div class="role-cards">
     <div class="role-card">
       <div class="rname">Super Admin (Executive Secretariat)</div>
-      <div class="rdesc">Unrestricted access across all studios, staff user management, financial configurations, and audit logs.</div>
+      <div class="rdesc">Unrestricted access across all studios, staff user management, financial configurations, and immutable audit logs.</div>
     </div>
     <div class="role-card">
       <div class="rname">Finance Officer (Pledges &amp; DRC Tax Desk)</div>
@@ -863,9 +1150,14 @@
 
 <!-- CHAPTER 22 -->
 <section class="chapter" id="ch22" data-num="22">
-  <div class="chapter-head"><div class="cnum">22</div><h2>Security Audit Trail &amp; Fiduciary Compliance Logs</h2></div>
+  <div class="chapter-head">
+    <div class="cnum">22</div>
+    <h2>Security Audit Trail &amp; Fiduciary Compliance Logs</h2>
+  </div>
   <div class="route-tag">/admin/audit-logs</div>
+
   <p>An immutable, tamper-evident security ledger recording every administrative action taken inside the system.</p>
+
   <h3>Audit Ledger Contents</h3>
   <p>Every log entry captures:</p>
   <ul>
@@ -875,31 +1167,38 @@
     <li><strong>Client IP Address</strong> and browser user agent.</li>
     <li><strong>Old vs New State Payload</strong> (JSON diff).</li>
   </ul>
-  <div class="callout">The audit trail cannot be edited or cleared by any administrator. It is exported annually for inspection by the Royal Audit Authority (RAA) auditors.</div>
+
+  <div class="callout">The audit trail cannot be edited or cleared by any administrator. It is exported annually for inspection by the Royal Audit Authority (RAA) statutory auditors.</div>
 </section>
 
 <!-- CHAPTER 23 -->
 <section class="chapter" id="ch23" data-num="23">
-  <div class="chapter-head"><div class="cnum">23</div><h2>Disaster Recovery, Database Backups &amp; VPS Maintenance</h2></div>
+  <div class="chapter-head">
+    <div class="cnum">23</div>
+    <h2>Disaster Recovery, Database Backups &amp; VPS Maintenance</h2>
+  </div>
+  <div class="route-tag">CLI · Nitro · PM2 · PostgreSQL Dump</div>
+
   <h3>Automated Database Backups</h3>
   <p>The database automatically backs up daily to encrypted storage. To run a manual on-demand backup on the production VPS server:</p>
-  <p><code>npm run db:backup</code></p>
+  <pre><code>npm run db:backup</code></pre>
   <p>Backup archives are timestamped and stored in <code>.backups/</code> with full PostgreSQL dump files.</p>
+
   <h3>Zero-Downtime Deployment</h3>
   <p>To deploy new system updates without interrupting citizen services:</p>
-  <ol>
-    <li>Connect to the server via SSH.</li>
-    <li>Run: <code>git pull origin main</code></li>
-    <li>Run: <code>npm run build</code></li>
-    <li>Reload the process via PM2: <code>pm2 reload bhtf-server</code></li>
-  </ol>
-  <div class="callout warn">Database credentials and server SSH keys are confidential sovereign assets. Store all environment variables securely and never commit <code>.env</code> files to public repositories.</div>
+  <pre><code>git pull origin main
+npm run build
+pm2 reload bhtf-server || pm2 restart bhtf-server</code></pre>
+
+  <div class="callout warn">
+    <strong>DevOps Security Advisory</strong>: Database credentials and server SSH keys are confidential sovereign assets. Store all environment variables securely and never commit <code>.env</code> files to public repositories.
+  </div>
 </section>
 
     </div>
 
     <footer>
-      Official Site Operations Manual compiled for the Bhutan Health Trust Fund (BHTF).<br>
+      Official Operations Document compiled for the Bhutan Health Trust Fund (BHTF).<br>
       Royal Charter Statutory Trust Fund · Ministry of Health, Kawajangsa, Thimphu, Kingdom of Bhutan.
     </footer>
   </main>
@@ -913,15 +1212,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var navGroups = document.getElementById('navGroups');
 
   var groups = [
-    { title: 'Executive & Operations', ids: [4, 5, 6, 7, 8, 9, 10] },
-    { title: 'Institutional CMS & Media', ids: [3, 11, 12, 13, 14, 15, 16] },
-    { title: 'Governance & Community', ids: [17, 18, 19] },
-    { title: 'Platform & Security', ids: [1, 2, 20, 21, 22, 23] }
+    { title: 'Platform & Controls', ids: [1, 2, 3] },
+    { title: '1. Executive CRM & Donors', ids: [4, 5, 6, 7] },
+    { title: '2. Commodities & Procurement', ids: [8, 9, 10] },
+    { title: '3. Institutional CMS & Media', ids: [11, 12, 13, 14, 15, 16] },
+    { title: '4. Sovereign Governance', ids: [17, 18, 19] },
+    { title: '5. System & DevOps', ids: [20, 21, 22, 23] }
   ];
 
   var chapterMeta = {};
   chapters.forEach(function (ch) {
-    var n = ch.getAttribute('data-num');
+    var n = parseInt(ch.getAttribute('data-num'), 10);
     var title = ch.querySelector('h2').textContent;
     chapterMeta[n] = title;
   });
