@@ -254,13 +254,13 @@ function HeroCorpusCard() {
 
   return (
     <div className="relative space-y-3">
-      {/* Translucent Pure Glass Chassis Over Authentic Scenic Background */}
+      {/* Translucent Pure Ultra-Glass Chassis Over Authentic Scenic Background */}
       <div
         ref={corpusCounter.ref}
-        className="relative rounded-3xl bg-white/[0.08] hover:bg-white/[0.11] border border-white/20 p-5 sm:p-7 shadow-[0_24px_60px_-10px_rgba(0,0,0,0.6)] backdrop-blur-xl space-y-5 overflow-hidden md:animate-float text-white transition-all"
+        className="relative rounded-3xl bg-[#061713]/40 hover:bg-[#061713]/50 border border-white/25 p-5 sm:p-7 shadow-[0_24px_60px_-10px_rgba(0,0,0,0.4)] backdrop-blur-md space-y-5 overflow-hidden md:animate-float text-white transition-all"
       >
         {/* Subtle Top Gold Hairline Accent */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
 
         {/* Top Status Header */}
         <div className="flex items-center justify-between border-b border-white/15 pb-3.5">
@@ -273,7 +273,7 @@ function HeroCorpusCard() {
               Sovereign Health Corpus
             </span>
           </div>
-          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/40">
+          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/40 backdrop-blur-sm">
             Nu. 1:1 RGOB Matched
           </span>
         </div>
@@ -283,19 +283,19 @@ function HeroCorpusCard() {
           <span className="text-[11px] uppercase tracking-wider text-slate-300 font-bold font-sans block">
             Perpetual Health Endowment
           </span>
-          <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+          <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             {corpusCounter.formatted}
           </div>
-          <p className="text-xs text-slate-200 font-sans leading-relaxed pt-0.5 font-normal">
+          <p className="text-xs text-slate-200 font-sans leading-relaxed pt-0.5 font-normal drop-shadow-xs">
             Invested sovereign capital yielding permanent annual returns to fund Bhutan's primary healthcare commodities.
           </p>
         </div>
 
-        {/* 3 Editorial Supply Rows with Crisp Visibility */}
+        {/* 3 Editorial Supply Rows with Ultra-Transparent Pure Glass Visibility */}
         <div className="space-y-2 pt-0.5">
-          <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.14] p-3.5 rounded-2xl border border-white/15 hover:border-emerald-500/50 transition-all">
+          <div className="flex items-center justify-between bg-black/25 hover:bg-black/40 p-3.5 rounded-2xl border border-white/15 hover:border-emerald-400/60 transition-all backdrop-blur-xs">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-emerald-500/25 text-emerald-300 grid place-items-center shrink-0 border border-emerald-500/40">
+              <div className="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-300 grid place-items-center shrink-0 border border-emerald-500/40">
                 <Syringe className="h-4 w-4" />
               </div>
               <div>
@@ -306,9 +306,9 @@ function HeroCorpusCard() {
             <span className="font-serif text-xs font-bold text-emerald-300 font-mono">Nu. 68.5M</span>
           </div>
 
-          <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.14] p-3.5 rounded-2xl border border-white/15 hover:border-amber-500/50 transition-all">
+          <div className="flex items-center justify-between bg-black/25 hover:bg-black/40 p-3.5 rounded-2xl border border-white/15 hover:border-amber-400/60 transition-all backdrop-blur-xs">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-amber-500/25 text-amber-300 grid place-items-center shrink-0 border border-amber-500/40">
+              <div className="h-8 w-8 rounded-xl bg-amber-500/20 text-amber-300 grid place-items-center shrink-0 border border-amber-500/40">
                 <Pill className="h-4 w-4" />
               </div>
               <div>
@@ -319,9 +319,9 @@ function HeroCorpusCard() {
             <span className="font-serif text-xs font-bold text-amber-300 font-mono">Nu. 145.0M</span>
           </div>
 
-          <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.14] p-3.5 rounded-2xl border border-white/15 hover:border-teal-500/50 transition-all">
+          <div className="flex items-center justify-between bg-black/25 hover:bg-black/40 p-3.5 rounded-2xl border border-white/15 hover:border-teal-400/60 transition-all backdrop-blur-xs">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-teal-500/25 text-teal-300 grid place-items-center shrink-0 border border-teal-500/40">
+              <div className="h-8 w-8 rounded-xl bg-teal-500/20 text-teal-300 grid place-items-center shrink-0 border border-teal-500/40">
                 <ThermometerSnowflake className="h-4 w-4" />
               </div>
               <div>
@@ -348,11 +348,15 @@ function HeroCorpusCard() {
         <div className="flex items-center justify-between pt-2 border-t border-white/15 text-[10px] text-slate-300 font-sans">
           <div className="flex items-center gap-1.5 text-emerald-300 font-medium">
             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-            <span>100% Ring-Fenced Healthcare Corpus</span>
+            <span>100% Ring-Fenced</span>
           </div>
           <div className="flex items-center gap-1.5 text-amber-300 font-medium">
             <ShieldCheck className="h-3.5 w-3.5 text-amber-400 shrink-0" />
             <span>RAA Clean Audit Certified</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-blue-300 font-medium">
+            <Globe className="h-3.5 w-3.5 text-blue-400 shrink-0" />
+            <span>All 20 Dzongkhags</span>
           </div>
         </div>
       </div>
@@ -469,23 +473,14 @@ function Index() {
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
       {/* 1. Atmospheric Modern Sovereign Dark Hero Section */}
       <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
-        {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner (Isolated to Hero Section) */}
+        {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner - Highly Clear & Visible */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-40 mix-blend-luminosity"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85 transition-opacity duration-700"
           style={{ backgroundImage: `url(${hero})` }}
         />
-        {/* Authentic Horizontal Portrait of His Majesty The Fourth Druk Gyalpo blended on right side */}
-        <div
-          className="absolute inset-0 bg-no-repeat pointer-events-none opacity-55"
-          style={{
-            backgroundImage: `url(${kingPortrait})`,
-            backgroundPosition: "right 5% top 15%",
-            backgroundSize: "contain",
-          }}
-        />
-        {/* Cinematic split vignette: high contrast on left for typography, open on right for King & snowy peaks */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061713] via-[#061713]/75 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/70 via-transparent to-[#061713] pointer-events-none" />
+        {/* Soft, Transparent Ambient Vignette (Keeps scenery bright & recognizable while ensuring crisp text readability) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/85 via-[#061713]/40 to-black/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#061713] via-transparent to-[#061713]/60 pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
@@ -496,7 +491,7 @@ function Index() {
         <div className="relative z-10 mx-auto max-w-7xl">
           {/* Top Sovereign Announcement Ribbon - Positioned Down After Header Menu Bar */}
           {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
-            <div className="mb-6 sm:mb-8 bg-[#09221b]/95 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-xl shadow-xl animate-in fade-in slide-in-from-top-2">
+            <div className="mb-6 sm:mb-8 bg-[#09221b]/80 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-md shadow-xl animate-in fade-in slide-in-from-top-2">
               <Sparkles className="h-4 w-4 shrink-0 text-amber-400 animate-pulse" />
               <span className="leading-snug text-center">{settings["announcement_banner"]}</span>
             </div>
@@ -507,7 +502,7 @@ function Index() {
             <div className="lg:col-span-7 space-y-6 sm:space-y-7">
               {/* Royal Charter & Live Status Badge */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#09221b]/95 border border-emerald-500/40 text-emerald-300 text-xs font-semibold backdrop-blur-xl shadow-md">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-emerald-400/40 text-emerald-300 text-xs font-semibold backdrop-blur-md shadow-md">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -515,7 +510,7 @@ function Index() {
                   <span>Royal Charter Mandate • 100% Guaranteed</span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1a1708]/95 text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-md backdrop-blur-xl">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-md backdrop-blur-md">
                   <Sparkles className="h-3 w-3 text-amber-400" />
                   <span>Nu. 1:1 RGOB Sovereign Match</span>
                 </div>
@@ -533,27 +528,27 @@ function Index() {
                 Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance.
               </p>
 
-              {/* Clean Transparent Highlights Grid (De-AI, Authentic Institutional) */}
+              {/* Clean Transparent Highlights Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
-                <div className="flex items-center gap-2.5 bg-white/[0.08] hover:bg-white/[0.12] p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
+                <div className="flex items-center gap-2.5 bg-black/30 hover:bg-black/45 p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-semibold text-white">Zero Stockout Guarantee</span>
                 </div>
-                <div className="flex items-center gap-2.5 bg-white/[0.08] hover:bg-white/[0.12] p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
+                <div className="flex items-center gap-2.5 bg-black/30 hover:bg-black/45 p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-semibold text-white">205 Remote Gewogs</span>
                 </div>
-                <div className="flex items-center gap-2.5 bg-white/[0.08] hover:bg-white/[0.12] p-3 rounded-2xl border border-white/15 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
+                <div className="flex items-center gap-2.5 bg-black/30 hover:bg-black/45 p-3 rounded-2xl border border-white/15 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
                   <span className="font-semibold text-white">100% DRC Tax Exempt</span>
                 </div>
               </div>
 
-              {/* Prominent Royal Homage Banner: His Majesty The Fourth Druk Gyalpo */}
-              <div className="relative overflow-hidden rounded-2xl border border-amber-400/40 bg-gradient-to-r from-[#0a231c]/95 via-[#0e3027]/90 to-[#071914]/95 p-3 sm:p-4 shadow-xl backdrop-blur-xl group">
+              {/* Prominent Royal Homage Banner: His Majesty The Fourth Druk Gyalpo (Glassmorphic & Transparent) */}
+              <div className="relative overflow-hidden rounded-2xl border border-amber-400/40 bg-black/35 hover:bg-black/45 p-3 sm:p-4 shadow-xl backdrop-blur-md group transition-all">
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   {/* Clear Horizontal Photo Frame of His Majesty */}
-                  <div className="relative w-full sm:w-44 h-28 sm:h-24 rounded-xl overflow-hidden shrink-0 border border-amber-300/50 shadow-md">
+                  <div className="relative w-full sm:w-44 h-28 sm:h-24 rounded-xl overflow-hidden shrink-0 border border-amber-300/60 shadow-lg">
                     <img
                       src={kingPortrait}
                       alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
@@ -574,14 +569,14 @@ function Index() {
                     <p className="font-serif text-sm sm:text-base font-bold text-white tracking-tight leading-snug">
                       His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
                     </p>
-                    <p className="text-xs text-slate-300 font-sans leading-relaxed line-clamp-2">
+                    <p className="text-xs text-slate-200 font-sans leading-relaxed line-clamp-2 drop-shadow-xs">
                       Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and universal vaccines for all citizens.
                     </p>
                   </div>
 
                   <Link
                     to="/our-story"
-                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/20 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm self-end sm:self-center"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/25 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm self-end sm:self-center"
                   >
                     <span>Royal Story</span>
                     <ArrowRight className="h-3 w-3" />
