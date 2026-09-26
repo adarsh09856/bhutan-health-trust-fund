@@ -22,8 +22,50 @@ import {
   CheckCircle2,
   XCircle,
   Eye,
+  Camera,
 } from "lucide-react";
 import { toast } from "sonner";
+import trusteeLesang from "@/assets/reference/trustee_lesang_wangdi.webp";
+import trusteeNawang from "@/assets/reference/trustee_nawang_norbu.webp";
+import trusteeSonamTashi from "@/assets/reference/trustee_sonam_tashi.webp";
+import trusteeTsheringDorji from "@/assets/reference/trustee_tshering_dorji.webp";
+import trusteeTsheringYangzom from "@/assets/reference/trustee_tshering_yangzom.webp";
+import trusteeSonamLeki from "@/assets/reference/trustee_sonam_leki_dorji.webp";
+import directorKarma from "@/assets/reference/director_karma_tshering.webp";
+import trusteeUjjwal from "@/assets/reference/trustee_ujjwal_deep_dahal.webp";
+
+const trusteeFallbackPhotos: Record<string, string> = {
+  "Lesang": trusteeLesang,
+  "Nawang": trusteeNawang,
+  "Sonam Tashi": trusteeSonamTashi,
+  "Tshering Dorji": trusteeTsheringDorji,
+  "Tshering Yangzom": trusteeTsheringYangzom,
+  "Sonam Leki": trusteeSonamLeki,
+  "Karma Tshering": directorKarma,
+  "Ujjwal": trusteeUjjwal,
+};
+
+const resolveTrusteePhoto = (name?: string, photoUrl?: string | null, idx = 0) => {
+  if (photoUrl && (photoUrl.startsWith("http://") || photoUrl.startsWith("https://") || photoUrl.startsWith("data:"))) {
+    return photoUrl;
+  }
+  if (name) {
+    for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
+      if (name.includes(key)) return p;
+    }
+  }
+  const defaultPhotos = [
+    trusteeLesang,
+    trusteeNawang,
+    trusteeSonamTashi,
+    trusteeTsheringDorji,
+    trusteeTsheringYangzom,
+    trusteeSonamLeki,
+    directorKarma,
+    trusteeUjjwal,
+  ];
+  return defaultPhotos[idx % defaultPhotos.length];
+};
 
 export const Route = createFileRoute("/admin/trustees")({
   head: () => ({
@@ -248,18 +290,11 @@ export function AdminTrusteesPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <div className="h-12 w-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
-                        {t.photoUrl ? (
-                          <img
-                            src={t.photoUrl}
-                            alt={t.name}
-                            className="h-full w-full object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLElement).style.display = "none";
-                            }}
-                          />
-                        ) : (
-                          <Users className="h-6 w-6 text-slate-400" />
-                        )}
+                        <img
+                          src={resolveTrusteePhoto(t.name, t.photoUrl, t.id)}
+                          alt={t.name}
+                          className="h-full w-full object-cover object-top"
+                        />
                       </div>
                       <div>
                         <span className="text-[10px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200/60 inline-block mb-1">

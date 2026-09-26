@@ -29,6 +29,14 @@ import {
   Landmark,
   Scale,
 } from "lucide-react";
+import trusteeLesang from "@/assets/reference/trustee_lesang_wangdi.webp";
+import trusteeNawang from "@/assets/reference/trustee_nawang_norbu.webp";
+import trusteeSonamTashi from "@/assets/reference/trustee_sonam_tashi.webp";
+import trusteeTsheringDorji from "@/assets/reference/trustee_tshering_dorji.webp";
+import trusteeTsheringYangzom from "@/assets/reference/trustee_tshering_yangzom.webp";
+import trusteeSonamLeki from "@/assets/reference/trustee_sonam_leki_dorji.webp";
+import directorKarma from "@/assets/reference/director_karma_tshering.webp";
+import trusteeUjjwal from "@/assets/reference/trustee_ujjwal_deep_dahal.webp";
 
 export const Route = createFileRoute("/about")({
   loader: async () => {
@@ -108,47 +116,76 @@ const values = [
 ];
 
 const trustees: {
-  name?: string;
+  name: string;
   role: string;
   organization: string;
   badge: string;
   desc: string;
+  photo: string;
 }[] = [
   {
-    role: "Chairperson of the Board",
-    organization: "Ministry of Health, RGOB",
-    badge: "Government Trustee",
-    desc: "Oversees strategic alignment with national healthcare policies, Five-Year Plans, and universal primary coverage.",
+    name: "Ambassador Lesang Wangdi",
+    role: "Trustee & Senior Diplomatic Advisor",
+    organization: "Board of Trustees, BHTF",
+    badge: "Trustee",
+    desc: "Oversees multilateral partnerships, international sovereign agreements, and bilateral healthcare endowments.",
+    photo: trusteeLesang,
   },
   {
-    role: "Secretary of Finance",
+    name: "Dr. Nawang Norbu",
+    role: "Trustee & Research Director",
+    organization: "Board of Trustees, BHTF",
+    badge: "Trustee",
+    desc: "Directs epidemiological research, evidence-based health investment allocations, and climate health resilience.",
+    photo: trusteeNawang,
+  },
+  {
+    name: "Dasho Sonam Tashi",
+    role: "Trustee & Fiscal Policy Specialist",
     organization: "Ministry of Finance, RGOB",
     badge: "Fiscal Trustee",
-    desc: "Directs endowment investment policies, 1:1 RGOB matching disbursements, and statutory fiscal governance.",
+    desc: "Oversees 1:1 RGOB matching fund allocations, capital ring-fencing, and statutory investment policy compliance.",
+    photo: trusteeSonamTashi,
   },
   {
-    role: "Country Representative",
-    organization: "World Health Organization (WHO)",
-    badge: "Multilateral Partner",
-    desc: "Advises on international pooled vaccine procurement, WHO prequalification standards, and cold chain safety.",
+    name: "Tshering Dorji",
+    role: "Trustee & Fiduciary Oversight Member",
+    organization: "Board of Trustees, BHTF",
+    badge: "Audit & Risk",
+    desc: "Advises on asset management, external statutory auditing, and strict Royal Audit Authority conformance.",
+    photo: trusteeTsheringDorji,
   },
   {
-    role: "Civil Society & Private Sector Trustee",
-    organization: "Eminent Public Representative",
+    name: "Tshering Yangzom",
+    role: "Trustee & Legal / Governance Member",
+    organization: "Board of Trustees, BHTF",
+    badge: "Governance",
+    desc: "Specializes in trust governance, Royal Charter compliance, and institutional statutory policies.",
+    photo: trusteeTsheringYangzom,
+  },
+  {
+    name: "Sonam Leki Dorji",
+    role: "Trustee & Private Sector Representative",
+    organization: "Board of Trustees, BHTF",
     badge: "Public Oversight",
-    desc: "Ensures citizen representation, societal accountability, ethical fiduciary stewardship, and community donor engagement.",
+    desc: "Represents corporate stakeholders, private contributions, and community philanthropy stewardship.",
+    photo: trusteeSonamLeki,
   },
   {
-    role: "Director of Medical Services",
-    organization: "Department of Medical Services, RGOB",
-    badge: "Clinical Technical",
-    desc: "Monitors national essential drug formularies, consumption rates, and 6-month buffer stock requirements across all 20 Dzongkhags.",
-  },
-  {
-    role: "Secretariat Director",
+    name: "Dr. Karma Tshering",
+    role: "Secretariat Executive Director",
     organization: "BHTF Executive Secretariat",
     badge: "Executive Leadership",
-    desc: "Leads day-to-day capital endowment management, international tender financing, and statutory Royal Audit Authority compliance.",
+    desc: "Leads day-to-day capital endowment management, international tender financing, and nationwide commodity supply buffers.",
+    photo: directorKarma,
+  },
+  {
+    name: "Ujjwal Deep Dahal",
+    role: "Trustee & Technology / Innovation Advisor",
+    organization: "Board of Trustees, BHTF",
+    badge: "Innovation",
+    desc: "Advises on digital health logistics, high-altitude solar cold chain automation, and supply chain telemetry.",
+    photo: trusteeUjjwal,
   },
 ];
 
@@ -216,14 +253,48 @@ function About() {
 
 
 
+  const trusteeFallbackPhotos: Record<string, string> = {
+    "Lesang": trusteeLesang,
+    "Nawang": trusteeNawang,
+    "Sonam Tashi": trusteeSonamTashi,
+    "Tshering Dorji": trusteeTsheringDorji,
+    "Tshering Yangzom": trusteeTsheringYangzom,
+    "Sonam Leki": trusteeSonamLeki,
+    "Karma Tshering": directorKarma,
+    "Ujjwal": trusteeUjjwal,
+  };
+
+  const getTrusteePhoto = (name?: string, photoUrl?: string | null, idx = 0) => {
+    if (photoUrl && (photoUrl.startsWith("http://") || photoUrl.startsWith("https://") || photoUrl.startsWith("data:"))) {
+      return photoUrl;
+    }
+    if (name) {
+      for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
+        if (name.includes(key)) return p;
+      }
+    }
+    const defaultPhotos = [
+      trusteeLesang,
+      trusteeNawang,
+      trusteeSonamTashi,
+      trusteeTsheringDorji,
+      trusteeTsheringYangzom,
+      trusteeSonamLeki,
+      directorKarma,
+      trusteeUjjwal,
+    ];
+    return defaultPhotos[idx % defaultPhotos.length];
+  };
+
   const displayTrustees =
     liveTrustees.length > 0
-      ? liveTrustees.map((t) => ({
+      ? liveTrustees.map((t, idx) => ({
           role: t.role,
           organization: t.organization,
           badge: t.badge,
           desc: t.bio,
           name: t.name,
+          photo: getTrusteePhoto(t.name, t.photoUrl, idx),
         }))
       : trustees;
 
@@ -361,24 +432,29 @@ function About() {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-amber-400 grid place-items-center shadow-md">
-                      <Users2 className="h-5 w-5" />
+                    <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden border-2 border-emerald-600/40 shadow-md shrink-0 bg-slate-100">
+                      <img
+                        src={t.photo}
+                        alt={t.name || t.role}
+                        className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
                     </div>
-                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
                       {t.badge}
                     </span>
                   </div>
 
                   <div>
                     {t.name && (
-                      <span className="text-xs font-black uppercase tracking-wider text-slate-500 block mb-0.5">
+                      <span className="text-xs font-black uppercase tracking-wider text-emerald-800 block mb-0.5">
                         {t.name}
                       </span>
                     )}
                     <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition">
                       {t.role}
                     </h3>
-                    <span className="text-xs font-bold text-emerald-700 block mt-0.5">
+                    <span className="text-xs font-bold text-slate-500 block mt-0.5">
                       {t.organization}
                     </span>
                   </div>

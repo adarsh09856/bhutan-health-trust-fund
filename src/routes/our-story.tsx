@@ -18,6 +18,10 @@ import {
 } from "lucide-react";
 import heroBhutan from "@/assets/hero-bhutan.jpg";
 import kingPortrait from "@/assets/king_portrait_fourth.jpg";
+import historyKing from "@/assets/reference/history_fourth_king.webp";
+import historyCharter from "@/assets/reference/history_charter_1992.webp";
+import historyMou from "@/assets/reference/history_mou.webp";
+import historyEndowment from "@/assets/reference/history_endowment.webp";
 
 export const Route = createFileRoute("/our-story")({
   loader: async () => {
@@ -267,6 +271,87 @@ function OurStoryPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* 4. Official Archival Documents & Decrees from BHTF Archive */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+          <span className="text-xs font-black uppercase tracking-widest text-emerald-800 font-mono">
+            Original Archival Manuscripts
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-serif">
+            Official Decrees, Charters & Historic MOUs
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm">
+            Primary historical documents from the Royal Government of Bhutan and multilateral partners.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+            <div className="aspect-[4/5] overflow-hidden bg-slate-100">
+              <img
+                src={historyKing}
+                alt="His Majesty the Fourth Druk Gyalpo Founding Portrait"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-5 space-y-1">
+              <span className="text-[10px] font-mono text-emerald-700 font-bold uppercase">Royal Benefactor</span>
+              <h4 className="font-serif font-bold text-sm text-slate-900">His Majesty the Fourth Druk Gyalpo</h4>
+              <p className="text-[11px] text-slate-500 leading-snug">Founding father and visionary of the health trust fund.</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+            <div className="aspect-[4/5] overflow-hidden bg-slate-100">
+              <img
+                src={historyCharter}
+                alt="Royal Charter Founding Manuscript"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-5 space-y-1">
+              <span className="text-[10px] font-mono text-emerald-700 font-bold uppercase">Legal Charter</span>
+              <h4 className="font-serif font-bold text-sm text-slate-900">Original Royal Charter</h4>
+              <p className="text-[11px] text-slate-500 leading-snug">Statutory enactment establishing autonomy and capital ring-fencing.</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+            <div className="aspect-[4/5] overflow-hidden bg-slate-100">
+              <img
+                src={historyMou}
+                alt="Geneva Multilateral MOU 1998"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-5 space-y-1">
+              <span className="text-[10px] font-mono text-emerald-700 font-bold uppercase">Geneva Accord</span>
+              <h4 className="font-serif font-bold text-sm text-slate-900">WHO Multilateral MOU</h4>
+              <p className="text-[11px] text-slate-500 leading-snug">International pact securing universal immunization procurement.</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+            <div className="aspect-[4/5] overflow-hidden bg-slate-100">
+              <img
+                src={historyEndowment}
+                alt="Sovereign Endowment Ledger Document"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-5 space-y-1">
+              <span className="text-[10px] font-mono text-emerald-700 font-bold uppercase">Sovereign Corpus</span>
+              <h4 className="font-serif font-bold text-sm text-slate-900">Perpetual Trust Ledger</h4>
+              <p className="text-[11px] text-slate-500 leading-snug">1:1 matching agreement and permanent capital preservation.</p>
+            </div>
+          </div>
         </div>
       </section>
 
