@@ -549,6 +549,46 @@ function Index() {
                 </div>
               </div>
 
+              {/* Prominent Royal Homage Banner: His Majesty The Fourth Druk Gyalpo */}
+              <div className="relative overflow-hidden rounded-2xl border border-amber-400/40 bg-gradient-to-r from-[#0a231c]/95 via-[#0e3027]/90 to-[#071914]/95 p-3 sm:p-4 shadow-xl backdrop-blur-xl group">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  {/* Clear Horizontal Photo Frame of His Majesty */}
+                  <div className="relative w-full sm:w-44 h-28 sm:h-24 rounded-xl overflow-hidden shrink-0 border border-amber-300/50 shadow-md">
+                    <img
+                      src={kingPortrait}
+                      alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
+                      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-1 left-1.5 text-[9px] font-mono uppercase tracking-wider text-amber-300 font-bold bg-black/60 px-1.5 py-0.5 rounded">
+                      Royal Visionary
+                    </span>
+                  </div>
+
+                  {/* Royal Citation */}
+                  <div className="space-y-1 text-left flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-300 font-sans">
+                      <Sparkles className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+                      <span>Conceived & Enacted under Royal Vision (1998–2000)</span>
+                    </div>
+                    <p className="font-serif text-sm sm:text-base font-bold text-white tracking-tight leading-snug">
+                      His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
+                    </p>
+                    <p className="text-xs text-slate-300 font-sans leading-relaxed line-clamp-2">
+                      Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and universal vaccines for all citizens.
+                    </p>
+                  </div>
+
+                  <Link
+                    to="/our-story"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/20 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm self-end sm:self-center"
+                  >
+                    <span>Royal Story</span>
+                    <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
               {/* Institutional Endorsement Bar */}
               <div className="pt-4 flex flex-wrap items-center gap-3 text-xs border-t border-white/15">
                 <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold font-mono">
