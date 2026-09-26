@@ -471,16 +471,20 @@ function Index() {
 
   return (
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
-      {/* 1. Atmospheric Modern Sovereign Dark Hero Section */}
-      <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
-        {/* Authentic Bhutanese Himalayan & Dzong Architecture Scenic Background Banner - Highly Clear & Visible */}
+      {/* 1. Sovereign Hero Section with His Majesty the Fourth Druk Gyalpo as the Clear Primary Background */}
+      <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20 min-h-[85vh] flex items-center">
+        {/* Clear & Highly Visible Horizontal Photo of His Majesty The Fourth Druk Gyalpo as the Hero Background */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85 transition-opacity duration-700"
-          style={{ backgroundImage: `url(${hero})` }}
+          className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none transition-opacity duration-700"
+          style={{
+            backgroundImage: `url(${kingPortrait})`,
+            backgroundPosition: "center 20%",
+          }}
         />
-        {/* Soft, Transparent Ambient Vignette (Keeps scenery bright & recognizable while ensuring crisp text readability) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/85 via-[#061713]/40 to-black/30 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#061713] via-transparent to-[#061713]/60 pointer-events-none" />
+
+        {/* Minimal Subtle Transparent Shade (Allows King Photo to be fully visible while ensuring text readability) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/90 via-[#061713]/55 to-black/35 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#061713] via-transparent to-[#061713]/40 pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
@@ -488,10 +492,10 @@ function Index() {
         <div className="absolute top-1/2 right-1/3 h-72 w-72 bg-teal-500/[0.06] rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
 
-        <div className="relative z-10 mx-auto max-w-7xl">
-          {/* Top Sovereign Announcement Ribbon - Positioned Down After Header Menu Bar */}
+        <div className="relative z-10 mx-auto max-w-7xl w-full">
+          {/* Top Sovereign Announcement Ribbon */}
           {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
-            <div className="mb-6 sm:mb-8 bg-[#09221b]/80 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-md shadow-xl animate-in fade-in slide-in-from-top-2">
+            <div className="mb-6 sm:mb-8 bg-black/40 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-md shadow-xl animate-in fade-in slide-in-from-top-2">
               <Sparkles className="h-4 w-4 shrink-0 text-amber-400 animate-pulse" />
               <span className="leading-snug text-center">{settings["announcement_banner"]}</span>
             </div>
@@ -502,7 +506,7 @@ function Index() {
             <div className="lg:col-span-7 space-y-6 sm:space-y-7">
               {/* Royal Charter & Live Status Badge */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-emerald-400/40 text-emerald-300 text-xs font-semibold backdrop-blur-md shadow-md">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 border border-emerald-400/40 text-emerald-300 text-xs font-semibold backdrop-blur-md shadow-md">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -510,7 +514,7 @@ function Index() {
                   <span>Royal Charter Mandate • 100% Guaranteed</span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-md backdrop-blur-md">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-md backdrop-blur-md">
                   <Sparkles className="h-3 w-3 text-amber-400" />
                   <span>Nu. 1:1 RGOB Sovereign Match</span>
                 </div>
@@ -528,40 +532,26 @@ function Index() {
                 Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance.
               </p>
 
-              {/* Clean Transparent Highlights Grid */}
+              {/* Clean Ultra-Transparent Highlights Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
-                <div className="flex items-center gap-2.5 bg-black/30 hover:bg-black/45 p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
+                <div className="flex items-center gap-2.5 bg-black/35 hover:bg-black/50 p-3 rounded-2xl border border-white/20 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-semibold text-white">Zero Stockout Guarantee</span>
                 </div>
-                <div className="flex items-center gap-2.5 bg-black/30 hover:bg-black/45 p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
+                <div className="flex items-center gap-2.5 bg-black/35 hover:bg-black/50 p-3 rounded-2xl border border-white/20 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-semibold text-white">205 Remote Gewogs</span>
                 </div>
-                <div className="flex items-center gap-2.5 bg-black/30 hover:bg-black/45 p-3 rounded-2xl border border-white/15 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
+                <div className="flex items-center gap-2.5 bg-black/35 hover:bg-black/50 p-3 rounded-2xl border border-white/20 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
                   <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
                   <span className="font-semibold text-white">100% DRC Tax Exempt</span>
                 </div>
               </div>
 
-              {/* Prominent Royal Homage Banner: His Majesty The Fourth Druk Gyalpo (Glassmorphic & Transparent) */}
-              <div className="relative overflow-hidden rounded-2xl border border-amber-400/40 bg-black/35 hover:bg-black/45 p-3 sm:p-4 shadow-xl backdrop-blur-md group transition-all">
-                <div className="flex flex-col sm:flex-row items-center gap-4">
-                  {/* Clear Horizontal Photo Frame of His Majesty */}
-                  <div className="relative w-full sm:w-44 h-28 sm:h-24 rounded-xl overflow-hidden shrink-0 border border-amber-300/60 shadow-lg">
-                    <img
-                      src={kingPortrait}
-                      alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-                      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                    <span className="absolute bottom-1 left-1.5 text-[9px] font-mono uppercase tracking-wider text-amber-300 font-bold bg-black/60 px-1.5 py-0.5 rounded">
-                      Royal Visionary
-                    </span>
-                  </div>
-
-                  {/* Royal Citation */}
-                  <div className="space-y-1 text-left flex-1 min-w-0">
+              {/* Transparent Royal Homage Badge Bar */}
+              <div className="relative overflow-hidden rounded-2xl border border-amber-400/40 bg-black/40 hover:bg-black/50 p-3.5 shadow-xl backdrop-blur-md group transition-all">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="space-y-0.5">
                     <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-300 font-sans">
                       <Sparkles className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                       <span>Conceived & Enacted under Royal Vision (1998–2000)</span>
@@ -569,23 +559,23 @@ function Index() {
                     <p className="font-serif text-sm sm:text-base font-bold text-white tracking-tight leading-snug">
                       His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
                     </p>
-                    <p className="text-xs text-slate-200 font-sans leading-relaxed line-clamp-2 drop-shadow-xs">
-                      Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and universal vaccines for all citizens.
+                    <p className="text-xs text-slate-200 font-sans leading-relaxed line-clamp-1 drop-shadow-xs">
+                      Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and vaccines.
                     </p>
                   </div>
 
                   <Link
                     to="/our-story"
-                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/25 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm self-end sm:self-center"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/25 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm"
                   >
-                    <span>Royal Story</span>
+                    <span>Read History</span>
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>
               </div>
 
               {/* Institutional Endorsement Bar */}
-              <div className="pt-4 flex flex-wrap items-center gap-3 text-xs border-t border-white/15">
+              <div className="pt-3 flex flex-wrap items-center gap-3 text-xs border-t border-white/15">
                 <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold font-mono">
                   Sovereign Multilateral Partners:
                 </span>
