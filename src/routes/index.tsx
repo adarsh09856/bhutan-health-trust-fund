@@ -189,6 +189,16 @@ const featuredNews = [
   },
 ];
 
+const resolveNewsImage = (img: string | undefined | null, fallbackIndex: number) => {
+  const fallbacks = [newsVaccine, newsCommunity, newsReport];
+  if (!img) return fallbacks[fallbackIndex % fallbacks.length];
+  if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) return img;
+  if (img.includes("vaccine")) return newsVaccine;
+  if (img.includes("community")) return newsCommunity;
+  if (img.includes("report")) return newsReport;
+  return fallbacks[fallbackIndex % fallbacks.length];
+};
+
 const metricIconMap: Record<string, any> = {
   Users,
   Pill,
@@ -455,7 +465,7 @@ function Index() {
     liveNews.length > 0
       ? liveNews.map((n, idx) => ({
           slug: n.slug,
-          img: n.coverImage || [newsVaccine, newsCommunity, newsReport][idx % 3],
+          img: resolveNewsImage(n.coverImage, idx),
           category: n.category,
           title: n.title,
           desc: n.excerpt,
@@ -482,9 +492,9 @@ function Index() {
           }}
         />
 
-        {/* Minimal Subtle Transparent Shade (Allows King Photo to be fully visible while ensuring text readability) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/90 via-[#061713]/55 to-black/35 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#061713] via-transparent to-[#061713]/40 pointer-events-none" />
+        {/* Ultra-Light Transparent Shade (Ensures King Photo is prominently vivid and clear while keeping text crisp) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/80 via-[#061713]/35 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#061713]/70 via-transparent to-transparent pointer-events-none" />
 
         {/* Ambient Subtle Luminous Orbs */}
         <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />

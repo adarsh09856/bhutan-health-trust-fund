@@ -229,6 +229,14 @@ export function AdminDashboardPage() {
             </Link>
 
             <Link
+              to="/admin/pages"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-xs"
+            >
+              <Layers className="h-3.5 w-3.5" />
+              <span>Pages & Live Edit</span>
+            </Link>
+
+            <Link
               to="/admin/settings"
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition"
             >
