@@ -43,7 +43,6 @@ import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
-import { EndowmentCalculator } from "@/components/endowment-calculator";
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { useCountUp } from "@/hooks/use-count-up";
 
@@ -1064,13 +1063,6 @@ function Index() {
       <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-[#FAF8F3]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <DzongkhagExplorer />
-        </div>
-      </section>
-
-      {/* 6. Interactive 1:1 RGOB Matching Simulator */}
-      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <EndowmentCalculator />
         </div>
       </section>
 

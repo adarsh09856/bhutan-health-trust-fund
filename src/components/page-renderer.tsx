@@ -26,7 +26,6 @@ import {
 } from "lucide-react";
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
-import { EndowmentCalculator } from "@/components/endowment-calculator";
 import { useCountUp } from "@/hooks/use-count-up";
 import heroBhutan from "@/assets/hero-bhutan.jpg";
 
@@ -554,19 +553,6 @@ function InteractiveToolsBlock({ section }: { section: PageBlockSection }) {
               <Pill className="h-4 w-4" />
               <span>Commodities Pipeline</span>
             </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab("calculator")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
-                activeTab === "calculator"
-                  ? "bg-emerald-900 text-white shadow-md"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-white"
-              }`}
-            >
-              <HeartHandshake className="h-4 w-4" />
-              <span>1:1 Matching Simulator</span>
-            </button>
           </div>
         </div>
 
@@ -574,7 +560,6 @@ function InteractiveToolsBlock({ section }: { section: PageBlockSection }) {
         <div className="pt-2">
           {activeTab === "map" && <DzongkhagExplorer />}
           {activeTab === "commodities" && <CommodityTracker />}
-          {activeTab === "calculator" && <EndowmentCalculator />}
         </div>
       </div>
     </section>
