@@ -128,7 +128,6 @@ export function SiteHeader() {
                 {/* 1. Organization */}
                 <Link
                   to="/about"
-                  hash="organization"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -136,7 +135,7 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      Organization
+                      Our Organization
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
                       Royal Charter mandate & statutory founding
@@ -144,9 +143,9 @@ export function SiteHeader() {
                   </div>
                 </Link>
 
-                {/* 2. Our History */}
+                {/* 2. Board of Trustees */}
                 <Link
-                  to="/our-story"
+                  to="/about/trustees"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-500 group-hover:text-white transition">
@@ -154,67 +153,35 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
-                      Our History
+                      Board of Trustees
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Chronicle from 1998 Geneva launch to 2026
+                      High-level ministerial governance & oversight
                     </p>
                   </div>
                 </Link>
 
-                {/* 3. Programs & Projects Portfolio */}
+                {/* 3. Asset Management Committee */}
                 <Link
-                  to="/our-work"
+                  to="/about/committees"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <Pill className="h-4 w-4" />
+                    <Landmark className="h-4 w-4" />
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
-                      Programs & Projects Portfolio
+                      Asset Management Committee
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Essential medicines, vaccines & cold chain
+                      Fiduciary investment parameters & audit GAC
                     </p>
                   </div>
                 </Link>
 
-                {/* 4. Governance (With Direct BTF Submenu Links) */}
-                <div className="pt-1 border-t border-slate-100">
-                  <div className="px-2.5 py-1 text-[10px] font-mono uppercase tracking-widest text-emerald-800 font-extrabold flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 inline-block" />
-                    Governance & Oversight
-                  </div>
-
-                  <div className="pl-3 space-y-0.5 border-l-2 border-emerald-100 ml-3 my-1">
-                    <Link
-                      to="/about"
-                      hash="trustees"
-                      className="block px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition"
-                    >
-                      • Board of Trustees
-                    </Link>
-                    <Link
-                      to="/about"
-                      hash="organogram"
-                      className="block px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition"
-                    >
-                      • Asset Management Committee
-                    </Link>
-                    <Link
-                      to="/policies"
-                      className="block px-2.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition"
-                    >
-                      • Governance & Audit Committee
-                    </Link>
-                  </div>
-                </div>
-
-                {/* 5. Secretariat */}
+                {/* 4. Secretariat & Organogram */}
                 <Link
-                  to="/about"
-                  hash="organogram"
+                  to="/about/secretariat"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-teal-50 text-teal-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-teal-600 group-hover:text-white transition">
@@ -222,10 +189,10 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-teal-700 transition">
-                      Secretariat
+                      Secretariat & Organogram
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Directorate & 3 Operational Divisions
+                      Directorate & 3 operational divisions (Annexure 1)
                     </p>
                   </div>
                 </Link>

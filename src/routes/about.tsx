@@ -334,6 +334,42 @@ function About() {
         subtitle="Safeguarding the sovereignty of Bhutan's healthcare system through permanent, sustainable endowment financing."
       />
 
+      {/* Institutional Sub-Navigation Pill Bar */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
+        <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-bold">
+          <Link
+            to="/about"
+            className="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-xs"
+          >
+            Our Organization
+          </Link>
+          <Link
+            to="/about/trustees"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
+          >
+            Board of Trustees
+          </Link>
+          <Link
+            to="/about/committees"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
+          >
+            Asset Management Committee
+          </Link>
+          <Link
+            to="/about/secretariat"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
+          >
+            Secretariat & Organogram
+          </Link>
+          <Link
+            to="/our-story"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-amber-700 hover:bg-amber-50 transition"
+          >
+            Our Story & History →
+          </Link>
+        </div>
+      </section>
+
       {/* 1. Who We Are & Royal Mandate */}
       <section id="organization" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">

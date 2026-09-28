@@ -144,10 +144,13 @@ function OurStoryPage() {
       {/* 1. Dignified Hero Header with Authentic Himalayan Background */}
       <section className="relative overflow-hidden bg-[#071914] text-white pt-32 pb-20 sm:pt-36 sm:pb-28 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-40 mix-blend-luminosity"
-          style={{ backgroundImage: `url(${heroBhutan})` }}
+          className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none opacity-45 mix-blend-luminosity"
+          style={{
+            backgroundImage: `url(${kingPortrait})`,
+            backgroundPosition: "center 22%",
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#071914]/80 via-[#071914]/90 to-[#071914] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#071914]/85 via-[#071914]/90 to-[#071914] pointer-events-none" />
 
         <div className="relative z-10 mx-auto max-w-4xl text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-amber-300 text-xs font-semibold backdrop-blur-md">

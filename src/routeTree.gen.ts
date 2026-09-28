@@ -19,6 +19,10 @@ import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as TrackDonationRouteImport } from './routes/track-donation'
+import { Route as AboutCommitteesRouteImport } from './routes/about/committees'
+import { Route as AboutOrganizationRouteImport } from './routes/about/organization'
+import { Route as AboutSecretariatRouteImport } from './routes/about/secretariat'
+import { Route as AboutTrusteesRouteImport } from './routes/about/trustees'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAuditLogsRouteImport } from './routes/admin/audit-logs'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
@@ -94,6 +98,26 @@ const TrackDonationRoute = TrackDonationRouteImport.update({
   id: '/track-donation',
   path: '/track-donation',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AboutCommitteesRoute = AboutCommitteesRouteImport.update({
+  id: '/committees',
+  path: '/committees',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutOrganizationRoute = AboutOrganizationRouteImport.update({
+  id: '/organization',
+  path: '/organization',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutSecretariatRoute = AboutSecretariatRouteImport.update({
+  id: '/secretariat',
+  path: '/secretariat',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutTrusteesRoute = AboutTrusteesRouteImport.update({
+  id: '/trustees',
+  path: '/trustees',
+  getParentRoute: () => AboutRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
@@ -223,7 +247,7 @@ const PSlugRoute = PSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutRouteWithChildren
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
@@ -232,6 +256,10 @@ export interface FileRoutesByFullPath {
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
   '/track-donation': typeof TrackDonationRoute
+  '/about/committees': typeof AboutCommitteesRoute
+  '/about/organization': typeof AboutOrganizationRoute
+  '/about/secretariat': typeof AboutSecretariatRoute
+  '/about/trustees': typeof AboutTrusteesRoute
   '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
@@ -260,7 +288,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutRouteWithChildren
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
@@ -269,6 +297,10 @@ export interface FileRoutesByTo {
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
   '/track-donation': typeof TrackDonationRoute
+  '/about/committees': typeof AboutCommitteesRoute
+  '/about/organization': typeof AboutOrganizationRoute
+  '/about/secretariat': typeof AboutSecretariatRoute
+  '/about/trustees': typeof AboutTrusteesRoute
   '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
@@ -298,7 +330,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutRouteWithChildren
   '/contact': typeof ContactRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
@@ -307,6 +339,10 @@ export interface FileRoutesById {
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
   '/track-donation': typeof TrackDonationRoute
+  '/about/committees': typeof AboutCommitteesRoute
+  '/about/organization': typeof AboutOrganizationRoute
+  '/about/secretariat': typeof AboutSecretariatRoute
+  '/about/trustees': typeof AboutTrusteesRoute
   '/admin/audit-logs': typeof AdminAuditLogsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/donations': typeof AdminDonationsRoute
@@ -346,6 +382,10 @@ export interface FileRouteTypes {
     | '/policies'
     | '/reports'
     | '/track-donation'
+    | '/about/committees'
+    | '/about/organization'
+    | '/about/secretariat'
+    | '/about/trustees'
     | '/admin/audit-logs'
     | '/admin/dashboard'
     | '/admin/donations'
@@ -383,6 +423,10 @@ export interface FileRouteTypes {
     | '/policies'
     | '/reports'
     | '/track-donation'
+    | '/about/committees'
+    | '/about/organization'
+    | '/about/secretariat'
+    | '/about/trustees'
     | '/admin/audit-logs'
     | '/admin/dashboard'
     | '/admin/donations'
@@ -420,6 +464,10 @@ export interface FileRouteTypes {
     | '/policies'
     | '/reports'
     | '/track-donation'
+    | '/about/committees'
+    | '/about/organization'
+    | '/about/secretariat'
+    | '/about/trustees'
     | '/admin/audit-logs'
     | '/admin/dashboard'
     | '/admin/donations'
@@ -449,7 +497,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  AboutRoute: typeof AboutRouteWithChildren
   ContactRoute: typeof ContactRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
   NewsRoute: typeof NewsRouteWithChildren
@@ -555,6 +603,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/track-donation'
       preLoaderRoute: typeof TrackDonationRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/about/committees': {
+      id: '/about/committees'
+      path: '/committees'
+      fullPath: '/about/committees'
+      preLoaderRoute: typeof AboutCommitteesRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/organization': {
+      id: '/about/organization'
+      path: '/organization'
+      fullPath: '/about/organization'
+      preLoaderRoute: typeof AboutOrganizationRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/secretariat': {
+      id: '/about/secretariat'
+      path: '/secretariat'
+      fullPath: '/about/secretariat'
+      preLoaderRoute: typeof AboutSecretariatRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/trustees': {
+      id: '/about/trustees'
+      path: '/trustees'
+      fullPath: '/about/trustees'
+      preLoaderRoute: typeof AboutTrusteesRouteImport
+      parentRoute: typeof AboutRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -734,6 +810,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AboutRouteChildren {
+  AboutCommitteesRoute: typeof AboutCommitteesRoute
+  AboutOrganizationRoute: typeof AboutOrganizationRoute
+  AboutSecretariatRoute: typeof AboutSecretariatRoute
+  AboutTrusteesRoute: typeof AboutTrusteesRoute
+}
+
+const AboutRouteChildren: AboutRouteChildren = {
+  AboutCommitteesRoute: AboutCommitteesRoute,
+  AboutOrganizationRoute: AboutOrganizationRoute,
+  AboutSecretariatRoute: AboutSecretariatRoute,
+  AboutTrusteesRoute: AboutTrusteesRoute,
+}
+
+const AboutRouteWithChildren = AboutRoute._addFileChildren(AboutRouteChildren)
+
 interface NewsRouteChildren {
   NewsSlugRoute: typeof NewsSlugRoute
 }
@@ -746,7 +838,7 @@ const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  AboutRoute: AboutRouteWithChildren,
   ContactRoute: ContactRoute,
   GetInvolvedRoute: GetInvolvedRoute,
   NewsRoute: NewsRouteWithChildren,
