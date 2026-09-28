@@ -190,7 +190,7 @@ function RendererHeroCorpusCard() {
           <span className="text-[11px] uppercase tracking-wider text-[#0B4F42]/70 font-bold font-sans block">
             Perpetual Health Endowment
           </span>
-          <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-[#0B4F42] tracking-tight leading-tight">
+          <div className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-[#0B4F42] tracking-tight leading-tight break-words">
             {corpusCounter.formatted}
           </div>
           <p className="text-xs text-[#0B4F42]/75 font-sans leading-relaxed pt-0.5 font-light">
@@ -210,7 +210,7 @@ function RendererHeroCorpusCard() {
                 <div className="text-[11px] text-[#0B4F42]/70 font-medium">100% Childhood Coverage (14 Antigens)</div>
               </div>
             </div>
-            <span className="font-serif text-xs font-bold text-[#00A896] font-mono">Nu. 68.5M</span>
+            <span className="font-serif text-xs font-bold text-[#00A896] font-mono shrink-0 ml-2">Nu. 68.5M</span>
           </div>
 
           <div className="flex items-center justify-between bg-[#EAF6F5]/70 hover:bg-[#EAF6F5] p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
@@ -223,7 +223,7 @@ function RendererHeroCorpusCard() {
                 <div className="text-[11px] text-[#0B4F42]/70 font-medium">Zero Stockout Buffer across 205 Gewogs</div>
               </div>
             </div>
-            <span className="font-serif text-xs font-bold text-[#00A896] font-mono">Nu. 145.0M</span>
+            <span className="font-serif text-xs font-bold text-[#00A896] font-mono shrink-0 ml-2">Nu. 145.0M</span>
           </div>
 
           <div className="flex items-center justify-between bg-[#EAF6F5]/70 hover:bg-[#EAF6F5] p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
@@ -236,7 +236,7 @@ function RendererHeroCorpusCard() {
                 <div className="text-[11px] text-[#0B4F42]/70 font-medium">High-Altitude Solar Refrigeration</div>
               </div>
             </div>
-            <span className="font-serif text-xs font-bold text-[#00A896] font-mono">Nu. 24.2M</span>
+            <span className="font-serif text-xs font-bold text-[#00A896] font-mono shrink-0 ml-2">Nu. 24.2M</span>
           </div>
         </div>
 
@@ -330,20 +330,20 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
           )}
 
           {(section.primaryCtaText || section.secondaryCtaText) && (
-            <div className="flex flex-wrap items-center gap-3 pt-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3">
               {section.primaryCtaText && section.primaryCtaUrl && (
                 <Link
                   to={section.primaryCtaUrl}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B4F42] text-white hover:bg-[#083b31] font-medium text-xs shadow-xs transition"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#0B4F42] text-white hover:bg-[#083b31] font-medium text-xs shadow-xs transition text-center"
                 >
                   <span>{section.primaryCtaText}</span>
-                  <ArrowRight className="h-3.5 w-3.5 text-amber-400" />
+                  <ArrowRight className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                 </Link>
               )}
               {section.secondaryCtaText && section.secondaryCtaUrl && (
                 <Link
                   to={section.secondaryCtaUrl}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium text-xs transition"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium text-xs transition text-center"
                 >
                   <span>{section.secondaryCtaText}</span>
                 </Link>
@@ -475,19 +475,19 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
               </div>
 
               {/* Modern Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full">
                 <Link
                   to={section.primaryCtaUrl || "/get-involved"}
-                  className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] transition-all text-sm uppercase tracking-wider"
+                  className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] transition-all text-xs sm:text-sm uppercase tracking-wider text-center"
                 >
                   <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
                   <span>{section.primaryCtaText || "Contribute (1:1 Matched)"}</span>
-                  <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+                  <ArrowRight className="h-4 w-4 stroke-[2.5] shrink-0" />
                 </Link>
 
                 <Link
                   to={section.secondaryCtaUrl || "/our-work"}
-                  className="inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full bg-white hover:bg-[#EAF6F5] border border-[#00A896]/30 text-[#0B4F42] shadow-xs transition-all text-sm tracking-wide"
+                  className="inline-flex items-center justify-center gap-2 font-bold px-7 py-4 rounded-full bg-white hover:bg-[#EAF6F5] border border-[#00A896]/30 text-[#0B4F42] shadow-xs transition-all text-xs sm:text-sm tracking-wide text-center"
                 >
                   <span>{section.secondaryCtaText || "Explore Commodities"}</span>
                 </Link>
@@ -631,31 +631,31 @@ function InteractiveToolsBlock({ section }: { section: PageBlockSection }) {
         </div>
 
         {/* Tab Switcher Pills */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center max-w-full overflow-x-auto">
           <div className="inline-flex items-center gap-1.5 p-1.5 rounded-full bg-slate-100 border border-slate-200 shadow-inner">
             <button
               type="button"
               onClick={() => setActiveTab("map")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                 activeTab === "map"
                   ? "bg-emerald-900 text-white shadow-md"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white"
               }`}
             >
-              <MapPin className="h-4 w-4" />
+              <MapPin className="h-4 w-4 shrink-0" />
               <span>20 Dzongkhags Explorer</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("commodities")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                 activeTab === "commodities"
                   ? "bg-emerald-900 text-white shadow-md"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white"
               }`}
             >
-              <Pill className="h-4 w-4" />
+              <Pill className="h-4 w-4 shrink-0" />
               <span>Commodities Pipeline</span>
             </button>
           </div>
@@ -700,7 +700,7 @@ function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
           {items.map((item, idx) => {
             const Icon = getIcon(item.icon);
             const theme = accentThemes[idx % accentThemes.length];
@@ -783,7 +783,7 @@ function RoyalDecreeBlock({ section }: { section: PageBlockSection }) {
           </div>
 
           {/* Quote Body */}
-          <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-relaxed tracking-tight italic max-w-3xl mx-auto text-slate-800">
+          <blockquote className="font-serif text-xl sm:text-3xl lg:text-4xl font-normal leading-relaxed tracking-tight italic max-w-3xl mx-auto text-slate-800 break-words">
             "{section.content || section.title}"
           </blockquote>
 
@@ -826,7 +826,7 @@ function RichTextBlock({ section }: { section: PageBlockSection }) {
         )}
 
         {section.content && (
-          <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed font-sans whitespace-pre-line text-base">
+          <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed font-sans whitespace-pre-line text-sm sm:text-base break-words overflow-x-auto">
             {section.content}
           </div>
         )}
@@ -916,21 +916,21 @@ function CtaBannerBlock({ section }: { section: PageBlockSection }) {
           </p>
         )}
 
-        <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
+        <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto w-full">
           {section.primaryCtaText && (
             <Link
               to={section.primaryCtaUrl || "/get-involved"}
-              className="inline-flex items-center gap-2.5 bg-[#D4A237] hover:bg-[#c4922b] text-slate-950 font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all text-sm uppercase tracking-wider hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2.5 bg-[#D4A237] hover:bg-[#c4922b] text-slate-950 font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all text-xs sm:text-sm uppercase tracking-wider text-center"
             >
               <span>{section.primaryCtaText}</span>
-              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+              <ArrowRight className="h-4 w-4 stroke-[2.5] shrink-0" />
             </Link>
           )}
 
           {section.secondaryCtaText && (
             <Link
               to={section.secondaryCtaUrl || "/track-donation"}
-              className="inline-flex items-center gap-2 font-semibold px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-[#0B4F42] text-sm hover:-translate-y-0.5 transition-all shadow-xs"
+              className="inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-[#0B4F42] text-xs sm:text-sm transition-all shadow-xs text-center"
             >
               <span>{section.secondaryCtaText}</span>
             </Link>

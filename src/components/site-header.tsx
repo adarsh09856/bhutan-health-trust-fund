@@ -75,18 +75,18 @@ export function SiteHeader() {
     >
       {/* Editorial Glass Capsule Navigation Island */}
       <div
-        className={`mx-auto max-w-7xl flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
+        className={`mx-auto max-w-7xl flex items-center justify-between gap-2 sm:gap-3 pointer-events-auto transition-all duration-300 ${
           scrolled
-            ? "w-full rounded-none sm:rounded-b-2xl bg-white/95 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.08)] px-4 sm:px-7 py-2 sm:py-2.5"
-            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-4 sm:px-6 py-2 sm:py-2.5"
+            ? "w-full rounded-none sm:rounded-b-2xl bg-white/95 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.08)] px-3 sm:px-7 py-1.5 sm:py-2.5"
+            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-3 sm:px-6 py-1.5 sm:py-2.5"
         }`}
       >
         {/* Logo & Dzongkha Title */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 whitespace-nowrap"
+          className="flex items-center gap-2 sm:gap-3.5 group shrink-0 whitespace-nowrap"
         >
-          <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-emerald-50/80 border border-amber-300/40 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105">
+          <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-emerald-50/80 border border-amber-300/40 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
             <img
               src={logo}
               alt="Bhutan Health Trust Fund Emblem"
@@ -94,10 +94,10 @@ export function SiteHeader() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] sm:text-[11px] font-bold text-emerald-800 tracking-wider flex items-center gap-1 font-sans">
+            <span className="text-[9px] sm:text-[11px] font-bold text-emerald-800 tracking-wider flex items-center gap-1 font-sans">
               ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ། །།
             </span>
-            <span className="font-serif text-sm sm:text-base md:text-lg font-bold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-900 transition">
+            <span className="font-serif text-xs sm:text-base md:text-lg font-bold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-900 transition truncate max-w-[125px] xs:max-w-[210px] sm:max-w-none">
               Bhutan Health Trust Fund
             </span>
           </div>
@@ -358,12 +358,12 @@ export function SiteHeader() {
         </nav>
 
         {/* 6. Clean, Attractive & Highly Clickable DONATE CTA */}
-        <div className="flex items-center gap-2.5 shrink-0 whitespace-nowrap">
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap">
           <Link
             to="/get-involved"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-xs font-black shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_22px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-6 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-[11px] sm:text-xs font-black shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_22px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
           >
-            <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
+            <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-slate-950 text-slate-950 shrink-0" />
             <span className="tracking-wide font-sans">DONATE</span>
           </Link>
 
@@ -385,20 +385,24 @@ export function SiteHeader() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mx-auto max-w-7xl mt-2 border border-slate-200/90 bg-white/98 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150 pointer-events-auto">
+        <div className="lg:hidden mx-auto max-w-7xl mt-2 border border-slate-200/90 bg-white/98 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150 pointer-events-auto max-h-[85vh] overflow-y-auto">
           <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-2 rounded-2xl border border-slate-200 space-y-1">
             {[
               { to: "/", label: "Home" },
-              { to: "/about", label: "About Us" },
-              { to: "/our-story", label: "Our Story" },
-              { to: "/our-work", label: "Our Impact" },
-              { to: "/reports", label: "Resources & Window Financing" },
+              { to: "/about", label: "Our Organization" },
+              { to: "/about/trustees", label: "Board of Trustees" },
+              { to: "/about/committees", label: "Asset Management Committee" },
+              { to: "/about/secretariat", label: "Secretariat & Organogram" },
+              { to: "/our-story", label: "Our Story & History" },
+              { to: "/our-work", label: "Health Commodities & Programs" },
+              { to: "/reports", label: "Reports & Window Financing" },
+              { to: "/policies", label: "Governance & Policies" },
               { to: "/news", label: "News & Events" },
-              { to: "/get-involved", label: "Donate" },
+              { to: "/get-involved", label: "Donate to Endowment" },
               { to: "/contact", label: "Contact Secretariat" },
             ].map((item) => {
               const isActive =
-                item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to);
+                item.to === "/" ? location.pathname === "/" : location.pathname === item.to;
 
               return (
                 <Link

@@ -70,8 +70,10 @@ export function CustomPublicPageRoute() {
     );
   }
 
+  const hasHeroFirst = sections.length > 0 && sections[0]?.type === "hero";
+
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 bg-[#FAF8F3]">
+    <div className={`min-h-screen bg-[#FAF8F3] ${hasHeroFirst ? "pt-16 sm:pt-20" : "pt-24 sm:pt-28"}`}>
       <PageRenderer sections={sections} interactive={false} />
     </div>
   );

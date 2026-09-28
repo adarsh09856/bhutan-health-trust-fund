@@ -14,6 +14,7 @@ if (!fs.existsSync(localOutDir)) {
 }
 
 const viewports = [
+  { name: 'phone-360', width: 360, height: 740, isMobile: true, hasTouch: true },
   { name: 'phone-390', width: 390, height: 844, isMobile: true, hasTouch: true },
   { name: 'tablet-768', width: 768, height: 1024, isMobile: false, hasTouch: false },
   { name: 'laptop-1440', width: 1440, height: 900, isMobile: false, hasTouch: false },
@@ -49,11 +50,18 @@ async function run() {
 
   for (const p of pagesToCapture) {
     console.log(`\n================ Testing Route: ${p.path} (${p.slugName}) ================`);
+    const url = `http://localhost:3000${p.path}`;
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    } catch (e) {
+      console.warn(`Initial goto failed for ${url}, retrying...`);
+      await page.goto(url, { waitUntil: 'load', timeout: 15000 });
+    }
+    await new Promise(r => setTimeout(r, 600));
+
     for (const vp of viewports) {
       await page.setViewport(vp);
-      const url = `http://localhost:3000${p.path}`;
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 350));
 
       // Check horizontal overflow
       const overflow = await page.evaluate(() => {

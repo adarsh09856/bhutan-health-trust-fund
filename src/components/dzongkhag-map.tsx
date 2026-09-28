@@ -385,7 +385,7 @@ export function DzongkhagExplorer() {
         </div>
 
         {/* Region Filter Tabs */}
-        <div className="flex items-center gap-1.5 bg-[#FAF8F3] p-1.5 rounded-xl border border-slate-200/80 self-start md:self-auto shrink-0">
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-1.5 bg-[#FAF8F3] p-1.5 rounded-xl border border-slate-200/80 self-start md:self-auto shrink-0 max-w-full overflow-x-auto">
           {[
             { id: "All", label: "All 20 Dzongkhags" },
             { id: "Western", label: "Western" },
@@ -396,7 +396,7 @@ export function DzongkhagExplorer() {
               key={tab.id}
               type="button"
               onClick={() => setSelectedRegion(tab.id as any)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer whitespace-nowrap ${
                 selectedRegion === tab.id
                   ? "bg-slate-900 text-white shadow-xs"
                   : "text-slate-600 hover:text-slate-950 hover:bg-white"
@@ -452,56 +452,56 @@ export function DzongkhagExplorer() {
           </div>
         </div>
 
-        {/* Right Column: Sovereign District Dossier Card (5 cols) */}
-        <div className="lg:col-span-5 bg-[#0B1F1A] text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl border border-amber-400/20 relative overflow-hidden">
+        {/* Right Column: Sovereign District Dossier Card (5 cols) - Dignified Light Institutional Chassis */}
+        <div className="lg:col-span-5 bg-[#EAF6F5] text-slate-900 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm border border-[#00A896]/25 relative overflow-hidden">
           {/* Header */}
-          <div className="flex items-start justify-between border-b border-white/10 pb-5">
+          <div className="flex items-start justify-between border-b border-[#00A896]/15 pb-5">
             <div>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-amber-400/30 text-amber-300 text-[10px] font-semibold uppercase tracking-wider font-sans">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-[#00A896]/30 text-[#0B4F42] text-[10px] font-bold uppercase tracking-wider font-sans shadow-2xs">
                 {activeDzongkhag.region} Region • {activeDzongkhag.dzongkha}
               </span>
-              <h4 className="font-serif text-2xl sm:text-3xl font-normal text-white mt-2 tracking-tight">
+              <h4 className="font-serif text-2xl sm:text-3xl font-black text-[#0B4F42] mt-2 tracking-tight">
                 {activeDzongkhag.name} Dzongkhag
               </h4>
             </div>
 
-            <div className="h-10 w-10 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30 grid place-items-center shrink-0">
+            <div className="h-10 w-10 rounded-2xl bg-white text-[#00A896] border border-[#00A896]/30 grid place-items-center shrink-0 shadow-xs">
               <MapPin className="h-5 w-5" />
             </div>
           </div>
 
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="bg-white/[0.04] p-3.5 rounded-2xl border border-white/10 space-y-1">
-              <span className="text-slate-400 text-[11px] font-sans flex items-center gap-1">
-                <Users className="h-3.5 w-3.5 text-emerald-400" /> Population Reach
+            <div className="bg-white p-3.5 rounded-2xl border border-[#00A896]/20 space-y-1 shadow-xs">
+              <span className="text-[#0B4F42]/70 text-[11px] font-sans flex items-center gap-1 font-semibold">
+                <Users className="h-3.5 w-3.5 text-[#00A896]" /> Population Reach
               </span>
-              <div className="font-serif text-lg font-normal text-white">
+              <div className="font-serif text-lg font-bold text-[#0B4F42]">
                 {activeDzongkhag.population}
               </div>
             </div>
 
-            <div className="bg-white/[0.04] p-3.5 rounded-2xl border border-white/10 space-y-1">
-              <span className="text-slate-400 text-[11px] font-sans flex items-center gap-1">
-                <Building2 className="h-3.5 w-3.5 text-amber-400" /> Health Facilities
+            <div className="bg-white p-3.5 rounded-2xl border border-[#00A896]/20 space-y-1 shadow-xs">
+              <span className="text-[#0B4F42]/70 text-[11px] font-sans flex items-center gap-1 font-semibold">
+                <Building2 className="h-3.5 w-3.5 text-amber-600" /> Health Facilities
               </span>
-              <div className="font-serif text-base font-normal text-white">
+              <div className="font-serif text-base font-bold text-[#0B4F42]">
                 {activeDzongkhag.bhuCount} BHUs + {activeDzongkhag.hospitals} Hosp
               </div>
             </div>
 
-            <div className="bg-white/[0.04] p-3.5 rounded-2xl border border-white/10 space-y-1.5 col-span-2">
+            <div className="bg-white p-3.5 rounded-2xl border border-[#00A896]/20 space-y-1.5 col-span-2 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400 text-[11px] font-sans flex items-center gap-1">
-                  <Pill className="h-3.5 w-3.5 text-emerald-400" /> Medicine Buffer Status
+                <span className="text-[#0B4F42]/70 text-[11px] font-sans flex items-center gap-1 font-semibold">
+                  <Pill className="h-3.5 w-3.5 text-[#00A896]" /> Medicine Buffer Status
                 </span>
-                <span className="text-emerald-300 font-semibold text-xs font-sans">
+                <span className="text-[#0B4F42] font-bold text-xs font-sans">
                   {activeDzongkhag.bufferStatus}
                 </span>
               </div>
-              <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-white h-2 rounded-full overflow-hidden border border-[#00A896]/20">
                 <div
-                  className="bg-gradient-to-r from-emerald-400 to-amber-300 h-full rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-[#00A896] to-amber-500 h-full rounded-full transition-all duration-500"
                   style={{ width: `${activeDzongkhag.bufferPercent}%` }}
                 />
               </div>
@@ -509,19 +509,19 @@ export function DzongkhagExplorer() {
           </div>
 
           {/* Strategic Priority Highlight */}
-          <div className="bg-white/[0.03] border border-amber-400/20 p-4 rounded-2xl text-xs space-y-1.5">
-            <span className="text-amber-300 font-semibold flex items-center gap-1.5 font-sans">
-              <Sparkles className="h-3.5 w-3.5" /> Fiduciary Healthcare Mandate:
+          <div className="bg-white border border-[#00A896]/20 p-4 rounded-2xl text-xs space-y-1.5 shadow-xs">
+            <span className="text-[#0B4F42] font-bold flex items-center gap-1.5 font-sans">
+              <Sparkles className="h-3.5 w-3.5 text-amber-600" /> Fiduciary Healthcare Mandate:
             </span>
-            <p className="text-slate-300 leading-relaxed font-sans font-light">
+            <p className="text-slate-600 leading-relaxed font-sans font-light">
               {activeDzongkhag.keyFocus}
             </p>
           </div>
 
           {/* Annual Allocation Total */}
-          <div className="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
-            <span className="text-slate-400 font-sans">Annual Commodity Allocation:</span>
-            <span className="font-serif text-xl font-normal text-amber-300">
+          <div className="pt-2 flex items-center justify-between border-t border-[#00A896]/20 text-xs">
+            <span className="text-[#0B4F42]/80 font-sans font-medium">Annual Commodity Allocation:</span>
+            <span className="font-serif text-xl font-black text-[#0B4F42] font-mono">
               {activeDzongkhag.disbursedNu} / Year
             </span>
           </div>

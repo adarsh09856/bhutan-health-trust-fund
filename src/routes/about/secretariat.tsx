@@ -75,30 +75,36 @@ function SecretariatPage() {
 
       {/* Sub-Navigation Pill Bar */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
-        <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-bold">
+        <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex items-center justify-start sm:justify-start gap-2 text-xs font-bold overflow-x-auto no-scrollbar sm:flex-wrap">
           <Link
             to="/about/organization"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
             Our Organization
           </Link>
           <Link
             to="/about/trustees"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
             Board of Trustees
           </Link>
           <Link
             to="/about/committees"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
             Asset Management Committee
           </Link>
           <Link
             to="/about/secretariat"
-            className="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-xs"
+            className="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-xs shrink-0 whitespace-nowrap"
           >
             Secretariat & Organogram
+          </Link>
+          <Link
+            to="/our-story"
+            className="px-4 py-2 rounded-xl text-slate-700 hover:text-amber-700 hover:bg-amber-50 transition shrink-0 whitespace-nowrap"
+          >
+            Our Story & History →
           </Link>
         </div>
       </section>
