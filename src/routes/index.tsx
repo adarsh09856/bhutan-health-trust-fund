@@ -480,43 +480,43 @@ function Index() {
 
   return (
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
-      {/* 1. Sovereign Hero Section: Upper 70% Clear King Portrait, Lower Content Stage with Smooth Elevation */}
-      <section className="relative bg-[#061713] text-white border-b border-amber-400/20">
-        {/* Upper Stage: Pure & Clear Portrait of His Majesty The Fourth Druk Gyalpo (70% Viewport Height) */}
-        <div className="relative w-full h-[65vh] sm:h-[72vh] overflow-hidden flex items-end">
-          {/* Crystal Clear Horizontal Photo of His Majesty (Face 100% Unobscured) */}
+      {/* 1. Sovereign Hero Section: Upper Stage King Portrait + Dynamic Scroll Elevation Content */}
+      <section className="relative bg-[#061713] text-white">
+        {/* Sticky Background / Upper Stage: Crystal Clear Portrait of His Majesty (68-72vh) */}
+        <div className="sticky top-0 w-full h-[68vh] sm:h-[72vh] overflow-hidden flex items-end">
+          {/* Portrait of His Majesty (100% Crisp, Untinted, Sharp & Clear Face) */}
           <div
-            className="absolute inset-0 bg-cover bg-no-repeat transition-transform duration-1000 scale-100 hover:scale-105"
+            className="absolute inset-0 bg-cover bg-no-repeat transition-transform duration-700 ease-out will-change-transform"
             style={{
               backgroundImage: `url(${kingPortrait})`,
-              backgroundPosition: "center 22%",
+              backgroundPosition: "center 20%",
             }}
           />
 
-          {/* Minimal Vignettes so King Portrait remains brilliantly visible */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#061713] via-transparent to-[#061713]/40 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/50 via-transparent to-[#061713]/40 pointer-events-none" />
+          {/* Minimal non-tinting top & bottom fades: ensures header and lower text contrast without washing face */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#061713]/90 via-[#061713]/30 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#061713] via-[#061713]/70 to-transparent pointer-events-none" />
 
-          {/* Top Royal Seal Banner Floating Above Visage */}
-          <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pb-6 flex items-center justify-between">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/60 border border-amber-400/50 backdrop-blur-md shadow-2xl text-amber-300 text-xs font-mono font-bold">
+          {/* Top Royal Seal Badge */}
+          <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pb-8 flex items-center justify-between pointer-events-none">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#061713]/70 border border-amber-400/40 backdrop-blur-md shadow-2xl text-amber-300 text-xs font-mono font-bold pointer-events-auto">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ། །། • Royal Charter Sovereign Trust Fund</span>
             </div>
 
-            <div className="hidden sm:inline-flex items-center gap-2 text-xs font-medium text-slate-200 bg-black/40 px-3.5 py-1.5 rounded-full border border-white/20 backdrop-blur-md">
+            <div className="hidden sm:inline-flex items-center gap-2 text-xs font-medium text-slate-200 bg-[#061713]/60 px-3.5 py-1.5 rounded-full border border-white/20 backdrop-blur-md pointer-events-auto">
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
               <span>Universal Free Healthcare Guarantee</span>
             </div>
           </div>
         </div>
 
-        {/* Lower Content Stage: Slides gracefully beneath the portrait with smooth elevation animation */}
-        <div className="relative z-10 bg-gradient-to-b from-[#061713] via-[#081f1a] to-[#061713] pt-6 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 -mt-6">
+        {/* Lower Content Stage: Seamlessly elevated over the portrait's lower edge with zero dead gap */}
+        <div className="relative z-20 bg-[#061713] pt-2 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20 shadow-[0_-20px_40px_rgba(6,23,19,0.95)]">
           <div className="mx-auto max-w-7xl w-full space-y-8">
             {/* Top Sovereign Announcement Ribbon */}
             {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
-              <div className="bg-black/50 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-md shadow-xl animate-in fade-in slide-in-from-top-2">
+              <div className="bg-[#081f1a]/80 border border-amber-400/40 text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl flex items-center justify-center gap-2.5 backdrop-blur-md shadow-xl animate-in fade-in slide-in-from-top-2">
                 <Sparkles className="h-4 w-4 shrink-0 text-amber-400 animate-pulse" />
                 <span className="leading-snug text-center">{settings["announcement_banner"]}</span>
               </div>
@@ -527,7 +527,7 @@ function Index() {
               <div className="lg:col-span-7 space-y-6">
                 {/* Royal Charter & Live Status Badge */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 border border-emerald-400/40 text-emerald-300 text-xs font-semibold backdrop-blur-md shadow-md">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-emerald-400/40 text-emerald-300 text-xs font-semibold backdrop-blur-md shadow-sm">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -535,42 +535,42 @@ function Index() {
                     <span>Royal Charter Mandate • 100% Guaranteed</span>
                   </div>
 
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-md backdrop-blur-md">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-sm backdrop-blur-md">
                     <Sparkles className="h-3 w-3 text-amber-400" />
                     <span>Nu. 1:1 RGOB Sovereign Match</span>
                   </div>
                 </div>
 
                 {/* Monumental Headline */}
-                <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06] drop-shadow-[0_3px_16px_rgba(0,0,0,0.9)]">
+                <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06] drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
                   Healthy People.{" "}
                   <span className="text-gradient-gold drop-shadow-xs">
                     Stronger Bhutan.
                   </span>
                 </h1>
 
-                <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-sans max-w-2xl font-normal drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-sans max-w-2xl font-normal drop-shadow-xs">
                   Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance.
                 </p>
 
-                {/* Clean Ultra-Transparent Highlights Grid */}
+                {/* Clean Translucent Highlights Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
-                  <div className="flex items-center gap-2.5 bg-black/35 hover:bg-black/50 p-3 rounded-2xl border border-white/20 backdrop-blur-md transition-all">
+                  <div className="flex items-center gap-2.5 bg-white/[0.05] hover:bg-white/[0.09] p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
                     <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span className="font-semibold text-white">Zero Stockout Guarantee</span>
                   </div>
-                  <div className="flex items-center gap-2.5 bg-black/35 hover:bg-black/50 p-3 rounded-2xl border border-white/20 backdrop-blur-md transition-all">
+                  <div className="flex items-center gap-2.5 bg-white/[0.05] hover:bg-white/[0.09] p-3 rounded-2xl border border-white/15 backdrop-blur-md transition-all">
                     <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                     <span className="font-semibold text-white">205 Remote Gewogs</span>
                   </div>
-                  <div className="flex items-center gap-2.5 bg-black/35 hover:bg-black/50 p-3 rounded-2xl border border-white/20 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
+                  <div className="flex items-center gap-2.5 bg-white/[0.05] hover:bg-white/[0.09] p-3 rounded-2xl border border-white/15 col-span-2 sm:col-span-1 backdrop-blur-md transition-all">
                     <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
                     <span className="font-semibold text-white">100% DRC Tax Exempt</span>
                   </div>
                 </div>
 
                 {/* Transparent Royal Homage Badge Bar */}
-                <div className="relative overflow-hidden rounded-2xl border border-amber-400/40 bg-black/40 hover:bg-black/50 p-3.5 shadow-xl backdrop-blur-md group transition-all">
+                <div className="relative overflow-hidden rounded-2xl border border-amber-400/35 bg-[#081f1a]/60 hover:bg-[#081f1a]/80 p-4 shadow-xl backdrop-blur-md group transition-all">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-300 font-sans">
@@ -580,14 +580,14 @@ function Index() {
                       <p className="font-serif text-sm sm:text-base font-bold text-white tracking-tight leading-snug">
                         His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
                       </p>
-                      <p className="text-xs text-slate-200 font-sans leading-relaxed line-clamp-1 drop-shadow-xs">
+                      <p className="text-xs text-slate-300 font-sans leading-relaxed line-clamp-1">
                         Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and vaccines.
                       </p>
                     </div>
 
                     <Link
                       to="/our-story"
-                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/25 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm"
+                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/20 hover:bg-amber-400 text-amber-200 hover:text-slate-950 border border-amber-400/40 text-xs font-bold transition-all shadow-sm"
                     >
                       <span>Read History</span>
                       <ArrowRight className="h-3 w-3" />
