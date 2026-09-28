@@ -175,120 +175,31 @@
   }
 }
 
-@keyframes pulse-glow {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
+/* Clean Micro-Animations (Hero rise & subtle entry only) */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
   }
-  50% {
+  to {
     opacity: 1;
-    transform: scale(1.04);
+    transform: translateY(0);
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
 }
 
-.animate-float {
-  animation: float-slow 4.5s ease-in-out infinite;
+/* Institutional Fiduciary & Ruled Utility Accents */
+.hairline-divider {
+  height: 1px;
+  background-color: rgba(11, 31, 26, 0.12);
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2.5s infinite;
-}
-
-/* Editorial Glassmorphism & Sovereign Card Accents */
-.glass-ink {
-  background-color: rgba(11, 31, 26, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 162, 55, 0.2);
-}
-
-.glass-pill {
-  background-color: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(11, 31, 26, 0.08);
-}
-
-/* Modern Ambient Background Light Gradients */
-.bg-mesh-dark {
-  background-color: #061713;
-  background-image: 
-    radial-gradient(at 20% 15%, rgba(212, 162, 55, 0.14) 0px, transparent 50%),
-    radial-gradient(at 80% 25%, rgba(16, 185, 129, 0.14) 0px, transparent 50%),
-    radial-gradient(at 50% 85%, rgba(5, 150, 105, 0.10) 0px, transparent 60%);
-}
-
-.bg-mesh-sovereign {
-  background-color: #061713;
-  background-image: 
-    radial-gradient(at 15% 20%, rgba(212, 162, 55, 0.16) 0px, transparent 48%),
-    radial-gradient(at 85% 15%, rgba(16, 185, 129, 0.15) 0px, transparent 52%),
-    radial-gradient(at 50% 90%, rgba(5, 150, 105, 0.12) 0px, transparent 65%);
-}
-
-.bg-mesh-light {
-  background-color: #FAF8F3;
-  background-image: 
-    radial-gradient(at 15% 10%, rgba(212, 162, 55, 0.09) 0px, transparent 45%),
-    radial-gradient(at 85% 20%, rgba(16, 185, 129, 0.08) 0px, transparent 45%),
-    radial-gradient(at 50% 90%, rgba(244, 241, 234, 0.9) 0px, transparent 50%);
-}
-
-.bg-mesh-white {
-  background-color: #FFFFFF;
-  background-image: 
-    radial-gradient(at 10% 10%, rgba(212, 162, 55, 0.06) 0px, transparent 40%),
-    radial-gradient(at 90% 12%, rgba(16, 185, 129, 0.07) 0px, transparent 45%),
-    radial-gradient(at 50% 85%, rgba(250, 248, 243, 0.8) 0px, transparent 55%);
-}
-
-/* Ultra-Premium Glassmorphic Surfaces */
-.card-modern {
-  background: #FFFFFF;
-  box-shadow: 0 4px 20px -2px rgba(11, 31, 26, 0.04), 0 2px 6px -1px rgba(11, 31, 26, 0.02);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.card-modern:hover {
-  box-shadow: 0 16px 36px -4px rgba(11, 31, 26, 0.08), 0 4px 12px -2px rgba(11, 31, 26, 0.04);
-  transform: translateY(-2px);
-}
-
-.card-modern-dark {
-  background: rgba(16, 41, 34, 0.75);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 162, 55, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-/* Glowing Accent Utilities */
-.glow-gold {
-  box-shadow: 0 0 35px -5px rgba(212, 162, 55, 0.3);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.25);
+.hairline-divider-gold {
+  height: 1px;
+  background-color: rgba(212, 162, 55, 0.35);
 }
 
 .text-gradient-gold {

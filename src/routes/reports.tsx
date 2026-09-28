@@ -24,7 +24,10 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/reports")({
   loader: async () => {
     try {
-      const page = await getPublicPage({ data: { slug: "reports" } }).catch(() => null);
+      const [page, reports] = await Promise.all([
+        getPublicPage({ data: { slug: "reports" } }).catch(() => null),
+        getPublicReports().catch(() => []),
+      ]);
       let sections: PageBlockSection[] | null = null;
       if (page && page.status === "published") {
         try {
@@ -34,9 +37,15 @@ export const Route = createFileRoute("/reports")({
           }
         } catch {}
       }
-      return { customSections: sections };
+      return {
+        customSections: sections,
+        initialReports: reports || [],
+      };
     } catch {
-      return { customSections: null };
+      return {
+        customSections: null,
+        initialReports: [],
+      };
     }
   },
   head: () => ({
@@ -53,9 +62,11 @@ export const Route = createFileRoute("/reports")({
 });
 
 function ReportsPage() {
-  const { customSections } = Route.useLoaderData();
-  const [reports, setReports] = useState<Report[]>([]);
-  const [loading, setLoading] = useState(true);
+  const loaderData = Route.useLoaderData();
+  const customSections = loaderData?.customSections;
+  const initialReports = loaderData?.initialReports || [];
+  const [reports, setReports] = useState<Report[]>(initialReports);
+  const [loading, setLoading] = useState(initialReports.length === 0);
   const [search, setSearch] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState("ALL");
@@ -64,9 +75,11 @@ function ReportsPage() {
   const fetchReports = async () => {
     try {
       const res = await getPublicReports();
-      setReports(res);
+      if (res && res.length > 0) {
+        setReports(res);
+      }
     } catch {
-      toast.error("Failed to load publications.");
+      // Keep existing SSR reports if client fetch fails
     } finally {
       setLoading(false);
     }

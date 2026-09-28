@@ -18,6 +18,7 @@ import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as SpecimenRouteImport } from './routes/specimen'
 import { Route as TrackDonationRouteImport } from './routes/track-donation'
 import { Route as AboutCommitteesRouteImport } from './routes/about/committees'
 import { Route as AboutOrganizationRouteImport } from './routes/about/organization'
@@ -92,6 +93,11 @@ const PoliciesRoute = PoliciesRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpecimenRoute = SpecimenRouteImport.update({
+  id: '/specimen',
+  path: '/specimen',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrackDonationRoute = TrackDonationRouteImport.update({
@@ -255,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/specimen': typeof SpecimenRoute
   '/track-donation': typeof TrackDonationRoute
   '/about/committees': typeof AboutCommitteesRoute
   '/about/organization': typeof AboutOrganizationRoute
@@ -296,6 +303,7 @@ export interface FileRoutesByTo {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/specimen': typeof SpecimenRoute
   '/track-donation': typeof TrackDonationRoute
   '/about/committees': typeof AboutCommitteesRoute
   '/about/organization': typeof AboutOrganizationRoute
@@ -338,6 +346,7 @@ export interface FileRoutesById {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/specimen': typeof SpecimenRoute
   '/track-donation': typeof TrackDonationRoute
   '/about/committees': typeof AboutCommitteesRoute
   '/about/organization': typeof AboutOrganizationRoute
@@ -381,6 +390,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/specimen'
     | '/track-donation'
     | '/about/committees'
     | '/about/organization'
@@ -422,6 +432,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/specimen'
     | '/track-donation'
     | '/about/committees'
     | '/about/organization'
@@ -463,6 +474,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/specimen'
     | '/track-donation'
     | '/about/committees'
     | '/about/organization'
@@ -505,6 +517,7 @@ export interface RootRouteChildren {
   OurWorkRoute: typeof OurWorkRoute
   PoliciesRoute: typeof PoliciesRoute
   ReportsRoute: typeof ReportsRoute
+  SpecimenRoute: typeof SpecimenRoute
   TrackDonationRoute: typeof TrackDonationRoute
   AdminAuditLogsRoute: typeof AdminAuditLogsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
@@ -595,6 +608,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/specimen': {
+      id: '/specimen'
+      path: '/specimen'
+      fullPath: '/specimen'
+      preLoaderRoute: typeof SpecimenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/track-donation': {
@@ -846,6 +866,7 @@ const rootRouteChildren: RootRouteChildren = {
   OurWorkRoute: OurWorkRoute,
   PoliciesRoute: PoliciesRoute,
   ReportsRoute: ReportsRoute,
+  SpecimenRoute: SpecimenRoute,
   TrackDonationRoute: TrackDonationRoute,
   AdminAuditLogsRoute: AdminAuditLogsRoute,
   AdminDashboardRoute: AdminDashboardRoute,

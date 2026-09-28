@@ -228,17 +228,7 @@ function OurWork() {
           </h2>
         </div>
 
-        {procurementSteps.length === 0 && !loading ? (
-          <div className="bg-slate-50 rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
-            <Scale className="h-10 w-10 text-slate-400 mx-auto" />
-            <h3 className="font-bold text-slate-800 text-sm">
-              Procurement lifecycle updates pending
-            </h3>
-            <p className="text-xs text-slate-500">
-              Procurement specifications are updated dynamically in accordance with RGOB standards.
-            </p>
-          </div>
-        ) : (
+        {procurementSteps.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {procurementSteps.map((step, idx) => (
               <div
