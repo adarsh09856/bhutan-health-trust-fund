@@ -14,37 +14,20 @@ import { ShieldCheck } from "lucide-react";
 
 export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#E3F1F6] via-[#FAF8F3] to-[#FAF8F3] text-slate-900 pt-20 sm:pt-22 pb-14 sm:pb-18 border-b border-slate-200/90">
-      {/* Authentic Portrait of His Majesty The Fourth Druk Gyalpo with subtle opacity */}
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#E3F1F6] via-[#FAF8F3] to-[#FAF8F3] text-slate-900 pt-24 sm:pt-28 pb-12 sm:pb-16 border-b border-slate-200/90">
+      {/* Authentic Portrait of His Majesty The Fourth Druk Gyalpo with crisp, dignified visibility */}
       <div
-        className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none opacity-[0.07]"
+        className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none opacity-[0.28] sm:opacity-[0.32] transition-opacity duration-300"
         style={{
           backgroundImage: `url(${kingPortrait})`,
-          backgroundPosition: "right 20%",
+          backgroundPosition: "right 15%",
         }}
       />
-      {/* Light soft vignette overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F3] via-transparent to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F3] via-transparent to-transparent pointer-events-none" />
-
-      {/* Transparent Royal Notice directly AFTER the fixed menu capsule (scrolls with page, never sticks) */}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-5">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-1 text-[11px] font-sans text-[#0B4F42]/85 bg-transparent border-b border-[#00A896]/15 pb-2.5">
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <span className="font-bold text-[#00A896] tracking-wide text-[10px] sm:text-[11px]">
-              ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ། །།
-            </span>
-            <span className="text-[#0B4F42]/40">•</span>
-            <span className="font-mono font-semibold text-[10px] sm:text-[11px] tracking-wide">
-              Royal Charter Sovereign Trust Fund
-            </span>
-          </div>
-          <div className="hidden md:flex items-center gap-1.5 text-[#0B4F42]/80 text-[10px] sm:text-[11px]">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
-            <span>Universal Free Healthcare Guarantee: 100% Essential Drugs & Vaccines Ring-Fenced in Perpetuity</span>
-          </div>
-        </div>
-      </div>
+      {/* Soft gradient mask to preserve high contrast for left-aligned typography */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F3] via-[#FAF8F3]/85 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F3] via-[#FAF8F3]/50 to-transparent pointer-events-none" />
+      {/* Subtle top gold accent line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4A237]/40 to-transparent pointer-events-none" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}

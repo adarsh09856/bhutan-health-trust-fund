@@ -8,7 +8,10 @@ import {
   verifyRazorpayPayment,
   verifyRmaBfsPayment,
   submitDonationJournal,
+  getPublicPage,
 } from "@/lib/api/public.functions";
+import type { PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   Heart,
   Handshake,
@@ -38,6 +41,23 @@ import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
 
 export const Route = createFileRoute("/get-involved")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "get-involved" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Donate & Support | Bhutan Health Trust Fund" },
@@ -98,6 +118,16 @@ const tiers = [
 ];
 
 function GetInvolvedPage() {
+  const { customSections } = Route.useLoaderData();
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
   const [amount, setAmount] = useState(1000);
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");

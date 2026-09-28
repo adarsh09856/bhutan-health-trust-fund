@@ -424,15 +424,16 @@ function Index() {
       .catch(() => {});
   }, []);
 
-  // Only override the rich home page layout if custom sections were explicitly created beyond the basic seeds
-  const isCustomEdited = customSections && customSections.length > 5;
+  // Render custom CMS sections if published by admin
+  const isCustomEdited = customSections && customSections.length > 0;
   if (isCustomEdited) {
+    const hasHero = customSections[0]?.type === "hero";
     return (
-      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen pt-24 sm:pt-28">
-        {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && (
+      <div className={`flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen ${hasHero ? "pt-0" : "pt-24 sm:pt-28"}`}>
+        {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && !hasHero && (
           <div className="mx-auto max-w-7xl w-full px-4 mb-6">
-            <div className="bg-[#0B1F1A] text-amber-200 text-xs font-medium py-2.5 px-5 rounded-2xl text-center border border-amber-500/30 flex items-center justify-center gap-2.5 shadow-md">
-              <Sparkles className="h-3.5 w-3.5 shrink-0 text-amber-400" />
+            <div className="bg-[#EAF6F5] text-[#0B4F42] text-xs font-semibold py-2.5 px-5 rounded-2xl text-center border border-[#00A896]/30 flex items-center justify-center gap-2.5 shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#D4A237]" />
               <span>{settings["announcement_banner"]}</span>
             </div>
           </div>
@@ -447,38 +448,22 @@ function Index() {
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
       {/* 1. Sovereign Hero Section: Upper Stage King Portrait + Dynamic Scroll Elevation Content */}
       <section className="relative bg-[#FAF8F3] text-slate-900">
-        {/* Transparent Royal Notice directly AFTER the fixed menu capsule (scrolls with hero, never sticks) */}
-        <div className="relative z-30 pt-20 sm:pt-22 pb-2 px-3 sm:px-6 pointer-events-none">
-          <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-1.5 text-[11px] font-sans text-[#0B4F42] bg-transparent text-center md:text-left drop-shadow-xs">
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-              <span className="font-bold text-[#00A896] tracking-wide text-[10px] sm:text-[11px]">
-                ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ། །།
-              </span>
-              <span className="text-[#0B4F42]/40">•</span>
-              <span className="font-mono font-semibold text-[10px] sm:text-[11px] tracking-wide">
-                Royal Charter Sovereign Trust Fund
-              </span>
-            </div>
-            <div className="hidden sm:flex items-center justify-center gap-1.5 text-[#0B4F42]/85 text-[10px] sm:text-[11px]">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
-              <span>Universal Free Healthcare Guarantee: 100% Essential Drugs & Vaccines Ring-Fenced in Perpetuity</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Upper Stage: Portrait of His Majesty (relative on mobile to prevent messy sticking in middle; sticky on desktop) */}
-        <div className="relative md:sticky md:top-0 w-full h-[46vh] sm:h-[56vh] md:h-[68vh] overflow-hidden flex items-end">
+        {/* Upper Stage: Portrait of His Majesty (starts from top of viewport; sticky on desktop) */}
+        <div className="relative md:sticky md:top-0 w-full h-[52vh] sm:h-[60vh] md:h-[70vh] overflow-hidden flex flex-col justify-end">
           {/* Portrait of His Majesty (100% Crisp, Untinted, Sharp & Clear Face) */}
           <div
             className="absolute inset-0 bg-cover bg-no-repeat transition-transform duration-700 ease-out will-change-transform"
             style={{
               backgroundImage: `url(${kingPortrait})`,
-              backgroundPosition: "center 15%",
+              backgroundPosition: "center 18%",
             }}
           />
 
-          {/* Clean soft fade at bottom into light page background; no tinting on face/shoulders */}
-          <div className="absolute inset-x-0 bottom-0 h-28 sm:h-40 bg-gradient-to-t from-[#FAF8F3] via-[#FAF8F3]/60 to-transparent pointer-events-none" />
+          {/* Soft top gradient to keep fixed header capsule legible */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#FAF8F3]/80 via-[#FAF8F3]/20 to-transparent pointer-events-none" />
+
+          {/* Clean soft fade at bottom into light page background */}
+          <div className="relative z-10 w-full h-24 sm:h-36 bg-gradient-to-t from-[#FAF8F3] via-[#FAF8F3]/60 to-transparent pointer-events-none" />
         </div>
 
         {/* Lower Content Stage: Seamlessly elevated over the portrait's lower edge with zero dead gap */}
@@ -500,6 +485,11 @@ function Index() {
                   <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold font-mono shadow-xs">
                     <Sparkles className="h-3 w-3 text-amber-600" />
                     <span>Nu. 1:1 RGOB Sovereign Match</span>
+                  </div>
+
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F7CAD0]/40 text-[#8B263E] border border-[#EE6C8A]/30 text-xs font-semibold shadow-xs">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#EE6C8A]" />
+                    <span>Universal Vaccines Ring-Fenced</span>
                   </div>
                 </div>
 

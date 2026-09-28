@@ -30,7 +30,7 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
       subtitle: "Sovereign healthcare financing guaranteeing essential medicines and vaccines.",
       dzongkhaText: "མི་སེར་གཟུགས་ཁམས་བཟང་པོ་དང་ རྒྱལ་ཁབ་སྟོབས་ཤུགས་ཅན།",
       badge: "Royal Charter Statutory Fund",
-      bgVariant: "dark",
+      bgVariant: "light",
       padding: "normal",
       isVisible: true,
       primaryCtaText: "Contribute to Corpus",

@@ -13,9 +13,12 @@ import {
   initialImpactMetrics,
   initialMilestones,
   initialSiteSettings,
+  initialAdminUsers,
 } from "./seed-data";
 import { defaultCorePages } from "./default-pages";
 import type {
+  User,
+  UserSession,
   NewsArticle,
   Report,
   Policy,
@@ -36,6 +39,8 @@ import type {
 } from "./schema";
 
 interface StoreData {
+  users: User[];
+  userSessions: UserSession[];
   news: NewsArticle[];
   reports: Report[];
   policies: Policy[];
@@ -264,7 +269,22 @@ class PersistentStore {
       subscribedAt: now,
     }));
 
+    const users: User[] = initialAdminUsers.map((u, idx) => ({
+      id: idx + 1,
+      name: u.name,
+      email: u.email,
+      passwordHash: u.passwordHash,
+      role: u.role || "SUPER_ADMIN",
+      isActive: true,
+      failedAttempts: 0,
+      lockedUntil: null,
+      createdAt: now,
+      updatedAt: now,
+    }));
+
     return {
+      users,
+      userSessions: [],
       news,
       reports,
       policies,
@@ -288,6 +308,8 @@ class PersistentStore {
   private ensureDefaultCollections(parsed: any): StoreData {
     const fresh = this.buildInitialData();
     return {
+      users: parsed.users?.length ? parsed.users : fresh.users,
+      userSessions: parsed.userSessions || [],
       news: parsed.news?.length ? parsed.news : fresh.news,
       reports: parsed.reports?.length ? parsed.reports : fresh.reports,
       policies: parsed.policies?.length ? parsed.policies : fresh.policies,
@@ -996,6 +1018,130 @@ class PersistentStore {
     this.data!.procurementTenders = this.data!.procurementTenders.filter((item) => item.id !== id);
     this.persist();
     return this.data!.procurementTenders.length < len;
+  }
+
+  // --- Users & Sessions Fallback ---
+  public getUsers(): User[] {
+    this.init();
+    return this.data!.users;
+  }
+
+  public getUserByEmail(email: string): User | null {
+    this.init();
+    const normalized = email.trim().toLowerCase();
+    return this.data!.users.find((u) => u.email.toLowerCase() === normalized) || null;
+  }
+
+  public getUserById(id: number): User | null {
+    this.init();
+    return this.data!.users.find((u) => u.id === id) || null;
+  }
+
+  public saveUser(userData: {
+    id?: number;
+    name: string;
+    email: string;
+    passwordHash: string;
+    role?: string;
+    isActive?: boolean;
+    failedAttempts?: number;
+    lockedUntil?: Date | null;
+  }): User {
+    this.init();
+    const normalized = userData.email.trim().toLowerCase();
+    const existingIdx = this.data!.users.findIndex((u) => u.id === userData.id || u.email.toLowerCase() === normalized);
+    const now = new Date();
+    if (existingIdx >= 0) {
+      this.data!.users[existingIdx] = {
+        ...this.data!.users[existingIdx],
+        ...userData,
+        email: normalized,
+        updatedAt: now,
+      };
+      this.persist();
+      return this.data!.users[existingIdx];
+    }
+    const nextId = Math.max(0, ...this.data!.users.map((u) => u.id)) + 1;
+    const created: User = {
+      id: nextId,
+      name: userData.name,
+      email: normalized,
+      passwordHash: userData.passwordHash,
+      role: userData.role || "EDITOR",
+      isActive: userData.isActive !== undefined ? userData.isActive : true,
+      failedAttempts: userData.failedAttempts || 0,
+      lockedUntil: userData.lockedUntil || null,
+      createdAt: now,
+      updatedAt: now,
+    };
+    this.data!.users.push(created);
+    this.persist();
+    return created;
+  }
+
+  public deleteUser(id: number): boolean {
+    this.init();
+    const lenBefore = this.data!.users.length;
+    this.data!.users = this.data!.users.filter((u) => u.id !== id);
+    this.data!.userSessions = this.data!.userSessions.filter((s) => s.userId !== id);
+    this.persist();
+    return this.data!.users.length < lenBefore;
+  }
+
+  public createSession(
+    userId: number,
+    tokenHash: string,
+    ipAddress?: string,
+    userAgent?: string,
+    expiresAt?: Date,
+  ): UserSession {
+    this.init();
+    const nextId = Math.max(0, ...this.data!.userSessions.map((s) => s.id)) + 1;
+    const session: UserSession = {
+      id: nextId,
+      userId,
+      tokenHash,
+      ipAddress: ipAddress || null,
+      userAgent: userAgent || null,
+      expiresAt: expiresAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      isActive: true,
+      createdAt: new Date(),
+    };
+    this.data!.userSessions.push(session);
+    this.persist();
+    return session;
+  }
+
+  public findSessionByTokenHash(tokenHash: string): { session: UserSession; user: User } | null {
+    this.init();
+    const now = new Date();
+    const session = this.data!.userSessions.find(
+      (s) => s.tokenHash === tokenHash && s.isActive && new Date(s.expiresAt) > now,
+    );
+    if (!session) return null;
+    const user = this.data!.users.find((u) => u.id === session.userId && u.isActive);
+    if (!user) return null;
+    return { session, user };
+  }
+
+  public revokeSession(sessionId: number): boolean {
+    this.init();
+    const session = this.data!.userSessions.find((s) => s.id === sessionId);
+    if (session) {
+      session.isActive = false;
+      this.persist();
+      return true;
+    }
+    return false;
+  }
+
+  public revokeAllUserSessions(userId: number): boolean {
+    this.init();
+    this.data!.userSessions.forEach((s) => {
+      if (s.userId === userId) s.isActive = false;
+    });
+    this.persist();
+    return true;
   }
 }
 

@@ -18,7 +18,7 @@ export function AdminTopBar() {
   if (location.pathname.startsWith("/p/")) {
     currentSlug = location.pathname.replace("/p/", "");
   } else if (location.pathname !== "/") {
-    currentSlug = location.pathname.replace(/^\//, "").split("/")[0];
+    currentSlug = location.pathname.replace(/^\//, "").replace(/\//g, "-");
   }
 
   if (collapsed) {

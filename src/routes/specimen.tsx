@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
+import { getPublicPage } from "@/lib/api/public.functions";
+import type { PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   StatementLayout,
   RuledLedgerLayout,
@@ -11,6 +14,23 @@ import {
 import kingPortrait from "@/assets/king_portrait_fourth.jpg";
 
 export const Route = createFileRoute("/specimen")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "specimen" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Institutional Design System Specimen | Bhutan Health Trust Fund" },
@@ -25,6 +45,16 @@ export const Route = createFileRoute("/specimen")({
 });
 
 function SpecimenPage() {
+  const { customSections } = Route.useLoaderData();
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen">
       <PageHero

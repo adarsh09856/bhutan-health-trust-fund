@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
+import { getPublicPage } from "@/lib/api/public.functions";
+import type { PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   Building2,
   Users2,
@@ -16,6 +19,23 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/about/secretariat")({
+  loader: async () => {
+    try {
+      const page = await getPublicPage({ data: { slug: "about-secretariat" } }).catch(() => null);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { customSections: sections };
+    } catch {
+      return { customSections: null };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Secretariat & Organogram | Bhutan Health Trust Fund" },
@@ -30,6 +50,16 @@ export const Route = createFileRoute("/about/secretariat")({
 });
 
 function SecretariatPage() {
+  const { customSections } = Route.useLoaderData();
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
       <PageHero
@@ -47,7 +77,7 @@ function SecretariatPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
         <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-bold">
           <Link
-            to="/about"
+            to="/about/organization"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
           >
             Our Organization

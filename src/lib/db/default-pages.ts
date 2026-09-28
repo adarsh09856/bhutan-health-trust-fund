@@ -236,6 +236,274 @@ export const defaultCorePages: DefaultPageDef[] = [
     ],
   },
   {
+    slug: "about-organization",
+    title: "Our Organization & Mandate | Bhutan Health Trust Fund",
+    metaDescription:
+      "Statutory founding of BHTF under the Royal Charter, constitutional healthcare rights under Article 9, and the approved Vision & Mission.",
+    isSystemPage: true,
+    sections: [
+      {
+        id: "about-org-hero",
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: "Statutory Mandate & Royal Charter",
+        subtitle:
+          "Established under Royal Charter in 1998 by His Majesty the Fourth Druk Gyalpo to permanently secure free primary healthcare for Bhutan.",
+        dzongkhaText: "རྒྱལ་པོའི་བཀའ་ཤོག་དང་ རང་དབང་གཙུག་ལག",
+        badge: "Royal Charter Institution",
+        bgVariant: "light",
+        primaryCtaText: "Read Charter Articles",
+        primaryCtaUrl: "/policies",
+        secondaryCtaText: "Board of Trustees",
+        secondaryCtaUrl: "/about/trustees",
+      },
+      {
+        id: "about-org-pillars",
+        type: "feature_cards",
+        order: 2,
+        isVisible: true,
+        title: "Constitutional Mandate & Institutional Pillars",
+        subtitle: "Anchored in Article 9 of the Constitution of the Kingdom of Bhutan",
+        bgVariant: "warm",
+        items: [
+          {
+            title: "Our Mission (དམིགས་ཡུལ།)",
+            description:
+              "To mobilise, invest, and prudently manage a dedicated health endowment to generate sustainable income for the financing of essential medicines, vaccines, and related supplies.",
+            icon: "Target",
+            badge: "Mission",
+          },
+          {
+            title: "Our Vision (མཐོང་སྣང་།)",
+            description:
+              "A self-reliant, resilient, and sovereign national health financing system where no Bhutanese is ever denied life-saving medicines or vaccines.",
+            icon: "Eye",
+            badge: "Vision",
+          },
+          {
+            title: "Article 9 Right to Health",
+            description:
+              "The State shall provide free access to basic public health services in both modern and traditional medicines across all 20 Dzongkhags.",
+            icon: "ShieldCheck",
+            badge: "Constitution",
+          },
+          {
+            title: "Capital Ring-Fencing",
+            description:
+              "Under Royal Charter Article 7, the core endowment principal is protected in perpetuity; only audited operational yields are disbursed.",
+            icon: "Lock",
+            badge: "Sovereign Shield",
+          },
+        ],
+      },
+      {
+        id: "about-org-decree",
+        type: "royal_decree",
+        order: 3,
+        isVisible: true,
+        title: "Royal Charter Enactment Proclamation",
+        subtitle: "His Majesty The King of Bhutan",
+        dzongkhaText: "མི་དབང་མངའ་བདག་རིན་པོ་ཆེའི་བཀའ་ཤོག",
+        content:
+          "Free basic healthcare is a fundamental right of our people. The Bhutan Health Trust Fund ensures that our children and future generations shall never face a shortage of life-saving medicines or vaccines.",
+        badge: "Royal Charter 2000",
+        bgVariant: "gold",
+      },
+    ],
+  },
+  {
+    slug: "about-trustees",
+    title: "Board of Trustees & Governance | Bhutan Health Trust Fund",
+    metaDescription:
+      "Directory of the High-Level Board of Trustees, ministerial leadership, terms of reference, and statutory fiduciary oversight.",
+    isSystemPage: true,
+    sections: [
+      {
+        id: "about-trustees-hero",
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: "High-Level Board of Trustees",
+        subtitle:
+          "Ministerial leadership and eminent sovereign trustees providing strategic fiduciary governance and ethical stewardship.",
+        dzongkhaText: "འགོ་ཁྲིད་ལྷན་ཚོགས།",
+        badge: "Statutory Governance",
+        bgVariant: "light",
+        primaryCtaText: "Asset Management Committee",
+        primaryCtaUrl: "/about/committees",
+        secondaryCtaText: "Secretariat Organogram",
+        secondaryCtaUrl: "/about/secretariat",
+      },
+      {
+        id: "about-trustees-pillars",
+        type: "feature_cards",
+        order: 2,
+        isVisible: true,
+        title: "Fiduciary Governance Roster",
+        subtitle: "Ministerial, fiscal, diplomatic, and public sector representation",
+        bgVariant: "white",
+        items: [
+          {
+            title: "Lyonpo Tandin Wangchuk",
+            description: "Chairperson • Hon'ble Minister for Health, Royal Government of Bhutan. Provides ministerial direction and policy alignment.",
+            icon: "Building2",
+            badge: "Chairperson",
+          },
+          {
+            title: "Mr. Tshering Dorji",
+            description: "Trustee (Finance) • Finance Secretary, Ministry of Finance, RGOB. Supervises sovereign matching and capital ring-fencing.",
+            icon: "ShieldCheck",
+            badge: "Trustee",
+          },
+          {
+            title: "Ambassador Lesang Wangdi",
+            description: "Trustee & Senior Diplomatic Advisor. Oversees multilateral partnerships and international sovereign agreements.",
+            icon: "Award",
+            badge: "Trustee",
+          },
+          {
+            title: "Dr. Nawang Norbu",
+            description: "Trustee & Research Director. Advises on epidemiological formulary priorities and national health research.",
+            icon: "Target",
+            badge: "Trustee",
+          },
+        ],
+      },
+      {
+        id: "about-trustees-terms",
+        type: "rich_text",
+        order: 3,
+        isVisible: true,
+        title: "Statutory Terms of Reference & Audit Oversight",
+        subtitle: "Royal Audit Authority (RAA) Clean Certification",
+        content:
+          "The Board of Trustees meets bi-annually to review endowment performance, approve annual procurement disbursements to the Department of Medical Services, and review audit disclosures certified by the Royal Audit Authority of Bhutan.",
+        bgVariant: "warm",
+      },
+    ],
+  },
+  {
+    slug: "about-committees",
+    title: "Asset Management & Audit Committees | Bhutan Health Trust Fund",
+    metaDescription:
+      "Fiduciary investment guidelines, Asset Management Committee (AMC) parameters, and Governance & Audit Committee oversight.",
+    isSystemPage: true,
+    sections: [
+      {
+        id: "about-comm-hero",
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: "Asset Management & Audit Committees",
+        subtitle:
+          "Specialized fiduciary bodies safeguarding the permanent endowment through disciplined asset allocation and statutory risk controls.",
+        dzongkhaText: "མ་དངུལ་བདག་སྐྱོང་དང་ རྩིས་ཞིབ་ཚོགས་ཆུང་།",
+        badge: "Fiduciary Oversight",
+        bgVariant: "light",
+        primaryCtaText: "Investment Policy Statement",
+        primaryCtaUrl: "/reports",
+        secondaryCtaText: "Board of Trustees",
+        secondaryCtaUrl: "/about/trustees",
+      },
+      {
+        id: "about-comm-pillars",
+        type: "feature_cards",
+        order: 2,
+        isVisible: true,
+        title: "Committee Mandates & Investment Guidelines",
+        subtitle: "Capital preservation and sovereign risk management",
+        bgVariant: "warm",
+        items: [
+          {
+            title: "Asset Management Committee (AMC)",
+            description: "Oversees portfolio asset allocation across sovereign fixed income, treasury bonds, and ring-fenced international reserves.",
+            icon: "Scale",
+            badge: "Portfolio AMC",
+          },
+          {
+            title: "Governance & Audit Committee (GAC)",
+            description: "Maintains direct audit trails with the Royal Audit Authority (RAA) and monitors internal fiduciary compliance.",
+            icon: "ShieldCheck",
+            badge: "Audit GAC",
+          },
+          {
+            title: "Capital Preservation Mandate",
+            description: "Targeting conservative annual real returns of 4.5% to 5.5% while strictly avoiding speculative instruments.",
+            icon: "Lock",
+            badge: "Zero-Risk Mandate",
+          },
+          {
+            title: "Liquidity Buffer",
+            description: "Maintains a minimum 6-month operational liquidity reserve to buffer against international supply-chain disruptions.",
+            icon: "Target",
+            badge: "Supply Buffer",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "about-secretariat",
+    title: "Secretariat & Organogram | Bhutan Health Trust Fund",
+    metaDescription:
+      "Official operational organogram, directorate leadership, and approved staffing cadre of the BHTF Secretariat.",
+    isSystemPage: true,
+    sections: [
+      {
+        id: "about-sec-hero",
+        type: "hero",
+        order: 1,
+        isVisible: true,
+        title: "Secretariat & Organogram",
+        subtitle:
+          "The executive administrative apparatus executing the Royal Charter mandate, procurement logistics, and fiduciary investments.",
+        dzongkhaText: "དྲུང་ཆེན་ཡིག་ཚང་དང་ བཀོད་རིམ།",
+        badge: "Annexure 1 Cadre",
+        bgVariant: "light",
+        primaryCtaText: "Contact Secretariat",
+        primaryCtaUrl: "/contact",
+        secondaryCtaText: "Board of Trustees",
+        secondaryCtaUrl: "/about/trustees",
+      },
+      {
+        id: "about-sec-pillars",
+        type: "feature_cards",
+        order: 2,
+        isVisible: true,
+        title: "Operational Divisions & Staffing Hierarchy",
+        subtitle: "Approved Annexure 1 Cadre under the Directorate",
+        bgVariant: "white",
+        items: [
+          {
+            title: "Directorate Leadership",
+            description: "Headed by the Executive Director, providing daily leadership, multilateral liaison, and coordination with the Ministry of Health.",
+            icon: "Building2",
+            badge: "Director",
+          },
+          {
+            title: "Investment Management Division",
+            description: "Manages sovereign bond portfolios, fixed deposits, foreign currency ring-fenced reserves, and treasury forecasting.",
+            icon: "Scale",
+            badge: "Finance & Investment",
+          },
+          {
+            title: "Programme & Procurement Division",
+            description: "Coordinates national forecasting for 120+ essential medicines, vaccine cold-chain logistics, and 20 Dzongkhags delivery.",
+            icon: "Pill",
+            badge: "Commodities Logistics",
+          },
+          {
+            title: "Administration & Accounts Division",
+            description: "Responsible for human resources, IT infrastructure, public disclosures, and fiduciary accounting.",
+            icon: "Target",
+            badge: "Administration",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "our-story",
     title: "Our Story & Historical Milestones | Bhutan Health Trust Fund",
     metaDescription:

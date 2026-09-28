@@ -91,8 +91,16 @@ function NewsPage() {
   const featured = filtered[0];
   const regularStories = filtered.slice(1);
 
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20">
+    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3]">
       <PageHero
         badge="Official Media Room"
         title="News, Media & Press Releases"

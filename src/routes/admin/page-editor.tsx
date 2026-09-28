@@ -40,7 +40,11 @@ interface EditorSearch {
 
 const DEFAULT_CORE_PAGES_MENU = [
   { slug: "home", title: "Home Page", path: "/" },
-  { slug: "about", title: "About Us & Royal Charter", path: "/about" },
+  { slug: "about", title: "About Us (Main)", path: "/about" },
+  { slug: "about-organization", title: "About: Organization & Mandate", path: "/about/organization" },
+  { slug: "about-trustees", title: "About: Board of Trustees", path: "/about/trustees" },
+  { slug: "about-committees", title: "About: Asset Management & Committees", path: "/about/committees" },
+  { slug: "about-secretariat", title: "About: Secretariat & Organogram", path: "/about/secretariat" },
   { slug: "our-story", title: "Our Story & Historical Milestones", path: "/our-story" },
   { slug: "our-work", title: "Our Impact & Programs", path: "/our-work" },
   { slug: "reports", title: "Resources & Window Financing", path: "/reports" },
@@ -49,6 +53,7 @@ const DEFAULT_CORE_PAGES_MENU = [
   { slug: "contact", title: "Contact Secretariat", path: "/contact" },
   { slug: "news", title: "News & Events", path: "/news" },
   { slug: "track-donation", title: "Track Donation & Tax Voucher", path: "/track-donation" },
+  { slug: "specimen", title: "Design System Specimen", path: "/specimen" },
 ];
 
 export const Route = createFileRoute("/admin/page-editor")({

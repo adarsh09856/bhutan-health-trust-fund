@@ -85,7 +85,7 @@ class BHTFDataStore {
     } catch (err: any) {
       console.warn("[PostgreSQL findUserByEmail Warning]:", err?.message || err);
     }
-    return null;
+    return persistentStore.getUserByEmail(normalized);
   }
 
   public async getUserByEmail(email: string): Promise<User | null> {
@@ -99,7 +99,7 @@ class BHTFDataStore {
     } catch (err: any) {
       console.warn("[PostgreSQL findUserById Warning]:", err?.message || err);
     }
-    return null;
+    return persistentStore.getUserById(id);
   }
 
   // --- News Articles ---
@@ -1231,18 +1231,24 @@ class BHTFDataStore {
     expiresAt?: Date,
   ): Promise<UserSession> {
     const exp = expiresAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    const [session] = await drizzleDb
-      .insert(schema.userSessions)
-      .values({
-        userId,
-        tokenHash,
-        ipAddress: ipAddress || null,
-        userAgent: userAgent || null,
-        expiresAt: exp,
-        isActive: true,
-      })
-      .returning();
-    return session;
+    const local = persistentStore.createSession(userId, tokenHash, ipAddress, userAgent, exp);
+    try {
+      const [session] = await drizzleDb
+        .insert(schema.userSessions)
+        .values({
+          userId,
+          tokenHash,
+          ipAddress: ipAddress || null,
+          userAgent: userAgent || null,
+          expiresAt: exp,
+          isActive: true,
+        })
+        .returning();
+      if (session) return session;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createSession Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async findSessionByTokenHash(
@@ -1271,23 +1277,34 @@ class BHTFDataStore {
     } catch (err: any) {
       console.warn("[PostgreSQL findSessionByTokenHash Warning]:", err?.message || err);
     }
-    return null;
+    return persistentStore.findSessionByTokenHash(tokenHash);
   }
 
   public async revokeSession(sessionId: number): Promise<boolean> {
-    const [updated] = await drizzleDb
-      .update(schema.userSessions)
-      .set({ isActive: false })
-      .where(eq(schema.userSessions.id, sessionId))
-      .returning();
-    return !!updated;
+    persistentStore.revokeSession(sessionId);
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.userSessions)
+        .set({ isActive: false })
+        .where(eq(schema.userSessions.id, sessionId))
+        .returning();
+      if (updated) return true;
+    } catch (err: any) {
+      console.warn("[PostgreSQL revokeSession Warning]:", err?.message || err);
+    }
+    return true;
   }
 
   public async revokeAllUserSessions(userId: number): Promise<boolean> {
-    await drizzleDb
-      .update(schema.userSessions)
-      .set({ isActive: false })
-      .where(eq(schema.userSessions.userId, userId));
+    persistentStore.revokeAllUserSessions(userId);
+    try {
+      await drizzleDb
+        .update(schema.userSessions)
+        .set({ isActive: false })
+        .where(eq(schema.userSessions.userId, userId));
+    } catch (err: any) {
+      console.warn("[PostgreSQL revokeAllUserSessions Warning]:", err?.message || err);
+    }
     return true;
   }
 
@@ -1386,42 +1403,68 @@ class BHTFDataStore {
     email: string,
   ): Promise<{ locked: boolean; lockedUntil: Date | null; attempts: number }> {
     const normalized = email.trim().toLowerCase();
-    const [user] = await drizzleDb
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.email, normalized));
+    try {
+      const [user] = await drizzleDb
+        .select()
+        .from(schema.users)
+        .where(eq(schema.users.email, normalized));
 
-    if (!user) return { locked: false, lockedUntil: null, attempts: 0 };
+      if (user) {
+        const attempts = (user.failedAttempts || 0) + 1;
+        let lockedUntil: Date | null = null;
+        let locked = false;
 
-    const attempts = (user.failedAttempts || 0) + 1;
+        if (attempts >= 5) {
+          // 15-minute progressive account lockout
+          lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+          locked = true;
+        }
+
+        await drizzleDb
+          .update(schema.users)
+          .set({
+            failedAttempts: attempts,
+            lockedUntil,
+          })
+          .where(eq(schema.users.id, user.id));
+
+        return { locked, lockedUntil, attempts };
+      }
+    } catch (err: any) {
+      console.warn("[PostgreSQL recordFailedLoginAttempt Warning]:", err?.message || err);
+    }
+
+    const localUser = persistentStore.getUserByEmail(normalized);
+    if (!localUser) return { locked: false, lockedUntil: null, attempts: 0 };
+    const attempts = (localUser.failedAttempts || 0) + 1;
     let lockedUntil: Date | null = null;
     let locked = false;
-
     if (attempts >= 5) {
-      // 15-minute progressive account lockout
       lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
       locked = true;
     }
-
-    await drizzleDb
-      .update(schema.users)
-      .set({
-        failedAttempts: attempts,
-        lockedUntil,
-      })
-      .where(eq(schema.users.id, user.id));
-
+    localUser.failedAttempts = attempts;
+    localUser.lockedUntil = lockedUntil;
+    persistentStore.saveUser(localUser);
     return { locked, lockedUntil, attempts };
   }
 
   public async resetFailedLoginAttempts(userId: number): Promise<void> {
-    await drizzleDb
-      .update(schema.users)
-      .set({
-        failedAttempts: 0,
-        lockedUntil: null,
-      })
-      .where(eq(schema.users.id, userId));
+    try {
+      await drizzleDb
+        .update(schema.users)
+        .set({
+          failedAttempts: 0,
+          lockedUntil: null,
+        })
+        .where(eq(schema.users.id, userId));
+    } catch {}
+    const localUser = persistentStore.getUserById(userId);
+    if (localUser) {
+      localUser.failedAttempts = 0;
+      localUser.lockedUntil = null;
+      persistentStore.saveUser(localUser);
+    }
   }
 
   public async hasAnySuperAdmin(): Promise<boolean> {
@@ -1430,10 +1473,10 @@ class BHTFDataStore {
         .select({ count: sql<number>`count(*)` })
         .from(schema.users)
         .where(and(eq(schema.users.role, "SUPER_ADMIN"), eq(schema.users.isActive, true)));
-      return Number(res?.count || 0) > 0;
-    } catch {
-      return false;
-    }
+      if (Number(res?.count || 0) > 0) return true;
+    } catch {}
+    const localUsers = persistentStore.getUsers();
+    return localUsers.some((u) => u.role === "SUPER_ADMIN" && u.isActive);
   }
 
   public async getAllUsers(): Promise<Omit<User, "passwordHash">[]> {
@@ -1442,11 +1485,13 @@ class BHTFDataStore {
         .select()
         .from(schema.users)
         .orderBy(desc(schema.users.createdAt));
-      return usersList.map(({ passwordHash, ...u }) => u);
+      if (usersList.length > 0) {
+        return usersList.map(({ passwordHash, ...u }) => u);
+      }
     } catch (err: any) {
       console.warn("[PostgreSQL getAllUsers Warning]:", err?.message || err);
-      return [];
     }
+    return persistentStore.getUsers().map(({ passwordHash, ...u }) => u);
   }
 
   public async createUser(data: {
@@ -1455,38 +1500,65 @@ class BHTFDataStore {
     passwordHash: string;
     role?: string;
   }): Promise<User> {
-    const [user] = await drizzleDb
-      .insert(schema.users)
-      .values({
-        name: data.name,
-        email: data.email.trim().toLowerCase(),
-        passwordHash: data.passwordHash,
-        role: data.role || "EDITOR",
-        isActive: true,
-        failedAttempts: 0,
-      })
-      .returning();
-    return user;
+    const local = persistentStore.saveUser({
+      name: data.name,
+      email: data.email,
+      passwordHash: data.passwordHash,
+      role: data.role,
+      isActive: true,
+    });
+    try {
+      const [user] = await drizzleDb
+        .insert(schema.users)
+        .values({
+          name: data.name,
+          email: data.email.trim().toLowerCase(),
+          passwordHash: data.passwordHash,
+          role: data.role || "EDITOR",
+          isActive: true,
+          failedAttempts: 0,
+        })
+        .returning();
+      if (user) return user;
+    } catch (err: any) {
+      console.warn("[PostgreSQL createUser Warning]:", err?.message || err);
+    }
+    return local;
   }
 
   public async updateUser(
     id: number,
     data: Partial<{ name: string; role: string; isActive: boolean; passwordHash: string }>,
   ): Promise<User | null> {
-    const [updated] = await drizzleDb
-      .update(schema.users)
-      .set({
-        ...data,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.users.id, id))
-      .returning();
-    return updated || null;
+    const local = persistentStore.getUserById(id);
+    if (local) {
+      persistentStore.saveUser({ ...local, ...data, id });
+    }
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.users)
+        .set({
+          ...data,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.users.id, id))
+        .returning();
+      if (updated) return updated;
+    } catch (err: any) {
+      console.warn("[PostgreSQL updateUser Warning]:", err?.message || err);
+    }
+    return persistentStore.getUserById(id);
   }
 
   public async deleteUser(id: number): Promise<boolean> {
-    const deleted = await drizzleDb.delete(schema.users).where(eq(schema.users.id, id)).returning();
-    return deleted.length > 0;
+    persistentStore.deleteUser(id);
+    try {
+      const deleted = await drizzleDb.delete(schema.users).where(eq(schema.users.id, id)).returning();
+      return deleted.length > 0;
+    } catch (err: any) {
+      console.warn("[PostgreSQL deleteUser Warning]:", err?.message || err);
+    }
+    return true;
   }
 
   // --- Procurement Steps CMS ---

@@ -1425,7 +1425,7 @@ export const createAdminPage = createServerFn({ method: "POST" })
         title: data.title,
         subtitle: "A custom sovereign initiative supported by Bhutan Health Trust Fund.",
         badge: "Special Mandate",
-        bgVariant: "dark",
+        bgVariant: "light",
         primaryCtaText: "Support This Initiative",
         primaryCtaUrl: "/get-involved",
       },

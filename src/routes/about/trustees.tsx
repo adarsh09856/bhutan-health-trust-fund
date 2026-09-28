@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicTrustees } from "@/lib/api/public.functions";
-import type { Trustee } from "@/lib/db/schema";
+import { getPublicTrustees, getPublicPage } from "@/lib/api/public.functions";
+import type { Trustee, PageBlockSection } from "@/lib/db/schema";
+import { PageRenderer } from "@/components/page-renderer";
 import {
   ShieldCheck,
   Award,
@@ -26,10 +27,22 @@ import trusteeUjjwal from "@/assets/reference/trustee_ujjwal_deep_dahal.webp";
 export const Route = createFileRoute("/about/trustees")({
   loader: async () => {
     try {
-      const trustees = await getPublicTrustees().catch(() => []);
-      return { liveTrustees: trustees || [] };
+      const [trustees, page] = await Promise.all([
+        getPublicTrustees().catch(() => []),
+        getPublicPage({ data: { slug: "about-trustees" } }).catch(() => null),
+      ]);
+      let sections: PageBlockSection[] | null = null;
+      if (page && page.status === "published") {
+        try {
+          const parsed = JSON.parse(page.sectionsJson);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sections = parsed;
+          }
+        } catch {}
+      }
+      return { liveTrustees: trustees || [], customSections: sections };
     } catch {
-      return { liveTrustees: [] };
+      return { liveTrustees: [], customSections: null };
     }
   },
   head: () => ({
@@ -121,8 +134,16 @@ const staticTrustees = [
 ];
 
 function TrusteesPage() {
-  const { liveTrustees } = Route.useLoaderData();
+  const { liveTrustees, customSections } = Route.useLoaderData();
   const [trusteesList, setTrusteesList] = useState<Trustee[]>(liveTrustees);
+
+  if (customSections && customSections.length > 0) {
+    return (
+      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
+        <PageRenderer sections={customSections} interactive={false} />
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (liveTrustees.length === 0) {
@@ -186,7 +207,7 @@ function TrusteesPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
         <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-bold">
           <Link
-            to="/about"
+            to="/about/organization"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition"
           >
             Our Organization

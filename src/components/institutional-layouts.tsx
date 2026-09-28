@@ -395,6 +395,15 @@ export function GazetteTimelineLayout({
         >
           {entries.map((entry, idx) => (
             <div key={idx} className="space-y-1 relative">
+              <span
+                className={`absolute -left-[31px] sm:-left-[39px] top-1.5 h-2.5 w-2.5 rounded-full border-2 bg-white ${
+                  idx % 3 === 1
+                    ? "border-[#EE6C8A] ring-2 ring-[#F7CAD0]/50"
+                    : isAqua
+                    ? "border-[#00A896]"
+                    : "border-[#D4A237]"
+                }`}
+              />
               <div
                 className={`text-xs font-mono font-bold uppercase tracking-wider ${
                   isAqua ? "text-[#00A896]" : "text-amber-800"

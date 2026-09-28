@@ -71,7 +71,7 @@ export function CustomPublicPageRoute() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-24 sm:pt-28 bg-[#FAF8F3]">
       <PageRenderer sections={sections} interactive={false} />
     </div>
   );

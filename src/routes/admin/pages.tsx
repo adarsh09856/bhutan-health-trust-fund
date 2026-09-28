@@ -117,7 +117,11 @@ export function AdminPagesList() {
 
   const DEFAULT_CORE_PAGES_FALLBACK = [
     { slug: "home", title: "Home Page", metaDescription: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
-    { slug: "about", title: "About Us & Royal Charter", metaDescription: "Founding history, Royal Charter mandate & Board of Trustees" },
+    { slug: "about", title: "About Us (Main Institutional Overview)", metaDescription: "Founding history, Royal Charter mandate & Board of Trustees" },
+    { slug: "about-organization", title: "About: Organization & Mandate", metaDescription: "Statutory founding under the Royal Charter, Article 9 constitutional rights & Vision/Mission" },
+    { slug: "about-trustees", title: "About: Board of Trustees", metaDescription: "High-level ministerial governance, trustee directory & fiduciary oversight" },
+    { slug: "about-committees", title: "About: Asset Management & Audit Committees", metaDescription: "Investment Policy Statement (IPS) guidelines and capital preservation" },
+    { slug: "about-secretariat", title: "About: Secretariat & Organogram", metaDescription: "Annexure 1 operational organogram and administrative divisions" },
     { slug: "our-story", title: "Our Story & Historical Milestones", metaDescription: "The founding chronicle of Bhutan Health Trust Fund and official milestones" },
     { slug: "our-work", title: "Our Programs & Commodities", metaDescription: "120+ Essential Medicines, Universal Vaccines & 20 Dzongkhags Reach" },
     { slug: "reports", title: "Reports & Financial Audits", metaDescription: "Annual reports and RAA certified statutory financial statements" },
@@ -165,12 +169,13 @@ export function AdminPagesList() {
     } catch {}
 
     const isCore = page.isSystemPage || isCorePageSlug(page.slug);
-    const publicUrl =
-      page.slug === "home"
-        ? "/"
-        : isCore
-          ? `/${page.slug}`
-          : `/p/${page.slug}`;
+    let publicUrl = `/p/${page.slug}`;
+    if (page.slug === "home") publicUrl = "/";
+    else if (page.slug === "about-organization") publicUrl = "/about/organization";
+    else if (page.slug === "about-trustees") publicUrl = "/about/trustees";
+    else if (page.slug === "about-committees") publicUrl = "/about/committees";
+    else if (page.slug === "about-secretariat") publicUrl = "/about/secretariat";
+    else if (isCore) publicUrl = `/${page.slug}`;
 
     return (
       <div
