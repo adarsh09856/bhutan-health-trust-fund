@@ -163,82 +163,79 @@ function RendererHeroCorpusCard() {
 
   return (
     <div className="relative space-y-3">
-      {/* Main Glassmorphic Corpus Card with Deep Opaque Chassis */}
+      {/* Main Glassmorphic Corpus Card with Light Institutional Chassis */}
       <div
         ref={corpusCounter.ref}
-        className="relative rounded-3xl bg-[#061813]/95 border border-white/20 ring-1 ring-white/10 p-5 sm:p-7 shadow-[0_32px_80px_-10px_rgba(0,0,0,0.9)] backdrop-blur-2xl space-y-5 overflow-hidden md:animate-float text-white text-left"
+        className="relative rounded-3xl bg-white/95 border border-[#00A896]/25 ring-1 ring-[#00A896]/10 p-5 sm:p-7 shadow-[0_20px_50px_-10px_rgba(11,79,66,0.10)] backdrop-blur-2xl space-y-5 overflow-hidden text-slate-900 text-left"
       >
-        {/* Subtle Top Gold Hairline Accent */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
-
         {/* Top Status Header */}
-        <div className="flex items-center justify-between border-b border-white/15 pb-3.5">
+        <div className="flex items-center justify-between border-b border-[#00A896]/15 pb-3.5">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A896] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00A896]" />
             </span>
-            <span className="text-[10px] font-mono tracking-widest text-emerald-300 uppercase font-bold">
+            <span className="text-[10px] font-mono tracking-widest text-[#00A896] uppercase font-bold">
               Sovereign Health Corpus
             </span>
           </div>
-          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/40">
+          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EAF6F5] text-[#0B4F42] border border-[#00A896]/30">
             Nu. 1:1 RGOB Matched
           </span>
         </div>
 
         {/* Main Numeral */}
         <div className="space-y-1">
-          <span className="text-[11px] uppercase tracking-wider text-slate-300 font-bold font-sans block">
+          <span className="text-[11px] uppercase tracking-wider text-[#0B4F42]/70 font-bold font-sans block">
             Perpetual Health Endowment
           </span>
-          <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+          <div className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-[#0B4F42] tracking-tight leading-tight">
             {corpusCounter.formatted}
           </div>
-          <p className="text-xs text-slate-200 font-sans leading-relaxed pt-0.5 font-normal">
+          <p className="text-xs text-[#0B4F42]/75 font-sans leading-relaxed pt-0.5 font-light">
             Invested sovereign capital yielding permanent annual returns to fund Bhutan's primary healthcare commodities.
           </p>
         </div>
 
         {/* 3 Editorial Supply Rows with Crisp Visibility */}
         <div className="space-y-2 pt-0.5">
-          <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.14] p-3.5 rounded-2xl border border-white/15 hover:border-emerald-500/50 transition-all">
+          <div className="flex items-center justify-between bg-[#EAF6F5]/70 hover:bg-[#EAF6F5] p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-emerald-500/25 text-emerald-300 grid place-items-center shrink-0 border border-emerald-500/40">
+              <div className="h-8 w-8 rounded-xl bg-white text-[#00A896] grid place-items-center shrink-0 border border-[#00A896]/30">
                 <Syringe className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-xs font-bold text-white tracking-wide">Universal Routine Vaccines</div>
-                <div className="text-[11px] text-slate-300 font-medium">100% Childhood Coverage (14 Antigens)</div>
+                <div className="text-xs font-bold text-[#0B4F42] tracking-wide">Universal Routine Vaccines</div>
+                <div className="text-[11px] text-[#0B4F42]/70 font-medium">100% Childhood Coverage (14 Antigens)</div>
               </div>
             </div>
-            <span className="font-serif text-xs font-bold text-emerald-300 font-mono">Nu. 68.5M</span>
+            <span className="font-serif text-xs font-bold text-[#00A896] font-mono">Nu. 68.5M</span>
           </div>
 
-          <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.14] p-3.5 rounded-2xl border border-white/15 hover:border-amber-500/50 transition-all">
+          <div className="flex items-center justify-between bg-[#EAF6F5]/70 hover:bg-[#EAF6F5] p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-amber-500/25 text-amber-300 grid place-items-center shrink-0 border border-amber-500/40">
+              <div className="h-8 w-8 rounded-xl bg-white text-[#00A896] grid place-items-center shrink-0 border border-[#00A896]/30">
                 <Pill className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-xs font-bold text-white tracking-wide">120+ Essential Medicines</div>
-                <div className="text-[11px] text-slate-300 font-medium">Zero Stockout Buffer across 205 Gewogs</div>
+                <div className="text-xs font-bold text-[#0B4F42] tracking-wide">120+ Essential Medicines</div>
+                <div className="text-[11px] text-[#0B4F42]/70 font-medium">Zero Stockout Buffer across 205 Gewogs</div>
               </div>
             </div>
-            <span className="font-serif text-xs font-bold text-amber-300 font-mono">Nu. 145.0M</span>
+            <span className="font-serif text-xs font-bold text-[#00A896] font-mono">Nu. 145.0M</span>
           </div>
 
-          <div className="flex items-center justify-between bg-white/[0.08] hover:bg-white/[0.14] p-3.5 rounded-2xl border border-white/15 hover:border-teal-500/50 transition-all">
+          <div className="flex items-center justify-between bg-[#EAF6F5]/70 hover:bg-[#EAF6F5] p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-teal-500/25 text-teal-300 grid place-items-center shrink-0 border border-teal-500/40">
+              <div className="h-8 w-8 rounded-xl bg-white text-[#00A896] grid place-items-center shrink-0 border border-[#00A896]/30">
                 <ThermometerSnowflake className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-xs font-bold text-white tracking-wide">Alpine Cold Chain Logistics</div>
-                <div className="text-[11px] text-slate-300 font-medium">High-Altitude Solar Refrigeration</div>
+                <div className="text-xs font-bold text-[#0B4F42] tracking-wide">Alpine Cold Chain Logistics</div>
+                <div className="text-[11px] text-[#0B4F42]/70 font-medium">High-Altitude Solar Refrigeration</div>
               </div>
             </div>
-            <span className="font-serif text-xs font-bold text-teal-300 font-mono">Nu. 24.2M</span>
+            <span className="font-serif text-xs font-bold text-[#00A896] font-mono">Nu. 24.2M</span>
           </div>
         </div>
 
@@ -246,7 +243,7 @@ function RendererHeroCorpusCard() {
         <div className="pt-1">
           <Link
             to="/get-involved"
-            className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-[0_10px_25px_rgba(212,162,55,0.4)] hover:shadow-[0_14px_32px_rgba(212,162,55,0.55)] hover:-translate-y-0.5 transition-all active:translate-y-0"
+            className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_22px_rgba(245,158,11,0.5)] transition-all"
           >
             <HeartHandshake className="h-4 w-4 text-slate-950" />
             <span>Donate to Healthcare Endowment →</span>
@@ -254,30 +251,30 @@ function RendererHeroCorpusCard() {
         </div>
 
         {/* Trust Seal Badges */}
-        <div className="flex items-center justify-between pt-2 border-t border-white/15 text-[10px] text-slate-300 font-sans">
-          <div className="flex items-center gap-1.5 text-emerald-300 font-medium">
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-            <span>100% Ring-Fenced Healthcare Corpus</span>
+        <div className="flex items-center justify-between pt-2 border-t border-[#00A896]/15 text-[10px] text-[#0B4F42]/80 font-sans">
+          <div className="flex items-center gap-1.5 text-[#00A896] font-medium">
+            <CheckCircle2 className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
+            <span>100% Ring-Fenced</span>
           </div>
-          <div className="flex items-center gap-1.5 text-amber-300 font-medium">
-            <ShieldCheck className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+          <div className="flex items-center gap-1.5 text-amber-800 font-medium">
+            <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
             <span>RAA Clean Audit Certified</span>
           </div>
         </div>
       </div>
 
-      {/* Floating Operational Status Satellite Micro-Card with Solid Backing */}
-      <div className="flex items-center justify-between bg-[#061713]/98 border border-amber-400/35 ring-1 ring-amber-400/20 rounded-2xl p-3.5 shadow-2xl backdrop-blur-2xl text-xs text-left">
+      {/* Floating Operational Status Satellite Micro-Card */}
+      <div className="flex items-center justify-between bg-white border border-[#00A896]/20 rounded-2xl p-3.5 shadow-sm text-xs text-left">
         <div className="flex items-center gap-2.5">
-          <div className="h-7 w-7 rounded-lg bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 grid place-items-center shrink-0">
+          <div className="h-7 w-7 rounded-lg bg-[#EAF6F5] border border-[#00A896]/30 text-[#00A896] grid place-items-center shrink-0">
             <MapPin className="h-3.5 w-3.5" />
           </div>
           <div>
-            <div className="text-[11px] font-bold text-white">20/20 Dzongkhags Buffer Active</div>
-            <div className="text-[10px] text-slate-300 font-medium">Zero Stockouts across 205 remote Gewog clinics</div>
+            <div className="text-[11px] font-bold text-[#0B4F42]">20/20 Dzongkhags Buffer Active</div>
+            <div className="text-[10px] text-[#0B4F42]/70 font-medium">Zero Stockouts across 205 remote Gewog clinics</div>
           </div>
         </div>
-        <span className="text-[10px] font-mono font-bold text-amber-300 px-2.5 py-1 rounded-lg bg-amber-400/10 border border-amber-400/30">
+        <span className="text-[10px] font-mono font-bold text-[#00A896] px-2.5 py-1 rounded-lg bg-[#EAF6F5] border border-[#00A896]/30">
           100% Funded
         </span>
       </div>
@@ -285,62 +282,47 @@ function RendererHeroCorpusCard() {
   );
 }
 
-// 1. Hero Block (Modern Sovereign Dark Theme with Scenic Banner & 2-Column Card)
+// 1. Hero Block (Light Institutional Theme)
 function HeroBlock({ section }: { section: PageBlockSection }) {
   const rawTitle = section.title || "Healthy People. Stronger Bhutan.";
   const titleParts = rawTitle.split(/(Stronger Bhutan\.?)/i);
 
   return (
-    <section className="relative overflow-hidden bg-[#061713] text-white pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-400/20">
-      {/* Authentic Bhutanese Himalayan Scenic Background Banner (Isolated to Hero Section) */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-85"
-        style={{ backgroundImage: `url(${heroBhutan})` }}
-      />
-      {/* Cinematic split vignette: high contrast on left for typography, open on right for Dzong & snowy peaks */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#061713]/92 via-[#061713]/60 to-black/35 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#061713]/50 via-transparent to-[#061713] pointer-events-none" />
-
-      {/* Ambient subtle light glows */}
-      <div className="absolute top-6 left-1/4 h-96 w-96 bg-amber-400/[0.08] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 h-96 w-96 bg-emerald-500/[0.09] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-1/3 h-72 w-72 bg-teal-500/[0.06] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
-
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#E3F1F6] via-[#FAF8F3] to-[#FAF8F3] text-slate-900 pt-24 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-slate-200/80">
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Monumental Editorial Typography */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
             {/* Royal Charter & Live Status Badge */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#09221b]/95 border border-emerald-500/40 text-emerald-300 text-xs font-semibold backdrop-blur-xl shadow-md">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAF6F5] border border-[#00A896]/30 text-[#0B4F42] text-xs font-semibold shadow-xs">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A896] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00A896]" />
                 </span>
                 <span>{section.badge || "Royal Charter Mandate • 100% Guaranteed"}</span>
               </div>
 
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1a1708]/95 text-amber-300 border border-amber-400/40 text-xs font-bold font-mono shadow-md backdrop-blur-xl">
-                <Sparkles className="h-3 w-3 text-amber-400" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold font-mono shadow-xs">
+                <Sparkles className="h-3 w-3 text-amber-600" />
                 <span>Nu. 1:1 RGOB Sovereign Match</span>
               </div>
             </div>
 
             {/* Dzongkha Seal Header if provided */}
             {section.dzongkhaText && (
-              <div className="font-serif text-lg sm:text-xl font-bold tracking-wide flex items-center gap-2 text-amber-300/90 drop-shadow-xs">
-                <Sparkles className="h-3.5 w-3.5 text-amber-400 opacity-80" />
+              <div className="font-serif text-lg sm:text-xl font-bold tracking-wide flex items-center gap-2 text-[#00A896]">
+                <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
                 <span>{section.dzongkhaText}</span>
               </div>
             )}
 
-            {/* Main Headline with Modern Gradient Typography */}
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06] drop-shadow-[0_3px_16px_rgba(0,0,0,0.9)]">
+            {/* Main Headline */}
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#0B4F42] leading-[1.06]">
               {titleParts.length > 1 ? (
                 <>
                   <span>{titleParts[0]}</span>
-                  <span className="text-gradient-gold drop-shadow-xs">{titleParts[1]}</span>
+                  <span className="text-[#00A896]">{titleParts[1]}</span>
                   <span>{titleParts[2]}</span>
                 </>
               ) : (
@@ -349,24 +331,24 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-sans max-w-2xl font-normal drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-sans max-w-2xl font-light">
               {section.subtitle ||
                 "Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance."}
             </p>
 
             {/* Feature Highlights Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs">
-              <div className="flex items-center gap-2 bg-[#091f1a]/85 p-2.5 rounded-xl border border-white/20 backdrop-blur-md shadow-sm">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span className="font-semibold text-white">Zero Stockout Guarantee</span>
+              <div className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-xs">
+                <CheckCircle2 className="h-4 w-4 text-[#00A896] shrink-0" />
+                <span className="font-semibold text-slate-900">Zero Stockout Guarantee</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#091f1a]/85 p-2.5 rounded-xl border border-white/20 backdrop-blur-md shadow-sm">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span className="font-semibold text-white">205 Remote Gewogs</span>
+              <div className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200/80 shadow-xs">
+                <CheckCircle2 className="h-4 w-4 text-[#00A896] shrink-0" />
+                <span className="font-semibold text-slate-900">205 Remote Gewogs</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#091f1a]/85 p-2.5 rounded-xl border border-white/20 col-span-2 sm:col-span-1 backdrop-blur-md shadow-sm">
-                <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0" />
-                <span className="font-semibold text-white">100% Tax Exempt (DRC)</span>
+              <div className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200/80 col-span-2 sm:col-span-1 shadow-xs">
+                <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
+                <span className="font-semibold text-slate-900">100% Tax Exempt (DRC)</span>
               </div>
             </div>
 
@@ -374,7 +356,7 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <Link
                 to={section.primaryCtaUrl || "/get-involved"}
-                className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_10px_28px_rgba(245,158,11,0.4)] hover:shadow-[0_15px_35px_rgba(245,158,11,0.55)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm uppercase tracking-wider"
+                className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] transition-all text-sm uppercase tracking-wider"
               >
                 <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
                 <span>{section.primaryCtaText || "Contribute (1:1 Matched)"}</span>
@@ -383,24 +365,24 @@ function HeroBlock({ section }: { section: PageBlockSection }) {
 
               <Link
                 to={section.secondaryCtaUrl || "/our-work"}
-                className="inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full bg-[#061a15]/85 hover:bg-[#061a15] border border-white/30 text-white shadow-md hover:-translate-y-0.5 transition-all text-sm tracking-wide backdrop-blur-md"
+                className="inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full bg-white hover:bg-[#EAF6F5] border border-[#00A896]/30 text-[#0B4F42] shadow-xs transition-all text-sm tracking-wide"
               >
                 <span>{section.secondaryCtaText || "Explore 6 Commodity Streams"}</span>
               </Link>
             </div>
 
             {/* Institutional Endorsement Bar */}
-            <div className="pt-3.5 flex flex-wrap items-center gap-3 text-xs border-t border-white/15">
-              <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold font-mono">
+            <div className="pt-3.5 flex flex-wrap items-center gap-3 text-xs border-t border-slate-200">
+              <span className="text-[11px] uppercase tracking-wider text-[#0B4F42] font-bold font-mono">
                 Sovereign Partners:
               </span>
-              <span className="text-slate-200 font-semibold">World Health Organization (WHO)</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-200 font-semibold">UNICEF</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-200 font-semibold">Gavi, The Vaccine Alliance</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-200 font-semibold">World Bank</span>
+              <span className="text-slate-800 font-semibold">World Health Organization (WHO)</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800 font-semibold">UNICEF</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800 font-semibold">Gavi, The Vaccine Alliance</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800 font-semibold">World Bank</span>
             </div>
           </div>
 
@@ -646,53 +628,39 @@ function FeatureCardsBlock({ section }: { section: PageBlockSection }) {
 
 // 4. Royal Decree / Proclamation Showcase
 function RoyalDecreeBlock({ section }: { section: PageBlockSection }) {
-  const isDark = section.bgVariant === "dark";
+  const isAlt = section.bgVariant === "dark" || section.bgVariant === "alt";
 
   return (
     <section className={`py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${
-      isDark ? "bg-[#061410] text-white" : "bg-mesh-light border-y border-slate-200/80 text-slate-900"
+      isAlt ? "bg-[#EAF6F5] border-y border-[#00A896]/20 text-[#0B4F42]" : "bg-[#FAF8F3] border-y border-slate-200/80 text-slate-900"
     }`}>
       {/* Ambient Royal Gold Backlighting */}
-      <div className={`absolute inset-0 pointer-events-none ${
-        isDark 
-          ? "bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.15)_0,transparent_65%)]" 
-          : "bg-[radial-gradient(circle_at_center,rgba(212,162,55,0.08)_0,transparent_60%)]"
-      }`} />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(212,162,55,0.08)_0,transparent_60%)]" />
 
       <div className="relative max-w-4xl mx-auto">
         {/* Royal Decree Framed Showcase */}
-        <div className={`relative rounded-3xl p-8 sm:p-14 text-center space-y-8 shadow-xl transition-all ${
-          isDark
-            ? "bg-gradient-to-b from-[#0b241d] via-[#071914] to-[#040e0b] border-2 border-amber-500/40 ring-1 ring-amber-400/20"
-            : "bg-white border-2 border-amber-400/40 ring-4 ring-amber-400/5 shadow-[0_20px_50px_rgba(212,162,55,0.08)]"
-        }`}>
+        <div className="relative rounded-3xl p-8 sm:p-14 text-center space-y-8 shadow-xl transition-all bg-white border-2 border-amber-400/40 ring-4 ring-amber-400/5 shadow-[0_20px_50px_rgba(212,162,55,0.08)]">
           {/* Royal Crest Header */}
           <div className="flex flex-col items-center gap-3">
             <div className="h-16 w-16 rounded-full bg-gradient-to-br from-amber-400 via-amber-300 to-amber-500 p-0.5 shadow-md flex items-center justify-center">
-              <div className={`h-full w-full rounded-full flex items-center justify-center ${
-                isDark ? "bg-[#071914] text-amber-400" : "bg-white text-amber-600"
-              }`}>
+              <div className="h-full w-full rounded-full flex items-center justify-center bg-white text-amber-600">
                 <Quote className="h-7 w-7" />
               </div>
             </div>
 
             {section.dzongkhaText && (
-              <div className={`font-serif text-2xl sm:text-3xl font-bold tracking-widest pt-1 ${
-                isDark ? "text-amber-300" : "text-emerald-900"
-              }`}>
+              <div className="font-serif text-2xl sm:text-3xl font-bold tracking-widest pt-1 text-[#0B4F42]">
                 {section.dzongkhaText}
               </div>
             )}
 
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-800 dark:text-amber-300 text-[11px] font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-800 text-[11px] font-bold uppercase tracking-widest">
               <span>{section.badge || "The Royal Mandate of Sustainable Healthcare"}</span>
             </div>
           </div>
 
           {/* Quote Body */}
-          <blockquote className={`font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-relaxed tracking-tight italic max-w-3xl mx-auto ${
-            isDark ? "text-amber-50/95" : "text-slate-800"
-          }`}>
+          <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-relaxed tracking-tight italic max-w-3xl mx-auto text-slate-800">
             "{section.content || section.title}"
           </blockquote>
 
@@ -806,21 +774,21 @@ function FaqAccordionBlock({ section }: { section: PageBlockSection }) {
 // 7. CTA Banner Block (Corpus Matching Banner)
 function CtaBannerBlock({ section }: { section: PageBlockSection }) {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#06241b] via-[#0a382c] to-[#041912] text-white relative overflow-hidden border-y border-emerald-500/30">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.15)_0,transparent_50%)]" />
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#EAF6F5] text-[#0B4F42] relative overflow-hidden border-y border-[#00A896]/20">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,162,55,0.08)_0,transparent_50%)] pointer-events-none" />
 
       <div className="relative max-w-5xl mx-auto text-center space-y-7">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-300 text-xs font-bold uppercase tracking-wider shadow-sm">
-          <Sparkles className="h-3.5 w-3.5" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-[#00A896]/30 text-[#0B4F42] text-xs font-bold uppercase tracking-wider shadow-xs">
+          <Sparkles className="h-3.5 w-3.5 text-[#D4A237]" />
           <span>{section.badge || "Permanent Corpus Endowment"}</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#0B4F42] tracking-tight leading-tight">
           {section.title}
         </h2>
 
         {section.subtitle && (
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-emerald-100/90 font-sans leading-relaxed">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-700 font-sans leading-relaxed">
             {section.subtitle}
           </p>
         )}
@@ -829,7 +797,7 @@ function CtaBannerBlock({ section }: { section: PageBlockSection }) {
           {section.primaryCtaText && (
             <Link
               to={section.primaryCtaUrl || "/get-involved"}
-              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-xl hover:shadow-amber-500/30 transition-all text-sm uppercase tracking-wide hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2.5 bg-[#D4A237] hover:bg-[#c4922b] text-slate-950 font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all text-sm uppercase tracking-wider hover:-translate-y-0.5"
             >
               <span>{section.primaryCtaText}</span>
               <ArrowRight className="h-4 w-4 stroke-[2.5]" />
@@ -839,7 +807,7 @@ function CtaBannerBlock({ section }: { section: PageBlockSection }) {
           {section.secondaryCtaText && (
             <Link
               to={section.secondaryCtaUrl || "/track-donation"}
-              className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 text-white text-sm hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 font-semibold px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-[#0B4F42] text-sm hover:-translate-y-0.5 transition-all shadow-xs"
             >
               <span>{section.secondaryCtaText}</span>
             </Link>

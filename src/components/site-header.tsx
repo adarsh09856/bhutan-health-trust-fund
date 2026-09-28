@@ -70,15 +70,15 @@ export function SiteHeader() {
             : "top-0 pt-0 px-0 sm:px-4 lg:px-6"
           : user
             ? "top-11 pt-1 px-3 sm:px-6 lg:px-8"
-            : "top-0 pt-3 sm:pt-4 px-3 sm:px-6 lg:px-8"
+            : "top-0 pt-2 sm:pt-3 px-3 sm:px-6 lg:px-8"
       }`}
     >
       {/* Editorial Glass Capsule Navigation Island */}
       <div
         className={`mx-auto max-w-7xl flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 ${
           scrolled
-            ? "w-full rounded-none sm:rounded-b-2xl bg-white/95 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,31,26,0.10)] px-4 sm:px-7 py-2 sm:py-2.5"
-            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-slate-200/80 shadow-xs px-4 sm:px-6 py-2 sm:py-2.5"
+            ? "w-full rounded-none sm:rounded-b-2xl bg-white/95 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.08)] px-4 sm:px-7 py-2 sm:py-2.5"
+            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-4 sm:px-6 py-2 sm:py-2.5"
         }`}
       >
         {/* Logo & Dzongkha Title */}
@@ -115,8 +115,8 @@ export function SiteHeader() {
               to="/about"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/about")
-                  ? "bg-slate-900 text-white shadow-md"
-                  : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                  ? "bg-[#0B4F42] text-white shadow-xs"
+                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
               }`}
             >
               <span>ABOUT US</span>
@@ -205,8 +205,8 @@ export function SiteHeader() {
             to="/our-story"
             className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
               location.pathname.startsWith("/our-story")
-                ? "bg-slate-900 text-white shadow-md"
-                : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                ? "bg-[#0B4F42] text-white shadow-xs"
+                : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
             }`}
           >
             OUR STORY
@@ -222,8 +222,8 @@ export function SiteHeader() {
               to="/our-work"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/our-work")
-                  ? "bg-slate-900 text-white shadow-md"
-                  : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                  ? "bg-[#0B4F42] text-white shadow-xs"
+                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
               }`}
             >
               <span>OUR IMPACT</span>
@@ -296,8 +296,8 @@ export function SiteHeader() {
               to="/reports"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
-                  ? "bg-slate-900 text-white shadow-md"
-                  : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                  ? "bg-[#0B4F42] text-white shadow-xs"
+                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
               }`}
             >
               <span>RESOURCES</span>
@@ -349,8 +349,8 @@ export function SiteHeader() {
             to="/news"
             className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
               location.pathname.startsWith("/news")
-                ? "bg-slate-900 text-white shadow-md"
-                : "text-slate-700 hover:text-emerald-700 hover:bg-white"
+                ? "bg-[#0B4F42] text-white shadow-xs"
+                : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
             }`}
           >
             NEWS & EVENTS

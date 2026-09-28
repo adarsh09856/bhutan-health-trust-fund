@@ -43,13 +43,13 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="bg-[#071512] text-slate-300 mt-20 border-t border-amber-400/20 relative overflow-hidden">
+    <footer className="bg-[#EAF6F5] text-slate-700 mt-20 border-t border-[#00A896]/20 relative overflow-hidden">
       {/* Upper Banner: Emergency Helpline Awareness */}
-      <div className="bg-[#0B1F1A] border-b border-white/10 px-4 py-3.5 relative z-10">
+      <div className="bg-[#0B4F42] text-white border-b border-[#00A896]/20 px-4 py-3.5 relative z-10">
         <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4 text-xs font-sans">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-slate-300">
+            <span className="text-slate-100">
               National Emergency Health Helpline:{" "}
               <strong className="text-amber-300 font-serif text-sm ml-1">
                 112
@@ -57,10 +57,10 @@ export function SiteFooter() {
               (Toll-Free, 24/7 Nationwide)
             </span>
           </div>
-          <div className="flex items-center gap-4 text-slate-400 text-xs">
-            <span className="text-emerald-400 font-medium">Royal Government of Bhutan Partner</span>
-            <span className="hidden sm:inline text-slate-600">•</span>
-            <span className="hidden sm:inline text-amber-300/90 font-medium">
+          <div className="flex items-center gap-4 text-slate-300 text-xs">
+            <span className="text-emerald-300 font-medium">Royal Government of Bhutan Partner</span>
+            <span className="hidden sm:inline text-white/30">•</span>
+            <span className="hidden sm:inline text-amber-200 font-medium">
               WHO Collaborating Sovereign Trust
             </span>
           </div>
@@ -72,90 +72,90 @@ export function SiteFooter() {
         {/* Column 1: Institutional Overview */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-2xl bg-white/[0.08] p-1.5 shadow-sm shrink-0 border border-amber-300/30">
+            <div className="h-12 w-12 rounded-2xl bg-white p-1.5 shadow-xs shrink-0 border border-[#00A896]/25">
               <img src={logo} alt="BHTF Emblem" className="h-full w-full object-contain" />
             </div>
             <div>
-              <span className="text-[10px] text-amber-400 font-semibold tracking-wider block font-sans">
+              <span className="text-[10px] text-[#00A896] font-semibold tracking-wider block font-sans">
                 འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
               </span>
-              <h3 className="font-serif text-base font-normal text-white">Bhutan Health Trust Fund</h3>
+              <h3 className="font-serif text-base font-bold text-[#0B4F42]">Bhutan Health Trust Fund</h3>
             </div>
           </div>
 
-          <p className="text-xs text-slate-400 leading-relaxed font-sans font-light">
+          <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
             Established under Royal Charter to guarantee perpetual sovereign financing for essential
             medicines, life-saving vaccines, and primary healthcare commodities across all 20
             Dzongkhags in the Kingdom of Bhutan.
           </p>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-emerald-400 font-medium font-sans">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          <div className="pt-2 flex items-center gap-2 text-xs text-[#00A896] font-medium font-sans">
+            <ShieldCheck className="h-4 w-4 text-[#00A896]" />
             <span>Autonomous & Fully Audited Entity</span>
           </div>
         </div>
 
         {/* Column 2: Quick Links */}
         <div>
-          <h4 className="font-serif text-sm font-semibold text-white mb-4 tracking-wide flex items-center gap-2">
-            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+          <h4 className="font-serif text-sm font-semibold text-[#0B4F42] mb-4 tracking-wide flex items-center gap-2">
+            <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
             <span>Institutional Portals</span>
           </h4>
-          <ul className="space-y-2.5 text-xs text-slate-400 font-sans">
+          <ul className="space-y-2.5 text-xs text-slate-600 font-sans">
             <li>
               <Link
                 to="/about"
-                className="hover:text-amber-300 transition flex items-center gap-1.5"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> About Us & Secretariat Organogram
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> About Us & Secretariat Organogram
               </Link>
             </li>
             <li>
               <Link
                 to="/our-story"
-                className="hover:text-emerald-400 transition flex items-center gap-1.5"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Our Story & Milestones (1998–2026)
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Our Story & Milestones (1998–2026)
               </Link>
             </li>
             <li>
               <Link
                 to="/our-work"
-                className="hover:text-emerald-400 transition flex items-center gap-1.5"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Our Impact & 20 Dzongkhags Reach
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Our Impact & 20 Dzongkhags Reach
               </Link>
             </li>
             <li>
               <Link
                 to="/reports"
-                className="hover:text-blue-300 transition flex items-center gap-1.5"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Resources & Window Financing
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Resources & Window Financing
               </Link>
             </li>
             <li>
               <Link
                 to="/news"
-                className="hover:text-slate-200 transition flex items-center gap-1.5"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> News, Events & Announcements
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> News, Events & Announcements
               </Link>
             </li>
             <li>
               <Link
                 to="/track-donation"
-                className="hover:text-amber-300 transition flex items-center gap-1.5"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
-                <ArrowUpRight className="h-3 w-3 text-slate-500" /> Track Donation / Tax Voucher
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Track Donation / Tax Voucher
               </Link>
             </li>
             <li>
               <Link
                 to="/get-involved"
-                className="hover:text-amber-300 transition flex items-center gap-1.5 font-bold text-amber-400"
+                className="hover:text-amber-700 transition flex items-center gap-1.5 font-bold text-amber-800"
               >
-                <Heart className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> Donate Now
+                <Heart className="h-3.5 w-3.5 fill-amber-500 text-amber-600" /> Donate Now
               </Link>
             </li>
           </ul>
@@ -163,29 +163,29 @@ export function SiteFooter() {
 
         {/* Column 3: Secretariat Contact */}
         <div>
-          <h4 className="font-serif text-sm font-semibold text-white mb-4 tracking-wide flex items-center gap-2">
-            <Building2 className="h-3.5 w-3.5 text-emerald-400" />
+          <h4 className="font-serif text-sm font-semibold text-[#0B4F42] mb-4 tracking-wide flex items-center gap-2">
+            <Building2 className="h-3.5 w-3.5 text-[#00A896]" />
             <span>Secretariat Directory</span>
           </h4>
-          <ul className="space-y-3.5 text-xs text-slate-400 font-sans">
+          <ul className="space-y-3.5 text-xs text-slate-600 font-sans">
             <li className="flex items-start gap-2.5">
-              <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-amber-400" />
+              <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-amber-600" />
               <span>{institutionalConfig.secretariatAddress}</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Phone className="h-4 w-4 shrink-0 text-emerald-400" />
+              <Phone className="h-4 w-4 shrink-0 text-[#00A896]" />
               <a
                 href={`tel:${institutionalConfig.secretariatPhone.replace(/[^0-9+]/g, "")}`}
-                className="hover:text-white transition"
+                className="hover:text-[#0B4F42] transition"
               >
                 {institutionalConfig.secretariatPhone}
               </a>
             </li>
             <li className="flex items-center gap-2.5">
-              <Mail className="h-4 w-4 shrink-0 text-emerald-400" />
+              <Mail className="h-4 w-4 shrink-0 text-[#00A896]" />
               <a
                 href={`mailto:${institutionalConfig.secretariatEmail}`}
-                className="hover:text-white transition"
+                className="hover:text-[#0B4F42] transition"
               >
                 {institutionalConfig.secretariatEmail}
               </a>
@@ -193,7 +193,7 @@ export function SiteFooter() {
             <li className="pt-1">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-1.5 text-amber-400 font-medium hover:text-amber-300 transition"
+                className="inline-flex items-center gap-1.5 text-amber-800 font-bold hover:text-amber-900 transition"
               >
                 Send Citizen Message →
               </Link>
@@ -203,10 +203,10 @@ export function SiteFooter() {
 
         {/* Column 4: Newsletter & Socials */}
         <div>
-          <h4 className="font-serif text-sm font-semibold text-white mb-4 tracking-wide">
+          <h4 className="font-serif text-sm font-semibold text-[#0B4F42] mb-4 tracking-wide">
             Official Bulletins
           </h4>
-          <p className="text-xs text-slate-400 mb-3 leading-relaxed font-sans font-light">
+          <p className="text-xs text-slate-600 mb-3 leading-relaxed font-sans font-light">
             Subscribe to receive audited financial statements, procurement notices, and national
             health milestones.
           </p>
@@ -219,13 +219,13 @@ export function SiteFooter() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="official.email@organization.bt"
-                className="w-full bg-white/[0.06] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition font-sans"
+                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#00A896] transition font-sans"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-semibold py-2.5 px-4 rounded-xl text-xs transition duration-150 flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-50 font-sans"
+              className="w-full bg-[#D4A237] hover:bg-[#b68525] text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition duration-150 flex items-center justify-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50 font-sans"
             >
               {loading ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -237,7 +237,7 @@ export function SiteFooter() {
 
           {/* Social Links */}
           <div className="space-y-2">
-            <span className="text-[11px] text-slate-400 font-sans block">
+            <span className="text-[11px] text-slate-500 font-sans block">
               Follow Official Channels:
             </span>
             <div className="flex gap-2">
@@ -253,7 +253,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  className="h-8 w-8 grid place-items-center rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-amber-300 border border-white/10 transition"
+                  className="h-8 w-8 grid place-items-center rounded-xl bg-white hover:bg-slate-50 text-slate-600 hover:text-[#00A896] border border-slate-200 transition shadow-xs"
                 >
                   <s.icon className="h-4 w-4" />
                 </a>
@@ -263,9 +263,9 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* Copyright & Legal Bar */}
-      <div className="border-t border-white/10 bg-[#071512] px-4 py-6 relative z-10">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left font-sans">
+      {/* Copyright & Legal Bar (Single Slim Dark Green Band) */}
+      <div className="border-t border-slate-200/60 bg-[#061713] px-4 py-4 relative z-10 text-white/80">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 text-center sm:text-left font-sans">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <span>© {new Date().getFullYear()} Bhutan Health Trust Fund.</span>
             <span className="hidden sm:inline">•</span>

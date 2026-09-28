@@ -55,12 +55,22 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Light Institutional Theme Tokens */
+  --color-page-bg: #FAF8F3;
+  --color-aqua-tint: #EAF6F5;
+  --color-sky-tint: #E3F1F6;
+  --color-aquamarine: #00A896;
+  --color-deep-teal: #0B4F42;
+  --color-lotus-pink: #EE6C8A;
+  --color-soft-pink: #F7CAD0;
+  --color-gold: #D4A237;
+  --color-dark-green: #061713;
+
   /* Sovereign Institutional Palette Tokens */
-  --color-ink: #0b1f1a;
+  --color-ink: #0B4F42;
   --color-ink-dark: #071512;
-  --color-ink-card: #102922;
+  --color-ink-card: #EAF6F5;
   --color-ink-muted: #17382f;
-  --color-gold: #d4a237;
   --color-gold-light: #e8c16d;
   --color-gold-dark: #b68525;
   --color-gold-soft: #fcf6e8;
@@ -69,17 +79,15 @@
   --color-paper: #f4f1ea;
   --color-charcoal: #121816;
 
-  /* Official BHTF Emblem Brand Palette (Traditional Medicine Pot & Lotus/Blue Poppy) */
-  --color-aquamarine: #00a896;
+  /* Official BHTF Emblem Brand Palette */
   --color-aquamarine-dark: #026c5f;
   --color-aquamarine-light: #e0f7f4;
-  --color-lotus-pink: #ee6c8a;
   --color-lotus-pink-light: #f7cad0;
   --color-lotus-pink-subtle: #fdf2f4;
-  --color-bhtf-forest: #071914;
+  --color-bhtf-forest: #0B4F42;
 
   /* Legacy BHTF color mappings */
-  --color-bhtf-pine-dark: #0b1f1a;
+  --color-bhtf-pine-dark: #0B4F42;
   --color-bhtf-pine: #143d32;
   --color-bhtf-ochre: #d4a237;
   --color-bhtf-ochre-light: #e8c16d;
@@ -191,55 +199,28 @@
   animation: fade-in 0.4s ease-out forwards;
 }
 
-/* Institutional Fiduciary & Ruled Utility Accents */
+/* Institutional Light Glass & Ruled Utility Accents */
+.card-light-glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 168, 150, 0.22);
+  box-shadow: 0 8px 30px -4px rgba(11, 79, 66, 0.06);
+}
+
 .hairline-divider {
   height: 1px;
-  background-color: rgba(11, 31, 26, 0.12);
+  background-color: rgba(11, 79, 66, 0.12);
+}
+
+.hairline-divider-aqua {
+  height: 1px;
+  background-color: rgba(0, 168, 150, 0.25);
 }
 
 .hairline-divider-gold {
   height: 1px;
   background-color: rgba(212, 162, 55, 0.35);
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, #d4a237 0%, #f5d78e 50%, #d4a237 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #059669 0%, #34d399 50%, #047857 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-dark {
-  background: linear-gradient(135deg, #0b1f1a 0%, #1e3a34 70%, #102922 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hairline-divider {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(11, 31, 26, 0.12) 20%,
-    rgba(11, 31, 26, 0.12) 80%,
-    transparent
-  );
-}
-
-.hairline-divider-gold {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(212, 162, 55, 0.4) 20%,
-    rgba(212, 162, 55, 0.4) 80%,
-    transparent
-  );
 }
 
 /* Print CSS for Sovereign Documents & Statutory Watermarks */

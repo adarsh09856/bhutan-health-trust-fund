@@ -29,13 +29,13 @@ export function StatementLayout({
   legalBasis,
   theme = "parchment",
 }: StatementLayoutProps) {
-  const isDark = theme === "forest";
+  const isAqua = theme === "forest";
 
   return (
     <section
       className={`py-16 sm:py-20 border-y ${
-        isDark
-          ? "bg-[#061713] text-white border-amber-400/20"
+        isAqua
+          ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-[#FAF8F3] text-slate-900 border-slate-200/90"
       }`}
     >
@@ -43,20 +43,16 @@ export function StatementLayout({
         {legalBasis && (
           <div
             className={`text-[11px] font-mono tracking-widest uppercase font-bold ${
-              isDark ? "text-amber-400/90" : "text-amber-800"
+              isAqua ? "text-[#00A896]" : "text-amber-800"
             }`}
           >
             {legalBasis}
           </div>
         )}
-        <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-snug tracking-tight">
+        <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-snug tracking-tight text-[#0B4F42]">
           "{proclamation}"
         </blockquote>
-        <div
-          className={`text-xs font-mono tracking-wider pt-2 ${
-            isDark ? "text-slate-400" : "text-slate-500"
-          }`}
-        >
+        <div className="text-xs font-mono tracking-wider pt-2 text-slate-500">
           — {citation}
         </div>
       </div>
@@ -89,27 +85,23 @@ export function RuledLedgerLayout({
   rows,
   theme = "parchment",
 }: RuledLedgerLayoutProps) {
-  const isDark = theme === "forest";
+  const isAqua = theme === "forest";
 
   return (
     <section
       className={`py-14 sm:py-18 border-b ${
-        isDark
-          ? "bg-[#061713] text-white border-white/10"
+        isAqua
+          ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-white text-slate-900 border-slate-200/80"
       }`}
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="space-y-1.5">
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#0B4F42]">
             {title}
           </h2>
           {subtitle && (
-            <p
-              className={`text-xs sm:text-sm font-sans font-light ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
+            <p className="text-xs sm:text-sm font-sans font-light text-slate-600">
               {subtitle}
             </p>
           )}
@@ -118,26 +110,26 @@ export function RuledLedgerLayout({
         {/* Ruled Table */}
         <div
           className={`border-t ${
-            isDark ? "border-white/15" : "border-slate-300"
+            isAqua ? "border-[#00A896]/20" : "border-slate-300"
           }`}
         >
           {rows.map((row, idx) => (
             <div
               key={idx}
               className={`flex flex-col sm:flex-row sm:items-baseline justify-between py-4 border-b gap-2 ${
-                isDark ? "border-white/10" : "border-slate-200"
+                isAqua ? "border-[#00A896]/15" : "border-slate-200"
               }`}
             >
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
-                  <span className="font-serif text-base sm:text-lg font-bold">
+                  <span className="font-serif text-base sm:text-lg font-bold text-slate-900">
                     {row.label}
                   </span>
                   {row.code && (
                     <span
                       className={`text-[10px] font-mono font-medium px-1.5 py-0.2 rounded ${
-                        isDark
-                          ? "bg-white/10 text-amber-300"
+                        isAqua
+                          ? "bg-white text-[#0B4F42] border border-[#00A896]/30"
                           : "bg-slate-100 text-slate-700"
                       }`}
                     >
@@ -146,20 +138,12 @@ export function RuledLedgerLayout({
                   )}
                 </div>
                 {row.subtext && (
-                  <p
-                    className={`text-xs font-sans ${
-                      isDark ? "text-slate-400" : "text-slate-500"
-                    }`}
-                  >
+                  <p className="text-xs font-sans text-slate-500">
                     {row.subtext}
                   </p>
                 )}
               </div>
-              <div
-                className={`font-serif text-xl sm:text-2xl font-bold font-mono tracking-tight shrink-0 ${
-                  isDark ? "text-amber-300" : "text-slate-900"
-                }`}
-              >
+              <div className="font-serif text-xl sm:text-2xl font-bold font-mono tracking-tight shrink-0 text-[#0B4F42]">
                 {row.figure}
               </div>
             </div>
@@ -167,11 +151,7 @@ export function RuledLedgerLayout({
         </div>
 
         {/* Mandatory Date & Source Line */}
-        <div
-          className={`text-[11px] font-mono tracking-wide ${
-            isDark ? "text-slate-400" : "text-slate-500"
-          }`}
-        >
+        <div className="text-[11px] font-mono tracking-wide text-slate-500">
           {sourceLine}
         </div>
       </div>
@@ -197,13 +177,13 @@ export function TwoColumnNarrativeLayout({
   actionLink,
   theme = "parchment",
 }: TwoColumnNarrativeLayoutProps) {
-  const isDark = theme === "forest";
+  const isAqua = theme === "forest";
 
   return (
     <section
       className={`py-16 sm:py-20 border-b ${
-        isDark
-          ? "bg-[#061713] text-white border-white/10"
+        isAqua
+          ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-[#FAF8F3] text-slate-900 border-slate-200/80"
       }`}
     >
@@ -212,13 +192,13 @@ export function TwoColumnNarrativeLayout({
           {referenceCode && (
             <span
               className={`text-[11px] font-mono font-bold tracking-widest uppercase block ${
-                isDark ? "text-amber-400" : "text-amber-800"
+                isAqua ? "text-[#00A896]" : "text-amber-800"
               }`}
             >
               {referenceCode}
             </span>
           )}
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight leading-tight text-[#0B4F42]">
             {sectionTitle}
           </h2>
         </div>
@@ -227,9 +207,7 @@ export function TwoColumnNarrativeLayout({
           {paragraphs.map((p, idx) => (
             <p
               key={idx}
-              className={`text-sm sm:text-base font-sans font-light leading-relaxed ${
-                isDark ? "text-slate-200" : "text-slate-700"
-              }`}
+              className="text-sm sm:text-base font-sans font-light leading-relaxed text-slate-700"
             >
               {p}
             </p>
@@ -240,8 +218,8 @@ export function TwoColumnNarrativeLayout({
               <Link
                 to={actionLink.to}
                 className={`inline-flex items-center gap-1.5 text-xs font-bold font-mono tracking-wider transition ${
-                  isDark
-                    ? "text-amber-300 hover:text-amber-200 hover:underline"
+                  isAqua
+                    ? "text-[#00A896] hover:text-[#0B4F42] hover:underline"
                     : "text-amber-800 hover:text-amber-900 hover:underline"
                 }`}
               >
@@ -283,27 +261,23 @@ export function DocumentRegisterLayout({
   documents,
   theme = "parchment",
 }: DocumentRegisterLayoutProps) {
-  const isDark = theme === "forest";
+  const isAqua = theme === "forest";
 
   return (
     <section
       className={`py-14 sm:py-18 border-b ${
-        isDark
-          ? "bg-[#061713] text-white border-white/10"
+        isAqua
+          ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-white text-slate-900 border-slate-200/80"
       }`}
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="space-y-1">
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#0B4F42]">
             {title}
           </h2>
           {subtitle && (
-            <p
-              className={`text-xs sm:text-sm font-sans font-light ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
+            <p className="text-xs sm:text-sm font-sans font-light text-slate-600">
               {subtitle}
             </p>
           )}
@@ -311,36 +285,28 @@ export function DocumentRegisterLayout({
 
         <div
           className={`border-t ${
-            isDark ? "border-white/15" : "border-slate-300"
+            isAqua ? "border-[#00A896]/20" : "border-slate-300"
           }`}
         >
           {documents.map((doc) => (
             <div
               key={doc.id}
               className={`py-4 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                isDark ? "border-white/10" : "border-slate-200"
+                isAqua ? "border-[#00A896]/15" : "border-slate-200"
               }`}
             >
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-serif text-base font-bold">
+                  <span className="font-serif text-base font-bold text-slate-900">
                     {doc.title}
                   </span>
                   <span
-                    className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                      isDark
-                        ? "bg-white/10 text-emerald-300"
-                        : "bg-emerald-50 text-emerald-900 border border-emerald-200"
-                    }`}
+                    className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-[#0B4F42] border border-[#00A896]/30"
                   >
                     {doc.category}
                   </span>
                 </div>
-                <div
-                  className={`text-xs font-mono flex items-center gap-3 ${
-                    isDark ? "text-slate-400" : "text-slate-500"
-                  }`}
-                >
+                <div className="text-xs font-mono flex items-center gap-3 text-slate-500">
                   <span>Ref: {doc.referenceNo}</span>
                   <span>•</span>
                   <span>{doc.date}</span>
@@ -359,8 +325,8 @@ export function DocumentRegisterLayout({
                     }
                   }}
                   className={`inline-flex items-center gap-1.5 text-xs font-bold font-mono tracking-wider px-3.5 py-1.5 rounded border transition shrink-0 ${
-                    isDark
-                      ? "border-amber-400/40 text-amber-300 hover:bg-amber-400 hover:text-slate-950"
+                    isAqua
+                      ? "border-[#00A896]/40 text-[#0B4F42] bg-white hover:bg-[#0B4F42] hover:text-white"
                       : "border-slate-300 text-slate-800 hover:border-slate-900 hover:bg-slate-900 hover:text-white"
                   }`}
                 >
@@ -399,27 +365,23 @@ export function GazetteTimelineLayout({
   entries,
   theme = "parchment",
 }: GazetteTimelineLayoutProps) {
-  const isDark = theme === "forest";
+  const isAqua = theme === "forest";
 
   return (
     <section
       className={`py-16 sm:py-20 border-b ${
-        isDark
-          ? "bg-[#061713] text-white border-white/10"
+        isAqua
+          ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-[#FAF8F3] text-slate-900 border-slate-200/80"
       }`}
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="space-y-1">
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#0B4F42]">
             {title}
           </h2>
           {subtitle && (
-            <p
-              className={`text-xs sm:text-sm font-sans font-light ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
+            <p className="text-xs sm:text-sm font-sans font-light text-slate-600">
               {subtitle}
             </p>
           )}
@@ -428,34 +390,26 @@ export function GazetteTimelineLayout({
         {/* Gazette Chronology List with Clean Vertical Hairline */}
         <div
           className={`border-l-2 pl-6 sm:pl-8 space-y-8 ${
-            isDark ? "border-amber-400/30" : "border-amber-800/40"
+            isAqua ? "border-[#00A896]/40" : "border-amber-800/40"
           }`}
         >
           {entries.map((entry, idx) => (
             <div key={idx} className="space-y-1 relative">
               <div
                 className={`text-xs font-mono font-bold uppercase tracking-wider ${
-                  isDark ? "text-amber-300" : "text-amber-800"
+                  isAqua ? "text-[#00A896]" : "text-amber-800"
                 }`}
               >
                 {entry.date}
               </div>
-              <h3 className="font-serif text-base sm:text-lg font-bold">
+              <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900">
                 {entry.title}
               </h3>
-              <p
-                className={`text-xs sm:text-sm font-sans font-light leading-relaxed ${
-                  isDark ? "text-slate-300" : "text-slate-600"
-                }`}
-              >
+              <p className="text-xs sm:text-sm font-sans font-light leading-relaxed text-slate-700">
                 {entry.summary}
               </p>
               {entry.statutoryBasis && (
-                <div
-                  className={`text-[11px] font-mono ${
-                    isDark ? "text-slate-400" : "text-slate-500"
-                  }`}
-                >
+                <div className="text-[11px] font-mono text-slate-500">
                   Authority: {entry.statutoryBasis}
                 </div>
               )}
@@ -487,23 +441,19 @@ export function PhotographicPlateLayout({
   credit,
   theme = "parchment",
 }: PhotographicPlateLayoutProps) {
-  const isDark = theme === "forest";
+  const isAqua = theme === "forest";
 
   return (
     <section
       className={`py-14 sm:py-18 border-b ${
-        isDark
-          ? "bg-[#061713] text-white border-white/10"
+        isAqua
+          ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-white text-slate-900 border-slate-200/80"
       }`}
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-4">
         {/* Unadorned Framed Plate */}
-        <div
-          className={`border overflow-hidden bg-slate-100 ${
-            isDark ? "border-white/15" : "border-slate-300"
-          }`}
-        >
+        <div className="border border-slate-300 overflow-hidden bg-slate-100">
           <img
             src={imageSrc}
             alt={imageAlt}
@@ -515,22 +465,14 @@ export function PhotographicPlateLayout({
         {/* Scholarly Caption & Credit */}
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pt-1 border-t border-slate-200/60">
           <div className="space-y-0.5 max-w-2xl">
-            <span className="font-serif text-sm font-bold block">
+            <span className="font-serif text-sm font-bold block text-[#0B4F42]">
               {captionTitle}
             </span>
-            <p
-              className={`text-xs font-sans font-light leading-relaxed ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
+            <p className="text-xs font-sans font-light leading-relaxed text-slate-600">
               {captionText}
             </p>
           </div>
-          <div
-            className={`text-[11px] font-mono tracking-wider shrink-0 ${
-              isDark ? "text-slate-400" : "text-slate-500"
-            }`}
-          >
+          <div className="text-[11px] font-mono tracking-wider shrink-0 text-slate-500">
             Credit: {credit}
           </div>
         </div>
