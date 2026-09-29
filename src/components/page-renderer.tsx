@@ -155,131 +155,119 @@ function renderSection(sec: PageBlockSection) {
   }
 }
 
-// Dedicated Sovereign Glass Hero Corpus Card for PageRenderer with Frosted Translucency
-export function RendererHeroCorpusCard() {
+// Clean, Streamlined Sovereign Corpus Card (Transparent Frosted Glass)
+export function RendererHeroCorpusCard({ showSatellite = false }: { showSatellite?: boolean }) {
+  const [corpusValue, setCorpusValue] = useState(3248500000);
+
+  useEffect(() => {
+    fetch("/api/public?action=settings")
+      .then((res) => res.json())
+      .then((data) => {
+        const val = data.settings?.corpus_target_amount;
+        if (val) setCorpusValue(Number(val));
+      })
+      .catch(() => {});
+  }, []);
+
   const corpusCounter = useCountUp({
-    end: 3248500000,
-    prefix: "Nu. ",
+    end: corpusValue,
     duration: 2200,
+    prefix: "Nu. ",
   });
 
   return (
-    <div className="relative space-y-3">
-      {/* Main Glassmorphic Corpus Card with Frosted Translucent Chassis */}
+    <div className="relative space-y-2.5">
+      {/* Main Glassmorphic Corpus Card with Ultra-Translucent Frosted Chassis */}
       <div
         ref={corpusCounter.ref}
-        className="relative rounded-3xl bg-white/80 sm:bg-white/70 border border-[#00A896]/25 ring-1 ring-white/60 p-5 sm:p-7 shadow-[0_25px_60px_-12px_rgba(11,79,66,0.12)] backdrop-blur-2xl space-y-5 overflow-hidden text-slate-900 text-left transition-all hover:border-[#00A896]/40"
+        className="relative rounded-2xl sm:rounded-3xl bg-white/20 hover:bg-white/30 border border-white/45 ring-1 ring-white/30 p-3.5 sm:p-4.5 lg:p-5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.15),inset_0_1px_2px_rgba(255,255,255,0.7)] backdrop-blur-2xl space-y-3 overflow-hidden text-slate-900 text-left transition-all"
       >
         {/* Top Status Header */}
-        <div className="flex items-center justify-between border-b border-[#00A896]/15 pb-3.5">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between border-b border-black/10 sm:border-white/35 pb-2.5">
+          <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A896] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00A896]" />
             </span>
-            <span className="text-[10px] font-mono tracking-widest text-[#00A896] uppercase font-bold">
+            <span className="text-[10px] font-mono tracking-widest text-[#00A896] uppercase font-black drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
               Sovereign Health Corpus
             </span>
           </div>
-          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EAF6F5]/80 text-[#0B4F42] border border-[#00A896]/30">
-            Nu. 1:1 RGOB Matched
+          <span className="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/40 backdrop-blur-md text-[#0B4F42] border border-white/40 shadow-2xs">
+            Royal Charter Mandate
           </span>
         </div>
 
         {/* Main Numeral */}
-        <div className="space-y-1">
-          <span className="text-[11px] uppercase tracking-wider text-[#0B4F42]/80 font-bold font-sans block">
+        <div className="space-y-0.5">
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#0B4F42] font-extrabold font-sans block drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">
             Perpetual Health Endowment
           </span>
-          <div className="font-serif text-2xl xs:text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-[#0B4F42] tracking-tight leading-tight break-words">
+          <div className="font-serif text-2xl sm:text-3xl lg:text-[2.2rem] font-black text-[#0B4F42] tracking-tight leading-tight break-words drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]">
             {corpusCounter.formatted}
           </div>
-          <p className="text-xs text-[#0B4F42]/80 font-sans leading-relaxed pt-0.5 font-light">
-            Invested sovereign capital yielding permanent annual returns to fund Bhutan's primary healthcare commodities.
+          <p className="text-[11px] sm:text-xs text-slate-900 font-sans leading-relaxed pt-0.5 font-medium drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">
+            Financing universal vaccines & 120+ essential medicines in perpetuity.
           </p>
         </div>
 
-        {/* 3 Editorial Supply Rows with Frosted Glass */}
-        <div className="space-y-2 pt-0.5">
-          <div className="flex items-center justify-between bg-[#EAF6F5]/65 hover:bg-[#EAF6F5]/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-white/90 text-[#00A896] grid place-items-center shrink-0 border border-[#00A896]/30 shadow-xs">
-                <Syringe className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-[#0B4F42] tracking-wide">Universal Routine Vaccines</div>
-                <div className="text-[11px] text-[#0B4F42]/70 font-medium">100% Childhood Coverage (14 Antigens)</div>
-              </div>
+        {/* Clean 3-Item Micro Grid (Translucent Frosted Pills) */}
+        <div className="grid grid-cols-3 gap-1.5 pt-0.5">
+          <div className="bg-white/30 hover:bg-white/45 backdrop-blur-md px-1.5 sm:px-2 py-2 rounded-xl border border-white/45 text-center shadow-2xs transition-all">
+            <div className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] font-bold text-[#0B4F42]">
+              <Syringe className="h-3 w-3 text-[#00A896] shrink-0" />
+              <span>Vaccines</span>
             </div>
-            <span className="font-serif text-xs font-bold text-[#00A896] font-mono shrink-0 ml-2">Nu. 68.5M</span>
+            <div className="font-serif text-[10px] sm:text-[11px] font-black text-[#0B4F42] font-mono pt-0.5 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Nu. 68.5M</div>
           </div>
 
-          <div className="flex items-center justify-between bg-[#EAF6F5]/65 hover:bg-[#EAF6F5]/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-white/90 text-[#00A896] grid place-items-center shrink-0 border border-[#00A896]/30 shadow-xs">
-                <Pill className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-[#0B4F42] tracking-wide">120+ Essential Medicines</div>
-                <div className="text-[11px] text-[#0B4F42]/70 font-medium">Zero Stockout Buffer across 205 Gewogs</div>
-              </div>
+          <div className="bg-white/30 hover:bg-white/45 backdrop-blur-md px-1.5 sm:px-2 py-2 rounded-xl border border-white/45 text-center shadow-2xs transition-all">
+            <div className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] font-bold text-[#0B4F42]">
+              <Pill className="h-3 w-3 text-[#00A896] shrink-0" />
+              <span>Medicines</span>
             </div>
-            <span className="font-serif text-xs font-bold text-[#00A896] font-mono shrink-0 ml-2">Nu. 145.0M</span>
+            <div className="font-serif text-[10px] sm:text-[11px] font-black text-[#0B4F42] font-mono pt-0.5 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Nu. 145M</div>
           </div>
 
-          <div className="flex items-center justify-between bg-[#EAF6F5]/65 hover:bg-[#EAF6F5]/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#00A896]/20 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-xl bg-white/90 text-[#00A896] grid place-items-center shrink-0 border border-[#00A896]/30 shadow-xs">
-                <ThermometerSnowflake className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-[#0B4F42] tracking-wide">Alpine Cold Chain Logistics</div>
-                <div className="text-[11px] text-[#0B4F42]/70 font-medium">High-Altitude Solar Refrigeration</div>
-              </div>
+          <div className="bg-white/30 hover:bg-white/45 backdrop-blur-md px-1.5 sm:px-2 py-2 rounded-xl border border-white/45 text-center shadow-2xs transition-all">
+            <div className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] font-bold text-[#0B4F42]">
+              <ThermometerSnowflake className="h-3 w-3 text-[#00A896] shrink-0" />
+              <span>Cold Chain</span>
             </div>
-            <span className="font-serif text-xs font-bold text-[#00A896] font-mono shrink-0 ml-2">Nu. 24.2M</span>
+            <div className="font-serif text-[10px] sm:text-[11px] font-black text-[#0B4F42] font-mono pt-0.5 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">Nu. 24.2M</div>
           </div>
-        </div>
-
-        {/* Donate Link */}
-        <div className="pt-1">
-          <Link
-            to="/get-involved"
-            className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_22px_rgba(245,158,11,0.5)] transition-all"
-          >
-            <HeartHandshake className="h-4 w-4 text-slate-950" />
-            <span>Donate to Healthcare Endowment →</span>
-          </Link>
         </div>
 
         {/* Trust Seal Badges */}
-        <div className="flex items-center justify-between pt-2 border-t border-[#00A896]/15 text-[10px] text-[#0B4F42]/80 font-sans">
-          <div className="flex items-center gap-1.5 text-[#00A896] font-medium">
+        <div className="flex items-center justify-between pt-2 border-t border-black/10 sm:border-white/35 text-[10px] text-[#0B4F42] font-bold font-sans">
+          <div className="flex items-center gap-1.5 text-[#00A896] font-bold drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
             <CheckCircle2 className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
             <span>100% Ring-Fenced</span>
           </div>
-          <div className="flex items-center gap-1.5 text-amber-800 font-medium">
+          <div className="flex items-center gap-1.5 text-amber-900 font-bold drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
             <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-            <span>RAA Clean Audit Certified</span>
+            <span>RAA Clean Audit</span>
           </div>
         </div>
       </div>
 
-      {/* Floating Operational Status Satellite Micro-Card */}
-      <div className="flex items-center justify-between bg-white/80 backdrop-blur-xl border border-[#00A896]/20 rounded-2xl p-3.5 shadow-xs text-xs text-left">
-        <div className="flex items-center gap-2.5">
-          <div className="h-7 w-7 rounded-lg bg-[#EAF6F5] border border-[#00A896]/30 text-[#00A896] grid place-items-center shrink-0">
-            <MapPin className="h-3.5 w-3.5" />
+      {/* Optional satellite micro-card */}
+      {showSatellite && (
+        <div className="flex items-center justify-between bg-white/80 backdrop-blur-xl border border-[#00A896]/20 rounded-2xl p-2.5 shadow-xs text-xs text-left">
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded-lg bg-[#EAF6F5] border border-[#00A896]/30 text-[#00A896] grid place-items-center shrink-0">
+              <MapPin className="h-3 w-3" />
+            </div>
+            <div>
+              <div className="text-[10px] font-bold text-[#0B4F42]">20/20 Dzongkhags Covered</div>
+              <div className="text-[9px] text-[#0B4F42]/70">Zero Stockouts across 205 Gewogs</div>
+            </div>
           </div>
-          <div>
-            <div className="text-[11px] font-bold text-[#0B4F42]">20/20 Dzongkhags Buffer Active</div>
-            <div className="text-[10px] text-[#0B4F42]/70 font-medium">Zero Stockouts across 205 remote Gewog clinics</div>
-          </div>
+          <span className="text-[9px] font-mono font-bold text-[#00A896] px-2 py-0.5 rounded-lg bg-[#EAF6F5] border border-[#00A896]/30">
+            100% Funded
+          </span>
         </div>
-        <span className="text-[10px] font-mono font-bold text-[#00A896] px-2.5 py-1 rounded-lg bg-[#EAF6F5] border border-[#00A896]/30">
-          100% Funded
-        </span>
-      </div>
+      )}
     </div>
   );
 }
@@ -409,24 +397,123 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
           style={{ opacity: Math.min(scrollProgress * 1.2, 1) }}
         />
 
-        {/* Floating Sovereign Healthcare Action (2 Horizontal Frosted Bars) */}
+        {/* Desktop Left Side: Clickable Story Rectangle Card + Mission Button */}
         <div
-          className="absolute inset-x-0 mx-auto bottom-3 sm:bottom-5 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:inset-x-auto lg:mx-0 lg:right-10 xl:right-16 z-20 w-[calc(100%-1.5rem)] max-w-[370px] sm:max-w-[440px] lg:max-w-[500px] pointer-events-auto transition-all duration-300 ease-out"
+          className="hidden lg:flex flex-col absolute z-20 lg:left-8 xl:left-14 top-[54%] w-[360px] lg:w-[380px] xl:w-[400px] pointer-events-auto transition-all duration-300 ease-out space-y-2.5"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 150),
+            pointerEvents: scrollY > 90 ? "none" : "auto",
+            transform: `translateY(calc(-50% - ${scrollY * 0.2}px))`,
+          }}
+        >
+          <Link
+            to="/our-story"
+            className="block rounded-2xl sm:rounded-3xl bg-white/20 hover:bg-white/30 border border-white/45 ring-1 ring-white/30 p-3.5 sm:p-4.5 lg:p-5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.15),inset_0_1px_2px_rgba(255,255,255,0.7)] backdrop-blur-2xl space-y-3 overflow-hidden text-slate-900 text-left transition-all hover:scale-[1.01] group cursor-pointer"
+          >
+            {/* Top Status Header */}
+            <div className="flex items-center justify-between border-b border-black/10 sm:border-white/35 pb-2.5">
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
+                <span className="text-[10px] font-mono tracking-widest text-[#00A896] uppercase font-black drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                  Sacred Trust Endowment
+                </span>
+              </div>
+              <span className="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/40 backdrop-blur-md text-[#0B4F42] border border-white/40 shadow-2xs">
+                100% Tax Exempt
+              </span>
+            </div>
+
+            {/* Photo + Story text in horizontal layout */}
+            <div className="flex items-start gap-3.5 pt-0.5">
+              <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-xs border border-white/40 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src={newsVaccine}
+                  alt="Bhutan Healthcare Immunization"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              </div>
+              <div className="flex-1 min-w-0 space-y-1">
+                <h3 className="font-serif text-sm lg:text-base font-black text-[#0B4F42] leading-snug drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] group-hover:text-[#00A896] transition-colors">
+                  Did you know you can donate here?
+                </h3>
+                <p className="text-[11px] text-slate-900 line-clamp-3 leading-relaxed font-medium drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">
+                  Your direct contribution strengthens Bhutan's primary healthcare lifeline — safeguarding universal childhood vaccines & 120+ essential medicines across all 20 Dzongkhags.
+                </p>
+              </div>
+            </div>
+
+            {/* Trust Seal Footer */}
+            <div className="flex items-center justify-between pt-2 border-t border-black/10 sm:border-white/35 text-[10px] text-[#0B4F42] font-bold font-sans">
+              <div className="flex items-center gap-1.5 text-[#00A896] font-bold drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
+                <span>Universal Health Guarantee</span>
+              </div>
+              <div className="flex items-center gap-1 text-amber-900 font-black group-hover:translate-x-0.5 transition-transform drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                <span>Read Story →</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Action Bar on Left Side */}
+          <div className="rounded-2xl bg-white/20 hover:bg-white/30 backdrop-blur-2xl border border-white/45 ring-1 ring-white/30 p-2 sm:p-2.5 shadow-[0_12px_35px_-10px_rgba(0,0,0,0.15),inset_0_1px_1px_rgba(255,255,255,0.6)] flex flex-col items-center justify-center text-center transition-all">
+            <Link
+              to="/our-story"
+              className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-white/35 hover:bg-white/50 text-[#0B4F42] border border-white/45 font-bold text-xs uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98] text-center shadow-2xs backdrop-blur-md"
+            >
+              <span>Explore Sovereign Mission</span>
+              <ArrowRight className="h-3.5 w-3.5 text-[#00A896]" />
+            </Link>
+            <div className="flex items-center justify-center gap-1.5 text-[9px] text-[#0B4F42] font-black font-sans pt-1 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">
+              <Sparkles className="h-3 w-3 text-[#00A896] shrink-0" />
+              <span>Conceived under Royal Vision (1998–2000)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Right Side: Clean Translucent Corpus Card + Donate Button Directly Below */}
+        <div
+          className="hidden lg:flex flex-col absolute z-20 lg:right-8 xl:right-14 top-[54%] w-[360px] lg:w-[380px] xl:w-[400px] pointer-events-auto transition-all duration-300 ease-out space-y-2.5"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 150),
+            pointerEvents: scrollY > 90 ? "none" : "auto",
+            transform: `translateY(calc(-50% - ${scrollY * 0.2}px))`,
+          }}
+        >
+          {/* Clean Minimalist Corpus Card */}
+          <RendererHeroCorpusCard showSatellite={false} />
+
+          {/* Dedicated Glowing Amber Donate Button Bar Directly Below Right Card */}
+          <div className="rounded-2xl bg-white/20 hover:bg-white/30 backdrop-blur-2xl border border-white/45 ring-1 ring-white/30 p-2 sm:p-2.5 shadow-[0_12px_35px_-10px_rgba(0,0,0,0.15),inset_0_1px_1px_rgba(255,255,255,0.6)] flex flex-col items-center justify-center text-center transition-all">
+            <Link
+              to="/get-involved"
+              className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-[0_4px_16px_rgba(245,158,11,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98] text-center"
+            >
+              <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
+              <span>Donate to Healthcare Fund →</span>
+            </Link>
+            <div className="flex items-center justify-center gap-1.5 text-[9px] text-[#0B4F42] font-black font-sans pt-1 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">
+              <CheckCircle2 className="h-3 w-3 text-[#00A896] shrink-0" />
+              <span>Royal Charter Mandate • RAA Clean Audit</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile View (< lg): Clean Clickable Story Card + Centered Donate Button at Bottom */}
+        <div
+          className="lg:hidden absolute inset-x-0 mx-auto bottom-3 sm:bottom-5 z-20 w-[calc(100%-1.5rem)] max-w-[370px] sm:max-w-[440px] pointer-events-auto transition-all duration-300 ease-out space-y-2"
           style={{
             opacity: Math.max(0, 1 - scrollY / 130),
             pointerEvents: scrollY > 70 ? "none" : "auto",
           }}
         >
-          <div
-            className="space-y-2 sm:space-y-2.5 lg:space-y-3 transition-transform duration-300 ease-out"
-            style={{
-              transform: `translateY(${Math.max(-25, -scrollY * 0.18)}px)`,
-            }}
+          {/* Clickable Story Card on Mobile */}
+          <Link
+            to="/our-story"
+            className="block rounded-2xl bg-white/25 hover:bg-white/35 backdrop-blur-2xl border border-white/45 ring-1 ring-white/30 p-2.5 sm:p-3.5 shadow-[0_15px_45px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.6)] transition-all text-left"
           >
-            {/* Bar 1: Horizontal Rectangle with Image First on Left, and Contents on Right */}
-            <div className="rounded-2xl sm:rounded-3xl bg-white/85 sm:bg-white/75 backdrop-blur-2xl border border-white/60 p-2.5 sm:p-3.5 lg:p-5 shadow-[0_15px_45px_-10px_rgba(11,79,66,0.14)] flex flex-row items-center gap-2.5 sm:gap-3.5 lg:gap-4 transition-all hover:bg-white/95 hover:shadow-2xl group">
-              {/* The Image (First) */}
-              <div className="relative shrink-0 w-14 h-14 sm:w-18 sm:h-18 lg:w-22 lg:h-22 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm border border-[#00A896]/20 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
+            <div className="flex flex-row items-center gap-2.5 sm:gap-3.5">
+              <div className="relative shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden shadow-xs border border-white/40 bg-slate-100">
                 <img
                   src={newsVaccine}
                   alt="Bhutan Healthcare Immunization"
@@ -435,200 +522,159 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
               </div>
 
-              {/* The Contents (Next) */}
-              <div className="flex-1 min-w-0 space-y-1 text-left">
+              <div className="flex-1 min-w-0 space-y-0.5 text-left">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#EAF6F5] text-[#0B4F42] text-[9px] sm:text-[10px] lg:text-[11px] font-bold border border-[#00A896]/30 shadow-xs">
-                    <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#00A896]" />
-                    <span>Sacred Trust Endowment</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/40 text-[#0B4F42] text-[9px] font-bold border border-white/40 backdrop-blur-sm">
+                    <Sparkles className="h-2.5 w-2.5 text-[#00A896]" />
+                    <span>Sacred Trust</span>
                   </span>
-                  <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-mono font-bold text-[#00A896] bg-emerald-50 px-1.5 py-0.5 rounded-full border border-[#00A896]/20">
+                  <span className="text-[9px] font-mono font-bold text-[#0B4F42] bg-white/40 px-1.5 py-0.5 rounded-full border border-white/40 backdrop-blur-sm">
                     100% Tax Exempt
                   </span>
                 </div>
-                <h3 className="font-serif text-xs sm:text-sm lg:text-base font-bold text-[#0B4F42] leading-tight sm:leading-snug">
+                <h3 className="font-serif text-xs sm:text-sm font-black text-[#0B4F42] leading-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.7)]">
                   Did you know you can donate here?
                 </h3>
-                <p className="text-[10px] sm:text-[11px] lg:text-xs text-slate-600 line-clamp-2 leading-relaxed font-light">
-                  Your direct contribution strengthens Bhutan's primary healthcare lifeline — safeguarding universal childhood vaccines and 120+ essential medicines in perpetuity.
+                <p className="text-[10px] text-slate-900 line-clamp-2 leading-relaxed font-medium drop-shadow-[0_1px_0_rgba(255,255,255,0.5)]">
+                  Your direct contribution safeguards childhood vaccines & 120+ essential medicines in perpetuity.
                 </p>
+                <div className="pt-0.5 flex items-center gap-1 text-[10px] font-bold text-[#00A896]">
+                  <span>Explore Mission</span>
+                  <ArrowRight className="h-2.5 w-2.5" />
+                </div>
               </div>
             </div>
+          </Link>
 
-            {/* Bar 2: Horizontal Rectangle with Button in the Middle */}
-            <div className="rounded-xl sm:rounded-2xl lg:rounded-3xl bg-white/85 sm:bg-white/75 backdrop-blur-2xl border border-white/60 p-2 sm:p-3 lg:p-4 shadow-[0_12px_35px_-10px_rgba(11,79,66,0.12)] flex flex-col items-center justify-center text-center transition-all hover:bg-white/95 hover:shadow-2xl">
-              <Link
-                to="/get-involved"
-                className="w-full sm:w-auto min-w-[220px] sm:min-w-[260px] inline-flex items-center justify-center gap-2 py-2 sm:py-2.5 lg:py-3 px-4 sm:px-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-[11px] sm:text-xs lg:text-sm uppercase tracking-wider shadow-[0_4px_16px_rgba(245,158,11,0.35)] transition-all hover:scale-[1.02] active:scale-[0.98] text-center"
-              >
-                <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-slate-950 text-slate-950 shrink-0" />
-                <span>Donate to Healthcare Fund →</span>
-              </Link>
-              <div className="flex items-center justify-center gap-1.5 text-[9px] sm:text-[10px] text-slate-500 font-sans pt-1">
-                <CheckCircle2 className="h-3 w-3 text-[#00A896] shrink-0" />
-                <span>Royal Charter Mandate • RAA Clean Audit</span>
-              </div>
+          {/* Centered Donate Button Bar on Mobile */}
+          <div className="rounded-xl bg-white/25 backdrop-blur-2xl border border-white/45 ring-1 ring-white/30 p-2 shadow-[0_12px_35px_-10px_rgba(0,0,0,0.18),inset_0_1px_1px_rgba(255,255,255,0.5)] flex flex-col items-center justify-center text-center">
+            <Link
+              to="/get-involved"
+              className="w-full inline-flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-[0_4px_16px_rgba(245,158,11,0.35)] transition-all text-center"
+            >
+              <Heart className="h-3.5 w-3.5 fill-slate-950 text-slate-950 shrink-0" />
+              <span>Donate to Healthcare Fund →</span>
+            </Link>
+            <div className="flex items-center justify-center gap-1.5 text-[9px] text-[#0B4F42] font-black font-sans pt-1 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">
+              <CheckCircle2 className="h-3 w-3 text-[#00A896] shrink-0" />
+              <span>Royal Charter Mandate • RAA Clean Audit</span>
             </div>
-          </div>
-        </div>
-
-        {/* Floating Royal Endowment Prompt on Initial Load (Fades out when user scrolls, shown on desktop where space allows) */}
-        <div
-          className="hidden lg:flex absolute bottom-8 inset-x-0 justify-center z-20 pointer-events-none transition-all duration-300 ease-out"
-          style={{
-            opacity: promptOpacity,
-            transform: `translateY(${scrollY > 30 ? "16px" : "0px"})`,
-          }}
-        >
-          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/85 backdrop-blur-xl border border-[#00A896]/30 text-[#0B4F42] text-xs sm:text-sm font-semibold shadow-[0_8px_30px_rgba(0,0,0,0.08)] animate-bounce">
-            <Sparkles className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
-            <span>Scroll to explore sovereign endowment</span>
-            <ChevronDown className="h-4 w-4 text-[#00A896] shrink-0" />
           </div>
         </div>
       </div>
 
-      {/* Dynamic Content Stage: Glides UP gracefully on scroll with Frosted Translucent Glassmorphism */}
+      {/* Dynamic Content Stage: Glides UP gracefully on scroll with Centered Frosted Editorial Layout */}
       <div className="relative z-10 px-3 sm:px-6 lg:px-8 pb-16 sm:pb-24 pointer-events-auto">
-        <div className="mx-auto max-w-7xl w-full">
+        <div className="mx-auto max-w-5xl w-full">
           <div
-            className="rounded-3xl sm:rounded-[2.5rem] bg-white/75 sm:bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_25px_70px_-15px_rgba(11,79,66,0.12)] p-6 sm:p-10 lg:p-14 space-y-8 transition-all duration-500 ease-out"
+            className="rounded-3xl sm:rounded-[2.5rem] bg-white/80 sm:bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_25px_70px_-15px_rgba(11,79,66,0.12)] p-6 sm:p-10 lg:p-14 space-y-7 transition-all duration-500 ease-out text-center"
             style={{
               transform: `translateY(${Math.max(0, (1 - scrollProgress) * 45)}px)`,
               opacity: Math.min(1, 0.35 + scrollProgress * 0.65),
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              {/* Left Column: Monumental Editorial Typography */}
-              <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
-                {/* Royal Charter & Live Status Badge */}
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAF6F5]/80 backdrop-blur-md border border-[#00A896]/30 text-[#0B4F42] text-xs font-semibold shadow-xs">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A896] opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00A896]" />
-                    </span>
-                    <span>{currentSection.badge || "Royal Charter Mandate • 100% Guaranteed"}</span>
-                  </div>
-
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50/90 backdrop-blur-md text-amber-900 border border-amber-300 text-xs font-bold font-mono shadow-xs">
-                    <Sparkles className="h-3 w-3 text-amber-600" />
-                    <span>Nu. 1:1 RGOB Sovereign Match</span>
-                  </div>
-
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F7CAD0]/50 backdrop-blur-md text-[#8B263E] border border-[#EE6C8A]/30 text-xs font-semibold shadow-xs">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#EE6C8A]" />
-                    <span>Universal Vaccines Ring-Fenced</span>
-                  </div>
-                </div>
-
-                {/* Dzongkha Seal Header if provided */}
-                {currentSection.dzongkhaText && (
-                  <div className="font-serif text-lg sm:text-xl font-bold tracking-wide flex items-center gap-2 text-[#00A896]">
-                    <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
-                    <span>{currentSection.dzongkhaText}</span>
-                  </div>
-                )}
-
-                {/* Main Headline */}
-                <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#0B4F42] leading-[1.06]">
-                  {titleParts.length > 1 ? (
-                    <>
-                      <span>{titleParts[0]}</span>
-                      <span className="text-[#00A896]">{titleParts[1]}</span>
-                      <span>{titleParts[2]}</span>
-                    </>
-                  ) : (
-                    currentSection.title || "Healthy People. Stronger Bhutan."
-                  )}
-                </h1>
-
-                {/* Subtitle */}
-                <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-sans max-w-2xl font-light">
-                  {currentSection.subtitle ||
-                    "Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance."}
-                </p>
-
-                {/* Feature Highlights Pills with Frosted Translucency */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs">
-                  <div className="flex items-center gap-2.5 bg-white/80 backdrop-blur-md p-3 rounded-2xl border border-white/60 shadow-xs hover:border-[#00A896]/40 transition-all">
-                    <CheckCircle2 className="h-4 w-4 text-[#00A896] shrink-0" />
-                    <span className="font-semibold text-slate-900">Zero Stockout Guarantee</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 bg-white/80 backdrop-blur-md p-3 rounded-2xl border border-white/60 shadow-xs hover:border-[#00A896]/40 transition-all">
-                    <CheckCircle2 className="h-4 w-4 text-[#00A896] shrink-0" />
-                    <span className="font-semibold text-slate-900">205 Remote Gewogs</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 bg-white/80 backdrop-blur-md p-3 rounded-2xl border border-white/60 col-span-2 sm:col-span-1 shadow-xs hover:border-amber-400/40 transition-all">
-                    <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
-                    <span className="font-semibold text-slate-900">100% Tax Exempt (DRC)</span>
-                  </div>
-                </div>
-
-                {/* Transparent Royal Homage Badge Bar */}
-                <div className="relative overflow-hidden rounded-2xl border border-[#00A896]/25 bg-[#EAF6F5]/70 backdrop-blur-xl hover:bg-[#EAF6F5]/85 p-4 shadow-xs transition-all">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#0B4F42] font-sans">
-                        <Sparkles className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
-                        <span>Conceived & Enacted under Royal Vision (1998–2000)</span>
-                      </div>
-                      <p className="font-serif text-sm sm:text-base font-bold text-[#0B4F42] tracking-tight leading-snug">
-                        His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
-                      </p>
-                      <p className="text-xs text-slate-600 font-sans leading-relaxed line-clamp-1 font-light">
-                        Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and vaccines.
-                      </p>
-                    </div>
-
-                    <Link
-                      to="/our-story"
-                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 hover:bg-[#0B4F42] text-[#0B4F42] hover:text-white border border-[#00A896]/30 text-xs font-bold transition-all shadow-xs"
-                    >
-                      <span>Read History</span>
-                      <ArrowRight className="h-3 w-3" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Modern Action Buttons */}
-                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full">
-                  <Link
-                    to={currentSection.primaryCtaUrl || "/get-involved"}
-                    className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black px-8 py-4 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] transition-all text-xs sm:text-sm uppercase tracking-wider text-center"
-                  >
-                    <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
-                    <span>{currentSection.primaryCtaText || "Contribute (1:1 Matched)"}</span>
-                    <ArrowRight className="h-4 w-4 stroke-[2.5] shrink-0" />
-                  </Link>
-
-                  <Link
-                    to={currentSection.secondaryCtaUrl || "/our-work"}
-                    className="inline-flex items-center justify-center gap-2 font-bold px-7 py-4 rounded-full bg-white/90 hover:bg-[#EAF6F5] border border-[#00A896]/30 text-[#0B4F42] shadow-xs transition-all text-xs sm:text-sm tracking-wide text-center"
-                  >
-                    <span>{currentSection.secondaryCtaText || "Explore Commodities"}</span>
-                  </Link>
-                </div>
-
-                {/* Institutional Endorsement Bar */}
-                <div className="pt-3.5 flex flex-wrap items-center gap-3 text-xs border-t border-slate-200/80">
-                  <span className="text-[11px] uppercase tracking-wider text-[#0B4F42] font-bold font-mono">
-                    Sovereign Partners:
-                  </span>
-                  <span className="text-slate-800 font-semibold">World Health Organization (WHO)</span>
-                  <span className="text-slate-400">•</span>
-                  <span className="text-slate-800 font-semibold">UNICEF</span>
-                  <span className="text-slate-400">•</span>
-                  <span className="text-slate-800 font-semibold">Gavi, The Vaccine Alliance</span>
-                  <span className="text-slate-400">•</span>
-                  <span className="text-slate-800 font-semibold">World Bank</span>
-                </div>
+            {/* Royal Charter & Live Status Badges (Centered) */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAF6F5] border border-[#00A896]/30 text-[#0B4F42] text-xs font-semibold shadow-xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A896] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00A896]" />
+                </span>
+                <span>{currentSection.badge || "Royal Charter Mandate • 100% Guaranteed"}</span>
               </div>
 
-              {/* Right Column: Sovereign Corpus Endowment Card */}
-              <div className="lg:col-span-5">
-                <RendererHeroCorpusCard />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold font-mono shadow-xs">
+                <Sparkles className="h-3 w-3 text-amber-600" />
+                <span>Royal Charter Sovereign Guarantee</span>
               </div>
+
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F7CAD0]/50 text-[#8B263E] border border-[#EE6C8A]/30 text-xs font-semibold shadow-xs">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#EE6C8A]" />
+                <span>Universal Vaccines Ring-Fenced</span>
+              </div>
+            </div>
+
+            {/* Dzongkha Seal Header (Centered) */}
+            {currentSection.dzongkhaText && (
+              <div className="font-serif text-lg sm:text-xl font-bold tracking-wide flex items-center justify-center gap-2 text-[#00A896]">
+                <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
+                <span>{currentSection.dzongkhaText}</span>
+              </div>
+            )}
+
+            {/* Main Headline (Centered) */}
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0B4F42] leading-[1.08] max-w-3xl mx-auto">
+              {titleParts.length > 1 ? (
+                <>
+                  <span>{titleParts[0]}</span>
+                  <span className="text-[#00A896]">{titleParts[1]}</span>
+                  <span>{titleParts[2]}</span>
+                </>
+              ) : (
+                currentSection.title || "Healthy People. Stronger Bhutan."
+              )}
+            </h1>
+
+            {/* Subtitle (Centered) */}
+            <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed font-sans max-w-2xl mx-auto font-light">
+              {currentSection.subtitle ||
+                "Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance."}
+            </p>
+
+            {/* Feature Highlights Pills (Centered) */}
+            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 pt-1 text-xs max-w-2xl mx-auto">
+              <div className="flex items-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/60 shadow-xs hover:border-[#00A896]/40 transition-all">
+                <CheckCircle2 className="h-4 w-4 text-[#00A896] shrink-0" />
+                <span className="font-semibold text-slate-900">Zero Stockout Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/60 shadow-xs hover:border-[#00A896]/40 transition-all">
+                <CheckCircle2 className="h-4 w-4 text-[#00A896] shrink-0" />
+                <span className="font-semibold text-slate-900">205 Remote Gewogs</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/60 shadow-xs hover:border-amber-400/40 transition-all">
+                <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
+                <span className="font-semibold text-slate-900">100% Tax Exempt (DRC)</span>
+              </div>
+            </div>
+
+            {/* Transparent Royal Homage Banner (Centered Box) */}
+            <div className="max-w-2xl mx-auto overflow-hidden rounded-2xl border border-[#00A896]/25 bg-[#EAF6F5]/70 backdrop-blur-xl p-4 shadow-xs text-left">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#0B4F42] font-sans">
+                    <Sparkles className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
+                    <span>Conceived & Enacted under Royal Vision (1998–2000)</span>
+                  </div>
+                  <p className="font-serif text-sm sm:text-base font-bold text-[#0B4F42] tracking-tight leading-snug">
+                    His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
+                  </p>
+                  <p className="text-xs text-slate-600 font-sans leading-relaxed line-clamp-1 font-light">
+                    Enacted through Royal Charter to guarantee perpetual, self-reliant financing for essential medicines and vaccines.
+                  </p>
+                </div>
+
+                <Link
+                  to="/our-story"
+                  className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 hover:bg-[#0B4F42] text-[#0B4F42] hover:text-white border border-[#00A896]/30 text-xs font-bold transition-all shadow-xs"
+                >
+                  <span>Read History</span>
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Institutional Endorsement Bar (Centered) */}
+            <div className="pt-3 flex flex-wrap items-center justify-center gap-3 text-xs border-t border-slate-200/80">
+              <span className="text-[11px] uppercase tracking-wider text-[#0B4F42] font-bold font-mono">
+                Sovereign Partners:
+              </span>
+              <span className="text-slate-800 font-semibold">World Health Organization (WHO)</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800 font-semibold">UNICEF</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800 font-semibold">Gavi, The Vaccine Alliance</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800 font-semibold">World Bank</span>
             </div>
           </div>
         </div>

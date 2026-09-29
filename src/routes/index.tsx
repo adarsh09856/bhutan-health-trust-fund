@@ -305,6 +305,56 @@ function Index() {
           </div>
         )}
         <PageRenderer sections={customSections} interactive={false} />
+
+        {/* Rich Institutional Content Sections Enriched on Homepage */}
+        <RuledLedgerLayout
+          title="Statutory Fiduciary & Operational Ledger"
+          subtitle="Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship."
+          sourceLine="Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing, FY 2024–2025"
+          theme="parchment"
+          rows={fiduciaryLedgerRows}
+        />
+
+        <TwoColumnNarrativeLayout
+          sectionTitle="Universal Vaccine & Primary Formulary Financing"
+          referenceCode="Statutory Mandate & Allocation"
+          paragraphs={[
+            "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines and over 120 essential pharmaceuticals directly for every hospital and gewog clinic in the Kingdom.",
+            "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 3.24B remains untouched in perpetuity.",
+          ]}
+          actionLink={{
+            label: "Examine Financed Commodities & Formularies",
+            to: "/our-work",
+          }}
+          theme="parchment"
+        />
+
+        <RuledDzongkhagMatrix />
+
+        <TwoColumnNarrativeLayout
+          sectionTitle="Governance, Legal Structure & Statutory Triple-Lock"
+          referenceCode="Charter Compliance & Oversight"
+          paragraphs={[
+            "BHTF operates under a strict Royal Charter mandate governed by a high-level Board of Trustees chaired by the Hon'ble Minister for Health. The Fund's fiduciary integrity is safeguarded by an institutional triple-lock: statutory capital ring-fencing prohibiting principal invasion, mandatory annual audits by the Royal Audit Authority (RAA), and independent oversight by the Asset Management and Technical Advisory Committees.",
+            "Disbursements follow an uncompromising window financing mechanism. Annual procurement capital is released quarterly to the Department of Medical Services (DMS) via the Ministry of Finance only upon submission of physical inventory reconciliations and WHO/DRA batch compliance certificates.",
+          ]}
+          actionLink={{
+            label: "Review Board of Trustees & Governance Structure",
+            to: "/about/trustees",
+          }}
+          theme="forest"
+        />
+
+        <DocumentRegisterLayout
+          title="Statutory Publications & Certified Audit Register"
+          subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
+          documents={recentAuditDocuments}
+          viewAllLink={{
+            label: "Browse Full Document & Audit Archive",
+            to: "/reports",
+          }}
+          theme="parchment"
+        />
       </div>
     );
   }
