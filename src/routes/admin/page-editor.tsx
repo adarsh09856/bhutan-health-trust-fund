@@ -40,19 +40,21 @@ interface EditorSearch {
 
 const DEFAULT_CORE_PAGES_MENU = [
   { slug: "home", title: "Home Page", path: "/" },
-  { slug: "about", title: "About Us (Main)", path: "/about" },
+  { slug: "about", title: "About Us (Main Institutional Overview)", path: "/about" },
   { slug: "about-organization", title: "About: Organization & Mandate", path: "/about/organization" },
   { slug: "about-trustees", title: "About: Board of Trustees", path: "/about/trustees" },
   { slug: "about-committees", title: "About: Asset Management & Committees", path: "/about/committees" },
   { slug: "about-secretariat", title: "About: Secretariat & Organogram", path: "/about/secretariat" },
   { slug: "our-story", title: "Our Story & Historical Milestones", path: "/our-story" },
-  { slug: "our-work", title: "Our Impact & Programs", path: "/our-work" },
-  { slug: "reports", title: "Resources & Window Financing", path: "/reports" },
-  { slug: "policies", title: "Governance & Policies", path: "/policies" },
-  { slug: "get-involved", title: "Donate & Support", path: "/get-involved" },
-  { slug: "contact", title: "Contact Secretariat", path: "/contact" },
-  { slug: "news", title: "News & Events", path: "/news" },
+  { slug: "our-impact", title: "Our Impact & Healthcare Commodities", path: "/our-impact" },
+  { slug: "resources", title: "Resources: Official Documents & Audits", path: "/resources" },
+  { slug: "window-financing", title: "Resources: Window Financing Protocol", path: "/resources/window-financing" },
+  { slug: "donate", title: "Donate & Support (1:1 Matched)", path: "/donate" },
+  { slug: "news", title: "News & Media Bulletins", path: "/news" },
   { slug: "track-donation", title: "Track Donation & Tax Voucher", path: "/track-donation" },
+  { slug: "reports", title: "Reports & Financial Audits", path: "/reports" },
+  { slug: "policies", title: "Governance & Policies", path: "/policies" },
+  { slug: "contact", title: "Contact Secretariat", path: "/contact" },
   { slug: "specimen", title: "Design System Specimen", path: "/specimen" },
 ];
 
@@ -312,12 +314,16 @@ export function AdminPageEditor() {
   const isCoreActiveSlug =
     DEFAULT_CORE_PAGES_MENU.some((cp) => cp.slug === activeSlug) || currentPage?.isSystemPage;
 
+  const matchedMenuItem = DEFAULT_CORE_PAGES_MENU.find((cp) => cp.slug === activeSlug);
+
   const publicUrl =
     activeSlug === "home"
       ? "/"
-      : isCoreActiveSlug
-        ? `/${activeSlug}`
-        : `/p/${activeSlug}`;
+      : matchedMenuItem
+        ? matchedMenuItem.path
+        : isCoreActiveSlug
+          ? `/${activeSlug}`
+          : `/p/${activeSlug}`;
 
   if (authLoading || loading) {
     return (

@@ -33,27 +33,47 @@ export function StatementLayout({
 
   return (
     <section
-      className={`py-16 sm:py-20 border-y ${
+      className={`py-14 sm:py-20 border-y ${
         isAqua
           ? "bg-[#EAF6F5] text-slate-900 border-[#00A896]/20"
           : "bg-[#FAF8F3] text-slate-900 border-slate-200/90"
       }`}
     >
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center space-y-5">
-        {legalBasis && (
-          <div
-            className={`text-[11px] font-mono tracking-widest uppercase font-bold ${
-              isAqua ? "text-[#00A896]" : "text-amber-800"
-            }`}
-          >
-            {legalBasis}
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        {/* Illuminated Framed Royal Proclamation Chassis */}
+        <div className="relative rounded-3xl p-7 sm:p-12 md:p-14 text-center space-y-6 bg-white border border-amber-400/40 shadow-[0_16px_45px_rgba(212,162,55,0.08)]">
+          {/* Centered Royal Medallion */}
+          <div className="flex flex-col items-center gap-2.5">
+            <div className="h-13 w-13 sm:h-14 sm:w-14 rounded-full bg-gradient-to-br from-amber-400 via-amber-300 to-amber-500 p-0.5 shadow-md flex items-center justify-center">
+              <div className="h-full w-full rounded-full flex items-center justify-center bg-white text-amber-600 font-serif font-black text-xl">
+                ༄༅
+              </div>
+            </div>
+
+            {legalBasis && (
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-300/80 text-amber-900 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase font-mono shadow-xs">
+                <span>{legalBasis}</span>
+              </div>
+            )}
           </div>
-        )}
-        <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-snug tracking-tight text-[#0B4F42]">
-          "{proclamation}"
-        </blockquote>
-        <div className="text-xs font-mono tracking-wider pt-2 text-slate-500">
-          — {citation}
+
+          {/* Proclamation Quote with Generous, Non-Squished Typography */}
+          <blockquote
+            className="font-serif text-lg sm:text-2xl md:text-[1.75rem] font-medium tracking-normal text-[#0B4F42] max-w-3xl mx-auto break-words italic"
+            style={{ lineHeight: 1.68 }}
+          >
+            "{proclamation}"
+          </blockquote>
+
+          {/* Attribution Footline */}
+          <div className="pt-4 border-t border-amber-500/20 max-w-md mx-auto space-y-0.5">
+            <div className="text-xs sm:text-sm font-bold tracking-wider uppercase text-amber-700 font-sans">
+              {citation}
+            </div>
+            <div className="text-[11px] text-slate-500 font-mono">
+              Sovereign Health Trust Mandate • Universal Healthcare Guarantee
+            </div>
+          </div>
         </div>
       </div>
     </section>

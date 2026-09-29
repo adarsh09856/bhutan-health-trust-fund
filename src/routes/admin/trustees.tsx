@@ -25,25 +25,36 @@ import {
   Camera,
 } from "lucide-react";
 import { toast } from "sonner";
-import trusteeLesang from "@/assets/reference/trustee_lesang_wangdi.webp";
-import trusteeNawang from "@/assets/reference/trustee_nawang_norbu.webp";
-import trusteeSonamTashi from "@/assets/reference/trustee_sonam_tashi.webp";
-import trusteeTsheringDorji from "@/assets/reference/trustee_tshering_dorji.webp";
-import trusteeTsheringYangzom from "@/assets/reference/trustee_tshering_yangzom.webp";
-import trusteeSonamLeki from "@/assets/reference/trustee_sonam_leki_dorji.webp";
-import directorKarma from "@/assets/reference/director_karma_tshering.webp";
-import trusteeUjjwal from "@/assets/reference/trustee_ujjwal_deep_dahal.webp";
+import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
+import trusteeLopenChoten from "@/assets/bhtf/trustees/lopen_choten_dorji.jpeg";
+import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
+import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
+import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
+import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
+import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
+import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 
 const trusteeFallbackPhotos: Record<string, string> = {
-  "Lesang": trusteeLesang,
-  "Nawang": trusteeNawang,
-  "Sonam Tashi": trusteeSonamTashi,
-  "Tshering Dorji": trusteeTsheringDorji,
-  "Tshering Yangzom": trusteeTsheringYangzom,
-  "Sonam Leki": trusteeSonamLeki,
-  "Karma Tshering": directorKarma,
-  "Ujjwal": trusteeUjjwal,
+  "Tandin": trusteeLyonpoTandin,
+  "Choten": trusteeLopenChoten,
+  "Phub": trusteeDrPhub,
+  "Pema": trusteePemaTshering,
+  "Ugyen": trusteeUgyenChoden,
+  "Norbu": trusteeNorbuDendup,
+  "Chencho": trusteeChenchoNamgay,
+  "Gyambo": trusteeDrGyambo,
 };
+
+const defaultPhotos = [
+  trusteeLyonpoTandin,
+  trusteeLopenChoten,
+  trusteeDrPhub,
+  trusteePemaTshering,
+  trusteeUgyenChoden,
+  trusteeNorbuDendup,
+  trusteeChenchoNamgay,
+  trusteeDrGyambo,
+];
 
 const resolveTrusteePhoto = (name?: string, photoUrl?: string | null, idx = 0) => {
   if (photoUrl && (photoUrl.startsWith("http://") || photoUrl.startsWith("https://") || photoUrl.startsWith("data:"))) {
@@ -51,19 +62,9 @@ const resolveTrusteePhoto = (name?: string, photoUrl?: string | null, idx = 0) =
   }
   if (name) {
     for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
-      if (name.includes(key)) return p;
+      if (name.toLowerCase().includes(key.toLowerCase())) return p;
     }
   }
-  const defaultPhotos = [
-    trusteeLesang,
-    trusteeNawang,
-    trusteeSonamTashi,
-    trusteeTsheringDorji,
-    trusteeTsheringYangzom,
-    trusteeSonamLeki,
-    directorKarma,
-    trusteeUjjwal,
-  ];
   return defaultPhotos[idx % defaultPhotos.length];
 };
 

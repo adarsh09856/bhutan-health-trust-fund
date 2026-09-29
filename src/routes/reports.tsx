@@ -61,10 +61,24 @@ export const Route = createFileRoute("/reports")({
   component: ReportsPage,
 });
 
-function ReportsPage() {
-  const loaderData = Route.useLoaderData();
-  const customSections = loaderData?.customSections;
-  const initialReports = loaderData?.initialReports || [];
+export function ReportsExperience({
+  customSections: initialCustomSections,
+  initialReports = [],
+  badge = "Statutory Public Transparency",
+  title = "Reports & Official Publications",
+  subtitle = "Uncompromising fiduciary accountability, audited financial statements, and empirical public health impact assessments.",
+  pageSlug = "reports",
+}: {
+  customSections?: PageBlockSection[] | null;
+  initialReports?: Report[];
+  badge?: string;
+  title?: string;
+  subtitle?: string;
+  pageSlug?: string;
+}) {
+  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
+    initialCustomSections || null,
+  );
   const [reports, setReports] = useState<Report[]>(initialReports);
   const [loading, setLoading] = useState(initialReports.length === 0);
   const [search, setSearch] = useState("");
@@ -86,8 +100,21 @@ function ReportsPage() {
   };
 
   useEffect(() => {
+    getPublicPage({ data: { slug: pageSlug } })
+      .then((page) => {
+        if (page && page.status === "published") {
+          try {
+            const parsed = JSON.parse(page.sectionsJson);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setCustomSections(parsed);
+            }
+          } catch {}
+        }
+      })
+      .catch(() => {});
+
     fetchReports();
-  }, []);
+  }, [pageSlug]);
 
   const handleDownload = async (r: Report) => {
     setDownloadingId(r.id);
@@ -137,9 +164,9 @@ function ReportsPage() {
   return (
     <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3]">
       <PageHero
-        badge="Statutory Public Transparency"
-        title="Reports & Official Publications"
-        subtitle="Uncompromising fiduciary accountability, audited financial statements, and empirical public health impact assessments."
+        badge={badge}
+        title={title}
+        subtitle={subtitle}
       />
 
       {/* Transparency Metric Highlights */}
@@ -375,5 +402,16 @@ function ReportsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+function ReportsPage() {
+  const loaderData = Route.useLoaderData();
+  return (
+    <ReportsExperience
+      customSections={loaderData?.customSections}
+      initialReports={loaderData?.initialReports}
+      pageSlug="reports"
+    />
   );
 }

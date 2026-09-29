@@ -17,6 +17,8 @@ export function AdminTopBar() {
   let currentSlug = "home";
   if (location.pathname.startsWith("/p/")) {
     currentSlug = location.pathname.replace("/p/", "");
+  } else if (location.pathname === "/resources/window-financing") {
+    currentSlug = "window-financing";
   } else if (location.pathname !== "/") {
     currentSlug = location.pathname.replace(/^\//, "").replace(/\//g, "-");
   }

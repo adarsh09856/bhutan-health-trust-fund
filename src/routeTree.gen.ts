@@ -20,6 +20,7 @@ import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as OurWorkRouteImport } from './routes/our-work'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SpecimenRouteImport } from './routes/specimen'
 import { Route as TrackDonationRouteImport } from './routes/track-donation'
 import { Route as AboutCommitteesRouteImport } from './routes/about/committees'
@@ -51,6 +52,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminVideosRouteImport } from './routes/admin/videos'
 import { Route as NewsSlugRouteImport } from './routes/news/$slug'
 import { Route as PSlugRouteImport } from './routes/p.$slug'
+import { Route as ResourcesWindowFinancingRouteImport } from './routes/resources/window-financing'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -105,6 +107,11 @@ const PoliciesRoute = PoliciesRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SpecimenRoute = SpecimenRouteImport.update({
@@ -262,6 +269,12 @@ const PSlugRoute = PSlugRouteImport.update({
   path: '/p/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesWindowFinancingRoute =
+  ResourcesWindowFinancingRouteImport.update({
+    id: '/window-financing',
+    path: '/window-financing',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -275,6 +288,7 @@ export interface FileRoutesByFullPath {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/specimen': typeof SpecimenRoute
   '/track-donation': typeof TrackDonationRoute
   '/about/committees': typeof AboutCommitteesRoute
@@ -305,6 +319,7 @@ export interface FileRoutesByFullPath {
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
   '/p/$slug': typeof PSlugRoute
+  '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -319,6 +334,7 @@ export interface FileRoutesByTo {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/specimen': typeof SpecimenRoute
   '/track-donation': typeof TrackDonationRoute
   '/about/committees': typeof AboutCommitteesRoute
@@ -349,6 +365,7 @@ export interface FileRoutesByTo {
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
   '/p/$slug': typeof PSlugRoute
+  '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -364,6 +381,7 @@ export interface FileRoutesById {
   '/our-work': typeof OurWorkRoute
   '/policies': typeof PoliciesRoute
   '/reports': typeof ReportsRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/specimen': typeof SpecimenRoute
   '/track-donation': typeof TrackDonationRoute
   '/about/committees': typeof AboutCommitteesRoute
@@ -394,6 +412,7 @@ export interface FileRoutesById {
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
   '/p/$slug': typeof PSlugRoute
+  '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -410,6 +429,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/resources'
     | '/specimen'
     | '/track-donation'
     | '/about/committees'
@@ -440,6 +460,7 @@ export interface FileRouteTypes {
     | '/admin/videos'
     | '/news/$slug'
     | '/p/$slug'
+    | '/resources/window-financing'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -454,6 +475,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/resources'
     | '/specimen'
     | '/track-donation'
     | '/about/committees'
@@ -484,6 +506,7 @@ export interface FileRouteTypes {
     | '/admin/videos'
     | '/news/$slug'
     | '/p/$slug'
+    | '/resources/window-financing'
     | '/admin'
   id:
     | '__root__'
@@ -498,6 +521,7 @@ export interface FileRouteTypes {
     | '/our-work'
     | '/policies'
     | '/reports'
+    | '/resources'
     | '/specimen'
     | '/track-donation'
     | '/about/committees'
@@ -528,6 +552,7 @@ export interface FileRouteTypes {
     | '/admin/videos'
     | '/news/$slug'
     | '/p/$slug'
+    | '/resources/window-financing'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -543,6 +568,7 @@ export interface RootRouteChildren {
   OurWorkRoute: typeof OurWorkRoute
   PoliciesRoute: typeof PoliciesRoute
   ReportsRoute: typeof ReportsRoute
+  ResourcesRoute: typeof ResourcesRouteWithChildren
   SpecimenRoute: typeof SpecimenRoute
   TrackDonationRoute: typeof TrackDonationRoute
   AdminAuditLogsRoute: typeof AdminAuditLogsRoute
@@ -648,6 +674,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/specimen': {
@@ -867,6 +900,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/window-financing': {
+      id: '/resources/window-financing'
+      path: '/window-financing'
+      fullPath: '/resources/window-financing'
+      preLoaderRoute: typeof ResourcesWindowFinancingRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
   }
 }
 
@@ -896,6 +936,18 @@ const NewsRouteChildren: NewsRouteChildren = {
 
 const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
+interface ResourcesRouteChildren {
+  ResourcesWindowFinancingRoute: typeof ResourcesWindowFinancingRoute
+}
+
+const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesWindowFinancingRoute: ResourcesWindowFinancingRoute,
+}
+
+const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
+  ResourcesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRouteWithChildren,
@@ -908,6 +960,7 @@ const rootRouteChildren: RootRouteChildren = {
   OurWorkRoute: OurWorkRoute,
   PoliciesRoute: PoliciesRoute,
   ReportsRoute: ReportsRoute,
+  ResourcesRoute: ResourcesRouteWithChildren,
   SpecimenRoute: SpecimenRoute,
   TrackDonationRoute: TrackDonationRoute,
   AdminAuditLogsRoute: AdminAuditLogsRoute,

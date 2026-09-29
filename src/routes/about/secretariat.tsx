@@ -17,6 +17,9 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
+import staffDirector from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
+import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
+import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
 
 export const Route = createFileRoute("/about/secretariat")({
   loader: async () => {
@@ -51,14 +54,6 @@ export const Route = createFileRoute("/about/secretariat")({
 
 function SecretariatPage() {
   const { customSections } = Route.useLoaderData();
-
-  if (customSections && customSections.length > 0) {
-    return (
-      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
-        <PageRenderer sections={customSections} interactive={false} />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
@@ -270,6 +265,83 @@ function SecretariatPage() {
                   <span className="font-mono text-slate-600 font-bold">1</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Secretariat Staff Profiles */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block mb-2">
+            Executive Leadership & Key Personnel
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            Secretariat Directorate & Officers
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm mt-3 font-light">
+            Dedicated professionals managing fiduciary operations, international commodity procurement, and statutory compliance.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <img
+                src={staffDirector}
+                alt="Mr. Sonam Chojay"
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-6 space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
+                Directorate
+              </span>
+              <h3 className="font-serif text-lg font-bold text-slate-900">Mr. Sonam Chojay</h3>
+              <p className="text-xs font-semibold text-emerald-700">Director / Executive Head</p>
+              <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                Leads executive administration, multilateral partnership management, and overall strategic stewardship of the health endowment corpus.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <img
+                src={staffFinance}
+                alt="Ms. Tshering Choden"
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-6 space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
+                Finance & Accounts
+              </span>
+              <h3 className="font-serif text-lg font-bold text-slate-900">Ms. Tshering Choden</h3>
+              <p className="text-xs font-semibold text-amber-700">Senior Finance Officer</p>
+              <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                Directs treasury allocations, 1:1 RGOB sovereign matching reconciliations, and statutory audit compliance with the Royal Audit Authority.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <img
+                src={staffProcurement}
+                alt="Mr. Rinchen Phuntsho"
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-6 space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
+                Program & Procurement
+              </span>
+              <h3 className="font-serif text-lg font-bold text-slate-900">Mr. Rinchen Phuntsho</h3>
+              <p className="text-xs font-semibold text-teal-700">Procurement & Program Officer</p>
+              <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                Coordinates WHO-prequalified international supply contracts, UNICEF cold chain logistics, and quarterly DMS hospital requisitions.
+              </p>
             </div>
           </div>
         </div>

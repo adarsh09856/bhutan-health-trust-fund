@@ -89,19 +89,26 @@ const progColors = [
   "bg-teal-50 text-teal-700 border-teal-200",
 ];
 
-function OurWork() {
-  const loaderData = Route.useLoaderData();
-  const [livePrograms, setLivePrograms] = useState<Program[]>(loaderData?.livePrograms || []);
-  const [procurementSteps, setProcurementSteps] = useState<ProcurementStep[]>(
-    loaderData?.liveSteps || [],
-  );
+export function OurWorkExperience({
+  customSections: initialCustomSections,
+  livePrograms: initialPrograms = [],
+  liveSteps: initialSteps = [],
+  pageSlug = "our-work",
+}: {
+  customSections?: PageBlockSection[] | null;
+  livePrograms?: Program[];
+  liveSteps?: ProcurementStep[];
+  pageSlug?: string;
+}) {
+  const [livePrograms, setLivePrograms] = useState<Program[]>(initialPrograms);
+  const [procurementSteps, setProcurementSteps] = useState<ProcurementStep[]>(initialSteps);
   const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
-    loaderData?.customSections || null,
+    initialCustomSections || null,
   );
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getPublicPage({ data: { slug: "our-work" } })
+    getPublicPage({ data: { slug: pageSlug } })
       .then((page) => {
         if (page && page.status === "published") {
           try {
@@ -281,5 +288,17 @@ function OurWork() {
         </div>
       </section>
     </div>
+  );
+}
+
+function OurWork() {
+  const loaderData = Route.useLoaderData();
+  return (
+    <OurWorkExperience
+      customSections={loaderData?.customSections}
+      livePrograms={loaderData?.livePrograms}
+      liveSteps={loaderData?.liveSteps}
+      pageSlug="our-work"
+    />
   );
 }

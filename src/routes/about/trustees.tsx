@@ -15,14 +15,14 @@ import {
   Calendar,
   Lock,
 } from "lucide-react";
-import trusteeLesang from "@/assets/reference/trustee_lesang_wangdi.webp";
-import trusteeNawang from "@/assets/reference/trustee_nawang_norbu.webp";
-import trusteeSonamTashi from "@/assets/reference/trustee_sonam_tashi.webp";
-import trusteeTsheringDorji from "@/assets/reference/trustee_tshering_dorji.webp";
-import trusteeTsheringYangzom from "@/assets/reference/trustee_tshering_yangzom.webp";
-import trusteeSonamLeki from "@/assets/reference/trustee_sonam_leki_dorji.webp";
-import directorKarma from "@/assets/reference/director_karma_tshering.webp";
-import trusteeUjjwal from "@/assets/reference/trustee_ujjwal_deep_dahal.webp";
+import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
+import trusteeLopenChoten from "@/assets/bhtf/trustees/lopen_choten_dorji.jpeg";
+import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
+import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
+import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
+import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
+import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
+import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 
 export const Route = createFileRoute("/about/trustees")({
   loader: async () => {
@@ -65,85 +65,69 @@ const staticTrustees = [
     organization: "Hon'ble Minister for Health, Royal Government of Bhutan",
     badge: "Chairperson",
     desc: "Provides ministerial direction and policy leadership, ensuring alignment between national primary healthcare goals and trust fund commodity disbursements.",
-    photo: trusteeLesang, // Fallback
+    photo: trusteeLyonpoTandin,
   },
   {
-    name: "Mr. Tshering Dorji",
-    role: "Trustee (Finance & Sovereign Fiduciary)",
-    organization: "Finance Secretary, Ministry of Finance, RGOB",
-    badge: "Trustee",
-    desc: "Supervises sovereign matching fund allocations, capital endowment ring-fencing, and statutory investment policy parameters.",
-    photo: trusteeTsheringDorji,
+    name: "Lopen Choten Dorji",
+    role: "Trustee (Monastic Representative)",
+    organization: "Zhung Dratshang (Central Monastic Body)",
+    badge: "Spiritual Fiduciary",
+    desc: "Represents religious and traditional community values, ensuring compassionate care and ethical stewardship across the Kingdom.",
+    photo: trusteeLopenChoten,
   },
   {
-    name: "Ambassador Lesang Wangdi",
-    role: "Trustee & Senior Diplomatic Advisor",
+    name: "Dr. Phub Tshering",
+    role: "Trustee (Health Technical Advisor)",
+    organization: "Ministry of Health, Royal Government of Bhutan",
+    badge: "Medical Trustee",
+    desc: "Oversees medical formulary compliance, essential drug prequalification, and clinical epidemiology priorities.",
+    photo: trusteeDrPhub,
+  },
+  {
+    name: "Dasho Pema Tshering",
+    role: "Trustee (Sovereign Finance)",
+    organization: "Ministry of Finance, Royal Government of Bhutan",
+    badge: "Fiscal Trustee",
+    desc: "Supervises 1:1 RGOB matching fund allocations, capital endowment ring-fencing, and statutory investment policy parameters.",
+    photo: trusteePemaTshering,
+  },
+  {
+    name: "Ms. Ugyen Choden",
+    role: "Trustee (Civil Society Representative)",
+    organization: "Civil Society & Private Sector Directorate",
+    badge: "Civil Society",
+    desc: "Fosters public-private healthcare partnerships, community health initiatives, and philanthropic mobilization.",
+    photo: trusteeUgyenChoden,
+  },
+  {
+    name: "Mr. Norbu Dendup",
+    role: "Trustee (Legal & Governance)",
     organization: "Board of Trustees, BHTF",
-    badge: "Trustee",
-    desc: "Oversees multilateral partnerships, international sovereign agreements, and bilateral healthcare endowments.",
-    photo: trusteeLesang,
+    badge: "Legal & Audit",
+    desc: "Specializes in trust governance, Royal Charter compliance, and institutional statutory policies.",
+    photo: trusteeNorbuDendup,
   },
   {
-    name: "Dr. Nawang Norbu",
-    role: "Trustee & Research Director",
-    organization: "Board of Trustees, BHTF",
-    badge: "Trustee",
-    desc: "Directs epidemiological research, evidence-based health investment allocations, and climate health resilience.",
-    photo: trusteeNawang,
+    name: "Mr. Chencho T. Namgay",
+    role: "Trustee (Portfolio & Asset Management)",
+    organization: "Asset Management Committee, BHTF",
+    badge: "Asset Portfolio",
+    desc: "Advises on endowment capital preservation, sovereign bond allocations, and offshore risk management.",
+    photo: trusteeChenchoNamgay,
   },
   {
-    name: "Mr. Sonam Tashi",
-    role: "Trustee & Chief Investment Strategist",
-    organization: "Board of Trustees, BHTF",
-    badge: "Trustee",
-    desc: "Oversees investment portfolios, sovereign fixed-income allocations, and asset preservation benchmarks.",
-    photo: trusteeSonamTashi,
-  },
-  {
-    name: "Ms. Tshering Yangzom",
-    role: "Trustee (Governance & Legal Compliance)",
-    organization: "Board of Trustees, BHTF",
-    badge: "Trustee",
-    desc: "Ensures institutional compliance with the Royal Charter, RAA clean audit mandates, and fiduciary ethics regulations.",
-    photo: trusteeTsheringYangzom,
-  },
-  {
-    name: "Mr. Sonam Leki Dorji",
-    role: "Trustee (Procurement & Clinical Logistics)",
-    organization: "Board of Trustees, BHTF",
-    badge: "Trustee",
-    desc: "Oversees international WHO-prequalified vaccine tenders, alpine cold chain distribution, and zero-stockout supply lines.",
-    photo: trusteeSonamLeki,
-  },
-  {
-    name: "Mr. Ujjwal Deep Dahal",
-    role: "Trustee (Technology & Systems Innovation)",
-    organization: "Board of Trustees, BHTF / DHI",
-    badge: "Trustee",
-    desc: "Advises on digital health infrastructure, automated pharmaceutical logistics, and supply chain telemetry.",
-    photo: trusteeUjjwal,
-  },
-  {
-    name: "Dr. Karma Tshering",
-    role: "Director & Member Secretary",
-    organization: "Secretariat, Bhutan Health Trust Fund",
-    badge: "Member Secretary",
-    desc: "Executive head of the Secretariat, leading day-to-day operations, endowment investments, and national procurement releases.",
-    photo: directorKarma,
+    name: "Dr. Gyambo Sithey",
+    role: "Trustee (Public Health Research)",
+    organization: "Public Health Institute of Bhutan",
+    badge: "Public Health",
+    desc: "Directs epidemiological research, evidence-based health investment allocations, and cold chain telemetry.",
+    photo: trusteeDrGyambo,
   },
 ];
 
 function TrusteesPage() {
   const { liveTrustees, customSections } = Route.useLoaderData();
   const [trusteesList, setTrusteesList] = useState<Trustee[]>(liveTrustees);
-
-  if (customSections && customSections.length > 0) {
-    return (
-      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
-        <PageRenderer sections={customSections} interactive={false} />
-      </div>
-    );
-  }
 
   useEffect(() => {
     if (liveTrustees.length === 0) {
@@ -156,37 +140,53 @@ function TrusteesPage() {
   }, [liveTrustees]);
 
   const trusteeFallbackPhotos: Record<string, string> = {
-    Lesang: trusteeLesang,
-    Nawang: trusteeNawang,
-    "Sonam Tashi": trusteeSonamTashi,
-    "Tshering Dorji": trusteeTsheringDorji,
-    "Tshering Yangzom": trusteeTsheringYangzom,
-    "Sonam Leki": trusteeSonamLeki,
-    Karma: directorKarma,
-    Ujjwal: trusteeUjjwal,
+    Tandin: trusteeLyonpoTandin,
+    Choten: trusteeLopenChoten,
+    Phub: trusteeDrPhub,
+    Pema: trusteePemaTshering,
+    Ugyen: trusteeUgyenChoden,
+    Norbu: trusteeNorbuDendup,
+    Chencho: trusteeChenchoNamgay,
+    Gyambo: trusteeDrGyambo,
   };
 
-  const resolvePhoto = (name: string, photo: string | null) => {
-    if (photo && (photo.startsWith("http://") || photo.startsWith("https://") || photo.startsWith("/assets/reference/"))) {
+  const defaultPhotoList = [
+    trusteeLyonpoTandin,
+    trusteeLopenChoten,
+    trusteeDrPhub,
+    trusteePemaTshering,
+    trusteeUgyenChoden,
+    trusteeNorbuDendup,
+    trusteeChenchoNamgay,
+    trusteeDrGyambo,
+  ];
+
+  const resolvePhoto = (name: string, photo: string | null, idx = 0) => {
+    if (photo && (photo.startsWith("http://") || photo.startsWith("https://") || photo.startsWith("data:"))) {
       return photo;
     }
-    for (const key of Object.keys(trusteeFallbackPhotos)) {
+    for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
       if (name.toLowerCase().includes(key.toLowerCase())) {
-        return trusteeFallbackPhotos[key];
+        return p;
       }
     }
-    return trusteeLesang;
+    return defaultPhotoList[idx % defaultPhotoList.length];
   };
 
   const displayTrustees =
-    trusteesList.length > 0
-      ? trusteesList.map((t) => ({
+    trusteesList.length >= 8 && trusteesList.some((t) => t.name.toLowerCase().includes("choten"))
+      ? trusteesList.map((t, idx) => ({
           name: t.name,
           role: t.role,
           organization: t.organization || "Board of Trustees, BHTF",
-          badge: t.orderIndex === 0 ? "Chairperson" : t.orderIndex === 8 ? "Member Secretary" : "Trustee",
-          desc: t.bio || "Statutory fiduciary trustee managing health endowment allocations.",
-          photo: resolvePhoto(t.name, t.photoUrl),
+          badge:
+            idx === 0 || t.name.toLowerCase().includes("tandin")
+              ? "Chairperson"
+              : t.role.toLowerCase().includes("secretary")
+              ? "Member Secretary"
+              : "Trustee",
+          desc: t.bio || staticTrustees[idx]?.desc || "Statutory fiduciary trustee managing health endowment allocations.",
+          photo: resolvePhoto(t.name, t.photoUrl, idx),
         }))
       : staticTrustees;
 
@@ -288,8 +288,8 @@ function TrusteesPage() {
               className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:border-emerald-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4 group"
             >
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="relative h-20 w-20 rounded-2xl overflow-hidden border-2 border-emerald-600/40 shadow-md shrink-0 bg-slate-100">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-2xl overflow-hidden border-2 border-emerald-600/50 shadow-lg shrink-0 bg-slate-100 ring-4 ring-emerald-50">
                     <img
                       src={t.photo}
                       alt={t.name || t.role}
@@ -297,7 +297,7 @@ function TrusteesPage() {
                       loading="lazy"
                     />
                   </div>
-                  <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full border ${
+                  <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full border shrink-0 ${
                     t.badge === "Chairperson"
                       ? "bg-amber-50 text-amber-900 border-amber-300"
                       : t.badge === "Member Secretary"

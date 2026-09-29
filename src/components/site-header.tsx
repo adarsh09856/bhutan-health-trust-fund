@@ -127,7 +127,7 @@ export function SiteHeader() {
               <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
                 {/* 1. Organization */}
                 <Link
-                  to="/about"
+                  to="/about/organization"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -153,7 +153,7 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
-                      Board of Trustees
+                      Board of Directors
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
                       High-level ministerial governance & oversight
@@ -174,7 +174,7 @@ export function SiteHeader() {
                       Asset Management Committee
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Fiduciary investment parameters & audit GAC
+                      Fiduciary investment parameters & risk oversight
                     </p>
                   </div>
                 </Link>
@@ -192,7 +192,7 @@ export function SiteHeader() {
                       Secretariat & Organogram
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Directorate & 3 operational divisions (Annexure 1)
+                      Directorate, staff members & headquarters
                     </p>
                   </div>
                 </Link>
@@ -200,7 +200,7 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 2. OUR STORY (Separate from Our Impact) */}
+          {/* 2. OUR STORY */}
           <Link
             to="/our-story"
             className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
@@ -212,90 +212,28 @@ export function SiteHeader() {
             OUR STORY
           </Link>
 
-          {/* 3. OUR IMPACT (Separate from Our Story) */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("impact")}
-            onMouseLeave={handleMouseLeave}
+          {/* 3. OUR IMPACT */}
+          <Link
+            to="/our-impact"
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
+              location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
+                ? "bg-[#0B4F42] text-white shadow-xs"
+                : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
+            }`}
           >
-            <Link
-              to="/our-work"
-              className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                location.pathname.startsWith("/our-work")
-                  ? "bg-[#0B4F42] text-white shadow-xs"
-                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-              }`}
-            >
-              <span>OUR IMPACT</span>
-              <ChevronDown className="h-3 w-3" />
-            </Link>
+            OUR IMPACT
+          </Link>
 
-            {openDropdown === "impact" && (
-              <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                <Link
-                  to="/our-work"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <Syringe className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
-                      Universal Routine Vaccines
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      100% Childhood immunization antigens
-                    </p>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/our-work"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
-                    <Pill className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      120+ Essential Medicines
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Primary healthcare formulary & emergency buffer
-                    </p>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/our-work"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-cyan-50 text-cyan-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-cyan-600 group-hover:text-white transition">
-                    <Globe2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-cyan-700 transition">
-                      20 Dzongkhags Reach Matrix
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Equitable supply to 205 remote gewogs
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* 4. RESOURCES (Includes Window Financing) */}
+          {/* 4. RESOURCES Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("resources")}
             onMouseLeave={handleMouseLeave}
           >
             <Link
-              to="/reports"
+              to="/resources"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
+                location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
                   ? "bg-[#0B4F42] text-white shadow-xs"
                   : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
               }`}
@@ -307,7 +245,7 @@ export function SiteHeader() {
             {openDropdown === "resources" && (
               <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
                 <Link
-                  to="/reports"
+                  to="/resources"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
@@ -324,8 +262,7 @@ export function SiteHeader() {
                 </Link>
 
                 <Link
-                  to="/reports"
-                  hash="window-financing"
+                  to="/resources/window-financing"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
@@ -357,10 +294,21 @@ export function SiteHeader() {
           </Link>
         </nav>
 
-        {/* 6. Clean, Attractive & Highly Clickable DONATE CTA */}
-        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap">
+        {/* Action Group: Track Donation Link + Prominent DONATE CTA */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0 whitespace-nowrap">
+          {/* Subtle Clickable Track Donation Link (In middle between menus and Donate) */}
           <Link
-            to="/get-involved"
+            to="/track-donation"
+            className="hidden xl:inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4F42] hover:text-[#00A896] hover:underline px-2.5 py-1.5 transition-colors whitespace-nowrap cursor-pointer"
+            title="Track donation pledge & verify 1:1 RGOB match"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+            <span>Track Donation</span>
+          </Link>
+
+          {/* 6. Clean, Attractive & Highly Clickable DONATE CTA */}
+          <Link
+            to="/donate"
             className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-6 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-[11px] sm:text-xs font-black shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_22px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
           >
             <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-slate-950 text-slate-950 shrink-0" />
@@ -389,16 +337,16 @@ export function SiteHeader() {
           <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-2 rounded-2xl border border-slate-200 space-y-1">
             {[
               { to: "/", label: "Home" },
-              { to: "/about", label: "Our Organization" },
-              { to: "/about/trustees", label: "Board of Trustees" },
-              { to: "/about/committees", label: "Asset Management Committee" },
-              { to: "/about/secretariat", label: "Secretariat & Organogram" },
+              { to: "/about/organization", label: "About: Our Organization" },
+              { to: "/about/trustees", label: "About: Board of Directors" },
+              { to: "/about/committees", label: "About: Asset Management Committee" },
+              { to: "/about/secretariat", label: "About: Secretariat & Staff" },
               { to: "/our-story", label: "Our Story & History" },
-              { to: "/our-work", label: "Health Commodities & Programs" },
-              { to: "/reports", label: "Reports & Window Financing" },
-              { to: "/policies", label: "Governance & Policies" },
+              { to: "/our-impact", label: "Our Impact (Health Commodities)" },
+              { to: "/resources", label: "Resources & Statutory Reports" },
+              { to: "/resources/window-financing", label: "Window Financing Mechanism" },
               { to: "/news", label: "News & Events" },
-              { to: "/get-involved", label: "Donate to Endowment" },
+              { to: "/track-donation", label: "Track Donation & Verify 1:1 Match" },
               { to: "/contact", label: "Contact Secretariat" },
             ].map((item) => {
               const isActive =
@@ -409,7 +357,7 @@ export function SiteHeader() {
                   key={item.to}
                   to={item.to}
                   className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
-                    isActive ? "bg-slate-900 text-white shadow-xs" : "text-slate-700 hover:bg-white"
+                    isActive ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
                   }`}
                 >
                   <span>{item.label}</span>
@@ -423,10 +371,10 @@ export function SiteHeader() {
 
           <div className="pt-1 flex flex-col gap-2">
             <Link
-              to="/get-involved"
+              to="/donate"
               className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs shadow-md whitespace-nowrap"
             >
-              <Heart className="h-4 w-4 fill-slate-950 text-slate-950" /> DONATE NOW
+              <Heart className="h-4 w-4 fill-slate-950 text-slate-950" /> DONATE NOW (1:1 MATCHED)
             </Link>
 
             {user && (

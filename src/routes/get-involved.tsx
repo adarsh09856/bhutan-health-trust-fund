@@ -117,9 +117,7 @@ const tiers = [
   },
 ];
 
-function GetInvolvedPage() {
-  const { customSections } = Route.useLoaderData();
-
+export function DonateView({ customSections }: { customSections?: PageBlockSection[] | null }) {
   if (customSections && customSections.length > 0) {
     return (
       <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
@@ -1207,4 +1205,9 @@ function GetInvolvedPage() {
       )}
     </div>
   );
+}
+
+function GetInvolvedPage() {
+  const { customSections } = Route.useLoaderData();
+  return <DonateView customSections={customSections} />;
 }
