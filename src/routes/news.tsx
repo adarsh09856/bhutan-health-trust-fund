@@ -22,7 +22,10 @@ import newsReport from "@/assets/news-report.jpg";
 export const Route = createFileRoute("/news")({
   loader: async () => {
     try {
-      const page = await getPublicPage({ data: { slug: "news" } }).catch(() => null);
+      const [page, news] = await Promise.all([
+        getPublicPage({ data: { slug: "news" } }).catch(() => null),
+        getPublicNews().catch(() => []),
+      ]);
       let sections: PageBlockSection[] | null = null;
       if (page && page.status === "published") {
         try {
@@ -32,9 +35,9 @@ export const Route = createFileRoute("/news")({
           }
         } catch {}
       }
-      return { customSections: sections };
+      return { customSections: sections, initialArticles: (news || []) as NewsArticle[] };
     } catch {
-      return { customSections: null };
+      return { customSections: null, initialArticles: [] };
     }
   },
   head: () => ({
@@ -50,17 +53,72 @@ export const Route = createFileRoute("/news")({
   component: NewsPage,
 });
 
+const fallbackArticles: NewsArticle[] = [
+  {
+    id: 1,
+    slug: "nationwide-influenza-vaccination-2024",
+    title: "BHTF supports nationwide influenza vaccination program for 2024-2025",
+    category: "Immunization",
+    author: "BHTF Communications",
+    coverImage: "/src/assets/news-vaccine.jpg",
+    excerpt:
+      "Over 200,000 doses of seasonal influenza vaccines are being deployed across all twenty dzongkhags to protect high-risk populations.",
+    content: "The Bhutan Health Trust Fund (BHTF) has mobilized complete financial backing for the 2024-2025 Nationwide Seasonal Influenza Vaccination Campaign in close collaboration with the Department of Public Health, Ministry of Health.",
+    isPublished: true,
+    viewsCount: 1420,
+    publishedAt: new Date("2024-11-15"),
+    createdAt: new Date("2024-11-15"),
+    updatedAt: new Date("2024-11-15"),
+  },
+  {
+    id: 2,
+    slug: "strengthening-primary-healthcare-remote-bhutan",
+    title: "Strengthening primary healthcare across remote communities in Bhutan",
+    category: "Essential Medicines",
+    author: "Program Operations Team",
+    coverImage: "/src/assets/news-community.jpg",
+    excerpt:
+      "BHTF expands financing to outreach clinics and Basic Health Units serving Bhutan's most geographically isolated settlements.",
+    content: "Ensuring equity in healthcare delivery is central to Gross National Happiness. This month, BHTF completed the second-quarter disbursement for essential commodity procurement, bolstering over 200 Basic Health Units (BHUs) and 450 Outreach Clinics (ORCs) across Bhutan.",
+    isPublished: true,
+    viewsCount: 980,
+    publishedAt: new Date("2024-10-02"),
+    createdAt: new Date("2024-10-02"),
+    updatedAt: new Date("2024-10-02"),
+  },
+  {
+    id: 3,
+    slug: "bhtf-annual-report-2023-released",
+    title: "BHTF Annual Report 2023: Celebrating Resilience and Financial Sustainability",
+    category: "Governance",
+    author: "Governance & Planning",
+    coverImage: "/src/assets/news-report.jpg",
+    excerpt:
+      "The latest audited report confirms full coverage of essential primary healthcare commodities with zero stockouts nationwide.",
+    content: "The Secretariat of the Bhutan Health Trust Fund is pleased to announce the release of its Comprehensive Annual Report and Audited Financial Statements for FY 2023-2024.",
+    isPublished: true,
+    viewsCount: 750,
+    publishedAt: new Date("2024-08-20"),
+    createdAt: new Date("2024-08-20"),
+    updatedAt: new Date("2024-08-20"),
+  },
+];
+
 function NewsPage() {
-  const { customSections } = Route.useLoaderData();
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { customSections, initialArticles } = Route.useLoaderData();
+  const [articles, setArticles] = useState<NewsArticle[]>(
+    initialArticles && initialArticles.length > 0 ? initialArticles : fallbackArticles,
+  );
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
   useEffect(() => {
     getPublicNews()
-      .then((res) => setArticles(res))
+      .then((res) => {
+        if (res && res.length > 0) setArticles(res);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -80,7 +138,9 @@ function NewsPage() {
     { id: "Partnership", label: "Global Partnerships" },
   ];
 
-  const filtered = articles.filter((a) => {
+  const activeArticles = articles.length > 0 ? articles : fallbackArticles;
+
+  const filtered = activeArticles.filter((a) => {
     const matchesSearch =
       a.title.toLowerCase().includes(search.toLowerCase()) ||
       a.excerpt.toLowerCase().includes(search.toLowerCase());
@@ -90,14 +150,6 @@ function NewsPage() {
 
   const featured = filtered[0];
   const regularStories = filtered.slice(1);
-
-  if (customSections && customSections.length > 0) {
-    return (
-      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
-        <PageRenderer sections={customSections} interactive={false} />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3]">

@@ -118,13 +118,6 @@ const tiers = [
 ];
 
 export function DonateView({ customSections }: { customSections?: PageBlockSection[] | null }) {
-  if (customSections && customSections.length > 0) {
-    return (
-      <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 min-h-screen pt-24 sm:pt-28">
-        <PageRenderer sections={customSections} interactive={false} />
-      </div>
-    );
-  }
 
   const [amount, setAmount] = useState(1000);
   const [donorName, setDonorName] = useState("");
@@ -413,7 +406,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Donation Form & Pledge Section */}
-      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <section id="donate-form" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 scroll-mt-28">
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold">

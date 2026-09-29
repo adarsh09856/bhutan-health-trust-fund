@@ -711,7 +711,7 @@ export const defaultCorePages: DefaultPageDef[] = [
         badge: "1:1 Sovereign Matching Guaranteed",
         bgVariant: "dark",
         primaryCtaText: "Contribute Online",
-        primaryCtaUrl: "/get-involved",
+        primaryCtaUrl: "/get-involved#donate-form",
       },
     ],
   },

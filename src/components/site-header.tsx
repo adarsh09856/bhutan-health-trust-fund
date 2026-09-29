@@ -299,7 +299,7 @@ export function SiteHeader() {
           {/* Subtle Clickable Track Donation Link (In middle between menus and Donate) */}
           <Link
             to="/track-donation"
-            className="hidden xl:inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4F42] hover:text-[#00A896] hover:underline px-2.5 py-1.5 transition-colors whitespace-nowrap cursor-pointer"
+            className="hidden lg:inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4F42] hover:text-[#00A896] hover:underline px-2.5 py-1.5 transition-colors whitespace-nowrap cursor-pointer"
             title="Track donation pledge & verify 1:1 RGOB match"
           >
             <Sparkles className="h-3.5 w-3.5 text-amber-500" />
