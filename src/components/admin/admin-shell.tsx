@@ -30,9 +30,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex bg-slate-50 text-foreground">
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:block">
+    <div className="h-screen flex bg-slate-50 text-foreground overflow-hidden">
+      {/* Desktop Sidebar (Fixed height, internal scroll only) */}
+      <div className="hidden lg:flex lg:flex-col lg:h-screen lg:shrink-0 sticky top-0">
         <AdminSidebar />
       </div>
 
@@ -49,10 +49,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <AdminHeader onToggleMenu={() => setMobileMenuOpen(!mobileMenuOpen)} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">{children}</main>
+      {/* Main Content Area (Header pinned at top, only content container scrolls) */}
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+        <div className="sticky top-0 z-30 shrink-0">
+          <AdminHeader onToggleMenu={() => setMobileMenuOpen(!mobileMenuOpen)} />
+        </div>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto overflow-y-auto">
+          {children}
+        </main>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
 import { getPublicNews, getPublicPage } from "@/lib/api/public.functions";
@@ -105,6 +105,13 @@ const fallbackArticles: NewsArticle[] = [
 ];
 
 function NewsPage() {
+  const location = useLocation();
+  const isExactNews = location.pathname === "/news" || location.pathname === "/news/";
+
+  if (!isExactNews) {
+    return <Outlet />;
+  }
+
   const { customSections, initialArticles } = Route.useLoaderData();
   const [articles, setArticles] = useState<NewsArticle[]>(
     initialArticles && initialArticles.length > 0 ? initialArticles : fallbackArticles,

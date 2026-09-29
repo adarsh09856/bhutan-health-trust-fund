@@ -128,6 +128,7 @@ class BHTFDataStore {
   }
 
   public async getNewsBySlug(slug: string): Promise<NewsArticle | null> {
+    const normalized = slug.trim().toLowerCase();
     try {
       const [article] = await drizzleDb
         .select()
@@ -147,7 +148,31 @@ class BHTFDataStore {
     }
 
     const all = persistentStore.getNews();
-    return all.find((a) => a.slug === slug) || null;
+    const found = all.find((a) => a.slug === slug || a.slug.toLowerCase() === normalized);
+    if (found) return found;
+
+    const seedFound = initialNewsArticles.find(
+      (a) => (a.slug || "").toLowerCase() === normalized,
+    );
+    if (seedFound) {
+      return {
+        id: 999,
+        slug: seedFound.slug,
+        title: seedFound.title,
+        category: seedFound.category || "General",
+        author: seedFound.author || "BHTF Communications",
+        coverImage: seedFound.coverImage,
+        excerpt: seedFound.excerpt,
+        content: seedFound.content,
+        isPublished: true,
+        viewsCount: 100,
+        publishedAt: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    }
+
+    return null;
   }
 
   public async createNews(data: NewNewsArticle): Promise<NewsArticle> {

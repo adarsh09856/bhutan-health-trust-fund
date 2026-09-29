@@ -11,8 +11,6 @@ import {
   Eye,
   EyeOff,
   ShieldAlert,
-  Sparkles,
-  UserCheck,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
@@ -75,12 +73,6 @@ function AdminLoginPage() {
     handleLoginWithCredentials(email, password);
   };
 
-  const handleQuickDemoAdmin = () => {
-    setEmail("admin@bhtf.bt");
-    setPassword("Admin@BHTF2026");
-    handleLoginWithCredentials("admin@bhtf.bt", "Admin@BHTF2026");
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-primary/90 flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-700/20">
@@ -100,34 +92,11 @@ function AdminLoginPage() {
 
         {/* Form Body */}
         <div className="p-8">
-          <div className="mb-5">
+          <div className="mb-6">
             <h2 className="text-lg font-bold text-slate-900">Sign in to your account</h2>
             <p className="text-xs text-slate-500 mt-1">
-              Select authorized instant login or enter your official credentials.
+              Enter your official administrative credentials to access the management portal.
             </p>
-          </div>
-
-          {/* Quick 1-Click Secretariat Login */}
-          <div className="mb-5 space-y-2">
-            <button
-              type="button"
-              id="btn-quick-admin-login"
-              onClick={handleQuickDemoAdmin}
-              disabled={loading}
-              className="w-full bg-[#0B4F42] hover:bg-[#083b31] text-white text-xs font-semibold py-3 px-3.5 rounded-xl flex items-center justify-between transition cursor-pointer shadow-sm hover:shadow"
-            >
-              <span className="flex items-center gap-2">
-                <UserCheck className="h-4 w-4 text-amber-400" />
-                <span>Instant Secretariat Login (Super Admin)</span>
-              </span>
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-            </button>
-          </div>
-
-          <div className="relative flex py-2 items-center mb-4">
-            <div className="flex-grow border-t border-slate-200"></div>
-            <span className="flex-shrink mx-3 text-slate-400 text-[10px] uppercase font-semibold">Or enter credentials</span>
-            <div className="flex-grow border-t border-slate-200"></div>
           </div>
 
           <form onSubmit={handleFormSubmit} className="space-y-4">
