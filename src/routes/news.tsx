@@ -138,11 +138,10 @@ function NewsPage() {
   };
 
   const categories = [
-    { id: "ALL", label: "All Press Releases" },
-    { id: "Immunization", label: "Vaccines & Cold Chain" },
-    { id: "Essential Medicines", label: "Essential Medicines" },
-    { id: "Governance", label: "Governance & Audits" },
-    { id: "Partnership", label: "Global Partnerships" },
+    { id: "ALL", label: "All Releases" },
+    { id: "OFFICIAL_NEWS", label: "Official News", match: ["Official News", "Governance", "Partnership"] },
+    { id: "EVENTS", label: "Events & Campaigns", match: ["Events & Campaigns", "Immunization", "Campaign"] },
+    { id: "FIELD_ACTIVITIES", label: "Field Activities", match: ["Field Activities", "Essential Medicines", "Logistics"] },
   ];
 
   const activeArticles = articles.length > 0 ? articles : fallbackArticles;
@@ -151,7 +150,10 @@ function NewsPage() {
     const matchesSearch =
       a.title.toLowerCase().includes(search.toLowerCase()) ||
       a.excerpt.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = selectedCategory === "ALL" || a.category === selectedCategory;
+    const catObj = categories.find((c) => c.id === selectedCategory);
+    const matchesCategory =
+      selectedCategory === "ALL" ||
+      (catObj?.match ? catObj.match.includes(a.category) : a.category === selectedCategory);
     return matchesSearch && matchesCategory;
   });
 

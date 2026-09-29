@@ -775,7 +775,7 @@ function Index() {
   return (
     <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
       {/* 1. Sovereign Hero Section: Full 100dvh Unobstructed King Portrait + Scroll-Driven Translucent Card Elevation */}
-      <HeroBlock />
+      <HeroBlock section={{ id: "hero-main", type: "hero", backgroundImage: settings["hero_background_image"] }} />
 
       {/* 2. Statement of Royal Mandate (Layout 1) */}
       <StatementLayout

@@ -174,6 +174,26 @@ function OurStoryPage() {
                 <span>100% Ring-Fenced Health Corpus</span>
               </div>
             </div>
+
+            {/* Lyonpo Sangay Nidup 1998 Geneva Launch Tribute */}
+            <div className="mt-4 p-4 rounded-2xl bg-[#EAF6F5]/80 border border-[#00A896]/30 flex items-start gap-3.5 shadow-2xs">
+              <div className="h-10 w-10 rounded-xl bg-white border border-[#00A896]/30 text-[#00A896] grid place-items-center shrink-0">
+                <Landmark className="h-5 w-5" />
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-serif text-xs sm:text-sm font-bold text-[#0B4F42]">
+                    Lyonpo Sangay Nidup • Minister for Health & Education (1998)
+                  </h4>
+                  <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#00A896] border border-[#00A896]/20">
+                    WHO Geneva 1998
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-600 font-light leading-relaxed">
+                  Led the historic delegation to the 51st World Health Assembly in Geneva on 12 May 1998, formally launching the Bhutan Health Trust Fund and mobilizing founding multilateral endorsements from WHO and sovereign partners.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-5">

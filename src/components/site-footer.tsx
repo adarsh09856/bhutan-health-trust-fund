@@ -144,6 +144,14 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
+                to="/our-impact"
+                className="hover:text-[#00A896] transition flex items-center gap-1.5"
+              >
+                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Field Activities & Supply Chains
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/track-donation"
                 className="hover:text-[#00A896] transition flex items-center gap-1.5"
               >
@@ -272,7 +280,15 @@ export function SiteFooter() {
             <span>Royal Charter Autonomous Statutory Entity.</span>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 text-slate-400">
+            <Link to="/policies" className="hover:text-amber-300 transition">
+              Privacy Policy
+            </Link>
+            <span>•</span>
+            <Link to="/policies" className="hover:text-amber-300 transition">
+              Terms & Conditions
+            </Link>
+            <span>•</span>
             <Link to="/policies" className="hover:text-amber-300 transition">
               Anti-Corruption Policy
             </Link>

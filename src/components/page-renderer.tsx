@@ -180,72 +180,72 @@ export function RendererHeroCorpusCard({ showSatellite = false }: { showSatellit
       {/* Main Glassmorphic Corpus Card with Ultra-Clear Frosted Chassis */}
       <div
         ref={corpusCounter.ref}
-        className="relative rounded-2xl sm:rounded-3xl bg-white/80 hover:bg-white/90 border border-white/85 ring-1 ring-black/5 p-4 sm:p-5 shadow-[0_20px_50px_-10px_rgba(11,79,66,0.16)] backdrop-blur-2xl space-y-3.5 overflow-hidden text-slate-900 text-left transition-all"
+        className="relative rounded-2xl bg-white/85 hover:bg-white/95 border border-white/90 ring-1 ring-black/5 p-3 sm:p-3.5 shadow-[0_16px_36px_-10px_rgba(11,79,66,0.14)] backdrop-blur-2xl space-y-2.5 overflow-hidden text-slate-900 text-left transition-all"
       >
         {/* Top Status Header */}
-        <div className="flex items-center justify-between border-b border-[#0B4F42]/15 pb-2.5">
+        <div className="flex items-center justify-between border-b border-[#0B4F42]/10 pb-2">
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A896] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00A896]" />
             </span>
-            <span className="text-[11px] font-mono tracking-widest text-[#0B4F42] uppercase font-black">
-              Sovereign Health Corpus
+            <span className="text-[10px] font-mono tracking-wider text-[#0B4F42] uppercase font-black">
+              Sovereign Corpus
             </span>
           </div>
-          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EAF6F5] text-[#0B4F42] border border-[#00A896]/30 shadow-2xs">
-            Royal Charter Mandate
+          <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#EAF6F5] text-[#0B4F42] border border-[#00A896]/30 shadow-2xs">
+            Royal Charter
           </span>
         </div>
 
         {/* Main Numeral */}
         <div className="space-y-0.5">
-          <span className="text-[11px] uppercase tracking-wider text-[#0B4F42]/90 font-black font-sans block">
-            Perpetual Health Endowment
+          <span className="text-[10px] uppercase tracking-wider text-[#0B4F42]/90 font-black font-sans block">
+            Perpetual Endowment
           </span>
-          <div className="font-serif text-2xl sm:text-3xl lg:text-[2.25rem] font-black text-[#0B4F42] tracking-tight leading-tight break-words">
+          <div className="font-serif text-xl sm:text-2xl lg:text-[1.8rem] font-black text-[#0B4F42] tracking-tight leading-tight break-words">
             {corpusCounter.formatted}
           </div>
-          <p className="text-xs text-slate-700 font-sans leading-relaxed pt-0.5 font-normal">
+          <p className="text-[11px] text-slate-700 font-sans leading-snug pt-0.5 font-normal line-clamp-1">
             Financing universal vaccines & 120+ essential medicines in perpetuity.
           </p>
         </div>
 
         {/* Clean 3-Item Micro Grid (Clean, Crisp Frosted Pills) */}
-        <div className="grid grid-cols-3 gap-1.5 pt-0.5">
-          <div className="bg-[#EAF6F5]/85 hover:bg-[#EAF6F5] backdrop-blur-md px-1.5 sm:px-2 py-2 rounded-xl border border-[#00A896]/25 text-center shadow-2xs transition-all">
-            <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-[#0B4F42]">
-              <Syringe className="h-3 w-3 text-[#00A896] shrink-0" />
+        <div className="grid grid-cols-3 gap-1 pt-0.5">
+          <div className="bg-[#EAF6F5]/85 hover:bg-[#EAF6F5] backdrop-blur-md px-1 py-1.5 rounded-lg border border-[#00A896]/20 text-center shadow-2xs transition-all">
+            <div className="flex items-center justify-center gap-1 text-[9px] font-bold text-[#0B4F42]">
+              <Syringe className="h-2.5 w-2.5 text-[#00A896] shrink-0" />
               <span>Vaccines</span>
             </div>
-            <div className="font-serif text-[11px] sm:text-xs font-black text-[#00A896] font-mono pt-0.5">Nu. 68.5M</div>
+            <div className="font-serif text-[10.5px] font-black text-[#00A896] font-mono pt-0.5">Nu. 68.5M</div>
           </div>
 
-          <div className="bg-[#EAF6F5]/85 hover:bg-[#EAF6F5] backdrop-blur-md px-1.5 sm:px-2 py-2 rounded-xl border border-[#00A896]/25 text-center shadow-2xs transition-all">
-            <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-[#0B4F42]">
-              <Pill className="h-3 w-3 text-[#00A896] shrink-0" />
+          <div className="bg-[#EAF6F5]/85 hover:bg-[#EAF6F5] backdrop-blur-md px-1 py-1.5 rounded-lg border border-[#00A896]/20 text-center shadow-2xs transition-all">
+            <div className="flex items-center justify-center gap-1 text-[9px] font-bold text-[#0B4F42]">
+              <Pill className="h-2.5 w-2.5 text-[#00A896] shrink-0" />
               <span>Medicines</span>
             </div>
-            <div className="font-serif text-[11px] sm:text-xs font-black text-[#00A896] font-mono pt-0.5">Nu. 145M</div>
+            <div className="font-serif text-[10.5px] font-black text-[#00A896] font-mono pt-0.5">Nu. 145M</div>
           </div>
 
-          <div className="bg-[#EAF6F5]/85 hover:bg-[#EAF6F5] backdrop-blur-md px-1.5 sm:px-2 py-2 rounded-xl border border-[#00A896]/25 text-center shadow-2xs transition-all">
-            <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-[#0B4F42]">
-              <ThermometerSnowflake className="h-3 w-3 text-[#00A896] shrink-0" />
+          <div className="bg-[#EAF6F5]/85 hover:bg-[#EAF6F5] backdrop-blur-md px-1 py-1.5 rounded-lg border border-[#00A896]/20 text-center shadow-2xs transition-all">
+            <div className="flex items-center justify-center gap-1 text-[9px] font-bold text-[#0B4F42]">
+              <ThermometerSnowflake className="h-2.5 w-2.5 text-[#00A896] shrink-0" />
               <span>Cold Chain</span>
             </div>
-            <div className="font-serif text-[11px] sm:text-xs font-black text-[#00A896] font-mono pt-0.5">Nu. 24.2M</div>
+            <div className="font-serif text-[10.5px] font-black text-[#00A896] font-mono pt-0.5">Nu. 24.2M</div>
           </div>
         </div>
 
         {/* Trust Seal Badges */}
-        <div className="flex items-center justify-between pt-2 border-t border-[#0B4F42]/15 text-[11px] text-[#0B4F42] font-bold font-sans">
-          <div className="flex items-center gap-1.5 text-[#00A896] font-bold">
-            <CheckCircle2 className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
+        <div className="flex items-center justify-between pt-1.5 border-t border-[#0B4F42]/10 text-[10px] text-[#0B4F42] font-bold font-sans">
+          <div className="flex items-center gap-1 text-[#00A896]">
+            <CheckCircle2 className="h-3 w-3 text-[#00A896] shrink-0" />
             <span>100% Ring-Fenced</span>
           </div>
-          <div className="flex items-center gap-1.5 text-amber-900 font-bold">
-            <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+          <div className="flex items-center gap-1 text-amber-900 font-bold">
+            <ShieldCheck className="h-3 w-3 text-amber-600 shrink-0" />
             <span>RAA Clean Audit</span>
           </div>
         </div>
@@ -306,7 +306,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
         <div
           className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none opacity-[0.25] sm:opacity-[0.28] transition-opacity duration-300"
           style={{
-            backgroundImage: `url(${kingPortrait})`,
+            backgroundImage: `url(${currentSection.backgroundImage || kingPortrait})`,
             backgroundPosition: "right 15%",
           }}
         />
@@ -383,7 +383,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
         <div
           className="absolute inset-0 bg-cover bg-no-repeat bg-[position:42%_18%] sm:bg-[position:39%_18%] lg:bg-[position:center_18%] transition-transform duration-300 ease-out will-change-transform"
           style={{
-            backgroundImage: `url(${kingPortrait})`,
+            backgroundImage: `url(${currentSection.backgroundImage || kingPortrait})`,
             transform: `scale(${portraitScale})`,
           }}
         />
@@ -397,9 +397,9 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
           style={{ opacity: Math.min(scrollProgress * 1.2, 1) }}
         />
 
-        {/* Desktop Left Side: Clickable Story Rectangle Card + Mission Button */}
+        {/* Desktop Left Side: Sleek Compact Story Card + Mission Button */}
         <div
-          className="hidden lg:flex flex-col absolute z-20 lg:left-8 xl:left-14 top-[54%] w-[360px] lg:w-[380px] xl:w-[400px] pointer-events-auto transition-all duration-300 ease-out space-y-2.5"
+          className="hidden lg:flex flex-col absolute z-20 lg:left-4 xl:left-8 2xl:left-12 top-[52%] w-[260px] lg:w-[280px] xl:w-[305px] pointer-events-auto transition-all duration-300 ease-out space-y-2"
           style={{
             opacity: Math.max(0, 1 - scrollY / 150),
             pointerEvents: scrollY > 90 ? "none" : "auto",
@@ -408,24 +408,24 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
         >
           <Link
             to="/our-story"
-            className="block rounded-2xl sm:rounded-3xl bg-white/80 hover:bg-white/90 border border-white/85 ring-1 ring-black/5 p-4 sm:p-5 shadow-[0_20px_50px_-10px_rgba(11,79,66,0.16)] backdrop-blur-2xl space-y-3.5 overflow-hidden text-slate-900 text-left transition-all hover:scale-[1.01] group cursor-pointer"
+            className="block rounded-2xl bg-white/85 hover:bg-white/95 border border-white/90 ring-1 ring-black/5 p-3 sm:p-3.5 shadow-[0_16px_36px_-10px_rgba(11,79,66,0.14)] backdrop-blur-2xl space-y-2.5 overflow-hidden text-slate-900 text-left transition-all hover:scale-[1.01] group cursor-pointer"
           >
             {/* Top Status Header */}
-            <div className="flex items-center justify-between border-b border-[#0B4F42]/15 pb-2.5">
+            <div className="flex items-center justify-between border-b border-[#0B4F42]/10 pb-2">
               <div className="flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
-                <span className="text-[11px] font-mono tracking-widest text-[#0B4F42] uppercase font-black">
-                  Sacred Trust Endowment
+                <Sparkles className="h-3 w-3 text-[#00A896]" />
+                <span className="text-[10px] font-mono tracking-wider text-[#0B4F42] uppercase font-black">
+                  Sacred Trust
                 </span>
               </div>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-[#00A896] border border-[#00A896]/30 shadow-2xs">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#00A896] border border-[#00A896]/30 shadow-2xs">
                 100% Tax Exempt
               </span>
             </div>
 
-            {/* Photo + Story text in horizontal layout */}
-            <div className="flex items-start gap-3.5 pt-0.5">
-              <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-xs border border-white/80 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
+            {/* Photo + Story text in compact horizontal layout */}
+            <div className="flex items-start gap-2.5 pt-0.5">
+              <div className="relative shrink-0 w-14 h-14 rounded-lg overflow-hidden shadow-xs border border-white/80 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
                 <img
                   src={newsVaccine}
                   alt="Bhutan Healthcare Immunization"
@@ -433,47 +433,47 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
               </div>
-              <div className="flex-1 min-w-0 space-y-1">
-                <h3 className="font-serif text-sm lg:text-base font-black text-[#0B4F42] leading-snug group-hover:text-[#00A896] transition-colors">
-                  Did you know you can donate here?
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <h3 className="font-serif text-xs lg:text-[13px] font-black text-[#0B4F42] leading-snug group-hover:text-[#00A896] transition-colors line-clamp-1">
+                  Did you know you can donate?
                 </h3>
-                <p className="text-xs text-slate-700 line-clamp-3 leading-relaxed font-normal">
-                  Your direct contribution strengthens Bhutan's primary healthcare lifeline — safeguarding universal childhood vaccines & 120+ essential medicines across all 20 Dzongkhags.
+                <p className="text-[11px] text-slate-700 line-clamp-2 leading-relaxed font-normal">
+                  Your direct contribution safeguards childhood vaccines & 120+ essential medicines across all 20 Dzongkhags.
                 </p>
               </div>
             </div>
 
             {/* Trust Seal Footer */}
-            <div className="flex items-center justify-between pt-2 border-t border-[#0B4F42]/15 text-[11px] text-[#0B4F42] font-bold font-sans">
-              <div className="flex items-center gap-1.5 text-[#00A896] font-bold">
-                <CheckCircle2 className="h-3.5 w-3.5 text-[#00A896] shrink-0" />
+            <div className="flex items-center justify-between pt-1.5 border-t border-[#0B4F42]/10 text-[10px] text-[#0B4F42] font-bold font-sans">
+              <div className="flex items-center gap-1 text-[#00A896]">
+                <CheckCircle2 className="h-3 w-3 text-[#00A896] shrink-0" />
                 <span>Universal Health Guarantee</span>
               </div>
-              <div className="flex items-center gap-1 text-[#0B4F42] font-black group-hover:text-[#00A896] group-hover:translate-x-0.5 transition-all">
-                <span>Read Story →</span>
+              <div className="flex items-center gap-0.5 text-[#0B4F42] font-black group-hover:text-[#00A896] group-hover:translate-x-0.5 transition-all">
+                <span>Story →</span>
               </div>
             </div>
           </Link>
 
           {/* Action Bar on Left Side */}
-          <div className="rounded-2xl bg-white/80 hover:bg-white/90 backdrop-blur-2xl border border-white/85 ring-1 ring-black/5 p-2 sm:p-2.5 shadow-[0_12px_35px_-10px_rgba(11,79,66,0.14)] flex flex-col items-center justify-center text-center transition-all">
+          <div className="rounded-xl bg-white/85 hover:bg-white/95 backdrop-blur-2xl border border-white/90 ring-1 ring-black/5 p-1.5 sm:p-2 shadow-[0_10px_25px_-8px_rgba(11,79,66,0.12)] flex flex-col items-center justify-center text-center transition-all">
             <Link
               to="/our-story"
-              className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-[#0B4F42] hover:bg-[#083b31] text-white font-bold text-xs uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98] text-center shadow-xs"
+              className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3.5 rounded-lg bg-[#0B4F42] hover:bg-[#083b31] text-white font-bold text-[11px] uppercase tracking-wider transition-all hover:scale-[1.01] active:scale-[0.98] text-center shadow-xs"
             >
               <span>Explore Sovereign Mission</span>
-              <ArrowRight className="h-3.5 w-3.5 text-amber-400" />
+              <ArrowRight className="h-3 w-3 text-amber-400" />
             </Link>
-            <div className="flex items-center justify-center gap-1.5 text-[9px] text-[#0B4F42] font-bold font-sans pt-1">
-              <Sparkles className="h-3 w-3 text-[#00A896] shrink-0" />
-              <span>Conceived under Royal Vision (1998–2000)</span>
+            <div className="flex items-center justify-center gap-1 text-[8.5px] text-[#0B4F42] font-bold font-sans pt-1">
+              <Sparkles className="h-2.5 w-2.5 text-[#00A896] shrink-0" />
+              <span>Royal Vision (1998–2000)</span>
             </div>
           </div>
         </div>
 
         {/* Desktop Right Side: Clean Translucent Corpus Card + Donate Button Directly Below */}
         <div
-          className="hidden lg:flex flex-col absolute z-20 lg:right-8 xl:right-14 top-[54%] w-[360px] lg:w-[380px] xl:w-[400px] pointer-events-auto transition-all duration-300 ease-out space-y-2.5"
+          className="hidden lg:flex flex-col absolute z-20 lg:right-4 xl:right-8 2xl:right-12 top-[52%] w-[270px] lg:w-[290px] xl:w-[315px] pointer-events-auto transition-all duration-300 ease-out space-y-2"
           style={{
             opacity: Math.max(0, 1 - scrollY / 150),
             pointerEvents: scrollY > 90 ? "none" : "auto",
@@ -484,17 +484,17 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
           <RendererHeroCorpusCard showSatellite={false} />
 
           {/* Dedicated Glowing Amber Donate Button Bar Directly Below Right Card */}
-          <div className="rounded-2xl bg-white/80 hover:bg-white/90 backdrop-blur-2xl border border-white/85 ring-1 ring-black/5 p-2 sm:p-2.5 shadow-[0_12px_35px_-10px_rgba(11,79,66,0.14)] flex flex-col items-center justify-center text-center transition-all">
+          <div className="rounded-xl bg-white/85 hover:bg-white/95 backdrop-blur-2xl border border-white/90 ring-1 ring-black/5 p-1.5 sm:p-2 shadow-[0_10px_25px_-8px_rgba(11,79,66,0.12)] flex flex-col items-center justify-center text-center transition-all">
             <Link
               to="/get-involved"
-              className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-[0_4px_16px_rgba(245,158,11,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98] text-center"
+              className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3.5 rounded-lg bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-[11px] uppercase tracking-wider shadow-[0_4px_14px_rgba(245,158,11,0.35)] transition-all hover:scale-[1.01] active:scale-[0.98] text-center"
             >
-              <Heart className="h-4 w-4 fill-slate-950 text-slate-950 shrink-0" />
+              <Heart className="h-3.5 w-3.5 fill-slate-950 text-slate-950 shrink-0" />
               <span>Donate to Healthcare Fund →</span>
             </Link>
-            <div className="flex items-center justify-center gap-1.5 text-[9px] text-[#0B4F42] font-bold font-sans pt-1">
-              <CheckCircle2 className="h-3 w-3 text-[#00A896] shrink-0" />
-              <span>Royal Charter Mandate • RAA Clean Audit</span>
+            <div className="flex items-center justify-center gap-1 text-[8.5px] text-[#0B4F42] font-bold font-sans pt-1">
+              <CheckCircle2 className="h-2.5 w-2.5 text-[#00A896] shrink-0" />
+              <span>Royal Charter • RAA Clean Audit</span>
             </div>
           </div>
         </div>

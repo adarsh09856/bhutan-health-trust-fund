@@ -247,6 +247,42 @@ export function BlockInspector({
           </div>
         )}
 
+        {/* Hero Background Image (4K Banner) */}
+        {section.type === "hero" && (
+          <div className="space-y-2 pt-2 border-t border-slate-800">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-slate-300">Hero Background Image (4K Banner)</label>
+              <span className="text-[10px] text-amber-400 font-mono">Dynamic Merge</span>
+            </div>
+            <input
+              type="text"
+              value={section.backgroundImage || ""}
+              onChange={(e) => updateField("backgroundImage", e.target.value)}
+              placeholder="Image URL or leave blank for official King Portrait"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-amber-500 transition-colors"
+            />
+            <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+              <button
+                type="button"
+                onClick={() => updateField("backgroundImage", "")}
+                className="py-1 px-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 truncate text-left"
+              >
+                Reset to King Portrait
+              </button>
+              <button
+                type="button"
+                onClick={() => updateField("backgroundImage", "/src/assets/forest_paro_hero.png")}
+                className="py-1 px-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 truncate text-left"
+              >
+                Paro Highland Forest
+              </button>
+            </div>
+            <p className="text-[10px] text-slate-400">
+              Paste any custom URL or asset path. Automatically merges with live hero cards and layout.
+            </p>
+          </div>
+        )}
+
         {/* Action Buttons */}
         {(section.type === "hero" || section.type === "cta_banner") && (
           <div className="space-y-4 pt-3 border-t border-slate-800">

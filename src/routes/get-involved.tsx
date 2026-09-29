@@ -35,6 +35,7 @@ import {
   Zap,
   X,
   Lock,
+  Quote,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -420,6 +421,53 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA
               Payment Gateway, or direct bank transfer.
             </p>
+          </div>
+
+          {/* Sacred Donation Proclamations & Buddhist Quotes (Record of Discussion & DOCX Section 11 & 12) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-[#FAF8F3] border border-amber-200/90 rounded-2xl p-4 sm:p-5 flex items-start gap-3 shadow-2xs">
+              <Quote className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-serif text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
+                  "Your gift protects the health of every Bhutanese forever."
+                </p>
+                <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider block">
+                  Sovereign Health Promise • Royal Charter Mandate
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-[#EAF6F5] border border-[#00A896]/30 rounded-2xl p-4 sm:p-5 flex items-start gap-3 shadow-2xs">
+              <Quote className="h-5 w-5 text-[#00A896] shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-serif text-xs sm:text-sm font-bold text-[#0B4F42] italic leading-snug">
+                  "No Buddhist should ever have to choose between their health and their livelihood."
+                </p>
+                <span className="text-[10px] font-mono font-bold text-[#00A896] uppercase tracking-wider block">
+                  Universal Compassion • Equitable Care
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Official DRC Tax Exemption Caption Callout */}
+          <div className="bg-white border-2 border-[#00A896]/30 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-2xs">
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 grid place-items-center shrink-0">
+                <Sparkles className="h-4 w-4 text-emerald-600" />
+              </div>
+              <div>
+                <div className="font-serif text-sm font-bold text-slate-900">
+                  “Give generously, save on tax.”
+                </div>
+                <p className="text-[11px] text-slate-600 font-light">
+                  100% Tax Deductible under Section 31 & Section 10(f) of the DRC Income Tax Act of Bhutan.
+                </p>
+              </div>
+            </div>
+            <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 shrink-0">
+              DRC Certified Exemption
+            </span>
           </div>
 
           {receiptData ? (
