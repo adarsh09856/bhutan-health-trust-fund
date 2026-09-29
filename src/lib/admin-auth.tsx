@@ -14,6 +14,8 @@ interface AdminAuthContextType {
   user: AdminUser | null;
   token: string | null;
   isLoading: boolean;
+  adminBarCollapsed: boolean;
+  setAdminBarCollapsed: (collapsed: boolean) => void;
   login: (user: AdminUser, token: string) => void;
   logout: () => void;
   refreshSession: () => Promise<void>;
@@ -23,6 +25,8 @@ const AdminAuthContext = createContext<AdminAuthContextType>({
   user: null,
   token: null,
   isLoading: true,
+  adminBarCollapsed: false,
+  setAdminBarCollapsed: () => {},
   login: () => {},
   logout: () => {},
   refreshSession: async () => {},
@@ -48,6 +52,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AdminUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [adminBarCollapsed, setAdminBarCollapsed] = useState(false);
   const router = useRouter();
 
   const verifySession = async (existingToken: string) => {
@@ -117,7 +122,18 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AdminAuthContext.Provider value={{ user, token, isLoading, login, logout, refreshSession }}>
+    <AdminAuthContext.Provider
+      value={{
+        user,
+        token,
+        isLoading,
+        adminBarCollapsed,
+        setAdminBarCollapsed,
+        login,
+        logout,
+        refreshSession,
+      }}
+    >
       {children}
     </AdminAuthContext.Provider>
   );

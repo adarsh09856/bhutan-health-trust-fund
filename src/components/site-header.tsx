@@ -31,9 +31,13 @@ export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const { user } = useAdminAuth();
+  const { user, adminBarCollapsed } = useAdminAuth();
   const location = useLocation();
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const showAdminBar = Boolean(
+    user && !adminBarCollapsed && !location.pathname.startsWith("/admin")
+  );
 
   // Scroll listener for sticky glass elevation
   useEffect(() => {
@@ -63,22 +67,20 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed left-0 right-0 z-40 w-full pointer-events-none transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-40 w-full pointer-events-none transition-all duration-300 px-3 sm:px-6 lg:px-8 ${
+        showAdminBar ? "top-10" : "top-0"
+      } ${
         scrolled
-          ? user
-            ? "top-10 pt-0 px-0 sm:px-4 lg:px-6"
-            : "top-0 pt-0 px-0 sm:px-4 lg:px-6"
-          : user
-            ? "top-11 pt-1 px-3 sm:px-6 lg:px-8"
-            : "top-0 pt-2 sm:pt-3 px-3 sm:px-6 lg:px-8"
+          ? "pt-1.5 sm:pt-2"
+          : "pt-2.5 sm:pt-3.5"
       }`}
     >
       {/* Editorial Glass Capsule Navigation Island */}
       <div
-        className={`mx-auto max-w-7xl flex items-center justify-between gap-2 sm:gap-3 pointer-events-auto transition-all duration-300 ${
+        className={`mx-auto max-w-7xl flex items-center justify-between gap-2 sm:gap-3 pointer-events-auto transition-all duration-300 rounded-full ${
           scrolled
-            ? "w-full rounded-none sm:rounded-b-2xl bg-white/95 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.08)] px-3 sm:px-7 py-1.5 sm:py-2.5"
-            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-3 sm:px-6 py-1.5 sm:py-2.5"
+            ? "w-full bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.12)] px-3 sm:px-6 py-1.5 sm:py-2.5"
+            : "w-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-3 sm:px-6 py-1.5 sm:py-2.5"
         }`}
       >
         {/* Logo & Dzongkha Title */}
