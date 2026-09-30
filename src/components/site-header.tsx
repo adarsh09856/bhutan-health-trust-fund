@@ -67,20 +67,22 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed left-0 right-0 z-40 w-full pointer-events-none transition-all duration-300 px-3 sm:px-6 lg:px-8 ${
-        showAdminBar ? "top-10" : "top-0"
-      } ${
-        scrolled
-          ? "pt-1.5 sm:pt-2"
-          : "pt-2.5 sm:pt-3.5"
+      className={`fixed left-0 right-0 z-40 w-full pointer-events-none transition-all duration-300 ease-in-out ${
+        showAdminBar
+          ? scrolled
+            ? "top-10 pt-0 px-0 sm:px-4 lg:px-6"
+            : "top-10 pt-2 px-3 sm:px-6 lg:px-8"
+          : scrolled
+            ? "top-0 pt-0 px-0 sm:px-4 lg:px-6"
+            : "top-0 pt-3 sm:pt-4 px-3 sm:px-6 lg:px-8"
       }`}
     >
       {/* Editorial Glass Capsule Navigation Island */}
       <div
-        className={`mx-auto max-w-7xl flex items-center justify-between gap-2 sm:gap-3 pointer-events-auto transition-all duration-300 rounded-full ${
+        className={`mx-auto max-w-7xl flex items-center justify-between gap-2 sm:gap-3 pointer-events-auto transition-all duration-300 ease-in-out ${
           scrolled
-            ? "w-full bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.12)] px-3 sm:px-6 py-1.5 sm:py-2.5"
-            : "w-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-3 sm:px-6 py-1.5 sm:py-2.5"
+            ? "w-full rounded-none sm:rounded-b-2xl bg-white/98 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.12)] px-3 sm:px-7 py-1.5 sm:py-2.5"
+            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-3 sm:px-6 py-1.5 sm:py-2.5"
         }`}
       >
         {/* Logo & Dzongkha Title */}
