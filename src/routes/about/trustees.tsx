@@ -63,64 +63,64 @@ const staticTrustees = [
     name: "Lyonpo Tandin Wangchuk",
     role: "Chairperson",
     organization: "Hon'ble Minister for Health, Royal Government of Bhutan",
-    badge: "Chairperson",
-    desc: "Provides ministerial direction and policy leadership, ensuring alignment between national primary healthcare goals and trust fund commodity disbursements.",
+    badge: "Cabinet Chair",
+    desc: "Appointed Chairperson under Cabinet Order C-3/4(4)/2024/35. Provides ministerial leadership, steering sovereign health financing and aligning BHTF disbursements with universal healthcare priorities.",
     photo: trusteeLyonpoTandin,
   },
   {
-    name: "Lopen Choten Dorji",
+    name: "Lopen Tshering Wangchuk",
     role: "Trustee (Monastic Representative)",
-    organization: "Zhung Dratshang (Central Monastic Body)",
-    badge: "Spiritual Fiduciary",
-    desc: "Represents religious and traditional community values, ensuring compassionate care and ethical stewardship across the Kingdom.",
+    organization: "Secretary, Monastic Council Zhung Dratshang",
+    badge: "Zhung Dratshang",
+    desc: "Represents the Central Monastic Body (Zhung Dratshang), upholding ethical fiduciary responsibility, spiritual stewardship, and compassionate healthcare across the Kingdom.",
     photo: trusteeLopenChoten,
   },
   {
-    name: "Dr. Phub Tshering",
-    role: "Trustee (Health Technical Advisor)",
-    organization: "Ministry of Health, Royal Government of Bhutan",
-    badge: "Medical Trustee",
-    desc: "Oversees medical formulary compliance, essential drug prequalification, and clinical epidemiology priorities.",
-    photo: trusteeDrPhub,
-  },
-  {
-    name: "Dasho Pema Tshering",
-    role: "Trustee (Sovereign Finance)",
-    organization: "Ministry of Finance, Royal Government of Bhutan",
-    badge: "Fiscal Trustee",
-    desc: "Supervises 1:1 RGOB matching fund allocations, capital endowment ring-fencing, and statutory investment policy parameters.",
-    photo: trusteePemaTshering,
-  },
-  {
     name: "Ms. Ugyen Choden",
-    role: "Trustee (Civil Society Representative)",
-    organization: "Civil Society & Private Sector Directorate",
-    badge: "Civil Society",
-    desc: "Fosters public-private healthcare partnerships, community health initiatives, and philanthropic mobilization.",
+    role: "Trustee & Chairperson of AMC",
+    organization: "Deputy Governor, Royal Monetary Authority (RMA)",
+    badge: "Central Bank / AMC Chair",
+    desc: "Brings extensive central banking, monetary policy, and financial regulatory expertise. Chairs the BHTF Asset Management Committee (AMC) overseeing capital preservation and asset allocation.",
     photo: trusteeUgyenChoden,
   },
   {
-    name: "Mr. Norbu Dendup",
-    role: "Trustee (Legal & Governance)",
-    organization: "Board of Trustees, BHTF",
-    badge: "Legal & Audit",
-    desc: "Specializes in trust governance, Royal Charter compliance, and institutional statutory policies.",
-    photo: trusteeNorbuDendup,
-  },
-  {
     name: "Mr. Chencho T. Namgay",
-    role: "Trustee (Portfolio & Asset Management)",
-    organization: "Asset Management Committee, BHTF",
-    badge: "Asset Portfolio",
-    desc: "Advises on endowment capital preservation, sovereign bond allocations, and offshore risk management.",
+    role: "Trustee & Member AMC",
+    organization: "CEO, National Pension & Provident Fund (NPPF)",
+    badge: "Pension Fund / AMC Member",
+    desc: "Provides institutional investment acumen, large-scale portfolio management insight, and fiduciary risk oversight as a member of the Board and Asset Management Committee.",
     photo: trusteeChenchoNamgay,
   },
   {
-    name: "Dr. Gyambo Sithey",
-    role: "Trustee (Public Health Research)",
-    organization: "Public Health Institute of Bhutan",
-    badge: "Public Health",
-    desc: "Directs epidemiological research, evidence-based health investment allocations, and cold chain telemetry.",
+    name: "Mr. Norbu Dendup",
+    role: "Trustee & Member AMC",
+    organization: "Director, Department of Treasury & Accounts, Ministry of Finance",
+    badge: "Ministry of Finance / AMC Member",
+    desc: "Oversees public financial management, treasury coordination, and sovereign endowment governance, serving on the Board and Asset Management Committee.",
+    photo: trusteeNorbuDendup,
+  },
+  {
+    name: "Mr. Pema Tshering",
+    role: "Trustee (Independent Director)",
+    organization: "Former CEO, T Bank Ltd. (Financial Sector Specialist)",
+    badge: "Financial Sector Specialist",
+    desc: "Serves as an independent fiduciary expert with decades of commercial banking, capital markets, and corporate governance leadership in Bhutan.",
+    photo: trusteePemaTshering,
+  },
+  {
+    name: "Dr. Phub Tshering",
+    role: "Trustee (Clinical & Medical Specialist)",
+    organization: "Medical Director, Jigme Dorji Wangchuck National Referral Hospital (JDWNRH)",
+    badge: "Clinical Specialist",
+    bio: "Provides high-level clinical guidance, therapeutic efficacy reviews, and medical formulary alignment directly representing the nation's premier tertiary healthcare institution.",
+    photo: trusteeDrPhub,
+  },
+  {
+    name: "Dr. Gyambo Sithey, PhD",
+    role: "Director & Ex-officio Member Secretary",
+    organization: "Director, BHTF Secretariat",
+    badge: "Member Secretary",
+    desc: "Leads day-to-day operations of the BHTF Secretariat, execution of statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.",
     photo: trusteeDrGyambo,
   },
 ];
@@ -141,6 +141,7 @@ function TrusteesPage() {
 
   const trusteeFallbackPhotos: Record<string, string> = {
     Tandin: trusteeLyonpoTandin,
+    Tshering: trusteeLopenChoten,
     Choten: trusteeLopenChoten,
     Phub: trusteeDrPhub,
     Pema: trusteePemaTshering,
@@ -153,11 +154,11 @@ function TrusteesPage() {
   const defaultPhotoList = [
     trusteeLyonpoTandin,
     trusteeLopenChoten,
-    trusteeDrPhub,
-    trusteePemaTshering,
     trusteeUgyenChoden,
-    trusteeNorbuDendup,
     trusteeChenchoNamgay,
+    trusteeNorbuDendup,
+    trusteePemaTshering,
+    trusteeDrPhub,
     trusteeDrGyambo,
   ];
 
@@ -174,17 +175,18 @@ function TrusteesPage() {
   };
 
   const displayTrustees =
-    trusteesList.length >= 8 && trusteesList.some((t) => t.name.toLowerCase().includes("choten"))
+    trusteesList.length >= 7
       ? trusteesList.map((t, idx) => ({
           name: t.name,
           role: t.role,
           organization: t.organization || "Board of Trustees, BHTF",
           badge:
-            idx === 0 || t.name.toLowerCase().includes("tandin")
+            t.badge ||
+            (idx === 0 || t.name.toLowerCase().includes("tandin")
               ? "Chairperson"
               : t.role.toLowerCase().includes("secretary")
               ? "Member Secretary"
-              : "Trustee",
+              : "Trustee"),
           desc: t.bio || staticTrustees[idx]?.desc || "Statutory fiduciary trustee managing health endowment allocations.",
           photo: resolvePhoto(t.name, t.photoUrl, idx),
         }))

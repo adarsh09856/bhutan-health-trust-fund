@@ -149,7 +149,7 @@ function AboutOrganizationPage() {
                 In the Kingdom of Bhutan, healthcare is not treated as a commodity, but as a fundamental human right guaranteed to every citizen. Under the benevolence and vision of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, the Bhutan Health Trust Fund was established to ensure that universal access to free primary healthcare is safeguarded from economic volatility and international donor shifts.
               </p>
               <p>
-                Operating as an independent statutory autonomous trust fund, BHTF manages a permanent sovereign endowment whose capital is preserved in perpetuity. The investment income earned annually is earmarked exclusively for procuring 100% of routine childhood vaccines, 120+ essential formulary medicines, and high-altitude solar cold chain infrastructure across all 205 remote gewogs in 20 Dzongkhags.
+                Operating as an independent statutory autonomous trust fund, BHTF manages a permanent sovereign endowment whose capital is preserved in perpetuity. The investment income earned annually is earmarked exclusively for procuring 100% of routine childhood vaccines, 438 essential medicines, 110 traditional formulations (gSo-ba Rig-pa), and high-altitude solar cold chain infrastructure across all 205 remote gewogs in 20 Dzongkhags.
               </p>
             </div>
 
@@ -157,11 +157,11 @@ function AboutOrganizationPage() {
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1">
                 <span className="font-serif text-2xl font-bold text-emerald-800 block">100%</span>
                 <span className="font-bold text-slate-900 block">Universal Free Coverage</span>
-                <p className="text-slate-500 font-light">Zero cost for vital drugs & childhood vaccines</p>
+                <p className="text-slate-500 font-light">438 Essential Drugs & 4 Key Vaccines</p>
               </div>
 
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1">
-                <span className="font-serif text-2xl font-bold text-amber-700 block">Nu. 3.24B+</span>
+                <span className="font-serif text-2xl font-bold text-amber-700 block">Nu. 4.8B+</span>
                 <span className="font-bold text-slate-900 block">Ring-Fenced Corpus</span>
                 <p className="text-slate-500 font-light">Permanent endowment with capital preservation</p>
               </div>
@@ -292,8 +292,7 @@ function AboutOrganizationPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Link
-            to="/about"
-            hash="trustees"
+            to="/about/trustees"
             className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-emerald-400 transition-all duration-300 group space-y-3"
           >
             <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
@@ -303,13 +302,12 @@ function AboutOrganizationPage() {
               Board of Trustees →
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              High-level governance comprising ministerial leaders, health experts, and international partners.
+              High-level governance appointed under Cabinet Order C-3/4(4)/2024/35 comprising ministerial leaders, monetary fiduciaries, and clinicians.
             </p>
           </Link>
 
           <Link
-            to="/about"
-            hash="committees"
+            to="/about/committees"
             className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-amber-400 transition-all duration-300 group space-y-3"
           >
             <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
@@ -319,13 +317,12 @@ function AboutOrganizationPage() {
               Asset Management Committee →
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              Specialized fiduciary and audit committees supervising investment strategies and risk parameters.
+              Specialized fiduciary sub-committee supervising investment policies, Nu. 4.8B capital preservation, and inflation hedging.
             </p>
           </Link>
 
           <Link
-            to="/about"
-            hash="organogram"
+            to="/about/secretariat"
             className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-teal-400 transition-all duration-300 group space-y-3"
           >
             <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-800 grid place-items-center">
@@ -335,7 +332,7 @@ function AboutOrganizationPage() {
               Secretariat & Organogram →
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              The Directorate and 3 operational divisions executing daily procurement and health logistics.
+              The Directorate headed by Dr. Gyambo Sithey and approved divisions executing daily procurement and health logistics.
             </p>
           </Link>
         </div>

@@ -13,7 +13,11 @@ import {
   Lock,
   CheckCircle2,
   PieChart,
+  UserCheck,
 } from "lucide-react";
+import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
+import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
+import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 
 export const Route = createFileRoute("/about/committees")({
   loader: async () => {
@@ -45,6 +49,33 @@ export const Route = createFileRoute("/about/committees")({
   }),
   component: CommitteesPage,
 });
+
+const amcMembers = [
+  {
+    name: "Ms. Ugyen Choden",
+    committeeRole: "Chairperson, Asset Management Committee",
+    title: "Deputy Governor, Royal Monetary Authority (RMA)",
+    badge: "AMC Chairperson",
+    desc: "Provides high-level central banking, liquidity, and macroeconomic portfolio oversight, guiding BHTF capital preservation strategies.",
+    photo: trusteeUgyenChoden,
+  },
+  {
+    name: "Mr. Chencho T. Namgay",
+    committeeRole: "Member, Asset Management Committee",
+    title: "CEO, National Pension & Provident Fund (NPPF)",
+    badge: "Institutional Portfolio",
+    desc: "Brings extensive institutional fund management, asset allocation, and risk management insight from Bhutan's premier pension fiduciary.",
+    photo: trusteeChenchoNamgay,
+  },
+  {
+    name: "Mr. Norbu Dendup",
+    committeeRole: "Member, Asset Management Committee",
+    title: "Director, Department of Treasury & Accounts, MoF",
+    badge: "Treasury & Sovereign Fiduciary",
+    desc: "Oversees public debt parameters, sovereign treasury allocations, and statutory matching fund coordination under the Ministry of Finance.",
+    photo: trusteeNorbuDendup,
+  },
+];
 
 function CommitteesPage() {
   const { customSections } = Route.useLoaderData();
@@ -104,7 +135,7 @@ function CommitteesPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-800">
-                Statutory Sub-Committee
+                Cabinet Appointed Sub-Committee
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
                 Asset Management Committee (AMC)
@@ -119,7 +150,7 @@ function CommitteesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-7 space-y-4 text-slate-700 text-sm leading-relaxed font-light">
               <p>
-                The Asset Management Committee (AMC) was instituted by the Board of Trustees to provide specialized financial acumen, portfolio risk management, and strategic asset allocation oversight. The committee ensures that all capital endowment funds adhere strictly to the principle of permanent preservation.
+                The Asset Management Committee (AMC) was instituted by the Board of Trustees pursuant to Cabinet Order No. C-3/4(4)/2024/35 to provide specialized financial acumen, portfolio risk management, and strategic asset allocation oversight. The committee ensures that all capital endowment funds adhere strictly to the principle of permanent capital preservation.
               </p>
               <p>
                 Under the approved Investment Policy Statement (IPS), the AMC formulates risk-adjusted return benchmarks, evaluates investment instruments (sovereign treasury bills, corporate bonds, fixed deposits, and multi-currency holdings), and ensures that liquidity is available for quarterly window financing releases without compromising the capital corpus.
@@ -147,6 +178,55 @@ function CommitteesPage() {
             </div>
           </div>
 
+          {/* AMC Appointed Members Gallery */}
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 uppercase tracking-wider">
+              <UserCheck className="h-4 w-4 text-emerald-700" />
+              <span>Asset Management Committee Members</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {amcMembers.map((m, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#FAF8F3] rounded-2xl p-5 border border-slate-200 shadow-2xs hover:border-amber-300 hover:shadow-md transition duration-200 flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="h-16 w-16 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-white">
+                        <img
+                          src={m.photo}
+                          alt={m.name}
+                          className="h-full w-full object-cover object-top"
+                          loading="lazy"
+                        />
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900 border border-amber-300">
+                        {m.badge}
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-sm font-bold text-slate-900 leading-snug">
+                        {m.name}
+                      </h4>
+                      <p className="text-[11px] font-semibold text-emerald-800 mt-0.5">
+                        {m.committeeRole}
+                      </p>
+                      <p className="text-[10px] text-slate-500 font-medium">
+                        {m.title}
+                      </p>
+                    </div>
+                    <p className="text-[11px] text-slate-600 leading-relaxed font-light">
+                      {m.desc}
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-slate-200/60 text-[10px] text-slate-400 font-mono">
+                    Cabinet Order C-3/4(4)/2024/35
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Investment Asset Allocation Strategy Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4">
             <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
@@ -155,7 +235,17 @@ function CommitteesPage() {
               </div>
               <h3 className="font-serif text-base font-bold text-slate-900">Capital Preservation</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-light">
-                Zero capital erosion mandate. The principal corpus cannot be touched or utilized for operational expenses.
+                Zero capital erosion mandate. The principal corpus (Nu. 4.8B) cannot be touched or utilized for operational expenses.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
+              <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
+                <TrendingUp className="h-4 w-4" />
+              </div>
+              <h3 className="font-serif text-base font-bold text-slate-900">Yield Optimization</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Investment yields fund 100% of 4 routine vaccines, 438 essential medicines, and 110 traditional formulations.
               </p>
             </div>
 

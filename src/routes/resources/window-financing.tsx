@@ -55,40 +55,73 @@ export const Route = createFileRoute("/resources/window-financing")({
 
 const quarters = [
   {
-    quarter: "Q1 Tranche (July)",
-    commodity: "Universal Pediatric Vaccines & Antigens",
-    focus: "100% routine childhood immunization financing",
+    quarter: "Quarter 1 (1st Week of October)",
+    commodity: "Initial Essential Drugs & Vaccines Requisition",
+    focus: "National primary formulary & immunization launch",
     icon: Activity,
     color: "bg-blue-50 text-blue-700 border-blue-200",
     details:
-      "Finances 14 essential pediatric antigens through UNICEF and WHO-prequalified manufacturers, ensuring zero cold-chain degradation across high-altitude gewogs.",
+      "First tranche disbursement covering routine pediatric vaccines, maternal healthcare commodities, and core primary care therapeutics across all 20 dzongkhags.",
   },
   {
-    quarter: "Q2 Tranche (October)",
-    commodity: "National Essential Drugs List (NEDL)",
-    focus: "120+ vital primary pharmaceuticals",
+    quarter: "Quarter 2 (1st Week of January)",
+    commodity: "Winter Formulary & Seasonal Antigens",
+    focus: "Winter reserve buffer & influenza vaccines",
     icon: ShieldCheck,
     color: "bg-emerald-50 text-emerald-700 border-emerald-200",
     details:
-      "Procures essential antibiotics, cardiac medications, analgesics, and insulin buffers for all 20 Dzongkhag hospitals and 205 Primary Health Units.",
+      "Mid-year disbursement replenishing high-altitude snowbound gewog clinics with essential medicines, rapid diagnostics, and seasonal influenza vaccines.",
   },
   {
-    quarter: "Q3 Tranche (January)",
-    commodity: "Hospital Diagnostics & Maternal Kits",
-    focus: "Point-of-care testing & neonatal kits",
+    quarter: "Quarter 3 (1st Week of April)",
+    commodity: "Spring Primary Healthcare Stocking",
+    focus: "Hospital therapeutics & traditional medicine",
     icon: Sparkles,
     color: "bg-purple-50 text-purple-700 border-purple-200",
     details:
-      "Supplies clean delivery packs, neonatal resuscitation equipment, rapid diagnostic test strips, and laboratory reagents directly to rural health personnel.",
+      "Third tranche release supporting 438 essential modern medicines and 110 traditional gSo-ba Rig-pa formulations nationwide.",
   },
   {
-    quarter: "Q4 Tranche (April)",
-    commodity: "Solar Cold-Chain & Contingency Restock",
-    focus: "Alpine logistics & remote winter buffers",
+    quarter: "Quarter 4 (Last Week of June)",
+    commodity: "Fiscal Year-End Reconciliation & Contingency",
+    focus: "Emergency buffer replenishment & annual audit prep",
     icon: Clock,
     color: "bg-amber-50 text-amber-700 border-amber-200",
     details:
-      "Funds preventive maintenance on solar medical refrigerators, backup battery packs, and replenishes emergency stockpiles before alpine monsoons.",
+      "Final fiscal year release reconciling annual consumption data, emergency contingency stockpiles, and preparing ledgers for Royal Audit Authority review.",
+  },
+];
+
+const statutoryGuidelines = [
+  {
+    num: "01",
+    title: "Verified Requisition",
+    desc: "Releases are executed strictly upon submission of verified drug requirements and inventory reconciliation by the Ministry of Health.",
+  },
+  {
+    num: "02",
+    title: "Designated Transfer",
+    desc: "Direct fund transfer to MoH designated Letter-of-Credit (LC) accounts and statutory project accounts for procurement execution.",
+  },
+  {
+    num: "03",
+    title: "Yield-Only Financing",
+    desc: "Financed exclusively from accumulated investment returns and donor contributions, without ever eroding the core capital corpus.",
+  },
+  {
+    num: "04",
+    title: "Formulary Compliance",
+    desc: "Strictly covers items listed on the approved National Essential Drugs List (438 items) and traditional medicines (110 formulations).",
+  },
+  {
+    num: "05",
+    title: "Utilization Verification",
+    desc: "Subsequent quarterly releases are contingent on submission and physical verification of previous quarter expenditure and stock ledgers.",
+  },
+  {
+    num: "06",
+    title: "Statutory RAA Audit",
+    desc: "Annual audit and physical verification conducted independently by the Royal Audit Authority of Bhutan with unqualified certification.",
   },
 ];
 
@@ -189,7 +222,7 @@ function WindowFinancingPage() {
                 100% Principal Ring-Fencing
               </h3>
               <p className="text-xs text-slate-600 font-light leading-relaxed">
-                By Royal Decree, the endowment principal (Nu. 3.24B) is strictly inviolable. All window disbursements are funded exclusively from certified interest, sovereign coupon yields, and dividend returns.
+                By Royal Decree, the endowment principal (Nu. 4.8 Billion) is strictly inviolable. All window disbursements are funded exclusively from certified interest, sovereign coupon yields, and dividend returns.
               </p>
             </div>
 
@@ -265,6 +298,45 @@ function WindowFinancingPage() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Six Statutory Disbursement Guidelines */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-3xl p-8 sm:p-12 shadow-sm space-y-8">
+          <div className="max-w-3xl space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00A896] block">
+              Governance Framework • Content Package V2
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl font-black text-[#0B4F42]">
+              Six Statutory Disbursement Guidelines
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
+              Mandatory fiduciary protocols governing all transfers from the Bhutan Health Trust Fund to the Ministry of Health.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+            {statutoryGuidelines.map((g) => (
+              <div
+                key={g.num}
+                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs space-y-2 hover:border-[#00A896]/50 transition duration-200 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-[#EAF6F5] text-[#0B4F42] border border-[#00A896]/20">
+                      Guideline {g.num}
+                    </span>
+                    <ShieldCheck className="h-4 w-4 text-[#00A896]" />
+                  </div>
+                  <h3 className="font-serif text-base font-bold text-slate-900">{g.title}</h3>
+                  <p className="text-xs text-slate-600 font-light leading-relaxed mt-2">
+                    {g.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -120,15 +120,15 @@ export const Route = createFileRoute("/")({
 const fiduciaryLedgerRows = [
   {
     label: "Sovereign Health Corpus (Endowment Principal)",
-    figure: "Nu. 3,248,500,000",
-    code: "CORPUS-AUDIT-2025",
-    subtext: "Ring-fenced statutory capital invested in sovereign instruments and fixed-income portfolios.",
+    figure: "Nu. 4,798,965,306.85",
+    code: "CORPUS-AUDIT-2026",
+    subtext: "Ring-fenced statutory capital invested under Royal Charter (~Nu. 4.8B as of 30 June 2026).",
   },
   {
     label: "Annual Commodity Procurement Yield Disbursement",
-    figure: "Nu. 145,000,000",
-    code: "DISB-NEDL",
-    subtext: "Disbursed quarterly to Department of Medical Services exclusively for vital medicines and vaccines.",
+    figure: "Nu. 557,734,000",
+    code: "DISB-FY24-25",
+    subtext: "Disbursed quarterly for 438 essential drugs, 110 traditional remedies, and 4 routine vaccines.",
   },
   {
     label: "Citizens Protected Across 20 Dzongkhags",
@@ -137,16 +137,16 @@ const fiduciaryLedgerRows = [
     subtext: "Universal healthcare guarantee delivered across all 205 remote gewog Primary Health Units.",
   },
   {
-    label: "Essential Medicines on Zero-Stockout Formulary",
-    figure: "120+ Formulations",
-    code: "NEML-REV-8",
-    subtext: "Pre-stocked continuous 6-month buffer maintained against global supply-chain shocks.",
+    label: "Essential Medicines & Traditional Formulations",
+    figure: "438 Modern + 110 Traditional",
+    code: "NEML-REV-V2",
+    subtext: "100% of National Essential Drugs List and 65 core gSo-ba Rig-pa formulations.",
   },
   {
-    label: "Universal Pediatric Vaccine Antigens Financed",
-    figure: "14 Antigens",
-    code: "EPI-WHO",
-    subtext: "100% routine childhood and maternal immunization coverage sustained in perpetuity.",
+    label: "Routine National Immunization Antigens Financed",
+    figure: "4 Key Antigens",
+    code: "EPI-WHO-GAVI",
+    subtext: "Pentavalent, PCV, HPV, and seasonal Influenza sustained in perpetuity.",
   },
 ];
 
@@ -486,65 +486,65 @@ function TrusteesLeadershipShowcase() {
       name: "Lyonpo Tandin Wangchuk",
       role: "Chairperson",
       title: "Hon'ble Minister for Health, RGOB",
-      badge: "Chairperson",
+      badge: "Cabinet Chair",
       photo: trusteeLyonpoTandin,
-      duty: "Ministerial policy leadership & alignment with national primary healthcare priorities.",
+      duty: "Ministerial leadership, sovereign health financing & universal healthcare alignment (Cabinet Order C-3/4(4)/2024/35).",
     },
     {
-      name: "Dr. Phub Tshering",
-      role: "Medical Trustee",
-      title: "Health Technical Advisor, Ministry of Health",
-      badge: "Health Technical Advisor",
-      photo: trusteeDrPhub,
-      duty: "WHO-prequalified medicines list & essential vaccine formulary compliance.",
-    },
-    {
-      name: "Dasho Pema Tshering",
-      role: "Fiscal Trustee",
-      title: "Ministry of Finance, RGOB",
-      badge: "Sovereign Finance",
-      photo: trusteePemaTshering,
-      duty: "1:1 RGOB matching fund releases, capital ring-fencing & statutory investments.",
-    },
-    {
-      name: "Lopen Choten Dorji",
-      role: "Monastic Representative",
-      title: "Zhung Dratshang (Central Monastic Body)",
-      badge: "Spiritual Fiduciary",
+      name: "Lopen Tshering Wangchuk",
+      role: "Trustee (Monastic Representative)",
+      title: "Secretary, Monastic Council Zhung Dratshang",
+      badge: "Zhung Dratshang",
       photo: trusteeLopenChoten,
-      duty: "Ethical stewardship, compassion, and universal community outreach.",
+      duty: "Ethical fiduciary stewardship, compassionate healthcare & monastic community outreach.",
     },
     {
       name: "Ms. Ugyen Choden",
-      role: "Civil Society Trustee",
-      title: "Civil Society & Private Sector Directorate",
-      badge: "Civil Society",
+      role: "Trustee & AMC Chairperson",
+      title: "Deputy Governor, Royal Monetary Authority (RMA)",
+      badge: "AMC Chair / RMA",
       photo: trusteeUgyenChoden,
-      duty: "Public-private health partnerships and philanthropic mobilization.",
-    },
-    {
-      name: "Mr. Norbu Dendup",
-      role: "Legal Trustee",
-      title: "Board of Trustees, BHTF",
-      badge: "Legal & Governance",
-      photo: trusteeNorbuDendup,
-      duty: "Royal Charter compliance, statutory governance & institutional policy audit.",
+      duty: "Chairs the Asset Management Committee, overseeing capital preservation, asset allocation & liquidity.",
     },
     {
       name: "Mr. Chencho T. Namgay",
-      role: "Asset Portfolio Trustee",
-      title: "Asset Management Committee, BHTF",
-      badge: "Portfolio Management",
+      role: "Trustee & Member AMC",
+      title: "CEO, National Pension & Provident Fund (NPPF)",
+      badge: "AMC Member / NPPF",
       photo: trusteeChenchoNamgay,
-      duty: "Endowment capital preservation, treasury bond allocations & sovereign risk controls.",
+      duty: "Institutional fund management, portfolio risk controls & endowment growth strategies.",
     },
     {
-      name: "Dr. Gyambo Sithey",
-      role: "Public Health Trustee",
-      title: "Public Health Institute of Bhutan",
-      badge: "Public Health Research",
+      name: "Mr. Norbu Dendup",
+      role: "Trustee & Member AMC",
+      title: "Director, Department of Treasury & Accounts, MoF",
+      badge: "AMC Member / MoF",
+      photo: trusteeNorbuDendup,
+      duty: "Public financial management, 1:1 RGOB matching fund releases & treasury coordination.",
+    },
+    {
+      name: "Mr. Pema Tshering",
+      role: "Trustee (Independent Director)",
+      title: "Former CEO, T Bank Ltd. (Financial Sector Specialist)",
+      badge: "Financial Specialist",
+      photo: trusteePemaTshering,
+      duty: "Independent fiduciary oversight, commercial banking expertise & governance audit.",
+    },
+    {
+      name: "Dr. Phub Tshering",
+      role: "Trustee (Clinical Specialist)",
+      title: "Medical Director, JDWNRH",
+      badge: "Clinical Specialist",
+      photo: trusteeDrPhub,
+      duty: "Therapeutic efficacy reviews, National Essential Drugs List & referral hospital alignment.",
+    },
+    {
+      name: "Dr. Gyambo Sithey, PhD",
+      role: "Director & Member Secretary",
+      title: "Director, BHTF Secretariat",
+      badge: "Member Secretary",
       photo: trusteeDrGyambo,
-      duty: "Epidemiological research, alpine cold chain telemetry & health investment allocations.",
+      duty: "Executive administration, board resolutions execution & nationwide procurement disbursements.",
     },
   ];
 
@@ -708,8 +708,8 @@ function Index() {
           sectionTitle="Universal Vaccine & Primary Formulary Financing"
           referenceCode="Statutory Mandate & Allocation"
           paragraphs={[
-            "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines and over 120 essential pharmaceuticals directly for every hospital and gewog clinic in the Kingdom.",
-            "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 3.24B remains untouched in perpetuity.",
+            "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines, 438 essential modern medicines, and 110 traditional formulations (gSo-ba Rig-pa) directly for every hospital and gewog clinic in the Kingdom.",
+            "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 4.8B remains untouched in perpetuity.",
           ]}
           actionLink={{
             label: "Examine Financed Commodities & Formularies",
@@ -802,8 +802,8 @@ function Index() {
         sectionTitle="Universal Vaccine & Primary Formulary Financing"
         referenceCode="Statutory Mandate & Allocation"
         paragraphs={[
-          "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines and over 120 essential pharmaceuticals directly for every hospital and gewog clinic in the Kingdom.",
-          "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 3.24B remains untouched in perpetuity.",
+          "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines, 438 essential modern medicines, and 110 traditional formulations (gSo-ba Rig-pa) directly for every hospital and gewog clinic in the Kingdom.",
+          "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 4.8B remains untouched in perpetuity.",
         ]}
         actionLink={{
           label: "Examine Financed Commodities & Formularies",

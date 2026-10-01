@@ -15,9 +15,12 @@ import {
   Syringe,
   Pill,
   Users,
+  Quote,
 } from "lucide-react";
 import heroBhutan from "@/assets/hero-bhutan.jpg";
 import kingPortrait from "@/assets/king_portrait_fourth.jpg";
+import kingFourthOfficial from "@/assets/bhtf/king_fourth_official.png";
+import lyonpoSangayPhoto from "@/assets/bhtf/lyonpo_sangay_ngedup.png";
 import historyKing from "@/assets/reference/history_fourth_king.webp";
 import historyCharter from "@/assets/reference/history_charter_1992.webp";
 import historyMou from "@/assets/reference/history_mou.webp";
@@ -63,47 +66,52 @@ export const Route = createFileRoute("/our-story")({
   component: OurStoryPage,
 });
 
-// Official BHTF Historical Milestones Table (From Official BHTF Archive)
+// Official BHTF Historical Milestones (Docx Content Package V2 Section 4)
 const officialMilestones = [
   {
     year: "1998 — 12 May",
-    title: "Launch at WHO Headquarters in Geneva",
-    desc: "The vision of the Bhutan Health Trust Fund was formally presented and launched to the international public health community at the World Health Assembly in Geneva, Switzerland, under the dynamic leadership of then Health Minister Lyonpo Sangay Nidup.",
+    title: "Conception & Geneva Launch at 51st World Health Assembly",
+    desc: "The vision of the Bhutan Health Trust Fund was formally launched to the international public health community at the 51st World Health Assembly in Geneva, Switzerland, under the visionary guidance of His Majesty the Fourth Druk Gyalpo and led by Lyonpo Sangay Ngedup (then Minister for Health and Education).",
   },
   {
-    year: "2000 — 3 August",
-    title: "Royal Charter Enactment & Secretariat Establishment",
-    desc: "A historic Royal Charter was issued by His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, establishing BHTF as an autonomous statutory trust fund with permanent corpus ring-fencing.",
+    year: "2000 — 12 May",
+    title: "Royal Charter Enactment & Statutory Establishment",
+    desc: "His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck granted the historic Royal Charter, establishing BHTF as an autonomous statutory body with a ring-fenced capital endowment to guarantee uninterrupted financing for primary healthcare in perpetuity.",
   },
   {
     year: "2003",
-    title: "First Vaccine Procurement Financing",
-    desc: "BHTF initiated full procurement financing for national routine childhood immunization antigens, securing universal protection across all 20 Dzongkhags.",
+    title: "Operational Primary Healthcare Financing Commences",
+    desc: "The Trust Fund commenced direct disbursements to finance essential primary healthcare needs, providing sustained funding for basic medical supplies, clinical consumables, and cold-chain infrastructure across all 20 Dzongkhags.",
   },
   {
     year: "2006",
-    title: "Measles-Rubella Campaign & Hepatitis B Rollout",
-    desc: "Financed the historic nationwide Measles & Rubella campaign and backed national Hepatitis B universal immunization.",
+    title: "100% Childhood Vaccines Financing",
+    desc: "BHTF assumed complete sovereign financing responsibility for all routine childhood vaccines and essential immunization cold-chain equipment nationwide, insulating national immunization from donor volatility.",
   },
   {
-    year: "2014–15",
-    title: "Expansion to 120+ Essential Medicines",
-    desc: "Strengthened management of public health contributions and took on the statutory mandate to finance national primary healthcare essential medicines.",
+    year: "2014–2015",
+    title: "Pentavalent Vaccine & Supply Chain Resilience",
+    desc: "Fully funded the nationwide transition to the 5-in-1 Pentavalent vaccine and sustained uninterrupted procurement through global WHO and UNICEF supply pipelines.",
   },
   {
     year: "2017",
-    title: "HPV Cancer Prevention with ACCF",
-    desc: "Initiated a co-financed nationwide Human Papillomavirus (HPV) vaccination program in collaboration with the Australian Cervical Cancer Foundation.",
+    title: "Target Endowment Corpus Realization",
+    desc: "BHTF achieved its primary target endowment corpus of USD 24 Million (Nu. 1.5 Billion+), securing long-term financial independence and sustainable annual investment returns.",
   },
   {
     year: "2018",
-    title: "GAVI Pentavalent Partnership & Full Autonomous Delinking",
-    desc: "Delinked from the Ministry of Health to become a fully independent statutory autonomous entity; introduced support for the Pentavalent vaccine in partnership with GAVI.",
+    title: "Nu. 3.0 Billion Corpus Milestone",
+    desc: "Through continuous Royal Government support, 1:1 sovereign matching grants, and public donations, the capital endowment crossed Nu. 3.0 Billion.",
   },
   {
-    year: "2020–2026",
-    title: "Sovereign Endowment Growth Surpassing Nu. 3.24 Billion",
-    desc: "Managing a robust sovereign health corpus with permanent capital preservation, solar cold-chain systems, and 100% uninterrupted emergency primary medicine buffers.",
+    year: "2019",
+    title: "Introduction of HPV & Flu Vaccines",
+    desc: "Financing expanded to cover nationwide Human Papillomavirus (HPV) vaccination for cervical cancer prevention and annual seasonal influenza vaccines for vulnerable and high-risk populations.",
+  },
+  {
+    year: "2026",
+    title: "Nu. 4.8 Billion Corpus & Comprehensive Formulary",
+    desc: "Capital endowment reached Nu. 4,798,965,306.85 (~Nu. 4.8B) as of 30 June 2026, funding 438 essential medicines, 110 traditional medicines (65 core formulations), and 4 routine vaccines nationwide.",
   },
 ];
 
@@ -144,10 +152,10 @@ function OurStoryPage() {
         ]}
       />
 
-      {/* 2. Tribute Section: Fourth Druk Gyalpo & Lyonpo Sangay Nidup */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <div className="lg:col-span-7 space-y-5">
+      {/* 2. Tribute Section: Fourth Druk Gyalpo & Lyonpo Sangay Ngedup */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-6">
+          <div className="max-w-3xl space-y-4">
             <span className="text-xs font-bold uppercase tracking-widest text-[#00A896] font-mono block">
               Founding Leadership & Royal Beneficence
             </span>
@@ -157,11 +165,11 @@ function OurStoryPage() {
             </h2>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-light font-sans">
-              Under the benevolent reign of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, healthcare was enshrined as a sacred right in Bhutan. Recognizing that external donor financing is temporary and vulnerable to global shifts, the Royal Government took the bold, historic step to build a self-reliant sovereign trust.
+              Under the benevolent reign of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, healthcare was enshrined as a sacred right in Bhutan. Recognizing that external donor financing is temporary and vulnerable to global economic shocks, the Royal Government took the historic step to build a self-reliant sovereign endowment.
             </p>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-light font-sans">
-              Launched at the 51st World Health Assembly in Geneva in May 1998 under Health Minister Lyonpo Sangay Nidup, the Bhutan Health Trust Fund established a global precedent: guaranteeing that universal access to free childhood vaccines and essential medicines would remain ring-fenced and protected in perpetuity.
+              Launched at the 51st World Health Assembly in Geneva on 12 May 1998 under Health Minister Lyonpo Sangay Ngedup, the Bhutan Health Trust Fund established a global precedent: guaranteeing that universal access to free childhood vaccines and essential medicines would remain ring-fenced and protected in perpetuity.
             </p>
 
             <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-slate-700">
@@ -171,57 +179,79 @@ function OurStoryPage() {
               </div>
               <div className="flex items-center gap-2 bg-[#FAF8F3] px-3.5 py-2 rounded-xl border border-slate-200 text-[#0B4F42]">
                 <Heart className="h-4 w-4 text-[#EE6C8A]" />
-                <span>100% Ring-Fenced Health Corpus</span>
+                <span>100% Ring-Fenced Health Corpus (Nu. 4.8B)</span>
               </div>
-            </div>
-
-            {/* Lyonpo Sangay Nidup 1998 Geneva Launch Tribute */}
-            <div className="mt-4 p-4 rounded-2xl bg-[#EAF6F5]/80 border border-[#00A896]/30 flex items-start gap-3.5 shadow-2xs">
-              <div className="h-10 w-10 rounded-xl bg-white border border-[#00A896]/30 text-[#00A896] grid place-items-center shrink-0">
-                <Landmark className="h-5 w-5" />
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-serif text-xs sm:text-sm font-bold text-[#0B4F42]">
-                    Lyonpo Sangay Nidup • Minister for Health & Education (1998)
-                  </h4>
-                  <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#00A896] border border-[#00A896]/20">
-                    WHO Geneva 1998
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-600 font-light leading-relaxed">
-                  Led the historic delegation to the 51st World Health Assembly in Geneva on 12 May 1998, formally launching the Bhutan Health Trust Fund and mobilizing founding multilateral endorsements from WHO and sovereign partners.
-                </p>
+              <div className="flex items-center gap-2 bg-amber-50 px-3.5 py-2 rounded-xl border border-amber-200 text-amber-900">
+                <Landmark className="h-4 w-4 text-amber-600" />
+                <span>Sovereign 1:1 RGOB Matching Fund</span>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 shadow-md bg-white text-slate-900">
-              {/* Blended Fourth King Portrait Snapshot */}
+          {/* Dual Tribute Cards: His Majesty the 4th King & Lyonpo Sangay Ngedup */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+            {/* Card 1: His Majesty the Fourth Druk Gyalpo */}
+            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#00A896]/50 transition-all duration-300">
               <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
                 <img
                   src={kingPortrait}
                   alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
-              </div>
-
-              {/* Caption & Geneva Quote Below Image */}
-              <div className="p-6 sm:p-7 space-y-3 relative z-10 bg-white border-t border-slate-100">
-                <div className="flex items-center justify-between border-b border-slate-200/60 pb-2">
-                  <span className="text-[10px] font-mono text-[#00A896] font-bold uppercase tracking-wider">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-bold">
                     Royal Visionary & Benefactor
                   </span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300">
-                    Royal Charter 2000
-                  </span>
+                  <h3 className="font-serif text-lg sm:text-xl font-bold mt-1 text-white leading-snug">
+                    His Majesty the Fourth Druk Gyalpo
+                  </h3>
+                  <p className="text-xs text-amber-200/90 font-light">
+                    Jigme Singye Wangchuck • Royal Charter 2000
+                  </p>
                 </div>
-                <h3 className="font-serif text-lg font-bold text-[#0B4F42] leading-snug">
-                  His Majesty the Fourth Druk Gyalpo
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed font-light">
-                  "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. BHTF stands as a sacred trust of self-reliance for generations to come."
+              </div>
+              <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
+                <div className="relative pl-4 border-l-2 border-amber-400">
+                  <p className="text-xs sm:text-sm text-slate-700 italic font-serif leading-relaxed">
+                    "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. BHTF stands as a sacred trust of self-reliance for generations to come."
+                  </p>
+                </div>
+                <p className="text-[11px] text-slate-500 font-light leading-relaxed pt-2 border-t border-slate-100">
+                  Enacted the Royal Charter on 12 May 2000, establishing the autonomous legal framework that forever protects basic healthcare financing in Bhutan.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Lyonpo Sangay Ngedup */}
+            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#00A896]/50 transition-all duration-300">
+              <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
+                <img
+                  src={lyonpoSangayPhoto}
+                  alt="Lyonpo Sangay Ngedup, Minister for Health and Education (1998)"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#00A896] text-white font-bold">
+                    Founding Architect • WHO Geneva 1998
+                  </span>
+                  <h3 className="font-serif text-lg sm:text-xl font-bold mt-1 text-white leading-snug">
+                    Lyonpo Sangay Ngedup
+                  </h3>
+                  <p className="text-xs text-emerald-200/90 font-light">
+                    Minister for Health & Education (1998) • Founding Leader of BHTF
+                  </p>
+                </div>
+              </div>
+              <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
+                <div className="relative pl-4 border-l-2 border-[#00A896]">
+                  <p className="text-xs sm:text-sm text-slate-700 italic font-serif leading-relaxed">
+                    "A tree is only as strong as the hands that first planted it. Lyonpo Sangay Ngedup laid the foundation of BHTF, and its founding members nurtured it into life. We remain forever grateful for their vision and contributions."
+                  </p>
+                </div>
+                <p className="text-[11px] text-slate-500 font-light leading-relaxed pt-2 border-t border-slate-100">
+                  Led the historic Bhutanese delegation to the 51st World Health Assembly in Geneva on 12 May 1998, mobilizing international partners to seed the world's first sovereign health trust fund.
                 </p>
               </div>
             </div>

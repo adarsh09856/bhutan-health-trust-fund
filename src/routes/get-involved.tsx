@@ -441,10 +441,10 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               <Quote className="h-5 w-5 text-[#00A896] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="font-serif text-xs sm:text-sm font-bold text-[#0B4F42] italic leading-snug">
-                  "No Buddhist should ever have to choose between their health and their livelihood."
+                  "No Bhutanese should ever have to choose between their health and their livelihood."
                 </p>
                 <span className="text-[10px] font-mono font-bold text-[#00A896] uppercase tracking-wider block">
-                  Universal Compassion • Equitable Care
+                  His Majesty the Fourth Druk Gyalpo • Universal Health Guarantee
                 </span>
               </div>
             </div>
@@ -461,12 +461,12 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   “Give generously, save on tax.”
                 </div>
                 <p className="text-[11px] text-slate-600 font-light">
-                  100% Tax Deductible under Section 31 & Section 10(f) of the DRC Income Tax Act of Bhutan.
+                  100% Tax Deductible up to 5% of taxable income under Department of Revenue & Customs Circular DRC/TAX-A&L/DO-16/399 (CIT & PIT).
                 </p>
               </div>
             </div>
             <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 shrink-0">
-              DRC Certified Exemption
+              DRC Circular DRC/TAX-A&L/DO-16/399
             </span>
           </div>
 
@@ -583,7 +583,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       )}
                       <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
                         <span>
-                          Account:{" "}
+                          <strong>Domestic (Nu.):</strong>{" "}
                           {finSettings?.bankAccountBOB ||
                             settings["bob_account_no"] ||
                             institutionalConfig.bankAccountBOB}
@@ -598,7 +598,21 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                             )
                           }
                           className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
-                          title="Copy Account Number"
+                          title="Copy Nu. Account Number"
+                        >
+                          <Copy className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
+                        <span>
+                          <strong>USD Account:</strong>{" "}
+                          {institutionalConfig.bankAccountUSD} (SWIFT: {institutionalConfig.swiftCodeBOB})
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(institutionalConfig.bankAccountUSD)}
+                          className="text-emerald-700 hover:text-emerald-800 p-1 cursor-pointer"
+                          title="Copy USD Account Number"
                         >
                           <Copy className="h-4 w-4" />
                         </button>
@@ -611,11 +625,6 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       </div>
                       <div className="bg-slate-50 p-2.5 rounded-lg text-slate-800">
                         {finSettings?.bankName || "Bank of Bhutan Limited"}, Thimphu Main Branch
-                        (SWIFT:{" "}
-                        {finSettings?.swiftCodeBOB ||
-                          settings["bob_swift_code"] ||
-                          institutionalConfig.swiftCodeBOB}
-                        )
                       </div>
                     </div>
 

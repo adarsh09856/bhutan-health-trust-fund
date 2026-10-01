@@ -46,7 +46,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Connect with the Bhutan Health Trust Fund Secretariat in Kawajangsa, Thimphu for citizen inquiries, donor partnerships, and official communications.",
+          "Connect with the Bhutan Health Trust Fund Secretariat at BTFEC Office Building, Genyen Lam, Thimphu for citizen inquiries, donor partnerships, and official communications.",
       },
     ],
   }),
@@ -55,24 +55,44 @@ export const Route = createFileRoute("/contact")({
 
 const faqs = [
   {
-    q: "How does the 1:1 RGOB Matching Fund work?",
-    a: "Every single Ngultrum contributed by individuals, corporations, or international donors is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling your healthcare purchasing power.",
+    q: "What is the Bhutan Health Trust Fund (BHTF)?",
+    a: "The Bhutan Health Trust Fund (BHTF) is an autonomous statutory body established under the Royal Charter granted by His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck in 2000. It manages a ring-fenced capital endowment to guarantee uninterrupted financing for essential drugs and vaccines in perpetuity.",
   },
   {
-    q: "Are donations to BHTF tax-deductible in Bhutan?",
-    a: "Yes. In accordance with Department of Revenue & Customs regulations, donations made to BHTF are eligible for corporate and personal income tax deduction upon receipt of our official stamped pledge certificate.",
+    q: "Why was BHTF created?",
+    a: "BHTF was created to insulate Bhutan's universal free healthcare system from donor dependency, geopolitical shifts, and economic volatility. By using only the investment returns of its endowment corpus, BHTF ensures that essential drugs and vaccines remain freely accessible to every Bhutanese citizen without interruption.",
   },
   {
-    q: "How does BHTF select which medicines and vaccines to finance?",
-    a: "BHTF finances commodities from the National Essential Medicines List (NEML) approved by the Ministry of Health and Drug Regulatory Authority of Bhutan, strictly adhering to WHO prequalification standards.",
+    q: "How does the sovereign 1:1 RGOB matching fund work?",
+    a: "Under the sovereign Royal Charter, every single Ngultrum contributed by individuals, corporations, civil society, and international well-wishers is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling the impact of every donation.",
   },
   {
-    q: "Can international donors contribute in foreign currencies (USD, EUR, GBP)?",
-    a: "Yes. BHTF maintains official foreign currency accounts with the Bank of Bhutan and Bhutan National Bank for direct international SWIFT wire transfers.",
+    q: "What healthcare commodities does BHTF finance?",
+    a: "BHTF finances 100% of the National Essential Medicines List comprising 438 essential modern medicines, 110 traditional medicines (gSo-ba Rig-pa) including 65 core formulations, and 4 routine national vaccines (Pentavalent, PCV, HPV, and seasonal Influenza), along with needles, syringes, and cold-chain equipment.",
   },
   {
-    q: "How can remote gewog clinics report emergency stock alerts?",
-    a: "Basic Health Units (BHUs) communicate through the National Emergency Health Logistics Channel and Dzongkhag Health Officers to trigger immediate replenishment.",
+    q: "Are donations to BHTF tax-deductible?",
+    a: "Yes. In accordance with Department of Revenue & Customs (DRC) Circular DRC/TAX-A&L/DO-16/399, contributions to BHTF are 100% tax-exempt and fully deductible up to 5% of taxable income under Corporate Income Tax (CIT) and Personal Income Tax (PIT).",
+  },
+  {
+    q: "How is BHTF governed and audited?",
+    a: "BHTF is governed by an eminent Board of Trustees chaired by the Hon'ble Minister for Health, comprising members from Zhung Dratshang, RMA, NPPF, MoF, private finance, and JDWNRH. Its accounts are audited annually by the Royal Audit Authority (RAA) of Bhutan, consistently receiving unqualified (clean) audit reports.",
+  },
+  {
+    q: "How are funds invested and managed?",
+    a: "The endowment corpus is managed under strict statutory investment policies overseen by the Board's Asset Management Committee (AMC). Investments prioritize capital preservation, inflation hedging, and liquidity across domestic treasury bills, fixed deposits, sovereign bonds, and prudent equities.",
+  },
+  {
+    q: "Can international donors contribute in foreign currency?",
+    a: "Yes. BHTF maintains an official USD account with the Bank of Bhutan (Account No. 100931468, SWIFT: BHUBBTBT022) for international wire transfers and bilateral donor contributions.",
+  },
+  {
+    q: "What is Window Financing and how does disbursement operate?",
+    a: "Window Financing is BHTF's quarterly disbursement mechanism to the Ministry of Health: Q1 (1st week of October), Q2 (1st week of January), Q3 (1st week of April), and Q4 (last week of June), following formal requisition and inventory reconciliations.",
+  },
+  {
+    q: "Where is the BHTF Secretariat located and how can I contact them?",
+    a: "The Secretariat is located at BTFEC Office Building, Genyen Lam, Thimphu, Bhutan. You can contact the Secretariat by phone at +975 2 322424, email at bhtf@bhtf.bt, or visit during official working hours (Monday-Friday, 9:00 AM - 5:00 PM BST).",
   },
 ];
 

@@ -17,7 +17,8 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
-import staffDirector from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
+import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
+import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
 import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
 
@@ -248,7 +249,7 @@ function SecretariatPage() {
                   Programme Division
                 </h4>
                 <p className="text-xs text-slate-600 mt-2 font-light leading-relaxed">
-                  Supervises national vaccine requisitions, 120+ essential medicine formularies, international procurement, and alpine solar cold chain logistics.
+                  Supervises national vaccine requisitions, 438 essential medicines, 110 traditional medicines (65 core formulations), international procurement, and alpine solar cold chain logistics.
                 </p>
               </div>
 
@@ -284,64 +285,108 @@ function SecretariatPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-              <img
-                src={staffDirector}
-                alt="Mr. Sonam Chojay"
-                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-              />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Director Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={drGyamboDirector}
+                  alt="Dr. Gyambo Sithey, PhD"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Directorate
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900">Dr. Gyambo Sithey, PhD</h3>
+                <p className="text-xs font-semibold text-teal-700">Director / Member Secretary</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                  Leads executive administration, statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.
+                </p>
+              </div>
             </div>
-            <div className="p-6 space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
-                Directorate
-              </span>
-              <h3 className="font-serif text-lg font-bold text-slate-900">Mr. Sonam Chojay</h3>
-              <p className="text-xs font-semibold text-emerald-700">Director / Executive Head</p>
-              <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                Leads executive administration, multilateral partnership management, and overall strategic stewardship of the health endowment corpus.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-              <img
-                src={staffFinance}
-                alt="Ms. Tshering Choden"
-                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            <div className="p-6 space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
-                Finance & Accounts
-              </span>
-              <h3 className="font-serif text-lg font-bold text-slate-900">Ms. Tshering Choden</h3>
-              <p className="text-xs font-semibold text-amber-700">Senior Finance Officer</p>
-              <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                Directs treasury allocations, 1:1 RGOB sovereign matching reconciliations, and statutory audit compliance with the Royal Audit Authority.
-              </p>
+            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
+              Cabinet Order C-3/4(4)/2024/35
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-              <img
-                src={staffProcurement}
-                alt="Mr. Rinchen Phuntsho"
-                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-              />
+          {/* Accounts Officer Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={staffSonamChojay}
+                  alt="Mr. Sonam Chojay"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Finance & Accounts
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900">Mr. Sonam Chojay</h3>
+                <p className="text-xs font-semibold text-emerald-700">Accounts Officer</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                  Manages financial ledgers, window financing quarterly disbursements, and audit reconciliations with the Royal Audit Authority.
+                </p>
+              </div>
             </div>
-            <div className="p-6 space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
-                Program & Procurement
-              </span>
-              <h3 className="font-serif text-lg font-bold text-slate-900">Mr. Rinchen Phuntsho</h3>
-              <p className="text-xs font-semibold text-teal-700">Procurement & Program Officer</p>
-              <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                Coordinates WHO-prequalified international supply contracts, UNICEF cold chain logistics, and quarterly DMS hospital requisitions.
-              </p>
+            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
+              Secretariat Operations
+            </div>
+          </div>
+
+          {/* Senior Finance & Investment Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={staffFinance}
+                  alt="Ms. Tshering Choden"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Portfolio Operations
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900">Ms. Tshering Choden</h3>
+                <p className="text-xs font-semibold text-amber-700">Senior Finance Officer</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                  Coordinates sovereign treasury allocations, 1:1 RGOB matching reconciliations, and AMC portfolio tracking.
+                </p>
+              </div>
+            </div>
+            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
+              Fiduciary FMS
+            </div>
+          </div>
+
+          {/* Procurement & Program Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={staffProcurement}
+                  alt="Mr. Rinchen Phuntsho"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Program & Procurement
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900">Mr. Rinchen Phuntsho</h3>
+                <p className="text-xs font-semibold text-teal-700">Procurement & Program Officer</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
+                  Coordinates WHO-prequalified international supply contracts, UNICEF cold chain logistics, and quarterly DMS hospital requisitions.
+                </p>
+              </div>
+            </div>
+            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
+              Procurement PRR
             </div>
           </div>
         </div>
@@ -358,22 +403,22 @@ function SecretariatPage() {
               Bhutan Health Trust Fund Office
             </h3>
             <p className="text-slate-300 text-xs sm:text-sm font-light max-w-xl">
-              Operating within the Ministry of Health complex in Kawajangsa, Thimphu, serving all primary health units nationwide.
+              Operating from the BTFEC Office Building in Genyen Lam, Thimphu, serving all primary healthcare units across the Kingdom.
             </p>
           </div>
 
           <div className="space-y-3 text-xs text-slate-200 shrink-0">
             <div className="flex items-center gap-3">
               <MapPin className="h-4 w-4 text-emerald-400" />
-              <span>Kawajangsa, Post Box 1037, Thimphu, Bhutan</span>
+              <span>BTFEC Office Building, Genyen Lam, Thimphu, Bhutan</span>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-emerald-400" />
-              <span>+975 2 328999 / 334999</span>
+              <span>+975 2 322424</span>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="h-4 w-4 text-emerald-400" />
-              <span>info@bhtf.bt</span>
+              <span>bhtf@bhtf.bt</span>
             </div>
           </div>
         </div>
