@@ -54,7 +54,7 @@ const commodityCategories: CommodityCategory[] = [
   },
   {
     id: "medicines",
-    name: "120+ Essential Medicines",
+    name: "438 Essential & 110 Traditional Medicines",
     dzongkha: "མཁོ་ཆེའི་སྨན་རིགས",
     icon: Pill,
     annualBudgetNu: "Nu. 145.0M / Year",
@@ -62,7 +62,7 @@ const commodityCategories: CommodityCategory[] = [
     leadTime: "Quarterly Scheduled",
     qualityStandard: "National Essential Drugs List (NEDL)",
     description:
-      "Uninterrupted procurement of vital primary healthcare medications including broad-spectrum antibiotics, cardiovascular regulators, antidiabetics, and analgesics.",
+      "Uninterrupted procurement of 438 essential modern medicines (100% of NEDL) and 110 indigenous gSo-ba Rig-pa traditional remedies (including 65 core formulations).",
     keyItems: [
       "Broad-Spectrum Antibiotics (Amoxicillin, Ceftriaxone)",
       "Cardiovascular & Antihypertensives (Amlodipine, Enalapril)",

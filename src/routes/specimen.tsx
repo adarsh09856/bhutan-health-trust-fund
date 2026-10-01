@@ -101,13 +101,13 @@ function SpecimenPage() {
           },
           {
             label: "Essential Medicines on Zero-Stockout Formulary",
-            figure: "120+ Formulations",
-            subtext: "Pre-stocked continuous 6-month buffer maintained against global supply-chain shocks.",
-            code: "NEML-REV-8",
+            figure: "438 Modern + 110 Traditional",
+            subtext: "100% of National Essential Drugs List & indigenous remedies guaranteed in perpetuity.",
+            code: "NEDL-OFFICIAL",
           },
           {
-            label: "Universal Pediatric Vaccine Antigens Financed",
-            figure: "14 Antigens",
+            label: "Universal Routine Vaccine Antigens Financed",
+            figure: "4 Key Antigens",
             subtext: "100% routine childhood and maternal immunization coverage sustained in perpetuity.",
             code: "EPI-WHO",
           },
@@ -194,9 +194,9 @@ function SpecimenPage() {
           },
           {
             date: "2026",
-            title: "Corpus Exceeds Nu. 3.24 Billion",
+            title: "Corpus Reaches Nu. 4.8 Billion",
             summary:
-              "Endowment yields sustainably cover 100% of national routine vaccine needs and 120+ essential medicines across all 20 Dzongkhags.",
+              "Endowment yields sustainably cover 100% of national routine vaccine needs, 438 essential medicines, and 110 traditional formulations across all 20 Dzongkhags.",
             statutoryBasis: "Royal Audit Authority Unqualified Clean Certification",
           },
         ]}

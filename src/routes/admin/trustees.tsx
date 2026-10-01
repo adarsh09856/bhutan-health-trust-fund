@@ -36,6 +36,8 @@ import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 
 const trusteeFallbackPhotos: Record<string, string> = {
   "Tandin": trusteeLyonpoTandin,
+  "Tshering Wangchuk": trusteeLopenChoten,
+  "Lopen": trusteeLopenChoten,
   "Choten": trusteeLopenChoten,
   "Phub": trusteeDrPhub,
   "Pema": trusteePemaTshering,

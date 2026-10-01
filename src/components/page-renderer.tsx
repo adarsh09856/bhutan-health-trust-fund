@@ -207,7 +207,7 @@ export function RendererHeroCorpusCard({ showSatellite = false }: { showSatellit
             {corpusCounter.formatted}
           </div>
           <p className="text-[11px] text-slate-700 font-sans leading-snug pt-0.5 font-normal line-clamp-1">
-            Financing universal vaccines & 120+ essential medicines in perpetuity.
+            Financing universal vaccines & 438 essential medicines in perpetuity.
           </p>
         </div>
 
@@ -438,7 +438,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
                   Did you know you can donate?
                 </h3>
                 <p className="text-[11px] text-slate-700 line-clamp-2 leading-relaxed font-normal">
-                  Your direct contribution safeguards childhood vaccines & 120+ essential medicines across all 20 Dzongkhags.
+                  Your direct contribution safeguards childhood vaccines & 438 essential medicines across all 20 Dzongkhags.
                 </p>
               </div>
             </div>
@@ -536,7 +536,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
                   Did you know you can donate here?
                 </h3>
                 <p className="text-[10px] text-slate-700 line-clamp-2 leading-relaxed font-normal">
-                  Your direct contribution safeguards childhood vaccines & 120+ essential medicines in perpetuity.
+                  Your direct contribution safeguards childhood vaccines & 438 essential medicines in perpetuity.
                 </p>
                 <div className="pt-0.5 flex items-center gap-1 text-[10px] font-bold text-[#00A896]">
                   <span>Explore Mission</span>
@@ -618,7 +618,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
             {/* Subtitle (Centered) */}
             <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed font-sans max-w-2xl mx-auto font-light">
               {currentSection.subtitle ||
-                "Bhutan's permanent statutory healthcare endowment — sustainably financing 120+ essential medicines, universal childhood vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance."}
+                "Bhutan's permanent statutory healthcare endowment — sustainably financing 438 essential medicines, 110 traditional remedies, universal vaccines, and alpine cold chain logistics across all 20 Dzongkhags without foreign reliance."}
             </p>
 
             {/* Feature Highlights Pills (Centered) */}

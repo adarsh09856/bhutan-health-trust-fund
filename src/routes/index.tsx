@@ -330,7 +330,7 @@ function FieldDispatchesGrid() {
       img: imgLhuntse,
       dzongkhag: "Eastern Dzongkhag",
       title: "Lhuentse Remote Gewog Primary Clinic",
-      desc: "Guaranteed year-round buffer stock of 120+ essential pharmaceuticals and pediatric vaccines maintained at 2,400m altitude.",
+      desc: "Guaranteed year-round buffer stock of 438 essential pharmaceuticals and routine vaccines maintained at 2,400m altitude.",
       code: "FIELD-OPS-LHUENTSE",
     },
     {

@@ -25,6 +25,9 @@ import {
   Award,
   Stethoscope,
   Pill,
+  Coins,
+  Syringe,
+  MapPin,
   CheckCircle2,
   XCircle,
 } from "lucide-react";
@@ -46,6 +49,10 @@ const iconMap: Record<string, any> = {
   Award,
   Stethoscope,
   Pill,
+  Coins,
+  Sparkles,
+  Syringe,
+  MapPin,
 };
 
 const iconOptions = [
@@ -57,6 +64,10 @@ const iconOptions = [
   "Award",
   "Stethoscope",
   "Pill",
+  "Coins",
+  "Sparkles",
+  "Syringe",
+  "MapPin",
 ];
 
 export function AdminMetricsPage() {

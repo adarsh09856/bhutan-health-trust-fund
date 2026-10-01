@@ -123,7 +123,7 @@ export function AdminPagesList() {
     { slug: "about-committees", title: "About: Asset Management & Audit Committees", metaDescription: "Investment Policy Statement (IPS) guidelines and capital preservation" },
     { slug: "about-secretariat", title: "About: Secretariat & Organogram", metaDescription: "Annexure 1 operational organogram and administrative divisions" },
     { slug: "our-story", title: "Our Story & Historical Milestones", metaDescription: "The founding chronicle of Bhutan Health Trust Fund and official milestones" },
-    { slug: "our-impact", title: "Our Impact & Healthcare Commodities", metaDescription: "120+ Essential Medicines, Universal Vaccines & 20 Dzongkhags Reach" },
+    { slug: "our-impact", title: "Our Impact & Healthcare Commodities", metaDescription: "438 Essential Modern Medicines, 110 Traditional Formulations & 4 Key Routine Vaccines" },
     { slug: "resources", title: "Resources: Official Documents & Audits", metaDescription: "Official statutory archive and RAA certified financial statements" },
     { slug: "window-financing", title: "Resources: Window Financing Protocol", metaDescription: "Quarterly commodity requisition mechanism and MOF fund releases" },
     { slug: "donate", title: "Donate & Support (1:1 Matched)", metaDescription: "Every Ngultrum matched 1:1 by the Royal Government of Bhutan" },
