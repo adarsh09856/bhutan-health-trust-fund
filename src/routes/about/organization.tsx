@@ -15,6 +15,11 @@ import {
   CheckCircle2,
   FileText,
   Lock,
+  AlertCircle,
+  Compass,
+  TrendingUp,
+  Globe,
+  Share2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/about/organization")({
@@ -276,6 +281,160 @@ function AboutOrganizationPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Section 11: Challenges & Strategic Way Forward */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold font-mono">
+            <Compass className="h-3.5 w-3.5 text-amber-700" />
+            <span>Section 11 • Strategic Way Forward</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            Current Challenges & Strategic Solutions
+          </h2>
+          <p className="text-slate-600 text-sm font-light leading-relaxed">
+            Preserving universal free healthcare requires confronting escalating global drug prices, domestic capital depth limitations, and evolving donor dynamics with an agile sovereign strategy.
+          </p>
+        </div>
+
+        {/* 6 Macro Challenges */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-xs font-bold font-mono uppercase tracking-wider text-rose-800">
+            <AlertCircle className="h-4 w-4" />
+            <span>Key Institutional Challenges</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-2 hover:border-rose-300 transition">
+              <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider block">01 • Escalating Global Costs</span>
+              <h4 className="font-serif text-base font-bold text-slate-900">Rising Pharmaceutical Prices</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Escalating global costs for essential drugs and vaccines each year pose a significant challenge to sustainable financing of free Primary Health Care services.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-2 hover:border-rose-300 transition">
+              <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider block">02 • Market Constraints</span>
+              <h4 className="font-serif text-base font-bold text-slate-900">Domestic Capital Market Depth</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Limited investment opportunities in the domestic financial market restrict the Fund's ability to diversify and grow its capital base.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-2 hover:border-rose-300 transition">
+              <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider block">03 • Donor Transition</span>
+              <h4 className="font-serif text-base font-bold text-slate-900">Declining External Grants</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Donor interest has declined over time, and traditional fundraising campaigns have become less effective, limiting the Fund's reach domestically and internationally.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-2 hover:border-rose-300 transition">
+              <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider block">04 • Public Awareness</span>
+              <h4 className="font-serif text-base font-bold text-slate-900">Community Ownership</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                A significant portion of the Bhutanese population lacks a clear understanding of BHTF's role, which undermines community participation and public ownership of the Fund's mission.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-2 hover:border-rose-300 transition">
+              <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider block">05 • Economic Sensitivity</span>
+              <h4 className="font-serif text-base font-bold text-slate-900">Capacity to Contribute</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Low income levels and economic instability reduce individuals' capacity to contribute, particularly during economic downturns and inflationary periods.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-2 hover:border-rose-300 transition">
+              <span className="text-[10px] font-mono font-bold text-rose-700 uppercase tracking-wider block">06 • Supply Chain Efficiency</span>
+              <h4 className="font-serif text-base font-bold text-slate-900">Facility Stock Accumulation</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Under-utilisation of medicines across certain health facilities has led to stock accumulation, expiries, and financial losses requiring robust tracking.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 6 Strategic Plan Pillars */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-9 shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-5">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
+                Official Roadmap
+              </span>
+              <h3 className="font-serif text-2xl font-black text-slate-900">
+                Our Three-Year Strategic Plan
+              </h3>
+            </div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-bold font-mono">
+              <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
+              <span>Multi-Year Transformation</span>
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-800 font-mono font-bold text-xs grid place-items-center">
+                1
+              </div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Safe International Portfolio Diversification</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Explore safe, regulated international investments and sovereign offshore allocations to diversify the Fund's portfolio beyond domestic capacity.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-800 font-mono font-bold text-xs grid place-items-center">
+                2
+              </div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Digital Fundraising & Strategic Alliances</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Strengthen donor engagement through modern digital fundraising platforms, QR integration, and institutional partnerships like RSEBL.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-800 font-mono font-bold text-xs grid place-items-center">
+                3
+              </div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Public Awareness Within Bhutan & Abroad</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Increase public consciousness and education regarding BHTF's constitutional role, impact statistics, and matching grant benefits.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-800 font-mono font-bold text-xs grid place-items-center">
+                4
+              </div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Grassroots Dzongkhag, Thromde & Gewog Drives</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Engage local government offices, corporate institutions, and individual donors across all 20 Dzongkhags for collective healthcare ownership.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-800 font-mono font-bold text-xs grid place-items-center">
+                5
+              </div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Diplomatic Missions & Diaspora Support</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Mobilise Bhutanese embassies, consulates, and international diaspora communities across Australia, the Americas, and Europe for ongoing support.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-800 font-mono font-bold text-xs grid place-items-center">
+                6
+              </div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Rigorous Monitoring & Wastage Audits</h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Enhance monitoring and reporting of BHTF-funded medicines and vaccines through quarterly reports and dedicated vaccine wastage studies.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -250,23 +250,127 @@ function CommitteesPage() {
             </div>
 
             <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
-              <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900">Yield Optimization</h3>
-              <p className="text-xs text-slate-600 leading-relaxed font-light">
-                Investment yields fund 100% of national vaccine procurement and 120+ primary medicine buffers.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
               <div className="h-9 w-9 rounded-xl bg-teal-50 text-teal-800 grid place-items-center">
                 <PieChart className="h-4 w-4" />
               </div>
               <h3 className="font-serif text-base font-bold text-slate-900">Prudent Diversification</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-light">
-                Allocated across sovereign bonds, high-grade domestic debt, and secure international instruments.
+                Allocated across sovereign bonds, high-grade domestic debt, and secure international offshore holdings.
               </p>
+            </div>
+          </div>
+
+          {/* Section 6 Official Portfolio Breakdown Table */}
+          <div className="pt-8 border-t border-slate-100 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800">
+                  Section 6: Investment Portfolio Structure
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900">
+                  Onshore & Offshore Endowment Asset Allocation
+                </h3>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-bold font-mono">
+                <span>Fund Total: Nu. 4,798,965,306.85</span>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-2xs">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-mono uppercase tracking-wider text-[10px]">
+                  <tr>
+                    <th className="py-3 px-4">Investment Class / Instrument</th>
+                    <th className="py-3 px-4 text-right">Holding Value (Nu.)</th>
+                    <th className="py-3 px-4 text-right">% of Total Endowment</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-sans">
+                  <tr className="bg-slate-50/50 font-bold text-slate-900">
+                    <td colSpan={3} className="py-2 px-4 text-[11px] text-emerald-900 font-mono">
+                      A. Onshore Investments (Domestic Financial Sector)
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Fixed Deposits (Domestic Commercial Banks)</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">1,905,600,000.00</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">39.71%</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Long-Term Annuity Scheme</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">645,000,000.00</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">13.44%</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Corporate Bonds (Bhutan Power Corporation)</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">500,000,000.00</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">10.42%</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Listed Equity Shares (Bhutan National Bank Ltd.)</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">148,999,386.85</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">3.10%</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Listed Equity Shares (GIC-Bhutan Reinsurance)</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">10,000,023.05</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">0.21%</td>
+                  </tr>
+                  <tr className="bg-emerald-50/40 font-bold text-emerald-950 border-t border-emerald-200">
+                    <td className="py-2.5 px-4 pl-6">Subtotal — Onshore Investments</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-black">3,209,599,409.90</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-black">66.88%</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 font-medium">B. Operational Bank Savings Deposits (Liquidity Reserve)</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">445,514,253.34</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">9.28%</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="py-2.5 px-4 text-slate-800 font-medium">C. Offshore Investments (USD 12,084,796.72 in Global Assets)</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">1,143,851,643.61</td>
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">23.84%</td>
+                  </tr>
+                  <tr className="bg-slate-900 text-white font-bold text-sm border-t-2 border-slate-900">
+                    <td className="py-3 px-4">Total Endowment Corpus (Audited Sovereign Fund)</td>
+                    <td className="py-3 px-4 text-right font-mono font-black text-amber-300">Nu. 4,798,965,306.85</td>
+                    <td className="py-3 px-4 text-right font-mono text-emerald-400">100.00%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* IPS Spending Policy Highlight */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">
+                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider">
+                  Spending Policy (70%)
+                </span>
+                <p className="font-serif text-sm font-bold text-slate-900">Essential Drugs & Vaccines</p>
+                <p className="text-[11px] text-slate-600 font-light">
+                  70% of net investment yields directly fund universal vaccines, 438 essential drugs, and 110 traditional remedies.
+                </p>
+              </div>
+
+              <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">
+                <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider">
+                  Capital Growth (20%)
+                </span>
+                <p className="font-serif text-sm font-bold text-slate-900">Endowment Reinvestment</p>
+                <p className="text-[11px] text-slate-600 font-light">
+                  20% of annual net income is automatically reinvested to protect the corpus against inflation and preserve real value.
+                </p>
+              </div>
+
+              <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">
+                <span className="text-[10px] font-mono font-bold text-teal-800 uppercase tracking-wider">
+                  Operations Cap (10%)
+                </span>
+                <p className="font-serif text-sm font-bold text-slate-900">Strict Fiduciary Efficiency</p>
+                <p className="text-[11px] text-slate-600 font-light">
+                  Statutory 10% ceiling for administration. In practice, only ~4% is utilized, with the remaining 6% returned to corpus.
+                </p>
+              </div>
             </div>
           </div>
         </div>

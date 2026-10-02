@@ -36,6 +36,8 @@ import {
   X,
   Lock,
   Quote,
+  Calendar,
+  Globe,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -1030,6 +1032,204 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               </button>
             </form>
           )}
+        </div>
+      </section>
+
+      {/* Section 7 Canonical: Sources of Funding & Statutory 1% Contribution */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-bold font-mono">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-700" />
+            <span>Section 7 • Institutional Financial Architecture</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            How BHTF Is Sustained
+          </h2>
+          <p className="text-slate-600 text-sm font-light leading-relaxed">
+            The Bhutan Health Trust Fund does not rely on short-term budgets. It is sustained by three perpetual, sovereign revenue streams designed to safeguard healthcare in perpetuity.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3">
+            <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center">
+              <Users className="h-6 w-6" />
+            </div>
+            <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
+              Stream 1 • Working Citizen Solidarity
+            </span>
+            <h3 className="font-serif text-lg font-bold text-slate-900">
+              1% Health Contribution
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-light">
+              1% of the monthly gross salary of working employees across Bhutan — public and civil servants, as well as private and corporate employees. 100% of all health contributions collected are ring-fenced and utilized directly for the procurement of essential medicines and vaccines.
+            </p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3">
+            <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-800 grid place-items-center">
+              <TrendingUp className="h-6 w-6" />
+            </div>
+            <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider block">
+              Stream 2 • Capital Portfolio Yields
+            </span>
+            <h3 className="font-serif text-lg font-bold text-slate-900">
+              Endowment Investment Income
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-light">
+              Prudent investment yields generated from the Fund's onshore holdings (annuities, corporate bonds, bank fixed deposits, equities) and safe offshore USD assets (USD 12.08M). 70% of net yields directly finance medicines and vaccines, while 20% is reinvested for capital growth.
+            </p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3">
+            <div className="h-12 w-12 rounded-2xl bg-teal-50 text-teal-800 grid place-items-center">
+              <Heart className="h-6 w-6" />
+            </div>
+            <span className="text-[10px] font-mono font-bold text-teal-800 uppercase tracking-wider block">
+              Stream 3 • Philanthropic & Sovereign Match
+            </span>
+            <h3 className="font-serif text-lg font-bold text-slate-900">
+              1:1 RGOB Matched Donations
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-light">
+              Voluntary contributions from donor nations, corporate entities, dzongkhags, gewogs, individuals, and the Bhutanese diaspora. Every single Ngultrum contributed by the public is doubled 1:1 by the Royal Government of Bhutan and is 100% tax-deductible under DRC Reg No. E-73.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Official Events: Coming Together for a Healthier Bhutan (11 November 2026 & RSEBL) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-radial from-emerald-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-emerald-900/40 relative overflow-hidden space-y-8">
+          <div className="absolute top-0 right-0 -mt-10 -mr-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-800/40 pb-6 relative z-10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-xs font-bold font-mono">
+                <Calendar className="h-3.5 w-3.5 text-amber-400" />
+                <span>Events: Coming Together for a Healthier Bhutan</span>
+              </div>
+              <h2 className="font-serif text-2xl sm:text-3xl font-black text-white mt-2">
+                Collective Mobilisation for Sovereign Health
+              </h2>
+            </div>
+            <p className="text-xs text-emerald-200/80 max-w-md font-light leading-relaxed">
+              "Every contribution has a purpose, and behind every figure is a life. Together, we can turn collective support into better health outcomes for the people of Bhutan."
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+            {/* 11 November 2026 Campaign */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-3 hover:bg-white/10 transition">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
+                  National Initiative
+                </span>
+                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  11 November 2026
+                </span>
+              </div>
+              <h3 className="font-serif text-xl font-bold text-white">
+                Fundraising Events — 11 November 2026
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Fundraising is more than an event—it is an opportunity for individuals, organisations and communities to come together and contribute towards a healthier Bhutan. The fundraising activities planned for <strong>11 November 2026</strong> will provide a platform for collective support towards ensuring the continued availability of essential medicines and vaccines for those who need them.
+              </p>
+            </div>
+
+            {/* RSEBL Capital Market Partnership */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-3 hover:bg-white/10 transition">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
+                  Capital Market Innovation
+                </span>
+                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
+                  Strategic Alliance
+                </span>
+              </div>
+              <h3 className="font-serif text-xl font-bold text-white">
+                RSEBL Fundraising Initiatives
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                In partnership with the <strong>Royal Securities Exchange of Bhutan Limited (RSEBL)</strong>, BHTF will also explore fundraising initiatives that encourage greater participation from the public and private sectors. Through such partnerships, every contribution can become part of a larger effort to strengthen healthcare and make a meaningful difference in people's lives.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Official Verified Banking Remittance Details Directory (Section 7 Verbatim) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
+                Official Banking Protocols
+              </span>
+              <h3 className="font-serif text-2xl font-black text-slate-900">
+                Direct Banking & Offshore Remittance Channels
+              </h3>
+            </div>
+            <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 self-start">
+              Verified by BHTF Finance
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-[#FAF8F3] border border-amber-200/80 rounded-2xl p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <Building className="h-4 w-4 text-emerald-800" />
+                <h4 className="font-serif text-sm font-bold text-slate-900">
+                  Domestic Contributions (Within Bhutan)
+                </h4>
+              </div>
+              <div className="space-y-2 text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">Bank Name:</span>
+                  <span className="font-bold text-slate-900">Bank of Bhutan Limited</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">Account Number:</span>
+                  <span className="font-bold text-emerald-800 text-sm">100782506</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">Mobile Apps:</span>
+                  <span className="font-medium text-slate-900 font-sans">mBoB, mPay, ePay, TPay</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">In-Person / Mail:</span>
+                  <span className="font-medium text-slate-900 font-sans">BTFEC Building, Genyen Lam, Thimphu</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#FAF8F3] border border-emerald-200/80 rounded-2xl p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4 text-emerald-800" />
+                <h4 className="font-serif text-sm font-bold text-slate-900">
+                  International & Diaspora Remittance (USD Wire)
+                </h4>
+              </div>
+              <div className="space-y-2 text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">SWIFT Code:</span>
+                  <span className="font-bold text-slate-900">BHUBBTBT022</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">Beneficiary Account:</span>
+                  <span className="font-bold text-emerald-800 text-sm">100931468</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">Account Name:</span>
+                  <span className="font-bold text-slate-900 font-sans">Bhutan Health Trust Fund</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600">Beneficiary Bank:</span>
+                  <span className="font-medium text-slate-900 font-sans">Bank of Bhutan Ltd., Thimphu Branch</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
