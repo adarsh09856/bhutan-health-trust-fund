@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
-import trusteeLopenChoten from "@/assets/bhtf/trustees/lopen_choten_dorji.jpeg";
+import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
 import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
 import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
@@ -36,9 +36,9 @@ import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 
 const trusteeFallbackPhotos: Record<string, string> = {
   "Tandin": trusteeLyonpoTandin,
-  "Tshering Wangchuk": trusteeLopenChoten,
-  "Lopen": trusteeLopenChoten,
-  "Choten": trusteeLopenChoten,
+  "Tshering Wangchuk": trusteeLopenTshering,
+  "Lopen": trusteeLopenTshering,
+  "Choten": trusteeLopenTshering,
   "Phub": trusteeDrPhub,
   "Pema": trusteePemaTshering,
   "Ugyen": trusteeUgyenChoden,
@@ -49,7 +49,7 @@ const trusteeFallbackPhotos: Record<string, string> = {
 
 const defaultPhotos = [
   trusteeLyonpoTandin,
-  trusteeLopenChoten,
+  trusteeLopenTshering,
   trusteeDrPhub,
   trusteePemaTshering,
   trusteeUgyenChoden,

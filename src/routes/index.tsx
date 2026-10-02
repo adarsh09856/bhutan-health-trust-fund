@@ -60,7 +60,7 @@ import imgVaccine from "@/assets/bhtf/field/vaccine_delivery.jpg";
 import imgMedicines from "@/assets/bhtf/field/essential_medicines_stock.jpg";
 
 import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
-import trusteeLopenChoten from "@/assets/bhtf/trustees/lopen_choten_dorji.jpeg";
+import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
 import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
 import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
@@ -495,7 +495,7 @@ function TrusteesLeadershipShowcase() {
       role: "Trustee (Monastic Representative)",
       title: "Secretary, Monastic Council Zhung Dratshang",
       badge: "Zhung Dratshang",
-      photo: trusteeLopenChoten,
+      photo: trusteeLopenTshering,
       duty: "Ethical fiduciary stewardship, compassionate healthcare & monastic community outreach.",
     },
     {

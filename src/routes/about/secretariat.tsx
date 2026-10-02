@@ -16,8 +16,10 @@ import {
   Phone,
   Mail,
   MapPin,
+  Car,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
+import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk.jpg";
 import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
 import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
@@ -285,9 +287,9 @@ function SecretariatPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Director Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* 1. Director Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
                 <img
@@ -296,15 +298,12 @@ function SecretariatPage() {
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-5 space-y-2">
+              <div className="p-5 space-y-1.5">
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
                   Directorate
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900">Dr. Gyambo Sithey, PhD</h3>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Dr. Gyambo Sithey, PhD</h3>
                 <p className="text-xs font-semibold text-teal-700">Director / Member Secretary</p>
-                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                  Leads executive administration, statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.
-                </p>
               </div>
             </div>
             <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
@@ -312,34 +311,31 @@ function SecretariatPage() {
             </div>
           </div>
 
-          {/* Accounts Officer Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          {/* 2. Senior Investment Officer Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
                 <img
-                  src={staffSonamChojay}
-                  alt="Mr. Sonam Chojay"
+                  src={staffThinley}
+                  alt="Mr. Thinley Wangchuk"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-5 space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Finance & Accounts
+              <div className="p-5 space-y-1.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Investment Management Division
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900">Mr. Sonam Chojay</h3>
-                <p className="text-xs font-semibold text-emerald-700">Accounts Officer</p>
-                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                  Manages financial ledgers, window financing quarterly disbursements, and audit reconciliations with the Royal Audit Authority.
-                </p>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
+                <p className="text-xs font-semibold text-teal-700">Senior Investment Officer</p>
               </div>
             </div>
             <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Secretariat Operations
+              Portfolio & Yield Operations
             </div>
           </div>
 
-          {/* Senior Finance & Investment Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          {/* 3. Senior Finance Officer Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
                 <img
@@ -348,24 +344,21 @@ function SecretariatPage() {
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-5 space-y-2">
+              <div className="p-5 space-y-1.5">
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Portfolio Operations
+                  Administration & Finance
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900">Ms. Tshering Choden</h3>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
                 <p className="text-xs font-semibold text-amber-700">Senior Finance Officer</p>
-                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                  Coordinates sovereign treasury allocations, 1:1 RGOB matching reconciliations, and AMC portfolio tracking.
-                </p>
               </div>
             </div>
             <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Fiduciary FMS
+              Fiduciary FMS & Matching
             </div>
           </div>
 
-          {/* Procurement & Program Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          {/* 4. Senior Program Officer Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
                 <img
@@ -374,19 +367,60 @@ function SecretariatPage() {
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-5 space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Program & Procurement
+              <div className="p-5 space-y-1.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Programme Division
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900">Mr. Rinchen Phuntsho</h3>
-                <p className="text-xs font-semibold text-teal-700">Procurement & Program Officer</p>
-                <p className="text-xs text-slate-500 leading-relaxed font-light pt-1">
-                  Coordinates WHO-prequalified international supply contracts, UNICEF cold chain logistics, and quarterly DMS hospital requisitions.
-                </p>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
+                <p className="text-xs font-semibold text-emerald-700">Senior Program Officer</p>
               </div>
             </div>
             <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Procurement PRR
+              Essential Drugs & Cold Chain Logistics
+            </div>
+          </div>
+
+          {/* 5. Accounts Officer Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={staffSonamChojay}
+                  alt="Mr. Sonam Chojay"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 space-y-1.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Administration & Finance
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Sonam Chojay</h3>
+                <p className="text-xs font-semibold text-amber-700">Accounts Officer</p>
+              </div>
+            </div>
+            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
+              Window Financing Ledgers
+            </div>
+          </div>
+
+          {/* 6. Driver Card */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 via-slate-50 to-emerald-50 flex items-center justify-center border-b border-slate-100">
+                <div className="h-16 w-16 rounded-2xl bg-white shadow-xs border border-slate-200/80 flex items-center justify-center text-slate-700">
+                  <Car className="h-8 w-8 text-emerald-700" />
+                </div>
+              </div>
+              <div className="p-5 space-y-1.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full inline-block">
+                  Administration & Finance
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Operational Support</h3>
+                <p className="text-xs font-semibold text-slate-700">Driver</p>
+              </div>
+            </div>
+            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
+              Fleet & Essential Cold Transit
             </div>
           </div>
         </div>

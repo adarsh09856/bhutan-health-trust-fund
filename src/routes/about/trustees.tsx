@@ -16,7 +16,7 @@ import {
   Lock,
 } from "lucide-react";
 import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
-import trusteeLopenChoten from "@/assets/bhtf/trustees/lopen_choten_dorji.jpeg";
+import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
 import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
 import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
@@ -73,7 +73,7 @@ const staticTrustees = [
     organization: "Secretary, Monastic Council Zhung Dratshang",
     badge: "Zhung Dratshang",
     desc: "Represents the Central Monastic Body (Zhung Dratshang), upholding ethical fiduciary responsibility, spiritual stewardship, and compassionate healthcare across the Kingdom.",
-    photo: trusteeLopenChoten,
+    photo: trusteeLopenTshering,
   },
   {
     name: "Ms. Ugyen Choden",
@@ -141,8 +141,9 @@ function TrusteesPage() {
 
   const trusteeFallbackPhotos: Record<string, string> = {
     Tandin: trusteeLyonpoTandin,
-    Tshering: trusteeLopenChoten,
-    Choten: trusteeLopenChoten,
+    "Tshering Wangchuk": trusteeLopenTshering,
+    Lopen: trusteeLopenTshering,
+    Choten: trusteeLopenTshering,
     Phub: trusteeDrPhub,
     Pema: trusteePemaTshering,
     Ugyen: trusteeUgyenChoden,
@@ -153,7 +154,7 @@ function TrusteesPage() {
 
   const defaultPhotoList = [
     trusteeLyonpoTandin,
-    trusteeLopenChoten,
+    trusteeLopenTshering,
     trusteeUgyenChoden,
     trusteeChenchoNamgay,
     trusteeNorbuDendup,
