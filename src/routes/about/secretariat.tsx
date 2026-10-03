@@ -16,7 +16,6 @@ import {
   Phone,
   Mail,
   MapPin,
-  Car,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk.jpg";
@@ -334,7 +333,7 @@ function SecretariatPage() {
             </div>
           </div>
 
-          {/* 3. Senior Finance Officer Card */}
+          {/* 3. Senior Program Officer Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
@@ -345,33 +344,10 @@ function SecretariatPage() {
                 />
               </div>
               <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Administration & Finance
-                </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
-                <p className="text-xs font-semibold text-amber-700">Senior Finance Officer</p>
-              </div>
-            </div>
-            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Fiduciary FMS & Matching
-            </div>
-          </div>
-
-          {/* 4. Senior Program Officer Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-                <img
-                  src={staffProcurement}
-                  alt="Mr. Rinchen Phuntsho"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-5 space-y-1.5">
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
                   Programme Division
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
                 <p className="text-xs font-semibold text-emerald-700">Senior Program Officer</p>
               </div>
             </div>
@@ -380,7 +356,7 @@ function SecretariatPage() {
             </div>
           </div>
 
-          {/* 5. Accounts Officer Card */}
+          {/* 4. Accounts Officer Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
@@ -403,19 +379,21 @@ function SecretariatPage() {
             </div>
           </div>
 
-          {/* 6. Driver Card */}
+          {/* 5. Driver Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 via-slate-50 to-emerald-50 flex items-center justify-center border-b border-slate-100">
-                <div className="h-16 w-16 rounded-2xl bg-white shadow-xs border border-slate-200/80 flex items-center justify-center text-slate-700">
-                  <Car className="h-8 w-8 text-emerald-700" />
-                </div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={staffProcurement}
+                  alt="Mr. Rinchen Phuntsho"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
               </div>
               <div className="p-5 space-y-1.5">
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full inline-block">
                   Administration & Finance
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Operational Support</h3>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
                 <p className="text-xs font-semibold text-slate-700">Driver</p>
               </div>
             </div>
