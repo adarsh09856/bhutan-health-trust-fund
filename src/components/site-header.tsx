@@ -23,6 +23,9 @@ import {
   Newspaper,
   HeartHandshake,
   Landmark,
+  Calendar,
+  Megaphone,
+  Briefcase,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import logo from "@/assets/logo.png";
@@ -228,14 +231,14 @@ export function SiteHeader() {
             OUR IMPACT
           </Link>
 
-          {/* 4. RESOURCES Dropdown */}
+          {/* 4. RESOURCES Dropdown (From old website: Advocacy Materials, Annual Reports, Audit Report) */}
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("resources")}
             onMouseLeave={handleMouseLeave}
           >
             <Link
-              to="/resources"
+              to="/reports"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
                   ? "bg-[#0B4F42] text-white shadow-xs"
@@ -248,8 +251,10 @@ export function SiteHeader() {
 
             {openDropdown === "resources" && (
               <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                {/* 1. Advocacy Materials */}
                 <Link
-                  to="/resources"
+                  to="/reports"
+                  search={{ category: "Advocacy" }}
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
@@ -257,27 +262,48 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-purple-700 transition">
-                      Official Documents & Audits
+                      Advocacy Materials
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Royal Charter, IPS, FMS & 2005–2025 RAA reports
+                      Publications, health education & promotional kits
                     </p>
                   </div>
                 </Link>
 
+                {/* 2. Annual Reports */}
                 <Link
-                  to="/resources/window-financing"
+                  to="/reports"
+                  search={{ category: "Annual Report" }}
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
-                  <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
-                    <Sparkles className="h-4 w-4" />
+                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <Building className="h-4 w-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
-                      Window Financing
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
+                      Annual Reports
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      MOF requisition process & Q1–Q4 quarterly releases
+                      Comprehensive annual operational & statutory summaries
+                    </p>
+                  </div>
+                </Link>
+
+                {/* 3. Audit Report */}
+                <Link
+                  to="/reports"
+                  search={{ category: "Financial" }}
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <ShieldCheck className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
+                      Audit Report
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Royal Audit Authority (RAA) audited financial statements
                     </p>
                   </div>
                 </Link>
@@ -285,17 +311,85 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 5. NEWS & EVENTS */}
-          <Link
-            to="/news"
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
-              location.pathname.startsWith("/news")
-                ? "bg-[#0B4F42] text-white shadow-xs"
-                : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-            }`}
+          {/* 5. NEWS & EVENTS Dropdown (Upcoming events, announcement, career) */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter("news")}
+            onMouseLeave={handleMouseLeave}
           >
-            NEWS & EVENTS
-          </Link>
+            <Link
+              to="/news"
+              className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
+                location.pathname.startsWith("/news")
+                  ? "bg-[#0B4F42] text-white shadow-xs"
+                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
+              }`}
+            >
+              <span>NEWS & EVENTS</span>
+              <ChevronDown className="h-3 w-3" />
+            </Link>
+
+            {openDropdown === "news" && (
+              <div className="absolute top-full right-0 lg:left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                {/* 1. Upcoming Events */}
+                <Link
+                  to="/news"
+                  search={{ category: "EVENTS" }}
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
+                    <Calendar className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
+                      Upcoming Events
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Symposiums, campaigns & national health commemorations
+                    </p>
+                  </div>
+                </Link>
+
+                {/* 2. Announcement */}
+                <Link
+                  to="/news"
+                  search={{ category: "OFFICIAL_NEWS" }}
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <Megaphone className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
+                      Announcement
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Official notifications, circulars & board resolutions
+                    </p>
+                  </div>
+                </Link>
+
+                {/* 3. Career */}
+                <Link
+                  to="/news"
+                  search={{ category: "CAREERS" }}
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <Briefcase className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
+                      Career
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Job vacancies, consultancy tenders & recruitments
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
         </nav>
 
         {/* Action Group: Track Donation Link + Prominent DONATE CTA */}
@@ -347,9 +441,12 @@ export function SiteHeader() {
               { to: "/about/secretariat", label: "About: Secretariat & Staff" },
               { to: "/our-story", label: "Our Story & History" },
               { to: "/our-impact", label: "Our Impact (Health Commodities)" },
-              { to: "/resources", label: "Resources & Statutory Reports" },
-              { to: "/resources/window-financing", label: "Window Financing Mechanism" },
-              { to: "/news", label: "News & Events" },
+              { to: "/reports", search: { category: "Advocacy" }, label: "Resources: Advocacy Materials" },
+              { to: "/reports", search: { category: "Annual Report" }, label: "Resources: Annual Reports" },
+              { to: "/reports", search: { category: "Financial" }, label: "Resources: Audit Report" },
+              { to: "/news", search: { category: "EVENTS" }, label: "News: Upcoming Events" },
+              { to: "/news", search: { category: "OFFICIAL_NEWS" }, label: "News: Announcement" },
+              { to: "/news", search: { category: "CAREERS" }, label: "News: Career" },
               { to: "/track-donation", label: "Track Donation & Verify 1:1 Match" },
               { to: "/contact", label: "Contact Secretariat" },
             ].map((item) => {
@@ -358,8 +455,9 @@ export function SiteHeader() {
 
               return (
                 <Link
-                  key={item.to}
+                  key={`${item.to}-${item.label}`}
                   to={item.to}
+                  search={"search" in item ? (item.search as Record<string, string>) : undefined}
                   className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                     isActive ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
                   }`}

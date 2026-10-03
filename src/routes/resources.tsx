@@ -4,6 +4,9 @@ import type { PageBlockSection, Report } from "@/lib/db/schema";
 import { ReportsExperience } from "./reports";
 
 export const Route = createFileRoute("/resources")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    category: typeof search.category === "string" ? search.category : undefined,
+  }),
   loader: async () => {
     try {
       const [page, reports] = await Promise.all([
@@ -51,6 +54,7 @@ export const Route = createFileRoute("/resources")({
     }
 
     const loaderData = Route.useLoaderData();
+    const search = Route.useSearch();
     return (
       <ReportsExperience
         customSections={loaderData?.customSections}
@@ -59,6 +63,7 @@ export const Route = createFileRoute("/resources")({
         title="Resources, Official Documents & Certified Audits"
         subtitle="Access statutory filings, audited financial statements (2005–2025), Royal Charter proclamations, and quarterly window financing documentation."
         pageSlug="resources"
+        initialCategory={search?.category}
       />
     );
   },

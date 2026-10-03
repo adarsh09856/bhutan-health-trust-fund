@@ -22,6 +22,9 @@ import {
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/reports")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    category: typeof search.category === "string" ? search.category : undefined,
+  }),
   loader: async () => {
     try {
       const [page, reports] = await Promise.all([
@@ -75,6 +78,7 @@ export function ReportsExperience({
   title?: string;
   subtitle?: string;
   pageSlug?: string;
+  initialCategory?: string;
 }) {
   const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
     initialCustomSections || null,
@@ -83,8 +87,14 @@ export function ReportsExperience({
   const [loading, setLoading] = useState(initialReports.length === 0);
   const [search, setSearch] = useState("");
 
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory || "ALL");
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (initialCategory) {
+      setSelectedCategory(initialCategory);
+    }
+  }, [initialCategory]);
 
   const fetchReports = async () => {
     try {
@@ -137,10 +147,10 @@ export function ReportsExperience({
 
   const categories = [
     { id: "ALL", label: "All Publications" },
+    { id: "Advocacy", label: "Advocacy Materials" },
     { id: "Annual Report", label: "Annual Reports" },
-    { id: "Financial", label: "Audited Financials" },
+    { id: "Financial", label: "Audit Report" },
     { id: "Governance", label: "Governance & Charters" },
-    { id: "Research", label: "Health Impact & Research" },
     { id: "Strategy", label: "Strategic Plans" },
   ];
 
@@ -149,7 +159,11 @@ export function ReportsExperience({
       r.title.toLowerCase().includes(search.toLowerCase()) ||
       r.description.toLowerCase().includes(search.toLowerCase()) ||
       r.year.includes(search);
-    const matchesCategory = selectedCategory === "ALL" || r.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === "ALL" ||
+      r.category === selectedCategory ||
+      (selectedCategory === "Advocacy" && (r.category === "Research" || r.category === "Advocacy" || r.category === "Publications")) ||
+      (selectedCategory === "Financial" && (r.category === "Financial" || r.category === "Audit"));
     return matchesSearch && matchesCategory;
   });
 
@@ -399,11 +413,13 @@ export function ReportsExperience({
 
 function ReportsPage() {
   const loaderData = Route.useLoaderData();
+  const search = Route.useSearch();
   return (
     <ReportsExperience
       customSections={loaderData?.customSections}
       initialReports={loaderData?.initialReports}
       pageSlug="reports"
+      initialCategory={search?.category}
     />
   );
 }

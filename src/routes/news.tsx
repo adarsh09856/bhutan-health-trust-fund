@@ -14,12 +14,16 @@ import {
   ArrowUpRight,
   Sparkles,
   Newspaper,
+  Briefcase,
 } from "lucide-react";
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
 
 export const Route = createFileRoute("/news")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    category: typeof search.category === "string" ? search.category : undefined,
+  }),
   loader: async () => {
     try {
       const [page, news] = await Promise.all([
@@ -119,7 +123,14 @@ function NewsPage() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const searchParams = Route.useSearch();
+  const [selectedCategory, setSelectedCategory] = useState(searchParams?.category || "ALL");
+
+  useEffect(() => {
+    if (searchParams?.category) {
+      setSelectedCategory(searchParams.category);
+    }
+  }, [searchParams?.category]);
 
   useEffect(() => {
     getPublicNews()
@@ -139,8 +150,9 @@ function NewsPage() {
 
   const categories = [
     { id: "ALL", label: "All Releases" },
-    { id: "OFFICIAL_NEWS", label: "Official News", match: ["Official News", "Governance", "Partnership"] },
-    { id: "EVENTS", label: "Events & Campaigns", match: ["Events & Campaigns", "Immunization", "Campaign"] },
+    { id: "EVENTS", label: "Upcoming Events", match: ["Events & Campaigns", "Immunization", "Campaign", "EVENTS", "Events"] },
+    { id: "OFFICIAL_NEWS", label: "Announcement", match: ["Official News", "Governance", "Partnership", "OFFICIAL_NEWS", "Announcement", "Announcements"] },
+    { id: "CAREERS", label: "Career", match: ["Career", "Careers", "Vacancies", "Recruitment", "CAREERS"] },
     { id: "FIELD_ACTIVITIES", label: "Field Activities", match: ["Field Activities", "Essential Medicines", "Logistics"] },
   ];
 

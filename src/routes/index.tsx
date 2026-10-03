@@ -540,9 +540,9 @@ function TrusteesLeadershipShowcase() {
     },
     {
       name: "Dr. Gyambo Sithey, PhD",
-      role: "Director & Member Secretary",
-      title: "Director, BHTF Secretariat",
-      badge: "Member Secretary",
+      role: "Director",
+      title: "BHTF Secretariat",
+      badge: "Director",
       photo: trusteeDrGyambo,
       duty: "Executive administration, board resolutions execution & nationwide procurement disbursements.",
     },
@@ -604,14 +604,12 @@ function TrusteesLeadershipShowcase() {
                   <div className="text-[11px] font-semibold text-emerald-800 mt-0.5">
                     {t.role}
                   </div>
-                  <div className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight">
-                    {t.title}
-                  </div>
+                  {t.title && (
+                    <div className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight">
+                      {t.title}
+                    </div>
+                  )}
                 </div>
-
-                <p className="text-xs text-slate-600 leading-relaxed font-light">
-                  {t.duty}
-                </p>
               </div>
 
               <div className="pt-2.5 border-t border-slate-200/70 flex items-center justify-between text-[10px] text-slate-400 font-mono">

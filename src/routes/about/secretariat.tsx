@@ -302,7 +302,7 @@ function SecretariatPage() {
                   Directorate
                 </span>
                 <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Dr. Gyambo Sithey, PhD</h3>
-                <p className="text-xs font-semibold text-teal-700">Director / Member Secretary</p>
+                <p className="text-xs font-semibold text-teal-700">Director</p>
               </div>
             </div>
             <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">

@@ -499,6 +499,28 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
           </div>
         </div>
 
+        {/* Desktop Centered Royal Proclamation Quote Banner (As drawn in User Image 3 & Image 2) */}
+        <div
+          className="hidden lg:flex flex-col items-center justify-center absolute z-20 inset-x-0 bottom-6 sm:bottom-8 mx-auto max-w-2xl px-4 pointer-events-auto transition-all duration-300 ease-out"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 130),
+            pointerEvents: scrollY > 80 ? "none" : "auto",
+            transform: `translateY(-${scrollY * 0.15}px)`,
+          }}
+        >
+          <div className="bg-white/90 hover:bg-white/95 backdrop-blur-2xl border border-white/90 ring-1 ring-black/5 rounded-2xl px-6 py-3 shadow-[0_16px_36px_-10px_rgba(11,79,66,0.16)] text-center space-y-1 transition-all">
+            <div className="flex items-center justify-center gap-2">
+              <Quote className="h-4 w-4 text-[#00A896] shrink-0" />
+              <p className="font-serif text-sm sm:text-base font-bold text-[#0B4F42] italic leading-snug">
+                “No Bhutanese should ever have to choose between their health and their livelihood.”
+              </p>
+            </div>
+            <span className="text-[10px] font-mono font-bold text-[#00A896] uppercase tracking-wider block">
+              His Majesty the Fourth Druk Gyalpo • Universal Health Guarantee
+            </span>
+          </div>
+        </div>
+
         {/* Mobile View (< lg): Clean Clickable Story Card + Centered Donate Button at Bottom */}
         <div
           className="lg:hidden absolute inset-x-0 mx-auto bottom-3 sm:bottom-5 z-20 w-[calc(100%-1.5rem)] max-w-[370px] sm:max-w-[440px] pointer-events-auto transition-all duration-300 ease-out space-y-2"
@@ -507,6 +529,15 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
             pointerEvents: scrollY > 70 ? "none" : "auto",
           }}
         >
+          {/* Mobile Sacred Quote Pill */}
+          <div className="rounded-xl bg-white/90 backdrop-blur-2xl border border-white/80 ring-1 ring-black/5 px-3 py-1.5 shadow-xs text-center">
+            <p className="font-serif text-[11px] font-bold text-[#0B4F42] italic leading-snug">
+              “No Bhutanese should ever have to choose between their health and their livelihood.”
+            </p>
+            <span className="text-[8.5px] font-mono font-bold text-[#00A896] uppercase tracking-wider block mt-0.5">
+              His Majesty the Fourth Druk Gyalpo • Universal Health Guarantee
+            </span>
+          </div>
           {/* Clickable Story Card on Mobile */}
           <Link
             to="/our-story"

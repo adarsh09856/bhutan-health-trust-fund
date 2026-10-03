@@ -18,6 +18,7 @@ import {
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
+import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 
 export const Route = createFileRoute("/about/committees")({
   loader: async () => {
@@ -74,6 +75,14 @@ const amcMembers = [
     badge: "Treasury & Sovereign Fiduciary",
     desc: "Oversees public debt parameters, sovereign treasury allocations, and statutory matching fund coordination under the Ministry of Finance.",
     photo: trusteeNorbuDendup,
+  },
+  {
+    name: "Dr. Gyambo Sithey, PhD",
+    committeeRole: "Director / Member Secretary",
+    title: "Director, BHTF Secretariat",
+    badge: "Director",
+    desc: "Executes AMC strategic investment mandates, portfolio oversight, and statutory reporting.",
+    photo: trusteeDrGyambo,
   },
 ];
 
@@ -184,7 +193,7 @@ function CommitteesPage() {
               <UserCheck className="h-4 w-4 text-emerald-700" />
               <span>Asset Management Committee Members</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {amcMembers.map((m, idx) => (
                 <div
                   key={idx}
@@ -215,9 +224,6 @@ function CommitteesPage() {
                         {m.title}
                       </p>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed font-light">
-                      {m.desc}
-                    </p>
                   </div>
                   <div className="pt-2 border-t border-slate-200/60 text-[10px] text-slate-400 font-mono">
                     Cabinet Order C-3/4(4)/2024/35

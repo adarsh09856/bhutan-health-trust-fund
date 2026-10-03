@@ -117,9 +117,9 @@ const staticTrustees = [
   },
   {
     name: "Dr. Gyambo Sithey, PhD",
-    role: "Director & Ex-officio Member Secretary",
-    organization: "Director, BHTF Secretariat",
-    badge: "Member Secretary",
+    role: "Director",
+    organization: "BHTF Secretariat",
+    badge: "Director",
     desc: "Leads day-to-day operations of the BHTF Secretariat, execution of statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.",
     photo: trusteeDrGyambo,
   },
@@ -303,7 +303,7 @@ function TrusteesPage() {
                   <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full border shrink-0 ${
                     t.badge === "Chairperson"
                       ? "bg-amber-50 text-amber-900 border-amber-300"
-                      : t.badge === "Member Secretary"
+                      : t.badge === "Member Secretary" || t.badge === "Director"
                       ? "bg-teal-50 text-teal-900 border-teal-300"
                       : "bg-emerald-50 text-emerald-800 border-emerald-200"
                   }`}>
@@ -318,14 +318,12 @@ function TrusteesPage() {
                   <div className="text-xs font-semibold text-emerald-800 mt-0.5">
                     {t.role}
                   </div>
-                  <div className="text-xs text-slate-500 font-medium mt-0.5">
-                    {t.organization}
-                  </div>
+                  {t.organization && (
+                    <div className="text-xs text-slate-500 font-medium mt-0.5">
+                      {t.organization}
+                    </div>
+                  )}
                 </div>
-
-                <p className="text-xs text-slate-600 leading-relaxed font-light">
-                  {t.desc}
-                </p>
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs text-slate-400 font-semibold">
