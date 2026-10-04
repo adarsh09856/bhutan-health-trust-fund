@@ -20,6 +20,7 @@ import {
   Filter,
 } from "lucide-react";
 import { toast } from "sonner";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/reports")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -175,8 +176,24 @@ export function ReportsExperience({
         subtitle={subtitle}
       />
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug={pageSlug} />
+      )}
+
       {/* Transparency Metric Highlights */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="transparency-highlights">
+        <SectionEditBadge
+          label="Transparency Highlights"
+          pageSlug={pageSlug}
+          sectionId="transparency-highlights"
+          studioHref="/admin/reports"
+          initialData={{
+            title: "100% Unqualified RAA Audit Rating",
+            subtitle: "Historical Archive Indexed from 2003 to 2026 across all statutory filings.",
+            badge: "Audit Certified",
+          }}
+        />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex items-center gap-4">
             <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 border border-emerald-200">
@@ -217,7 +234,18 @@ export function ReportsExperience({
       </section>
 
       {/* Main Filter & Search Area */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="reports-archive">
+        <SectionEditBadge
+          label="Document Archive & Register"
+          pageSlug={pageSlug}
+          sectionId="reports-archive"
+          studioHref="/admin/reports"
+          initialData={{
+            title: title,
+            subtitle: subtitle,
+            badge: badge,
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Box */}
           <div className="relative w-full md:w-96">
@@ -322,7 +350,18 @@ export function ReportsExperience({
       </section>
 
       {/* Dedicated Section: Window Financing (MOF Requisition & Quarterly Releases) */}
-      <section id="window-financing" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="window-financing" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="statutory-disbursements">
+        <SectionEditBadge
+          label="Window Financing Releases"
+          pageSlug={pageSlug}
+          sectionId="statutory-disbursements"
+          studioHref="/admin/reports"
+          initialData={{
+            title: "Ministry of Finance Window Financing & Quarterly Releases",
+            subtitle: "Window Financing is the formal statutory channel through which BHTF disburses endowment yields to the Royal Government's Department of Medical Services (DMS) via the Ministry of Finance (MOF) for essential primary healthcare procurement.",
+            badge: "Statutory Mechanism • Window Financing",
+          }}
+        />
         <div className="bg-gradient-to-br from-slate-900 via-[#071914] to-emerald-950 text-white rounded-3xl p-6 sm:p-10 border border-emerald-500/30 shadow-xl space-y-8">
           <div className="max-w-3xl space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300 font-bold px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 inline-block">

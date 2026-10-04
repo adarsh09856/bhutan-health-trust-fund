@@ -21,6 +21,7 @@ import {
   Globe,
   Share2,
 } from "lucide-react";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/about/organization")({
   loader: async () => {
@@ -136,8 +137,24 @@ function AboutOrganizationPage() {
         </div>
       </section>
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="about-organization" />
+      )}
+
       {/* 1. Sovereign Mandate & Legal Status */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-mandate">
+        <SectionEditBadge
+          label="Sovereign Mandate & Charter"
+          pageSlug="about-organization"
+          sectionId="org-mandate"
+          studioHref="/admin/page-editor?slug=about-organization"
+          initialData={{
+            title: "Healthcare as a Sacred Constitutional Guarantee",
+            subtitle: "Article 9 of the Constitution of the Kingdom of Bhutan solemnly mandates that the State shall provide free access to basic public health services in both modern and traditional medicines.",
+            badge: "Constitutional Mandate",
+          }}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold font-mono border border-emerald-200">
@@ -237,7 +254,18 @@ function AboutOrganizationPage() {
       </section>
 
       {/* 2. Official Vision, Mission & Core Values Grid */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-pillars">
+        <SectionEditBadge
+          label="Vision, Mission & Values"
+          pageSlug="about-organization"
+          sectionId="org-pillars"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "Vision, Mission & Guiding Principles",
+            subtitle: "Formally approved by the Secretariat leadership and Board of Trustees to anchor all strategic investment and healthcare allocations.",
+            badge: "Approved Strategic Compass",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
             Approved Strategic Compass (July 17, 2026)
@@ -285,7 +313,18 @@ function AboutOrganizationPage() {
       </section>
 
       {/* Section 11: Challenges & Strategic Way Forward */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12 relative" data-bhtf-section="org-challenges-solutions">
+        <SectionEditBadge
+          label="Strategic Challenges & Solutions"
+          pageSlug="about-organization"
+          sectionId="org-challenges-solutions"
+          studioHref="/admin/page-editor?slug=about-organization"
+          initialData={{
+            title: "Current Challenges & Strategic Solutions",
+            subtitle: "Preserving universal free healthcare requires confronting escalating global drug prices, domestic capital depth limitations, and evolving donor dynamics with an agile sovereign strategy.",
+            badge: "Section 11 • Strategic Way Forward",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold font-mono">
             <Compass className="h-3.5 w-3.5 text-amber-700" />
@@ -439,7 +478,18 @@ function AboutOrganizationPage() {
       </section>
 
       {/* 3. Link Cards to Trustees, Committees & Secretariat */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-governance-framework">
+        <SectionEditBadge
+          label="Governance & Stewardship Structure"
+          pageSlug="about-organization"
+          sectionId="org-governance-framework"
+          studioHref="/admin/trustees"
+          initialData={{
+            title: "Fiduciary Structure & Stewardship",
+            subtitle: "High-level governance appointed under Cabinet Order C-3/4(4)/2024/35 comprising ministerial leaders, monetary fiduciaries, and clinicians.",
+            badge: "Governance & Operational Leadership",
+          }}
+        />
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-bold uppercase tracking-widest text-slate-500 block mb-2 font-mono">
             Governance & Operational Leadership

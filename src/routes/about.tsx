@@ -9,6 +9,7 @@ import {
 } from "@/lib/api/public.functions";
 import type { Trustee, Milestone, PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 import {
   Target,
@@ -375,8 +376,24 @@ function About() {
         </div>
       </section>
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="about" />
+      )}
+
       {/* 1. Who We Are & Royal Mandate */}
-      <section id="organization" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="organization" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="about-organization">
+        <SectionEditBadge
+          label="Who We Are & Royal Mandate"
+          pageSlug="about"
+          sectionId="about-organization"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "A Permanent Safety Net for the Health of the Nation",
+            subtitle: "In the Kingdom of Bhutan, healthcare is recognized by the Constitution as a fundamental human right.",
+            badge: "Founding Philosophy & Royal Vision",
+          }}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-extrabold border border-emerald-200">
@@ -449,7 +466,18 @@ function About() {
       </section>
 
       {/* 2. Board of Trustees & Governance Structure */}
-      <section id="trustees" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 border-y border-slate-200/80 py-16 sm:py-24">
+      <section id="trustees" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 border-y border-slate-200/80 py-16 sm:py-24 relative" data-bhtf-section="about-trustees">
+        <SectionEditBadge
+          label="Board of Trustees Showcase"
+          pageSlug="about"
+          sectionId="about-trustees"
+          studioHref="/admin/trustees"
+          initialData={{
+            title: "Board of Trustees & Oversight",
+            subtitle: "BHTF is governed by an eminent multi-sectoral Board of Trustees comprising royal government leadership, multilateral health authorities, and civil society representatives.",
+            badge: "High-Level Stewardship & Statutory Governance",
+          }}
+        />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-2">
@@ -514,7 +542,18 @@ function About() {
       </section>
 
       {/* 3. Annexure 1: Organizational Structure of the Secretariat (Official Organogram) */}
-      <section id="organogram" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="organogram" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="about-organogram">
+        <SectionEditBadge
+          label="Secretariat Organogram"
+          pageSlug="about"
+          sectionId="about-organogram"
+          studioHref="/admin/page-editor?slug=about-secretariat"
+          initialData={{
+            title: "Organizational Structure of the Secretariat",
+            subtitle: "Approved statutory reporting hierarchy linking the Board of Trustees, Asset Management Committee, Executive Directorate, and 3 specialized operational divisions.",
+            badge: "Annexure 1 • Institutional Structure",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-2 font-mono">
             Annexure 1 • Institutional Structure
@@ -676,7 +715,18 @@ function About() {
       </section>
 
       {/* 3. Historical Timeline & Milestones */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="about-milestones">
+        <SectionEditBadge
+          label="Historical Milestones"
+          pageSlug="about"
+          sectionId="about-milestones"
+          studioHref="/admin/milestones"
+          initialData={{
+            title: "Milestones in Health Sovereignty",
+            subtitle: "From an ambitious vision at the World Health Assembly in Geneva to an enduring multi-billion sovereign healthcare corpus.",
+            badge: "Chronicle of Growth",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block mb-2">
             Chronicle of Growth
@@ -716,7 +766,18 @@ function About() {
       </section>
 
       {/* 4. Action CTA */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="about-cta">
+        <SectionEditBadge
+          label="Sovereign Shield CTA"
+          pageSlug="about"
+          sectionId="about-cta"
+          studioHref="/admin/donations"
+          initialData={{
+            title: "Support the Sovereign Health Shield",
+            subtitle: "Every contribution is matched 1:1 by the Royal Government of Bhutan to guarantee free medicines for generations.",
+            badge: "1:1 RGOB Sovereign Matching",
+          }}
+        />
         <div className="bg-gradient-to-r from-emerald-900 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-emerald-500/30">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black">Support the Sovereign Health Shield</h3>

@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page-hero";
 import { getPublicPage } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Building2,
   Users2,
@@ -107,7 +108,18 @@ function SecretariatPage() {
       </section>
 
       {/* Annexure 1: Organizational Structure Visual Tree */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-organogram">
+        <SectionEditBadge
+          label="Approved Organogram"
+          pageSlug="about-secretariat"
+          sectionId="secretariat-organogram"
+          studioHref="/admin/page-editor?slug=about-secretariat"
+          initialData={{
+            title: "Organizational Structure of the Secretariat",
+            subtitle: "Formally approved governance hierarchy illustrating the direct line of accountability from the Board of Trustees to operational divisions.",
+            badge: "Approved Organogram • Annexure 1",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block mb-2">
             Approved Organogram • Annexure 1
@@ -273,7 +285,18 @@ function SecretariatPage() {
       </section>
 
       {/* Secretariat Staff Profiles */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-roster">
+        <SectionEditBadge
+          label="Secretariat Personnel Roster"
+          pageSlug="about-secretariat"
+          sectionId="secretariat-roster"
+          studioHref="/admin/page-editor?slug=about-secretariat"
+          initialData={{
+            title: "Secretariat Directorate & Officers",
+            subtitle: "Dedicated professionals managing fiduciary operations, international commodity procurement, and statutory compliance.",
+            badge: "Executive Leadership & Key Personnel",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block mb-2">
             Executive Leadership & Key Personnel
@@ -305,9 +328,6 @@ function SecretariatPage() {
                 <p className="text-xs font-semibold text-teal-700">Director</p>
               </div>
             </div>
-            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Cabinet Order C-3/4(4)/2024/35
-            </div>
           </div>
 
           {/* 2. Senior Investment Officer Card */}
@@ -327,9 +347,6 @@ function SecretariatPage() {
                 <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
                 <p className="text-xs font-semibold text-teal-700">Senior Investment Officer</p>
               </div>
-            </div>
-            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Portfolio & Yield Operations
             </div>
           </div>
 
@@ -351,9 +368,6 @@ function SecretariatPage() {
                 <p className="text-xs font-semibold text-emerald-700">Senior Program Officer</p>
               </div>
             </div>
-            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Essential Drugs & Cold Chain Logistics
-            </div>
           </div>
 
           {/* 4. Accounts Officer Card */}
@@ -374,9 +388,6 @@ function SecretariatPage() {
                 <p className="text-xs font-semibold text-amber-700">Accounts Officer</p>
               </div>
             </div>
-            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Window Financing Ledgers
-            </div>
           </div>
 
           {/* 5. Driver Card */}
@@ -390,22 +401,27 @@ function SecretariatPage() {
                 />
               </div>
               <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full inline-block">
-                  Administration & Finance
-                </span>
                 <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
                 <p className="text-xs font-semibold text-slate-700">Driver</p>
               </div>
-            </div>
-            <div className="px-5 pb-5 text-[10px] text-slate-400 font-mono border-t border-slate-100 pt-3">
-              Fleet & Essential Cold Transit
             </div>
           </div>
         </div>
       </section>
 
       {/* Secretariat Contact Details & Office Location */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-contact">
+        <SectionEditBadge
+          label="Secretariat Contact & HQ"
+          pageSlug="about-secretariat"
+          sectionId="secretariat-contact"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "Bhutan Health Trust Fund Office",
+            subtitle: "Operating from the BTFEC Office Building in Genyen Lam, Thimphu, serving all primary healthcare units across the Kingdom.",
+            badge: "Secretariat Headquarters",
+          }}
+        />
         <div className="bg-gradient-to-br from-slate-900 via-[#071914] to-emerald-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300 font-bold">

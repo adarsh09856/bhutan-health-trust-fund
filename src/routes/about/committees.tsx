@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page-hero";
 import { getPublicPage } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Scale,
   ShieldCheck,
@@ -139,7 +140,18 @@ function CommitteesPage() {
       </section>
 
       {/* 1. Asset Management Committee (AMC) Overview */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="amc-overview">
+        <SectionEditBadge
+          label="Asset Management Committee (AMC)"
+          pageSlug="about-committees"
+          sectionId="amc-overview"
+          studioHref="/admin/page-editor?slug=about-committees"
+          initialData={{
+            title: "Asset Management Committee (AMC)",
+            subtitle: "Cabinet Appointed Sub-Committee providing investment stewardship, capital preservation parameters, and statutory asset allocation.",
+            badge: "Cabinet Appointed Sub-Committee",
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">
@@ -383,7 +395,18 @@ function CommitteesPage() {
       </section>
 
       {/* 2. Governance & Audit Committee (GAC) Overview */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="gac-overview">
+        <SectionEditBadge
+          label="Governance & Audit Committee (GAC)"
+          pageSlug="about-committees"
+          sectionId="gac-overview"
+          studioHref="/admin/policies"
+          initialData={{
+            title: "Governance & Audit Committee (GAC)",
+            subtitle: "Statutory compliance, independent audit oversight, and anti-corruption safeguards directly reporting to the Royal Audit Authority.",
+            badge: "Statutory Compliance",
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">

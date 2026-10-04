@@ -4,6 +4,7 @@ import { PageHero } from "@/components/page-hero";
 import { getPublicNews, getPublicPage } from "@/lib/api/public.functions";
 import type { NewsArticle, PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Calendar,
   Search,
@@ -180,7 +181,18 @@ function NewsPage() {
         subtitle="Authoritative coverage of national health financing milestones, vaccine supply chains, and community health impacts."
       />
 
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 relative" data-bhtf-section="news-bulletins">
+        <SectionEditBadge
+          label="News & Media Bulletins"
+          pageSlug="news"
+          sectionId="news-bulletins"
+          studioHref="/admin/news"
+          initialData={{
+            title: "News, Media & Press Releases",
+            subtitle: "Authoritative coverage of national health financing milestones, vaccine supply chains, and community health impacts.",
+            badge: "Official Media Room",
+          }}
+        />
         {/* Search & Category Filter Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
           <div className="flex items-center gap-2.5 flex-1 w-full bg-slate-50 rounded-2xl px-4 py-2.5 border border-slate-200">

@@ -8,6 +8,7 @@ import {
 } from "@/lib/api/public.functions";
 import type { ImpactMetric, NewsArticle, PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer, HeroBlock } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 import {
   Users,
@@ -688,12 +689,287 @@ function Index() {
             </div>
           </div>
         )}
-        <PageRenderer sections={customSections} interactive={false} />
+        {/* Custom Page Renderer */}
+        <PageRenderer sections={customSections} interactive={false} pageSlug="home" />
 
         {/* Founding Partners Strip */}
-        <PartnerLogosStrip />
+        <div className="relative" data-bhtf-section="partners-strip">
+          <SectionEditBadge
+            label="Founding Partners"
+            pageSlug="home"
+            sectionId="partners-strip"
+            studioHref="/admin/page-editor?slug=home"
+          />
+          <PartnerLogosStrip />
+        </div>
 
         {/* Rich Institutional Content Sections Enriched on Homepage */}
+        <div className="relative" data-bhtf-section="fiduciary-ledger">
+          <SectionEditBadge
+            label="Fiduciary Ledger"
+            pageSlug="home"
+            sectionId="fiduciary-ledger"
+            studioHref="/admin/metrics"
+            initialData={{
+              title: "Statutory Fiduciary & Operational Ledger",
+              subtitle: "Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship.",
+              badge: "Audit Certified",
+            }}
+          />
+          <RuledLedgerLayout
+            title="Statutory Fiduciary & Operational Ledger"
+            subtitle="Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship."
+            sourceLine="Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing, FY 2024–2025"
+            theme="parchment"
+            rows={fiduciaryLedgerRows}
+          />
+        </div>
+
+        <div className="relative" data-bhtf-section="commodities-formulary">
+          <SectionEditBadge
+            label="Vaccines & Commodities"
+            pageSlug="home"
+            sectionId="commodities-formulary"
+            studioHref="/admin/programs"
+            initialData={{
+              title: "Universal Vaccine & Primary Formulary Financing",
+              subtitle: "438 Modern + 110 Traditional Medicines Financed in Perpetuity",
+              badge: "Statutory Allocation",
+            }}
+          />
+          <TwoColumnNarrativeLayout
+            sectionTitle="Universal Vaccine & Primary Formulary Financing"
+            referenceCode="Statutory Mandate & Allocation"
+            paragraphs={[
+              "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines, 438 essential modern medicines, and 110 traditional formulations (gSo-ba Rig-pa) directly for every hospital and gewog clinic in the Kingdom.",
+              "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 4.8B remains untouched in perpetuity.",
+            ]}
+            actionLink={{
+              label: "Examine Financed Commodities & Formularies",
+              to: "/our-impact",
+            }}
+            theme="parchment"
+          />
+        </div>
+
+        {/* Field Operations & Cold Chain Dispatches */}
+        <div className="relative" data-bhtf-section="field-dispatches">
+          <SectionEditBadge
+            label="Field Dispatches"
+            pageSlug="home"
+            sectionId="field-dispatches"
+            studioHref="/admin/gallery"
+            initialData={{
+              title: "Primary Health Units in Every Gewog",
+              subtitle: "Photographic dispatches directly from public healthcare clinics and cold-chain hubs.",
+              badge: "Field Operations",
+            }}
+          />
+          <FieldDispatchesGrid />
+        </div>
+
+        <div className="relative" data-bhtf-section="dzongkhag-coverage">
+          <SectionEditBadge
+            label="20 Dzongkhags Allocation"
+            pageSlug="home"
+            sectionId="dzongkhag-coverage"
+            studioHref="/admin/metrics"
+            initialData={{
+              title: "Nationwide Coverage Across All 20 Dzongkhags",
+              subtitle: "Equitable primary healthcare commodity buffer maintained across all 205 remote gewogs.",
+              badge: "Kingdom-Wide Distribution",
+            }}
+          />
+          <RuledDzongkhagMatrix />
+        </div>
+
+        {/* Window Financing Highlight Showcase */}
+        <div className="relative" data-bhtf-section="window-financing">
+          <SectionEditBadge
+            label="Window Financing Protocol"
+            pageSlug="home"
+            sectionId="window-financing"
+            studioHref="/admin/page-editor?slug=window-financing"
+            initialData={{
+              title: "Autonomous Sovereign Window Financing Protocol",
+              subtitle: "Quarterly capital releases backed by inventory reconciliations and WHO/DRA compliance.",
+              badge: "Statutory Mechanism",
+              primaryCtaText: "Review Operational Protocol",
+              primaryCtaUrl: "/resources/window-financing",
+            }}
+          />
+          <WindowFinancingHighlightCard />
+        </div>
+
+        <div className="relative" data-bhtf-section="governance-triple-lock">
+          <SectionEditBadge
+            label="Governance & Triple-Lock"
+            pageSlug="home"
+            sectionId="governance-triple-lock"
+            studioHref="/admin/policies"
+            initialData={{
+              title: "Governance, Legal Structure & Statutory Triple-Lock",
+              subtitle: "Royal Charter mandate safeguarded by capital ring-fencing, RAA audits & committee oversight.",
+              badge: "Triple-Lock Guarantee",
+            }}
+          />
+          <TwoColumnNarrativeLayout
+            sectionTitle="Governance, Legal Structure & Statutory Triple-Lock"
+            referenceCode="Charter Compliance & Oversight"
+            paragraphs={[
+              "BHTF operates under a strict Royal Charter mandate governed by a high-level Board of Trustees chaired by the Hon'ble Minister for Health. The Fund's fiduciary integrity is safeguarded by an institutional triple-lock: statutory capital ring-fencing prohibiting principal invasion, mandatory annual audits by the Royal Audit Authority (RAA), and independent oversight by the Asset Management and Technical Advisory Committees.",
+              "Disbursements follow an uncompromising window financing mechanism. Annual procurement capital is released quarterly to the Department of Medical Services (DMS) via the Ministry of Finance only upon submission of physical inventory reconciliations and WHO/DRA batch compliance certificates.",
+            ]}
+            actionLink={{
+              label: "Review Board of Trustees & Governance Structure",
+              to: "/about/trustees",
+            }}
+            theme="forest"
+          />
+        </div>
+
+        {/* High-Level Board of Trustees Showcase with Authentic Portraits */}
+        <div className="relative" data-bhtf-section="trustees-roster">
+          <SectionEditBadge
+            label="Board of Trustees"
+            pageSlug="home"
+            sectionId="trustees-roster"
+            studioHref="/admin/trustees"
+            initialData={{
+              title: "High-Level Board of Trustees",
+              subtitle: "Distinguished ministerial leadership, fiscal specialists, and monastic trustees safeguarding universal health security.",
+              badge: "Board Leadership",
+            }}
+          />
+          <TrusteesLeadershipShowcase />
+        </div>
+
+        <div className="relative" data-bhtf-section="audit-publications">
+          <SectionEditBadge
+            label="Audit Register & Publications"
+            pageSlug="home"
+            sectionId="audit-publications"
+            studioHref="/admin/reports"
+            initialData={{
+              title: "Statutory Publications & Certified Audit Register",
+              subtitle: "Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny.",
+              badge: "Official Filings",
+            }}
+          />
+          <DocumentRegisterLayout
+            title="Statutory Publications & Certified Audit Register"
+            subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
+            documents={recentAuditDocuments}
+            viewAllLink={{
+              label: "Browse Full Document & Audit Archive",
+              to: "/resources",
+            }}
+            theme="parchment"
+          />
+        </div>
+
+        <div className="relative" data-bhtf-section="tax-matching">
+          <SectionEditBadge
+            label="1:1 Match & DRC Tax Relief"
+            pageSlug="home"
+            sectionId="tax-matching"
+            studioHref="/admin/donations"
+            initialData={{
+              title: "1:1 Sovereign Match & Permanent DRC Tax Exemption",
+              subtitle: "Section 10(f) Income Tax Act • 100% Tax Deductible with Dollar-for-Dollar Sovereign Match",
+              badge: "Royal Decree & Fiscal Law",
+              primaryCtaText: "Contribute to Corpus (1:1 Matched)",
+              primaryCtaUrl: "/donate",
+            }}
+          />
+          <TwoColumnNarrativeLayout
+            sectionTitle="1:1 Sovereign Match & Permanent DRC Tax Exemption"
+            referenceCode="DRC Income Tax Act Section 10(f) • Royal Decree"
+            paragraphs={[
+              "Under Royal Decree and Section 10(f) of the Department of Revenue & Customs (DRC) Income Tax Act of the Kingdom of Bhutan, all individual, philanthropic, and corporate contributions to the Bhutan Health Trust Fund are 100% tax-deductible.",
+              "Furthermore, the Royal Government of Bhutan commits a permanent dollar-for-dollar (1:1) sovereign match to every citizen and institutional Ngultrum contributed, instantly doubling the enduring health financing capacity of every contribution.",
+            ]}
+            actionLink={{
+              label: "Contribute to the Sovereign Health Endowment (1:1 Matched)",
+              to: "/donate",
+            }}
+            theme="parchment"
+          />
+        </div>
+      </div>
+    );
+  }
+
+
+  return (
+    <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
+      {/* 1. Sovereign Hero Section: Full 100dvh Unobstructed King Portrait + Scroll-Driven Translucent Card Elevation */}
+      <div className="relative" data-bhtf-section="home-hero">
+        <SectionEditBadge
+          label="Hero Banner"
+          pageSlug="home"
+          sectionId="home-hero"
+          studioHref="/admin/page-editor?slug=home"
+          initialData={{
+            title: "Healthy People. Stronger Bhutan.",
+            subtitle: "Sovereign healthcare financing guaranteeing uninterrupted essential medicines and universal vaccines for every citizen across all 20 Dzongkhags.",
+            badge: "Royal Charter Statutory Trust Fund",
+            primaryCtaText: "Contribute to Corpus (1:1 Matched)",
+            primaryCtaUrl: "/donate",
+            secondaryCtaText: "Explore Commodities Formulary",
+            secondaryCtaUrl: "/our-impact",
+            backgroundImage: settings["hero_background_image"],
+          }}
+        />
+        <HeroBlock section={{ id: "hero-main", type: "hero", backgroundImage: settings["hero_background_image"] }} />
+      </div>
+
+      {/* 2. Statement of Royal Mandate (Layout 1) */}
+      <div className="relative" data-bhtf-section="royal-mandate">
+        <SectionEditBadge
+          label="Royal Mandate Proclamation"
+          pageSlug="home"
+          sectionId="royal-mandate"
+          studioHref="/admin/page-editor?slug=home"
+          initialData={{
+            title: "The Royal Mandate of Sustainable Healthcare",
+            content: "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come.",
+            badge: "Royal Charter Proclamation",
+            subtitle: "His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck",
+          }}
+        />
+        <StatementLayout
+          proclamation="No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come."
+          citation="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
+          legalBasis="ROYAL CHARTER PROCLAMATION • 3 AUGUST 2000"
+          theme="parchment"
+        />
+      </div>
+
+      {/* Sovereign Founding & Multilateral Partners Strip */}
+      <div className="relative" data-bhtf-section="partners-strip">
+        <SectionEditBadge
+          label="Founding Partners"
+          pageSlug="home"
+          sectionId="partners-strip"
+          studioHref="/admin/page-editor?slug=home"
+        />
+        <PartnerLogosStrip />
+      </div>
+
+      {/* 3. Statutory Fiduciary & Operational Ledger (Layout 2) */}
+      <div className="relative" data-bhtf-section="fiduciary-ledger">
+        <SectionEditBadge
+          label="Fiduciary Ledger"
+          pageSlug="home"
+          sectionId="fiduciary-ledger"
+          studioHref="/admin/metrics"
+          initialData={{
+            title: "Statutory Fiduciary & Operational Ledger",
+            subtitle: "Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship.",
+            badge: "Audit Certified",
+          }}
+        />
         <RuledLedgerLayout
           title="Statutory Fiduciary & Operational Ledger"
           subtitle="Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship."
@@ -701,7 +977,21 @@ function Index() {
           theme="parchment"
           rows={fiduciaryLedgerRows}
         />
+      </div>
 
+      {/* 4. What the Fund Finances (Layout 3: Two-Column Narrative) */}
+      <div className="relative" data-bhtf-section="commodities-formulary">
+        <SectionEditBadge
+          label="Vaccines & Commodities"
+          pageSlug="home"
+          sectionId="commodities-formulary"
+          studioHref="/admin/programs"
+          initialData={{
+            title: "Universal Vaccine & Primary Formulary Financing",
+            subtitle: "438 Modern + 110 Traditional Medicines Financed in Perpetuity",
+            badge: "Statutory Allocation",
+          }}
+        />
         <TwoColumnNarrativeLayout
           sectionTitle="Universal Vaccine & Primary Formulary Financing"
           referenceCode="Statutory Mandate & Allocation"
@@ -715,15 +1005,71 @@ function Index() {
           }}
           theme="parchment"
         />
+      </div>
 
-        {/* Field Operations & Cold Chain Dispatches */}
+      {/* Field Operations & Cold Chain Dispatches */}
+      <div className="relative" data-bhtf-section="field-dispatches">
+        <SectionEditBadge
+          label="Field Dispatches"
+          pageSlug="home"
+          sectionId="field-dispatches"
+          studioHref="/admin/gallery"
+          initialData={{
+            title: "Primary Health Units in Every Gewog",
+            subtitle: "Photographic dispatches directly from public healthcare clinics and cold-chain hubs.",
+            badge: "Field Operations",
+          }}
+        />
         <FieldDispatchesGrid />
+      </div>
 
+      {/* 5. Nationwide Coverage Across All 20 Dzongkhags (Ruled Regional Matrix) */}
+      <div className="relative" data-bhtf-section="dzongkhag-coverage">
+        <SectionEditBadge
+          label="20 Dzongkhags Allocation"
+          pageSlug="home"
+          sectionId="dzongkhag-coverage"
+          studioHref="/admin/metrics"
+          initialData={{
+            title: "Nationwide Coverage Across All 20 Dzongkhags",
+            subtitle: "Equitable primary healthcare commodity buffer maintained across all 205 remote gewogs.",
+            badge: "Kingdom-Wide Distribution",
+          }}
+        />
         <RuledDzongkhagMatrix />
+      </div>
 
-        {/* Window Financing Highlight Showcase */}
+      {/* Window Financing Highlight Showcase */}
+      <div className="relative" data-bhtf-section="window-financing">
+        <SectionEditBadge
+          label="Window Financing Protocol"
+          pageSlug="home"
+          sectionId="window-financing"
+          studioHref="/admin/page-editor?slug=window-financing"
+          initialData={{
+            title: "Autonomous Sovereign Window Financing Protocol",
+            subtitle: "Quarterly capital releases backed by inventory reconciliations and WHO/DRA compliance.",
+            badge: "Statutory Mechanism",
+            primaryCtaText: "Review Operational Protocol",
+            primaryCtaUrl: "/resources/window-financing",
+          }}
+        />
         <WindowFinancingHighlightCard />
+      </div>
 
+      {/* 6. Governance, Legal Structure & Statutory Triple-Lock (Layout 3: Forest Theme) */}
+      <div className="relative" data-bhtf-section="governance-triple-lock">
+        <SectionEditBadge
+          label="Governance & Triple-Lock"
+          pageSlug="home"
+          sectionId="governance-triple-lock"
+          studioHref="/admin/policies"
+          initialData={{
+            title: "Governance, Legal Structure & Statutory Triple-Lock",
+            subtitle: "Royal Charter mandate safeguarded by capital ring-fencing, RAA audits & committee oversight.",
+            badge: "Triple-Lock Guarantee",
+          }}
+        />
         <TwoColumnNarrativeLayout
           sectionTitle="Governance, Legal Structure & Statutory Triple-Lock"
           referenceCode="Charter Compliance & Oversight"
@@ -737,10 +1083,37 @@ function Index() {
           }}
           theme="forest"
         />
+      </div>
 
-        {/* High-Level Board of Trustees Showcase with Authentic Portraits */}
+      {/* High-Level Board of Trustees Showcase with Authentic Portraits */}
+      <div className="relative" data-bhtf-section="trustees-roster">
+        <SectionEditBadge
+          label="Board of Trustees"
+          pageSlug="home"
+          sectionId="trustees-roster"
+          studioHref="/admin/trustees"
+          initialData={{
+            title: "High-Level Board of Trustees",
+            subtitle: "Distinguished ministerial leadership, fiscal specialists, and monastic trustees safeguarding universal health security.",
+            badge: "Board Leadership",
+          }}
+        />
         <TrusteesLeadershipShowcase />
+      </div>
 
+      {/* 7. Statutory Publications & Certified Audit Register (Layout 4) */}
+      <div className="relative" data-bhtf-section="audit-publications">
+        <SectionEditBadge
+          label="Audit Register & Publications"
+          pageSlug="home"
+          sectionId="audit-publications"
+          studioHref="/admin/reports"
+          initialData={{
+            title: "Statutory Publications & Certified Audit Register",
+            subtitle: "Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny.",
+            badge: "Official Filings",
+          }}
+        />
         <DocumentRegisterLayout
           title="Statutory Publications & Certified Audit Register"
           subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
@@ -751,7 +1124,23 @@ function Index() {
           }}
           theme="parchment"
         />
+      </div>
 
+      {/* 8. Sovereign Matching & Permanent DRC Tax Exemption (Layout 3) */}
+      <div className="relative" data-bhtf-section="tax-matching">
+        <SectionEditBadge
+          label="1:1 Match & DRC Tax Relief"
+          pageSlug="home"
+          sectionId="tax-matching"
+          studioHref="/admin/donations"
+          initialData={{
+            title: "1:1 Sovereign Match & Permanent DRC Tax Exemption",
+            subtitle: "Section 10(f) Income Tax Act • 100% Tax Deductible with Dollar-for-Dollar Sovereign Match",
+            badge: "Royal Decree & Fiscal Law",
+            primaryCtaText: "Contribute to Corpus (1:1 Matched)",
+            primaryCtaUrl: "/donate",
+          }}
+        />
         <TwoColumnNarrativeLayout
           sectionTitle="1:1 Sovereign Match & Permanent DRC Tax Exemption"
           referenceCode="DRC Income Tax Act Section 10(f) • Royal Decree"
@@ -766,103 +1155,6 @@ function Index() {
           theme="parchment"
         />
       </div>
-    );
-  }
-
-
-  return (
-    <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
-      {/* 1. Sovereign Hero Section: Full 100dvh Unobstructed King Portrait + Scroll-Driven Translucent Card Elevation */}
-      <HeroBlock section={{ id: "hero-main", type: "hero", backgroundImage: settings["hero_background_image"] }} />
-
-      {/* 2. Statement of Royal Mandate (Layout 1) */}
-      <StatementLayout
-        proclamation="No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come."
-        citation="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-        legalBasis="ROYAL CHARTER PROCLAMATION • 3 AUGUST 2000"
-        theme="parchment"
-      />
-
-      {/* Sovereign Founding & Multilateral Partners Strip */}
-      <PartnerLogosStrip />
-
-      {/* 3. Statutory Fiduciary & Operational Ledger (Layout 2) */}
-      <RuledLedgerLayout
-        title="Statutory Fiduciary & Operational Ledger"
-        subtitle="Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship."
-        sourceLine="Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing, FY 2024–2025"
-        theme="parchment"
-        rows={fiduciaryLedgerRows}
-      />
-
-      {/* 4. What the Fund Finances (Layout 3: Two-Column Narrative) */}
-      <TwoColumnNarrativeLayout
-        sectionTitle="Universal Vaccine & Primary Formulary Financing"
-        referenceCode="Statutory Mandate & Allocation"
-        paragraphs={[
-          "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines, 438 essential modern medicines, and 110 traditional formulations (gSo-ba Rig-pa) directly for every hospital and gewog clinic in the Kingdom.",
-          "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 4.8B remains untouched in perpetuity.",
-        ]}
-        actionLink={{
-          label: "Examine Financed Commodities & Formularies",
-          to: "/our-impact",
-        }}
-        theme="parchment"
-      />
-
-      {/* Field Operations & Cold Chain Dispatches */}
-      <FieldDispatchesGrid />
-
-      {/* 5. Nationwide Coverage Across All 20 Dzongkhags (Ruled Regional Matrix) */}
-      <RuledDzongkhagMatrix />
-
-      {/* Window Financing Highlight Showcase */}
-      <WindowFinancingHighlightCard />
-
-      {/* 6. Governance, Legal Structure & Statutory Triple-Lock (Layout 3: Forest Theme) */}
-      <TwoColumnNarrativeLayout
-        sectionTitle="Governance, Legal Structure & Statutory Triple-Lock"
-        referenceCode="Charter Compliance & Oversight"
-        paragraphs={[
-          "BHTF operates under a strict Royal Charter mandate governed by a high-level Board of Trustees chaired by the Hon'ble Minister for Health. The Fund's fiduciary integrity is safeguarded by an institutional triple-lock: statutory capital ring-fencing prohibiting principal invasion, mandatory annual audits by the Royal Audit Authority (RAA), and independent oversight by the Asset Management and Technical Advisory Committees.",
-          "Disbursements follow an uncompromising window financing mechanism. Annual procurement capital is released quarterly to the Department of Medical Services (DMS) via the Ministry of Finance only upon submission of physical inventory reconciliations and WHO/DRA batch compliance certificates.",
-        ]}
-        actionLink={{
-          label: "Review Board of Trustees & Governance Structure",
-          to: "/about/trustees",
-        }}
-        theme="forest"
-      />
-
-      {/* High-Level Board of Trustees Showcase with Authentic Portraits */}
-      <TrusteesLeadershipShowcase />
-
-      {/* 7. Statutory Publications & Certified Audit Register (Layout 4) */}
-      <DocumentRegisterLayout
-        title="Statutory Publications & Certified Audit Register"
-        subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
-        documents={recentAuditDocuments}
-        viewAllLink={{
-          label: "Browse Full Document & Audit Archive",
-          to: "/resources",
-        }}
-        theme="parchment"
-      />
-
-      {/* 8. Sovereign Matching & Permanent DRC Tax Exemption (Layout 3) */}
-      <TwoColumnNarrativeLayout
-        sectionTitle="1:1 Sovereign Match & Permanent DRC Tax Exemption"
-        referenceCode="DRC Income Tax Act Section 10(f) • Royal Decree"
-        paragraphs={[
-          "Under Royal Decree and Section 10(f) of the Department of Revenue & Customs (DRC) Income Tax Act of the Kingdom of Bhutan, all individual, philanthropic, and corporate contributions to the Bhutan Health Trust Fund are 100% tax-deductible.",
-          "Furthermore, the Royal Government of Bhutan commits a permanent dollar-for-dollar (1:1) sovereign match to every citizen and institutional Ngultrum contributed, instantly doubling the enduring health financing capacity of every contribution.",
-        ]}
-        actionLink={{
-          label: "Contribute to the Sovereign Health Endowment (1:1 Matched)",
-          to: "/donate",
-        }}
-        theme="parchment"
-      />
     </div>
   );
 }

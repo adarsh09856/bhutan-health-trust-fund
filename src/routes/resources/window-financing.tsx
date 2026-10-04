@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page-hero";
 import { getPublicPage } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Sparkles,
   ShieldCheck,
@@ -199,7 +200,18 @@ function WindowFinancingPage() {
       </section>
 
       {/* Core Principle: The Fiduciary Triple-Lock */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="fiduciary-architecture">
+        <SectionEditBadge
+          label="Fiduciary Architecture"
+          pageSlug="window-financing"
+          sectionId="fiduciary-architecture"
+          studioHref="/admin/page-editor?slug=window-financing"
+          initialData={{
+            title: "Perpetual Healthcare Independence Through Window Financing",
+            subtitle: "Enacted under the Royal Charter, the Window Financing mechanism bridges BHTF's sovereign endowment directly with public health supply lines.",
+            badge: "Statutory Fiduciary Architecture",
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-sm space-y-8">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
@@ -302,7 +314,18 @@ function WindowFinancingPage() {
       </section>
 
       {/* Six Statutory Disbursement Guidelines */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="disbursement-guidelines">
+        <SectionEditBadge
+          label="Disbursement Guidelines"
+          pageSlug="window-financing"
+          sectionId="disbursement-guidelines"
+          studioHref="/admin/page-editor?slug=window-financing"
+          initialData={{
+            title: "Six Statutory Disbursement Guidelines",
+            subtitle: "Mandatory fiduciary protocols governing all transfers from the Bhutan Health Trust Fund to the Ministry of Health.",
+            badge: "Governance Framework",
+          }}
+        />
         <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-3xl p-8 sm:p-12 shadow-sm space-y-8">
           <div className="max-w-3xl space-y-2">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00A896] block">

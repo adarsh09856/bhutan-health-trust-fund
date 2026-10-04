@@ -4,6 +4,7 @@ import { PageHero } from "@/components/page-hero";
 import { getPublicTrustees, getPublicPage } from "@/lib/api/public.functions";
 import type { Trustee, PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   ShieldCheck,
   Award,
@@ -243,7 +244,18 @@ function TrusteesPage() {
       </section>
 
       {/* Statutory Mandate Overview */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-composition">
+        <SectionEditBadge
+          label="Terms of Reference"
+          pageSlug="about-trustees"
+          sectionId="trustees-composition"
+          studioHref="/admin/trustees"
+          initialData={{
+            title: "Composition, Fiduciary Duty & Terms of Reference",
+            subtitle: "Pursuant to the Royal Charter granted by His Majesty the Fourth Druk Gyalpo, the Board of Trustees sits as the supreme governing authority.",
+            badge: "Royal Charter Mandated Governance",
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
@@ -271,7 +283,18 @@ function TrusteesPage() {
       </section>
 
       {/* Complete Trustees Gallery Grid */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-roster">
+        <SectionEditBadge
+          label="Board of Trustees Roster"
+          pageSlug="about-trustees"
+          sectionId="trustees-roster"
+          studioHref="/admin/trustees"
+          initialData={{
+            title: "Members of the Board of Trustees",
+            subtitle: "Distinguished leaders entrusted with safeguarding universal health security across all 20 Dzongkhags.",
+            badge: "Official Directory • High-Level Trustees",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
             Official Directory • High-Level Trustees

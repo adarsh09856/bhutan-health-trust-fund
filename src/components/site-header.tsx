@@ -231,14 +231,14 @@ export function SiteHeader() {
             OUR IMPACT
           </Link>
 
-          {/* 4. RESOURCES Dropdown (From old website: Advocacy Materials, Annual Reports, Audit Report) */}
+          {/* 4. RESOURCES Dropdown (Dedicated Routes: Advocacy Materials, Annual Reports, Audit Report) */}
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("resources")}
             onMouseLeave={handleMouseLeave}
           >
             <Link
-              to="/reports"
+              to="/resources/annual-reports"
               className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
                   ? "bg-[#0B4F42] text-white shadow-xs"
@@ -253,8 +253,7 @@ export function SiteHeader() {
               <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
                 {/* 1. Advocacy Materials */}
                 <Link
-                  to="/reports"
-                  search={{ category: "Advocacy" }}
+                  to="/resources/advocacy"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
@@ -272,8 +271,7 @@ export function SiteHeader() {
 
                 {/* 2. Annual Reports */}
                 <Link
-                  to="/reports"
-                  search={{ category: "Annual Report" }}
+                  to="/resources/annual-reports"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
@@ -291,8 +289,7 @@ export function SiteHeader() {
 
                 {/* 3. Audit Report */}
                 <Link
-                  to="/reports"
-                  search={{ category: "Financial" }}
+                  to="/resources/audit-reports"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -311,7 +308,7 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 5. NEWS & EVENTS Dropdown (Upcoming events, announcement, career) */}
+          {/* 5. NEWS & EVENTS Dropdown (Dedicated Routes: Upcoming events, announcement, career) */}
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("news")}
@@ -333,8 +330,7 @@ export function SiteHeader() {
               <div className="absolute top-full right-0 lg:left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
                 {/* 1. Upcoming Events */}
                 <Link
-                  to="/news"
-                  search={{ category: "EVENTS" }}
+                  to="/news/events"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
@@ -352,8 +348,7 @@ export function SiteHeader() {
 
                 {/* 2. Announcement */}
                 <Link
-                  to="/news"
-                  search={{ category: "OFFICIAL_NEWS" }}
+                  to="/news/announcements"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
@@ -371,8 +366,7 @@ export function SiteHeader() {
 
                 {/* 3. Career */}
                 <Link
-                  to="/news"
-                  search={{ category: "CAREERS" }}
+                  to="/news/careers"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -441,12 +435,12 @@ export function SiteHeader() {
               { to: "/about/secretariat", label: "About: Secretariat & Staff" },
               { to: "/our-story", label: "Our Story & History" },
               { to: "/our-impact", label: "Our Impact (Health Commodities)" },
-              { to: "/reports", search: { category: "Advocacy" }, label: "Resources: Advocacy Materials" },
-              { to: "/reports", search: { category: "Annual Report" }, label: "Resources: Annual Reports" },
-              { to: "/reports", search: { category: "Financial" }, label: "Resources: Audit Report" },
-              { to: "/news", search: { category: "EVENTS" }, label: "News: Upcoming Events" },
-              { to: "/news", search: { category: "OFFICIAL_NEWS" }, label: "News: Announcement" },
-              { to: "/news", search: { category: "CAREERS" }, label: "News: Career" },
+              { to: "/resources/advocacy", label: "Resources: Advocacy Materials" },
+              { to: "/resources/annual-reports", label: "Resources: Annual Reports" },
+              { to: "/resources/audit-reports", label: "Resources: Audit Report" },
+              { to: "/news/events", label: "News: Upcoming Events" },
+              { to: "/news/announcements", label: "News: Announcement" },
+              { to: "/news/careers", label: "News: Career" },
               { to: "/track-donation", label: "Track Donation & Verify 1:1 Match" },
               { to: "/contact", label: "Contact Secretariat" },
             ].map((item) => {
@@ -457,7 +451,6 @@ export function SiteHeader() {
                 <Link
                   key={`${item.to}-${item.label}`}
                   to={item.to}
-                  search={"search" in item ? (item.search as Record<string, string>) : undefined}
                   className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                     isActive ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
                   }`}

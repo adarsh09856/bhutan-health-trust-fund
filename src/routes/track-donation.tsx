@@ -26,6 +26,7 @@ import {
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/track-donation")({
   loader: async () => {
@@ -202,9 +203,27 @@ export function TrackDonationPage() {
         />
       </div>
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <div className="print:hidden">
+          <PageRenderer sections={customSections} pageSlug="track-donation" />
+        </div>
+      )}
+
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Verification Form (Hidden when printing) */}
-        <div className="print:hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-6">
+        <div className="print:hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-6 relative" data-bhtf-section="track-donation-lookup">
+          <SectionEditBadge
+            label="Donation Lookup Form"
+            pageSlug="track-donation"
+            sectionId="track-donation-lookup"
+            studioHref="/admin/donations"
+            initialData={{
+              title: "Track Donation & DRC Tax Certificate",
+              subtitle: "Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC 100% Tax Exemption Certificate",
+              badge: "SOVEREIGN HEALTH REPOSITORY",
+            }}
+          />
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
             <div>
               <span className="text-xs font-black text-emerald-700 uppercase tracking-widest flex items-center gap-1.5">

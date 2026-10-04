@@ -242,3 +242,28 @@
     print-color-adjust: exact !important;
   }
 }
+
+/* 
+ * BHTF Visual Live Edit Mode & Section Quick Edit Badges
+ * Visible strictly to authenticated staff admins when Visual Edit is toggled ON.
+ */
+body.bhtf-visual-edit-on [data-bhtf-section] {
+  position: relative !important;
+  outline: 2px dashed rgba(212, 162, 55, 0.75) !important;
+  outline-offset: -2px;
+  transition: outline 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.bhtf-visual-edit-on [data-bhtf-section]:hover {
+  outline: 2.5px solid #d4a237 !important;
+  box-shadow: inset 0 0 0 2px rgba(212, 162, 55, 0.25), 0 0 24px rgba(212, 162, 55, 0.18) !important;
+}
+
+.bhtf-section-edit-badge {
+  display: none;
+}
+
+body.bhtf-visual-edit-on .bhtf-section-edit-badge {
+  display: flex !important;
+}
+

@@ -27,6 +27,7 @@ import {
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
 import { useCountUp } from "@/hooks/use-count-up";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import heroBhutan from "@/assets/hero-bhutan.jpg";
 import kingPortrait from "@/assets/king_portrait_fourth.jpg";
 import newsVaccine from "@/assets/news-vaccine.jpg";
@@ -62,11 +63,13 @@ export function PageRenderer({
   interactive = false,
   activeSectionId,
   onSelectSection,
+  pageSlug = "home",
 }: {
   sections: PageBlockSection[];
   interactive?: boolean;
   activeSectionId?: string;
   onSelectSection?: (id: string) => void;
+  pageSlug?: string;
 }) {
   const visibleSections = sections
     .filter((s) => (interactive ? true : s.isVisible))
@@ -77,6 +80,7 @@ export function PageRenderer({
       {visibleSections.map((sec) => (
         <div
           key={sec.id}
+          data-bhtf-section={sec.id}
           onClickCapture={(e) => {
             if (interactive) {
               const target = e.target as HTMLElement;
@@ -101,6 +105,17 @@ export function PageRenderer({
               : ""
           } ${!sec.isVisible && interactive ? "opacity-50 grayscale" : ""}`}
         >
+          {/* Section Edit Badge for Staff Admin Visual Edit Mode */}
+          {!interactive && (
+            <SectionEditBadge
+              label={sec.title || sec.type.replace("_", " ")}
+              pageSlug={pageSlug}
+              sectionId={sec.id}
+              studioHref={`/admin/page-editor?slug=${pageSlug}`}
+              initialData={sec}
+            />
+          )}
+
           {/* Admin Block Label Overlay in Interactive Mode */}
           {interactive && (
             <div className="absolute top-3 left-3 z-20 flex items-center gap-2 bg-slate-900/95 text-amber-400 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono shadow-lg border border-amber-500/40">

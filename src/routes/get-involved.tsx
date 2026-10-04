@@ -42,6 +42,7 @@ import {
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/get-involved")({
   loader: async () => {
@@ -390,8 +391,24 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
         subtitle="Every Ngultrum you pledge is doubled 1:1 by the Royal Government of Bhutan to build a permanent, sovereign health endowment."
       />
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="get-involved" />
+      )}
+
       {/* 4 Pillars of Engagement */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-avenues">
+        <SectionEditBadge
+          label="Donation Avenues"
+          pageSlug="get-involved"
+          sectionId="donate-avenues"
+          studioHref="/admin/donations"
+          initialData={{
+            title: "Support the Bhutan Health Trust Fund",
+            subtitle: "Every Ngultrum you pledge is doubled 1:1 by the Royal Government of Bhutan to build a permanent, sovereign health endowment.",
+            badge: "Tax Deductible in Bhutan",
+          }}
+        />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {ways.map((w) => (
             <div
@@ -409,7 +426,18 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Donation Form & Pledge Section */}
-      <section id="donate-form" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 scroll-mt-28">
+      <section id="donate-form" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 scroll-mt-28 relative" data-bhtf-section="donate-terminal">
+        <SectionEditBadge
+          label="Donation Terminal & Gateways"
+          pageSlug="get-involved"
+          sectionId="donate-terminal"
+          studioHref="/admin/donations"
+          initialData={{
+            title: "Make a Healthcare Contribution Pledge",
+            subtitle: "Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA Payment Gateway, or direct bank transfer.",
+            badge: "1:1 RGOB Matching Model Guaranteed",
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold">
@@ -1036,7 +1064,18 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Section 7 Canonical: Sources of Funding & Statutory 1% Contribution */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 relative" data-bhtf-section="donate-funding-architecture">
+        <SectionEditBadge
+          label="Funding Architecture"
+          pageSlug="get-involved"
+          sectionId="donate-funding-architecture"
+          studioHref="/admin/metrics"
+          initialData={{
+            title: "How BHTF Is Sustained",
+            subtitle: "The Bhutan Health Trust Fund does not rely on short-term budgets. It is sustained by three perpetual, sovereign revenue streams designed to safeguard healthcare in perpetuity.",
+            badge: "Section 7 • Institutional Financial Architecture",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-bold font-mono">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-700" />
@@ -1099,7 +1138,18 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Official Events: Coming Together for a Healthier Bhutan (11 November 2026 & RSEBL) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-fundraising-campaigns">
+        <SectionEditBadge
+          label="Fundraising Campaigns"
+          pageSlug="get-involved"
+          sectionId="donate-fundraising-campaigns"
+          studioHref="/admin/news"
+          initialData={{
+            title: "Collective Mobilisation for Sovereign Health",
+            subtitle: "Every contribution has a purpose, and behind every figure is a life. Together, we can turn collective support into better health outcomes for the people of Bhutan.",
+            badge: "Events: Coming Together for a Healthier Bhutan",
+          }}
+        />
         <div className="bg-radial from-emerald-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-emerald-900/40 relative overflow-hidden space-y-8">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
           
@@ -1159,7 +1209,18 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Official Verified Banking Remittance Details Directory (Section 7 Verbatim) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-banking-channels">
+        <SectionEditBadge
+          label="Banking Channels & Accounts"
+          pageSlug="get-involved"
+          sectionId="donate-banking-channels"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "Direct Banking & Offshore Remittance Channels",
+            subtitle: "Official domestic Ngultrum accounts and international USD SWIFT wire routing verified by BHTF Finance.",
+            badge: "Official Banking Protocols",
+          }}
+        />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
             <div>

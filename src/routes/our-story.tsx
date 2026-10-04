@@ -4,6 +4,7 @@ import { PageHero } from "@/components/page-hero";
 import { getPublicMilestones, getPublicPage } from "@/lib/api/public.functions";
 import type { Milestone, PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Sparkles,
   Calendar,
@@ -153,7 +154,18 @@ function OurStoryPage() {
       />
 
       {/* 2. Tribute Section: Fourth Druk Gyalpo & Lyonpo Sangay Ngedup */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 relative" data-bhtf-section="founding-tribute">
+        <SectionEditBadge
+          label="Founding Vision & Royal Mandate"
+          pageSlug="our-story"
+          sectionId="founding-tribute"
+          studioHref="/admin/milestones"
+          initialData={{
+            title: "A Sovereign Gift to Safeguard Universal Healthcare",
+            subtitle: "Under the benevolent reign of His Majesty the Fourth Druk Gyalpo, healthcare was enshrined as a sacred right in Bhutan.",
+            badge: "Founding Leadership & Royal Beneficence",
+          }}
+        />
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-6">
           <div className="max-w-3xl space-y-4">
             <span className="text-xs font-bold uppercase tracking-widest text-[#00A896] font-mono block">
@@ -260,7 +272,18 @@ function OurStoryPage() {
       </section>
 
       {/* 3. Official Historical Milestones (1998 - 2026) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="milestones-timeline">
+        <SectionEditBadge
+          label="Historical Milestones Archive"
+          pageSlug="our-story"
+          sectionId="milestones-timeline"
+          studioHref="/admin/milestones"
+          initialData={{
+            title: "Official Milestones in Health Sovereignty",
+            subtitle: "Two decades of transparent stewardship and continuous nationwide expansion.",
+            badge: "Chronology of Service",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
             Chronology of Service
@@ -301,7 +324,18 @@ function OurStoryPage() {
       </section>
 
       {/* 4. Official Archival Documents & Decrees from BHTF Archive */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="archival-manuscripts">
+        <SectionEditBadge
+          label="Archival Decrees & Manuscripts"
+          pageSlug="our-story"
+          sectionId="archival-manuscripts"
+          studioHref="/admin/reports"
+          initialData={{
+            title: "Official Decrees, Charters & Historic MOUs",
+            subtitle: "Primary historical documents from the Royal Government of Bhutan and multilateral partners.",
+            badge: "Original Archival Manuscripts",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-800 font-mono">
             Original Archival Manuscripts

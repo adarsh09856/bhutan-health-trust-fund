@@ -8,6 +8,7 @@ import {
 } from "@/lib/api/public.functions";
 import type { Program, ProcurementStep, PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 import {
   Pill,
@@ -150,12 +151,34 @@ export function OurWorkExperience({
       />
 
       {/* 1. Interactive Health Commodity Streams */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-tracker">
+        <SectionEditBadge
+          label="Commodity Tracker"
+          pageSlug={pageSlug}
+          sectionId="commodity-tracker"
+          studioHref="/admin/programs"
+          initialData={{
+            title: "Interactive Health Commodity Streams",
+            subtitle: "Real-time formulary stock levels and distribution logistics.",
+            badge: "Formulary Monitoring",
+          }}
+        />
         <CommodityTracker />
       </section>
 
       {/* 2. Core Commodities Summary Cards */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-streams">
+        <SectionEditBadge
+          label="Financed Commodities"
+          pageSlug={pageSlug}
+          sectionId="commodity-streams"
+          studioHref="/admin/programs"
+          initialData={{
+            title: "Health Commodities Financed by BHTF",
+            subtitle: "Every Ngultrum disbursed is earmarked for tangible, life-saving medical supplies that directly benefit patients.",
+            badge: "Comprehensive Procurement",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-2">
             Comprehensive Procurement
@@ -218,14 +241,31 @@ export function OurWorkExperience({
       </section>
 
       {/* 3. Interactive Nationwide Reach Across 20 Dzongkhags */}
-      <section className="bg-slate-50 border-y border-slate-200/80 py-16 sm:py-20">
+      <section className="bg-slate-50 border-y border-slate-200/80 py-16 sm:py-20 relative" data-bhtf-section="dzongkhag-explorer">
+        <SectionEditBadge
+          label="20 Dzongkhags Explorer"
+          pageSlug={pageSlug}
+          sectionId="dzongkhag-explorer"
+          studioHref="/admin/metrics"
+        />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <DzongkhagExplorer />
         </div>
       </section>
 
       {/* 4. Transparent Procurement Cycle */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="procurement-lifecycle">
+        <SectionEditBadge
+          label="Procurement Lifecycle"
+          pageSlug={pageSlug}
+          sectionId="procurement-lifecycle"
+          studioHref="/admin/procurement"
+          initialData={{
+            title: "How BHTF Manages Quality & Procurement",
+            subtitle: "Strict WHO prequalification, DRA regulatory clearance, and cold chain verification.",
+            badge: "Fiduciary Integrity",
+          }}
+        />
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 block mb-2">
             Fiduciary Integrity
@@ -259,7 +299,19 @@ export function OurWorkExperience({
       </section>
 
       {/* 5. Action Banner */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donation-banner">
+        <SectionEditBadge
+          label="Donation Call-To-Action"
+          pageSlug={pageSlug}
+          sectionId="donation-banner"
+          studioHref="/admin/donations"
+          initialData={{
+            title: "Help Safeguard Essential Medicine Buffers",
+            subtitle: "Your donations are directly multiplied 1:1 by the Royal Government of Bhutan to fund vital supplies.",
+            primaryCtaText: "Donate to the Trust Fund",
+            primaryCtaUrl: "/donate",
+          }}
+        />
         <div className="bg-gradient-to-r from-emerald-800 to-slate-900 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-bold">
@@ -271,7 +323,7 @@ export function OurWorkExperience({
             </p>
           </div>
           <Link
-            to="/get-involved"
+            to="/donate"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-extrabold text-sm hover:bg-emerald-50 transition shrink-0 shadow-lg cursor-pointer"
           >
             <HandHeart className="h-4 w-4 text-emerald-700" />

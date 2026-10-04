@@ -20,6 +20,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { toast } from "sonner";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/policies")({
   loader: async () => {
@@ -124,8 +125,24 @@ export function PoliciesPage() {
         subtitle="Institutional regulations, statutory anti-corruption safeguards, and quality assurance frameworks of the Bhutan Health Trust Fund."
       />
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="policies" />
+      )}
+
       {/* Main Content Area */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="policies-register">
+        <SectionEditBadge
+          label="Governance & Policies"
+          pageSlug="policies"
+          sectionId="policies-register"
+          studioHref="/admin/policies"
+          initialData={{
+            title: "Governance, Policies & Ethics",
+            subtitle: "Institutional regulations, statutory anti-corruption safeguards, and quality assurance frameworks of the Bhutan Health Trust Fund.",
+            badge: "Autonomous Fiduciary Governance",
+          }}
+        />
         {/* Search & Filter Controls */}
         <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="relative w-full md:w-96">
@@ -234,7 +251,18 @@ export function PoliciesPage() {
       </section>
 
       {/* Whistleblower & Direct Reporting Box */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="policies-whistleblower">
+        <SectionEditBadge
+          label="Whistleblower & Ombudsman"
+          pageSlug="policies"
+          sectionId="policies-whistleblower"
+          studioHref="/admin/policies"
+          initialData={{
+            title: "Confidential Reporting & Anti-Corruption Channel",
+            subtitle: "Under the Anti-Corruption Act of the Kingdom of Bhutan and BHTF Trust Regulations, any citizen or contractor may confidentially report concerns regarding procurement irregularities, conflicts of interest, or misconduct with full legal protection.",
+            badge: "Statutory Whistleblower Protection",
+          }}
+        />
         <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-rose-500/30 shadow-2xl space-y-6 relative overflow-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div className="space-y-1">

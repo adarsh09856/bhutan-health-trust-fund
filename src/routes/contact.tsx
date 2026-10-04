@@ -21,6 +21,7 @@ import {
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/contact")({
   loader: async () => {
@@ -162,7 +163,23 @@ function ContactPage() {
         subtitle="Direct communication channels for public health inquiries, donor partnerships, and official administrative requests."
       />
 
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="contact" />
+      )}
+
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="contact-directory">
+        <SectionEditBadge
+          label="Secretariat Directory & Form"
+          pageSlug="contact"
+          sectionId="contact-directory"
+          studioHref="/admin/inquiries"
+          initialData={{
+            title: "Contact the Secretariat",
+            subtitle: "Direct communication channels for public health inquiries, donor partnerships, and official administrative requests.",
+            badge: "Citizen & Partner Secretariat",
+          }}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           {/* Contact Details Column (4 Cols) */}
           <div className="lg:col-span-4 space-y-6">
@@ -373,7 +390,18 @@ function ContactPage() {
       </section>
 
       {/* Interactive FAQ Accordion */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="contact-faqs">
+        <SectionEditBadge
+          label="Frequently Asked Questions"
+          pageSlug="contact"
+          sectionId="contact-faqs"
+          studioHref="/admin/faqs"
+          initialData={{
+            title: "Common Inquiries on BHTF Operations",
+            subtitle: "Answers to the most frequently asked questions regarding the endowment, governance, and commodity procurement.",
+            badge: "Frequently Asked Questions",
+          }}
+        />
         <div className="text-center space-y-2">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-700 block">
             Frequently Asked Questions

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { db } from "../db";
+import { defaultCorePages } from "../db/default-pages";
 import { requireAdminFromRequest, requireSuperAdminFromRequest } from "../auth.server";
 
 // --- Dashboard Analytics ---
@@ -1496,4 +1497,115 @@ export const deleteAdminPage = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     return await db.deletePage(data.slug);
   });
+
+// --- Quick Live Visual Section Editor Server Function ---
+export const saveQuickSectionEdit = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      pageSlug: z.string(),
+      sectionId: z.string(),
+      updates: z.object({
+        title: z.string().optional(),
+        subtitle: z.string().optional(),
+        badge: z.string().optional(),
+        content: z.string().optional(),
+        dzongkhaText: z.string().optional(),
+        primaryCtaText: z.string().optional(),
+        primaryCtaUrl: z.string().optional(),
+        secondaryCtaText: z.string().optional(),
+        secondaryCtaUrl: z.string().optional(),
+        bgVariant: z.string().optional(),
+        backgroundImage: z.string().optional(),
+        items: z.array(z.any()).optional(),
+      }),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const slug = data.pageSlug.trim().toLowerCase();
+
+    // Check if this is a site setting edit
+    if (slug === "settings" || data.sectionId.startsWith("setting-")) {
+      const settingKey = data.sectionId.replace(/^setting-/, "");
+      const value = data.updates.content || data.updates.title || "";
+      await db.updateSetting(settingKey, value);
+      return {
+        success: true,
+        pageSlug: slug,
+        sectionId: data.sectionId,
+        updatedSection: { id: data.sectionId, ...data.updates },
+      };
+    }
+
+    // Load existing page from DB
+    let page = await db.getPageBySlug(slug);
+    let sections: any[] = [];
+    let pageTitle = slug;
+
+    if (page && page.sectionsJson) {
+      try {
+        sections = JSON.parse(page.sectionsJson);
+        pageTitle = page.title || slug;
+      } catch {
+        sections = [];
+      }
+    }
+
+    // If page has no sections yet in DB, check defaultCorePages
+    if (sections.length === 0) {
+      const defaultPage = defaultCorePages.find((dp) => dp.slug.toLowerCase() === slug);
+      if (defaultPage) {
+        sections = JSON.parse(JSON.stringify(defaultPage.sections));
+        pageTitle = defaultPage.title;
+      }
+    }
+
+    // Locate section by sectionId
+    const existingIndex = sections.findIndex((s) => s.id === data.sectionId);
+    let updatedSection: any;
+
+    if (existingIndex >= 0) {
+      sections[existingIndex] = {
+        ...sections[existingIndex],
+        ...data.updates,
+      };
+      updatedSection = sections[existingIndex];
+    } else {
+      // Append new section block
+      updatedSection = {
+        id: data.sectionId,
+        type: "rich_text",
+        order: sections.length + 1,
+        isVisible: true,
+        ...data.updates,
+      };
+      sections.push(updatedSection);
+    }
+
+    // Persist to database
+    await db.savePage(slug, {
+      title: pageTitle,
+      sectionsJson: JSON.stringify(sections),
+      status: "published",
+    });
+
+    // Record audit log
+    try {
+      await db.createAuditLog({
+        userEmail: "admin@bhtf.bt",
+        action: "UPDATE",
+        entity: "PAGE_SECTION",
+        entityId: `${slug}/${data.sectionId}`,
+        details: `Quick edited section "${data.sectionId}" on page "${slug}" via Live Visual Editor`,
+        newValue: JSON.stringify(data.updates),
+      });
+    } catch {}
+
+    return {
+      success: true,
+      pageSlug: slug,
+      sectionId: data.sectionId,
+      updatedSection,
+    };
+  });
+
 

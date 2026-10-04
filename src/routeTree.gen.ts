@@ -51,7 +51,13 @@ import { Route as AdminTrusteesRouteImport } from './routes/admin/trustees'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminVideosRouteImport } from './routes/admin/videos'
 import { Route as NewsSlugRouteImport } from './routes/news/$slug'
+import { Route as NewsAnnouncementsRouteImport } from './routes/news/announcements'
+import { Route as NewsCareersRouteImport } from './routes/news/careers'
+import { Route as NewsEventsRouteImport } from './routes/news/events'
 import { Route as PSlugRouteImport } from './routes/p.$slug'
+import { Route as ResourcesAdvocacyRouteImport } from './routes/resources/advocacy'
+import { Route as ResourcesAnnualReportsRouteImport } from './routes/resources/annual-reports'
+import { Route as ResourcesAuditReportsRouteImport } from './routes/resources/audit-reports'
 import { Route as ResourcesWindowFinancingRouteImport } from './routes/resources/window-financing'
 
 const IndexRoute = IndexRouteImport.update({
@@ -264,10 +270,40 @@ const NewsSlugRoute = NewsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => NewsRoute,
 } as any)
+const NewsAnnouncementsRoute = NewsAnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => NewsRoute,
+} as any)
+const NewsCareersRoute = NewsCareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => NewsRoute,
+} as any)
+const NewsEventsRoute = NewsEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => NewsRoute,
+} as any)
 const PSlugRoute = PSlugRouteImport.update({
   id: '/p/$slug',
   path: '/p/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesAdvocacyRoute = ResourcesAdvocacyRouteImport.update({
+  id: '/advocacy',
+  path: '/advocacy',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesAnnualReportsRoute = ResourcesAnnualReportsRouteImport.update({
+  id: '/annual-reports',
+  path: '/annual-reports',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesAuditReportsRoute = ResourcesAuditReportsRouteImport.update({
+  id: '/audit-reports',
+  path: '/audit-reports',
+  getParentRoute: () => ResourcesRoute,
 } as any)
 const ResourcesWindowFinancingRoute =
   ResourcesWindowFinancingRouteImport.update({
@@ -318,7 +354,13 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/news/announcements': typeof NewsAnnouncementsRoute
+  '/news/careers': typeof NewsCareersRoute
+  '/news/events': typeof NewsEventsRoute
   '/p/$slug': typeof PSlugRoute
+  '/resources/advocacy': typeof ResourcesAdvocacyRoute
+  '/resources/annual-reports': typeof ResourcesAnnualReportsRoute
+  '/resources/audit-reports': typeof ResourcesAuditReportsRoute
   '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -364,7 +406,13 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/news/announcements': typeof NewsAnnouncementsRoute
+  '/news/careers': typeof NewsCareersRoute
+  '/news/events': typeof NewsEventsRoute
   '/p/$slug': typeof PSlugRoute
+  '/resources/advocacy': typeof ResourcesAdvocacyRoute
+  '/resources/annual-reports': typeof ResourcesAnnualReportsRoute
+  '/resources/audit-reports': typeof ResourcesAuditReportsRoute
   '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -411,7 +459,13 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/news/announcements': typeof NewsAnnouncementsRoute
+  '/news/careers': typeof NewsCareersRoute
+  '/news/events': typeof NewsEventsRoute
   '/p/$slug': typeof PSlugRoute
+  '/resources/advocacy': typeof ResourcesAdvocacyRoute
+  '/resources/annual-reports': typeof ResourcesAnnualReportsRoute
+  '/resources/audit-reports': typeof ResourcesAuditReportsRoute
   '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -459,7 +513,13 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/videos'
     | '/news/$slug'
+    | '/news/announcements'
+    | '/news/careers'
+    | '/news/events'
     | '/p/$slug'
+    | '/resources/advocacy'
+    | '/resources/annual-reports'
+    | '/resources/audit-reports'
     | '/resources/window-financing'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -505,7 +565,13 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/videos'
     | '/news/$slug'
+    | '/news/announcements'
+    | '/news/careers'
+    | '/news/events'
     | '/p/$slug'
+    | '/resources/advocacy'
+    | '/resources/annual-reports'
+    | '/resources/audit-reports'
     | '/resources/window-financing'
     | '/admin'
   id:
@@ -551,7 +617,13 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/videos'
     | '/news/$slug'
+    | '/news/announcements'
+    | '/news/careers'
+    | '/news/events'
     | '/p/$slug'
+    | '/resources/advocacy'
+    | '/resources/annual-reports'
+    | '/resources/audit-reports'
     | '/resources/window-financing'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -893,12 +965,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof NewsRoute
     }
+    '/news/announcements': {
+      id: '/news/announcements'
+      path: '/announcements'
+      fullPath: '/news/announcements'
+      preLoaderRoute: typeof NewsAnnouncementsRouteImport
+      parentRoute: typeof NewsRoute
+    }
+    '/news/careers': {
+      id: '/news/careers'
+      path: '/careers'
+      fullPath: '/news/careers'
+      preLoaderRoute: typeof NewsCareersRouteImport
+      parentRoute: typeof NewsRoute
+    }
+    '/news/events': {
+      id: '/news/events'
+      path: '/events'
+      fullPath: '/news/events'
+      preLoaderRoute: typeof NewsEventsRouteImport
+      parentRoute: typeof NewsRoute
+    }
     '/p/$slug': {
       id: '/p/$slug'
       path: '/p/$slug'
       fullPath: '/p/$slug'
       preLoaderRoute: typeof PSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/resources/advocacy': {
+      id: '/resources/advocacy'
+      path: '/advocacy'
+      fullPath: '/resources/advocacy'
+      preLoaderRoute: typeof ResourcesAdvocacyRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/annual-reports': {
+      id: '/resources/annual-reports'
+      path: '/annual-reports'
+      fullPath: '/resources/annual-reports'
+      preLoaderRoute: typeof ResourcesAnnualReportsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/audit-reports': {
+      id: '/resources/audit-reports'
+      path: '/audit-reports'
+      fullPath: '/resources/audit-reports'
+      preLoaderRoute: typeof ResourcesAuditReportsRouteImport
+      parentRoute: typeof ResourcesRoute
     }
     '/resources/window-financing': {
       id: '/resources/window-financing'
@@ -928,19 +1042,31 @@ const AboutRouteWithChildren = AboutRoute._addFileChildren(AboutRouteChildren)
 
 interface NewsRouteChildren {
   NewsSlugRoute: typeof NewsSlugRoute
+  NewsAnnouncementsRoute: typeof NewsAnnouncementsRoute
+  NewsCareersRoute: typeof NewsCareersRoute
+  NewsEventsRoute: typeof NewsEventsRoute
 }
 
 const NewsRouteChildren: NewsRouteChildren = {
   NewsSlugRoute: NewsSlugRoute,
+  NewsAnnouncementsRoute: NewsAnnouncementsRoute,
+  NewsCareersRoute: NewsCareersRoute,
+  NewsEventsRoute: NewsEventsRoute,
 }
 
 const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
 interface ResourcesRouteChildren {
+  ResourcesAdvocacyRoute: typeof ResourcesAdvocacyRoute
+  ResourcesAnnualReportsRoute: typeof ResourcesAnnualReportsRoute
+  ResourcesAuditReportsRoute: typeof ResourcesAuditReportsRoute
   ResourcesWindowFinancingRoute: typeof ResourcesWindowFinancingRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesAdvocacyRoute: ResourcesAdvocacyRoute,
+  ResourcesAnnualReportsRoute: ResourcesAnnualReportsRoute,
+  ResourcesAuditReportsRoute: ResourcesAuditReportsRoute,
   ResourcesWindowFinancingRoute: ResourcesWindowFinancingRoute,
 }
 
