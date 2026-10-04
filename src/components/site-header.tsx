@@ -33,11 +33,16 @@ import logo from "@/assets/logo.png";
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const { user, adminBarCollapsed } = useAdminAuth();
   const location = useLocation();
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const toggleMobileCategory = (cat: string) => {
+    setExpandedMobileCategory((prev) => (prev === cat ? null : cat));
+  };
 
   const showAdminBar = Boolean(
     user && !adminBarCollapsed && !location.pathname.startsWith("/admin")
@@ -112,7 +117,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop Strict 6 Main Navigation Items */}
-        <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 backdrop-blur-md p-1 rounded-full border border-slate-200/80 shadow-inner shrink-0">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-slate-100/80 backdrop-blur-md p-1 rounded-full border border-slate-200/80 shadow-inner shrink-0">
           {/* 1. ABOUT US Dropdown */}
           <div
             className="relative"
@@ -121,7 +126,7 @@ export function SiteHeader() {
           >
             <Link
               to="/about"
-              className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
+              className={`inline-flex items-center gap-1 px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/about")
                   ? "bg-[#0B4F42] text-white shadow-xs"
                   : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
@@ -211,7 +216,7 @@ export function SiteHeader() {
           {/* 2. OUR STORY */}
           <Link
             to="/our-story"
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
+            className={`px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 ${
               location.pathname.startsWith("/our-story")
                 ? "bg-[#0B4F42] text-white shadow-xs"
                 : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
@@ -223,7 +228,7 @@ export function SiteHeader() {
           {/* 3. OUR IMPACT */}
           <Link
             to="/our-impact"
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${
+            className={`px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 ${
               location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
                 ? "bg-[#0B4F42] text-white shadow-xs"
                 : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
@@ -240,7 +245,7 @@ export function SiteHeader() {
           >
             <Link
               to="/resources/annual-reports"
-              className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
+              className={`inline-flex items-center gap-1 px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
                   ? "bg-[#0B4F42] text-white shadow-xs"
                   : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
@@ -317,7 +322,7 @@ export function SiteHeader() {
           >
             <Link
               to="/news"
-              className={`inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
+              className={`inline-flex items-center gap-1 px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
                 location.pathname.startsWith("/news")
                   ? "bg-[#0B4F42] text-white shadow-xs"
                   : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
@@ -389,10 +394,10 @@ export function SiteHeader() {
 
         {/* Action Group: Track Donation Link + Prominent DONATE CTA */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0 whitespace-nowrap">
-          {/* Subtle Clickable Track Donation Link (In middle between menus and Donate) */}
+          {/* Subtle Clickable Track Donation Link (Visible on xl screens to maintain clean spacing) */}
           <Link
             to="/track-donation"
-            className="hidden lg:inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4F42] hover:text-[#00A896] hover:underline px-2.5 py-1.5 transition-colors whitespace-nowrap cursor-pointer"
+            className="hidden xl:inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4F42] hover:text-[#00A896] hover:underline px-2.5 py-1.5 transition-colors whitespace-nowrap cursor-pointer"
             title="Track donation pledge & verify 1:1 RGOB match"
           >
             <Sparkles className="h-3.5 w-3.5 text-amber-500" />
@@ -424,61 +429,257 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu - Clean Hierarchical Accordions Matching Desktop */}
       {mobileMenuOpen && (
         <div className="lg:hidden mx-auto max-w-7xl mt-2 border border-slate-200/90 bg-white/98 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150 pointer-events-auto max-h-[85vh] overflow-y-auto">
-          <div className="bg-gradient-to-b from-slate-50 to-slate-100 p-2 rounded-2xl border border-slate-200 space-y-1">
-            {[
-              { to: "/", label: "Home" },
-              { to: "/about/organization", label: "About: Our Organization" },
-              { to: "/about/trustees", label: "About: Board of Directors" },
-              { to: "/about/committees", label: "About: Asset Management Committee" },
-              { to: "/about/secretariat", label: "About: Secretariat & Staff" },
-              { to: "/our-story", label: "Our Story & History" },
-              { to: "/our-impact", label: "Our Impact (Health Commodities)" },
-              { to: "/resources/annual-reports", label: "Resources: Annual Reports" },
-              { to: "/resources/financial-reports", label: "Resources: Financial Reports" },
-              { to: "/resources/other-publications", label: "Resources: Other Publications" },
-              { to: "/news/events", label: "News: Upcoming Events" },
-              { to: "/news/announcements", label: "News: Announcement" },
-              { to: "/news/careers", label: "News: Career" },
-              { to: "/track-donation", label: "Track Donation & Verify 1:1 Match" },
-              { to: "/contact", label: "Contact Secretariat" },
-            ].map((item) => {
-              const isActive =
-                item.to === "/" ? location.pathname === "/" : location.pathname === item.to;
+          <div className="bg-gradient-to-b from-slate-50 to-slate-100/70 p-2 rounded-2xl border border-slate-200 space-y-1">
+            {/* 1. Home */}
+            <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+                location.pathname === "/" ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              }`}
+            >
+              <span>Home</span>
+              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname === "/" ? "text-amber-400" : "text-slate-400"}`} />
+            </Link>
 
-              return (
-                <Link
-                  key={`${item.to}-${item.label}`}
-                  to={item.to}
-                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
-                    isActive ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+            {/* 2. ABOUT US (Dropdown Accordion - Matching Desktop) */}
+            <div className="rounded-xl overflow-hidden">
+              <button
+                type="button"
+                onClick={() => toggleMobileCategory("about")}
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  location.pathname.startsWith("/about")
+                    ? "bg-[#0B4F42]/10 text-[#0B4F42] font-black"
+                    : "text-slate-800 hover:bg-white"
+                }`}
+              >
+                <span>About Us</span>
+                <ChevronDown
+                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${
+                    expandedMobileCategory === "about" ? "rotate-180 text-[#0B4F42]" : ""
                   }`}
-                >
-                  <span>{item.label}</span>
-                  <ChevronRight
-                    className={`h-3.5 w-3.5 ${isActive ? "text-amber-400" : "text-slate-400"}`}
-                  />
-                </Link>
-              );
-            })}
+                />
+              </button>
+
+              {expandedMobileCategory === "about" && (
+                <div className="bg-white/95 rounded-xl m-1 p-1.5 space-y-1 border border-slate-200/80 shadow-xs animate-in fade-in duration-150">
+                  <Link
+                    to="/about/organization"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition"
+                  >
+                    <Landmark className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
+                    <span>Our Organization</span>
+                  </Link>
+                  <Link
+                    to="/about/trustees"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition"
+                  >
+                    <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+                    <span>Board of Directors</span>
+                  </Link>
+                  <Link
+                    to="/about/committees"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-800 transition"
+                  >
+                    <Landmark className="h-3.5 w-3.5 text-blue-600 shrink-0" />
+                    <span>Asset Management Committee</span>
+                  </Link>
+                  <Link
+                    to="/about/secretariat"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition"
+                  >
+                    <Building className="h-3.5 w-3.5 text-teal-600 shrink-0" />
+                    <span>Secretariat & Organogram</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* 3. OUR STORY */}
+            <Link
+              to="/our-story"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+                location.pathname.startsWith("/our-story") ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              }`}
+            >
+              <span>Our Story</span>
+              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname.startsWith("/our-story") ? "text-amber-400" : "text-slate-400"}`} />
+            </Link>
+
+            {/* 4. OUR IMPACT */}
+            <Link
+              to="/our-impact"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+                location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
+                  ? "bg-[#0B4F42] text-white shadow-xs"
+                  : "text-slate-700 hover:bg-white"
+              }`}
+            >
+              <span>Our Impact</span>
+              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname.startsWith("/our-impact") ? "text-amber-400" : "text-slate-400"}`} />
+            </Link>
+
+            {/* 5. RESOURCES (Dropdown Accordion - Matching Desktop: Annual Reports, Financial Reports, Other Publications) */}
+            <div className="rounded-xl overflow-hidden">
+              <button
+                type="button"
+                onClick={() => toggleMobileCategory("resources")}
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/annual-reports") || location.pathname.startsWith("/financial-reports") || location.pathname.startsWith("/other-publications")
+                    ? "bg-[#0B4F42]/10 text-[#0B4F42] font-black"
+                    : "text-slate-800 hover:bg-white"
+                }`}
+              >
+                <span>Resources</span>
+                <ChevronDown
+                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${
+                    expandedMobileCategory === "resources" ? "rotate-180 text-[#0B4F42]" : ""
+                  }`}
+                />
+              </button>
+
+              {expandedMobileCategory === "resources" && (
+                <div className="bg-white/95 rounded-xl m-1 p-1.5 space-y-1 border border-slate-200/80 shadow-xs animate-in fade-in duration-150">
+                  <Link
+                    to="/resources/annual-reports"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-800 transition"
+                  >
+                    <Building className="h-3.5 w-3.5 text-blue-600 shrink-0" />
+                    <span>Annual Reports</span>
+                  </Link>
+                  <Link
+                    to="/resources/financial-reports"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition"
+                  >
+                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span>Financial Reports</span>
+                  </Link>
+                  <Link
+                    to="/resources/other-publications"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-purple-50 hover:text-purple-800 transition"
+                  >
+                    <BookOpen className="h-3.5 w-3.5 text-purple-600 shrink-0" />
+                    <span>Other Publications</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* 6. NEWS & EVENTS (Dropdown Accordion - Matching Desktop: Upcoming Events, Announcement, Career) */}
+            <div className="rounded-xl overflow-hidden">
+              <button
+                type="button"
+                onClick={() => toggleMobileCategory("news")}
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  location.pathname.startsWith("/news")
+                    ? "bg-[#0B4F42]/10 text-[#0B4F42] font-black"
+                    : "text-slate-800 hover:bg-white"
+                }`}
+              >
+                <span>News & Events</span>
+                <ChevronDown
+                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${
+                    expandedMobileCategory === "news" ? "rotate-180 text-[#0B4F42]" : ""
+                  }`}
+                />
+              </button>
+
+              {expandedMobileCategory === "news" && (
+                <div className="bg-white/95 rounded-xl m-1 p-1.5 space-y-1 border border-slate-200/80 shadow-xs animate-in fade-in duration-150">
+                  <Link
+                    to="/news/events"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition"
+                  >
+                    <Calendar className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+                    <span>Upcoming Events</span>
+                  </Link>
+                  <Link
+                    to="/news/announcements"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-800 transition"
+                  >
+                    <Megaphone className="h-4 w-4 text-blue-600 shrink-0" />
+                    <span>Announcement</span>
+                  </Link>
+                  <Link
+                    to="/news/careers"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition"
+                  >
+                    <Briefcase className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span>Career</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* 7. Track Donation */}
+            <Link
+              to="/track-donation"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+                location.pathname === "/track-donation" ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                <span>Track Donation</span>
+              </div>
+              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                1:1 RGOB Match
+              </span>
+            </Link>
+
+            {/* 8. Contact Secretariat */}
+            <Link
+              to="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+                location.pathname === "/contact" ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              }`}
+            >
+              <span>Contact Secretariat</span>
+              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname === "/contact" ? "text-amber-400" : "text-slate-400"}`} />
+            </Link>
           </div>
 
           <div className="pt-1 flex flex-col gap-2">
             <Link
               to="/donate"
-              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs shadow-md whitespace-nowrap"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs shadow-md whitespace-nowrap active:scale-95 transition-transform"
             >
               <Heart className="h-4 w-4 fill-slate-950 text-slate-950" /> DONATE NOW (1:1 MATCHED)
             </Link>
 
-            {user && (
+            {user ? (
               <Link
                 to="/admin/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
                 className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs shadow-xs whitespace-nowrap"
               >
                 <LayoutDashboard className="h-4 w-4 text-amber-400" /> Open Admin Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/admin/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full inline-flex items-center justify-center gap-2 py-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 font-medium text-xs whitespace-nowrap"
+              >
+                <Lock className="h-3.5 w-3.5 text-slate-400" /> Admin Portal
               </Link>
             )}
           </div>
