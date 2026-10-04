@@ -25,6 +25,8 @@ const ROUTE_STUDIO_MAP: Record<string, { label: string; href: string }> = {
   "/resources": { label: "Reports & Audits Studio", href: "/admin/reports" },
   "/resources/advocacy": { label: "Advocacy Studio", href: "/admin/reports" },
   "/resources/annual-reports": { label: "Annual Reports Studio", href: "/admin/reports" },
+  "/resources/financial-reports": { label: "Financial Reports Studio", href: "/admin/reports" },
+  "/resources/other-publications": { label: "Other Publications Studio", href: "/admin/reports" },
   "/resources/audit-reports": { label: "Audit Reports Studio", href: "/admin/reports" },
   "/resources/window-financing": { label: "Window Financing Studio", href: "/admin/page-editor?slug=window-financing" },
   "/news": { label: "News & Bulletins Studio", href: "/admin/news" },

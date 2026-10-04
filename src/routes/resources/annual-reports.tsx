@@ -34,106 +34,150 @@ interface AnnualReportRecord {
   id: string;
   fiscalYear: string;
   title: string;
-  theme: string;
   fileSize: string;
-  pages: number;
-  corpusValue: string;
-  disbursementNu: string;
+  pages?: number;
   auditStatus: string;
   summary: string;
-  highlights: string[];
+  downloadUrl: string;
 }
 
 const annualReportsArchive: AnnualReportRecord[] = [
   {
-    id: "ar-2024-25",
+    id: "ar-2024-2025",
     fiscalYear: "2024–2025",
-    title: "BHTF Annual Report: Safeguarding Universal Health Coverage in Perpetuity",
-    theme: "Sovereign Self-Reliance & Alpine Cold Chain",
+    title: "Annual Report 2024–2025",
     fileSize: "6.8 MB",
     pages: 76,
-    corpusValue: "Nu. 4,798,965,306.85",
-    disbursementNu: "Nu. 557,734,000",
-    auditStatus: "Unqualified Clean Opinion (RAA)",
+    auditStatus: "Official Publication",
     summary:
-      "Comprehensive review of FY 2024–2025 procurement of 438 essential modern medicines, 110 traditional remedies, and four routine vaccines across 20 Dzongkhags.",
-    highlights: ["Nu. 4.8B Ring-Fenced Corpus", "97.4% National HPV Coverage", "Zero Medicine Stockouts"],
+      "Comprehensive statutory operational report detailing fiduciary stewardship, healthcare commodity disbursements, and program investments across the Kingdom of Bhutan.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2026/06/BTFAnnualReport2025.pdf",
   },
   {
-    id: "ar-2023-24",
+    id: "ar-2023-2024",
     fiscalYear: "2023–2024",
-    title: "BHTF Annual Report: Sustaining Health Security Across Mountain Communities",
-    theme: "Resilient Health Financing & Generational Equity",
+    title: "Annual Report 2023–2024",
     fileSize: "5.4 MB",
     pages: 68,
-    corpusValue: "Nu. 4,520,120,400.00",
-    disbursementNu: "Nu. 512,400,000",
-    auditStatus: "Unqualified Clean Opinion (RAA)",
+    auditStatus: "Official Publication",
     summary:
-      "Detailed operational reporting on the expansion of cold-chain solarization and pediatric immunization campaigns serving remote gewog primary health units.",
-    highlights: ["Solar Direct Drive Deployment", "1:1 RGOB Sovereign Match", "205 Gewogs Supported"],
+      "Statutory annual summary highlighting endowment growth, sustainable health financing, and nationwide primary care supply chain security.",
+    downloadUrl: "https://bhutantrustfund.bt/BTFDemo/wordpress/wp-content/uploads/2025/08/1742810786annualReport2023-2024.pdf.pdf",
   },
   {
-    id: "ar-2022-23",
+    id: "ar-2022-2023",
     fiscalYear: "2022–2023",
-    title: "BHTF Annual Report: Post-Pandemic Consolidation & Asset Optimization",
-    theme: "Endowment Growth & Investment Diversification",
+    title: "Annual Report 2022–2023",
     fileSize: "4.9 MB",
     pages: 60,
-    corpusValue: "Nu. 4,210,850,000.00",
-    disbursementNu: "Nu. 480,200,000",
-    auditStatus: "Unqualified Clean Opinion (RAA)",
+    auditStatus: "Official Publication",
     summary:
-      "Portfolio rebalancing under the updated Investment Policy Statement (IPS), multi-currency risk management, and WHO pre-qualification bulk purchasing.",
-    highlights: ["Offshore Asset Allocation", "WHO Pre-qualification Verification", "FMS Upgrade"],
+      "Operational review and audited balance sheet overview covering essential medicines procurement and trust fund asset diversification.",
+    downloadUrl: "https://bhutantrustfund.bt/BTFDemo/wordpress/wp-content/uploads/2025/08/1716382873Annual-Report-BTFEC-2022-2023.pdf",
   },
   {
-    id: "ar-2021-22",
-    fiscalYear: "2021–2022",
-    title: "BHTF Annual Report: National Resilience During Global Supply Disruptions",
-    theme: "Uninterrupted Formulary Supply",
-    fileSize: "4.2 MB",
-    pages: 56,
-    corpusValue: "Nu. 3,980,450,000.00",
-    disbursementNu: "Nu. 445,000,000",
-    auditStatus: "Unqualified Clean Opinion (RAA)",
+    id: "ar-2018-2019",
+    fiscalYear: "2018–2019",
+    title: "Annual Report 2018–2019",
+    fileSize: "4.1 MB",
+    pages: 54,
+    auditStatus: "Official Publication",
     summary:
-      "Emergency air-drop logistics, cold-chain maintenance, and buffer stock maintenance for essential emergency pharmaceuticals during global border closures.",
-    highlights: ["Emergency Supply Buffer", "National Flu Campaign", "Public Transparency Award"],
+      "Annual operational filings, grant distributions, and programmatic milestones for the 2018–2019 fiscal cycle.",
+    downloadUrl: "https://bhutantrustfund.bt/BTFDemo/wordpress/wp-content/uploads/2025/08/1705406276Annual-Report-2018-1.pdf",
   },
   {
-    id: "ar-2020-21",
-    fiscalYear: "2020–2021",
-    title: "BHTF Annual Report: Two Decades of Royal Charter Stewardship",
-    theme: "20th Anniversary Commemoration",
-    fileSize: "7.1 MB",
-    pages: 92,
-    corpusValue: "Nu. 3,750,000,000.00",
-    disbursementNu: "Nu. 410,000,000",
-    auditStatus: "Unqualified Clean Opinion (RAA)",
+    id: "ar-2017",
+    fiscalYear: "2017",
+    title: "Annual Report 2017",
+    fileSize: "3.7 MB",
+    pages: 48,
+    auditStatus: "Official Publication",
     summary:
-      "Special 20th-anniversary historical edition tracing the evolution of BHTF from its 1998 WHO Geneva launch to its statutory position as Bhutan's healthcare backbone.",
-    highlights: ["Historical Milestone Chronology", "Endowment Growth Trajectory", "Founding Donor Honor Roll"],
+      "Review of annual endowment earnings, national immunization support, and long-term fiduciary health allocations.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705406212Annual-Report-2017.pdf",
   },
   {
-    id: "ar-2019-20",
-    fiscalYear: "2019–2020",
-    title: "BHTF Annual Report: Strengthening Primary Health Centers & Outreach",
-    theme: "Primary Care Infrastructure",
-    fileSize: "3.8 MB",
-    pages: 52,
-    corpusValue: "Nu. 3,500,000,000.00",
-    disbursementNu: "Nu. 385,000,000",
-    auditStatus: "Unqualified Clean Opinion (RAA)",
+    id: "ar-2001-2002",
+    fiscalYear: "2001–2002",
+    title: "Annual Report 2001–2002",
+    fileSize: "2.8 MB",
+    pages: 36,
+    auditStatus: "Historical Archive",
     summary:
-      "Targeted support for Basic Health Units (BHUs) Grade I & II, regional cold chain monitoring, and training for district pharmacy technicians.",
-    highlights: ["Grade I/II BHU Audits", "Pharmacy Staff Training", "Zero Wastage Initiative"],
+      "Institutional archive from early operational years of the Trust Fund documenting founding grants and endowment capitalization.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705403083AR2001-2002.pdf",
+  },
+  {
+    id: "ar-1999-2000",
+    fiscalYear: "1999–2000",
+    title: "Annual Report 1999–2000",
+    fileSize: "2.5 MB",
+    pages: 32,
+    auditStatus: "Historical Archive",
+    summary:
+      "Historical filings detailing initial multilateral contributions, charter mandates, and primary healthcare allocations.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705403856AR1999-2000.pdf",
+  },
+  {
+    id: "ar-1998-2001",
+    fiscalYear: "1998–2001",
+    title: "Annual Report 1998–2001 (Consolidated)",
+    fileSize: "3.1 MB",
+    pages: 44,
+    auditStatus: "Historical Archive",
+    summary:
+      "Triennial consolidated financial statement and governance review tracking the establishment of the perpetual fund.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705402410Annual-Report-1998-2001.pdf",
+  },
+  {
+    id: "ar-1996-1997",
+    fiscalYear: "1996–1997",
+    title: "Annual Report 1996–1997",
+    fileSize: "2.2 MB",
+    pages: 28,
+    auditStatus: "Historical Archive",
+    summary:
+      "Early foundational report on capital mobilization, governance meetings, and initial essential drug financing policies.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401952Annual-Report-1996-1997.pdf",
+  },
+  {
+    id: "ar-1994-1995",
+    fiscalYear: "1994–1995",
+    title: "Annual Report 1994–1995",
+    fileSize: "2.0 MB",
+    pages: 24,
+    auditStatus: "Historical Archive",
+    summary:
+      "Historical documentation of early Trust Fund operations, partner commitments, and healthcare assistance programs.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401855Annual-Report-1994-1995.pdf",
+  },
+  {
+    id: "ar-1993-1994",
+    fiscalYear: "1993–1994",
+    title: "Annual Report 1993–1994",
+    fileSize: "1.9 MB",
+    pages: 22,
+    auditStatus: "Historical Archive",
+    summary:
+      "Foundational report assessing initial financing models and long-term healthcare sustainability strategies for Bhutan.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401776Annual-Report-1993-1994.pdf",
+  },
+  {
+    id: "ar-1992-1993",
+    fiscalYear: "1992–1993",
+    title: "Annual Report 1992–1993",
+    fileSize: "1.8 MB",
+    pages: 20,
+    auditStatus: "Historical Archive",
+    summary:
+      "Inaugural Trust Fund annual report capturing the inception vision, charter ratification, and earliest endowment contributions.",
+    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401650Annual-Report-1992-1993.pdf",
   },
 ];
 
 function AnnualReportsPage() {
   const [search, setSearch] = useState("");
-  const [selectedDecade, setSelectedDecade] = useState<string>("ALL");
 
   const filtered = annualReportsArchive.filter((r) => {
     const matchesSearch =
@@ -144,7 +188,8 @@ function AnnualReportsPage() {
   });
 
   const handleDownload = (r: AnnualReportRecord) => {
-    toast.success(`Downloading "${r.title}" (${r.fileSize})...`);
+    toast.success(`Opening "${r.title}" (${r.fileSize})...`);
+    window.open(r.downloadUrl, "_blank");
   };
 
   return (
@@ -260,35 +305,41 @@ function AnnualReportsPage() {
                   {r.summary}
                 </p>
 
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {r.highlights.map((h, idx) => (
-                    <span
-                      key={idx}
-                      className="text-[10px] bg-slate-50 text-slate-600 border border-slate-200 px-2.5 py-1 rounded-md font-medium"
-                    >
-                      • {h}
-                    </span>
-                  ))}
-                </div>
+                {r.highlights && r.highlights.length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {r.highlights.map((h, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[10px] bg-slate-50 text-slate-600 border border-slate-200 px-2.5 py-1 rounded-md font-medium"
+                      >
+                        • {h}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-3 shrink-0 w-full sm:w-auto">
-                <div className="text-right hidden lg:block">
-                  <div className="text-[10px] font-mono uppercase text-slate-400 font-bold">
-                    Annual Disbursement
+                {r.disbursementNu && (
+                  <div className="text-right hidden lg:block">
+                    <div className="text-[10px] font-mono uppercase text-slate-400 font-bold">
+                      Annual Disbursement
+                    </div>
+                    <div className="text-sm font-mono font-bold text-slate-800">
+                      {r.disbursementNu}
+                    </div>
                   </div>
-                  <div className="text-sm font-mono font-bold text-slate-800">
-                    {r.disbursementNu}
-                  </div>
-                </div>
+                )}
 
-                <button
-                  onClick={() => handleDownload(r)}
+                <a
+                  href={r.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#0B4F42] hover:bg-[#083b32] text-white text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
                 >
                   <Download className="h-4 w-4" />
                   <span>Download Annual Report</span>
-                </button>
+                </a>
               </div>
             </div>
           ))}

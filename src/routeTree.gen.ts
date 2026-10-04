@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AnnualReportsRouteImport } from './routes/annual-reports'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as FinancialReportsRouteImport } from './routes/financial-reports'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as OtherPublicationsRouteImport } from './routes/other-publications'
 import { Route as OurImpactRouteImport } from './routes/our-impact'
 import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as OurWorkRouteImport } from './routes/our-work'
@@ -58,6 +61,8 @@ import { Route as PSlugRouteImport } from './routes/p.$slug'
 import { Route as ResourcesAdvocacyRouteImport } from './routes/resources/advocacy'
 import { Route as ResourcesAnnualReportsRouteImport } from './routes/resources/annual-reports'
 import { Route as ResourcesAuditReportsRouteImport } from './routes/resources/audit-reports'
+import { Route as ResourcesFinancialReportsRouteImport } from './routes/resources/financial-reports'
+import { Route as ResourcesOtherPublicationsRouteImport } from './routes/resources/other-publications'
 import { Route as ResourcesWindowFinancingRouteImport } from './routes/resources/window-financing'
 
 const IndexRoute = IndexRouteImport.update({
@@ -70,6 +75,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnnualReportsRoute = AnnualReportsRouteImport.update({
+  id: '/annual-reports',
+  path: '/annual-reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -80,6 +90,11 @@ const DonateRoute = DonateRouteImport.update({
   path: '/donate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FinancialReportsRoute = FinancialReportsRouteImport.update({
+  id: '/financial-reports',
+  path: '/financial-reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GetInvolvedRoute = GetInvolvedRouteImport.update({
   id: '/get-involved',
   path: '/get-involved',
@@ -88,6 +103,11 @@ const GetInvolvedRoute = GetInvolvedRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OtherPublicationsRoute = OtherPublicationsRouteImport.update({
+  id: '/other-publications',
+  path: '/other-publications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OurImpactRoute = OurImpactRouteImport.update({
@@ -305,6 +325,18 @@ const ResourcesAuditReportsRoute = ResourcesAuditReportsRouteImport.update({
   path: '/audit-reports',
   getParentRoute: () => ResourcesRoute,
 } as any)
+const ResourcesFinancialReportsRoute =
+  ResourcesFinancialReportsRouteImport.update({
+    id: '/financial-reports',
+    path: '/financial-reports',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
+const ResourcesOtherPublicationsRoute =
+  ResourcesOtherPublicationsRouteImport.update({
+    id: '/other-publications',
+    path: '/other-publications',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
 const ResourcesWindowFinancingRoute =
   ResourcesWindowFinancingRouteImport.update({
     id: '/window-financing',
@@ -315,10 +347,13 @@ const ResourcesWindowFinancingRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRouteWithChildren
+  '/annual-reports': typeof AnnualReportsRoute
   '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
+  '/financial-reports': typeof FinancialReportsRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
+  '/other-publications': typeof OtherPublicationsRoute
   '/our-impact': typeof OurImpactRoute
   '/our-story': typeof OurStoryRoute
   '/our-work': typeof OurWorkRoute
@@ -361,16 +396,21 @@ export interface FileRoutesByFullPath {
   '/resources/advocacy': typeof ResourcesAdvocacyRoute
   '/resources/annual-reports': typeof ResourcesAnnualReportsRoute
   '/resources/audit-reports': typeof ResourcesAuditReportsRoute
+  '/resources/financial-reports': typeof ResourcesFinancialReportsRoute
+  '/resources/other-publications': typeof ResourcesOtherPublicationsRoute
   '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRouteWithChildren
+  '/annual-reports': typeof AnnualReportsRoute
   '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
+  '/financial-reports': typeof FinancialReportsRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
+  '/other-publications': typeof OtherPublicationsRoute
   '/our-impact': typeof OurImpactRoute
   '/our-story': typeof OurStoryRoute
   '/our-work': typeof OurWorkRoute
@@ -413,6 +453,8 @@ export interface FileRoutesByTo {
   '/resources/advocacy': typeof ResourcesAdvocacyRoute
   '/resources/annual-reports': typeof ResourcesAnnualReportsRoute
   '/resources/audit-reports': typeof ResourcesAuditReportsRoute
+  '/resources/financial-reports': typeof ResourcesFinancialReportsRoute
+  '/resources/other-publications': typeof ResourcesOtherPublicationsRoute
   '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -420,10 +462,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRouteWithChildren
+  '/annual-reports': typeof AnnualReportsRoute
   '/contact': typeof ContactRoute
   '/donate': typeof DonateRoute
+  '/financial-reports': typeof FinancialReportsRoute
   '/get-involved': typeof GetInvolvedRoute
   '/news': typeof NewsRouteWithChildren
+  '/other-publications': typeof OtherPublicationsRoute
   '/our-impact': typeof OurImpactRoute
   '/our-story': typeof OurStoryRoute
   '/our-work': typeof OurWorkRoute
@@ -466,6 +511,8 @@ export interface FileRoutesById {
   '/resources/advocacy': typeof ResourcesAdvocacyRoute
   '/resources/annual-reports': typeof ResourcesAnnualReportsRoute
   '/resources/audit-reports': typeof ResourcesAuditReportsRoute
+  '/resources/financial-reports': typeof ResourcesFinancialReportsRoute
+  '/resources/other-publications': typeof ResourcesOtherPublicationsRoute
   '/resources/window-financing': typeof ResourcesWindowFinancingRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -474,10 +521,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/annual-reports'
     | '/contact'
     | '/donate'
+    | '/financial-reports'
     | '/get-involved'
     | '/news'
+    | '/other-publications'
     | '/our-impact'
     | '/our-story'
     | '/our-work'
@@ -520,16 +570,21 @@ export interface FileRouteTypes {
     | '/resources/advocacy'
     | '/resources/annual-reports'
     | '/resources/audit-reports'
+    | '/resources/financial-reports'
+    | '/resources/other-publications'
     | '/resources/window-financing'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/annual-reports'
     | '/contact'
     | '/donate'
+    | '/financial-reports'
     | '/get-involved'
     | '/news'
+    | '/other-publications'
     | '/our-impact'
     | '/our-story'
     | '/our-work'
@@ -572,16 +627,21 @@ export interface FileRouteTypes {
     | '/resources/advocacy'
     | '/resources/annual-reports'
     | '/resources/audit-reports'
+    | '/resources/financial-reports'
+    | '/resources/other-publications'
     | '/resources/window-financing'
     | '/admin'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/annual-reports'
     | '/contact'
     | '/donate'
+    | '/financial-reports'
     | '/get-involved'
     | '/news'
+    | '/other-publications'
     | '/our-impact'
     | '/our-story'
     | '/our-work'
@@ -624,6 +684,8 @@ export interface FileRouteTypes {
     | '/resources/advocacy'
     | '/resources/annual-reports'
     | '/resources/audit-reports'
+    | '/resources/financial-reports'
+    | '/resources/other-publications'
     | '/resources/window-financing'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -631,10 +693,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRouteWithChildren
+  AnnualReportsRoute: typeof AnnualReportsRoute
   ContactRoute: typeof ContactRoute
   DonateRoute: typeof DonateRoute
+  FinancialReportsRoute: typeof FinancialReportsRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
   NewsRoute: typeof NewsRouteWithChildren
+  OtherPublicationsRoute: typeof OtherPublicationsRoute
   OurImpactRoute: typeof OurImpactRoute
   OurStoryRoute: typeof OurStoryRoute
   OurWorkRoute: typeof OurWorkRoute
@@ -685,6 +750,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/annual-reports': {
+      id: '/annual-reports'
+      path: '/annual-reports'
+      fullPath: '/annual-reports'
+      preLoaderRoute: typeof AnnualReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -699,6 +771,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/financial-reports': {
+      id: '/financial-reports'
+      path: '/financial-reports'
+      fullPath: '/financial-reports'
+      preLoaderRoute: typeof FinancialReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/get-involved': {
       id: '/get-involved'
       path: '/get-involved'
@@ -711,6 +790,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/other-publications': {
+      id: '/other-publications'
+      path: '/other-publications'
+      fullPath: '/other-publications'
+      preLoaderRoute: typeof OtherPublicationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/our-impact': {
@@ -1014,6 +1100,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesAuditReportsRouteImport
       parentRoute: typeof ResourcesRoute
     }
+    '/resources/financial-reports': {
+      id: '/resources/financial-reports'
+      path: '/financial-reports'
+      fullPath: '/resources/financial-reports'
+      preLoaderRoute: typeof ResourcesFinancialReportsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/other-publications': {
+      id: '/resources/other-publications'
+      path: '/other-publications'
+      fullPath: '/resources/other-publications'
+      preLoaderRoute: typeof ResourcesOtherPublicationsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/resources/window-financing': {
       id: '/resources/window-financing'
       path: '/window-financing'
@@ -1060,6 +1160,8 @@ interface ResourcesRouteChildren {
   ResourcesAdvocacyRoute: typeof ResourcesAdvocacyRoute
   ResourcesAnnualReportsRoute: typeof ResourcesAnnualReportsRoute
   ResourcesAuditReportsRoute: typeof ResourcesAuditReportsRoute
+  ResourcesFinancialReportsRoute: typeof ResourcesFinancialReportsRoute
+  ResourcesOtherPublicationsRoute: typeof ResourcesOtherPublicationsRoute
   ResourcesWindowFinancingRoute: typeof ResourcesWindowFinancingRoute
 }
 
@@ -1067,6 +1169,8 @@ const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesAdvocacyRoute: ResourcesAdvocacyRoute,
   ResourcesAnnualReportsRoute: ResourcesAnnualReportsRoute,
   ResourcesAuditReportsRoute: ResourcesAuditReportsRoute,
+  ResourcesFinancialReportsRoute: ResourcesFinancialReportsRoute,
+  ResourcesOtherPublicationsRoute: ResourcesOtherPublicationsRoute,
   ResourcesWindowFinancingRoute: ResourcesWindowFinancingRoute,
 }
 
@@ -1077,10 +1181,13 @@ const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRouteWithChildren,
+  AnnualReportsRoute: AnnualReportsRoute,
   ContactRoute: ContactRoute,
   DonateRoute: DonateRoute,
+  FinancialReportsRoute: FinancialReportsRoute,
   GetInvolvedRoute: GetInvolvedRoute,
   NewsRoute: NewsRouteWithChildren,
+  OtherPublicationsRoute: OtherPublicationsRoute,
   OurImpactRoute: OurImpactRoute,
   OurStoryRoute: OurStoryRoute,
   OurWorkRoute: OurWorkRoute,

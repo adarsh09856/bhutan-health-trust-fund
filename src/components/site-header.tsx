@@ -26,6 +26,7 @@ import {
   Calendar,
   Megaphone,
   Briefcase,
+  BookOpen,
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import logo from "@/assets/logo.png";
@@ -251,25 +252,7 @@ export function SiteHeader() {
 
             {openDropdown === "resources" && (
               <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                {/* 1. Advocacy Materials */}
-                <Link
-                  to="/resources/advocacy"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
-                    <FileText className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-purple-700 transition">
-                      Advocacy Materials
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Publications, health education & promotional kits
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 2. Annual Reports */}
+                {/* 1. Annual Reports */}
                 <Link
                   to="/resources/annual-reports"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
@@ -282,14 +265,14 @@ export function SiteHeader() {
                       Annual Reports
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Comprehensive annual operational & statutory summaries
+                      Comprehensive annual operational & statutory summaries (1992–2025)
                     </p>
                   </div>
                 </Link>
 
-                {/* 3. Audit Report */}
+                {/* 2. Financial Reports */}
                 <Link
-                  to="/resources/audit-reports"
+                  to="/resources/financial-reports"
                   className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
                 >
                   <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -297,10 +280,28 @@ export function SiteHeader() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      Audit Report
+                      Financial Reports
                     </div>
                     <p className="text-[11px] text-slate-500 leading-snug font-normal">
                       Royal Audit Authority (RAA) audited financial statements
+                    </p>
+                  </div>
+                </Link>
+
+                {/* 3. Other Publications */}
+                <Link
+                  to="/resources/other-publications"
+                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
+                >
+                  <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
+                    <BookOpen className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 group-hover:text-purple-700 transition">
+                      Other Publications
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
+                      Surveys, policy studies & technical research publications
                     </p>
                   </div>
                 </Link>
@@ -435,9 +436,9 @@ export function SiteHeader() {
               { to: "/about/secretariat", label: "About: Secretariat & Staff" },
               { to: "/our-story", label: "Our Story & History" },
               { to: "/our-impact", label: "Our Impact (Health Commodities)" },
-              { to: "/resources/advocacy", label: "Resources: Advocacy Materials" },
               { to: "/resources/annual-reports", label: "Resources: Annual Reports" },
-              { to: "/resources/audit-reports", label: "Resources: Audit Report" },
+              { to: "/resources/financial-reports", label: "Resources: Financial Reports" },
+              { to: "/resources/other-publications", label: "Resources: Other Publications" },
               { to: "/news/events", label: "News: Upcoming Events" },
               { to: "/news/announcements", label: "News: Announcement" },
               { to: "/news/careers", label: "News: Career" },
