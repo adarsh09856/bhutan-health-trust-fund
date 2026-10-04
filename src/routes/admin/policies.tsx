@@ -22,6 +22,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 
 export const Route = createFileRoute("/admin/policies")({
   head: () => ({
@@ -346,6 +347,17 @@ export function AdminPoliciesPage() {
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Official statutory text, section numbers, and provisions..."
                     className="w-full rounded-2xl border border-slate-300 p-3 text-xs focus:border-emerald-600 focus:outline-none font-normal"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <FileUploadDropzone
+                    value={fileUrl}
+                    onChange={(url) => setFileUrl(url)}
+                    accept=".pdf,application/pdf"
+                    category="policies"
+                    label="Official Policy PDF Document (Optional)"
+                    description="Upload statutory policy charter PDF or Royal decree document."
                   />
                 </div>
 

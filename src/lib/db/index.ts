@@ -62,6 +62,8 @@ import type {
   NewPaymentGateway,
   CustomPage,
   NewCustomPage,
+  UploadedAsset,
+  NewUploadedAsset,
 } from "./schema";
 import { persistentStore } from "./persistent-store";
 import { defaultCorePages } from "./default-pages";
@@ -2073,6 +2075,52 @@ class BHTFDataStore {
     } catch (err: any) {
       console.error("[PostgreSQL purgeDemoData Error]:", err?.message || err);
       throw new Error(`Failed to purge demo data: ${err?.message || err}`);
+    }
+  }
+
+  // --- Sovereign Uploaded Assets System ---
+  async createUploadedAsset(data: NewUploadedAsset): Promise<UploadedAsset> {
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.uploadedAssets)
+        .values(data)
+        .returning();
+      return created;
+    } catch (err: any) {
+      console.error("[PostgreSQL createUploadedAsset Error]:", err?.message || err);
+      throw new Error(`Failed to record uploaded asset: ${err?.message || err}`);
+    }
+  }
+
+  async getAllUploadedAssets(category?: string): Promise<UploadedAsset[]> {
+    try {
+      if (category && category !== "ALL") {
+        return await drizzleDb
+          .select()
+          .from(schema.uploadedAssets)
+          .where(eq(schema.uploadedAssets.category, category))
+          .orderBy(desc(schema.uploadedAssets.createdAt));
+      }
+      return await drizzleDb
+        .select()
+        .from(schema.uploadedAssets)
+        .orderBy(desc(schema.uploadedAssets.createdAt));
+    } catch (err: any) {
+      console.error("[PostgreSQL getAllUploadedAssets Error]:", err?.message || err);
+      return [];
+    }
+  }
+
+  async deleteUploadedAsset(id: number): Promise<boolean> {
+    try {
+      const deleted = await drizzleDb
+        .delete(schema.uploadedAssets)
+        .where(eq(schema.uploadedAssets.id, id))
+        .returning();
+      return deleted.length > 0;
+    } catch (err: any) {
+      console.error("[PostgreSQL deleteUploadedAsset Error]:", err?.message || err);
+      return false;
     }
   }
 }

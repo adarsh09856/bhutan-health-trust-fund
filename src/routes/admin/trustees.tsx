@@ -25,6 +25,7 @@ import {
   Camera,
 } from "lucide-react";
 import { toast } from "sonner";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
 import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
 import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
@@ -451,14 +452,16 @@ export function AdminTrusteesPage() {
                     />
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-700">Photo URL (Optional)</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. /images/trustees/chair.jpg"
+                  <div className="space-y-1.5 sm:col-span-2">
+                    <FileUploadDropzone
                       value={photoUrl}
-                      onChange={(e) => setPhotoUrl(e.target.value)}
-                      className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                      onChange={(url) => setPhotoUrl(url)}
+                      accept="image/*"
+                      category="trustees"
+                      label="Trustee Official Portrait Photo (Optional)"
+                      description="Upload official high-resolution portrait photograph. Max 50MB."
+                      aspectRatio="square"
+                      compact
                     />
                   </div>
 

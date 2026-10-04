@@ -23,6 +23,7 @@ import {
   Calendar,
   BarChart3,
 } from "lucide-react";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/reports")({
@@ -389,34 +390,29 @@ export function AdminReportsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="block font-bold text-slate-700 uppercase tracking-wider text-[11px]">
-                      PDF Asset URL / Path
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={fileUrl}
-                      onChange={(e) => setFileUrl(e.target.value)}
-                      placeholder="/documents/bhtf-annual-report.pdf"
-                      className="w-full rounded-2xl border border-slate-300 p-3 text-xs focus:border-emerald-600 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block font-bold text-slate-700 uppercase tracking-wider text-[11px]">
-                      File Size Display
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={fileSize}
-                      onChange={(e) => setFileSize(e.target.value)}
-                      placeholder="3.2 MB"
-                      className="w-full rounded-2xl border border-slate-300 p-3 text-xs focus:border-emerald-600 focus:outline-none"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <FileUploadDropzone
+                    value={fileUrl}
+                    onChange={(url, meta) => {
+                      setFileUrl(url);
+                      if (meta?.fileSize) setFileSize(meta.fileSize);
+                      if (!title && meta?.fileName) {
+                        setTitle(meta.fileName.replace(/\.pdf$/i, "").replace(/[-_]/g, " "));
+                      }
+                    }}
+                    accept=".pdf,application/pdf"
+                    category="reports"
+                    label="Official Report Document (PDF) *"
+                    description="Upload RAA audit statement or annual report PDF. Auto-calculates file size."
+                  />
+                  {fileSize && (
+                    <div className="text-[11px] font-mono text-slate-500 flex items-center justify-between px-1">
+                      <span>Detected Document Size:</span>
+                      <span className="font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">
+                        {fileSize}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">

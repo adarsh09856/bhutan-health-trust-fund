@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
+import fs from "fs";
+import path from "path";
 import { db } from "../db";
 import { defaultCorePages } from "../db/default-pages";
 import { requireAdminFromRequest, requireSuperAdminFromRequest } from "../auth.server";
@@ -1606,6 +1608,101 @@ export const saveQuickSectionEdit = createServerFn({ method: "POST" })
       sectionId: data.sectionId,
       updatedSection,
     };
+  });
+
+// --- Sovereign Upload & Media Asset Engine ---
+export const uploadAsset = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      fileName: z.string().min(1),
+      fileType: z.string().min(1),
+      fileBase64: z.string().min(1),
+      fileSize: z.string().optional(),
+      category: z.string().default("general"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const timestamp = Date.now();
+    const cleanName = data.fileName
+      .replace(/[^a-zA-Z0-9.-]/g, "_")
+      .toLowerCase();
+    const storedName = `${timestamp}-${cleanName}`;
+
+    // Decode base64
+    const base64Data = data.fileBase64.replace(/^data:[^;]+;base64,/, "");
+    const buffer = Buffer.from(base64Data, "base64");
+    const sizeBytes = buffer.length;
+
+    // Calculate human readable size
+    const computedSize =
+      data.fileSize ||
+      (sizeBytes >= 1024 * 1024
+        ? `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`
+        : `${Math.round(sizeBytes / 1024)} KB`);
+
+    // Ensure public/uploads exists
+    const uploadsDir = path.resolve(process.cwd(), "public", "uploads");
+    try {
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(uploadsDir, storedName), buffer);
+
+      // Duplicate to .output/public/uploads if available for production Nitro builds
+      const nitroUploadsDir = path.resolve(process.cwd(), ".output", "public", "uploads");
+      const nitroPub = path.resolve(process.cwd(), ".output", "public");
+      if (fs.existsSync(nitroPub)) {
+        if (!fs.existsSync(nitroUploadsDir)) {
+          fs.mkdirSync(nitroUploadsDir, { recursive: true });
+        }
+        fs.writeFileSync(path.join(nitroUploadsDir, storedName), buffer);
+      }
+    } catch (writeErr) {
+      console.warn("[uploadAsset] File write to disk:", writeErr);
+    }
+
+    const publicUrl = `/uploads/${storedName}`;
+
+    // Store in PostgreSQL database for persistence
+    const asset = await db.createUploadedAsset({
+      fileName: data.fileName,
+      storedName,
+      fileType: data.fileType,
+      fileSize: computedSize,
+      sizeBytes,
+      category: data.category,
+      publicUrl,
+      dataBase64: sizeBytes <= 500 * 1024 ? data.fileBase64 : null,
+      uploadedBy: "admin@bhtf.bt",
+    });
+
+    try {
+      await db.createAuditLog({
+        userEmail: "admin@bhtf.bt",
+        action: "CREATE",
+        entity: "UPLOADED_ASSET",
+        entityId: String(asset.id),
+        details: `Uploaded asset "${data.fileName}" (${computedSize}) to ${publicUrl}`,
+      });
+    } catch {}
+
+    return {
+      success: true,
+      url: publicUrl,
+      asset,
+    };
+  });
+
+export const getAdminAssets = createServerFn({ method: "GET" })
+  .validator((category?: unknown) => (typeof category === "string" ? category : undefined))
+  .handler(async ({ data: category }) => {
+    return await db.getAllUploadedAssets(category);
+  });
+
+export const deleteAdminAsset = createServerFn({ method: "POST" })
+  .validator(z.object({ id: z.number() }))
+  .handler(async ({ data }) => {
+    return await db.deleteUploadedAsset(data.id);
   });
 
 

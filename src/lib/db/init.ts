@@ -319,6 +319,20 @@ export async function ensureDatabaseSchema() {
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
 
+      CREATE TABLE IF NOT EXISTS uploaded_assets (
+        id SERIAL PRIMARY KEY,
+        file_name TEXT NOT NULL,
+        stored_name TEXT NOT NULL,
+        file_type TEXT NOT NULL,
+        file_size TEXT NOT NULL,
+        size_bytes INTEGER NOT NULL DEFAULT 0,
+        category TEXT NOT NULL DEFAULT 'general',
+        public_url TEXT NOT NULL,
+        data_base64 TEXT,
+        uploaded_by TEXT NOT NULL DEFAULT 'admin@bhtf.bt',
+        created_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+
       CREATE TABLE IF NOT EXISTS payment_gateways (
         gateway_key TEXT PRIMARY KEY,
         name TEXT NOT NULL,

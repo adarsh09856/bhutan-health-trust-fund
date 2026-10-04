@@ -35,6 +35,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 
 export const Route = createFileRoute("/admin/procurement")({
   head: () => ({
@@ -726,31 +727,26 @@ export function AdminProcurementPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="col-span-2 space-y-1">
-                    <label className="font-bold text-slate-700 block">
-                      Bidding Document PDF URL *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={tenderDocUrl}
-                      onChange={(e) => setTenderDocUrl(e.target.value)}
-                      placeholder="/documents/sample-report.pdf"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 font-mono focus:border-emerald-600 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label className="font-bold text-slate-700 block">File Size</label>
-                    <input
-                      type="text"
-                      value={tenderDocSize}
-                      onChange={(e) => setTenderDocSize(e.target.value)}
-                      placeholder="2.4 MB"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 font-mono focus:border-emerald-600 focus:outline-none"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <FileUploadDropzone
+                    value={tenderDocUrl}
+                    onChange={(url, meta) => {
+                      setTenderDocUrl(url);
+                      if (meta?.fileSize) setTenderDocSize(meta.fileSize);
+                    }}
+                    accept=".pdf,.doc,.docx,.zip,application/pdf"
+                    category="procurement"
+                    label="Bidding Document PDF / Tender Pack *"
+                    description="Upload RFP, technical specification PDF, or tender dossier. Max 50MB."
+                  />
+                  {tenderDocSize && (
+                    <div className="text-[11px] font-mono text-slate-500 flex items-center justify-between px-1">
+                      <span>Dossier Size:</span>
+                      <span className="font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">
+                        {tenderDocSize}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-1">

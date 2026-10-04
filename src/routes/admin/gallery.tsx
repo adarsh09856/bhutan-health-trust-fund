@@ -27,6 +27,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { toast } from "sonner";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
@@ -474,19 +475,24 @@ export function AdminGalleryPage() {
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">Image Asset URL *</label>
-                  <input
-                    type="text"
-                    required
+                <div className="space-y-2">
+                  <FileUploadDropzone
                     value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                    placeholder="/src/assets/news-community.jpg or https://..."
-                    className="w-full text-xs font-mono rounded-xl border border-slate-200 p-2.5 focus:border-emerald-600 focus:outline-none"
+                    onChange={(url, meta) => {
+                      setImageUrl(url);
+                      if (!title && meta?.fileName) {
+                        setTitle(meta.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "));
+                      }
+                    }}
+                    accept="image/*"
+                    category="gallery"
+                    label="Field Photo Asset *"
+                    description="Drag & drop field photo or browse. JPG, PNG, WebP up to 50MB."
+                    aspectRatio="video"
                   />
 
                   {/* Preset quick picker */}
-                  <div className="pt-1.5 flex items-center gap-2">
+                  <div className="pt-1 flex items-center gap-2">
                     <span className="text-[10px] font-bold text-slate-400">Quick presets:</span>
                     {defaultImageOptions.map((opt) => (
                       <button

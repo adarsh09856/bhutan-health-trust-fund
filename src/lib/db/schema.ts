@@ -411,7 +411,22 @@ export type NewMediaGalleryItem = typeof mediaGallery.$inferInsert;
 export type MediaVideo = typeof mediaVideos.$inferSelect;
 export type NewMediaVideo = typeof mediaVideos.$inferInsert;
 export type ProcurementTender = typeof procurementTenders.$inferSelect;
-export type NewProcurementTender = typeof procurementTenders.$inferInsert;
+export const uploadedAssets = pgTable("uploaded_assets", {
+  id: serial("id").primaryKey(),
+  fileName: text("file_name").notNull(),
+  storedName: text("stored_name").notNull(),
+  fileType: text("file_type").notNull(),
+  fileSize: text("file_size").notNull(),
+  sizeBytes: integer("size_bytes").notNull().default(0),
+  category: text("category").notNull().default("general"),
+  publicUrl: text("public_url").notNull(),
+  dataBase64: text("data_base64"),
+  uploadedBy: text("uploaded_by").notNull().default("admin@bhtf.bt"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type UploadedAsset = typeof uploadedAssets.$inferSelect;
+export type NewUploadedAsset = typeof uploadedAssets.$inferInsert;
 export type PaymentGateway = typeof paymentGateways.$inferSelect;
 export type NewPaymentGateway = typeof paymentGateways.$inferInsert;
 

@@ -24,6 +24,7 @@ import {
   User,
 } from "lucide-react";
 import { toast } from "sonner";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
@@ -385,32 +386,45 @@ export function AdminNewsPage() {
                   </div>
                 </div>
 
-                {/* Cover Image Selector */}
-                <div className="space-y-1.5">
-                  <label className="block font-bold text-slate-700 uppercase tracking-wider text-[11px]">
-                    Featured Cover Photo Asset
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {coverOptions.map((opt) => (
-                      <div
-                        key={opt.path}
-                        onClick={() => setCoverImage(opt.path)}
-                        className={`p-2 rounded-2xl border-2 transition cursor-pointer flex flex-col items-center gap-2 ${
-                          coverImage === opt.path
-                            ? "border-emerald-600 bg-emerald-50/50"
-                            : "border-slate-200 hover:border-slate-300"
-                        }`}
-                      >
-                        <img
-                          src={opt.img}
-                          alt={opt.label}
-                          className="h-16 w-full object-cover rounded-xl"
-                        />
-                        <span className="text-[10px] font-bold text-slate-700 text-center">
-                          {opt.label}
-                        </span>
-                      </div>
-                    ))}
+                {/* Featured Cover Photo Upload with Quick Preset Fallbacks */}
+                <div className="space-y-2">
+                  <FileUploadDropzone
+                    value={coverImage}
+                    onChange={(url) => setCoverImage(url)}
+                    accept="image/*"
+                    category="news"
+                    label="Featured Cover Photo Asset *"
+                    description="Drag & drop custom article banner or browse. JPG, PNG, WebP up to 50MB."
+                    aspectRatio="video"
+                  />
+
+                  {/* Quick Preset Presets Bar */}
+                  <div className="pt-1">
+                    <span className="text-[10px] font-bold text-slate-400 block mb-1.5">
+                      Or select from standard editorial presets:
+                    </span>
+                    <div className="grid grid-cols-3 gap-2">
+                      {coverOptions.map((opt) => (
+                        <div
+                          key={opt.path}
+                          onClick={() => setCoverImage(opt.path)}
+                          className={`p-1.5 rounded-xl border transition cursor-pointer flex items-center gap-2 ${
+                            coverImage === opt.path
+                              ? "border-emerald-600 bg-emerald-50/70"
+                              : "border-slate-200 hover:border-slate-300 bg-slate-50/50"
+                          }`}
+                        >
+                          <img
+                            src={opt.img}
+                            alt={opt.label}
+                            className="h-8 w-12 object-cover rounded-lg shrink-0"
+                          />
+                          <span className="text-[10px] font-bold text-slate-700 truncate">
+                            {opt.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

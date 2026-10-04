@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { saveQuickSectionEdit } from "@/lib/api/admin.functions";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 
 export interface UniversalLiveSectionEditorProps {
   isOpen: boolean;
@@ -440,28 +441,17 @@ export function UniversalLiveSectionEditor({
                 </select>
               </div>
 
-              <div>
-                <label className="block font-semibold text-slate-300 mb-1">
-                  Background / Feature Image URL
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={backgroundImage}
-                    onChange={(e) => setBackgroundImage(e.target.value)}
-                    placeholder="e.g. /assets/hero-bhutan.jpg"
-                    className="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-amber-400 text-xs font-mono"
-                  />
-                </div>
-                {backgroundImage && (
-                  <div className="mt-2 h-28 w-44 rounded-lg overflow-hidden border border-slate-700">
-                    <img
-                      src={backgroundImage}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                )}
+              <div className="space-y-1.5">
+                <FileUploadDropzone
+                  value={backgroundImage}
+                  onChange={(url) => setBackgroundImage(url)}
+                  accept="image/*"
+                  category="general"
+                  label="Background / Feature Image"
+                  description="Upload custom section background image. JPG, PNG, WebP up to 50MB."
+                  aspectRatio="banner"
+                  compact
+                />
               </div>
             </div>
           )}

@@ -11,6 +11,7 @@ import {
   Sliders,
 } from "lucide-react";
 import type { PageBlockSection, PageBlockItem } from "@/lib/db/schema";
+import { FileUploadDropzone } from "@/components/admin/file-upload-dropzone";
 
 export function BlockInspector({
   section,
@@ -254,12 +255,15 @@ export function BlockInspector({
               <label className="text-xs font-semibold text-slate-300">Hero Background Image (4K Banner)</label>
               <span className="text-[10px] text-amber-400 font-mono">Dynamic Merge</span>
             </div>
-            <input
-              type="text"
+            <FileUploadDropzone
               value={section.backgroundImage || ""}
-              onChange={(e) => updateField("backgroundImage", e.target.value)}
-              placeholder="Image URL or leave blank for official King Portrait"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-amber-500 transition-colors"
+              onChange={(url) => updateField("backgroundImage", url)}
+              accept="image/*"
+              category="pages"
+              label="Hero Background Banner"
+              description="Upload 4K hero background image or browse files. Max 50MB."
+              aspectRatio="video"
+              compact
             />
             <div className="grid grid-cols-2 gap-1.5 text-[10px]">
               <button
@@ -277,9 +281,6 @@ export function BlockInspector({
                 Paro Highland Forest
               </button>
             </div>
-            <p className="text-[10px] text-slate-400">
-              Paste any custom URL or asset path. Automatically merges with live hero cards and layout.
-            </p>
           </div>
         )}
 
