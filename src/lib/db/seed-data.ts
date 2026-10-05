@@ -420,9 +420,9 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Dr. Gyambo Sithey, PhD",
-    role: "Director & Ex-officio Member Secretary",
+    role: "Director",
     organization: "Director, BHTF Secretariat",
-    badge: "Member Secretary",
+    badge: "Director",
     bio: "Leads day-to-day operations of the BHTF Secretariat, execution of statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.",
     photoUrl: null,
     orderIndex: 7,

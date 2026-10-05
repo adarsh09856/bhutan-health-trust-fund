@@ -23,6 +23,8 @@ import {
   ThermometerSnowflake,
   Loader2,
   Scale,
+  Coins,
+  TrendingUp,
 } from "lucide-react";
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
@@ -238,6 +240,164 @@ export function OurWorkExperience({
             ))}
           </div>
         )}
+      </section>
+
+      {/* 2b. Life-Cycle Immunization Protection Grid (Strategy Workshop Verified Data) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="vaccine-coverage">
+        <SectionEditBadge
+          label="Immunization Coverage"
+          pageSlug={pageSlug}
+          sectionId="vaccine-coverage"
+          studioHref="/admin/programs"
+          initialData={{
+            title: "Protection Across the Life Cycle — 90,167+ Citizens Annually",
+            subtitle: "Uninterrupted sovereign financing for routine childhood and adult immunization with 100% facility coverage.",
+            badge: "Universal Vaccine Security",
+          }}
+        />
+        <div className="bg-gradient-to-br from-emerald-950 via-[#071F18] to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-emerald-500/20 space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-emerald-500/20 pb-6">
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-widest text-amber-400 font-bold">
+                Universal Vaccine Security
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl font-black text-white mt-1">
+                Protection Across the Life Cycle: 90,167+ Protected Annually
+              </h2>
+              <p className="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl font-light">
+                Zero stockouts across all 4 critical vaccine programs. Financed directly by BHTF endowment yields and RGOB matched funds.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
+                <span className="block text-2xl font-black text-amber-400 font-mono">0</span>
+                <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold">Citizens Billed</span>
+              </div>
+              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
+                <span className="block text-2xl font-black text-emerald-400 font-mono">100%</span>
+                <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold">Health Facilities</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* 1. Pentavalent */}
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-400">98.9% Coverage</span>
+                <Syringe className="h-4 w-4 text-emerald-400" />
+              </div>
+              <h3 className="font-bold text-lg text-white">Pentavalent Vaccine</h3>
+              <p className="text-xs text-slate-300 font-light">
+                <strong className="text-white font-mono">8,961 babies</strong> protected against Diphtheria, Pertussis, Tetanus, Hepatitis B, and Hib.
+              </p>
+            </div>
+
+            {/* 2. PCV */}
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-blue-400">98.7% Coverage</span>
+                <ShieldCheck className="h-4 w-4 text-blue-400" />
+              </div>
+              <h3 className="font-bold text-lg text-white">PCV (Pneumococcal)</h3>
+              <p className="text-xs text-slate-300 font-light">
+                <strong className="text-white font-mono">8,927 babies</strong> shielded against infant pneumonia, sepsis, and bacterial meningitis.
+              </p>
+            </div>
+
+            {/* 3. Influenza */}
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-amber-400">97.4% Coverage</span>
+                <ThermometerSnowflake className="h-4 w-4 text-amber-400" />
+              </div>
+              <h3 className="font-bold text-lg text-white">Seasonal Influenza</h3>
+              <p className="text-xs text-slate-300 font-light">
+                <strong className="text-white font-mono">66,238 citizens</strong> (elderly 65+, comorbidities, children & frontline healthcare workers).
+              </p>
+            </div>
+
+            {/* 4. HPV */}
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-pink-400">99.8% Coverage</span>
+                <HeartPulse className="h-4 w-4 text-pink-400" />
+              </div>
+              <h3 className="font-bold text-lg text-white">HPV (Cervical Cancer)</h3>
+              <p className="text-xs text-slate-300 font-light">
+                <strong className="text-white font-mono">6,041 adolescent girls</strong> vaccinated to eliminate cervical cancer nationwide.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2c. Essential Drug Formulary & Expenditure Ranking (Slide 6 & Chart 1) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="top-medicines">
+        <SectionEditBadge
+          label="Top Procured Medicines & Expenditure"
+          pageSlug={pageSlug}
+          sectionId="top-medicines"
+          studioHref="/admin/reports"
+          initialData={{
+            title: "Top 10 Procured Medicines & Nu. 4.37B Cumulative Record",
+            subtitle: "Verified procurement volume and expenditure ranking under Royal Audit Authority oversight.",
+            badge: "Procurement Transparency",
+          }}
+        />
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+                FY 2025–2026 Formulary Ranking
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                Top Ten Essential Medicines Financed by BHTF
+              </h2>
+              <p className="text-slate-600 text-xs sm:text-sm mt-2 max-w-2xl font-light">
+                Over <strong className="font-mono text-emerald-900 font-bold">Nu. 4.37 Billion</strong> cumulatively disbursed for essential medicines and vaccines since inception (2003–04 to 2025–26), scaling from under Nu. 5M/yr to over Nu. 613M in FY 2025–26.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-50 text-amber-950 border border-amber-300 text-xs font-mono font-bold shrink-0">
+              <Coins className="h-4 w-4 text-amber-600" />
+              <span>Cumulative Disbursed: Nu. 4.37B</span>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-slate-200">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-mono uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th className="py-3 px-4"># Rank</th>
+                  <th className="py-3 px-4">Medicine / Formulary Description</th>
+                  <th className="py-3 px-4">Clinical Indication</th>
+                  <th className="py-3 px-4 text-right">Annual Allocation (Nu.)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 font-sans">
+                {[
+                  { rank: "1", name: "Losartan", desc: "Essential Antihypertensive therapy", cost: "Nu. 51,000,000" },
+                  { rank: "2", name: "Metformin", desc: "First-line Type-2 Diabetes oral glycemic management", cost: "Nu. 25,000,000" },
+                  { rank: "3", name: "Paracetamol", desc: "National essential analgesic & antipyretic", cost: "Nu. 17,000,000" },
+                  { rank: "4", name: "Hydrochlorothiazide", desc: "Cardiovascular diuretic therapy", cost: "Nu. 14,000,000" },
+                  { rank: "5", name: "Glipizide", desc: "Oral sulfonylurea antidiabetic therapy", cost: "Nu. 10,000,000" },
+                  { rank: "6", name: "Essential Vitamins & Immunosuppressants", desc: "Post-transplant immunosuppression & renal therapeutic vitamins", cost: "Nu. 9,000,000" },
+                  { rank: "7", name: "Omeprazole", desc: "Proton-pump inhibitor for acid peptic disease", cost: "Nu. 9,000,000" },
+                  { rank: "8", name: "Gastrointestinal Formulations", desc: "Therapeutic gastrointestinal protectants & buffers", cost: "Nu. 8,000,000" },
+                  { rank: "9", name: "Cetirizine", desc: "Second-generation antihistamine", cost: "Nu. 8,000,000" },
+                  { rank: "10", name: "Vitamin C", desc: "Essential nutritional micronutrient supplementation", cost: "Nu. 8,000,000" },
+                ].map((med) => (
+                  <tr key={med.rank} className="hover:bg-slate-50/70 transition">
+                    <td className="py-2.5 px-4 font-mono font-bold text-slate-500">{med.rank}</td>
+                    <td className="py-2.5 px-4 font-bold text-slate-900">{med.name}</td>
+                    <td className="py-2.5 px-4 text-slate-600 font-light">{med.desc}</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-bold text-emerald-800">{med.cost}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
       {/* 3. Interactive Nationwide Reach Across 20 Dzongkhags */}

@@ -390,6 +390,24 @@ function CommitteesPage() {
                 </p>
               </div>
             </div>
+
+            {/* National Strategic Doubling Roadmap Target (Workshop Slide 5) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-900 to-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-widest block">
+                  Strategic Roadmap 2026–2030 • Fund Expansion Target
+                </span>
+                <h4 className="font-serif text-base font-bold text-white">
+                  Target: Doubling the Endowment Corpus from Nu. 4.3B to roughly Nu. 8.6 Billion
+                </h4>
+                <p className="text-xs text-slate-300 font-light max-w-2xl">
+                  Following the audited FY 2024–25 baseline of Nu. 4.31B and reaching Nu. 4.8B in 2026, the Asset Management Committee is establishing policy space for offshore asset diversification and 1:1 RGOB matched institutional giving to achieve roughly Nu. 8.6 Billion in capital preservation.
+                </p>
+              </div>
+              <div className="px-4 py-2 rounded-xl bg-amber-400 text-slate-950 font-black text-xs font-mono shrink-0 text-center">
+                Target: Nu. 8.6B
+              </div>
+            </div>
           </div>
         </div>
       </section>

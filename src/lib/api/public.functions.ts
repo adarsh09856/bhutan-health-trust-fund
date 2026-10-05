@@ -61,7 +61,7 @@ export const getPublicPaymentConfig = createServerFn({ method: "GET" }).handler(
       bnbAccountNo: settingsMap["bnb_account_no"] || "BHTF-BNB-XXXXXX",
       bankName: fin.bankName || "Bank of Bhutan Limited",
       accountTitle: fin.accountTitle || "Bhutan Health Trust Fund",
-      qrImageUrl: settingsMap["donation_qr_image"] || "/src/assets/qr-placeholder.png",
+      qrImageUrl: settingsMap["donation_qr_image"] || "/uploads/bhtf_donate_qr.png",
     },
   };
 });

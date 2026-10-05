@@ -19,7 +19,7 @@ import {
   MapPin,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk.jpg";
+import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026.jpg";
 import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
 import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
@@ -330,27 +330,7 @@ function SecretariatPage() {
             </div>
           </div>
 
-          {/* 2. Senior Investment Officer Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-                <img
-                  src={staffThinley}
-                  alt="Mr. Thinley Wangchuk"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Investment Management Division
-                </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
-                <p className="text-xs font-semibold text-teal-700">Senior Investment Officer</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 3. Senior Program Officer Card */}
+          {/* 2. Senior Program Officer Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
@@ -366,6 +346,26 @@ function SecretariatPage() {
                 </span>
                 <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
                 <p className="text-xs font-semibold text-emerald-700">Senior Program Officer</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Senior Investment Officer Card (Third Sequence) */}
+          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <img
+                  src={staffThinley}
+                  alt="Mr. Thinley Wangchuk"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-5 space-y-1.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
+                  Investment Management Division
+                </span>
+                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
+                <p className="text-xs font-semibold text-teal-700">Senior Investment Officer</p>
               </div>
             </div>
           </div>

@@ -20,6 +20,8 @@ import {
   TrendingUp,
   Globe,
   Share2,
+  Coins,
+  ArrowUpRight,
 } from "lucide-react";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
@@ -309,6 +311,87 @@ function AboutOrganizationPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* 2b. The Financial Architecture: Two Income Streams (Strategy Workshop Slide 10 & 14) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-financial-architecture">
+        <SectionEditBadge
+          label="Financial Architecture"
+          pageSlug="about-organization"
+          sectionId="org-financial-architecture"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "The Financial Architecture: Two Sustainable Income Streams",
+            subtitle: "Investment income alone no longer covers annual expenditure. A dual-stream domestic architecture bridges the 60% procurement gap.",
+            badge: "Domestic Health Financing",
+          }}
+        />
+        <div className="bg-gradient-to-br from-slate-900 via-[#0B251F] to-emerald-950 rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-emerald-500/20 space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-emerald-500/20 pb-6">
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-widest text-amber-400 font-bold">
+                Domestic Health Financing Architecture
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl font-black text-white mt-1">
+                Two Income Streams Sustaining Free Primary Healthcare
+              </h2>
+              <p className="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl font-light">
+                As annual medicine expenditure rises to Nu. 557.7M (scaling to Nu. 613M), endowment returns cover 40%. The 1% Health Contribution covers the remaining 60% gap with 100% direct procurement pass-through.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
+                <span className="block text-xl sm:text-2xl font-black text-emerald-400 font-mono">Nu. 4.8B</span>
+                <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold">Endowment Assets</span>
+              </div>
+              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
+                <span className="block text-xl sm:text-2xl font-black text-amber-400 font-mono">1:1</span>
+                <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold">RGOB Matching</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Stream 1 */}
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">Stream 1 • Sovereign Endowment</span>
+                <Coins className="h-5 w-5 text-emerald-400" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-white">Investment Income (ROI)</h3>
+              <div className="text-3xl font-black font-mono text-emerald-300">Nu. 318M — Nu. 400M</div>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Generated from ring-fenced domestic commercial deposits, long-term bonds, equities, and offshore Asian Development Bank (ADB) instruments. Governed by a 70% procurement / 20% capital growth / 10% operations statutory spending policy.
+              </p>
+            </div>
+
+            {/* Stream 2 */}
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">Stream 2 • National Solidarity</span>
+                <Heart className="h-5 w-5 text-amber-400" />
+              </div>
+              <h3 className="font-serif text-xl font-bold text-white">1% Health Contribution</h3>
+              <div className="text-3xl font-black font-mono text-amber-300">~Nu. 450M Annually</div>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Mandatory 1% contribution from gross monthly salaries of public, civil, corporate, and private employees. Grown from Nu. 138M in FY 2014–15, 100% of this revenue is disbursed directly to healthcare procurement.
+              </p>
+            </div>
+          </div>
+
+          {/* Structural Risk Highlight Card */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs font-bold font-mono text-amber-300 uppercase tracking-wider">
+                <AlertCircle className="h-4 w-4" />
+                <span>Macroeconomic Structural Risk</span>
+              </div>
+              <p className="text-xs text-slate-200 font-light">
+                Global essential medicine prices escalate at <strong className="text-amber-300 font-mono">11% annually</strong> against an average <strong className="text-emerald-300 font-mono">7.7% investment return</strong>. The National Sustainable Health Financing Strategy roadmap is expanding the endowment from Nu. 4.3B to <strong className="text-white font-mono font-bold">Nu. 8.6 Billion</strong> to safeguard self-reliance.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

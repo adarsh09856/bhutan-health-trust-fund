@@ -67,7 +67,7 @@ export const Route = createFileRoute("/our-story")({
   component: OurStoryPage,
 });
 
-// Official BHTF Historical Milestones (Docx Content Package V2 Section 4)
+// Official BHTF Historical Milestones (Docx Content Package V2 Section 4 & National Strategy Strategy Record)
 const officialMilestones = [
   {
     year: "1998 — 12 May",
@@ -75,9 +75,9 @@ const officialMilestones = [
     desc: "The vision of the Bhutan Health Trust Fund was formally launched to the international public health community at the 51st World Health Assembly in Geneva, Switzerland, under the visionary guidance of His Majesty the Fourth Druk Gyalpo and led by Lyonpo Sangay Ngedup (then Minister for Health and Education).",
   },
   {
-    year: "2000 — 12 May",
-    title: "Royal Charter Enactment & Statutory Establishment",
-    desc: "His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck granted the historic Royal Charter, establishing BHTF as an autonomous statutory body with a ring-fenced capital endowment to guarantee uninterrupted financing for primary healthcare in perpetuity.",
+    year: "2000 — 3 August",
+    title: "Royal Charter Enactment & Secretariat Establishment",
+    desc: "His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck granted the historic Royal Charter on 3rd August 2000, formally establishing the BHTF Secretariat and ring-fencing the capital endowment to guarantee uninterrupted financing for primary healthcare in perpetuity.",
   },
   {
     year: "2003",
@@ -86,33 +86,33 @@ const officialMilestones = [
   },
   {
     year: "2006",
-    title: "100% Childhood Vaccines Financing",
-    desc: "BHTF assumed complete sovereign financing responsibility for all routine childhood vaccines and essential immunization cold-chain equipment nationwide, insulating national immunization from donor volatility.",
+    title: "100% Childhood Vaccines Financing & National Campaigns",
+    desc: "BHTF assumed complete sovereign financing responsibility for routine childhood immunization, supporting the nationwide Measles & Rubella campaign and fully financing the national Hepatitis B vaccination drive.",
   },
   {
     year: "2014–2015",
-    title: "Pentavalent Vaccine & Supply Chain Resilience",
-    desc: "Fully funded the nationwide transition to the 5-in-1 Pentavalent vaccine and sustained uninterrupted procurement through global WHO and UNICEF supply pipelines.",
+    title: "Health Contribution Transferred to BHTF & Drug Financing",
+    desc: "Management of the national 1% Health Contribution was transferred to BHTF, empowering the Fund to expand beyond vaccines to finance the entire national Essential Drugs List and 5-in-1 Pentavalent vaccine nationwide.",
   },
   {
     year: "2017",
-    title: "Target Endowment Corpus Realization",
-    desc: "BHTF achieved its primary target endowment corpus of USD 24 Million (Nu. 1.5 Billion+), securing long-term financial independence and sustainable annual investment returns.",
+    title: "Target US$ 24M Achieved & HPV Co-Financed with ACCF",
+    desc: "BHTF attained its founding endowment target of US$ 24.0 Million (Nu. 1.5 Billion+). Simultaneously launched nationwide HPV vaccination in partnership with the Australian Cervical Cancer Foundation (ACCF).",
   },
   {
     year: "2018",
-    title: "Nu. 3.0 Billion Corpus Milestone",
-    desc: "Through continuous Royal Government support, 1:1 sovereign matching grants, and public donations, the capital endowment crossed Nu. 3.0 Billion.",
+    title: "Autonomous Statutory Delinking & Pentavalent with GAVI",
+    desc: "Delinked from the Ministry of Health to operate as an independent autonomous agency under Cabinet oversight; supported nationwide Pentavalent introduction with GAVI, and crossed the Nu. 3.0 Billion endowment milestone.",
   },
   {
     year: "2019",
-    title: "Introduction of HPV & Flu Vaccines",
-    desc: "Financing expanded to cover nationwide Human Papillomavirus (HPV) vaccination for cervical cancer prevention and annual seasonal influenza vaccines for vulnerable and high-risk populations.",
+    title: "Pneumococcal Conjugate Vaccine (PCV) & Influenza Funding",
+    desc: "Financing expanded to introduce Pneumococcal Conjugate Vaccine (PCV) protecting infants against fatal pneumonia/meningitis, alongside nationwide seasonal influenza protection for high-risk citizens and frontline workers.",
   },
   {
     year: "2026",
-    title: "Nu. 4.8 Billion Corpus & Comprehensive Formulary",
-    desc: "Capital endowment reached Nu. 4,798,965,306.85 (~Nu. 4.8B) as of 30 June 2026, funding 438 essential medicines, 110 traditional medicines (65 core formulations), and 4 routine vaccines nationwide.",
+    title: "26 Years of Service: Nu. 4.8B Endowment & Strategy Roadmap",
+    desc: "Marking 26 years of unbroken solidarity: capital endowment stands at Nu. 4,798,965,306.85 (~Nu. 4.8B), guaranteeing 438 essential modern medicines, 110 traditional medicines (65 core formulations), and 4 routine vaccines across 100% of health facilities.",
   },
 ];
 
