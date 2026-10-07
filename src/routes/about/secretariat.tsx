@@ -357,7 +357,7 @@ function SecretariatPage() {
                 <img
                   src={staffThinley}
                   alt="Mr. Thinley Wangchuk"
-                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-5 space-y-1.5">

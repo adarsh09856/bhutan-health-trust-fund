@@ -133,7 +133,7 @@ function OurStoryPage() {
   }, []);
 
   const milestonesToRender =
-    liveMilestones.length > 0
+    liveMilestones.length >= 9
       ? liveMilestones.map((m) => ({
           year: m.year,
           title: m.title,

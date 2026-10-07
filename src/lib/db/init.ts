@@ -403,6 +403,25 @@ export async function ensureDatabaseSchema() {
       `);
     }
 
+    // Seed official 9 historical milestones if empty or outdated (< 9 records)
+    const msCountCheck = await client.query("SELECT COUNT(*) FROM milestones");
+    if (parseInt(msCountCheck.rows[0].count, 10) < 9) {
+      await client.query(`
+        DELETE FROM milestones;
+        INSERT INTO milestones (year, title, description, order_index)
+        VALUES
+          ('1998 — 12 May', 'Conception & Geneva Launch at 51st World Health Assembly', 'The vision of the Bhutan Health Trust Fund was formally launched to the international public health community at the 51st World Health Assembly in Geneva, Switzerland, under the visionary guidance of His Majesty the Fourth Druk Gyalpo and led by Lyonpo Sangay Ngedup.', 1),
+          ('2000 — 3 August', 'Royal Charter Enactment & Secretariat Establishment', 'His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck granted the historic Royal Charter on 3rd August 2000, formally establishing the BHTF Secretariat and ring-fencing the capital endowment to guarantee uninterrupted financing for primary healthcare in perpetuity.', 2),
+          ('2003', 'Operational Primary Healthcare Financing Commences', 'The Trust Fund commenced direct disbursements to finance essential primary healthcare needs, providing sustained funding for basic medical supplies, clinical consumables, and cold-chain infrastructure across all 20 Dzongkhags.', 3),
+          ('2006', '100% Childhood Vaccines Financing & National Campaigns', 'BHTF assumed complete sovereign financing responsibility for routine childhood immunization, supporting the nationwide Measles & Rubella campaign and fully financing the national Hepatitis B vaccination drive.', 4),
+          ('2014–2015', 'Health Contribution Transferred to BHTF & Drug Financing', 'Management of the national 1% Health Contribution was transferred to BHTF, empowering the Fund to expand beyond vaccines to finance the entire national Essential Drugs List and 5-in-1 Pentavalent vaccine nationwide.', 5),
+          ('2017', 'Target US$ 24M Achieved & HPV Co-Financed with ACCF', 'BHTF attained its founding endowment target of US$ 24.0 Million (Nu. 1.5 Billion+). Simultaneously launched nationwide HPV vaccination in partnership with the Australian Cervical Cancer Foundation (ACCF).', 6),
+          ('2018', 'Autonomous Statutory Delinking & Pentavalent with GAVI', 'Delinked from the Ministry of Health to operate as an independent autonomous agency under Cabinet oversight; supported nationwide Pentavalent introduction with GAVI, and crossed the Nu. 3.0 Billion endowment milestone.', 7),
+          ('2019', 'Pneumococcal Conjugate Vaccine (PCV) & Influenza Funding', 'Financing expanded to introduce Pneumococcal Conjugate Vaccine (PCV) protecting infants against fatal pneumonia/meningitis, alongside nationwide seasonal influenza protection for high-risk citizens and frontline workers.', 8),
+          ('2026', '26 Years of Service: Nu. 4.8B Endowment & Strategy Roadmap', 'Marking 26 years of unbroken solidarity: capital endowment stands at Nu. 4,798,965,306.85 (~Nu. 4.8B), guaranteeing 438 essential modern medicines, 110 traditional medicines (65 core formulations), and 4 routine vaccines across 100% of health facilities.', 9);
+      `);
+    }
+
     // Ensure all critical site settings are populated across all 6 categories
     await client.query(`
       INSERT INTO site_settings (setting_key, setting_value, category, description)

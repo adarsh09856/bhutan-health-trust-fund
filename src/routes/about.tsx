@@ -192,29 +192,49 @@ const trustees: {
 
 const milestones = [
   {
-    year: "1998",
-    title: "Conception in Geneva (WHO World Health Assembly)",
-    desc: "The Royal Government of Bhutan formally announced the vision of an autonomous health endowment fund to international partners in Geneva.",
+    year: "1998 — 12 May",
+    title: "Conception & Geneva Launch at 51st World Health Assembly",
+    desc: "The vision of the Bhutan Health Trust Fund was formally launched to the international public health community at the 51st World Health Assembly in Geneva, Switzerland, under the visionary guidance of His Majesty the Fourth Druk Gyalpo and led by Lyonpo Sangay Ngedup.",
+  },
+  {
+    year: "2000 — 3 August",
+    title: "Royal Charter Enactment & Secretariat Establishment",
+    desc: "His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck granted the historic Royal Charter on 3rd August 2000, formally establishing the BHTF Secretariat and ring-fencing the capital endowment to guarantee uninterrupted financing for primary healthcare in perpetuity.",
   },
   {
     year: "2003",
-    title: "Royal Charter & Statutory Establishment",
-    desc: "Enacted under Royal Charter as a permanent statutory trust fund with ring-fenced capital grants from RGOB and bilateral partners.",
+    title: "Operational Primary Healthcare Financing Commences",
+    desc: "The Trust Fund commenced direct disbursements to finance essential primary healthcare needs, providing sustained funding for basic medical supplies, clinical consumables, and cold-chain infrastructure across all 20 Dzongkhags.",
   },
   {
-    year: "2014",
-    title: "1:1 Matching Grant Policy Institutionalized",
-    desc: "The Royal Government of Bhutan legislated to match every Ngultrum contributed by the public and corporate donors.",
+    year: "2006",
+    title: "100% Childhood Vaccines Financing & National Campaigns",
+    desc: "BHTF assumed complete sovereign financing responsibility for routine childhood immunization, supporting the nationwide Measles & Rubella campaign and fully financing the national Hepatitis B vaccination drive.",
   },
   {
-    year: "2020",
-    title: "Pandemic Emergency Vaccine Security",
-    desc: "BHTF mobilized emergency financing to guarantee uninterrupted essential drug buffers and pediatric vaccines across all 20 Dzongkhags during global supply shocks.",
+    year: "2014–2015",
+    title: "Health Contribution Transferred to BHTF & Drug Financing",
+    desc: "Management of the national 1% Health Contribution was transferred to BHTF, empowering the Fund to expand beyond vaccines to finance the entire national Essential Drugs List and 5-in-1 Pentavalent vaccine nationwide.",
+  },
+  {
+    year: "2017",
+    title: "Target US$ 24M Achieved & HPV Co-Financed with ACCF",
+    desc: "BHTF attained its founding endowment target of US$ 24.0 Million (Nu. 1.5 Billion+). Simultaneously launched nationwide HPV vaccination in partnership with the Australian Cervical Cancer Foundation (ACCF).",
+  },
+  {
+    year: "2018",
+    title: "Autonomous Statutory Delinking & Pentavalent with GAVI",
+    desc: "Delinked from the Ministry of Health to operate as an independent autonomous agency under Cabinet oversight; supported nationwide Pentavalent introduction with GAVI, and crossed the Nu. 3.0 Billion endowment milestone.",
+  },
+  {
+    year: "2019",
+    title: "Pneumococcal Conjugate Vaccine (PCV) & Influenza Funding",
+    desc: "Financing expanded to introduce Pneumococcal Conjugate Vaccine (PCV) protecting infants against fatal pneumonia/meningitis, alongside nationwide seasonal influenza protection for high-risk citizens and frontline workers.",
   },
   {
     year: "2026",
-    title: "Multi-Billion Sovereign Endowment & Diagnostic Expansion",
-    desc: "Endowment capital surpasses Nu. 3.24 Billion, expanding coverage to high-altitude solar cold chain logistics, oncology medicines, and automated hospital diagnostics.",
+    title: "26 Years of Service: Nu. 4.8B Endowment & Strategy Roadmap",
+    desc: "Marking 26 years of unbroken solidarity: capital endowment stands at Nu. 4,798,965,306.85 (~Nu. 4.8B), guaranteeing 438 essential modern medicines, 110 traditional medicines (65 core formulations), and 4 routine vaccines across 100% of health facilities.",
   },
 ];
 
@@ -305,7 +325,7 @@ function About() {
       : trustees;
 
   const displayMilestones =
-    liveMilestones.length > 0
+    liveMilestones.length >= 9
       ? liveMilestones.map((m) => ({
           year: m.year,
           title: m.title,

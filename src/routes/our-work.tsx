@@ -566,7 +566,7 @@ export function OurWorkExperience({
                   { rank: "5", name: "Glipizide", desc: "Oral sulfonylurea antidiabetic therapy", cost: "Nu. 10,000,000" },
                   { rank: "6", name: "Immunosuppressant (Vitamin B & D)", desc: "Post-transplant immunosuppression & therapeutic vitamins", cost: "Nu. 9,000,000" },
                   { rank: "7", name: "Omeprazole", desc: "Proton-pump inhibitor for acid peptic disease", cost: "Nu. 9,000,000" },
-                  { rank: "8", name: "Gastrointestinal Formulations", desc: "Therapeutic gastrointestinal protectants & buffers", cost: "Nu. 8,000,000" },
+                  { rank: "8", name: "Ranitidine", desc: "Histamine H2 receptor antagonist for acid peptic disease", cost: "Nu. 8,000,000" },
                   { rank: "9", name: "Cetirizine", desc: "Second-generation antihistamine", cost: "Nu. 8,000,000" },
                   { rank: "10", name: "Vitamin C", desc: "Essential nutritional micronutrient supplementation", cost: "Nu. 8,000,000" },
                 ].map((med) => (
