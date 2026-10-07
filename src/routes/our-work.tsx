@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
+import { DisbursementChart } from "@/components/disbursement-chart";
 
 export const Route = createFileRoute("/our-work")({
   loader: async () => {
@@ -147,7 +148,7 @@ export function OurWorkExperience({
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
       <PageHero
-        badge="Universal Healthcare Coverage"
+        badge="Anchoring Sustainable Health Financing • 1998–2026"
         title="Our Programs & Financed Commodities"
         subtitle="Ensuring no hospital, clinic, or health post across Bhutan faces stockouts of life-saving medicines or vaccines."
       />
@@ -396,6 +397,11 @@ export function OurWorkExperience({
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Strategy Workshop Chart 1 Trajectory & Two Income Streams */}
+          <div className="pt-8 border-t border-slate-100">
+            <DisbursementChart />
           </div>
         </div>
       </section>

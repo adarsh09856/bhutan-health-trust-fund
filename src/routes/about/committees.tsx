@@ -358,6 +358,19 @@ function CommitteesPage() {
               </table>
             </div>
 
+            {/* Visual 70/20/10 Ratio Bar (Workshop Slide 11 Chart 3) */}
+            <div className="pt-2">
+              <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-700 mb-2">
+                <span>Statutory 70 / 20 / 10 Spending Allocation (Slide 11 • Chart 3)</span>
+                <span className="text-emerald-800">100% Ring-Fenced Endowment Yield</span>
+              </div>
+              <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex shadow-inner border border-slate-200">
+                <div style={{ width: "70%" }} className="bg-emerald-600 h-full transition-all" title="70% Procurement" />
+                <div style={{ width: "20%" }} className="bg-amber-500 h-full transition-all" title="20% Capital Growth" />
+                <div style={{ width: "10%" }} className="bg-teal-600 h-full transition-all" title="10% Operations" />
+              </div>
+            </div>
+
             {/* IPS Spending Policy Highlight */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
               <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">

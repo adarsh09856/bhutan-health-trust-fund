@@ -1,0 +1,7 @@
+# Bhutan Health Trust Fund (BHTF) robots.txt
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Allow: /
+
+Sitemap: https://bhtf.bt/sitemap.xml

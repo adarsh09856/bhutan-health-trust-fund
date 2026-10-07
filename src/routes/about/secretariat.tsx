@@ -19,7 +19,7 @@ import {
   MapPin,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026.jpg";
+import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
 import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
 import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
@@ -313,7 +313,7 @@ function SecretariatPage() {
           {/* 1. Director Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
                 <img
                   src={drGyamboDirector}
                   alt="Dr. Gyambo Sithey, PhD"
@@ -333,7 +333,7 @@ function SecretariatPage() {
           {/* 2. Senior Program Officer Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
                 <img
                   src={staffFinance}
                   alt="Ms. Tshering Choden"
@@ -353,7 +353,7 @@ function SecretariatPage() {
           {/* 3. Senior Investment Officer Card (Third Sequence) */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
                 <img
                   src={staffThinley}
                   alt="Mr. Thinley Wangchuk"
@@ -373,7 +373,7 @@ function SecretariatPage() {
           {/* 4. Accounts Officer Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
                 <img
                   src={staffSonamChojay}
                   alt="Mr. Sonam Chojay"
@@ -393,7 +393,7 @@ function SecretariatPage() {
           {/* 5. Driver Card */}
           <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
                 <img
                   src={staffProcurement}
                   alt="Mr. Rinchen Phuntsho"
