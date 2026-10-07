@@ -25,6 +25,8 @@ import {
   Scale,
   Coins,
   TrendingUp,
+  Building2,
+  Quote,
 } from "lucide-react";
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
@@ -153,6 +155,104 @@ export function OurWorkExperience({
         subtitle="Ensuring no hospital, clinic, or health post across Bhutan faces stockouts of life-saving medicines or vaccines."
       />
 
+      {/* The Impact: What BHTF Delivers Today (Slide 8 / Screenshot 6) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="today-impact-summary">
+        <SectionEditBadge
+          label="What BHTF Delivers Today"
+          pageSlug={pageSlug}
+          sectionId="today-impact-summary"
+          studioHref="/admin/page-editor?slug=our-work"
+          initialData={{
+            title: "The Impact: What BHTF Delivers Today",
+            subtitle: "Unbroken sovereign financing securing 100% of essential medicines, traditional therapies, and life-cycle vaccines nationwide.",
+            badge: "Nationwide Coverage & Impact",
+          }}
+        />
+        <div className="space-y-6">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+              Nationwide Coverage & Impact
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+              The Impact: What BHTF Delivers Today
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-light">
+              Direct sovereign financing ensuring no hospital or patient faces stockouts.
+            </p>
+          </div>
+
+          {/* 4 Impact Stat Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+              <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
+                <Pill className="h-5 w-5" />
+              </div>
+              <div className="font-mono text-3xl font-black text-slate-900">438</div>
+              <h4 className="font-serif font-bold text-base text-slate-900">Essential Medicines</h4>
+              <p className="text-xs text-slate-600 font-light">100% of the National Essential Drugs List financed across all therapy lines.</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+              <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 grid place-items-center">
+                <HeartPulse className="h-5 w-5" />
+              </div>
+              <div className="font-mono text-3xl font-black text-slate-900">65–110</div>
+              <h4 className="font-serif font-bold text-base text-slate-900">Traditional Medicines</h4>
+              <p className="text-xs text-slate-600 font-light">65 core traditional formulations and 110 total indigenous remedies funded.</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+              <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-700 grid place-items-center">
+                <Syringe className="h-5 w-5" />
+              </div>
+              <div className="font-mono text-3xl font-black text-slate-900">4</div>
+              <h4 className="font-serif font-bold text-base text-slate-900">Routine Vaccines</h4>
+              <p className="text-xs text-slate-600 font-light">Pentavalent, PCV, Seasonal Flu, and HPV shielding infants, youth, and elderly.</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+              <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 grid place-items-center">
+                <Building2 className="h-5 w-5" />
+              </div>
+              <div className="font-mono text-3xl font-black text-slate-900">100%</div>
+              <h4 className="font-serif font-bold text-base text-slate-900">Facility Coverage</h4>
+              <p className="text-xs text-slate-600 font-light">Every referral hospital, district hospital, and Primary Health Centre across all 20 Dzongkhags.</p>
+            </div>
+          </div>
+
+          {/* Spend Ribbon (Slide 8 Bottom Banner) */}
+          <div className="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-6 border border-emerald-500/20 shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 grid place-items-center shrink-0">
+                <Coins className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-300 font-bold block">
+                  Annual Procurement Financing
+                </span>
+                <div className="text-2xl sm:text-3xl font-mono font-black text-white">Nu. 557M / Year</div>
+                <p className="text-xs text-slate-300 font-light">Scaling to over Nu. 613M in FY 2025–26.</p>
+              </div>
+            </div>
+
+            <div className="h-10 w-px bg-slate-700 hidden sm:block" />
+
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 grid place-items-center shrink-0">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-amber-300 font-bold block">
+                  Cumulative Spend Since Inception
+                </span>
+                <div className="text-2xl sm:text-3xl font-mono font-black text-amber-300">Nu. 4.37 Billion</div>
+                <p className="text-xs text-slate-300 font-light">Total health disbursements from 2003–04 to 2025–26.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 1. Interactive Health Commodity Streams */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-tracker">
         <SectionEditBadge
@@ -241,6 +341,88 @@ export function OurWorkExperience({
             ))}
           </div>
         )}
+      </section>
+
+      {/* 2a. Constitutional & Royal Guarantee (Slide 9 Side-by-Side Quotes & Metric Tiles) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="sacred-mandate-quotes">
+        <SectionEditBadge
+          label="Sacred Mandate Quotes"
+          pageSlug={pageSlug}
+          sectionId="sacred-mandate-quotes"
+          studioHref="/admin/page-editor?slug=our-work"
+          initialData={{
+            title: "Guaranteed by Royal Vision and the Constitution",
+            subtitle: "Universal healthcare in Bhutan is anchored in the supreme law of the land and the compassion of our Monarchs.",
+            badge: "Sacred Constitutional Foundation",
+          }}
+        />
+        <div className="space-y-8">
+          {/* Side-by-Side Quotes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Quote 1: HM Fourth Druk Gyalpo */}
+            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
+                  <Quote className="h-5 w-5" />
+                </div>
+                <p className="font-serif text-base sm:text-lg text-slate-900 italic leading-relaxed">
+                  "The primary health services will be made available to all our citizens, and no citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines."
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <h4 className="font-serif font-bold text-sm text-slate-900">His Majesty the Fourth Druk Gyalpo</h4>
+                  <p className="text-xs text-amber-700 font-medium">Jigme Singye Wangchuck • Royal Charter 2000</p>
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">
+                  Royal Decree
+                </span>
+              </div>
+            </div>
+
+            {/* Quote 2: Constitution Article 9 */}
+            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <p className="font-serif text-base sm:text-lg text-slate-900 italic leading-relaxed">
+                  "The State shall provide free access to basic public health services in both modern and traditional medicines."
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <h4 className="font-serif font-bold text-sm text-slate-900">The Constitution of the Kingdom of Bhutan</h4>
+                  <p className="text-xs text-emerald-700 font-medium">Article 9, Section 21 • Principles of State Policy</p>
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900">
+                  Constitutional Law
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 3 Metric Tiles (Slide 9) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-2 text-center">
+              <div className="font-mono text-3xl sm:text-4xl font-black text-amber-600">0</div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Citizens Billed</h4>
+              <p className="text-xs text-slate-500 font-light">Zero out-of-pocket costs for essential medicines or routine vaccines at all public facilities.</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-2 text-center">
+              <div className="font-mono text-3xl sm:text-4xl font-black text-emerald-700">253 → 438</div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Essential & Traditional Medicines</h4>
+              <p className="text-xs text-slate-500 font-light">Expanded from 253 to 438 essential modern medicines plus 110 traditional medicinal formulations.</p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-2 text-center">
+              <div className="font-mono text-3xl sm:text-4xl font-black text-teal-700">90,167+</div>
+              <h4 className="font-serif text-sm font-bold text-slate-900">Citizens Protected Annually</h4>
+              <p className="text-xs text-slate-500 font-light">Babies, adolescent girls, elderly, and high-risk patients protected against vaccine-preventable diseases.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* 2b. Life-Cycle Immunization Protection Grid (Strategy Workshop Verified Data) */}
@@ -378,11 +560,11 @@ export function OurWorkExperience({
               <tbody className="divide-y divide-slate-100 font-sans">
                 {[
                   { rank: "1", name: "Losartan", desc: "Essential Antihypertensive therapy", cost: "Nu. 51,000,000" },
-                  { rank: "2", name: "Metformin", desc: "First-line Type-2 Diabetes oral glycemic management", cost: "Nu. 25,000,000" },
+                  { rank: "2", name: "Diabetes Metformin", desc: "First-line Type-2 Diabetes oral glycemic management", cost: "Nu. 25,000,000" },
                   { rank: "3", name: "Paracetamol", desc: "National essential analgesic & antipyretic", cost: "Nu. 17,000,000" },
                   { rank: "4", name: "Hydrochlorothiazide", desc: "Cardiovascular diuretic therapy", cost: "Nu. 14,000,000" },
                   { rank: "5", name: "Glipizide", desc: "Oral sulfonylurea antidiabetic therapy", cost: "Nu. 10,000,000" },
-                  { rank: "6", name: "Essential Vitamins & Immunosuppressants", desc: "Post-transplant immunosuppression & renal therapeutic vitamins", cost: "Nu. 9,000,000" },
+                  { rank: "6", name: "Immunosuppressant (Vitamin B & D)", desc: "Post-transplant immunosuppression & therapeutic vitamins", cost: "Nu. 9,000,000" },
                   { rank: "7", name: "Omeprazole", desc: "Proton-pump inhibitor for acid peptic disease", cost: "Nu. 9,000,000" },
                   { rank: "8", name: "Gastrointestinal Formulations", desc: "Therapeutic gastrointestinal protectants & buffers", cost: "Nu. 8,000,000" },
                   { rank: "9", name: "Cetirizine", desc: "Second-generation antihistamine", cost: "Nu. 8,000,000" },

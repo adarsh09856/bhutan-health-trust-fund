@@ -648,7 +648,7 @@ export function AdminDonationsPage() {
                     <img src={logo} alt="BHTF Crest" className="h-14 w-14 object-contain" />
                     <div>
                       <div className="text-xs font-black text-emerald-800">
-                        འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
+                        འབྲུག་གི་གསོ་བའི་བཅོལ་དངུལ།
                       </div>
                       <h2 className="text-lg font-black text-slate-900 tracking-tight">
                         Bhutan Health Trust Fund

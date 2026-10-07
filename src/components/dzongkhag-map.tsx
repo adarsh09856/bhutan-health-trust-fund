@@ -33,7 +33,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "thimphu",
     name: "Thimphu",
-    dzongkha: "ཐིམ་ཕུག",
+    dzongkha: "ཐིམ་ཕུག།",
     region: "Western",
     population: "138,700",
     bhuCount: 14,
@@ -49,7 +49,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "paro",
     name: "Paro",
-    dzongkha: "སྤ་རོ",
+    dzongkha: "སྤ་རོ།",
     region: "Western",
     population: "46,300",
     bhuCount: 12,
@@ -65,7 +65,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "haa",
     name: "Haa",
-    dzongkha: "ཧཱ",
+    dzongkha: "ཧཱ།",
     region: "Western",
     population: "14,800",
     bhuCount: 7,
@@ -81,7 +81,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "chhukha",
     name: "Chhukha",
-    dzongkha: "ཆུ་ཁ",
+    dzongkha: "ཆུ་ཁ།",
     region: "Western",
     population: "68,900",
     bhuCount: 16,
@@ -97,7 +97,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "samtse",
     name: "Samtse",
-    dzongkha: "བསམ་རྩེ",
+    dzongkha: "བསམ་རྩེ།",
     region: "Western",
     population: "62,500",
     bhuCount: 18,
@@ -115,7 +115,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "gasa",
     name: "Gasa",
-    dzongkha: "མགར་ས",
+    dzongkha: "མགར་ས།",
     region: "Central",
     population: "3,950",
     bhuCount: 5,
@@ -131,7 +131,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "punakha",
     name: "Punakha",
-    dzongkha: "སྤུ་ན་ཁ",
+    dzongkha: "སྤུ་ན་ཁ།",
     region: "Central",
     population: "28,700",
     bhuCount: 11,
@@ -147,7 +147,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "wangdue",
     name: "Wangdue Phodrang",
-    dzongkha: "དབང་འདུས་ཕོ་བྲང",
+    dzongkha: "དབང་འདུས་ཕོ་བྲང་།",
     region: "Central",
     population: "42,100",
     bhuCount: 15,
@@ -163,7 +163,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "trongsa",
     name: "Trongsa",
-    dzongkha: "ཀྲོང་གསར",
+    dzongkha: "ཀྲོང་གསར།",
     region: "Central",
     population: "19,900",
     bhuCount: 8,
@@ -179,7 +179,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "bumthang",
     name: "Bumthang",
-    dzongkha: "བུམ་ཐང",
+    dzongkha: "བུམ་ཐང་།",
     region: "Central",
     population: "17,800",
     bhuCount: 9,
@@ -195,7 +195,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "dagana",
     name: "Dagana",
-    dzongkha: "དར་དཀར་ན",
+    dzongkha: "དར་དཀར་ནང་།",
     region: "Central",
     population: "24,900",
     bhuCount: 12,
@@ -211,7 +211,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "tsirang",
     name: "Tsirang",
-    dzongkha: "རྩི་རང",
+    dzongkha: "རྩི་རང་།",
     region: "Central",
     population: "22,300",
     bhuCount: 10,
@@ -227,7 +227,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "sarpang",
     name: "Sarpang",
-    dzongkha: "གསར་སྤང",
+    dzongkha: "གསར་སྤང་།",
     region: "Central",
     population: "46,000",
     bhuCount: 14,
@@ -243,7 +243,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "zhemgang",
     name: "Zhemgang",
-    dzongkha: "གཞལ་སྒང",
+    dzongkha: "གཞལ་སྒང་།",
     region: "Central",
     population: "17,800",
     bhuCount: 14,
@@ -261,7 +261,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "mongar",
     name: "Mongar",
-    dzongkha: "མོང་སྒར",
+    dzongkha: "མོང་སྒར།",
     region: "Eastern",
     population: "37,100",
     bhuCount: 21,
@@ -277,7 +277,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "trashigang",
     name: "Trashigang",
-    dzongkha: "བཀྲ་ཤིས་སྒང",
+    dzongkha: "བཀྲ་ཤིས་སྒང་།",
     region: "Eastern",
     population: "45,800",
     bhuCount: 20,
@@ -293,7 +293,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "trashiyangtse",
     name: "Trashiyangtse",
-    dzongkha: "བཀྲ་ཤིས་གཡང་རྩེ",
+    dzongkha: "བཀྲ་ཤིས་གཡང་རྩེ།",
     region: "Eastern",
     population: "17,300",
     bhuCount: 9,
@@ -309,7 +309,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "lhuentse",
     name: "Lhuentse",
-    dzongkha: "ལྷུན་རྩེ",
+    dzongkha: "ལྷུན་རྩེ།",
     region: "Eastern",
     population: "14,400",
     bhuCount: 11,
@@ -325,7 +325,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "pemagatshel",
     name: "Pema Gatshel",
-    dzongkha: "པདྨ་དགའ་ཚལ",
+    dzongkha: "པདྨ་དགའ་ཚལ།",
     region: "Eastern",
     population: "23,600",
     bhuCount: 13,
@@ -341,7 +341,7 @@ const dzongkhags: DzongkhagData[] = [
   {
     id: "samdrupjongkhar",
     name: "Samdrup Jongkhar",
-    dzongkha: "བསམ་གྲུབ་ལྗོངས་མཁར",
+    dzongkha: "བསམ་གྲུབ་ལྗོངས་མཁར།",
     region: "Eastern",
     population: "35,100",
     bhuCount: 14,

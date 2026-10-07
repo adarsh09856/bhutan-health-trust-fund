@@ -20,6 +20,7 @@ import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
+import { PortfolioAllocationCharts } from "@/components/portfolio-allocation-chart";
 
 export const Route = createFileRoute("/about/committees")({
   loader: async () => {
@@ -358,10 +359,13 @@ function CommitteesPage() {
               </table>
             </div>
 
-            {/* Visual 70/20/10 Ratio Bar (Workshop Slide 11 Chart 3) */}
+            {/* Interactive Visual Portfolio Allocation & Spending Donut Charts */}
+            <PortfolioAllocationCharts />
+
+            {/* Visual 70/20/10 Ratio Bar */}
             <div className="pt-2">
               <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-700 mb-2">
-                <span>Statutory 70 / 20 / 10 Spending Allocation (Slide 11 • Chart 3)</span>
+                <span>Statutory 70 / 20 / 10 Spending Allocation Policy</span>
                 <span className="text-emerald-800">100% Ring-Fenced Endowment Yield</span>
               </div>
               <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex shadow-inner border border-slate-200">

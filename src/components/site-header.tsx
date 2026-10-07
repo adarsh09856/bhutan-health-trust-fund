@@ -108,7 +108,7 @@ export function SiteHeader() {
           </div>
           <div className="flex flex-col">
             <span className="text-[9px] sm:text-[11px] font-bold text-emerald-800 tracking-wider flex items-center gap-1 font-sans">
-              ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ། །།
+              ༄༅། །འབྲུག་གི་གསོ་བའི་བཅོལ་དངུལ། །།
             </span>
             <span className="font-serif text-xs sm:text-base md:text-lg font-bold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-900 transition truncate max-w-[125px] xs:max-w-[210px] sm:max-w-none">
               Bhutan Health Trust Fund

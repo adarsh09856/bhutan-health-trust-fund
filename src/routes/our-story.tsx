@@ -26,6 +26,7 @@ import historyKing from "@/assets/reference/history_fourth_king.webp";
 import historyCharter from "@/assets/reference/history_charter_1992.webp";
 import historyMou from "@/assets/reference/history_mou.webp";
 import historyEndowment from "@/assets/reference/history_endowment.webp";
+import { FundGrowthTimeline } from "@/components/fund-growth-timeline";
 
 export const Route = createFileRoute("/our-story")({
   loader: async () => {
@@ -271,6 +272,17 @@ function OurStoryPage() {
         </div>
       </section>
 
+      {/* 2b. Growth of the Fund Progression Timeline (National Strategy Record) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="fund-growth-timeline">
+        <SectionEditBadge
+          label="Growth of the Fund"
+          pageSlug="our-story"
+          sectionId="fund-growth-timeline"
+          studioHref="/admin/metrics"
+        />
+        <FundGrowthTimeline />
+      </section>
+
       {/* 3. Official Historical Milestones (1998 - 2026) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="milestones-timeline">
         <SectionEditBadge
@@ -298,25 +310,45 @@ function OurStoryPage() {
 
         <div className="relative border-l-2 border-emerald-400/60 ml-4 sm:ml-36 space-y-8 sm:space-y-10">
           {milestonesToRender.map((m, idx) => (
-            <div key={idx} className="relative pl-6 sm:pl-10 group">
-              {/* Year badge on left */}
-              <div className="hidden sm:block absolute -left-36 top-1 text-right w-28 font-mono text-xs font-black text-emerald-800 uppercase tracking-wide">
-                {m.year}
-              </div>
+            <div key={idx}>
+              {/* Era 1 Badge */}
+              {idx === 0 && (
+                <div className="relative pl-6 sm:pl-10 -ml-1 sm:-ml-4 mb-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950 text-amber-300 border border-emerald-700/60 text-xs font-mono font-bold shadow-xs">
+                    <span>Era 1: 1998–2006 · Foundational Years</span>
+                  </div>
+                </div>
+              )}
 
-              {/* Node Indicator Dot */}
-              <div className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-emerald-600 border-4 border-white shadow-md group-hover:scale-125 transition-transform" />
+              {/* Era 2 Badge */}
+              {m.year.includes("2014") && (
+                <div className="relative pl-6 sm:pl-10 -ml-1 sm:-ml-4 my-8">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-emerald-400 border border-slate-700 text-xs font-mono font-bold shadow-xs">
+                    <span>Era 2: 2014–2026 · Scaling to National Coverage</span>
+                  </div>
+                </div>
+              )}
 
-              <div className="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-xs hover:shadow-lg hover:border-emerald-300 transition duration-200 space-y-2">
-                <span className="sm:hidden inline-block text-xs font-black text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-md mb-1 font-mono">
+              <div className="relative pl-6 sm:pl-10 group">
+                {/* Year badge on left */}
+                <div className="hidden sm:block absolute -left-36 top-1 text-right w-28 font-mono text-xs font-black text-emerald-800 uppercase tracking-wide">
                   {m.year}
-                </span>
-                <h3 className="font-serif font-bold text-base sm:text-lg text-slate-900">
-                  {m.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
-                  {m.desc}
-                </p>
+                </div>
+
+                {/* Node Indicator Dot */}
+                <div className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-emerald-600 border-4 border-white shadow-md group-hover:scale-125 transition-transform" />
+
+                <div className="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-xs hover:shadow-lg hover:border-emerald-300 transition duration-200 space-y-2">
+                  <span className="sm:hidden inline-block text-xs font-black text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-md mb-1 font-mono">
+                    {m.year}
+                  </span>
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-slate-900">
+                    {m.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+                    {m.desc}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

@@ -29,7 +29,7 @@ const commodityCategories: CommodityCategory[] = [
   {
     id: "vaccines",
     name: "Universal Vaccines",
-    dzongkha: "སྔོན་ཁབ་འཐོབ་ཐངས",
+    dzongkha: "འགོག་ཁབ་འཐོབ་ཐངས།",
     icon: Syringe,
     annualBudgetNu: "Nu. 68.5M / Year",
     reach: "100% of infants & mothers",
@@ -55,7 +55,7 @@ const commodityCategories: CommodityCategory[] = [
   {
     id: "medicines",
     name: "438 Essential & 110 Traditional Medicines",
-    dzongkha: "མཁོ་ཆེའི་སྨན་རིགས",
+    dzongkha: "མཁོ་ཆེའི་སྨན་རིགས།",
     icon: Pill,
     annualBudgetNu: "Nu. 145.0M / Year",
     reach: "780,000+ Citizens",
@@ -81,7 +81,7 @@ const commodityCategories: CommodityCategory[] = [
   {
     id: "cold-chain",
     name: "High-Altitude Cold Chain",
-    dzongkha: "བསིལ་མཛོད་རྒྱུན་སྐྱོང",
+    dzongkha: "བསིལ་མཛོད་རྒྱུན་སྐྱོང་།",
     icon: ThermometerSnowflake,
     annualBudgetNu: "Nu. 24.2M / Year",
     reach: "20 Dzongkhags (Including Lunana & Laya)",
@@ -106,7 +106,7 @@ const commodityCategories: CommodityCategory[] = [
   {
     id: "diagnostics",
     name: "Laboratory Reagents",
-    dzongkha: "བརྟག་དཔྱད་སྨན་རྫས",
+    dzongkha: "བརྟག་དཔྱད་སྨན་རྫས།",
     icon: Microscope,
     annualBudgetNu: "Nu. 38.0M / Year",
     reach: "186 Primary Laboratories",
@@ -130,7 +130,7 @@ const commodityCategories: CommodityCategory[] = [
   {
     id: "maternal",
     name: "Safe Motherhood Kits",
-    dzongkha: "ཨམ་སྲུའི་འཕྲོད་བསྟེན",
+    dzongkha: "ཨམ་སྲུའི་འཕྲོད་བསྟེན།",
     icon: HeartPulse,
     annualBudgetNu: "Nu. 18.5M / Year",
     reach: "100% of Expectant Mothers",
@@ -154,7 +154,7 @@ const commodityCategories: CommodityCategory[] = [
   {
     id: "blood-safety",
     name: "Blood Safety Reagents",
-    dzongkha: "ཁྲག་གི་ཉེན་སྲུང་",
+    dzongkha: "ཁྲག་གི་ཉེན་སྲུང་།",
     icon: Droplets,
     annualBudgetNu: "Nu. 12.0M / Year",
     reach: "All Regional Transfusion Centers",

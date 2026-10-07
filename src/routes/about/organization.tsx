@@ -22,6 +22,8 @@ import {
   Share2,
   Coins,
   ArrowUpRight,
+  Users,
+  Sparkles,
 } from "lucide-react";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
@@ -203,7 +205,7 @@ function AboutOrganizationPage() {
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-800 border border-amber-300 grid place-items-center font-serif text-lg font-bold">
-                  ༄
+                  ༄༅།
                 </div>
                 <div>
                   <h3 className="font-serif text-base font-bold text-slate-900">Royal Charter Mandate</h3>
@@ -314,6 +316,66 @@ function AboutOrganizationPage() {
         </div>
       </section>
 
+      {/* 2a. Three Strategic Objectives (Slide 4) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-objectives">
+        <SectionEditBadge
+          label="Three Strategic Objectives"
+          pageSlug="about-organization"
+          sectionId="org-objectives"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "Three Strategic Objectives",
+            subtitle: "Guiding every investment decision and health commodity disbursement since the founding Royal Charter.",
+            badge: "Strategic Objectives • Slide 4",
+          }}
+        />
+        <div className="space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+              Core Strategic Mandate
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+              Three Strategic Objectives
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-light">
+              Guiding every investment decision and health commodity disbursement since the founding Royal Charter.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-3xl border border-slate-200 p-7 shadow-xs hover:border-emerald-300 hover:shadow-md transition space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center font-mono font-bold text-base">
+                01
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Sustain Primary Health Care</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Guarantee uninterrupted, sustainable financing for primary healthcare services, childhood vaccines, and essential medicines for every citizen across Bhutan.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200 p-7 shadow-xs hover:border-amber-300 hover:shadow-md transition space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-800 grid place-items-center font-mono font-bold text-base">
+                02
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Eliminate Financing Uncertainty</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Protect national healthcare delivery from fluctuations in government revenue, global economic volatility, and external donor transition cycles.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200 p-7 shadow-xs hover:border-teal-300 hover:shadow-md transition space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-teal-50 text-teal-800 grid place-items-center font-mono font-bold text-base">
+                03
+              </div>
+              <h3 className="font-serif text-xl font-bold text-slate-900">Build National Self-Reliance</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-light">
+                Institutionalize a durable domestic financing architecture through endowment growth, the 1% Health Contribution, and sovereign matching grants.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2b. The Financial Architecture: Two Income Streams (Strategy Workshop Slide 10 & 14) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-financial-architecture">
         <SectionEditBadge
@@ -389,6 +451,80 @@ function AboutOrganizationPage() {
               </div>
               <p className="text-xs text-slate-200 font-light">
                 Global essential medicine prices escalate at <strong className="text-amber-300 font-mono">11% annually</strong> against an average <strong className="text-emerald-300 font-mono">7.7% investment return</strong>. The National Sustainable Health Financing Strategy roadmap is expanding the endowment from Nu. 4.3B to <strong className="text-white font-mono font-bold">Nu. 8.6 Billion</strong> to safeguard self-reliance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2c. Built to Last: 4 Institutional Foundations (Slide 10) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-institutional-foundations">
+        <SectionEditBadge
+          label="Institutional Foundations"
+          pageSlug="about-organization"
+          sectionId="org-institutional-foundations"
+          studioHref="/admin/settings"
+          initialData={{
+            title: "Built to Last: Four Institutional Foundations",
+            subtitle: "A ring-fenced sovereign framework ensuring permanent capital preservation, fiduciary independence, and statutory transparency.",
+            badge: "Fiduciary Architecture • Slide 10",
+          }}
+        />
+        <div className="space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+              Fiduciary Architecture • Slide 10
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+              Built to Last: Four Institutional Foundations
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-light">
+              A ring-fenced sovereign framework ensuring permanent capital preservation, fiduciary independence, and statutory transparency.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:border-amber-300 transition space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800">Foundation 1</span>
+              <h3 className="font-serif text-base font-bold text-slate-900">Royal Charter 2000</h3>
+              <p className="text-xs text-slate-600 font-light leading-relaxed">
+                Enacted by His Majesty the Fourth Druk Gyalpo on 3 August 2000, establishing statutory autonomy, 1:1 RGOB matching, and capital ring-fencing.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
+                <Lock className="h-5 w-5" />
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800">Foundation 2</span>
+              <h3 className="font-serif text-base font-bold text-slate-900">Endowment Model</h3>
+              <p className="text-xs text-slate-600 font-light leading-relaxed">
+                Permanent capital preservation: the Nu. 4.8B principal corpus is ring-fenced and can never be spent; only investment returns fund healthcare.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:border-blue-300 transition space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-800 grid place-items-center">
+                <Users className="h-5 w-5" />
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-blue-800">Foundation 3</span>
+              <h3 className="font-serif text-base font-bold text-slate-900">Independent Governance</h3>
+              <p className="text-xs text-slate-600 font-light leading-relaxed">
+                Apex 7-member Board of Trustees chaired by Lyonpo, Asset Management Committee (AMC), and annual statutory audits by the Royal Audit Authority (RAA).
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs hover:border-teal-300 transition space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-800 grid place-items-center">
+                <TrendingUp className="h-5 w-5" />
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800">Foundation 4</span>
+              <h3 className="font-serif text-base font-bold text-slate-900">Investment Mandate</h3>
+              <p className="text-xs text-slate-600 font-light leading-relaxed">
+                Guided by the Investment Policy Statement (IPS), diversified across domestic bonds, bank deposits, and secure offshore holdings via ADB.
               </p>
             </div>
           </div>
@@ -556,6 +692,162 @@ function AboutOrganizationPage() {
                 Enhance monitoring and reporting of BHTF-funded medicines and vaccines through quarterly reports and dedicated vaccine wastage studies.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 12: Why BHTF Must Be Part of the National Strategy (Slide 16 / Screenshot 13) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="why-bhtf-strategy">
+        <SectionEditBadge
+          label="Why BHTF in National Strategy"
+          pageSlug="about-organization"
+          sectionId="why-bhtf-strategy"
+          studioHref="/admin/page-editor?slug=about-organization"
+          initialData={{
+            title: "Why BHTF Must Be Part of the Strategy",
+            subtitle: "Bridging the gap between 11% pharmaceutical inflation and 7.7% returns through sovereign endowment expansion.",
+            badge: "Strategic Imperative",
+          }}
+        />
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+            Strategic Imperative
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            Why BHTF Must Be Part of the Strategy
+          </h2>
+          <p className="text-slate-600 text-sm font-light">
+            Sustaining universal free healthcare requires a resilient sovereign endowment that outpaces pharmaceutical inflation.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-amber-300 transition space-y-3">
+            <div className="h-10 w-10 rounded-xl bg-rose-50 text-rose-700 grid place-items-center">
+              <TrendingUp className="h-5 w-5" />
+            </div>
+            <h4 className="font-serif font-bold text-base text-slate-900">11% Inflation vs 7.7% Returns</h4>
+            <p className="text-xs text-slate-600 font-light leading-relaxed">
+              Global essential medicine prices escalate at 11% annually against an average 7.7% investment yield. Without scaling the capital corpus, the financing gap will widen each year.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-3">
+            <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
+              <Landmark className="h-5 w-5" />
+            </div>
+            <h4 className="font-serif font-bold text-base text-slate-900">1:1 Sovereign RGOB Matching</h4>
+            <p className="text-xs text-slate-600 font-light leading-relaxed">
+              Enacted under the Royal Charter 2000, the Royal Government matches every Ngultrum contributed by the public and corporate donors, doubling the impact of every contribution.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-blue-300 transition space-y-3">
+            <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-700 grid place-items-center">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <h4 className="font-serif font-bold text-base text-slate-900">Donor Transition Buffer</h4>
+            <p className="text-xs text-slate-600 font-light leading-relaxed">
+              As Bhutan transitions from external health assistance programs (GAVI, Global Fund), BHTF serves as the sole permanent domestic financing shield protecting essential health services.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-teal-300 transition space-y-3">
+            <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 grid place-items-center">
+              <Scale className="h-5 w-5" />
+            </div>
+            <h4 className="font-serif font-bold text-base text-slate-900">Constitutional Mandate Fulfillment</h4>
+            <p className="text-xs text-slate-600 font-light leading-relaxed">
+              Directly delivers on Article 9, Section 21 of the Constitution of the Kingdom of Bhutan, ensuring free access to basic healthcare in both modern and traditional medicine.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-amber-300 transition space-y-3 lg:col-span-2">
+            <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 grid place-items-center">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <h4 className="font-serif font-bold text-base text-slate-900">Generational Health Sovereignty</h4>
+            <p className="text-xs text-slate-600 font-light leading-relaxed">
+              By expanding the capital endowment to roughly Nu. 8.6 Billion by 2030, Bhutan secures perpetual health self-reliance, ensuring no future generation ever faces healthcare rationing or catastrophic medical debt.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 13: BHTF's Role in the National Strategy (Slide 17 / Screenshot 14) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="role-national-strategy">
+        <SectionEditBadge
+          label="BHTF Role in National Strategy"
+          pageSlug="about-organization"
+          sectionId="role-national-strategy"
+          studioHref="/admin/page-editor?slug=about-organization"
+          initialData={{
+            title: "BHTF's Role in the National Strategy",
+            subtitle: "Three strategic asks to anchor sustainable health financing across Bhutan.",
+            badge: "National Strategic Asks",
+          }}
+        />
+        <div className="bg-gradient-to-br from-emerald-950 via-[#0B251F] to-slate-950 rounded-3xl p-6 sm:p-12 text-white shadow-xl border border-emerald-500/20 space-y-8">
+          <div className="space-y-3 text-center max-w-3xl mx-auto">
+            <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
+              National Strategic Asks
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-white">
+              BHTF's Role in the National Strategy
+            </h2>
+            <p className="text-slate-300 text-xs sm:text-sm font-light">
+              Three critical pillars to achieve lasting health security under the National Sustainable Health Financing Strategy.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-amber-400/20 text-amber-300 font-mono font-bold text-sm grid place-items-center">
+                01
+              </div>
+              <h3 className="font-serif text-lg font-bold text-white">Double the Capital Corpus</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Expand the fund from Nu. 4.3B baseline to roughly <strong className="text-amber-300 font-mono">Nu. 8.6 Billion</strong> by 2030 through RGOB matching, corporate partnerships, and diaspora mobilization.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-emerald-400/20 text-emerald-300 font-mono font-bold text-sm grid place-items-center">
+                02
+              </div>
+              <h3 className="font-serif text-lg font-bold text-white">Strengthen Health Contribution</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Optimize the national 1% Health Contribution collections, ensuring 100% direct procurement pass-through to absorb growing clinical demands.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-teal-400/20 text-teal-300 font-mono font-bold text-sm grid place-items-center">
+                03
+              </div>
+              <h3 className="font-serif text-lg font-bold text-white">Prudent Portfolio Diversification</h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                Broaden investment horizons into regulated international instruments via multilateral partners (ADB) to optimize yield and mitigate domestic liquidity constraints.
+              </p>
+            </div>
+          </div>
+
+          {/* Shared Goal Banner */}
+          <div className="p-5 rounded-2xl bg-white/10 border border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">
+                The Shared National Goal
+              </span>
+              <p className="text-sm font-medium text-white mt-0.5">
+                A self-reliant, sustainable healthcare financing ecosystem guaranteeing free primary health care for every Bhutanese citizen in perpetuity.
+              </p>
+            </div>
+            <Link
+              to="/get-involved"
+              className="px-6 py-2.5 rounded-full bg-amber-400 text-slate-950 font-bold text-xs hover:bg-amber-300 transition shrink-0"
+            >
+              Support the Strategy →
+            </Link>
           </div>
         </div>
       </section>

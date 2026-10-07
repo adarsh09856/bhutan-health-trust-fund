@@ -77,7 +77,7 @@ export function SiteFooter() {
             </div>
             <div>
               <span className="text-[10px] text-[#00A896] font-semibold tracking-wider block font-sans">
-                འབྲུག་གི་འཕྲོད་བསྟེན་མ་དངུལ།
+                འབྲུག་གི་གསོ་བའི་བཅོལ་དངུལ།
               </span>
               <h3 className="font-serif text-base font-bold text-[#0B4F42]">Bhutan Health Trust Fund</h3>
             </div>
