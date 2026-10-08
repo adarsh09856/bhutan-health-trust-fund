@@ -31,6 +31,7 @@ import {
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
 import { DisbursementChart } from "@/components/disbursement-chart";
+import { PortfolioAllocationCharts } from "@/components/portfolio-allocation-chart";
 
 export const Route = createFileRoute("/our-work")({
   loader: async () => {
@@ -164,7 +165,7 @@ export function OurWorkExperience({
           studioHref="/admin/page-editor?slug=our-work"
           initialData={{
             title: "The Impact: What BHTF Delivers Today",
-            subtitle: "Unbroken sovereign financing securing 100% of essential medicines, traditional therapies, and life-cycle vaccines nationwide.",
+            subtitle: "No Bhutanese citizen has ever been billed for an essential medicine or vaccine.",
             badge: "Nationwide Coverage & Impact",
           }}
         />
@@ -176,8 +177,8 @@ export function OurWorkExperience({
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
               The Impact: What BHTF Delivers Today
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-light">
-              Direct sovereign financing ensuring no hospital or patient faces stockouts.
+            <p className="text-sm sm:text-base text-slate-700 font-medium">
+              No Bhutanese citizen has ever been billed for an essential medicine or vaccine.
             </p>
           </div>
 
@@ -366,7 +367,7 @@ export function OurWorkExperience({
                   <Quote className="h-5 w-5" />
                 </div>
                 <p className="font-serif text-base sm:text-lg text-slate-900 italic leading-relaxed">
-                  "The primary health services will be made available to all our citizens, and no citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines."
+                  "No Bhutanese should ever have to choose between their health and their livelihood."
                 </p>
               </div>
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
@@ -585,6 +586,112 @@ export function OurWorkExperience({
           <div className="pt-8 border-t border-slate-100">
             <DisbursementChart />
           </div>
+        </div>
+      </section>
+
+      {/* How the Fund is Financed: Two Income Streams & Asset Allocation (Slide 11 & 12 / Screenshots 9 & 10) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="fund-financing-structure">
+        <SectionEditBadge
+          label="How the Fund is Financed"
+          pageSlug={pageSlug}
+          sectionId="fund-financing-structure"
+          studioHref="/admin/reports"
+          initialData={{
+            title: "How the Fund is Financed: Two Income Streams",
+            subtitle: "Bridging the Nu. 240M annual financing gap between investment returns and statutory procurement obligations.",
+            badge: "Sustainable Health Financing",
+          }}
+        />
+        <div className="space-y-10">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+              Sustainable Health Financing Structure
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+              How the Fund is Financed
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-light">
+              Dual sovereign income channels powering lifelong medicine and vaccine security across Bhutan.
+            </p>
+          </div>
+
+          {/* Two Income Streams + Financing Gap Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Stream 1 */}
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
+                    <TrendingUp className="h-5 w-5" />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900">
+                    Stream 1
+                  </span>
+                </div>
+                <div>
+                  <div className="font-mono text-2xl sm:text-3xl font-black text-slate-900">Nu. 318M</div>
+                  <h4 className="font-serif font-bold text-base text-slate-900 mt-1">Investment Returns</h4>
+                </div>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  Average annual return generated by the endowment corpus across onshore domestic term deposits, bonds, and offshore ADB global market investments.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500">
+                Primary perpetual capital yield
+              </div>
+            </div>
+
+            {/* Stream 2 */}
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
+                    <Scale className="h-5 w-5" />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">
+                    Stream 2
+                  </span>
+                </div>
+                <div>
+                  <div className="font-mono text-2xl sm:text-3xl font-black text-slate-900">~Nu. 450M</div>
+                  <h4 className="font-serif font-bold text-base text-slate-900 mt-1">Health Contribution</h4>
+                </div>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  1% statutory monthly payroll deduction from the gross salaries of all civil servants and formally employed citizens nationwide.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500">
+                Solidarity payroll contribution
+              </div>
+            </div>
+
+            {/* Financing Gap & RGOB Multiplier */}
+            <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-md flex flex-col justify-between space-y-4 border border-slate-800">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="h-10 w-10 rounded-xl bg-amber-400/20 text-amber-300 grid place-items-center">
+                    <Coins className="h-5 w-5" />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300">
+                    Fiscal Reality
+                  </span>
+                </div>
+                <div>
+                  <div className="font-mono text-2xl sm:text-3xl font-black text-amber-400">~Nu. 240M</div>
+                  <h4 className="font-serif font-bold text-base text-white mt-1">Annual Financing Gap</h4>
+                </div>
+                <p className="text-xs text-slate-300 font-light leading-relaxed">
+                  Rising procurement needs (Nu. 557M+ scaling to Nu. 613M in 2025–26) exceed current investment returns (Nu. 318M), bridged by Health Contributions and RGOB matching.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-800 text-[11px] font-medium text-emerald-400">
+                1:1 Sovereign RGOB matching guarantee
+              </div>
+            </div>
+          </div>
+
+          {/* Slide 12 Donut Charts (Portfolio Allocation & Spending Policy) */}
+          <PortfolioAllocationCharts />
         </div>
       </section>
 

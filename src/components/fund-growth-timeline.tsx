@@ -35,8 +35,8 @@ const fundMilestones: FundStep[] = [
   },
   {
     year: "June 2026",
-    title: "Nu. 4.7B – 4.8B",
-    desc: "Current audited fund size (Nu. 4,798,965,306.85), marking 26 years of service.",
+    title: "Nu. 4.7 billion",
+    desc: "Audited fund size (Nu. 4.798B), marking 26 years of unbroken sovereign service.",
     icon: Wallet,
     highlight: true,
   },
