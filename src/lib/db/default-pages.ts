@@ -687,7 +687,7 @@ export const defaultCorePages: DefaultPageDef[] = [
         order: 1,
         isVisible: true,
         title: "Contribution Verification & Tax Vouchers",
-        subtitle: "Audit your transaction reference, verify the 1:1 sovereign match, and download your sealed DRC 100% tax exemption certificate.",
+        subtitle: "Audit your transaction reference, verify the 1:1 sovereign match, and download your sealed DRC tax exemption certificate (Reg. E-73).",
         dzongkhaText: "ཞལ་འདེབས་བདེན་དཔྱད་དང་ ཁྲལ་ཡང་སྙན་ཞུ།",
         badge: "Department of Revenue & Customs Compliant",
         bgVariant: "dark",
@@ -718,7 +718,7 @@ export const defaultCorePages: DefaultPageDef[] = [
   {
     slug: "donate",
     title: "Donate to BHTF — 1:1 RGOB Sovereign Matched Healthcare Endowment",
-    metaDescription: "Make an official contribution to Bhutan Health Trust Fund. 1:1 RGOB Golden Match, DRC 100% tax exemption.",
+    metaDescription: "Make an official contribution to Bhutan Health Trust Fund. 1:1 RGOB Golden Match, DRC tax exemption (Reg. E-73).",
     isSystemPage: true,
     sections: [
       {

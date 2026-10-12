@@ -52,7 +52,7 @@ export const Route = createFileRoute("/track-donation")({
       {
         name: "description",
         content:
-          "Track your healthcare contribution, verify 1:1 RGOB Royal Matching, and generate your Department of Revenue & Customs 100% Tax Exemption Certificate.",
+          "Track your healthcare contribution, verify 1:1 RGOB Royal Matching, and generate your Department of Revenue & Customs Tax Exemption Certificate (Reg. E-73).",
       },
     ],
   }),
@@ -199,7 +199,7 @@ export function TrackDonationPage() {
         <PageHero
           badge="SOVEREIGN HEALTH REPOSITORY"
           title="Track Donation & DRC Tax Certificate"
-          subtitle="Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC 100% Tax Exemption Certificate"
+          subtitle="Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC Tax Exemption Certificate (Reg. E-73)"
         />
       </div>
 
@@ -220,7 +220,7 @@ export function TrackDonationPage() {
             studioHref="/admin/donations"
             initialData={{
               title: "Track Donation & DRC Tax Certificate",
-              subtitle: "Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC 100% Tax Exemption Certificate",
+              subtitle: "Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC Tax Exemption Certificate (Reg. E-73)",
               badge: "SOVEREIGN HEALTH REPOSITORY",
             }}
           />
@@ -449,9 +449,10 @@ export function TrackDonationPage() {
               <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-900 text-xs flex items-start gap-3">
                 <Sparkles className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="leading-relaxed">
-                  <strong className="font-bold">DRC 100% Tax Exemption Clause:</strong> Under
-                  Section 10(b) of the Income Tax Act of the Kingdom of Bhutan, direct contributions
-                  to the Bhutan Health Trust Fund are fully deductible from gross taxable income.
+                  <strong className="font-bold">DRC Tax Deductibility Clause:</strong> Under
+                  DRC Tax Exemption Registration No. E-73 and Circular DRC/TAX-A&L/DO-16/399, contributions
+                  to the Bhutan Health Trust Fund are tax-deductible up to 5% of Assessed Net Profit (BIT/CIT)
+                  or up to 5% of Assessed Adjusted Gross Income (PIT).
                   Click &quot;Print DRC Tax Certificate&quot; to obtain the official stamped
                   documentation.
                 </div>
@@ -573,7 +574,7 @@ export function TrackDonationPage() {
                           Public Healthcare Contribution Remittance
                         </span>
                         <p className="text-[10px] text-slate-500">
-                          100% Tax Deductible against DRC Assessment
+                          Tax Deductible under DRC Reg. No. E-73
                         </p>
                       </td>
                       <td className="p-3 text-right font-mono font-bold text-slate-900">

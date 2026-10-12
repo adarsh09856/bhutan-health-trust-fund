@@ -426,7 +426,7 @@ export async function ensureDatabaseSchema() {
     await client.query(`
       INSERT INTO site_settings (setting_key, setting_value, category, description)
       VALUES
-        ('site_title', 'Bhutan Health Trust Fund | འབྲུག་གི་གསོ་བའི་བཅོལ་དངུལ།', 'general', 'Official institutional website title in English and Dzongkha'),
+        ('site_title', 'Bhutan Health Trust Fund | འབྲུག་གི་གསོ་བའི་དད་རྟེན་མ་དངུལ།', 'general', 'Official institutional website title in English and Dzongkha'),
         ('site_tagline', 'Universal Primary Healthcare in Perpetuity for All Citizens of Bhutan', 'general', 'Institutional motto and sovereign health mandate tagline'),
         ('founding_year', '1998', 'general', 'Royal Charter establishment year by His Majesty the Fourth Druk Gyalpo'),
         ('emergency_hotline', '112', 'general', 'National emergency health helpline number'),

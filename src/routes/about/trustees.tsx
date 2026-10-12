@@ -214,7 +214,7 @@ function TrusteesPage() {
             to="/about/organization"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
-            Our Organization
+            Our Organization & Organogram
           </Link>
           <Link
             to="/about/trustees"
@@ -232,7 +232,7 @@ function TrusteesPage() {
             to="/about/secretariat"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
-            Secretariat & Organogram
+            Secretariat & Staff
           </Link>
           <Link
             to="/our-story"

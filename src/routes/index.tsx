@@ -875,18 +875,18 @@ function Index() {
             sectionId="tax-matching"
             studioHref="/admin/donations"
             initialData={{
-              title: "1:1 Sovereign Match & Permanent DRC Tax Exemption",
-              subtitle: "Section 10(f) Income Tax Act • 100% Tax Deductible with Dollar-for-Dollar Sovereign Match",
+              title: "1:1 Sovereign Match & DRC Tax Deductibility",
+              subtitle: "DRC Reg. No. E-73 • Tax Deductible with Dollar-for-Dollar Sovereign Match",
               badge: "Royal Decree & Fiscal Law",
               primaryCtaText: "Contribute to Corpus (1:1 Matched)",
               primaryCtaUrl: "/donate",
             }}
           />
           <TwoColumnNarrativeLayout
-            sectionTitle="1:1 Sovereign Match & Permanent DRC Tax Exemption"
-            referenceCode="DRC Income Tax Act Section 10(f) • Royal Decree"
+            sectionTitle="1:1 Sovereign Match & DRC Tax Deductibility"
+            referenceCode="DRC Reg. No. E-73 • Circular DRC/TAX-A&L/DO-16/399"
             paragraphs={[
-              "Under Royal Decree and Section 10(f) of the Department of Revenue & Customs (DRC) Income Tax Act of the Kingdom of Bhutan, all individual, philanthropic, and corporate contributions to the Bhutan Health Trust Fund are 100% tax-deductible.",
+              "All contributions made by the nationals of Bhutan to the BHTF are tax deductible under Tax Exemption Registration No. E-73 of the Department of Revenue & Customs (DRC), Ministry of Finance. As per DRC Circular Ref. No. DRC/TAX-A&L/DO-16/399 (12 February 2025), donations are tax-exempt up to 5% of Assessed Net Profit for BIT/CIT payers, and up to 5% of Assessed Adjusted Gross Income for PIT payers.",
               "Furthermore, the Royal Government of Bhutan commits a permanent dollar-for-dollar (1:1) sovereign match to every citizen and institutional Ngultrum contributed, instantly doubling the enduring health financing capacity of every contribution.",
             ]}
             actionLink={{
@@ -1134,18 +1134,18 @@ function Index() {
           sectionId="tax-matching"
           studioHref="/admin/donations"
           initialData={{
-            title: "1:1 Sovereign Match & Permanent DRC Tax Exemption",
-            subtitle: "Section 10(f) Income Tax Act • 100% Tax Deductible with Dollar-for-Dollar Sovereign Match",
+            title: "1:1 Sovereign Match & DRC Tax Deductibility",
+            subtitle: "DRC Reg. No. E-73 • Tax Deductible with Dollar-for-Dollar Sovereign Match",
             badge: "Royal Decree & Fiscal Law",
             primaryCtaText: "Contribute to Corpus (1:1 Matched)",
             primaryCtaUrl: "/donate",
           }}
         />
         <TwoColumnNarrativeLayout
-          sectionTitle="1:1 Sovereign Match & Permanent DRC Tax Exemption"
-          referenceCode="DRC Income Tax Act Section 10(f) • Royal Decree"
+          sectionTitle="1:1 Sovereign Match & DRC Tax Deductibility"
+          referenceCode="DRC Reg. No. E-73 • Circular DRC/TAX-A&L/DO-16/399"
           paragraphs={[
-            "Under Royal Decree and Section 10(f) of the Department of Revenue & Customs (DRC) Income Tax Act of the Kingdom of Bhutan, all individual, philanthropic, and corporate contributions to the Bhutan Health Trust Fund are 100% tax-deductible.",
+            "All contributions made by the nationals of Bhutan to the BHTF are tax deductible under Tax Exemption Registration No. E-73 of the Department of Revenue & Customs (DRC), Ministry of Finance. As per DRC Circular Ref. No. DRC/TAX-A&L/DO-16/399 (12 February 2025), donations are tax-exempt up to 5% of Assessed Net Profit for BIT/CIT payers, and up to 5% of Assessed Adjusted Gross Income for PIT payers.",
             "Furthermore, the Royal Government of Bhutan commits a permanent dollar-for-dollar (1:1) sovereign match to every citizen and institutional Ngultrum contributed, instantly doubling the enduring health financing capacity of every contribution.",
           ]}
           actionLink={{

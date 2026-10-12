@@ -128,7 +128,7 @@ export function AdminPagesList() {
     { slug: "window-financing", title: "Resources: Window Financing Protocol", metaDescription: "Quarterly commodity requisition mechanism and MOF fund releases" },
     { slug: "donate", title: "Donate & Support (1:1 Matched)", metaDescription: "Every Ngultrum matched 1:1 by the Royal Government of Bhutan" },
     { slug: "news", title: "News & Media Bulletins", metaDescription: "Official press releases, field dispatches & procurement communiqués" },
-    { slug: "track-donation", title: "Track Donation & Tax Voucher", metaDescription: "1:1 matching verification and DRC 100% tax exemption vouchers" },
+    { slug: "track-donation", title: "Track Donation & Tax Voucher", metaDescription: "1:1 matching verification and DRC tax exemption vouchers (Reg. E-73)" },
     { slug: "reports", title: "Reports & Financial Audits", metaDescription: "Annual reports and RAA certified statutory financial statements" },
     { slug: "policies", title: "Governance & Policies", metaDescription: "Trust regulations, procurement ethics & whistleblower protections" },
     { slug: "contact", title: "Contact Secretariat", metaDescription: "Citizen inquiries, donor consultations & Thimphu HQ contact" },

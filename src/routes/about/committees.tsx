@@ -111,7 +111,7 @@ function CommitteesPage() {
             to="/about/organization"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
-            Our Organization
+            Our Organization & Organogram
           </Link>
           <Link
             to="/about/trustees"
@@ -129,7 +129,7 @@ function CommitteesPage() {
             to="/about/secretariat"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
-            Secretariat & Organogram
+            Secretariat & Staff
           </Link>
           <Link
             to="/our-story"
@@ -149,15 +149,15 @@ function CommitteesPage() {
           studioHref="/admin/page-editor?slug=about-committees"
           initialData={{
             title: "Asset Management Committee (AMC)",
-            subtitle: "Cabinet Appointed Sub-Committee providing investment stewardship, capital preservation parameters, and statutory asset allocation.",
-            badge: "Cabinet Appointed Sub-Committee",
+            subtitle: "Fiduciary investment sub-committee providing portfolio risk management, capital preservation parameters, and asset allocation oversight.",
+            badge: "Fiduciary Investment Sub-Committee",
           }}
         />
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-800">
-                Cabinet Appointed Sub-Committee
+                Fiduciary Investment Sub-Committee
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
                 Asset Management Committee (AMC)
@@ -169,34 +169,23 @@ function CommitteesPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-7 space-y-4 text-slate-700 text-sm leading-relaxed font-light">
-              <p>
-                The Asset Management Committee (AMC) was instituted by the Board of Trustees pursuant to Cabinet Order No. C-3/4(4)/2024/35 to provide specialized financial acumen, portfolio risk management, and strategic asset allocation oversight. The committee ensures that all capital endowment funds adhere strictly to the principle of permanent capital preservation.
-              </p>
-              <p>
-                Under the approved Investment Policy Statement (IPS), the AMC formulates risk-adjusted return benchmarks, evaluates investment instruments (sovereign treasury bills, corporate bonds, fixed deposits, and multi-currency holdings), and ensures that liquidity is available for quarterly window financing releases without compromising the capital corpus.
-              </p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
+            <div className="font-bold text-slate-900 font-mono uppercase tracking-wider text-xs">
+              Core AMC Responsibilities
             </div>
-
-            <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 text-xs">
-              <div className="font-bold text-slate-900 font-mono uppercase tracking-wider">
-                Core AMC Responsibilities
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-700">
+              <div className="flex items-start gap-2.5 bg-white p-4 rounded-xl border border-slate-200/80">
+                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+                <span>Enforcing capital preservation guidelines across all bank deposits and bonds.</span>
               </div>
-              <ul className="space-y-2 text-slate-600">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span>Enforcing capital preservation guidelines across all bank deposits and bonds.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span>Reviewing quarterly yield performance against inflation and healthcare cost trends.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span>Approving multi-currency diversification (BTN, INR, USD) to mitigate foreign exchange risks.</span>
-                </li>
-              </ul>
+              <div className="flex items-start gap-2.5 bg-white p-4 rounded-xl border border-slate-200/80">
+                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+                <span>Reviewing quarterly yield performance against inflation and healthcare cost trends.</span>
+              </div>
+              <div className="flex items-start gap-2.5 bg-white p-4 rounded-xl border border-slate-200/80">
+                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+                <span>Approving multi-currency diversification (BTN, INR, USD) to mitigate foreign exchange risks.</span>
+              </div>
             </div>
           </div>
 
@@ -237,9 +226,6 @@ function CommitteesPage() {
                         {m.title}
                       </p>
                     </div>
-                  </div>
-                  <div className="pt-2 border-t border-slate-200/60 text-[10px] text-slate-400 font-mono">
-                    Cabinet Order C-3/4(4)/2024/35
                   </div>
                 </div>
               ))}

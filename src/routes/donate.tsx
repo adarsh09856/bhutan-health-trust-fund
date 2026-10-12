@@ -29,7 +29,7 @@ export const Route = createFileRoute("/donate")({
       {
         name: "description",
         content:
-          "Make an official contribution to Bhutan Health Trust Fund. 1:1 RGOB Golden Match, DRC 100% tax exemption, instant official voucher and live tracking.",
+          "Make an official contribution to Bhutan Health Trust Fund. 1:1 RGOB Golden Match, DRC tax exemption (Reg. E-73), instant official voucher and live tracking.",
       },
     ],
   }),

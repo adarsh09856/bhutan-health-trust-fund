@@ -434,7 +434,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
                 </span>
               </div>
               <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#00A896] border border-[#00A896]/30 shadow-2xs">
-                100% Tax Exempt
+                Tax Deductible • DRC Reg. E-73
               </span>
             </div>
 
@@ -575,7 +575,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
                     <span>Sacred Trust</span>
                   </span>
                   <span className="text-[9px] font-mono font-bold text-[#00A896] bg-emerald-50 px-1.5 py-0.5 rounded-full border border-[#00A896]/30">
-                    100% Tax Exempt
+                    Tax Deductible • DRC Reg. E-73
                   </span>
                 </div>
                 <h3 className="font-serif text-xs sm:text-sm font-black text-[#0B4F42] leading-tight">
@@ -679,7 +679,7 @@ export function HeroBlock({ section }: { section?: PageBlockSection }) {
               </div>
               <div className="flex items-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/60 shadow-xs hover:border-amber-400/40 transition-all">
                 <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
-                <span className="font-semibold text-slate-900">100% Tax Exempt (DRC)</span>
+                <span className="font-semibold text-slate-900">DRC Tax Deductible (Reg. E-73)</span>
               </div>
             </div>
 

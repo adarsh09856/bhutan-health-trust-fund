@@ -466,7 +466,7 @@ export const initialFaqs: NewFaq[] = [
   {
     question: "Are donations to BHTF tax-deductible?",
     answer:
-      "Yes. In accordance with Department of Revenue & Customs (DRC) Circular DRC/TAX-A&L/DO-16/399, contributions to BHTF are 100% tax-exempt and fully deductible up to 5% of taxable income under Corporate Income Tax (CIT) and Personal Income Tax (PIT).",
+      "Yes. All contributions made by the nationals of Bhutan to the BHTF are tax deductible under Tax Exemption Registration No. E-73 of DRC, Ministry of Finance. As per DRC Circular Ref. No. DRC/TAX-A&L/DO-16/399 (12 February 2025), donations are tax-exempt up to 5% of Assessed Net Profit for BIT/CIT payers, and up to 5% of Assessed Adjusted Gross Income for PIT payers.",
     category: "Tax Exemption",
     orderIndex: 5,
     isPublished: true,

@@ -17,6 +17,7 @@ import {
   Phone,
   Mail,
   MapPin,
+  ArrowRight,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
@@ -78,7 +79,7 @@ function SecretariatPage() {
             to="/about/organization"
             className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
           >
-            Our Organization
+            Our Organization & Organogram
           </Link>
           <Link
             to="/about/trustees"
@@ -96,7 +97,7 @@ function SecretariatPage() {
             to="/about/secretariat"
             className="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-xs shrink-0 whitespace-nowrap"
           >
-            Secretariat & Organogram
+            Secretariat & Staff
           </Link>
           <Link
             to="/our-story"
@@ -107,180 +108,38 @@ function SecretariatPage() {
         </div>
       </section>
 
-      {/* Annexure 1: Organizational Structure Visual Tree */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-organogram">
+      {/* Executive Overview Banner & Link to Organogram under Our Organization */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-overview">
         <SectionEditBadge
-          label="Approved Organogram"
+          label="Secretariat Operations"
           pageSlug="about-secretariat"
-          sectionId="secretariat-organogram"
+          sectionId="secretariat-overview"
           studioHref="/admin/page-editor?slug=about-secretariat"
           initialData={{
-            title: "Organizational Structure of the Secretariat",
-            subtitle: "Formally approved governance hierarchy illustrating the direct line of accountability from the Board of Trustees to operational divisions.",
-            badge: "Approved Organogram • Annexure 1",
+            title: "Executive Arm of the Health Trust Fund",
+            subtitle: "The Secretariat manages daily fiduciary investments, international vaccine procurement, and healthcare distributions under Board governance.",
+            badge: "Operational Secretariat",
           }}
         />
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block mb-2">
-            Approved Organogram • Annexure 1
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-            Organizational Structure of the Secretariat
-          </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-3 font-light">
-            Formally approved governance hierarchy illustrating the direct line of accountability from the Board of Trustees to operational divisions.
-          </p>
-        </div>
-
-        {/* Tree Container */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
-          {/* Top Level: Board of Trustees */}
-          <div className="max-w-md mx-auto">
-            <div className="bg-slate-900 text-white rounded-2xl p-5 text-center shadow-lg border border-amber-400/40">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-bold block mb-1">
-                Apex Governing Authority
-              </span>
-              <h3 className="font-serif text-lg font-bold">Board of Trustees</h3>
-              <p className="text-[11px] text-slate-300 mt-1 font-light">
-                Chaired by Lyonpo, Ministry of Health, Royal Government of Bhutan
-              </p>
-            </div>
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
+              Operational Secretariat
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
+              Executive Arm of the Health Trust Fund
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm font-light leading-relaxed">
+              Operating under the direct supervision of the Director and the Board of Trustees, the Secretariat executes statutory health endowment investments, nationwide commodity procurement, and cold-chain logistics across all 20 Dzongkhags.
+            </p>
           </div>
-
-          {/* Stem Down */}
-          <div className="w-px h-8 bg-slate-300 mx-auto" />
-
-          {/* Second Level: AMC and Director */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div className="bg-white border border-amber-300/80 rounded-2xl p-5 text-center shadow-xs">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-800 font-bold block mb-1">
-                Fiduciary Advisory Body
-              </span>
-              <h4 className="font-serif text-base font-bold text-slate-900">
-                Asset Management Committee (AMC)
-              </h4>
-              <p className="text-xs text-slate-500 mt-1 font-light">
-                Direct statutory advisory to the Board
-              </p>
-            </div>
-
-            <div className="bg-white border-2 border-emerald-700 rounded-2xl p-5 text-center shadow-xs">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 font-bold block mb-1">
-                Executive Leadership
-              </span>
-              <h4 className="font-serif text-base font-bold text-slate-900">
-                Director / Executive Secretary
-              </h4>
-              <p className="text-xs text-slate-500 mt-1 font-light">
-                Executive Head of Secretariat Operations
-              </p>
-            </div>
-          </div>
-
-          {/* Stem Down */}
-          <div className="w-px h-8 bg-slate-300 mx-auto" />
-
-          {/* Third Level: 3 Operational Divisions (Annexure 1 Cadre) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-            {/* Division 1: Investment Management */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4">
-              <div>
-                <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-800 grid place-items-center mb-3">
-                  <TrendingUp className="h-5 w-5" />
-                </div>
-                <h4 className="font-serif text-lg font-bold text-slate-900">
-                  Investment Management Division
-                </h4>
-                <p className="text-xs text-slate-600 mt-2 font-light leading-relaxed">
-                  Responsible for capital endowment preservation, asset diversification, multi-currency treasury oversight, and yield optimization.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs text-slate-700">
-                <div className="font-bold text-[11px] text-slate-500 uppercase tracking-wider font-mono">
-                  Approved Cadre
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Chief of Division</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Investment Officer</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Division 2: Administration & Finance */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4">
-              <div>
-                <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center mb-3">
-                  <Building2 className="h-5 w-5" />
-                </div>
-                <h4 className="font-serif text-lg font-bold text-slate-900">
-                  Administration & Finance Division
-                </h4>
-                <p className="text-xs text-slate-600 mt-2 font-light leading-relaxed">
-                  Directs statutory accounting, audit compliance, financial reconciliation, secretariat administration, and HR logistics.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-1.5 text-xs text-slate-700">
-                <div className="font-bold text-[11px] text-slate-500 uppercase tracking-wider font-mono">
-                  Approved Cadre
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Personal Assistant (PA)</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Accountant</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Administrative Assistant</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Driver / Peon</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Security Guard / Sweeper</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Division 3: Programme Division */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4">
-              <div>
-                <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center mb-3">
-                  <Activity className="h-5 w-5" />
-                </div>
-                <h4 className="font-serif text-lg font-bold text-slate-900">
-                  Programme Division
-                </h4>
-                <p className="text-xs text-slate-600 mt-2 font-light leading-relaxed">
-                  Supervises national vaccine requisitions, 438 essential medicines, 110 traditional medicines (65 core formulations), international procurement, and alpine solar cold chain logistics.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs text-slate-700">
-                <div className="font-bold text-[11px] text-slate-500 uppercase tracking-wider font-mono">
-                  Approved Cadre
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Chief Programme Officer</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-                <div className="flex items-center justify-between font-medium">
-                  <span>• Programme Officer</span>
-                  <span className="font-mono text-slate-600 font-bold">1</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Link
+            to="/about/organization"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition text-xs font-bold shrink-0 shadow-xs"
+          >
+            <span>View Approved Organogram Tree</span>
+            <ArrowRight className="h-4 w-4 text-amber-400" />
+          </Link>
         </div>
       </section>
 
@@ -309,100 +168,103 @@ function SecretariatPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
           {/* 1. Director Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
+              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
                 <img
                   src={drGyamboDirector}
                   alt="Dr. Gyambo Sithey, PhD"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
+              <div className="p-3.5 space-y-1">
+                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full inline-block">
                   Directorate
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Dr. Gyambo Sithey, PhD</h3>
-                <p className="text-xs font-semibold text-teal-700">Director</p>
+                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Dr. Gyambo Sithey, PhD</h3>
+                <p className="text-[11px] font-semibold text-teal-700">Director</p>
               </div>
             </div>
           </div>
 
           {/* 2. Senior Program Officer Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
+              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
                 <img
                   src={staffFinance}
                   alt="Ms. Tshering Choden"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block">
+              <div className="p-3.5 space-y-1">
+                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full inline-block">
                   Programme Division
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
-                <p className="text-xs font-semibold text-emerald-700">Senior Program Officer</p>
+                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
+                <p className="text-[11px] font-semibold text-emerald-700">Senior Program Officer</p>
               </div>
             </div>
           </div>
 
           {/* 3. Senior Investment Officer Card (Third Sequence) */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
+              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
                 <img
                   src={staffThinley}
                   alt="Mr. Thinley Wangchuk"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Investment Management Division
+              <div className="p-3.5 space-y-1">
+                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full inline-block">
+                  Investment Management
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
-                <p className="text-xs font-semibold text-teal-700">Senior Investment Officer</p>
+                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
+                <p className="text-[11px] font-semibold text-teal-700">Senior Investment Officer</p>
               </div>
             </div>
           </div>
 
           {/* 4. Accounts Officer Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
+              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
                 <img
                   src={staffSonamChojay}
                   alt="Mr. Sonam Chojay"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full inline-block">
-                  Administration & Finance
+              <div className="p-3.5 space-y-1">
+                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full inline-block">
+                  Admin & Finance
                 </span>
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Sonam Chojay</h3>
-                <p className="text-xs font-semibold text-amber-700">Accounts Officer</p>
+                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Mr. Sonam Chojay</h3>
+                <p className="text-[11px] font-semibold text-amber-700">Accounts Officer</p>
               </div>
             </div>
           </div>
 
           {/* 5. Driver Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
             <div>
-              <div className="aspect-[3/4] bg-slate-100 overflow-hidden">
+              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
                 <img
                   src={staffProcurement}
                   alt="Mr. Rinchen Phuntsho"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5 space-y-1.5">
-                <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
-                <p className="text-xs font-semibold text-slate-700">Driver</p>
+              <div className="p-3.5 space-y-1">
+                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full inline-block">
+                  Support Logistics
+                </span>
+                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
+                <p className="text-[11px] font-semibold text-slate-700">Driver</p>
               </div>
             </div>
           </div>

@@ -77,24 +77,32 @@ export const Route = createFileRoute("/get-involved")({
 
 const ways = [
   {
-    icon: Heart,
-    title: "Public Donations",
-    text: "Every single Ngultrum contributed directly finances essential medicines and childhood vaccines across all 20 Dzongkhags.",
+    icon: ShieldCheck,
+    title: "1:1 Government Matching",
+    caption: "“Double the gift. Double the lives touched.”",
+    text: "Every donation is matched 1:1 by the Royal Government of Bhutan — doubling your impact instantly.",
+    badge: "1:1 Sovereign Match",
   },
   {
-    icon: Handshake,
-    title: "Corporate CSR Partnerships",
-    text: "Partner with BHTF for institutional CSR allocations with official DRC Bhutan tax deduction certification.",
+    icon: Award,
+    title: "Tax Exemption (DRC E-73)",
+    caption: "“Give generously. Save on tax, as per DRC Circular DRC/TAX-A&L/DO-16/399.”",
+    text: "Tax-exempt under DRC Reg. No. E-73. Limits: BIT/CIT payers up to 5% of Assessed Net Profit; PIT payers up to 5% of Assessed Adjusted Gross Income.",
+    badge: "Circular DRC/TAX-A&L/DO-16/399",
   },
   {
-    icon: Landmark,
-    title: "Endowment Legacy Giving",
-    text: "Establish permanent named health endowments or long-term philanthropic trusts supporting remote primary clinics.",
+    icon: Lock,
+    title: "Capital Preservation",
+    caption: "“Your gift is preserved, not spent — working for Bhutan's health every year.”",
+    text: "Your donated capital is never spent — only invested. It stays protected in the Fund forever.",
+    badge: "Corpus Protected Forever",
   },
   {
-    icon: Briefcase,
-    title: "International Bilateral Grants",
-    text: "Collaborate with WHO, UNICEF, and global health foundations under autonomous statutory governance.",
+    icon: TrendingUp,
+    title: "Return on Investment (RoI)",
+    caption: "“Interest that saves lives. That's the real return.”",
+    text: "Only the interest earned from the Fund is used — to finance vaccines, essential medicines, and emergency health supplies across Bhutan.",
+    badge: "Life-Saving Returns",
   },
 ];
 
@@ -131,7 +139,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
     "MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD"
   >("MBOB");
   const [dedicationType, setDedicationType] = useState<
-    "GENERAL" | "BIRTHDAY" | "MEMORIAL" | "ANNIVERSARY" | "MERIT"
+    "GENERAL" | "BIRTHDAY" | "MEMORIAL" | "ANNIVERSARY" | "MERIT" | "CELEBRATION"
   >("GENERAL");
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -386,9 +394,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
       <PageHero
-        badge="Tax Deductible in Bhutan"
-        title="Support the Bhutan Health Trust Fund"
-        subtitle="Every Ngultrum you pledge is doubled 1:1 by the Royal Government of Bhutan to build a permanent, sovereign health endowment."
+        badge="DRC Reg. No. E-73 • 1:1 RGOB Match"
+        title="Donate — Bhutan Health Trust Fund"
+        subtitle="Your gift protects the health of every Bhutanese, forever."
       />
 
       {/* Custom Page Renderer if edited by admin */}
@@ -396,30 +404,40 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
         <PageRenderer sections={customSections} pageSlug="get-involved" />
       )}
 
-      {/* 4 Pillars of Engagement */}
+      {/* 4 Core Pillars of Donation */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-avenues">
         <SectionEditBadge
-          label="Donation Avenues"
+          label="Donation Pillars"
           pageSlug="get-involved"
           sectionId="donate-avenues"
           studioHref="/admin/donations"
           initialData={{
-            title: "Support the Bhutan Health Trust Fund",
-            subtitle: "Every Ngultrum you pledge is doubled 1:1 by the Royal Government of Bhutan to build a permanent, sovereign health endowment.",
-            badge: "Tax Deductible in Bhutan",
+            title: "Donate — Bhutan Health Trust Fund",
+            subtitle: "Your gift protects the health of every Bhutanese, forever. Every donation is matched 1:1 by the Royal Government of Bhutan.",
+            badge: "Sovereign Health Guarantee",
           }}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {ways.map((w) => (
             <div
               key={w.title}
-              className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-150 space-y-3"
+              className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-150 flex flex-col justify-between space-y-4"
             >
-              <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center mb-4">
-                <w.icon className="h-6 w-6" />
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="h-11 w-11 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
+                    <w.icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                    {w.badge}
+                  </span>
+                </div>
+                <h3 className="font-serif font-bold text-slate-900 text-base">{w.title}</h3>
+                <p className="font-serif italic font-bold text-xs text-emerald-800 leading-snug">
+                  {w.caption}
+                </p>
+                <p className="text-xs text-slate-600 leading-relaxed font-light">{w.text}</p>
               </div>
-              <h3 className="font-bold text-slate-900 text-base">{w.title}</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{w.text}</p>
             </div>
           ))}
         </div>
@@ -491,7 +509,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   “Give generously, save on tax.”
                 </div>
                 <p className="text-[11px] text-slate-600 font-light">
-                  100% Tax Deductible up to 5% of taxable income under Department of Revenue & Customs Circular DRC/TAX-A&L/DO-16/399 (CIT & PIT).
+                  Tax deductible under DRC Reg. No. E-73 (subject to 5% statutory limits per Circular DRC/TAX-A&L/DO-16/399 for BIT/CIT & PIT).
                 </p>
               </div>
             </div>
@@ -523,9 +541,12 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       1:1 RGOB Sovereign Match Activated (Nu. {(receiptData.amountNu * 2).toLocaleString()})
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-2xs">
-                      DRC Tax Deductible (Section 31)
+                      DRC Reg. No. E-73 Tax Deductible
                     </span>
                   </div>
+                  <p className="font-serif italic text-xs font-bold text-emerald-950 bg-white/90 border border-emerald-300 rounded-xl p-3 max-w-lg mx-auto leading-relaxed shadow-2xs">
+                    “Thank you — doubled by the Royal Government's 1:1 match! Your gift is preserved forever, and its interest helps supply vaccines and medicines across Bhutan.”
+                  </p>
                 </div>
               )}
 
@@ -946,17 +967,22 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               </div>
 
               {/* Meaningful Occasion Dedication Options */}
+              {/* Meaningful Occasion Dedication Options */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Donation Dedication (Occasion / Merit)
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Dedicate Your Donation (Tribute)
+                  </label>
+                  <span className="text-[11px] font-serif italic text-emerald-800 font-semibold">
+                    “Turn a celebration into a lifesaving gift.”
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
                     { id: "GENERAL", label: "National Health", icon: "🏥" },
-                    { id: "BIRTHDAY", label: "Birthday Gift", icon: "🎂" },
-                    { id: "MEMORIAL", label: "In Memory Of", icon: "🕊️" },
-                    { id: "ANNIVERSARY", label: "Anniversary", icon: "🎊" },
-                    { id: "MERIT", label: "Auspicious Merit", icon: "🌿" },
+                    { id: "BIRTHDAY", label: "Birthday", icon: "🎂" },
+                    { id: "MEMORIAL", label: "In Memoriam", icon: "🕊️" },
+                    { id: "CELEBRATION", label: "Celebration", icon: "🎉" },
                   ].map((occ) => (
                     <button
                       type="button"
@@ -992,9 +1018,11 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                     {dedicationType === "MEMORIAL"
-                      ? "In Memory Of (Name)"
+                      ? "In Memoriam (Name)"
                       : dedicationType === "BIRTHDAY"
-                      ? "Birthday Dedication (Name)"
+                      ? "Birthday Tribute (Name)"
+                      : dedicationType === "CELEBRATION"
+                      ? "Celebration Tribute (Name & Occasion)"
                       : "Dedication Note (Optional)"}
                   </label>
                   <input
@@ -1003,9 +1031,11 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={
                       dedicationType === "MEMORIAL"
-                        ? "e.g. In loving memory of Late Aum Karma"
+                        ? "e.g. In loving memory of [Name]"
                         : dedicationType === "BIRTHDAY"
-                        ? "e.g. In honor of Tenzin's 1st Birthday"
+                        ? "e.g. Celebrating [Name]'s birthday with the gift of health"
+                        : dedicationType === "CELEBRATION"
+                        ? "e.g. In honor of [Name]'s [occasion]"
                         : "e.g. For pediatric vaccines in remote gewogs"
                     }
                     className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
@@ -1131,7 +1161,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               1:1 RGOB Matched Donations
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              Voluntary contributions from donor nations, corporate entities, dzongkhags, gewogs, individuals, and the Bhutanese diaspora. Every single Ngultrum contributed by the public is doubled 1:1 by the Royal Government of Bhutan and is 100% tax-deductible under DRC Reg No. E-73.
+              Voluntary contributions from donor nations, corporate entities, dzongkhags, gewogs, individuals, and the Bhutanese diaspora. Every single Ngultrum contributed by the public is doubled 1:1 by the Royal Government of Bhutan and is tax-deductible under DRC Reg No. E-73.
             </p>
           </div>
         </div>
