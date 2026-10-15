@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -52,6 +53,7 @@ const quickTemplates = [
 ];
 
 export function AdminInquiriesPage() {
+  const confirm = useConfirmation();
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -140,8 +142,9 @@ export function AdminInquiriesPage() {
     setResponseMessage("");
     if (iq.status === "UNREAD") {
       updateInquiryStatus({ data: { id: iq.id, status: "IN_PROGRESS" } }).then(() => {
+        setSelectedInquiry(current => current?.id === iq.id ? { ...current, status: "IN_PROGRESS" } : current);
         fetchInquiries();
-      });
+      }).catch(() => toast.error("Could not update the ticket status."));
     }
   };
 
@@ -154,7 +157,7 @@ export function AdminInquiriesPage() {
           id: selectedInquiry.id,
           status,
           replyNotes:
-            replyNotes + (responseMessage ? `\n[Dispatched Response]: ${responseMessage}` : ""),
+            replyNotes + (responseMessage ? `\n[Response record]: ${responseMessage}` : ""),
         },
       });
       toast.success(`Inquiry ticket updated to ${status}.`);
@@ -168,7 +171,7 @@ export function AdminInquiriesPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this message record?")) return;
+    if (!await confirm("Are you sure you want to delete this message record?")) return;
     try {
       await deleteAdminInquiry({ data: { id } });
       toast.success("Message removed from inbox.");
@@ -530,15 +533,16 @@ export function AdminInquiriesPage() {
                 {/* Response Composer */}
                 <div className="space-y-1.5">
                   <label className="block font-bold text-slate-700 uppercase tracking-wider text-[11px]">
-                    Dispatch Response Message (Simulated Email)
+                    Response record
                   </label>
                   <textarea
                     rows={3}
                     value={responseMessage}
                     onChange={(e) => setResponseMessage(e.target.value)}
-                    placeholder="Type official response to dispatch to citizen..."
+                    placeholder="Record the response sent through your official email channel..."
                     className="w-full rounded-2xl border border-slate-300 p-3 text-xs focus:border-purple-600 focus:outline-none"
                   />
+                  <p className="text-xs text-slate-500">Saved with the case notes. Send the response using your official email account.</p>
                 </div>
 
                 {/* Staff Internal Notes */}
@@ -564,7 +568,7 @@ export function AdminInquiriesPage() {
                         key={st}
                         type="button"
                         onClick={() => handleUpdateStatus(st)}
-                        disabled={updating}
+                        disabled={updating || ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"].indexOf(st) < ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"].indexOf(selectedInquiry.status)}
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer disabled:opacity-50 ${
                           selectedInquiry.status === st
                             ? "bg-slate-900 text-white shadow-md"

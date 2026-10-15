@@ -68,12 +68,38 @@ import type {
 import { persistentStore } from "./persistent-store";
 import { defaultCorePages } from "./default-pages";
 
-
 /**
  * Enterprise Production PostgreSQL Database Layer for BHTF
  * Direct Drizzle ORM queries against live aaPanel-hosted PostgreSQL database.
  * Includes graceful zero-downtime seed data fallbacks if the database is initializing.
  */
+function isStorageUnavailable(error: unknown): boolean {
+  let current: any = error;
+  for (let depth = 0; current && depth < 5; depth++, current = current.cause) {
+    if (
+      [
+        "ECONNREFUSED",
+        "ETIMEDOUT",
+        "ECONNRESET",
+        "ENOTFOUND",
+        "EHOSTUNREACH",
+        "57P01",
+        "57P02",
+        "57P03",
+      ].includes(current.code)
+    )
+      return true;
+    if (current instanceof AggregateError && current.errors.some(isStorageUnavailable)) return true;
+    if (
+      /Connection terminated unexpectedly|timeout exceeded when trying to connect/i.test(
+        current.message || "",
+      )
+    )
+      return true;
+  }
+  return false;
+}
+
 class BHTFDataStore {
   // --- Users & Auth ---
   public async findUserByEmail(email: string): Promise<User | null> {
@@ -83,7 +109,7 @@ class BHTFDataStore {
         .select()
         .from(schema.users)
         .where(eq(schema.users.email, normalized));
-      if (user) return user;
+      return user || null;
     } catch (err: any) {
       console.warn("[PostgreSQL findUserByEmail Warning]:", err?.message || err);
     }
@@ -97,7 +123,7 @@ class BHTFDataStore {
   public async findUserById(id: number): Promise<User | null> {
     try {
       const [user] = await drizzleDb.select().from(schema.users).where(eq(schema.users.id, id));
-      if (user) return user;
+      return user || null;
     } catch (err: any) {
       console.warn("[PostgreSQL findUserById Warning]:", err?.message || err);
     }
@@ -113,13 +139,13 @@ class BHTFDataStore {
           .from(schema.newsArticles)
           .where(eq(schema.newsArticles.isPublished, true))
           .orderBy(desc(schema.newsArticles.publishedAt));
-        if (res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.newsArticles)
           .orderBy(desc(schema.newsArticles.publishedAt));
-        if (res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getAllNews Warning]:", err?.message || err);
@@ -153,9 +179,7 @@ class BHTFDataStore {
     const found = all.find((a) => a.slug === slug || a.slug.toLowerCase() === normalized);
     if (found) return found;
 
-    const seedFound = initialNewsArticles.find(
-      (a) => (a.slug || "").toLowerCase() === normalized,
-    );
+    const seedFound = initialNewsArticles.find((a) => (a.slug || "").toLowerCase() === normalized);
     if (seedFound) {
       return {
         id: 999,
@@ -262,7 +286,7 @@ class BHTFDataStore {
         .select()
         .from(schema.reports)
         .orderBy(desc(schema.reports.year), desc(schema.reports.createdAt));
-      if (res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllReports Warning]:", err?.message || err);
     }
@@ -321,7 +345,7 @@ class BHTFDataStore {
     } catch {}
     const rep = persistentStore.getReports().find((r) => r.id === id);
     if (rep) {
-      rep.downloadCount = (rep.downloadCount || 0) + 1;
+      persistentStore.saveReport({ ...rep, downloadCount: (rep.downloadCount || 0) + 1 });
     }
     return true;
   }
@@ -333,7 +357,7 @@ class BHTFDataStore {
         .select()
         .from(schema.policies)
         .orderBy(desc(schema.policies.createdAt));
-      if (res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllPolicies Warning]:", err?.message || err);
     }
@@ -343,7 +367,10 @@ class BHTFDataStore {
 
   public async getPolicyBySlug(slug: string): Promise<Policy | null> {
     try {
-      const [p] = await drizzleDb.select().from(schema.policies).where(eq(schema.policies.slug, slug));
+      const [p] = await drizzleDb
+        .select()
+        .from(schema.policies)
+        .where(eq(schema.policies.slug, slug));
       if (p) return p;
     } catch (err: any) {
       console.warn("[PostgreSQL getPolicyBySlug Warning]:", err?.message || err);
@@ -408,7 +435,7 @@ class BHTFDataStore {
   public async getAllPrograms(): Promise<Program[]> {
     try {
       const res = await drizzleDb.select().from(schema.programs).orderBy(asc(schema.programs.id));
-      if (res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllPrograms Warning]:", err?.message || err);
     }
@@ -465,7 +492,6 @@ class BHTFDataStore {
     return localDeleted;
   }
 
-
   // --- Donations ---
   public async getAllDonations(): Promise<Donation[]> {
     try {
@@ -476,22 +502,30 @@ class BHTFDataStore {
       return res || [];
     } catch (err: any) {
       console.warn("[PostgreSQL getAllDonations Warning]:", err?.message || err);
-      return [];
+      return persistentStore.getDonations();
     }
   }
 
   public async createDonation(data: NewDonation): Promise<Donation> {
     const randomSuffix = Math.floor(100000 + Math.random() * 900000);
     const referenceNo = data.referenceNo || `BHTF-DON-${randomSuffix}`;
+    if (await this.findDonationByReference(referenceNo)) {
+      throw new Error("Donation reference already exists. Please retry with a new reference.");
+    }
 
-    const [created] = await drizzleDb
-      .insert(schema.donations)
-      .values({
-        ...data,
-        referenceNo,
-      })
-      .returning();
-    return created;
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.donations)
+        .values({
+          ...data,
+          referenceNo,
+        })
+        .returning();
+      return created;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.saveDonation({ ...data, referenceNo });
+    }
   }
 
   public async findDonationByReference(referenceNo: string): Promise<Donation | null> {
@@ -511,20 +545,22 @@ class BHTFDataStore {
   }
 
   public async updateDonationStatus(id: number, status: string): Promise<Donation | null> {
-    const [updated] = await drizzleDb
-      .update(schema.donations)
-      .set({ status })
-      .where(eq(schema.donations.id, id))
-      .returning();
-    return updated || null;
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.donations)
+        .set({ status })
+        .where(eq(schema.donations.id, id))
+        .returning();
+      return updated || null;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      const item = persistentStore.getDonations().find((d) => d.id === id);
+      return item ? persistentStore.saveDonation({ ...item, status }) : null;
+    }
   }
 
-  public async deleteDonation(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.donations)
-      .where(eq(schema.donations.id, id))
-      .returning();
-    return deleted.length > 0;
+  public async deleteDonation(_id: number): Promise<boolean> {
+    throw new Error("Donation references must be retained. Cancel the donation instead.");
   }
 
   public async updateDonationPayment(
@@ -539,12 +575,18 @@ class BHTFDataStore {
     },
   ): Promise<Donation | null> {
     const normalized = referenceNo.trim().toUpperCase();
-    const [updated] = await drizzleDb
-      .update(schema.donations)
-      .set(updates)
-      .where(eq(schema.donations.referenceNo, normalized))
-      .returning();
-    return updated || null;
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.donations)
+        .set(updates)
+        .where(eq(schema.donations.referenceNo, normalized))
+        .returning();
+      return updated || null;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      const item = persistentStore.getDonations().find((d) => d.referenceNo === normalized);
+      return item ? persistentStore.saveDonation({ ...item, ...updates }) : null;
+    }
   }
 
   public async submitDonationJournal(
@@ -560,7 +602,8 @@ class BHTFDataStore {
     if (current.paymentMetadata) {
       try {
         existingMeta = JSON.parse(current.paymentMetadata);
-      } catch {
+      } catch (error) {
+        if (!isStorageUnavailable(error)) throw error;
         existingMeta = {};
       }
     }
@@ -572,18 +615,28 @@ class BHTFDataStore {
       submittedAt: new Date().toISOString(),
     });
 
-    const [updated] = await drizzleDb
-      .update(schema.donations)
-      .set({
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.donations)
+        .set({
+          gatewayTransactionId: journalNo.trim(),
+          gatewayStatus: "VERIFICATION_SUBMITTED",
+          status: "VERIFICATION_SUBMITTED",
+          paymentMetadata: updatedMeta,
+        })
+        .where(eq(schema.donations.referenceNo, normalized))
+        .returning();
+
+      return updated || null;
+    } catch {
+      return persistentStore.saveDonation({
+        ...current,
         gatewayTransactionId: journalNo.trim(),
         gatewayStatus: "VERIFICATION_SUBMITTED",
         status: "VERIFICATION_SUBMITTED",
         paymentMetadata: updatedMeta,
-      })
-      .where(eq(schema.donations.referenceNo, normalized))
-      .returning();
-
-    return updated || null;
+      });
+    }
   }
 
   // --- Inquiries ---
@@ -596,21 +649,26 @@ class BHTFDataStore {
       return res || [];
     } catch (err: any) {
       console.warn("[PostgreSQL getAllInquiries Warning]:", err?.message || err);
-      return [];
+      return persistentStore.getInquiries();
     }
   }
 
   public async createInquiry(data: NewInquiry): Promise<Inquiry> {
-    const [created] = await drizzleDb
-      .insert(schema.inquiries)
-      .values({
-        ...data,
-        status: data.status || "UNREAD",
-        channel: data.channel || "WEB",
-        loggedBy: data.loggedBy || null,
-      })
-      .returning();
-    return created;
+    try {
+      const [created] = await drizzleDb
+        .insert(schema.inquiries)
+        .values({
+          ...data,
+          status: data.status || "UNREAD",
+          channel: data.channel || "WEB",
+          loggedBy: data.loggedBy || null,
+        })
+        .returning();
+      return created;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.saveInquiry(data);
+    }
   }
 
   public async updateInquiryStatus(
@@ -623,20 +681,30 @@ class BHTFDataStore {
       updatePayload.replyNotes = replyNotes;
     }
 
-    const [updated] = await drizzleDb
-      .update(schema.inquiries)
-      .set(updatePayload)
-      .where(eq(schema.inquiries.id, id))
-      .returning();
-    return updated || null;
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.inquiries)
+        .set(updatePayload)
+        .where(eq(schema.inquiries.id, id))
+        .returning();
+      return updated || null;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.updateInquiryStatus(id, status, replyNotes);
+    }
   }
 
   public async deleteInquiry(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.inquiries)
-      .where(eq(schema.inquiries.id, id))
-      .returning();
-    return deleted.length > 0;
+    try {
+      const deleted = await drizzleDb
+        .delete(schema.inquiries)
+        .where(eq(schema.inquiries.id, id))
+        .returning();
+      return deleted.length > 0;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.deleteInquiry(id);
+    }
   }
 
   // --- Subscribers ---
@@ -649,80 +717,101 @@ class BHTFDataStore {
       return res || [];
     } catch (err: any) {
       console.warn("[PostgreSQL getAllSubscribers Warning]:", err?.message || err);
-      return [];
+      return persistentStore.getSubscribers();
     }
   }
 
   public async addSubscriber(email: string): Promise<Subscriber> {
     const normalized = email.toLowerCase().trim();
-    const [existing] = await drizzleDb
-      .select()
-      .from(schema.subscribers)
-      .where(eq(schema.subscribers.email, normalized));
+    try {
+      const [existing] = await drizzleDb
+        .select()
+        .from(schema.subscribers)
+        .where(eq(schema.subscribers.email, normalized));
 
-    if (existing) {
-      if (!existing.isActive) {
-        const [reactivated] = await drizzleDb
-          .update(schema.subscribers)
-          .set({ isActive: true })
-          .where(eq(schema.subscribers.id, existing.id))
-          .returning();
-        return reactivated;
+      if (existing) {
+        if (!existing.isActive) {
+          const [reactivated] = await drizzleDb
+            .update(schema.subscribers)
+            .set({ isActive: true })
+            .where(eq(schema.subscribers.id, existing.id))
+            .returning();
+          return reactivated;
+        }
+        return existing;
       }
-      return existing;
-    }
 
-    const [created] = await drizzleDb
-      .insert(schema.subscribers)
-      .values({
-        email: normalized,
-        isActive: true,
-      })
-      .returning();
-    return created;
+      const [created] = await drizzleDb
+        .insert(schema.subscribers)
+        .values({
+          email: normalized,
+          isActive: true,
+        })
+        .returning();
+      return created;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.addSubscriber(normalized);
+    }
   }
 
   public async adminAddSubscriber(email: string, isActive = true): Promise<Subscriber> {
     const normalized = email.toLowerCase().trim();
-    const [existing] = await drizzleDb
-      .select()
-      .from(schema.subscribers)
-      .where(eq(schema.subscribers.email, normalized));
+    try {
+      const [existing] = await drizzleDb
+        .select()
+        .from(schema.subscribers)
+        .where(eq(schema.subscribers.email, normalized));
 
-    if (existing) {
-      const [updated] = await drizzleDb
-        .update(schema.subscribers)
-        .set({ isActive })
-        .where(eq(schema.subscribers.id, existing.id))
+      if (existing) {
+        const [updated] = await drizzleDb
+          .update(schema.subscribers)
+          .set({ isActive })
+          .where(eq(schema.subscribers.id, existing.id))
+          .returning();
+        return updated;
+      }
+
+      const [created] = await drizzleDb
+        .insert(schema.subscribers)
+        .values({
+          email: normalized,
+          isActive,
+        })
         .returning();
-      return updated;
+      return created;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      const item = persistentStore.addSubscriber(normalized);
+      return persistentStore.updateSubscriber(item.id, isActive)!;
     }
-
-    const [created] = await drizzleDb
-      .insert(schema.subscribers)
-      .values({
-        email: normalized,
-        isActive,
-      })
-      .returning();
-    return created;
   }
 
   public async updateSubscriberStatus(id: number, isActive: boolean): Promise<Subscriber | null> {
-    const [updated] = await drizzleDb
-      .update(schema.subscribers)
-      .set({ isActive })
-      .where(eq(schema.subscribers.id, id))
-      .returning();
-    return updated || null;
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.subscribers)
+        .set({ isActive })
+        .where(eq(schema.subscribers.id, id))
+        .returning();
+      return updated || null;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.updateSubscriber(id, isActive);
+    }
   }
 
   public async deleteSubscriber(id: number): Promise<boolean> {
-    const deleted = await drizzleDb
-      .delete(schema.subscribers)
-      .where(eq(schema.subscribers.id, id))
-      .returning();
-    return deleted.length > 0;
+    try {
+      const deleted = await drizzleDb
+        .delete(schema.subscribers)
+        .where(eq(schema.subscribers.id, id))
+        .returning();
+      return deleted.length > 0;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.deleteSubscriber(id);
+    }
   }
 
   // --- Trustees ---
@@ -734,13 +823,13 @@ class BHTFDataStore {
           .from(schema.trustees)
           .where(eq(schema.trustees.isActive, true))
           .orderBy(asc(schema.trustees.orderIndex), asc(schema.trustees.id));
-        if (res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.trustees)
           .orderBy(asc(schema.trustees.orderIndex), asc(schema.trustees.id));
-        if (res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getAllTrustees Warning]:", err?.message || err);
@@ -795,13 +884,13 @@ class BHTFDataStore {
           .from(schema.faqs)
           .where(eq(schema.faqs.isPublished, true))
           .orderBy(asc(schema.faqs.orderIndex), asc(schema.faqs.id));
-        if (res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.faqs)
           .orderBy(asc(schema.faqs.orderIndex), asc(schema.faqs.id));
-        if (res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getAllFaqs Warning]:", err?.message || err);
@@ -856,13 +945,13 @@ class BHTFDataStore {
           .from(schema.impactMetrics)
           .where(eq(schema.impactMetrics.isActive, true))
           .orderBy(asc(schema.impactMetrics.orderIndex), asc(schema.impactMetrics.id));
-        if (res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.impactMetrics)
           .orderBy(asc(schema.impactMetrics.orderIndex), asc(schema.impactMetrics.id));
-        if (res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getAllImpactMetrics Warning]:", err?.message || err);
@@ -918,7 +1007,7 @@ class BHTFDataStore {
         .select()
         .from(schema.milestones)
         .orderBy(asc(schema.milestones.orderIndex), asc(schema.milestones.year));
-      if (res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllMilestones Warning]:", err?.message || err);
     }
@@ -966,7 +1055,7 @@ class BHTFDataStore {
   public async getAllSettings(): Promise<SiteSetting[]> {
     try {
       const res = await drizzleDb.select().from(schema.siteSettings);
-      if (res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllSettings Warning]:", err?.message || err);
     }
@@ -1056,7 +1145,7 @@ class BHTFDataStore {
         }
       }
 
-      if (res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getAllPages Warning]:", err?.message || err);
     }
@@ -1179,13 +1268,14 @@ class BHTFDataStore {
     try {
       await drizzleDb
         .delete(schema.customPages)
-        .where(and(eq(schema.customPages.slug, normalized), eq(schema.customPages.isSystemPage, false)));
+        .where(
+          and(eq(schema.customPages.slug, normalized), eq(schema.customPages.isSystemPage, false)),
+        );
     } catch (err: any) {
       console.warn(`[PostgreSQL deletePage(${normalized}) Warning]:`, err?.message || err);
     }
     return localDeleted;
   }
-
 
   // --- Dashboard Aggregations ---
   public async getDashboardMetrics() {
@@ -1206,7 +1296,20 @@ class BHTFDataStore {
     const totalReportsCount = allReports.length;
 
     // Compute genuine monthly statistics dynamically from real database donations
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     const currentYear = new Date().getFullYear();
     const currentMonthIndex = new Date().getMonth();
 
@@ -1301,6 +1404,7 @@ class BHTFDataStore {
       if (rows.length > 0) {
         return rows[0];
       }
+      return null;
     } catch (err: any) {
       console.warn("[PostgreSQL findSessionByTokenHash Warning]:", err?.message || err);
     }
@@ -1336,6 +1440,7 @@ class BHTFDataStore {
   }
 
   public async getActiveSessionsForUser(userId: number): Promise<UserSession[]> {
+    try {
     return await drizzleDb
       .select()
       .from(schema.userSessions)
@@ -1347,6 +1452,10 @@ class BHTFDataStore {
         ),
       )
       .orderBy(desc(schema.userSessions.createdAt));
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.getActiveSessionsForUser(userId);
+    }
   }
 
   // --- Audit Logging & System Events ---
@@ -1500,7 +1609,7 @@ class BHTFDataStore {
         .select({ count: sql<number>`count(*)` })
         .from(schema.users)
         .where(and(eq(schema.users.role, "SUPER_ADMIN"), eq(schema.users.isActive, true)));
-      if (Number(res?.count || 0) > 0) return true;
+      return Number(res?.count || 0) > 0;
     } catch {}
     const localUsers = persistentStore.getUsers();
     return localUsers.some((u) => u.role === "SUPER_ADMIN" && u.isActive);
@@ -1512,9 +1621,7 @@ class BHTFDataStore {
         .select()
         .from(schema.users)
         .orderBy(desc(schema.users.createdAt));
-      if (usersList.length > 0) {
-        return usersList.map(({ passwordHash, ...u }) => u);
-      }
+      return usersList.map(({ passwordHash, ...u }) => u);
     } catch (err: any) {
       console.warn("[PostgreSQL getAllUsers Warning]:", err?.message || err);
     }
@@ -1580,7 +1687,10 @@ class BHTFDataStore {
   public async deleteUser(id: number): Promise<boolean> {
     persistentStore.deleteUser(id);
     try {
-      const deleted = await drizzleDb.delete(schema.users).where(eq(schema.users.id, id)).returning();
+      const deleted = await drizzleDb
+        .delete(schema.users)
+        .where(eq(schema.users.id, id))
+        .returning();
       return deleted.length > 0;
     } catch (err: any) {
       console.warn("[PostgreSQL deleteUser Warning]:", err?.message || err);
@@ -1595,7 +1705,7 @@ class BHTFDataStore {
         .select()
         .from(schema.procurementSteps)
         .orderBy(asc(schema.procurementSteps.orderIndex));
-      if (res && res.length > 0) return res;
+      return res;
     } catch (err: any) {
       console.warn("[PostgreSQL getProcurementSteps Warning]:", err?.message || err);
     }
@@ -1634,15 +1744,12 @@ class BHTFDataStore {
   public async deleteProcurementStep(id: number): Promise<boolean> {
     const local = persistentStore.deleteProcurementStep(id);
     try {
-      await drizzleDb
-        .delete(schema.procurementSteps)
-        .where(eq(schema.procurementSteps.id, id));
+      await drizzleDb.delete(schema.procurementSteps).where(eq(schema.procurementSteps.id, id));
     } catch (err: any) {
       console.warn("[PostgreSQL deleteProcurementStep Warning]:", err?.message || err);
     }
     return local;
   }
-
 
   // --- Tier 2 Financial Settings ---
   public async getFinancialSettings(): Promise<FinancialSetting> {
@@ -1774,13 +1881,13 @@ class BHTFDataStore {
           .from(schema.mediaGallery)
           .where(eq(schema.mediaGallery.isPublished, true))
           .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
-        if (res && res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.mediaGallery)
           .orderBy(asc(schema.mediaGallery.orderIndex), desc(schema.mediaGallery.createdAt));
-        if (res && res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getGallery Error]:", err?.message || err);
@@ -1821,9 +1928,7 @@ class BHTFDataStore {
   public async deleteGalleryItem(id: number): Promise<boolean> {
     const local = persistentStore.deleteGalleryItem(id);
     try {
-      await drizzleDb
-        .delete(schema.mediaGallery)
-        .where(eq(schema.mediaGallery.id, id));
+      await drizzleDb.delete(schema.mediaGallery).where(eq(schema.mediaGallery.id, id));
     } catch (err: any) {
       console.warn("[PostgreSQL deleteGalleryItem Warning]:", err?.message || err);
     }
@@ -1839,13 +1944,13 @@ class BHTFDataStore {
           .from(schema.mediaVideos)
           .where(eq(schema.mediaVideos.isPublished, true))
           .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
-        if (res && res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.mediaVideos)
           .orderBy(asc(schema.mediaVideos.orderIndex), desc(schema.mediaVideos.createdAt));
-        if (res && res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getVideos Error]:", err?.message || err);
@@ -1883,9 +1988,7 @@ class BHTFDataStore {
   public async deleteVideo(id: number): Promise<boolean> {
     const local = persistentStore.deleteVideo(id);
     try {
-      await drizzleDb
-        .delete(schema.mediaVideos)
-        .where(eq(schema.mediaVideos.id, id));
+      await drizzleDb.delete(schema.mediaVideos).where(eq(schema.mediaVideos.id, id));
     } catch (err: any) {
       console.warn("[PostgreSQL deleteVideo Warning]:", err?.message || err);
     }
@@ -1901,13 +2004,13 @@ class BHTFDataStore {
           .from(schema.procurementTenders)
           .where(eq(schema.procurementTenders.status, statusFilter))
           .orderBy(desc(schema.procurementTenders.closingDate));
-        if (res && res.length > 0) return res;
+        return res;
       } else {
         const res = await drizzleDb
           .select()
           .from(schema.procurementTenders)
           .orderBy(desc(schema.procurementTenders.closingDate));
-        if (res && res.length > 0) return res;
+        return res;
       }
     } catch (err: any) {
       console.warn("[PostgreSQL getProcurementTenders Error]:", err?.message || err);
@@ -1950,15 +2053,12 @@ class BHTFDataStore {
   public async deleteProcurementTender(id: number): Promise<boolean> {
     const local = persistentStore.deleteProcurementTender(id);
     try {
-      await drizzleDb
-        .delete(schema.procurementTenders)
-        .where(eq(schema.procurementTenders.id, id));
+      await drizzleDb.delete(schema.procurementTenders).where(eq(schema.procurementTenders.id, id));
     } catch (err: any) {
       console.warn("[PostgreSQL deleteProcurementTender Warning]:", err?.message || err);
     }
     return local;
   }
-
 
   // --- Payment Gateways & Fiduciary APIs ---
   public async getPaymentGateways(): Promise<PaymentGateway[]> {
@@ -2040,21 +2140,21 @@ class BHTFDataStore {
       const deletedDonations = await drizzleDb
         .delete(schema.donations)
         .where(
-          sql`${schema.donations.referenceNo} IN ('BHTF-DON-928174', 'BHTF-DON-741920', 'BHTF-DON-551029', 'BHTF-DON-318492') OR ${schema.donations.donorName} ILIKE '%test%' OR ${schema.donations.donorEmail} ILIKE '%@druknet.bt%' OR ${schema.donations.donorEmail} ILIKE '%anonymous@bhutan.bt%'`
+          sql`${schema.donations.referenceNo} IN ('BHTF-DON-928174', 'BHTF-DON-741920', 'BHTF-DON-551029', 'BHTF-DON-318492') OR ${schema.donations.donorName} ILIKE '%test%' OR ${schema.donations.donorEmail} ILIKE '%@druknet.bt%' OR ${schema.donations.donorEmail} ILIKE '%anonymous@bhutan.bt%'`,
         )
         .returning();
 
       const deletedInquiries = await drizzleDb
         .delete(schema.inquiries)
         .where(
-          sql`${schema.inquiries.email} IN ('stobgay@moh.gov.bt', 'rachel.higgins@globalhealth.org', 'upelzom@bhutanfound.bt') OR ${schema.inquiries.name} ILIKE '%test%'`
+          sql`${schema.inquiries.email} IN ('stobgay@moh.gov.bt', 'rachel.higgins@globalhealth.org', 'upelzom@bhutanfound.bt') OR ${schema.inquiries.name} ILIKE '%test%'`,
         )
         .returning();
 
       const deletedSubscribers = await drizzleDb
         .delete(schema.subscribers)
         .where(
-          sql`${schema.subscribers.email} IN ('info@drukhealth.bt', 'sangay.c@rub.edu.bt', 'pema.choden@undp.org', 'tshering.penjor@bhtf.bt')`
+          sql`${schema.subscribers.email} IN ('info@drukhealth.bt', 'sangay.c@rub.edu.bt', 'pema.choden@undp.org', 'tshering.penjor@bhtf.bt')`,
         )
         .returning();
 
@@ -2081,14 +2181,12 @@ class BHTFDataStore {
   // --- Sovereign Uploaded Assets System ---
   async createUploadedAsset(data: NewUploadedAsset): Promise<UploadedAsset> {
     try {
-      const [created] = await drizzleDb
-        .insert(schema.uploadedAssets)
-        .values(data)
-        .returning();
+      const [created] = await drizzleDb.insert(schema.uploadedAssets).values(data).returning();
       return created;
     } catch (err: any) {
       console.error("[PostgreSQL createUploadedAsset Error]:", err?.message || err);
-      throw new Error(`Failed to record uploaded asset: ${err?.message || err}`);
+      if (isStorageUnavailable(err)) return persistentStore.saveUploadedAsset(data);
+      throw new Error("Failed to record uploaded asset.");
     }
   }
 
@@ -2107,7 +2205,8 @@ class BHTFDataStore {
         .orderBy(desc(schema.uploadedAssets.createdAt));
     } catch (err: any) {
       console.error("[PostgreSQL getAllUploadedAssets Error]:", err?.message || err);
-      return [];
+      if (!isStorageUnavailable(err)) throw new Error("Unable to load assets.");
+      return persistentStore.getUploadedAssets(category);
     }
   }
 
@@ -2120,7 +2219,8 @@ class BHTFDataStore {
       return deleted.length > 0;
     } catch (err: any) {
       console.error("[PostgreSQL deleteUploadedAsset Error]:", err?.message || err);
-      return false;
+      if (!isStorageUnavailable(err)) throw new Error("Unable to delete asset.");
+      return persistentStore.deleteUploadedAsset(id);
     }
   }
 }

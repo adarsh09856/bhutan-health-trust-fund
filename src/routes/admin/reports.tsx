@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/admin/reports")({
 });
 
 export function AdminReportsPage() {
+  const confirm = useConfirmation();
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -127,7 +129,7 @@ export function AdminReportsPage() {
   };
 
   const handleDelete = async (id: number, reportTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete "${reportTitle}"?`)) return;
+    if (!await confirm(`Are you sure you want to delete "${reportTitle}"?`)) return;
     try {
       await deleteAdminReport({ data: { id } });
       toast.success("Report deleted from repository.");
@@ -240,6 +242,7 @@ export function AdminReportsPage() {
               <option value="Financial">Audited Financials</option>
               <option value="Governance">Governance & Charters</option>
               <option value="Research">Health Impact & Research</option>
+                      <option value="Advocacy">Advocacy Materials</option>
               <option value="Strategy">Strategic Frameworks</option>
             </select>
           </div>
@@ -385,6 +388,7 @@ export function AdminReportsPage() {
                       <option value="Financial">Audited Financials</option>
                       <option value="Governance">Governance & Charters</option>
                       <option value="Research">Health Impact & Research</option>
+                      <option value="Advocacy">Advocacy Materials</option>
                       <option value="Strategy">Strategic Frameworks</option>
                     </select>
                   </div>

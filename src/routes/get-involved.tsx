@@ -130,7 +130,7 @@ const tiers = [
 ];
 
 export function DonateView({ customSections }: { customSections?: PageBlockSection[] | null }) {
-
+  const pageHeroSection = customSections?.find((section) => section.type === "hero" && section.isVisible);
   const [amount, setAmount] = useState(1000);
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
@@ -299,27 +299,13 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
     if (!rmaPayload || !receiptData) return;
     setProcessingRma(true);
     try {
-      const bfsTxnId = `BFS-${rmaSelectedBank}-${Date.now().toString().slice(-6)}`;
-      const res = await verifyRmaBfsPayment({
+      await verifyRmaBfsPayment({
         data: {
           referenceNo: receiptData.referenceNo,
           orderNo: rmaPayload.orderNo,
-          bfsTxnId,
+          bfsTxnId: "pending-bank-verification",
         },
       });
-      if (res.success) {
-        setPaymentCompleted({
-          transactionId: bfsTxnId,
-          channel: `RMA BFS (${rmaSelectedBank})`,
-          completedAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          }),
-        });
-        setRmaModalOpen(false);
-        toast.success(`RMA Payment successfully authorized! Txn Ref: ${bfsTxnId}`);
-      }
     } catch {
       toast.error("RMA gateway authorization failed. Please try again.");
     } finally {
@@ -332,27 +318,50 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
     if (!razorpayData || !receiptData) return;
     setProcessingRazorpay(true);
     try {
-      const razorpayPaymentId = `pay_${Date.now().toString(36)}${Math.random().toString(36).substring(2, 7)}`;
-      const res = await verifyRazorpayPayment({
-        data: {
-          referenceNo: razorpayData.referenceNo,
-          razorpayOrderId: razorpayData.orderId,
-          razorpayPaymentId,
+      if (!(window as any).Razorpay) {
+        await new Promise<void>((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = "https://checkout.razorpay.com/v1/checkout.js";
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error("Checkout could not load"));
+          document.head.appendChild(script);
+        });
+      }
+      const checkout = new (window as any).Razorpay({
+        key: razorpayData.keyId,
+        order_id: razorpayData.orderId,
+        amount: Math.round(razorpayData.amountNu * 100),
+        currency: razorpayData.currency,
+        name: "Bhutan Health Trust Fund",
+        handler: async (response: {
+          razorpay_order_id: string;
+          razorpay_payment_id: string;
+          razorpay_signature: string;
+        }) => {
+          try {
+            await verifyRazorpayPayment({
+              data: {
+                referenceNo: razorpayData.referenceNo,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              },
+            });
+            setPaymentCompleted({
+              transactionId: response.razorpay_payment_id,
+              channel: "Razorpay",
+              completedAt: new Date().toLocaleDateString(),
+            });
+            setRazorpayModalOpen(false);
+            toast.success("Payment verified.");
+          } catch {
+            toast.error(
+              "Payment verification failed. Contact the Fund with your reference number.",
+            );
+          }
         },
       });
-      if (res.success) {
-        setPaymentCompleted({
-          transactionId: razorpayPaymentId,
-          channel: "Razorpay (Credit / Debit Card)",
-          completedAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          }),
-        });
-        setRazorpayModalOpen(false);
-        toast.success(`Payment verified! Razorpay Txn: ${razorpayPaymentId}`);
-      }
+      checkout.open();
     } catch {
       toast.error("Payment authorization failed.");
     } finally {
@@ -392,20 +401,23 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
   };
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20">
+    <div className="public-editorial-page donation-editorial-page space-y-14 sm:space-y-20 pb-20">
       <PageHero
-        badge="DRC Reg. No. E-73 • 1:1 RGOB Match"
-        title="Donate — Bhutan Health Trust Fund"
-        subtitle="Your gift protects the health of every Bhutanese, forever."
+        badge={pageHeroSection?.badge || "DRC Reg. No. E-73 • 1:1 RGOB Match"}
+        title={pageHeroSection?.title || "Donate — Bhutan Health Trust Fund"}
+        subtitle={pageHeroSection?.subtitle || "Your gift protects the health of every Bhutanese, forever."}
       />
 
       {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="get-involved" />
+      {customSections && customSections.some((section) => section.type !== "hero") && (
+        <PageRenderer sections={customSections.filter((section) => section.type !== "hero")} pageSlug="get-involved" />
       )}
 
       {/* 4 Core Pillars of Donation */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-avenues">
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
+        data-bhtf-section="donate-avenues"
+      >
         <SectionEditBadge
           label="Donation Pillars"
           pageSlug="get-involved"
@@ -413,7 +425,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
           studioHref="/admin/donations"
           initialData={{
             title: "Donate — Bhutan Health Trust Fund",
-            subtitle: "Your gift protects the health of every Bhutanese, forever. Every donation is matched 1:1 by the Royal Government of Bhutan.",
+            subtitle:
+              "Your gift protects the health of every Bhutanese, forever. Every donation is matched 1:1 by the Royal Government of Bhutan.",
             badge: "Sovereign Health Guarantee",
           }}
         />
@@ -444,7 +457,11 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Donation Form & Pledge Section */}
-      <section id="donate-form" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 scroll-mt-28 relative" data-bhtf-section="donate-terminal">
+      <section
+        id="donate-form"
+        className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 scroll-mt-28 relative"
+        data-bhtf-section="donate-terminal"
+      >
         <SectionEditBadge
           label="Donation Terminal & Gateways"
           pageSlug="get-involved"
@@ -452,7 +469,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
           studioHref="/admin/donations"
           initialData={{
             title: "Make a Healthcare Contribution Pledge",
-            subtitle: "Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA Payment Gateway, or direct bank transfer.",
+            subtitle:
+              "Generate an official stamped pledge certificate and deposit via MBOB, BNB Pay, RMA Payment Gateway, or direct bank transfer.",
             badge: "1:1 RGOB Matching Model Guaranteed",
           }}
         />
@@ -489,7 +507,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               <Quote className="h-5 w-5 text-[#00A896] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="font-serif text-xs sm:text-sm font-bold text-[#0B4F42] italic leading-snug">
-                  "No Bhutanese should ever have to choose between their health and their livelihood."
+                  "No Bhutanese should ever have to choose between their health and their
+                  livelihood."
                 </p>
                 <span className="text-[10px] font-mono font-bold text-[#00A896] uppercase tracking-wider block">
                   His Majesty the Fourth Druk Gyalpo • Universal Health Guarantee
@@ -509,7 +528,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   “Give generously, save on tax.”
                 </div>
                 <p className="text-[11px] text-slate-600 font-light">
-                  Tax deductible under DRC Reg. No. E-73 (subject to 5% statutory limits per Circular DRC/TAX-A&L/DO-16/399 for BIT/CIT & PIT).
+                  Tax deductible under DRC Reg. No. E-73 (subject to 5% statutory limits per
+                  Circular DRC/TAX-A&L/DO-16/399 for BIT/CIT & PIT).
                 </p>
               </div>
             </div>
@@ -531,21 +551,27 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       Payment Successfully Authorized & Verified!
                     </h3>
                     <p className="text-xs text-emerald-800 mt-1 max-w-md mx-auto leading-relaxed">
-                      Your contribution has been settled via <strong className="text-emerald-950">{paymentCompleted.channel}</strong>.
-                      Reference ID: <code className="bg-emerald-100 px-2 py-0.5 rounded font-mono font-bold text-emerald-900">{paymentCompleted.transactionId}</code>
+                      Your contribution has been settled via{" "}
+                      <strong className="text-emerald-950">{paymentCompleted.channel}</strong>.
+                      Reference ID:{" "}
+                      <code className="bg-emerald-100 px-2 py-0.5 rounded font-mono font-bold text-emerald-900">
+                        {paymentCompleted.transactionId}
+                      </code>
                     </p>
                   </div>
                   <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                     <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-800 bg-white border border-emerald-300 px-3.5 py-1 rounded-full shadow-2xs">
                       <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                      1:1 RGOB Sovereign Match Activated (Nu. {(receiptData.amountNu * 2).toLocaleString()})
+                      1:1 RGOB Sovereign Match Activated (Nu.{" "}
+                      {(receiptData.amountNu * 2).toLocaleString()})
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-2xs">
                       DRC Reg. No. E-73 Tax Deductible
                     </span>
                   </div>
                   <p className="font-serif italic text-xs font-bold text-emerald-950 bg-white/90 border border-emerald-300 rounded-xl p-3 max-w-lg mx-auto leading-relaxed shadow-2xs">
-                    “Thank you — doubled by the Royal Government's 1:1 match! Your gift is preserved forever, and its interest helps supply vaccines and medicines across Bhutan.”
+                    “Thank you — doubled by the Royal Government's 1:1 match! Your gift is preserved
+                    forever, and its interest helps supply vaccines and medicines across Bhutan.”
                   </p>
                 </div>
               )}
@@ -656,8 +682,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       </div>
                       <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg">
                         <span>
-                          <strong>USD Account:</strong>{" "}
-                          {institutionalConfig.bankAccountUSD} (SWIFT: {institutionalConfig.swiftCodeBOB})
+                          <strong>USD Account:</strong> {institutionalConfig.bankAccountUSD} (SWIFT:{" "}
+                          {institutionalConfig.swiftCodeBOB})
                         </span>
                         <button
                           type="button"
@@ -721,13 +747,24 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                           Bank Journal Submitted Successfully!
                         </div>
                         <p className="text-[11px] text-emerald-800 leading-relaxed">
-                          Your journal reference <strong className="font-mono bg-white px-2 py-0.5 rounded border border-emerald-300">{journalNo}</strong> has been tied to pledge voucher <strong className="font-mono">{receiptData.referenceNo}</strong>. The BHTF Secretariat cross-checks bank account entries daily and will verify your pledge for official DRC tax deductibility.
+                          Your journal reference{" "}
+                          <strong className="font-mono bg-white px-2 py-0.5 rounded border border-emerald-300">
+                            {journalNo}
+                          </strong>{" "}
+                          has been tied to pledge voucher{" "}
+                          <strong className="font-mono">{receiptData.referenceNo}</strong>. The BHTF
+                          Secretariat cross-checks bank account entries daily and will verify your
+                          pledge for official DRC tax deductibility.
                         </p>
                       </div>
                     ) : (
                       <form onSubmit={handleSubmitJournal} className="space-y-3">
                         <p className="text-[11px] text-slate-600 leading-relaxed">
-                          Once you execute the transfer on your <strong>mBoB, BNB Pay</strong> app, or bank counter, please enter the <strong>Journal / Reference / Narration Number</strong> from your transaction receipt below. This allows instant matching and fast certificate issuance.
+                          Once you execute the transfer on your <strong>mBoB, BNB Pay</strong> app,
+                          or bank counter, please enter the{" "}
+                          <strong>Journal / Reference / Narration Number</strong> from your
+                          transaction receipt below. This allows instant matching and fast
+                          certificate issuance.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-2">
                           <input
@@ -875,10 +912,19 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     {
                       id: "RMA_GATEWAY",
                       label: "RMA Payment Gateway",
-                      sub: "Bhutan Financial Switch (All Bhutan Banks)",
+                      sub: paymentConfig?.rmaBfs?.isEnabled
+                        ? "Bhutan Financial Switch (All Bhutan Banks)"
+                        : "Temporarily unavailable while the bank checkout protocol is verified.",
                       icon: Building,
-                      badge: paymentConfig?.rmaBfs?.isLiveMode ? "RMA BFS Live" : "BFS Gateway Active",
-                      badgeColor: "bg-amber-50 text-amber-800 border-amber-200",
+                      disabled: !paymentConfig?.rmaBfs?.isEnabled,
+                      badge: paymentConfig?.rmaBfs?.isLiveMode
+                        ? "RMA BFS Live"
+                        : paymentConfig?.rmaBfs?.isEnabled
+                          ? "RMA BFS Test"
+                          : "Verification pending",
+                      badgeColor: paymentConfig?.rmaBfs?.isEnabled
+                        ? "bg-amber-50 text-amber-800 border-amber-200"
+                        : "bg-slate-100 text-slate-600 border-slate-200",
                     },
                     {
                       id: "BANK_TRANSFER",
@@ -891,17 +937,31 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     {
                       id: "INTERNATIONAL_CARD",
                       label: "International Card (Razorpay)",
-                      sub: "Visa / Mastercard / UPI (~2% low card fee)",
+                      sub: paymentConfig?.razorpay?.isEnabled
+                        ? "Visa / Mastercard / UPI card checkout."
+                        : "Temporarily unavailable until verified Razorpay credentials are configured.",
                       icon: CreditCard,
-                      badge: paymentConfig?.razorpay?.isLiveMode ? "Razorpay Live" : "Lowest Card Fee (~2%)",
-                      badgeColor: "bg-blue-50 text-blue-800 border-blue-200",
+                      disabled: !paymentConfig?.razorpay?.isEnabled,
+                      badge: paymentConfig?.razorpay?.isLiveMode
+                        ? "Razorpay Live"
+                        : paymentConfig?.razorpay?.isEnabled
+                          ? "Razorpay Test"
+                          : "Setup pending",
+                      badgeColor: paymentConfig?.razorpay?.isEnabled
+                        ? "bg-blue-50 text-blue-800 border-blue-200"
+                        : "bg-slate-100 text-slate-600 border-slate-200",
                     },
                   ].map((pm) => (
                     <button
                       type="button"
                       key={pm.id}
+                      disabled={Boolean((pm as { disabled?: boolean }).disabled)}
                       onClick={() => setPaymentMethod(pm.id as any)}
-                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between gap-2.5 transition cursor-pointer ${
+                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between gap-2.5 transition ${
+                        (pm as { disabled?: boolean }).disabled
+                          ? "cursor-not-allowed border-slate-200 bg-slate-50 text-slate-500 opacity-75"
+                          : "cursor-pointer"
+                      } ${
                         paymentMethod === pm.id
                           ? "border-emerald-600 bg-emerald-50/50 text-emerald-950 ring-2 ring-emerald-600/20 shadow-xs"
                           : "border-slate-200 text-slate-700 hover:bg-slate-50 bg-white"
@@ -1020,10 +1080,10 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     {dedicationType === "MEMORIAL"
                       ? "In Memoriam (Name)"
                       : dedicationType === "BIRTHDAY"
-                      ? "Birthday Tribute (Name)"
-                      : dedicationType === "CELEBRATION"
-                      ? "Celebration Tribute (Name & Occasion)"
-                      : "Dedication Note (Optional)"}
+                        ? "Birthday Tribute (Name)"
+                        : dedicationType === "CELEBRATION"
+                          ? "Celebration Tribute (Name & Occasion)"
+                          : "Dedication Note (Optional)"}
                   </label>
                   <input
                     type="text"
@@ -1033,10 +1093,10 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       dedicationType === "MEMORIAL"
                         ? "e.g. In loving memory of [Name]"
                         : dedicationType === "BIRTHDAY"
-                        ? "e.g. Celebrating [Name]'s birthday with the gift of health"
-                        : dedicationType === "CELEBRATION"
-                        ? "e.g. In honor of [Name]'s [occasion]"
-                        : "e.g. For pediatric vaccines in remote gewogs"
+                          ? "e.g. Celebrating [Name]'s birthday with the gift of health"
+                          : dedicationType === "CELEBRATION"
+                            ? "e.g. In honor of [Name]'s [occasion]"
+                            : "e.g. For pediatric vaccines in remote gewogs"
                     }
                     className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none transition"
                   />
@@ -1050,7 +1110,10 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   <span>The Capital Preservation Model</span>
                 </div>
                 <p className="text-[11px] text-amber-900/90 leading-relaxed font-light">
-                  100% of your principal donation of <strong>Nu. {amount.toLocaleString()}</strong> remains permanently preserved and untouched within the sovereign endowment corpus. Only the annual returns and interest are spent on life-saving medicines and universal childhood vaccines — protecting generations in perpetuity.
+                  100% of your principal donation of <strong>Nu. {amount.toLocaleString()}</strong>{" "}
+                  remains permanently preserved and untouched within the sovereign endowment corpus.
+                  Only the annual returns and interest are spent on life-saving medicines and
+                  universal childhood vaccines — protecting generations in perpetuity.
                 </p>
               </div>
 
@@ -1094,7 +1157,10 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Section 7 Canonical: Sources of Funding & Statutory 1% Contribution */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 relative" data-bhtf-section="donate-funding-architecture">
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 relative"
+        data-bhtf-section="donate-funding-architecture"
+      >
         <SectionEditBadge
           label="Funding Architecture"
           pageSlug="get-involved"
@@ -1102,7 +1168,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
           studioHref="/admin/metrics"
           initialData={{
             title: "How BHTF Is Sustained",
-            subtitle: "The Bhutan Health Trust Fund does not rely on short-term budgets. It is sustained by three perpetual, sovereign revenue streams designed to safeguard healthcare in perpetuity.",
+            subtitle:
+              "The Bhutan Health Trust Fund does not rely on short-term budgets. It is sustained by three perpetual, sovereign revenue streams designed to safeguard healthcare in perpetuity.",
             badge: "Section 7 • Institutional Financial Architecture",
           }}
         />
@@ -1115,27 +1182,30 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             How BHTF Is Sustained
           </h2>
           <p className="text-slate-600 text-sm font-light leading-relaxed">
-            The Bhutan Health Trust Fund does not rely on short-term budgets. It is sustained by three perpetual, sovereign revenue streams designed to safeguard healthcare in perpetuity.
+            The Bhutan Health Trust Fund does not rely on short-term budgets. It is sustained by
+            three perpetual, sovereign revenue streams designed to safeguard healthcare in
+            perpetuity.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3">
+          <div className="editorial-card p-6 sm:p-7 hover:shadow-lg transition-all duration-300 space-y-3">
             <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center">
               <Users className="h-6 w-6" />
             </div>
             <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
               Stream 1 • Working Citizen Solidarity
             </span>
-            <h3 className="font-serif text-lg font-bold text-slate-900">
-              1% Health Contribution
-            </h3>
+            <h3 className="font-serif text-lg font-bold text-slate-900">1% Health Contribution</h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              1% of the monthly gross salary of working employees across Bhutan — public and civil servants, as well as private and corporate employees. 100% of all health contributions collected are ring-fenced and utilized directly for the procurement of essential medicines and vaccines.
+              1% of the monthly gross salary of working employees across Bhutan — public and civil
+              servants, as well as private and corporate employees. 100% of all health contributions
+              collected are ring-fenced and utilized directly for the procurement of essential
+              medicines and vaccines.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3">
+          <div className="editorial-card p-6 sm:p-7 hover:shadow-lg transition-all duration-300 space-y-3">
             <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-800 grid place-items-center">
               <TrendingUp className="h-6 w-6" />
             </div>
@@ -1146,11 +1216,14 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               Endowment Investment Income
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              Prudent investment yields generated from the Fund's onshore holdings (annuities, corporate bonds, bank fixed deposits, equities) and safe offshore USD assets (USD 12.08M). 70% of net yields directly finance medicines and vaccines, while 20% is reinvested for capital growth.
+              Prudent investment yields generated from the Fund's onshore holdings (annuities,
+              corporate bonds, bank fixed deposits, equities) and safe offshore USD assets (USD
+              12.08M). 70% of net yields directly finance medicines and vaccines, while 20% is
+              reinvested for capital growth.
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all duration-300 space-y-3">
+          <div className="editorial-card p-6 sm:p-7 hover:shadow-lg transition-all duration-300 space-y-3">
             <div className="h-12 w-12 rounded-2xl bg-teal-50 text-teal-800 grid place-items-center">
               <Heart className="h-6 w-6" />
             </div>
@@ -1161,14 +1234,20 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               1:1 RGOB Matched Donations
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
-              Voluntary contributions from donor nations, corporate entities, dzongkhags, gewogs, individuals, and the Bhutanese diaspora. Every single Ngultrum contributed by the public is doubled 1:1 by the Royal Government of Bhutan and is tax-deductible under DRC Reg No. E-73.
+              Voluntary contributions from donor nations, corporate entities, dzongkhags, gewogs,
+              individuals, and the Bhutanese diaspora. Every single Ngultrum contributed by the
+              public is doubled 1:1 by the Royal Government of Bhutan and is tax-deductible under
+              DRC Reg No. E-73.
             </p>
           </div>
         </div>
       </section>
 
       {/* Official Events: Coming Together for a Healthier Bhutan (11 November 2026 & RSEBL) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-fundraising-campaigns">
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
+        data-bhtf-section="donate-fundraising-campaigns"
+      >
         <SectionEditBadge
           label="Fundraising Campaigns"
           pageSlug="get-involved"
@@ -1176,13 +1255,14 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
           studioHref="/admin/news"
           initialData={{
             title: "Collective Mobilisation for Sovereign Health",
-            subtitle: "Every contribution has a purpose, and behind every figure is a life. Together, we can turn collective support into better health outcomes for the people of Bhutan.",
+            subtitle:
+              "Every contribution has a purpose, and behind every figure is a life. Together, we can turn collective support into better health outcomes for the people of Bhutan.",
             badge: "Events: Coming Together for a Healthier Bhutan",
           }}
         />
         <div className="bg-radial from-emerald-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-emerald-900/40 relative overflow-hidden space-y-8">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          
+
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-800/40 pb-6 relative z-10">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-xs font-bold font-mono">
@@ -1194,7 +1274,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               </h2>
             </div>
             <p className="text-xs text-emerald-200/80 max-w-md font-light leading-relaxed">
-              "Every contribution has a purpose, and behind every figure is a life. Together, we can turn collective support into better health outcomes for the people of Bhutan."
+              "Every contribution has a purpose, and behind every figure is a life. Together, we can
+              turn collective support into better health outcomes for the people of Bhutan."
             </p>
           </div>
 
@@ -1213,7 +1294,11 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 Fundraising Events — 11 November 2026
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
-                Fundraising is more than an event—it is an opportunity for individuals, organisations and communities to come together and contribute towards a healthier Bhutan. The fundraising activities planned for <strong>11 November 2026</strong> will provide a platform for collective support towards ensuring the continued availability of essential medicines and vaccines for those who need them.
+                Fundraising is more than an event—it is an opportunity for individuals,
+                organisations and communities to come together and contribute towards a healthier
+                Bhutan. The fundraising activities planned for <strong>11 November 2026</strong>{" "}
+                will provide a platform for collective support towards ensuring the continued
+                availability of essential medicines and vaccines for those who need them.
               </p>
             </div>
 
@@ -1231,7 +1316,12 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 RSEBL Fundraising Initiatives
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
-                In partnership with the <strong>Royal Securities Exchange of Bhutan Limited (RSEBL)</strong>, BHTF will also explore fundraising initiatives that encourage greater participation from the public and private sectors. Through such partnerships, every contribution can become part of a larger effort to strengthen healthcare and make a meaningful difference in people's lives.
+                In partnership with the{" "}
+                <strong>Royal Securities Exchange of Bhutan Limited (RSEBL)</strong>, BHTF will also
+                explore fundraising initiatives that encourage greater participation from the public
+                and private sectors. Through such partnerships, every contribution can become part
+                of a larger effort to strengthen healthcare and make a meaningful difference in
+                people's lives.
               </p>
             </div>
           </div>
@@ -1239,7 +1329,10 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
       </section>
 
       {/* Official Verified Banking Remittance Details Directory (Section 7 Verbatim) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donate-banking-channels">
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
+        data-bhtf-section="donate-banking-channels"
+      >
         <SectionEditBadge
           label="Banking Channels & Accounts"
           pageSlug="get-involved"
@@ -1247,11 +1340,12 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
           studioHref="/admin/settings"
           initialData={{
             title: "Direct Banking & Offshore Remittance Channels",
-            subtitle: "Official domestic Ngultrum accounts and international USD SWIFT wire routing verified by BHTF Finance.",
+            subtitle:
+              "Official domestic Ngultrum accounts and international USD SWIFT wire routing verified by BHTF Finance.",
             badge: "Official Banking Protocols",
           }}
         />
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-6">
+        <div className="editorial-card p-6 sm:p-10 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
@@ -1285,11 +1379,15 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </div>
                 <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
                   <span className="text-slate-600">Mobile Apps:</span>
-                  <span className="font-medium text-slate-900 font-sans">mBoB, mPay, ePay, TPay</span>
+                  <span className="font-medium text-slate-900 font-sans">
+                    mBoB, mPay, ePay, TPay
+                  </span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
                   <span className="text-slate-600">In-Person / Mail:</span>
-                  <span className="font-medium text-slate-900 font-sans">BTFEC Building, Genyen Lam, Thimphu</span>
+                  <span className="font-medium text-slate-900 font-sans">
+                    BTFEC Building, Genyen Lam, Thimphu
+                  </span>
                 </div>
               </div>
             </div>
@@ -1312,11 +1410,15 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </div>
                 <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
                   <span className="text-slate-600">Account Name:</span>
-                  <span className="font-bold text-slate-900 font-sans">Bhutan Health Trust Fund</span>
+                  <span className="font-bold text-slate-900 font-sans">
+                    Bhutan Health Trust Fund
+                  </span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
                   <span className="text-slate-600">Beneficiary Bank:</span>
-                  <span className="font-medium text-slate-900 font-sans">Bank of Bhutan Ltd., Thimphu Branch</span>
+                  <span className="font-medium text-slate-900 font-sans">
+                    Bank of Bhutan Ltd., Thimphu Branch
+                  </span>
                 </div>
               </div>
             </div>
@@ -1335,7 +1437,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </div>
                 <div>
                   <h3 className="font-black text-slate-900 text-sm">RMA Bhutan Financial Switch</h3>
-                  <p className="text-[11px] text-slate-500">Central Bank Inter-Bank Gateway (BFS)</p>
+                  <p className="text-[11px] text-slate-500">
+                    Central Bank Inter-Bank Gateway (BFS)
+                  </p>
                 </div>
               </div>
               <button
@@ -1354,7 +1458,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Amount to Authorize:</span>
-                <span className="font-bold text-emerald-700">Nu. {rmaPayload.amountNu.toLocaleString()}</span>
+                <span className="font-bold text-emerald-700">
+                  Nu. {rmaPayload.amountNu.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>RMA Switch Terminal:</span>
@@ -1418,7 +1524,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     </>
                   ) : (
                     <>
-                      <Lock className="h-3.5 w-3.5" /> Authorize Nu. {rmaPayload.amountNu.toLocaleString()}
+                      <Lock className="h-3.5 w-3.5" /> Authorize Nu.{" "}
+                      {rmaPayload.amountNu.toLocaleString()}
                     </>
                   )}
                 </button>
@@ -1439,7 +1546,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </div>
                 <div>
                   <h3 className="font-black text-slate-900 text-sm">Razorpay Sovereign Checkout</h3>
-                  <p className="text-[11px] text-slate-500">Low-fee International Cards & Regional UPI (~2%)</p>
+                  <p className="text-[11px] text-slate-500">
+                    Low-fee International Cards & Regional UPI (~2%)
+                  </p>
                 </div>
               </div>
               <button
@@ -1468,54 +1577,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             </div>
 
             <form onSubmit={handleConfirmRazorpayPayment} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-700">Card Number</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    required
-                    maxLength={19}
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="4111 2222 3333 4444"
-                    className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-mono focus:border-blue-600 focus:outline-none"
-                  />
-                  <CreditCard className="h-4 w-4 text-slate-400 absolute right-3 top-3" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-700">Expiry (MM/YY)</label>
-                  <input
-                    type="text"
-                    required
-                    maxLength={5}
-                    value={cardExpiry}
-                    onChange={(e) => setCardExpiry(e.target.value)}
-                    placeholder="12/28"
-                    className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-mono text-center focus:border-blue-600 focus:outline-none"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-700">CVV / CVC</label>
-                  <input
-                    type="password"
-                    required
-                    maxLength={4}
-                    value={cardCvc}
-                    onChange={(e) => setCardCvc(e.target.value)}
-                    placeholder="•••"
-                    className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-mono text-center focus:border-blue-600 focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                <Lock className="h-3.5 w-3.5 text-blue-600 shrink-0" />
-                <span>PCI-DSS 256-bit TLS Encrypted Transaction</span>
-              </div>
-
+              <p className="text-sm text-slate-600">
+                Continue to Razorpay to enter payment details securely.
+              </p>
               <div className="flex gap-2 pt-2">
                 <button
                   type="button"
@@ -1526,7 +1590,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </button>
                 <button
                   type="submit"
-                  disabled={processingRazorpay || !cardNumber}
+                  disabled={processingRazorpay}
                   className="w-2/3 py-2.5 px-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {processingRazorpay ? (
@@ -1535,7 +1599,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     </>
                   ) : (
                     <>
-                      <Lock className="h-3.5 w-3.5" /> Pay Nu. {razorpayData.amountNu.toLocaleString()}
+                      <Lock className="h-3.5 w-3.5" /> Pay Nu.{" "}
+                      {razorpayData.amountNu.toLocaleString()}
                     </>
                   )}
                 </button>

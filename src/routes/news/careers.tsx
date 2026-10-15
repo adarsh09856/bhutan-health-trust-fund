@@ -140,7 +140,7 @@ function CareersPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Join Our Mission"
         title="Careers & Consultancies"
@@ -165,7 +165,7 @@ function CareersPage() {
           }}
         />
         {/* Equal Opportunity Commitment */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="editorial-card p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-start gap-4">
             <div className="h-12 w-12 rounded-2xl bg-teal-50 text-teal-700 grid place-items-center shrink-0 border border-teal-200">
               <ShieldCheck className="h-6 w-6" />
@@ -211,7 +211,7 @@ function CareersPage() {
           {filtered.map((job) => (
             <div
               key={job.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-lg transition-all duration-300 space-y-6 group"
+              className="editorial-card p-6 sm:p-8 hover:shadow-lg transition-all duration-300 space-y-6 group"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
                 <div className="space-y-2">

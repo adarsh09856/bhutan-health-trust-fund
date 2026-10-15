@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { randomUUID } from "node:crypto";
 import {
   initialNewsArticles,
   initialReports,
@@ -36,6 +37,8 @@ import type {
   MediaVideo,
   ProcurementStep,
   ProcurementTender,
+  UploadedAsset,
+  NewUploadedAsset,
 } from "./schema";
 
 interface StoreData {
@@ -58,6 +61,7 @@ interface StoreData {
   donations: Donation[];
   inquiries: Inquiry[];
   subscribers: Subscriber[];
+  uploadedAssets: UploadedAsset[];
 }
 
 class PersistentStore {
@@ -67,7 +71,7 @@ class PersistentStore {
   private initialized = false;
 
   constructor() {
-    this.dataDir = path.resolve(process.cwd(), ".data");
+    this.dataDir = path.resolve(process.env.BHTF_DATA_DIR || path.join(process.cwd(), ".data"));
     this.filePath = path.resolve(this.dataDir, "bhtf-store.json");
   }
 
@@ -101,9 +105,12 @@ class PersistentStore {
       if (!fs.existsSync(this.dataDir)) {
         fs.mkdirSync(this.dataDir, { recursive: true });
       }
-      fs.writeFileSync(this.filePath, JSON.stringify(this.data, null, 2), "utf-8");
+      const temporaryPath = `${this.filePath}.${randomUUID()}.tmp`;
+      fs.writeFileSync(temporaryPath, JSON.stringify(this.data, null, 2), { encoding: "utf-8", mode: 0o600 });
+      fs.renameSync(temporaryPath, this.filePath);
     } catch (err) {
       console.warn("[PersistentStore Persist Warning]:", err);
+      throw new Error("Local storage could not save the change.");
     }
   }
 
@@ -302,23 +309,24 @@ class PersistentStore {
       donations,
       inquiries,
       subscribers,
+      uploadedAssets: [],
     };
   }
 
   private ensureDefaultCollections(parsed: any): StoreData {
     const fresh = this.buildInitialData();
     return {
-      users: parsed.users?.length ? parsed.users : fresh.users,
+      users: Array.isArray(parsed.users) ? parsed.users : fresh.users,
       userSessions: parsed.userSessions || [],
-      news: parsed.news?.length ? parsed.news : fresh.news,
-      reports: parsed.reports?.length ? parsed.reports : fresh.reports,
-      policies: parsed.policies?.length ? parsed.policies : fresh.policies,
-      programs: parsed.programs?.length ? parsed.programs : fresh.programs,
-      trustees: parsed.trustees?.length ? parsed.trustees : fresh.trustees,
-      faqs: parsed.faqs?.length ? parsed.faqs : fresh.faqs,
-      impactMetrics: parsed.impactMetrics?.length ? parsed.impactMetrics : fresh.impactMetrics,
-      milestones: parsed.milestones?.length ? parsed.milestones : fresh.milestones,
-      siteSettings: parsed.siteSettings?.length ? parsed.siteSettings : fresh.siteSettings,
+      news: Array.isArray(parsed.news) ? parsed.news : fresh.news,
+      reports: Array.isArray(parsed.reports) ? parsed.reports : fresh.reports,
+      policies: Array.isArray(parsed.policies) ? parsed.policies : fresh.policies,
+      programs: Array.isArray(parsed.programs) ? parsed.programs : fresh.programs,
+      trustees: Array.isArray(parsed.trustees) ? parsed.trustees : fresh.trustees,
+      faqs: Array.isArray(parsed.faqs) ? parsed.faqs : fresh.faqs,
+      impactMetrics: Array.isArray(parsed.impactMetrics) ? parsed.impactMetrics : fresh.impactMetrics,
+      milestones: Array.isArray(parsed.milestones) ? parsed.milestones : fresh.milestones,
+      siteSettings: Array.isArray(parsed.siteSettings) ? parsed.siteSettings : fresh.siteSettings,
       customPages: (() => {
         const existing = parsed.customPages || [];
         const existingSlugs = new Set(existing.map((p: any) => p.slug?.toLowerCase()));
@@ -337,10 +345,38 @@ class PersistentStore {
       donations: parsed.donations || fresh.donations,
       inquiries: parsed.inquiries || fresh.inquiries,
       subscribers: parsed.subscribers || fresh.subscribers,
+      uploadedAssets: parsed.uploadedAssets || [],
     };
   }
 
   // --- Collection Accessors ---
+
+  public getUploadedAssets(category?: string): UploadedAsset[] {
+    this.init();
+    return this.data!.uploadedAssets.filter(item => !category || category === "ALL" || item.category === category);
+  }
+  public saveUploadedAsset(data: NewUploadedAsset): UploadedAsset {
+    this.init();
+    const item: UploadedAsset = {
+      ...data,
+      id: Math.max(0, ...this.data!.uploadedAssets.map(item => item.id)) + 1,
+      category: data.category || "general",
+      sizeBytes: data.sizeBytes || 0,
+      dataBase64: data.dataBase64 || null,
+      uploadedBy: data.uploadedBy || "unknown",
+      createdAt: new Date(),
+    };
+    this.data!.uploadedAssets.unshift(item);
+    this.persist();
+    return item;
+  }
+  public deleteUploadedAsset(id: number): boolean {
+    this.init();
+    const count = this.data!.uploadedAssets.length;
+    this.data!.uploadedAssets = this.data!.uploadedAssets.filter(item => item.id !== id);
+    this.persist();
+    return count !== this.data!.uploadedAssets.length;
+  }
 
   public getNews(): NewsArticle[] {
     this.init();
@@ -840,6 +876,28 @@ class PersistentStore {
     this.init();
     return this.data!.subscribers;
   }
+  public updateSubscriber(id: number, isActive: boolean): Subscriber | null {
+    this.init();
+    const item = this.data!.subscribers.find((s) => s.id === id);
+    if (!item) return null;
+    item.isActive = isActive;
+    this.persist();
+    return item;
+  }
+  public deleteSubscriber(id: number): boolean {
+    this.init();
+    const count = this.data!.subscribers.length;
+    this.data!.subscribers = this.data!.subscribers.filter((s) => s.id !== id);
+    this.persist();
+    return count !== this.data!.subscribers.length;
+  }
+  public deleteInquiry(id: number): boolean {
+    this.init();
+    const count = this.data!.inquiries.length;
+    this.data!.inquiries = this.data!.inquiries.filter((s) => s.id !== id);
+    this.persist();
+    return count !== this.data!.inquiries.length;
+  }
   public addSubscriber(email: string): Subscriber {
     this.init();
     const normalized = email.trim().toLowerCase();
@@ -1122,6 +1180,10 @@ class PersistentStore {
     const user = this.data!.users.find((u) => u.id === session.userId && u.isActive);
     if (!user) return null;
     return { session, user };
+  }
+  public getActiveSessionsForUser(userId: number): UserSession[] {
+    this.init();
+    return this.data!.userSessions.filter(session => session.userId === userId && session.isActive && new Date(session.expiresAt).getTime() > Date.now());
   }
 
   public revokeSession(sessionId: number): boolean {

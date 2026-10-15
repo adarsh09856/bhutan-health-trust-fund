@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -88,6 +89,7 @@ const dzongkhagsList = [
 ];
 
 export function AdminGalleryPage() {
+  const confirm = useConfirmation();
   const [items, setItems] = useState<MediaGalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -209,7 +211,7 @@ export function AdminGalleryPage() {
   };
 
   const handleDelete = async (id: number, itemTitle: string) => {
-    if (!window.confirm(`Are you sure you want to permanently delete "${itemTitle}"?`)) return;
+    if (!await confirm(`Are you sure you want to permanently delete "${itemTitle}"?`)) return;
     try {
       await deleteAdminGalleryItem({ data: { id } });
       toast.success("Gallery photo deleted.");

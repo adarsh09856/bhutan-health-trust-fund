@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -48,6 +49,7 @@ const iconMap: Record<string, any> = {
 const iconOptions = ["Pill", "Syringe", "Stethoscope", "HeartPulse", "Microscope", "GraduationCap"];
 
 export function AdminProgramsPage() {
+  const confirm = useConfirmation();
   const [programs, setPrograms] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -166,7 +168,7 @@ export function AdminProgramsPage() {
   };
 
   const handleDelete = async (id: number, programTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete "${programTitle}"?`)) return;
+    if (!await confirm(`Are you sure you want to delete "${programTitle}"?`)) return;
     try {
       await deleteAdminProgram({ data: { id } });
       toast.success("Commodity program removed.");

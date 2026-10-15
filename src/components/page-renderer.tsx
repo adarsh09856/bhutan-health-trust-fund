@@ -289,7 +289,7 @@ export function RendererHeroCorpusCard({ showSatellite = false }: { showSatellit
 
 // 1. Hero Block (Full 100dvh Unobstructed King Portrait + Scroll-Driven Translucent Card Elevation)
 export function HeroBlock({ section }: { section?: PageBlockSection }) {
-  const currentSection = section || { id: "hero-main", type: "hero" };
+  const currentSection: PageBlockSection = section || { id: "hero-main", type: "hero", order: 0, isVisible: true };
   const isHomepageHero =
     !currentSection.id ||
     currentSection.id === "hero-main" ||

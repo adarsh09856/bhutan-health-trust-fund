@@ -91,7 +91,7 @@ export const Route = createFileRoute("/")({
         customSections: sections,
         liveMetrics: metrics || [],
         settings: settings || {},
-        liveNews: (news || []).slice(0, 3),
+        liveNews: (news || []).slice(0, 4),
       };
     } catch {
       return {
@@ -153,30 +153,54 @@ const fiduciaryLedgerRows = [
 
 const recentAuditDocuments = [
   {
+    id: "audit-2025",
     title: "Annual Financial & Operational Audit Report (FY 2024–2025)",
-    referenceNumber: "RAA-BHTF-2025-01",
+    referenceNo: "RAA-BHTF-2025-01",
     date: "June 2026",
-    fileSize: "PDF, 4.2 MB",
-    documentType: "Audit Report",
+    formatSize: "PDF, 4.2 MB",
+    category: "Audit Report",
     downloadUrl: "/reports",
   },
   {
+    id: "royal-charter",
     title: "Royal Charter of the Bhutan Health Trust Fund (Official Enactment)",
-    referenceNumber: "ROYAL-CHARTER-2000",
+    referenceNo: "ROYAL-CHARTER-2000",
     date: "August 2000",
-    fileSize: "PDF, 1.8 MB",
-    documentType: "Legal Charter",
+    formatSize: "PDF, 1.8 MB",
+    category: "Legal Charter",
     downloadUrl: "/reports",
   },
   {
+    id: "essential-drugs",
     title: "National Essential Drugs List & Vaccine Cold-Chain Protocol",
-    referenceNumber: "MOH-NEDL-REV8",
+    referenceNo: "MOH-NEDL-REV8",
     date: "January 2026",
-    fileSize: "PDF, 2.4 MB",
-    documentType: "Formulary",
+    formatSize: "PDF, 2.4 MB",
+    category: "Formulary",
     downloadUrl: "/reports",
   },
 ];
+
+function HomepageNews({ articles }: { articles: NewsArticle[] }) {
+  const latest = articles.filter((article) => article.isPublished).slice(0, 4);
+  if (!latest.length) return null;
+  return (
+    <section className="border-t border-slate-200 bg-white py-16" aria-labelledby="home-news-title">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div><p className="text-xs font-bold uppercase tracking-widest text-emerald-800">Latest updates</p><h2 id="home-news-title" className="font-serif text-3xl font-bold text-slate-900">News & Events</h2></div>
+          <Link to="/news" search={{}} className="text-sm font-bold text-emerald-800 hover:underline">View all news →</Link>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {latest.map((article) => <Link key={article.id} to="/news/$slug" params={{ slug: article.slug }} search={{}} className="group overflow-hidden rounded-xl border border-slate-200 bg-[#FAF8F3] hover:border-emerald-600 hover:shadow-lg transition">
+            {article.coverImage && <img src={article.coverImage} alt="" className="h-44 w-full object-cover" loading="lazy" />}
+            <div className="p-5"><p className="mb-2 text-xs text-slate-500">{new Date(article.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p><h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800">{article.title}</h3><p className="mt-2 line-clamp-3 text-sm text-slate-600">{article.excerpt}</p></div>
+          </Link>)}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 const dzongkhagRegions = [
   {
@@ -670,7 +694,7 @@ function Index() {
 
     getPublicNews()
       .then((res) => {
-        if (res && res.length > 0) setLiveNews(res.slice(0, 3));
+        if (res && res.length > 0) setLiveNews(res.slice(0, 4));
       })
       .catch(() => {});
   }, []);
@@ -860,10 +884,6 @@ function Index() {
             title="Statutory Publications & Certified Audit Register"
             subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
             documents={recentAuditDocuments}
-            viewAllLink={{
-              label: "Browse Full Document & Audit Archive",
-              to: "/resources",
-            }}
             theme="parchment"
           />
         </div>
@@ -896,6 +916,7 @@ function Index() {
             theme="parchment"
           />
         </div>
+        <HomepageNews articles={liveNews} />
       </div>
     );
   }
@@ -921,7 +942,7 @@ function Index() {
             backgroundImage: settings["hero_background_image"],
           }}
         />
-        <HeroBlock section={{ id: "hero-main", type: "hero", backgroundImage: settings["hero_background_image"] }} />
+        <HeroBlock section={{ id: "hero-main", type: "hero", order: 0, isVisible: true, backgroundImage: settings["hero_background_image"] }} />
       </div>
 
       {/* 2. Statement of Royal Mandate (Layout 1) */}
@@ -1118,10 +1139,6 @@ function Index() {
           title="Statutory Publications & Certified Audit Register"
           subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
           documents={recentAuditDocuments}
-          viewAllLink={{
-            label: "Browse Full Document & Audit Archive",
-            to: "/resources",
-          }}
           theme="parchment"
         />
       </div>
@@ -1155,6 +1172,7 @@ function Index() {
           theme="parchment"
         />
       </div>
+      <HomepageNews articles={liveNews} />
     </div>
   );
 }

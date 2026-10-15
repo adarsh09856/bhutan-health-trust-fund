@@ -4,7 +4,7 @@ import type { PageBlockSection, Report } from "@/lib/db/schema";
 import { ReportsExperience } from "./reports";
 
 export const Route = createFileRoute("/resources")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { category?: string } => ({
     category: typeof search.category === "string" ? search.category : undefined,
   }),
   loader: async () => {

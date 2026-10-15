@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/reports")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { category?: string } => ({
     category: typeof search.category === "string" ? search.category : undefined,
   }),
   loader: async () => {
@@ -72,6 +72,7 @@ export function ReportsExperience({
   title = "Reports & Official Publications",
   subtitle = "Uncompromising fiduciary accountability, audited financial statements, and empirical public health impact assessments.",
   pageSlug = "reports",
+  initialCategory,
 }: {
   customSections?: PageBlockSection[] | null;
   initialReports?: Report[];

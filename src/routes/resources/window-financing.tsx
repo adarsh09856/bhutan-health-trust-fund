@@ -157,7 +157,7 @@ function WindowFinancingPage() {
   const { customSections } = Route.useLoaderData();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
+    <div className="public-editorial-page financing-editorial-page space-y-14 sm:space-y-20 pb-20">
       <PageHero
         badge="Statutory Capital Allocation"
         title="Quarterly Window Financing Protocol"
@@ -381,7 +381,7 @@ function WindowFinancingPage() {
           {lifecycleSteps.map((step, idx) => (
             <div
               key={step.step}
-              className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4 relative group hover:border-emerald-300 transition"
+              className="editorial-card border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4 relative group hover:border-emerald-300 transition"
             >
               <div>
                 <div className="font-mono text-3xl font-black text-emerald-800/30 group-hover:text-emerald-700 transition">
@@ -408,15 +408,15 @@ function WindowFinancingPage() {
 
       {/* Action CTA */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-slate-900 via-[#071F18] to-emerald-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-emerald-500/30 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="editorial-callout flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-xl">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300 font-bold">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-800 font-bold">
               Institutional Fiduciary Assurance
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-black text-white">
+            <h3 className="font-serif text-2xl sm:text-3xl font-black text-[#0B4F42]">
               Permanent Health Security for All 20 Dzongkhags
             </h3>
-            <p className="text-slate-300 text-xs sm:text-sm font-light leading-relaxed">
+            <p className="text-slate-700 text-xs sm:text-sm font-light leading-relaxed">
               Every Ngultrum contributed to the Bhutan Health Trust Fund expands the window financing yield capacity and is matched 1:1 by the Royal Government of Bhutan.
             </p>
           </div>
@@ -424,7 +424,7 @@ function WindowFinancingPage() {
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
             <Link
               to="/resources"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/20 transition-all text-center"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border-b border-[#0B4F42]/30 text-[#0B4F42] font-bold text-xs hover:border-[#0B4F42] transition-all text-center"
             >
               <FileText className="h-4 w-4 text-emerald-400" />
               <span>Official Audit Reports</span>

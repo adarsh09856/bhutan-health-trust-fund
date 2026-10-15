@@ -1,3 +1,4 @@
+import { ConfirmationProvider } from "@/components/confirmation-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -156,6 +157,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AdminAuthProvider>
+        <ConfirmationProvider>
         <div className="flex min-h-screen flex-col bg-background text-foreground">
           <AdminTopBar />
           {!isAdminRoute && <SiteHeader />}
@@ -165,6 +167,7 @@ function RootComponent() {
           {!isAdminRoute && <SiteFooter />}
         </div>
         <Toaster position="top-right" richColors />
+        </ConfirmationProvider>
       </AdminAuthProvider>
     </QueryClientProvider>
   );

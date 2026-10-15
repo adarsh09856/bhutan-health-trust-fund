@@ -34,7 +34,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/bhtf/bhtf_emblem.png";
 
 export const Route = createFileRoute("/admin/donations")({
   head: () => ({
@@ -79,18 +79,16 @@ export function AdminDonationsPage() {
     }
   };
 
-  const handleDeleteDonation = async (id: number, refNo: string) => {
-    if (!window.confirm(`Are you sure you want to permanently delete donation record ${refNo}?`))
-      return;
+  const handleCancelDonation = async (id: number, refNo: string) => {
     try {
-      await deleteAdminDonation({ data: { id } });
-      toast.success(`Donation record ${refNo} deleted.`);
+      await updateDonationStatus({ data: { id, status: "CANCELLED" } });
+      toast.success(`Donation ${refNo} cancelled. Reference retained.`);
       if (selectedDonation?.id === id) {
         setSelectedDonation(null);
       }
       fetchDonations();
     } catch {
-      toast.error("Failed to delete donation record.");
+      toast.error("Failed to cancel donation record.");
     }
   };
 
@@ -417,7 +415,10 @@ export function AdminDonationsPage() {
                             {d.paymentMethod}
                           </span>
                           {d.gatewayTransactionId && (
-                            <div className="text-[10px] font-mono text-slate-500 mt-1 truncate max-w-[140px]" title={d.gatewayTransactionId}>
+                            <div
+                              className="text-[10px] font-mono text-slate-500 mt-1 truncate max-w-[140px]"
+                              title={d.gatewayTransactionId}
+                            >
                               Ref: {d.gatewayTransactionId}
                             </div>
                           )}
@@ -463,12 +464,12 @@ export function AdminDonationsPage() {
 
                           <button
                             type="button"
-                            onClick={() => handleDeleteDonation(d.id, d.referenceNo)}
+                            onClick={() => handleCancelDonation(d.id, d.referenceNo)}
                             className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold transition cursor-pointer text-xs"
-                            title="Delete donation record"
+                            title="Cancel donation and retain its reference"
                           >
                             <Trash2 className="h-3 w-3" />
-                            <span>Delete</span>
+                            <span>Cancel</span>
                           </button>
                         </td>
                       </tr>
@@ -557,7 +558,8 @@ export function AdminDonationsPage() {
                     </span>
                     {selectedDonation.status === "VERIFICATION_SUBMITTED" && (
                       <p className="text-[11px] text-blue-700 font-medium pt-1">
-                        ⚠️ Donor submitted mobile banking remittance. Cross-check your bank statement and click "VERIFIED" below to approve.
+                        ⚠️ Donor submitted mobile banking remittance. Cross-check your bank
+                        statement and click "VERIFIED" below to approve.
                       </p>
                     )}
                   </div>
@@ -568,7 +570,15 @@ export function AdminDonationsPage() {
                     Update Fiduciary Status:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {(["PENDING", "VERIFICATION_SUBMITTED", "VERIFIED", "COMPLETED", "CANCELLED"] as const).map((st) => (
+                    {(
+                      [
+                        "PENDING",
+                        "VERIFICATION_SUBMITTED",
+                        "VERIFIED",
+                        "COMPLETED",
+                        "CANCELLED",
+                      ] as const
+                    ).map((st) => (
                       <button
                         key={st}
                         type="button"
@@ -599,11 +609,11 @@ export function AdminDonationsPage() {
                   <button
                     type="button"
                     onClick={() =>
-                      handleDeleteDonation(selectedDonation.id, selectedDonation.referenceNo)
+                      handleCancelDonation(selectedDonation.id, selectedDonation.referenceNo)
                     }
                     className="px-3.5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
                   >
-                    <Trash2 className="h-3.5 w-3.5" /> Delete Record
+                    <Trash2 className="h-3.5 w-3.5" /> Cancel Donation
                   </button>
 
                   <button

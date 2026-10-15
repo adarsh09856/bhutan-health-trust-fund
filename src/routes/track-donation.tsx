@@ -23,7 +23,7 @@ import {
   ArrowRight,
   ExternalLink,
 } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/bhtf/bhtf_emblem.png";
 import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
@@ -193,7 +193,7 @@ export function TrackDonationPage() {
   };
 
   return (
-    <div className="space-y-12 pb-20">
+    <div className="public-editorial-page space-y-12 pb-20">
       {/* Page Hero */}
       <div className="print:hidden">
         <PageHero
@@ -204,15 +204,15 @@ export function TrackDonationPage() {
       </div>
 
       {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
+      {customSections && customSections.some((section) => section.type !== "hero") && (
         <div className="print:hidden">
-          <PageRenderer sections={customSections} pageSlug="track-donation" />
+          <PageRenderer sections={customSections.filter((section) => section.type !== "hero")} pageSlug="track-donation" />
         </div>
       )}
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Verification Form (Hidden when printing) */}
-        <div className="print:hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl space-y-6 relative" data-bhtf-section="track-donation-lookup">
+        <div className="print:hidden editorial-card p-6 sm:p-10 space-y-6 relative" data-bhtf-section="track-donation-lookup">
           <SectionEditBadge
             label="Donation Lookup Form"
             pageSlug="track-donation"
@@ -357,7 +357,7 @@ export function TrackDonationPage() {
             </div>
 
             {/* Verification Breakdown Card (Web View) */}
-            <div className="print:hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
+            <div className="print:hidden editorial-card p-6 sm:p-8 space-y-8">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-extrabold border border-emerald-200">
@@ -410,7 +410,7 @@ export function TrackDonationPage() {
                   </span>
                 </div>
 
-                <div className="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl p-5 shadow">
+                <div className="editorial-band rounded-xl p-5">
                   <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
                     Total Healthcare Impact
                   </span>

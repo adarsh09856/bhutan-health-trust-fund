@@ -12,7 +12,7 @@ import {
   EyeOff,
   ShieldAlert,
 } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/bhtf/bhtf_emblem.png";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/login")({
@@ -37,11 +37,9 @@ function AdminLoginPage() {
   const router = useRouter();
 
   const handleLoginWithCredentials = async (loginEmail: string, loginPass: string) => {
-    console.log("[LOGIN SUBMITTING]", loginEmail);
     setLoading(true);
     try {
       const res = await adminLogin({ data: { email: loginEmail, password: loginPass } });
-      console.log("[LOGIN RESPONSE]", res);
       if (res.success && res.user && res.token) {
         login(res.user, res.token);
         toast.success(`Welcome back, ${res.user.name}!`);

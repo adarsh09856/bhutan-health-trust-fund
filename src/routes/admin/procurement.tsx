@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -54,6 +55,7 @@ const tenderCategories = [
 ];
 
 export function AdminProcurementPage() {
+  const confirm = useConfirmation();
   const [activeTab, setActiveTab] = useState<"tenders" | "steps">("tenders");
 
   // --- Tenders State ---
@@ -200,7 +202,7 @@ export function AdminProcurementPage() {
   };
 
   const handleDeleteTender = async (id: number, tNo: string) => {
-    if (!window.confirm(`Are you sure you want to permanently delete tender ${tNo}?`)) return;
+    if (!await confirm(`Are you sure you want to permanently delete tender ${tNo}?`)) return;
     try {
       await deleteAdminProcurementTender({ data: { id } });
       toast.success(`Tender ${tNo} deleted.`);
@@ -267,7 +269,7 @@ export function AdminProcurementPage() {
   };
 
   const handleDeleteStep = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this procurement step?")) return;
+    if (!await confirm("Are you sure you want to delete this procurement step?")) return;
     try {
       await deleteAdminProcurementStep({ data: { id } });
       toast.success("Procurement step removed.");

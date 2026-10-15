@@ -144,7 +144,7 @@ function UpcomingEventsPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Official Event Calendar"
         title="Upcoming Events & National Health Commemorations"
@@ -169,7 +169,7 @@ function UpcomingEventsPage() {
           }}
         />
         {/* Search & Filter */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="editorial-card p-4 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="relative w-full md:w-80">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -250,11 +250,11 @@ function UpcomingEventsPage() {
         )}
 
         {/* Regular Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="event-register">
           {regular.map((evt) => (
             <div
               key={evt.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-6 group"
+              className="editorial-card p-6 sm:p-8 hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-6 group"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-xs font-mono">

@@ -141,6 +141,12 @@ function AboutOrganizationPage() {
         </div>
       </section>
 
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <a href="#organogram" className="inline-flex items-center gap-2 rounded-xl border border-emerald-800 bg-white px-5 py-3 text-sm font-bold text-emerald-900 shadow-sm hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800">
+          View the official organogram <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
       {/* Custom Page Renderer if edited by admin */}
       {customSections && customSections.length > 0 && (
         <PageRenderer sections={customSections} pageSlug="about-organization" />
@@ -532,7 +538,7 @@ function AboutOrganizationPage() {
       </section>
 
       {/* Annexure 1: Organizational Structure of the Secretariat (Exact match to WhatsApp Briefing & Slide 10) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-structure-tree">
+      <section id="organogram" className="mx-auto max-w-7xl scroll-mt-32 px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-structure-tree">
         <SectionEditBadge
           label="Approved Organogram"
           pageSlug="about-organization"

@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -71,6 +72,7 @@ const iconOptions = [
 ];
 
 export function AdminMetricsPage() {
+  const confirm = useConfirmation();
   const [metrics, setMetrics] = useState<ImpactMetric[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -172,7 +174,7 @@ export function AdminMetricsPage() {
   };
 
   const handleDelete = async (id: number, metricLabel: string) => {
-    if (!window.confirm(`Are you sure you want to delete the metric "${metricLabel}"?`)) return;
+    if (!await confirm(`Are you sure you want to delete the metric "${metricLabel}"?`)) return;
     try {
       await deleteAdminMetric({ data: { id } });
       toast.success("Metric deleted.");

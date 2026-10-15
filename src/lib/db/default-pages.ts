@@ -27,7 +27,7 @@ export const defaultCorePages: DefaultPageDef[] = [
         dzongkhaText: "མི་སེར་གཟུགས་ཁམས་བཟང་པོ་དང་ རྒྱལ་ཁབ་སྟོབས་ཤུགས་ཅན།",
         badge: "Royal Charter Statutory Trust Fund",
         bgVariant: "dark",
-        primaryCtaText: "Contribute to Corpus (1:1 Matched)",
+        primaryCtaText: "Support Healthcare",
         primaryCtaUrl: "/get-involved",
         secondaryCtaText: "Explore Commodities Formulary",
         secondaryCtaUrl: "/our-work",

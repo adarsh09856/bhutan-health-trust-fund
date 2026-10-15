@@ -15,7 +15,7 @@ import {
   EyeOff,
   AlertTriangle,
 } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/bhtf/bhtf_emblem.png";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/setup")({

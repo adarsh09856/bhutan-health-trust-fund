@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/admin/policies")({
 });
 
 export function AdminPoliciesPage() {
+  const confirm = useConfirmation();
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -124,7 +126,7 @@ export function AdminPoliciesPage() {
   };
 
   const handleDelete = async (id: number, policyTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete "${policyTitle}"?`)) return;
+    if (!await confirm(`Are you sure you want to delete "${policyTitle}"?`)) return;
     try {
       await deleteAdminPolicy({ data: { id } });
       toast.success("Policy removed.");

@@ -460,25 +460,7 @@ export async function ensureDatabaseSchema() {
         description = EXCLUDED.description;
     `);
 
-    // 8. Auto-cleanse legacy mock/test records from active database tables
-    await client.query(`
-      DELETE FROM donations 
-      WHERE donor_email LIKE '%example.com' 
-         OR donor_email LIKE '%sample.com%' 
-         OR reference_no LIKE 'BHTF-DON-2025-%';
-
-      DELETE FROM inquiries 
-      WHERE email LIKE '%example.com' 
-         OR email LIKE '%sample.com%' 
-         OR name IN ('Sonam Tobgay', 'Kinley Pem', 'Dr. Karma Yonten');
-
-      DELETE FROM subscribers 
-      WHERE email LIKE '%example.com' 
-         OR email IN ('dorji.t@gov.bt', 'pema.w@health.gov.bt', 'karma.z@who.int', 'tshering.d@unicef.org', 'dechen.c@moh.gov.bt');
-
-      DELETE FROM media_videos 
-      WHERE video_url LIKE '%dQw4w9WgXcQ%';
-    `);
+    // Existing records are never removed during schema initialization.
 
     // 9. Ensure custom_pages table (WordPress-style dynamic page editor)
     await client.query(`

@@ -9,11 +9,13 @@ import { requireAdminFromRequest, requireSuperAdminFromRequest } from "../auth.s
 
 // --- Dashboard Analytics ---
 export const getDashboardAnalytics = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getDashboardMetrics();
 });
 
 // --- News Admin Functions ---
 export const getAdminNews = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllNews(false);
 });
 
@@ -31,6 +33,7 @@ export const createNewsArticle = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createNews({
       title: data.title,
       slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -56,6 +59,7 @@ export const updateNewsArticle = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateNews(id, rest);
   });
@@ -63,11 +67,13 @@ export const updateNewsArticle = createServerFn({ method: "POST" })
 export const deleteNewsArticle = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteNews(data.id);
   });
 
 // --- Reports Admin Functions ---
 export const getAdminReports = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllReports();
 });
 
@@ -83,6 +89,7 @@ export const createAdminReport = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createReport({
       title: data.title,
       year: data.year,
@@ -96,6 +103,7 @@ export const createAdminReport = createServerFn({ method: "POST" })
 export const deleteAdminReport = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteReport(data.id);
   });
 
@@ -112,12 +120,14 @@ export const updateAdminReport = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateReport(id, rest);
   });
 
 // --- Policies Admin Functions ---
 export const getAdminPolicies = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllPolicies();
 });
 
@@ -134,6 +144,7 @@ export const createAdminPolicy = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createPolicy({
       title: data.title,
       slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -158,6 +169,7 @@ export const updateAdminPolicy = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updatePolicy(id, rest);
   });
@@ -165,11 +177,13 @@ export const updateAdminPolicy = createServerFn({ method: "POST" })
 export const deleteAdminPolicy = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deletePolicy(data.id);
   });
 
 // --- Donations Admin Functions ---
 export const getAdminDonations = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllDonations();
 });
 
@@ -195,6 +209,7 @@ export const createAdminDonation = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const refNo = `BHTF-REM-${Math.floor(100000 + Math.random() * 900000)}`;
     return await db.createDonation({
       referenceNo: refNo,
@@ -218,17 +233,20 @@ export const updateDonationStatus = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.updateDonationStatus(data.id, data.status);
   });
 
 export const deleteAdminDonation = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteDonation(data.id);
   });
 
 // --- Inquiries Admin Functions ---
 export const getAdminInquiries = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllInquiries();
 });
 
@@ -244,6 +262,7 @@ export const createAdminInquiry = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createInquiry({
       name: data.name.trim(),
       email: data.email.trim().toLowerCase(),
@@ -264,17 +283,26 @@ export const updateInquiryStatus = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
+    const current = (await db.getAllInquiries()).find((item) => item.id === data.id);
+    if (!current) throw new Error("Inquiry was not found.");
+    const stages = ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"];
+    if (stages.indexOf(data.status) < stages.indexOf(current.status)) {
+      throw new Error("Inquiry status cannot move backwards.");
+    }
     return await db.updateInquiryStatus(data.id, data.status, data.replyNotes);
   });
 
 export const deleteAdminInquiry = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteInquiry(data.id);
   });
 
 // --- Subscribers Admin Functions ---
 export const getAdminSubscribers = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllSubscribers();
 });
 
@@ -286,6 +314,7 @@ export const createAdminSubscriber = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.adminAddSubscriber(data.email, data.isActive);
   });
 
@@ -297,17 +326,20 @@ export const updateAdminSubscriberStatus = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.updateSubscriberStatus(data.id, data.isActive);
   });
 
 export const deleteAdminSubscriber = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteSubscriber(data.id);
   });
 
 // --- Programs Admin Functions ---
 export const getAdminPrograms = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllPrograms();
 });
 
@@ -325,6 +357,7 @@ export const createAdminProgram = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createProgram({
       title: data.title,
       slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -352,6 +385,7 @@ export const updateAdminProgram = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateProgram(id, rest);
   });
@@ -359,11 +393,13 @@ export const updateAdminProgram = createServerFn({ method: "POST" })
 export const deleteAdminProgram = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteProgram(data.id);
   });
 
 // --- Trustees Admin Functions ---
 export const getAdminTrustees = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllTrustees(false);
 });
 
@@ -381,6 +417,7 @@ export const createAdminTrustee = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createTrustee({
       name: data.name.trim(),
       role: data.role.trim(),
@@ -408,6 +445,7 @@ export const updateAdminTrustee = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateTrustee(id, rest);
   });
@@ -415,11 +453,13 @@ export const updateAdminTrustee = createServerFn({ method: "POST" })
 export const deleteAdminTrustee = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteTrustee(data.id);
   });
 
 // --- FAQs Admin Functions ---
 export const getAdminFaqs = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllFaqs(false);
 });
 
@@ -434,6 +474,7 @@ export const createAdminFaq = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createFaq({
       question: data.question.trim(),
       answer: data.answer.trim(),
@@ -455,6 +496,7 @@ export const updateAdminFaq = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateFaq(id, rest);
   });
@@ -462,11 +504,13 @@ export const updateAdminFaq = createServerFn({ method: "POST" })
 export const deleteAdminFaq = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteFaq(data.id);
   });
 
 // --- Impact Metrics Admin Functions ---
 export const getAdminMetrics = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllImpactMetrics(false);
 });
 
@@ -483,6 +527,7 @@ export const createAdminMetric = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createImpactMetric({
       label: data.label.trim(),
       value: data.value.trim(),
@@ -508,6 +553,7 @@ export const updateAdminMetric = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateImpactMetric(id, rest);
   });
@@ -515,11 +561,13 @@ export const updateAdminMetric = createServerFn({ method: "POST" })
 export const deleteAdminMetric = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteImpactMetric(data.id);
   });
 
 // --- Milestones Admin Functions ---
 export const getAdminMilestones = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllMilestones();
 });
 
@@ -533,6 +581,7 @@ export const createAdminMilestone = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.createMilestone({
       year: data.year.trim(),
       title: data.title.trim(),
@@ -552,6 +601,7 @@ export const updateAdminMilestone = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const { id, ...rest } = data;
     return await db.updateMilestone(id, rest);
   });
@@ -559,11 +609,13 @@ export const updateAdminMilestone = createServerFn({ method: "POST" })
 export const deleteAdminMilestone = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteMilestone(data.id);
   });
 
 // --- Site Settings Admin Functions ---
 export const getAdminSettings = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllSettings();
 });
 
@@ -702,6 +754,14 @@ export const updateAdminUser = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     const admin = await requireSuperAdminFromRequest();
+    const users = await db.getAllUsers();
+    const current = users.find(user => user.id === data.id);
+    if (!current) throw new Error("User was not found.");
+    if (current.role === "SUPER_ADMIN" && current.isActive &&
+        (data.role === "EDITOR" || data.isActive === false) &&
+        users.filter(user => user.role === "SUPER_ADMIN" && user.isActive).length <= 1) {
+      throw new Error("Keep at least one active Super Administrator.");
+    }
     const updateData: any = {};
     if (data.name) updateData.name = data.name.trim();
     if (data.role) updateData.role = data.role;
@@ -727,11 +787,13 @@ export const updateAdminUser = createServerFn({ method: "POST" })
       entity: "USER",
       entityId: String(data.id),
       details: `Updated parameters: ${Object.keys(updateData).join(", ")}`,
-      newValue: JSON.stringify(updateData),
+      newValue: JSON.stringify({ name: updateData.name, role: updateData.role, isActive: updateData.isActive, passwordChanged: Boolean(data.password) }),
       reason: data.reason,
     });
 
-    return updated;
+    if (!updated) return null;
+    const { passwordHash: _passwordHash, ...publicUser } = updated;
+    return publicUser;
   });
 
 export const deleteAdminUser = createServerFn({ method: "POST" })
@@ -1226,7 +1288,10 @@ export const updateAdminPaymentGateway = createServerFn({ method: "POST" })
       currency: z.string().optional(),
       reason: z
         .string()
-        .min(10, "Mandatory reason must be at least 10 characters justifying payment gateway mutation"),
+        .min(
+          10,
+          "Mandatory reason must be at least 10 characters justifying payment gateway mutation",
+        ),
     }),
   )
   .handler(async ({ data }) => {
@@ -1281,13 +1346,26 @@ export const testGatewayConnection = createServerFn({ method: "POST" })
     const startTime = Date.now();
     const gw = await db.getPaymentGateway(data.gatewayKey);
 
+    if (data.gatewayKey === "RMA_BFS") {
+      return {
+        success: false,
+        gatewayKey: "RMA_BFS",
+        isLiveMode: gw?.isLiveMode ?? false,
+        latencyMs: Date.now() - startTime,
+        message:
+          "RMA BFS connection cannot be verified until the bank supplies its authenticated test protocol. Online checkout remains disabled.",
+      };
+    }
+
     if (!gw) {
       throw new Error(`Gateway configuration for ${data.gatewayKey} not found.`);
     }
 
     if (data.gatewayKey === "RAZORPAY") {
       if (!gw.keyId || !gw.keySecret) {
-        throw new Error("Razorpay Key ID and Key Secret must be configured before testing connection.");
+        throw new Error(
+          "Razorpay Key ID and Key Secret must be configured before testing connection.",
+        );
       }
 
       try {
@@ -1327,27 +1405,11 @@ export const testGatewayConnection = createServerFn({ method: "POST" })
       }
     }
 
-    if (data.gatewayKey === "RMA_BFS") {
-      const crypto = await import("node:crypto");
-      const secret = gw.keySecret || "BHTF_BFS_SECRET_TEST_KEY";
-      const samplePayload = `BHTF_TEST_ORDER|1000|${gw.merchantId || "BHTF_RMA_MERCHANT"}|${Date.now()}`;
-      const signature = crypto.createHmac("sha256", secret).update(samplePayload).digest("hex");
-
-      const latencyMs = Date.now() - startTime;
-      return {
-        success: true,
-        gatewayKey: "RMA_BFS",
-        isLiveMode: gw.isLiveMode,
-        latencyMs,
-        message: `RMA BFS HMAC-SHA256 signature generator active. Endpoint: ${gw.gatewayUrl || "https://bfstest.rma.org.bt/bfsgateway"}. Test checksum verified (${signature.slice(0, 12)}...).`,
-      };
-    }
-
     return {
-      success: true,
+      success: false,
       gatewayKey: data.gatewayKey,
       latencyMs: Date.now() - startTime,
-      message: `Gateway ${data.gatewayKey} simulated connection verified.`,
+      message: `No verified connection check is configured for ${data.gatewayKey}.`,
     };
   });
 
@@ -1396,12 +1458,14 @@ export const verifyDonationJournalAction = createServerFn({ method: "POST" })
 // --- WordPress-Style Live Page Editor Server Functions ---
 
 export const getAdminPages = createServerFn({ method: "GET" }).handler(async () => {
+  await requireAdminFromRequest();
   return await db.getAllPages();
 });
 
 export const getAdminPage = createServerFn({ method: "GET" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.getPageBySlug(data.slug);
   });
 
@@ -1414,6 +1478,7 @@ export const createAdminPage = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const slug = data.slug
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, "-")
@@ -1438,7 +1503,8 @@ export const createAdminPage = createServerFn({ method: "POST" })
         order: 2,
         isVisible: true,
         title: "About This Initiative",
-        content: "Provide background information, healthcare impact details, and community benefits here.",
+        content:
+          "Provide background information, healthcare impact details, and community benefits here.",
         bgVariant: "white",
       },
     ];
@@ -1462,6 +1528,7 @@ export const saveAdminPageDraft = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.savePage(data.slug, {
       title: data.title,
       metaDescription: data.metaDescription,
@@ -1480,6 +1547,7 @@ export const publishAdminPage = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.savePage(data.slug, {
       title: data.title,
       metaDescription: data.metaDescription,
@@ -1491,12 +1559,14 @@ export const publishAdminPage = createServerFn({ method: "POST" })
 export const resetAdminPageToDefault = createServerFn({ method: "POST" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.resetPageToDefault(data.slug);
   });
 
 export const deleteAdminPage = createServerFn({ method: "POST" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deletePage(data.slug);
   });
 
@@ -1523,6 +1593,7 @@ export const saveQuickSectionEdit = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     const slug = data.pageSlug.trim().toLowerCase();
 
     // Check if this is a site setting edit
@@ -1592,7 +1663,7 @@ export const saveQuickSectionEdit = createServerFn({ method: "POST" })
 
     // Record audit log
     try {
-      await db.createAuditLog({
+      await db.logAuditEvent({
         userEmail: "admin@bhtf.bt",
         action: "UPDATE",
         entity: "PAGE_SECTION",
@@ -1622,16 +1693,29 @@ export const uploadAsset = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
+    const admin = await requireAdminFromRequest();
     const timestamp = Date.now();
-    const cleanName = data.fileName
-      .replace(/[^a-zA-Z0-9.-]/g, "_")
-      .toLowerCase();
+    const allowedExtensions = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif", ".svg", ".pdf", ".doc", ".docx", ".zip"]);
+    if (!allowedExtensions.has(path.extname(data.fileName).toLowerCase())) {
+      throw new Error("Choose an image, PDF, Word document or ZIP archive.");
+    }
+    const cleanName = data.fileName.replace(/[^a-zA-Z0-9.-]/g, "_").toLowerCase();
     const storedName = `${timestamp}-${cleanName}`;
 
     // Decode base64
     const base64Data = data.fileBase64.replace(/^data:[^;]+;base64,/, "");
+    if (!/^[A-Za-z0-9+/\r\n]+={0,2}$/.test(base64Data)) {
+      throw new Error("The uploaded file encoding is invalid.");
+    }
     const buffer = Buffer.from(base64Data, "base64");
     const sizeBytes = buffer.length;
+    if (!sizeBytes || sizeBytes > 50 * 1024 * 1024) {
+      throw new Error("Upload must contain a file of at most 50MB.");
+    }
+    if (path.extname(data.fileName).toLowerCase() === ".svg" &&
+        /<\s*(script|foreignObject)|\bon\w+\s*=|javascript:|<!DOCTYPE|<!ENTITY/i.test(buffer.toString("utf8"))) {
+      throw new Error("SVG uploads must not contain scripts or active content.");
+    }
 
     // Calculate human readable size
     const computedSize =
@@ -1659,6 +1743,7 @@ export const uploadAsset = createServerFn({ method: "POST" })
       }
     } catch (writeErr) {
       console.warn("[uploadAsset] File write to disk:", writeErr);
+      throw new Error("The file could not be saved. Please retry the upload.");
     }
 
     const publicUrl = `/uploads/${storedName}`;
@@ -1673,12 +1758,12 @@ export const uploadAsset = createServerFn({ method: "POST" })
       category: data.category,
       publicUrl,
       dataBase64: sizeBytes <= 500 * 1024 ? data.fileBase64 : null,
-      uploadedBy: "admin@bhtf.bt",
+      uploadedBy: admin.email,
     });
 
     try {
-      await db.createAuditLog({
-        userEmail: "admin@bhtf.bt",
+      await db.logAuditEvent({
+        userEmail: admin.email,
         action: "CREATE",
         entity: "UPLOADED_ASSET",
         entityId: String(asset.id),
@@ -1696,13 +1781,13 @@ export const uploadAsset = createServerFn({ method: "POST" })
 export const getAdminAssets = createServerFn({ method: "GET" })
   .validator((category?: unknown) => (typeof category === "string" ? category : undefined))
   .handler(async ({ data: category }) => {
+    await requireAdminFromRequest();
     return await db.getAllUploadedAssets(category);
   });
 
 export const deleteAdminAsset = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.number() }))
   .handler(async ({ data }) => {
+    await requireAdminFromRequest();
     return await db.deleteUploadedAsset(data.id);
   });
-
-

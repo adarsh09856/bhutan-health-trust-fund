@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -79,6 +80,7 @@ export const Route = createFileRoute("/admin/trustees")({
 });
 
 export function AdminTrusteesPage() {
+  const confirm = useConfirmation();
   const [trustees, setTrustees] = useState<Trustee[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -185,7 +187,7 @@ export function AdminTrusteesPage() {
   };
 
   const handleDelete = async (id: number, trusteeName: string) => {
-    if (!window.confirm(`Are you sure you want to remove ${trusteeName} from the Board?`)) return;
+    if (!await confirm(`Are you sure you want to remove ${trusteeName} from the Board?`)) return;
     try {
       await deleteAdminTrustee({ data: { id } });
       toast.success("Trustee removed.");

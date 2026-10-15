@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
+import { useConfirmation } from "@/components/confirmation-provider";
 import {
   getAdminPages,
   createAdminPage,
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/admin/pages")({
 });
 
 export function AdminPagesList() {
+  const confirm = useConfirmation();
   const [pages, setPages] = useState<CustomPage[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -90,7 +92,7 @@ export function AdminPagesList() {
   };
 
   const handleReset = async (slug: string) => {
-    if (!confirm(`Are you sure you want to reset "${slug}" back to its default sovereign template?`)) {
+    if (!await confirm(`Are you sure you want to reset "${slug}" back to its default sovereign template?`)) {
       return;
     }
     try {
@@ -103,7 +105,7 @@ export function AdminPagesList() {
   };
 
   const handleDelete = async (slug: string) => {
-    if (!confirm(`Permanently delete custom page "/p/${slug}"? This action cannot be undone.`)) {
+    if (!await confirm(`Permanently delete custom page "/p/${slug}"? This action cannot be undone.`)) {
       return;
     }
     try {

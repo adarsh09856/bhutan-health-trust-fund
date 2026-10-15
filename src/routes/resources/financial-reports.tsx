@@ -1,3 +1,5 @@
+import { ManagedPublications } from "@/components/managed-publications";
+import { getPublicReports } from "@/lib/api/public.functions";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/page-hero";
@@ -17,6 +19,7 @@ import { toast } from "sonner";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/resources/financial-reports")({
+  loader: async () => ({ managedReports: await getPublicReports().catch(() => []) }),
   head: () => ({
     meta: [
       { title: "Financial Reports & Statutory Audits | Bhutan Health Trust Fund" },
@@ -113,6 +116,7 @@ const financialReportsArchive: FinancialReportRecord[] = [
 ];
 
 function FinancialReportsPage() {
+  const { managedReports } = Route.useLoaderData();
   const [search, setSearch] = useState("");
 
   const filtered = financialReportsArchive.filter((r) => {
@@ -130,7 +134,7 @@ function FinancialReportsPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Official Financial Repository"
         title="Financial Reports & Statutory Audits"
@@ -141,6 +145,7 @@ function FinancialReportsPage() {
           { label: "Financial Reports" },
         ]}
       />
+      <ManagedPublications reports={managedReports} categories={["Financial","Audit"]} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="financial-reports-register">
         <SectionEditBadge
@@ -156,7 +161,7 @@ function FinancialReportsPage() {
         />
 
         {/* Search Header */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="editorial-card p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -174,11 +179,11 @@ function FinancialReportsPage() {
         </div>
 
         {/* Audit Report List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="publication-register">
           {filtered.map((report) => (
             <div
               key={report.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="editorial-card p-6 sm:p-7 hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-2">

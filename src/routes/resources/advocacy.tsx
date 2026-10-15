@@ -1,3 +1,5 @@
+import { ManagedPublications } from "@/components/managed-publications";
+import { getPublicReports } from "@/lib/api/public.functions";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/page-hero";
@@ -19,6 +21,7 @@ import { toast } from "sonner";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/resources/advocacy")({
+  loader: async () => ({ managedReports: await getPublicReports().catch(() => []) }),
   head: () => ({
     meta: [
       { title: "Advocacy Materials & Public Health Literacy | Bhutan Health Trust Fund" },
@@ -134,6 +137,7 @@ const advocacyArchive: AdvocacyItem[] = [
 ];
 
 function AdvocacyMaterialsPage() {
+  const { managedReports } = Route.useLoaderData();
   const [search, setSearch] = useState("");
   const [selectedCat, setSelectedCat] = useState<string>("ALL");
 
@@ -159,7 +163,7 @@ function AdvocacyMaterialsPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Official Publications & Toolkits"
         title="Advocacy Materials & Health Literacy Kits"
@@ -170,6 +174,7 @@ function AdvocacyMaterialsPage() {
           { label: "Advocacy Materials" },
         ]}
       />
+      <ManagedPublications reports={managedReports} categories={["Advocacy"]} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="advocacy-archive">
         <SectionEditBadge
@@ -184,7 +189,7 @@ function AdvocacyMaterialsPage() {
           }}
         />
         {/* Search & Category Filter Bar */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="editorial-card p-4 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="relative w-full md:w-80">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -214,11 +219,11 @@ function AdvocacyMaterialsPage() {
         </div>
 
         {/* Advocacy Publication Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="publication-register">
           {filtered.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              className="editorial-card rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 {/* Visual Cover Banner */}

@@ -1,3 +1,5 @@
+import { ManagedPublications } from "@/components/managed-publications";
+import { getPublicReports } from "@/lib/api/public.functions";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/page-hero";
@@ -16,6 +18,7 @@ import { toast } from "sonner";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/resources/other-publications")({
+  loader: async () => ({ managedReports: await getPublicReports().catch(() => []) }),
   head: () => ({
     meta: [
       { title: "Other Publications & Research Reports | Bhutan Health Trust Fund" },
@@ -106,6 +109,7 @@ const publicationsArchive: PublicationRecord[] = [
 ];
 
 function OtherPublicationsPage() {
+  const { managedReports } = Route.useLoaderData();
   const [search, setSearch] = useState("");
 
   const filtered = publicationsArchive.filter((p) => {
@@ -124,7 +128,7 @@ function OtherPublicationsPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Official Publications Repository"
         title="Other Publications"
@@ -135,6 +139,7 @@ function OtherPublicationsPage() {
           { label: "Other Publications" },
         ]}
       />
+      <ManagedPublications reports={managedReports} categories={["Research","Assessment","Governance","Strategy","Publications"]} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="other-publications-register">
         <SectionEditBadge
@@ -150,7 +155,7 @@ function OtherPublicationsPage() {
         />
 
         {/* Search Header */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="editorial-card p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -168,11 +173,11 @@ function OtherPublicationsPage() {
         </div>
 
         {/* Publications Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="publication-register">
           {filtered.map((pub) => (
             <div
               key={pub.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="editorial-card p-6 sm:p-7 hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-2">

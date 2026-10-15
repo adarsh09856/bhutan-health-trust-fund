@@ -180,7 +180,7 @@ export function CommodityTracker() {
   const [activeTab, setActiveTab] = useState<CommodityCategory>(commodityCategories[0]);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-xs space-y-8">
+    <div className="commodity-editorial">
       {/* Header */}
       <div className="relative z-10 max-w-3xl space-y-2">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF8F3] border border-amber-500/30 text-amber-800 text-xs font-semibold">
@@ -197,8 +197,8 @@ export function CommodityTracker() {
       </div>
 
       {/* 6 Minimal Tab Switchers */}
-      <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        {commodityCategories.map((c) => {
+      <div className="commodity-tabs" role="tablist" aria-label="Healthcare supply streams">
+        {commodityCategories.map((c, index) => {
           const isSelected = activeTab.id === c.id;
           const Icon = c.icon;
 
@@ -206,43 +206,41 @@ export function CommodityTracker() {
             <button
               key={c.id}
               type="button"
+              id={`commodity-tab-${c.id}`}
+              role="tab"
+              aria-selected={isSelected}
+              aria-controls="commodity-detail"
+              tabIndex={isSelected ? 0 : -1}
               onClick={() => setActiveTab(c)}
-              className={`p-4 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between cursor-pointer group ${
-                isSelected
-                  ? "border-emerald-800 bg-[#FAF8F3] ring-1 ring-emerald-800/30 shadow-xs"
-                  : "border-slate-200/80 bg-white hover:border-amber-400/60 hover:bg-[#FAF8F3]/50"
-              }`}
+              onKeyDown={(event) => {
+                const nextIndex = event.key === "ArrowRight" || event.key === "ArrowDown"
+                  ? (index + 1) % commodityCategories.length
+                  : event.key === "ArrowLeft" || event.key === "ArrowUp"
+                    ? (index - 1 + commodityCategories.length) % commodityCategories.length
+                    : event.key === "Home" ? 0
+                      : event.key === "End" ? commodityCategories.length - 1 : -1;
+                if (nextIndex >= 0) {
+                  event.preventDefault();
+                  const next = commodityCategories[nextIndex];
+                  setActiveTab(next);
+                  document.getElementById(`commodity-tab-${next.id}`)?.focus();
+                }
+              }}
+              className={`commodity-tab ${isSelected ? "is-selected" : ""}`}
             >
-              <div className="flex items-center justify-between">
-                <div
-                  className={`h-9 w-9 rounded-xl grid place-items-center transition ${
-                    isSelected
-                      ? "bg-slate-900 text-amber-300"
-                      : "bg-[#FAF8F3] text-emerald-800 group-hover:text-amber-700"
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                </div>
-                <span className="text-[10px] font-semibold text-emerald-800 tracking-wider font-sans">
-                  {c.dzongkha}
-                </span>
-              </div>
-
-              <div className="mt-3">
-                <div className="font-serif text-xs font-semibold text-slate-900 group-hover:text-emerald-900 transition line-clamp-1">
-                  {c.name}
-                </div>
-                <span className="text-[10px] text-slate-500 font-sans block mt-0.5">
-                  {c.annualBudgetNu.split(" / ")[0]}
-                </span>
-              </div>
+              <Icon className="commodity-tab-icon" aria-hidden="true" />
+              <span className="commodity-tab-copy">
+                <span className="commodity-tab-name">{c.name}</span>
+                <span className="commodity-tab-meta">{c.dzongkha} · {c.annualBudgetNu.split(" / ")[0]}</span>
+              </span>
+              <span className="commodity-tab-arrow" aria-hidden="true">↗</span>
             </button>
           );
         })}
       </div>
 
       {/* Selected Commodity Deep-Dive Card */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start bg-[#FAF8F3] p-6 sm:p-8 rounded-2xl border border-slate-200/80">
+      <div className="commodity-detail" id="commodity-detail" role="tabpanel" aria-labelledby={`commodity-tab-${activeTab.id}`}>
         {/* Left Column: Description & Specifications (7 Cols) */}
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-2">
@@ -258,7 +256,7 @@ export function CommodityTracker() {
           </div>
 
           {/* Specifications Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-sans">
+          <div className="commodity-facts">
             <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1">
               <span className="text-slate-400 text-[11px] block">Annual Spend:</span>
               <span className="font-serif text-sm font-normal text-slate-900 block">
@@ -275,7 +273,7 @@ export function CommodityTracker() {
 
             <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1 col-span-2 sm:col-span-1">
               <span className="text-slate-400 text-[11px] block">Quality Protocol:</span>
-              <span className="font-sans text-[11px] font-medium text-slate-800 block truncate">
+              <span className="font-sans text-[11px] font-medium text-slate-800 block">
                 {activeTab.qualityStandard}
               </span>
             </div>
@@ -286,7 +284,7 @@ export function CommodityTracker() {
             <h5 className="text-[11px] font-bold text-slate-700 uppercase tracking-wider font-sans">
               Financed Formulations & Supplies:
             </h5>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div className="commodity-supplies">
               {activeTab.keyItems.map((item, idx) => (
                 <div
                   key={idx}
@@ -301,7 +299,7 @@ export function CommodityTracker() {
         </div>
 
         {/* Right Column: Supply Chain Pipeline (5 Cols) */}
-        <div className="lg:col-span-5 bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 space-y-5">
+        <div className="commodity-pipeline lg:col-span-5 space-y-5">
           <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-3 font-sans">
             <Building2 className="h-4 w-4 text-emerald-800" />
             <span>Procurement & Supply Pipeline</span>

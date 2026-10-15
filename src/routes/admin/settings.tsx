@@ -1057,12 +1057,12 @@ export function AdminSettingsPage() {
                 const rma = gateways.find((g) => g.gatewayKey === "RMA_BFS") || {
                   gatewayKey: "RMA_BFS",
                   name: "RMA Payment Gateway / Bhutan Financial Switch",
-                  isEnabled: true,
+                  isEnabled: false,
                   isLiveMode: false,
-                  merchantId: "BHTF_RMA_MERCHANT",
-                  terminalId: "BHTF_TERM_01",
-                  gatewayUrl: "https://bfstest.rma.org.bt/bfsgateway",
-                  keySecret: "••••••••••••",
+                  merchantId: null,
+                  terminalId: null,
+                  gatewayUrl: null,
+                  keySecret: null,
                   currency: "BTN",
                 };
 
@@ -1091,7 +1091,7 @@ export function AdminSettingsPage() {
                                 : "bg-slate-100 text-slate-600"
                             }`}
                           >
-                            {rma.isEnabled ? "ENABLED" : "DISABLED"}
+                            {rma.isEnabled ? "CONFIGURED" : "NOT CONFIGURED"}
                           </span>
                           <span
                             className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -1140,7 +1140,7 @@ export function AdminSettingsPage() {
                           </span>
                           <div className="flex items-center justify-between">
                             <span className="font-mono text-slate-600">
-                              {rma.keySecret || "••••••••••••"}
+                              {rma.keySecret || "Not configured"}
                             </span>
                             <span className="text-[10px] text-amber-700 font-medium bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                               Masked

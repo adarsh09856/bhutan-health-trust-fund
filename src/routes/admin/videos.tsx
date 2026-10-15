@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -62,6 +63,7 @@ const categories = [
 ];
 
 export function AdminVideosPage() {
+  const confirm = useConfirmation();
   const [videos, setVideos] = useState<MediaVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -188,7 +190,7 @@ export function AdminVideosPage() {
   };
 
   const handleDelete = async (id: number, videoTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete video "${videoTitle}"?`)) return;
+    if (!await confirm(`Are you sure you want to delete video "${videoTitle}"?`)) return;
     try {
       await deleteAdminVideo({ data: { id } });
       toast.success("Video deleted.");

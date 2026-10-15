@@ -361,7 +361,7 @@ export async function requireSuperAdminSession(token?: string): Promise<SessionU
  */
 export async function getSessionFromRequest(explicitToken?: string): Promise<SessionUser | null> {
   try {
-    const cookieToken = getCookie(SESSION_COOKIE_NAME);
+    const cookieToken = explicitToken ? undefined : getCookie(SESSION_COOKIE_NAME);
     const token =
       explicitToken ||
       (typeof cookieToken === "string" ? decodeURIComponent(cookieToken) : undefined);

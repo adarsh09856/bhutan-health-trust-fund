@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/admin/milestones")({
 });
 
 export function AdminMilestonesPage() {
+  const confirm = useConfirmation();
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -117,7 +119,7 @@ export function AdminMilestonesPage() {
   };
 
   const handleDelete = async (id: number, milestoneTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete the milestone "${milestoneTitle}"?`))
+    if (!await confirm(`Are you sure you want to delete the milestone "${milestoneTitle}"?`))
       return;
     try {
       await deleteAdminMilestone({ data: { id } });

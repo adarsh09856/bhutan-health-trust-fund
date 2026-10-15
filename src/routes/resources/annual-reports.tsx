@@ -1,3 +1,5 @@
+import { ManagedPublications } from "@/components/managed-publications";
+import { getPublicReports } from "@/lib/api/public.functions";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/page-hero";
@@ -17,9 +19,10 @@ import { toast } from "sonner";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/resources/annual-reports")({
+  loader: async () => ({ managedReports: await getPublicReports().catch(() => []) }),
   head: () => ({
     meta: [
-      { title: "Statutory Annual Reports (2005–2025) | Bhutan Health Trust Fund" },
+      { title: "Statutory Annual Reports (2010–2025) | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
@@ -39,144 +42,84 @@ interface AnnualReportRecord {
   auditStatus: string;
   summary: string;
   downloadUrl: string;
+  highlights?: string[];
+  disbursementNu?: string;
 }
 
+// Official archive: https://www.bhtf.bt/?page_id=3279
 const annualReportsArchive: AnnualReportRecord[] = [
   {
-    id: "ar-2024-2025",
-    fiscalYear: "2024–2025",
-    title: "Annual Report 2024–2025",
-    fileSize: "6.8 MB",
-    pages: 76,
-    auditStatus: "Official Publication",
-    summary:
-      "Comprehensive statutory operational report detailing fiduciary stewardship, healthcare commodity disbursements, and program investments across the Kingdom of Bhutan.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2026/06/BTFAnnualReport2025.pdf",
+    "id": "ar-2023-2025",
+    "fiscalYear": "2023–2025",
+    "title": "Annual Report 2023–2025",
+    "fileSize": "19.1 MB",
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2023–2025 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2023-2025.pdf"
   },
   {
-    id: "ar-2023-2024",
-    fiscalYear: "2023–2024",
-    title: "Annual Report 2023–2024",
-    fileSize: "5.4 MB",
-    pages: 68,
-    auditStatus: "Official Publication",
-    summary:
-      "Statutory annual summary highlighting endowment growth, sustainable health financing, and nationwide primary care supply chain security.",
-    downloadUrl: "https://bhutantrustfund.bt/BTFDemo/wordpress/wp-content/uploads/2025/08/1742810786annualReport2023-2024.pdf.pdf",
+    "id": "ar-2020-2023",
+    "fiscalYear": "2020–2023",
+    "title": "Annual Report 2020–2023",
+    "fileSize": "18.9 MB",
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2020–2023 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2020-2023.pdf"
   },
   {
-    id: "ar-2022-2023",
-    fiscalYear: "2022–2023",
-    title: "Annual Report 2022–2023",
-    fileSize: "4.9 MB",
-    pages: 60,
-    auditStatus: "Official Publication",
-    summary:
-      "Operational review and audited balance sheet overview covering essential medicines procurement and trust fund asset diversification.",
-    downloadUrl: "https://bhutantrustfund.bt/BTFDemo/wordpress/wp-content/uploads/2025/08/1716382873Annual-Report-BTFEC-2022-2023.pdf",
+    "id": "ar-2018-2020",
+    "fiscalYear": "2018–2020",
+    "title": "Annual Report 2018–2020",
+    "fileSize": "9.3 MB",
+    "pages": 34,
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2018–2020 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2018-2020.pdf"
   },
   {
-    id: "ar-2018-2019",
-    fiscalYear: "2018–2019",
-    title: "Annual Report 2018–2019",
-    fileSize: "4.1 MB",
-    pages: 54,
-    auditStatus: "Official Publication",
-    summary:
-      "Annual operational filings, grant distributions, and programmatic milestones for the 2018–2019 fiscal cycle.",
-    downloadUrl: "https://bhutantrustfund.bt/BTFDemo/wordpress/wp-content/uploads/2025/08/1705406276Annual-Report-2018-1.pdf",
+    "id": "ar-2016-2018",
+    "fiscalYear": "2016–2018",
+    "title": "Annual Report 2016–2018",
+    "fileSize": "2.4 MB",
+    "pages": 27,
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2016–2018 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2016-2018.pdf"
   },
   {
-    id: "ar-2017",
-    fiscalYear: "2017",
-    title: "Annual Report 2017",
-    fileSize: "3.7 MB",
-    pages: 48,
-    auditStatus: "Official Publication",
-    summary:
-      "Review of annual endowment earnings, national immunization support, and long-term fiduciary health allocations.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705406212Annual-Report-2017.pdf",
+    "id": "ar-2014-2016",
+    "fiscalYear": "2014–2016",
+    "title": "Annual Report 2014–2016",
+    "fileSize": "4.0 MB",
+    "pages": 19,
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2014–2016 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2014-2016.pdf"
   },
   {
-    id: "ar-2001-2002",
-    fiscalYear: "2001–2002",
-    title: "Annual Report 2001–2002",
-    fileSize: "2.8 MB",
-    pages: 36,
-    auditStatus: "Historical Archive",
-    summary:
-      "Institutional archive from early operational years of the Trust Fund documenting founding grants and endowment capitalization.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705403083AR2001-2002.pdf",
+    "id": "ar-2012-2013",
+    "fiscalYear": "2012–2013",
+    "title": "Annual Report 2012–2013",
+    "fileSize": "8.5 MB",
+    "pages": 16,
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2012–2013 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2012-2013.pdf"
   },
   {
-    id: "ar-1999-2000",
-    fiscalYear: "1999–2000",
-    title: "Annual Report 1999–2000",
-    fileSize: "2.5 MB",
-    pages: 32,
-    auditStatus: "Historical Archive",
-    summary:
-      "Historical filings detailing initial multilateral contributions, charter mandates, and primary healthcare allocations.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705403856AR1999-2000.pdf",
-  },
-  {
-    id: "ar-1998-2001",
-    fiscalYear: "1998–2001",
-    title: "Annual Report 1998–2001 (Consolidated)",
-    fileSize: "3.1 MB",
-    pages: 44,
-    auditStatus: "Historical Archive",
-    summary:
-      "Triennial consolidated financial statement and governance review tracking the establishment of the perpetual fund.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705402410Annual-Report-1998-2001.pdf",
-  },
-  {
-    id: "ar-1996-1997",
-    fiscalYear: "1996–1997",
-    title: "Annual Report 1996–1997",
-    fileSize: "2.2 MB",
-    pages: 28,
-    auditStatus: "Historical Archive",
-    summary:
-      "Early foundational report on capital mobilization, governance meetings, and initial essential drug financing policies.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401952Annual-Report-1996-1997.pdf",
-  },
-  {
-    id: "ar-1994-1995",
-    fiscalYear: "1994–1995",
-    title: "Annual Report 1994–1995",
-    fileSize: "2.0 MB",
-    pages: 24,
-    auditStatus: "Historical Archive",
-    summary:
-      "Historical documentation of early Trust Fund operations, partner commitments, and healthcare assistance programs.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401855Annual-Report-1994-1995.pdf",
-  },
-  {
-    id: "ar-1993-1994",
-    fiscalYear: "1993–1994",
-    title: "Annual Report 1993–1994",
-    fileSize: "1.9 MB",
-    pages: 22,
-    auditStatus: "Historical Archive",
-    summary:
-      "Foundational report assessing initial financing models and long-term healthcare sustainability strategies for Bhutan.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401776Annual-Report-1993-1994.pdf",
-  },
-  {
-    id: "ar-1992-1993",
-    fiscalYear: "1992–1993",
-    title: "Annual Report 1992–1993",
-    fileSize: "1.8 MB",
-    pages: 20,
-    auditStatus: "Historical Archive",
-    summary:
-      "Inaugural Trust Fund annual report capturing the inception vision, charter ratification, and earliest endowment contributions.",
-    downloadUrl: "https://bhutantrustfund.bt/wp-content/uploads/2025/08/1705401650Annual-Report-1992-1993.pdf",
-  },
+    "id": "ar-2010-2012",
+    "fiscalYear": "2010–2012",
+    "title": "Annual Report 2010–2012",
+    "fileSize": "1.7 MB",
+    "pages": 24,
+    "auditStatus": "Official BHTF Publication",
+    "summary": "Official Bhutan Health Trust Fund publication covering the 2010–2012 reporting period.",
+    "downloadUrl": "https://www.bhtf.bt/annual-report/2010-2012.pdf"
+  }
 ];
 
 function AnnualReportsPage() {
+  const { managedReports } = Route.useLoaderData();
   const [search, setSearch] = useState("");
 
   const filtered = annualReportsArchive.filter((r) => {
@@ -193,10 +136,10 @@ function AnnualReportsPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Statutory Filings Archive"
-        title="BHTF Annual Reports (2005–2025)"
+        title="BHTF Annual Reports (2010–2025)"
         subtitle="Complete chronological archive of published annual operational summaries, fiduciary accounts, and healthcare procurement disbursements."
         breadcrumb={[
           { label: "Home", to: "/" },
@@ -204,6 +147,8 @@ function AnnualReportsPage() {
           { label: "Annual Reports" },
         ]}
       />
+      <ManagedPublications reports={managedReports} categories={["Annual Report"]} />
+      <p className="home-content text-sm text-slate-600">Archive source: <a href="https://www.bhtf.bt/?page_id=3279" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Bhutan Health Trust Fund</a></p>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="annual-reports-archive">
         <SectionEditBadge
@@ -212,7 +157,7 @@ function AnnualReportsPage() {
           sectionId="annual-reports-archive"
           studioHref="/admin/reports"
           initialData={{
-            title: "Statutory Annual Reports Archive (2005–2025)",
+            title: "Statutory Annual Reports Archive (2010–2025)",
             subtitle: "Official, audited reporting submitted to the Royal Government of Bhutan and international donors.",
             badge: "Permanent Public Record",
           }}
@@ -260,7 +205,7 @@ function AnnualReportsPage() {
         </div>
 
         {/* Search Bar */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="editorial-card p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:w-96">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -277,19 +222,19 @@ function AnnualReportsPage() {
         </div>
 
         {/* Reports Archive List */}
-        <div className="space-y-5">
+        <div className="publication-register">
           {filtered.map((r) => (
             <div
               key={r.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 group"
+              className="editorial-card p-6 sm:p-8 hover:shadow-lg transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 group"
             >
               <div className="space-y-3 max-w-3xl">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-3 py-1 rounded-full text-xs font-bold font-mono bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    Fiscal Year {r.fiscalYear}
+                    Reporting period {r.fiscalYear}
                   </span>
                   <span className="px-3 py-1 rounded-full text-[11px] font-mono text-slate-500 bg-slate-100">
-                    {r.pages} Pages • {r.fileSize}
+                    {r.pages ? `${r.pages} Pages • ` : ""}{r.fileSize}
                   </span>
                   <span className="px-3 py-1 rounded-full text-[11px] font-mono text-teal-700 bg-teal-50 border border-teal-200 flex items-center gap-1 font-bold">
                     <ShieldCheck className="h-3 w-3" />

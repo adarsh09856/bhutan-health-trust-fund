@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -33,6 +34,7 @@ export const Route = createFileRoute("/admin/subscribers")({
 });
 
 export function AdminSubscribersPage() {
+  const confirm = useConfirmation();
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -96,7 +98,7 @@ export function AdminSubscribersPage() {
   }, []);
 
   const handleDelete = async (id: number, email: string) => {
-    if (!window.confirm(`Remove "${email}" from subscriber list?`)) return;
+    if (!await confirm(`Remove "${email}" from subscriber list?`)) return;
     try {
       await deleteAdminSubscriber({ data: { id } });
       toast.success("Subscriber removed.");

@@ -3,7 +3,7 @@ import path from "path";
 
 dotenv.config();
 try {
-  dotenv.config({ path: path.resolve(process.cwd(), ".env"), override: true });
+  dotenv.config({ path: path.resolve(process.cwd(), ".env"), override: false });
 } catch {}
 
 import { drizzle } from "drizzle-orm/node-postgres";

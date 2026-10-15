@@ -29,6 +29,8 @@ export const submitContactInquiry = createServerFn({ method: "POST" })
   });
 
 import crypto from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 
 // --- Get Public Payment Gateways Configuration ---
 export const getPublicPaymentConfig = createServerFn({ method: "GET" }).handler(async () => {
@@ -45,12 +47,14 @@ export const getPublicPaymentConfig = createServerFn({ method: "GET" }).handler(
 
   return {
     razorpay: {
-      isEnabled: razorpay?.isEnabled ?? false,
+      isEnabled: Boolean(razorpay?.isEnabled && razorpay.keyId && razorpay.keySecret),
       isLiveMode: razorpay?.isLiveMode ?? false,
       keyId: razorpay?.keyId || null,
     },
     rmaBfs: {
-      isEnabled: rmaBfs?.isEnabled ?? true,
+      // The provider's authenticated checkout/callback protocol has not been verified.
+      // Never advertise a configured flag as a usable payment channel until then.
+      isEnabled: false,
       isLiveMode: rmaBfs?.isLiveMode ?? false,
       merchantId: rmaBfs?.merchantId || "BHTF_RMA_MERCHANT",
       gatewayUrl: rmaBfs?.gatewayUrl || "https://bfstest.rma.org.bt/bfsgateway",
@@ -87,7 +91,20 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    const refNo = `BHTF-DON-${Math.floor(100000 + Math.random() * 900000)}`;
+    if (data.paymentMethod === "RMA_GATEWAY") {
+      throw new Error(
+        "BFS online checkout is awaiting bank integration verification. Please use bank transfer or mobile banking.",
+      );
+    }
+    if (["RAZORPAY", "INTERNATIONAL_CARD"].includes(data.paymentMethod)) {
+      const gateway = await db.getPaymentGateway("RAZORPAY");
+      if (!gateway?.isEnabled || !gateway.keyId || !gateway.keySecret) {
+        throw new Error(
+          "Card payments are unavailable. Please use bank transfer or mobile banking.",
+        );
+      }
+    }
+    const refNo = `BHTF-DON-${crypto.randomInt(100000, 1000000)}`;
 
     const donation = await db.createDonation({
       referenceNo: refNo,
@@ -105,8 +122,8 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
     // 1. Razorpay / International Card
     if (data.paymentMethod === "RAZORPAY" || data.paymentMethod === "INTERNATIONAL_CARD") {
       const gw = await db.getPaymentGateway("RAZORPAY");
-      let razorpayOrderId = `order_${refNo.replace(/[^A-Za-z0-9]/g, "")}`;
-      let keyId = gw?.keyId || "rzp_test_sample";
+      let razorpayOrderId = "";
+      const keyId = gw!.keyId!;
 
       if (gw?.isEnabled && gw?.keyId && gw?.keySecret) {
         try {
@@ -118,7 +135,7 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
               Authorization: authHeader,
             },
             body: JSON.stringify({
-              amount: data.amountNu * 100, // in subunits (paisa/chhertum)
+              amount: Math.round(data.amountNu * 100), // in subunits (paisa/chhertum)
               currency: "INR",
               receipt: refNo,
               notes: {
@@ -129,16 +146,19 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
             }),
           });
 
+          if (!res.ok) throw new Error("Payment provider could not create an order.");
           if (res.ok) {
             const orderData = await res.json();
             razorpayOrderId = orderData.id;
-            keyId = gw.keyId;
           }
         } catch (err: any) {
-          console.warn("[Razorpay Order Creation Warning]:", err?.message || err);
+          throw new Error(
+            "Card checkout could not start. Your pledge remains pending; no payment was recorded.",
+          );
         }
       }
 
+      if (!razorpayOrderId) throw new Error("Payment provider returned no order.");
       await db.updateDonationPayment(refNo, {
         gatewaySessionId: razorpayOrderId,
       });
@@ -151,40 +171,6 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
         razorpayOrderId,
         razorpayKeyId: keyId,
         currency: "INR",
-        createdAt: donation.createdAt,
-      };
-    }
-
-    // 2. RMA BFS Payment Gateway (Bhutan Domestic Central Bank Switch)
-    if (data.paymentMethod === "RMA_GATEWAY") {
-      const gw = await db.getPaymentGateway("RMA_BFS");
-      const merchantId = gw?.merchantId || "BHTF_RMA_MERCHANT";
-      const terminalId = gw?.terminalId || "BHTF_TERM_01";
-      const secret = gw?.keySecret || "BHTF_BFS_SECRET_TEST_KEY";
-      const gatewayUrl = gw?.gatewayUrl || "https://bfstest.rma.org.bt/bfsgateway";
-      const orderNo = `BFS-${refNo.replace("BHTF-DON-", "")}`;
-
-      const payloadString = `${orderNo}|${data.amountNu}|${merchantId}|${Date.now()}`;
-      const checksum = crypto.createHmac("sha256", secret).update(payloadString).digest("hex");
-
-      await db.updateDonationPayment(refNo, {
-        gatewaySessionId: orderNo,
-        gatewayStatus: "BFS_DISPATCHED",
-      });
-
-      return {
-        success: true,
-        referenceNo: refNo,
-        amountNu: data.amountNu,
-        paymentMethod: data.paymentMethod,
-        rmaPayload: {
-          orderNo,
-          amountNu: data.amountNu,
-          merchantId,
-          terminalId,
-          checksum,
-          gatewayUrl,
-        },
         createdAt: donation.createdAt,
       };
     }
@@ -207,27 +193,50 @@ export const verifyRazorpayPayment = createServerFn({ method: "POST" })
       referenceNo: z.string(),
       razorpayOrderId: z.string(),
       razorpayPaymentId: z.string(),
-      razorpaySignature: z.string().optional(),
+      razorpaySignature: z
+        .string()
+        .regex(/^[a-fA-F0-9]{64}$/, "A valid payment signature is required"),
     }),
   )
   .handler(async ({ data }) => {
     const gw = await db.getPaymentGateway("RAZORPAY");
     const secret = gw?.keySecret;
 
-    let isSignatureValid = false;
-    if (secret && data.razorpaySignature) {
-      const expected = crypto
-        .createHmac("sha256", secret)
-        .update(`${data.razorpayOrderId}|${data.razorpayPaymentId}`)
-        .digest("hex");
-      isSignatureValid = expected === data.razorpaySignature;
-    } else {
-      // In test simulation or if signature check is bypassed for test accounts
-      isSignatureValid = Boolean(data.razorpayPaymentId);
+    if (!gw?.isEnabled || !secret || !gw.keyId) {
+      throw new Error(
+        "Payment verification is unavailable. Please contact the Fund with your reference number.",
+      );
     }
-
-    if (!isSignatureValid) {
+    const donation = await db.findDonationByReference(data.referenceNo);
+    if (
+      !donation ||
+      donation.gatewaySessionId !== data.razorpayOrderId ||
+      !["RAZORPAY", "INTERNATIONAL_CARD"].includes(donation.paymentMethod)
+    ) {
+      throw new Error("Payment order does not match this donation.");
+    }
+    const expected = crypto
+      .createHmac("sha256", secret)
+      .update(`${donation.gatewaySessionId}|${data.razorpayPaymentId}`)
+      .digest();
+    if (!crypto.timingSafeEqual(expected, Buffer.from(data.razorpaySignature, "hex"))) {
       throw new Error("Invalid Razorpay payment signature.");
+    }
+    if (
+      donation.status === "COMPLETED" &&
+      donation.gatewayTransactionId !== data.razorpayPaymentId
+    ) {
+      throw new Error("This donation already has a different verified payment.");
+    }
+    const paymentResponse = await fetch(`https://api.razorpay.com/v1/payments/${encodeURIComponent(data.razorpayPaymentId)}`, {
+      headers: { Authorization: `Basic ${Buffer.from(`${gw.keyId}:${secret}`).toString("base64")}` },
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!paymentResponse.ok) throw new Error("The payment provider could not confirm this payment.");
+    const payment = await paymentResponse.json();
+    if (payment.status !== "captured" || payment.order_id !== donation.gatewaySessionId ||
+        payment.amount !== Math.round(donation.amountNu * 100) || payment.currency !== "INR") {
+      throw new Error("Payment has not been captured for the expected order and amount. Your pledge remains pending.");
     }
 
     const updated = await db.updateDonationPayment(data.referenceNo, {
@@ -257,20 +266,11 @@ export const verifyRmaBfsPayment = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    const updated = await db.updateDonationPayment(data.referenceNo, {
-      status: "COMPLETED",
-      gatewayTransactionId: data.bfsTxnId,
-      gatewaySessionId: data.orderNo,
-      gatewayStatus: "paid",
-      completedAt: new Date(),
-    });
-
-    return {
-      success: true,
-      referenceNo: data.referenceNo,
-      transactionId: data.bfsTxnId,
-      donation: updated,
-    };
+    // Completion requires the provider's authenticated response protocol.
+    // Until that protocol is configured, a browser callback is not proof of payment.
+    throw new Error(
+      "BFS payment confirmation requires bank verification. Please contact the Fund with your reference number.",
+    );
   });
 
 // --- Submit Bank Journal / Remittance Verification ---
@@ -278,16 +278,14 @@ export const submitDonationJournal = createServerFn({ method: "POST" })
   .validator(
     z.object({
       referenceNo: z.string(),
-      journalNo: z.string().min(4, "Bank journal / remittance number must be at least 4 characters"),
+      journalNo: z
+        .string()
+        .min(4, "Bank journal / remittance number must be at least 4 characters"),
       bankName: z.string().optional(),
     }),
   )
   .handler(async ({ data }) => {
-    const updated = await db.submitDonationJournal(
-      data.referenceNo,
-      data.journalNo,
-      data.bankName,
-    );
+    const updated = await db.submitDonationJournal(data.referenceNo, data.journalNo, data.bankName);
 
     if (!updated) {
       throw new Error(`Donation reference ${data.referenceNo} was not found.`);
@@ -298,7 +296,8 @@ export const submitDonationJournal = createServerFn({ method: "POST" })
       referenceNo: updated.referenceNo,
       journalNo: data.journalNo,
       status: updated.status,
-      message: "Bank journal number submitted successfully. Secretariat will verify and stamp your tax certificate.",
+      message:
+        "Bank journal number submitted successfully. Secretariat will verify and stamp your tax certificate.",
     };
   });
 
@@ -327,13 +326,27 @@ export const getPublicNewsBySlug = createServerFn({ method: "GET" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
     const article = await db.getNewsBySlug(data.slug);
-    if (!article) return null;
+    if (!article?.isPublished) return null;
     return article;
   });
 
 // --- Get Public Reports ---
 export const getPublicReports = createServerFn({ method: "GET" }).handler(async () => {
-  return await db.getAllReports();
+  const reports = await db.getAllReports();
+  return reports.map(report => {
+    let fileAvailable = /^https?:\/\//i.test(report.fileUrl);
+    if (report.fileUrl.startsWith("/") && !report.fileUrl.startsWith("//")) {
+      try {
+        const fileName = decodeURIComponent(new URL(report.fileUrl, "http://localhost").pathname).slice(1);
+        fileAvailable = ["public", ".output/public"].some(directory => {
+          const root = path.resolve(process.cwd(), directory);
+          const target = path.resolve(root, fileName);
+          return target.startsWith(`${root}${path.sep}`) && fs.existsSync(target) && fs.statSync(target).isFile();
+        });
+      } catch { fileAvailable = false; }
+    }
+    return { ...report, fileAvailable };
+  });
 });
 
 // --- Track Report Download ---
@@ -468,4 +481,3 @@ export const getPublicPage = createServerFn({ method: "GET" })
     if (!page || page.status !== "published") return null;
     return page;
   });
-

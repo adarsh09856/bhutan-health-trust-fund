@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { authenticateAdmin, verifyDatabaseSession, revokeSessionByToken } from "../auth.server";
+import { authenticateAdmin, getSessionFromRequest, revokeSessionByToken } from "../auth.server";
 import { db } from "../db";
 
 export const adminLogin = createServerFn({ method: "POST" })
@@ -54,10 +54,7 @@ export const adminLogout = createServerFn({ method: "POST" })
 export const verifyCurrentSession = createServerFn({ method: "POST" })
   .validator(z.object({ token: z.string().optional() }))
   .handler(async ({ data }) => {
-    if (!data.token) {
-      return { user: null };
-    }
-    const sessionUser = await verifyDatabaseSession(data.token);
+    const sessionUser = await getSessionFromRequest(data.token);
     return { user: sessionUser };
   });
 
@@ -99,8 +96,8 @@ export const executeFirstRunSetup = createServerFn({ method: "POST" })
     }
 
     // 2. Validate SETUP_TOKEN
-    const expectedToken = process.env.SETUP_TOKEN || "BHTF_SOVEREIGN_SETUP_2026";
-    if (data.setupToken.trim() !== expectedToken.trim()) {
+    const expectedToken = process.env.SETUP_TOKEN;
+    if (!expectedToken || data.setupToken.trim() !== expectedToken.trim()) {
       return {
         success: false,
         statusCode: 404,

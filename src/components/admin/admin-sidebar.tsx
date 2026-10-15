@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { getDashboardAnalytics } from "@/lib/api/admin.functions";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/bhtf/bhtf_emblem.png";
 
 interface NavGroup {
   groupName: string;
@@ -107,6 +107,9 @@ const navGroups: NavGroup[] = [
 export function AdminSidebar({ onClose }: { onClose?: () => void }) {
   const location = useLocation();
   const { user, logout } = useAdminAuth();
+  const visibleGroups = navGroups.map(group => ({ ...group, items: group.items.filter(item =>
+    user?.role === "SUPER_ADMIN" || !["/admin/users", "/admin/audit-logs"].includes(item.to)
+  ) }));
   const [counts, setCounts] = useState<{ pendingDonations: number; unreadInquiries: number }>({
     pendingDonations: 0,
     unreadInquiries: 0,
@@ -138,14 +141,14 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
           </div>
           <div className="text-[10px] text-amber-400 font-bold tracking-wider uppercase flex items-center gap-1 mt-0.5">
             <Sparkles className="h-3 w-3 text-amber-400" />
-            Super Admin Portal
+            {user?.role === "SUPER_ADMIN" ? "Super Admin Portal" : "Editor Portal"}
           </div>
         </div>
       </div>
 
       {/* Navigation Groups */}
       <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-950">
-        {navGroups.map((group) => (
+        {visibleGroups.map((group) => (
           <div key={group.groupName} className="space-y-1">
             {/* Group Header */}
             <div className="text-[10px] uppercase font-black tracking-widest text-amber-400/80 px-3 mb-1.5 flex items-center justify-between">

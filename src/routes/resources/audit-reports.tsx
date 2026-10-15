@@ -156,7 +156,7 @@ function AuditReportsPage() {
   };
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3] min-h-screen">
+    <div className="public-editorial-page space-y-12 sm:space-y-16 pb-20 min-h-screen">
       <PageHero
         badge="Independent Oversight & Compliance"
         title="Certified RAA Audit Reports & Statements"
@@ -211,7 +211,7 @@ function AuditReportsPage() {
         </div>
 
         {/* Search */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="editorial-card p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:w-96">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -232,7 +232,7 @@ function AuditReportsPage() {
           {filtered.map((a) => (
             <div
               key={a.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-lg transition-all duration-300 space-y-6 group"
+              className="editorial-card p-6 sm:p-8 hover:shadow-lg transition-all duration-300 space-y-6 group"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
                 <div className="space-y-1.5">

@@ -355,7 +355,7 @@ export interface PageBlockSection {
   dzongkhaText?: string;
   badge?: string;
   content?: string;
-  bgVariant?: "white" | "warm" | "dark" | "emerald" | "gold";
+  bgVariant?: "white" | "warm" | "dark" | "emerald" | "gold" | "light" | "alt";
   padding?: "compact" | "normal" | "relaxed";
   isVisible: boolean;
   order: number;
@@ -364,6 +364,7 @@ export interface PageBlockSection {
   secondaryCtaText?: string;
   secondaryCtaUrl?: string;
   mediaUrl?: string;
+  backgroundImage?: string;
   items?: PageBlockItem[];
 }
 
@@ -386,6 +387,7 @@ export type NewsArticle = typeof newsArticles.$inferSelect;
 export type NewNewsArticle = typeof newsArticles.$inferInsert;
 export type Report = typeof reports.$inferSelect;
 export type NewReport = typeof reports.$inferInsert;
+export type NewProcurementTender = typeof procurementTenders.$inferInsert;
 export type Policy = typeof policies.$inferSelect;
 export type NewPolicy = typeof policies.$inferInsert;
 export type Donation = typeof donations.$inferSelect;

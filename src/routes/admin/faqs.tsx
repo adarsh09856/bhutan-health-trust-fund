@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -42,6 +43,7 @@ const defaultCategories = [
 ];
 
 export function AdminFaqsPage() {
+  const confirm = useConfirmation();
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -135,7 +137,7 @@ export function AdminFaqsPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this FAQ entry?")) return;
+    if (!await confirm("Are you sure you want to delete this FAQ entry?")) return;
     try {
       await deleteAdminFaq({ data: { id } });
       toast.success("FAQ deleted.");

@@ -1,3 +1,4 @@
+import { useConfirmation } from "@/components/confirmation-provider";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -39,18 +40,19 @@ export const Route = createFileRoute("/admin/news")({
 const coverOptions = [
   {
     label: "Routine Vaccines & Cold Chain",
-    path: "/src/assets/news-vaccine.jpg",
+    path: newsVaccine,
     img: newsVaccine,
   },
   {
     label: "Community Healthcare Access",
-    path: "/src/assets/news-community.jpg",
+    path: newsCommunity,
     img: newsCommunity,
   },
-  { label: "Audited Reports & Governance", path: "/src/assets/news-report.jpg", img: newsReport },
+  { label: "Audited Reports & Governance", path: newsReport, img: newsReport },
 ];
 
 export function AdminNewsPage() {
+  const confirm = useConfirmation();
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -64,7 +66,7 @@ export function AdminNewsPage() {
   const [author, setAuthor] = useState("BHTF Communications");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
-  const [coverImage, setCoverImage] = useState("/src/assets/news-vaccine.jpg");
+  const [coverImage, setCoverImage] = useState(newsVaccine);
   const [isPublished, setIsPublished] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -103,7 +105,7 @@ export function AdminNewsPage() {
     setAuthor("BHTF Communications");
     setExcerpt("");
     setContent("");
-    setCoverImage("/src/assets/news-vaccine.jpg");
+    setCoverImage(newsVaccine);
     setIsPublished(true);
     setModalOpen(true);
   };
@@ -152,7 +154,7 @@ export function AdminNewsPage() {
             isPublished,
           },
         });
-        toast.success("New press release published successfully!");
+        toast.success(isPublished ? "Press release published." : "Draft saved.");
       }
       setModalOpen(false);
       fetchArticles();
@@ -164,7 +166,7 @@ export function AdminNewsPage() {
   };
 
   const handleDelete = async (id: number, articleTitle: string) => {
-    if (!window.confirm(`Are you sure you want to delete "${articleTitle}"?`)) return;
+    if (!await confirm(`Are you sure you want to delete "${articleTitle}"?`)) return;
     try {
       await deleteNewsArticle({ data: { id } });
       toast.success("Article deleted from media room.");
@@ -481,7 +483,7 @@ export function AdminNewsPage() {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-4 w-4" /> Save & Publish
+                        <Sparkles className="h-4 w-4" /> {isPublished ? "Save & Publish" : "Save Draft"}
                       </>
                     )}
                   </button>
