@@ -58,17 +58,17 @@
   --color-aqua-tint: #EAF6F5;
   --color-sky-tint: #E3F1F6;
   --color-aquamarine: #00A896;
-  --color-deep-teal: #0c2b5e;
+  --color-deep-teal: #0B4F42;
   --color-gold: #f59e0b;
   --color-dark-green: #061713;
 
   /* Sovereign Institutional Palette Tokens */
-  --color-ink: #0c2b5e;
+  --color-ink: #0B4F42;
   --color-ink-dark: #071512;
   --color-ink-card: #f8fafc;
   --color-ink-muted: #1e293b;
   --color-cream: #ffffff;
-  --color-cream-subtle: #f8fafc;
+  --color-cream-subtle: #FAF8F5;
   --color-paper: #ffffff;
   --color-charcoal: #0f172a;
 }
@@ -76,44 +76,44 @@
 :root {
   --radius: 0.75rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.2 0.04 250);
+  --foreground: oklch(0.2 0.03 175);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.04 250);
+  --card-foreground: oklch(0.2 0.03 175);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.04 250);
+  --popover-foreground: oklch(0.2 0.03 175);
 
-  /* Brand: deep navy blue (BHTF primary) */
-  --primary: oklch(0.32 0.11 255);
+  /* Brand: Royal Bhutan Health Emerald Teal (BHTF Primary) */
+  --primary: oklch(0.35 0.09 175);
   --primary-foreground: oklch(0.99 0 0);
 
-  /* Saffron orange CTA */
-  --saffron: oklch(0.72 0.18 50);
+  /* Saffron Gold CTA */
+  --saffron: oklch(0.74 0.18 65);
   --saffron-foreground: oklch(1 0 0);
 
-  --deep-blue: oklch(0.28 0.12 258);
-  --soft-blue: oklch(0.95 0.03 250);
-  --soft-orange: oklch(0.96 0.04 60);
-  --soft-green: oklch(0.95 0.05 155);
-  --soft-red: oklch(0.95 0.04 25);
-  --soft-purple: oklch(0.95 0.04 290);
+  --deep-blue: oklch(0.24 0.08 175);
+  --soft-blue: oklch(0.96 0.03 175);
+  --soft-orange: oklch(0.97 0.04 65);
+  --soft-green: oklch(0.96 0.05 155);
+  --soft-red: oklch(0.96 0.04 25);
+  --soft-purple: oklch(0.96 0.04 290);
 
-  --secondary: oklch(0.96 0.02 250);
-  --secondary-foreground: oklch(0.25 0.08 255);
-  --muted: oklch(0.97 0.01 250);
-  --muted-foreground: oklch(0.5 0.03 255);
-  --accent: oklch(0.72 0.18 50);
+  --secondary: oklch(0.96 0.02 175);
+  --secondary-foreground: oklch(0.25 0.08 175);
+  --muted: oklch(0.97 0.01 175);
+  --muted-foreground: oklch(0.48 0.03 200);
+  --accent: oklch(0.74 0.18 65);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0.01 250);
-  --input: oklch(0.92 0.01 250);
-  --ring: oklch(0.72 0.18 50);
+  --border: oklch(0.92 0.01 175);
+  --input: oklch(0.92 0.01 175);
+  --ring: oklch(0.74 0.18 65);
 
-  --gradient-hero: linear-gradient(135deg, oklch(0.98 0.02 240) 0%, oklch(0.92 0.04 230) 100%);
-  --gradient-stats: linear-gradient(135deg, oklch(0.32 0.11 255) 0%, oklch(0.4 0.13 260) 100%);
-  --gradient-footer: linear-gradient(180deg, oklch(0.28 0.12 258) 0%, oklch(0.22 0.1 260) 100%);
-  --shadow-card: 0 4px 24px -8px oklch(0.32 0.11 255 / 0.15);
-  --shadow-elevated: 0 10px 40px -12px oklch(0.32 0.11 255 / 0.25);
+  --gradient-hero: linear-gradient(135deg, #FAF8F5 0%, #F0F7F4 100%);
+  --gradient-stats: linear-gradient(135deg, #0B4F42 0%, #07382F 100%);
+  --gradient-footer: linear-gradient(180deg, #062822 0%, #031713 100%);
+  --shadow-card: 0 4px 24px -8px rgba(11, 79, 66, 0.12);
+  --shadow-elevated: 0 10px 40px -12px rgba(11, 79, 66, 0.2);
 }
 
 .dark {

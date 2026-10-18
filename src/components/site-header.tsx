@@ -7,7 +7,6 @@ import {
   Mail,
   MapPin,
   Globe,
-  Search,
   X,
   ChevronDown,
   Landmark,
@@ -19,6 +18,13 @@ import {
   Activity,
   Calendar,
   Sparkles,
+  Briefcase,
+  Layers,
+  Download,
+  Megaphone,
+  FileSpreadsheet,
+  TrendingUp,
+  ChevronRight,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useAdminAuth } from "@/lib/admin-auth";
@@ -26,30 +32,36 @@ import { useAdminAuth } from "@/lib/admin-auth";
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null);
   const location = useLocation();
   const { user } = useAdminAuth();
 
   useEffect(() => {
     setMobileMenuOpen(false);
     setOpenDropdown(null);
+    setMobileExpandedSection(null);
   }, [location.pathname]);
 
+  const toggleMobileSection = (section: string) => {
+    setMobileExpandedSection((prev) => (prev === section ? null : section));
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 transition-all">
-      {/* 1. Top Utility Bar in Saffron */}
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90 transition-all border-b border-border shadow-xs">
+      {/* 1. Top Utility Bar in Bhutan Royal Saffron */}
       <div className="bg-saffron text-saffron-foreground text-xs shadow-xs">
-        <div className="container-page flex h-9 items-center justify-between gap-4">
+        <div className="container-page flex h-8 items-center justify-between gap-4">
           <span className="hidden sm:inline font-medium">
             ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ། — Working together for a healthier Bhutan
           </span>
           <span className="sm:hidden font-medium">Healthier Bhutan • BHTF</span>
 
           <div className="flex items-center gap-3 sm:gap-5">
-            <a href="tel:+9752328999" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition">
+            <a href="tel:+9752328999" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-85 transition">
               <Phone className="size-3.5" />
               <span>+975 2 328999</span>
             </a>
-            <a href="mailto:bhtf@bhtf.bt" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition">
+            <a href="mailto:bhtf@bhtf.bt" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-85 transition">
               <Mail className="size-3.5" />
               <span>bhtf@bhtf.bt</span>
             </a>
@@ -74,7 +86,7 @@ export function SiteHeader() {
       </div>
 
       {/* 2. Main Institutional Navigation Bar */}
-      <div className="border-b border-border bg-white">
+      <div className="bg-white">
         <div className="container-page flex h-20 items-center justify-between gap-4">
           {/* Logo & Royal Proclamation */}
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
@@ -95,37 +107,37 @@ export function SiteHeader() {
           <nav className="hidden xl:flex items-center gap-1">
             {/* 1. About Us with Dropdown */}
             <div
-              className="relative"
+              className="relative py-2"
               onMouseEnter={() => setOpenDropdown("about")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <Link
-                to="/about"
-                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors relative ${
-                  location.pathname.startsWith("/about") ? "text-saffron" : "text-foreground/80 hover:text-saffron"
+                to="/about/organization"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                  location.pathname.startsWith("/about") ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
                 }`}
               >
                 <span>About Us</span>
-                <ChevronDown className="size-3.5" />
+                <ChevronDown className="size-3.5 transition-transform duration-200" />
               </Link>
 
               {openDropdown === "about" && (
-                <div className="absolute top-full left-0 mt-1 w-72 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
+                <div className="absolute top-full left-0 w-76 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
                   <Link
                     to="/about/organization"
-                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
                   >
-                    <Landmark className="size-4 text-primary" />
+                    <Landmark className="size-4 text-primary shrink-0" />
                     <div>
                       <div>Our Organization & Organogram</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Royal Charter & Divisions</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Royal Charter & Cadre Divisions</div>
                     </div>
                   </Link>
                   <Link
                     to="/about/trustees"
-                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
                   >
-                    <ShieldCheck className="size-4 text-primary" />
+                    <ShieldCheck className="size-4 text-primary shrink-0" />
                     <div>
                       <div>Board of Trustees</div>
                       <div className="text-[10px] text-muted-foreground font-normal">Apex ministerial leadership</div>
@@ -133,9 +145,9 @@ export function SiteHeader() {
                   </Link>
                   <Link
                     to="/about/committees"
-                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
                   >
-                    <Scale className="size-4 text-primary" />
+                    <Scale className="size-4 text-primary shrink-0" />
                     <div>
                       <div>Asset Management Committee</div>
                       <div className="text-[10px] text-muted-foreground font-normal">Prudent endowment governance</div>
@@ -143,77 +155,257 @@ export function SiteHeader() {
                   </Link>
                   <Link
                     to="/about/secretariat"
-                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
                   >
-                    <Users className="size-4 text-primary" />
+                    <Users className="size-4 text-primary shrink-0" />
                     <div>
                       <div>Secretariat & Staff</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Headquarters administration</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Executive operations & Directorate</div>
+                    </div>
+                  </Link>
+                  <div className="pt-1 mt-1 border-t border-border/60">
+                    <Link
+                      to="/our-story"
+                      className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-orange text-xs font-semibold text-foreground transition"
+                    >
+                      <BookOpen className="size-4 text-saffron shrink-0" />
+                      <div>
+                        <div>Our Story & 26-Yr Timeline</div>
+                        <div className="text-[10px] text-muted-foreground font-normal">Geneva Launch (1998) to Present</div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 2. Our Work & Impact with Dropdown */}
+            <div
+              className="relative py-2"
+              onMouseEnter={() => setOpenDropdown("work")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <Link
+                to="/our-impact"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                  location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
+                    ? "text-saffron bg-soft-orange/50"
+                    : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                }`}
+              >
+                <span>Our Work</span>
+                <ChevronDown className="size-3.5 transition-transform duration-200" />
+              </Link>
+
+              {openDropdown === "work" && (
+                <div className="absolute top-full left-0 w-72 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
+                  <Link
+                    to="/our-impact"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Activity className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Healthcare Impact Overview</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">20 Dzongkhags & 100% Free Coverage</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/our-work"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Layers className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Essential Medicines & Vaccines</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">438 Allopathic + 110 Traditional Formulations</div>
                     </div>
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* 2. Our Story */}
+            {/* 3. Resources with Full Subpages Dropdown */}
+            <div
+              className="relative py-2"
+              onMouseEnter={() => setOpenDropdown("resources")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <Link
+                to="/resources"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                  location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports")
+                    ? "text-saffron bg-soft-orange/50"
+                    : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                }`}
+              >
+                <span>Resources</span>
+                <ChevronDown className="size-3.5 transition-transform duration-200" />
+              </Link>
+
+              {openDropdown === "resources" && (
+                <div className="absolute top-full left-0 w-80 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
+                  <Link
+                    to="/resources"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <BookOpen className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div className="font-bold">Official Publications Archive</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Central statutory document repository</div>
+                    </div>
+                  </Link>
+                  <div className="h-px bg-border/60 my-1" />
+                  <Link
+                    to="/resources/annual-reports"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <FileText className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Annual Reports</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Yearly operational filings & governance</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/resources/financial-reports"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <FileSpreadsheet className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Financial Statements</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Portfolio yields & balance sheets</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/resources/audit-reports"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <ShieldCheck className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Certified Audit Reports</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Royal Audit Authority (RAA) certificates</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/resources/window-financing"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Scale className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Window Financing Requisitions</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Quarterly DMS procurement releases</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/resources/advocacy"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Megaphone className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Advocacy & IEC Materials</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Community health guides & brochures</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/resources/other-publications"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Layers className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Formularies & Other Publications</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Drug formularies & strategic charters</div>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* 4. News & Events with Full Subpages Dropdown */}
+            <div
+              className="relative py-2"
+              onMouseEnter={() => setOpenDropdown("news")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <Link
+                to="/news"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                  location.pathname.startsWith("/news") ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                }`}
+              >
+                <span>News & Events</span>
+                <ChevronDown className="size-3.5 transition-transform duration-200" />
+              </Link>
+
+              {openDropdown === "news" && (
+                <div className="absolute top-full left-0 w-76 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
+                  <Link
+                    to="/news"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Activity className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div className="font-bold">Latest News & BBS Dispatches</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Field coverage & national reports</div>
+                    </div>
+                  </Link>
+                  <div className="h-px bg-border/60 my-1" />
+                  <Link
+                    to="/news/announcements"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Megaphone className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Press Releases & Announcements</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Official secretariat circulars</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/news/events"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Calendar className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Official Events Calendar</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Annual BHTF Day & RSEB Mobilization</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/news/careers"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Briefcase className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Careers & Consultancies</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Official vacancies & RFP tenders</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/news/media"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Sparkles className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Media Gallery</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">High-resolution field photo archive</div>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* 5. Track Donation */}
             <Link
-              to="/our-story"
-              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
-                location.pathname === "/our-story" ? "text-saffron" : "text-foreground/80 hover:text-saffron"
+              to="/track-donation"
+              className={`px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                location.pathname === "/track-donation" ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
               }`}
             >
-              Our Story
+              Track Donation
             </Link>
 
-            {/* 3. Impact */}
-            <Link
-              to="/our-impact"
-              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
-                location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
-                  ? "text-saffron"
-                  : "text-foreground/80 hover:text-saffron"
-              }`}
-            >
-              Impact
-            </Link>
-
-            {/* 4. Resources */}
-            <Link
-              to="/reports"
-              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
-                location.pathname.startsWith("/reports") || location.pathname.startsWith("/resources")
-                  ? "text-saffron"
-                  : "text-foreground/80 hover:text-saffron"
-              }`}
-            >
-              Resources
-            </Link>
-
-            {/* 5. News and Events */}
-            <Link
-              to="/news"
-              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
-                location.pathname.startsWith("/news") ? "text-saffron" : "text-foreground/80 hover:text-saffron"
-              }`}
-            >
-              News & Events
-            </Link>
-
-            {/* 6. Donate */}
-            <Link
-              to="/donate"
-              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
-                location.pathname === "/donate" ? "text-saffron" : "text-foreground/80 hover:text-saffron"
-              }`}
-            >
-              Donate
-            </Link>
-
-            {/* 7. Contact Us */}
+            {/* 6. Contact Us */}
             <Link
               to="/contact"
-              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
-                location.pathname === "/contact" ? "text-saffron" : "text-foreground/80 hover:text-saffron"
+              className={`px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                location.pathname === "/contact" ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
               }`}
             >
               Contact Us
@@ -241,51 +433,242 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Drawer with Accordion Subpages */}
         {mobileMenuOpen && (
-          <nav className="xl:hidden border-t border-border bg-white animate-in slide-in-from-top-2 duration-200">
-            <div className="container-page py-4 flex flex-col space-y-2">
-              <div className="font-bold text-xs uppercase tracking-wider text-muted-foreground px-3 pt-1">
-                Main Menu
+          <nav className="xl:hidden border-t border-border bg-white animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
+            <div className="container-page py-4 flex flex-col space-y-1">
+              <div className="font-bold text-xs uppercase tracking-wider text-muted-foreground px-3 pt-1 pb-2">
+                Navigation Menu
               </div>
-              <Link to="/" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+
+              <Link
+                to="/"
+                className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg"
+              >
                 Home
               </Link>
-              <div className="pl-3 space-y-1 border-l-2 border-saffron/30 ml-3">
-                <Link to="/about" className="block py-1.5 text-sm font-medium text-foreground hover:text-saffron">
-                  About Us (Overview)
-                </Link>
-                <Link to="/about/organization" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
-                  • Organization & Organogram
-                </Link>
-                <Link to="/about/trustees" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
-                  • Board of Trustees
-                </Link>
-                <Link to="/about/committees" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
-                  • Asset Management Committee
-                </Link>
-                <Link to="/about/secretariat" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
-                  • Secretariat & Staff
-                </Link>
+
+              {/* Accordion 1: About Us */}
+              <div className="border-b border-border/60 pb-1">
+                <button
+                  onClick={() => toggleMobileSection("about")}
+                  className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
+                >
+                  <span>About Us</span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground transition-transform duration-200 ${
+                      mobileExpandedSection === "about" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {mobileExpandedSection === "about" && (
+                  <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl my-1 border border-border/40">
+                    <Link
+                      to="/about/organization"
+                      className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
+                    >
+                      • Our Organization & Organogram
+                    </Link>
+                    <Link
+                      to="/about/trustees"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Board of Trustees
+                    </Link>
+                    <Link
+                      to="/about/committees"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Asset Management Committee
+                    </Link>
+                    <Link
+                      to="/about/secretariat"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Secretariat & Staff
+                    </Link>
+                    <Link
+                      to="/our-story"
+                      className="block py-1.5 px-2 text-xs font-semibold text-saffron hover:underline"
+                    >
+                      • Our Story & 26-Yr Timeline
+                    </Link>
+                  </div>
+                )}
               </div>
-              <Link to="/our-story" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
-                Our Story
+
+              {/* Accordion 2: Our Work */}
+              <div className="border-b border-border/60 pb-1">
+                <button
+                  onClick={() => toggleMobileSection("work")}
+                  className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
+                >
+                  <span>Our Work & Impact</span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground transition-transform duration-200 ${
+                      mobileExpandedSection === "work" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {mobileExpandedSection === "work" && (
+                  <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl my-1 border border-border/40">
+                    <Link
+                      to="/our-impact"
+                      className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
+                    >
+                      • Healthcare Impact Overview (20 Dzongkhags)
+                    </Link>
+                    <Link
+                      to="/our-work"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Essential Medicines & Traditional Therapies
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Accordion 3: Resources (All 6 Subpages) */}
+              <div className="border-b border-border/60 pb-1">
+                <button
+                  onClick={() => toggleMobileSection("resources")}
+                  className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
+                >
+                  <span>Resources & Certified Audits</span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground transition-transform duration-200 ${
+                      mobileExpandedSection === "resources" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {mobileExpandedSection === "resources" && (
+                  <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl my-1 border border-border/40">
+                    <Link
+                      to="/resources"
+                      className="block py-1.5 px-2 text-xs font-bold text-primary hover:underline"
+                    >
+                      • All Statutory Publications Archive
+                    </Link>
+                    <Link
+                      to="/resources/annual-reports"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Annual Reports
+                    </Link>
+                    <Link
+                      to="/resources/financial-reports"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Financial Statements
+                    </Link>
+                    <Link
+                      to="/resources/audit-reports"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Certified Audit Reports (RAA)
+                    </Link>
+                    <Link
+                      to="/resources/window-financing"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Window Financing Requisitions
+                    </Link>
+                    <Link
+                      to="/resources/advocacy"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Advocacy & IEC Materials
+                    </Link>
+                    <Link
+                      to="/resources/other-publications"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Formularies & Other Publications
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Accordion 4: News & Events */}
+              <div className="border-b border-border/60 pb-1">
+                <button
+                  onClick={() => toggleMobileSection("news")}
+                  className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
+                >
+                  <span>News & Events</span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground transition-transform duration-200 ${
+                      mobileExpandedSection === "news" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {mobileExpandedSection === "news" && (
+                  <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl my-1 border border-border/40">
+                    <Link
+                      to="/news"
+                      className="block py-1.5 px-2 text-xs font-bold text-primary hover:underline"
+                    >
+                      • Latest News & BBS Dispatches
+                    </Link>
+                    <Link
+                      to="/news/announcements"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Press Releases & Announcements
+                    </Link>
+                    <Link
+                      to="/news/events"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Official Events Calendar
+                    </Link>
+                    <Link
+                      to="/news/careers"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Career Opportunities & Consultancies
+                    </Link>
+                    <Link
+                      to="/news/media"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Media Gallery
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                to="/track-donation"
+                className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg"
+              >
+                Track Donation
               </Link>
-              <Link to="/our-impact" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
-                Impact
-              </Link>
-              <Link to="/reports" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
-                Resources & Reports
-              </Link>
-              <Link to="/news" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
-                News & Events
-              </Link>
-              <Link to="/donate" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
-                Donate (1:1 Matched)
-              </Link>
-              <Link to="/contact" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+              <Link
+                to="/contact"
+                className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg"
+              >
                 Contact Us
               </Link>
+              <Link
+                to="/donate"
+                className="mx-2 mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-saffron px-4 py-2.5 text-sm font-bold text-saffron-foreground shadow-card"
+              >
+                <Heart className="size-4 fill-current" />
+                <span>Donate (1:1 Sovereign Match)</span>
+              </Link>
+
+              {/* Mobile Quick Support Info */}
+              <div className="pt-4 px-3 text-xs text-muted-foreground space-y-2 border-t border-border mt-3">
+                <div className="flex items-center gap-2">
+                  <Phone className="size-3.5 text-saffron" />
+                  <span>+975 2 328999</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="size-3.5 text-saffron" />
+                  <span>bhtf@bhtf.bt</span>
+                </div>
+              </div>
             </div>
           </nav>
         )}

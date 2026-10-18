@@ -106,11 +106,6 @@ function AboutOrganizationPage() {
         ]}
       />
 
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="about-organization" />
-      )}
-
       {/* 1. Official Section 1: About Us, Mandate, Vision, Mission, Governance, Operating Model */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-mandate">
         <div className="bg-white border border-border rounded-3xl p-6 sm:p-10 lg:p-12 shadow-card space-y-8">
@@ -121,7 +116,7 @@ function AboutOrganizationPage() {
             <h2 className="text-3xl sm:text-4xl font-bold text-primary">
               About the Bhutan Health Trust Fund
             </h2>
-            <p className="text-base sm:text-lg text-foreground/80 leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground/80 leading-relaxed font-sans">
               The Bhutan Health Trust Fund (BHTF) is a national trust established to support the sustainability of free primary healthcare services in Bhutan. Guided by its royal charter, BHTF finances essential medicines and vaccines through investment returns and health contributions, helping ensure continued access to essential healthcare for the people of Bhutan.
             </p>
           </div>
@@ -132,7 +127,7 @@ function AboutOrganizationPage() {
                 <Target className="size-4 shrink-0" />
                 <span>Our Mandate</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
                 To ensure sustainable financing for essential medicines and vaccines through prudent fund management and responsible investment.
               </p>
             </div>
@@ -142,7 +137,7 @@ function AboutOrganizationPage() {
                 <Eye className="size-4 shrink-0" />
                 <span>Our Vision</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
                 A Bhutan where every citizen has uninterrupted access to essential medicines and vaccines, now and for generations to come.
               </p>
             </div>
@@ -152,7 +147,7 @@ function AboutOrganizationPage() {
                 <Heart className="size-4 shrink-0" />
                 <span>Our Mission</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
                 To mobilise, invest, and prudently manage a dedicated health endowment to generate sustainable income for financing essential medicines, vaccines, and related supplies.
               </p>
             </div>
@@ -162,7 +157,7 @@ function AboutOrganizationPage() {
                 <ShieldCheck className="size-4 shrink-0" />
                 <span>Governance</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
                 BHTF operates under the guidance of its board of directors, supported by the Asset Management Committee (AMC) and the secretariat, ensuring accountability, transparency, and sound governance.
               </p>
             </div>
@@ -172,70 +167,11 @@ function AboutOrganizationPage() {
                 <Coins className="size-4 text-saffron shrink-0" />
                 <span>Our Operating Model</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed font-sans">
                 The fund generates investment returns and receives health contributions to finance essential medicines and vaccines, while preserving its long-term financial sustainability through capital preservation.
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 2. Official Vision, Mission & Core Values Grid */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-pillars">
-        <SectionEditBadge
-          label="Vision, Mission & Values"
-          pageSlug="about-organization"
-          sectionId="org-pillars"
-          studioHref="/admin/settings"
-          initialData={{
-            title: "Vision, Mission & Guiding Principles",
-            subtitle: "Formally approved by the Secretariat leadership and Board of Trustees to anchor all strategic investment and healthcare allocations.",
-            badge: "Approved Strategic Compass",
-          }}
-        />
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
-            Approved Strategic Compass (July 17, 2026)
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-            Vision, Mission & Guiding Principles
-          </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-3 font-light">
-            Formally approved by the Secretariat leadership and Board of Trustees to anchor all strategic investment and healthcare allocations.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {corePillars.map((p) => (
-            <div
-              key={p.title}
-              className="bg-white border border-slate-200 rounded-3xl p-7 sm:p-9 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-300 group flex flex-col justify-between space-y-4"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`h-12 w-12 rounded-2xl grid place-items-center border ${p.color}`}>
-                    <p.icon className="h-6 w-6" />
-                  </div>
-                  <span className="font-sans text-xs font-bold text-emerald-800">
-                    {p.dzongkha}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-emerald-800 transition">
-                  {p.title}
-                </h3>
-
-                <p className="text-sm text-slate-600 leading-relaxed font-light mt-3">
-                  {p.text}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-400">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>Institutional Mandate</span>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
