@@ -180,24 +180,24 @@ export function CommodityTracker() {
   const [activeTab, setActiveTab] = useState<CommodityCategory>(commodityCategories[0]);
 
   return (
-    <div className="commodity-editorial">
+    <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-8 shadow-xs space-y-8">
       {/* Header */}
-      <div className="relative z-10 max-w-3xl space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF8F3] border border-amber-500/30 text-amber-800 text-xs font-semibold">
+      <div className="max-w-3xl space-y-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-300/60 text-amber-900 text-xs font-semibold">
           <Sparkles className="h-3.5 w-3.5 text-amber-600" />
           <span>Statutory Health Commodities Portfolio</span>
         </div>
-        <h3 className="font-serif text-2xl sm:text-4xl font-normal text-slate-900 tracking-tight">
+        <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
           Primary Healthcare Supplies Financed in Perpetuity
         </h3>
-        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans font-light">
           The Bhutan Health Trust Fund ring-fences procurement capital for 6 core healthcare streams,
           ensuring sovereign health security across all 20 Dzongkhags.
         </p>
       </div>
 
-      {/* 6 Minimal Tab Switchers */}
-      <div className="commodity-tabs" role="tablist" aria-label="Healthcare supply streams">
+      {/* 6 Responsive Tab Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3" role="tablist" aria-label="Healthcare supply streams">
         {commodityCategories.map((c, index) => {
           const isSelected = activeTab.id === c.id;
           const Icon = c.icon;
@@ -213,12 +213,16 @@ export function CommodityTracker() {
               tabIndex={isSelected ? 0 : -1}
               onClick={() => setActiveTab(c)}
               onKeyDown={(event) => {
-                const nextIndex = event.key === "ArrowRight" || event.key === "ArrowDown"
-                  ? (index + 1) % commodityCategories.length
-                  : event.key === "ArrowLeft" || event.key === "ArrowUp"
+                const nextIndex =
+                  event.key === "ArrowRight" || event.key === "ArrowDown"
+                    ? (index + 1) % commodityCategories.length
+                    : event.key === "ArrowLeft" || event.key === "ArrowUp"
                     ? (index - 1 + commodityCategories.length) % commodityCategories.length
-                    : event.key === "Home" ? 0
-                      : event.key === "End" ? commodityCategories.length - 1 : -1;
+                    : event.key === "Home"
+                    ? 0
+                    : event.key === "End"
+                    ? commodityCategories.length - 1
+                    : -1;
                 if (nextIndex >= 0) {
                   event.preventDefault();
                   const next = commodityCategories[nextIndex];
@@ -226,28 +230,65 @@ export function CommodityTracker() {
                   document.getElementById(`commodity-tab-${next.id}`)?.focus();
                 }
               }}
-              className={`commodity-tab ${isSelected ? "is-selected" : ""}`}
+              className={`group flex flex-col justify-between p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer ${
+                isSelected
+                  ? "bg-slate-900 border-slate-900 text-white shadow-md ring-2 ring-amber-400/60"
+                  : "bg-[#FAF8F5] border-slate-200 text-slate-700 hover:bg-white hover:border-slate-300 hover:shadow-xs"
+              }`}
             >
-              <Icon className="commodity-tab-icon" aria-hidden="true" />
-              <span className="commodity-tab-copy">
-                <span className="commodity-tab-name">{c.name}</span>
-                <span className="commodity-tab-meta">{c.dzongkha} · {c.annualBudgetNu.split(" / ")[0]}</span>
-              </span>
-              <span className="commodity-tab-arrow" aria-hidden="true">↗</span>
+              <div>
+                <div className="flex items-center justify-between mb-2.5">
+                  <div
+                    className={`size-8 rounded-xl grid place-items-center transition-colors ${
+                      isSelected ? "bg-amber-400 text-slate-950 font-bold" : "bg-white text-emerald-800 border border-slate-200"
+                    }`}
+                  >
+                    <Icon className="size-4" aria-hidden="true" />
+                  </div>
+                  <span
+                    className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                      isSelected
+                        ? "bg-white/15 text-amber-300"
+                        : "bg-emerald-50 text-emerald-800 border border-emerald-100"
+                    }`}
+                  >
+                    {c.annualBudgetNu.split(" / ")[0]}
+                  </span>
+                </div>
+                <div
+                  className={`text-xs font-bold leading-snug line-clamp-2 ${
+                    isSelected ? "text-white" : "text-slate-900"
+                  }`}
+                >
+                  {c.name}
+                </div>
+              </div>
+              <div
+                className={`text-[10px] mt-2 pt-2 border-t truncate ${
+                  isSelected ? "border-white/15 text-amber-200/90" : "border-slate-200 text-slate-600"
+                }`}
+              >
+                {c.dzongkha}
+              </div>
             </button>
           );
         })}
       </div>
 
       {/* Selected Commodity Deep-Dive Card */}
-      <div className="commodity-detail" id="commodity-detail" role="tabpanel" aria-labelledby={`commodity-tab-${activeTab.id}`}>
+      <div
+        className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-[#FAF8F5] border border-slate-200/80 rounded-2xl p-5 sm:p-7"
+        id="commodity-detail"
+        role="tabpanel"
+        aria-labelledby={`commodity-tab-${activeTab.id}`}
+      >
         {/* Left Column: Description & Specifications (7 Cols) */}
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-2">
             <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider font-sans">
               {activeTab.dzongkha} • Statutory Health Stream
             </span>
-            <h4 className="font-serif text-2xl sm:text-3xl font-normal text-slate-900">
+            <h4 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
               {activeTab.name}
             </h4>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans font-light">
@@ -256,24 +297,24 @@ export function CommodityTracker() {
           </div>
 
           {/* Specifications Grid */}
-          <div className="commodity-facts">
-            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1">
-              <span className="text-slate-400 text-[11px] block">Annual Spend:</span>
-              <span className="font-serif text-sm font-normal text-slate-900 block">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1 shadow-2xs">
+              <span className="text-slate-600 text-[11px] block font-medium">Annual Spend:</span>
+              <span className="font-serif text-sm font-bold text-slate-900 block">
                 {activeTab.annualBudgetNu}
               </span>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1">
-              <span className="text-slate-400 text-[11px] block">Coverage Reach:</span>
-              <span className="font-serif text-sm font-normal text-emerald-800 block">
+            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1 shadow-2xs">
+              <span className="text-slate-600 text-[11px] block font-medium">Coverage Reach:</span>
+              <span className="font-serif text-sm font-bold text-emerald-800 block">
                 {activeTab.reach}
               </span>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1 col-span-2 sm:col-span-1">
-              <span className="text-slate-400 text-[11px] block">Quality Protocol:</span>
-              <span className="font-sans text-[11px] font-medium text-slate-800 block">
+            <div className="bg-white p-4 rounded-xl border border-slate-200/80 space-y-1 shadow-2xs">
+              <span className="text-slate-600 text-[11px] block font-medium">Quality Protocol:</span>
+              <span className="font-sans text-[11px] font-semibold text-slate-800 block leading-tight">
                 {activeTab.qualityStandard}
               </span>
             </div>
@@ -284,13 +325,13 @@ export function CommodityTracker() {
             <h5 className="text-[11px] font-bold text-slate-700 uppercase tracking-wider font-sans">
               Financed Formulations & Supplies:
             </h5>
-            <div className="commodity-supplies">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {activeTab.keyItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-2.5 bg-white p-3 rounded-xl border border-slate-200/80 text-slate-800 font-sans"
+                  className="flex items-start gap-2.5 bg-white p-3 rounded-xl border border-slate-200/80 text-slate-800 font-sans shadow-2xs"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
                   <span className="leading-snug text-xs">{item}</span>
                 </div>
               ))}
@@ -299,7 +340,7 @@ export function CommodityTracker() {
         </div>
 
         {/* Right Column: Supply Chain Pipeline (5 Cols) */}
-        <div className="commodity-pipeline lg:col-span-5 space-y-5">
+        <div className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-2xs space-y-5">
           <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-3 font-sans">
             <Building2 className="h-4 w-4 text-emerald-800" />
             <span>Procurement & Supply Pipeline</span>
@@ -308,7 +349,7 @@ export function CommodityTracker() {
           <div className="space-y-3.5 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-slate-200">
             {activeTab.logisticsFlow.map((step, idx) => (
               <div key={idx} className="relative flex items-start gap-3 pl-1 text-xs font-sans">
-                <div className="h-5 w-5 rounded-full bg-slate-900 text-amber-300 font-bold text-[10px] grid place-items-center shrink-0 z-10">
+                <div className="h-5 w-5 rounded-full bg-slate-900 text-amber-300 font-bold text-[10px] grid place-items-center shrink-0 z-10 shadow-xs">
                   {idx + 1}
                 </div>
                 <div className="pt-0.5 text-slate-700 font-medium leading-snug">{step}</div>

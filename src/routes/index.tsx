@@ -22,7 +22,7 @@ import {
   Mail,
 } from "lucide-react";
 
-import kingPortrait from "@/assets/king_portrait_fourth.jpg";
+import kingHeroWidescreen from "@/assets/king_hero_widescreen.jpg";
 
 // Client Field Photos
 import imgDispensary from "@/assets/field/bhtf_dispensary_pharmacist.jpg";
@@ -268,52 +268,48 @@ const PARTNERS = [
 function HomePage() {
   return (
     <div className="bg-background text-foreground">
-      {/* 1. HERO SECTION (Full King Portrait Background with His Majesty on the right, smooth left fade, and crisp typography) */}
-      <section className="relative overflow-hidden min-h-[580px] lg:min-h-[640px] xl:min-h-[680px] flex items-center border-b border-border bg-[#FAF8F5]">
-        {/* Full Image Background with His Majesty the Fourth Druk Gyalpo on the right */}
+      {/* 1. HERO SECTION (Widescreen King Portrait with His Majesty on the right, extended natural wall on left, clear & vivid with zero haze) */}
+      <section className="relative overflow-hidden min-h-[560px] lg:min-h-[640px] xl:min-h-[680px] flex items-center border-b border-border bg-[#BFA26F]">
+        {/* Full Seamless Portrait Background with His Majesty clearly on the right and extended background on the left */}
         <div
-          className="absolute inset-0 bg-cover bg-no-repeat bg-[position:85%_top] sm:bg-[position:80%_center] lg:bg-[position:right_center]"
-          style={{ backgroundImage: `url(${kingPortrait})` }}
+          className="absolute inset-0 bg-cover bg-no-repeat bg-right lg:bg-center"
+          style={{ backgroundImage: `url(${kingHeroWidescreen})` }}
         />
-
-        {/* Smooth gradient scrim from left: ensures typography is 100% crisp and readable while His Majesty remains fully visible on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/95 sm:via-[#FAF8F5]/90 lg:via-[#FAF8F5]/85 via-50% to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-transparent sm:hidden pointer-events-none" />
 
         <div className="container-page py-12 lg:py-20 relative z-10 w-full">
           {/* Left Column: Vision, Royal Mandate & Shorter Transparent Quote */}
           <div className="max-w-2xl lg:max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-soft-orange px-3.5 py-1 text-xs font-semibold text-saffron mb-5 border border-saffron/20 shadow-2xs backdrop-blur-sm">
-              <Sparkles className="size-3.5" />
-              <span>Royal Charter Statutory Trust Fund • Established 1998</span>
+            <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/80 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
+              <Sparkles className="size-3.5 text-amber-400" />
+              <span>1:1</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary leading-[1.08] tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.08] tracking-tight">
               Building a<br />Healthier Bhutan
             </h1>
 
-            <div className="h-1.5 w-24 bg-saffron rounded-full my-5" />
+            <div className="h-1.5 w-24 bg-amber-500 rounded-full my-5" />
 
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-900/90 font-medium leading-relaxed">
               The Bhutan Health Trust Fund sustainably finances essential medicines and vaccines to strengthen primary
               healthcare and protect the well-being of every Bhutanese citizen.
             </p>
 
             {/* Shorter, Transparent Frosted Glass Royal Vision Callout (User requested: "4th make shoter and the transpernt ok") */}
-            <div className="my-5 p-3 sm:p-3.5 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 shadow-2xs space-y-1.5 max-w-lg">
-              <p className="text-xs sm:text-sm font-semibold text-primary italic leading-snug">
+            <div className="my-5 p-3 sm:p-3.5 rounded-2xl bg-white/75 backdrop-blur-md border border-white/80 shadow-xs space-y-1.5 max-w-lg">
+              <p className="text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
                 “No Bhutanese should ever have to choose between their health and their livelihood.”
               </p>
-              <div className="flex items-center gap-2 pt-1 border-t border-primary/10">
-                <span className="size-1.5 rounded-full bg-saffron" />
-                <span className="text-[11px] font-bold text-foreground">
+              <div className="flex items-center gap-2 pt-1 border-t border-slate-900/10">
+                <span className="size-1.5 rounded-full bg-amber-500" />
+                <span className="text-[11px] font-bold text-slate-900">
                   HM the Fourth Druk Gyalpo Jigme Singye Wangchuck
                 </span>
-                <span className="text-[10px] text-muted-foreground hidden sm:inline">(2004)</span>
+                <span className="text-[10px] text-slate-600 hidden sm:inline">(2004)</span>
               </div>
             </div>
 
-            {/* Action CTA Pills */}
+            {/* Action CTA Pills: User requested "only donate" */}
             <div className="mt-7 flex flex-wrap gap-3 items-center">
               <Link
                 to="/our-impact"
@@ -325,7 +321,7 @@ function HomePage() {
 
               <Link
                 to="/about/organization"
-                className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md border border-border px-6 py-3 text-sm font-semibold hover:bg-white transition text-foreground shadow-2xs"
+                className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-slate-300 px-6 py-3 text-sm font-semibold hover:bg-white transition text-slate-900 shadow-xs"
               >
                 <span>About BHTF</span>
                 <Play className="size-3.5 fill-current text-primary" />
@@ -336,16 +332,10 @@ function HomePage() {
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-card hover:bg-primary/90 transition"
               >
                 <Heart className="size-3.5 fill-current text-saffron" />
-                <span>Donate (1:1 Matched)</span>
+                <span>Donate</span>
               </Link>
             </div>
           </div>
-        </div>
-
-        {/* Subtle, Dignified Royal Benefactor Badge on Bottom Right */}
-        <div className="hidden lg:flex absolute bottom-5 right-8 z-10 items-center gap-2 px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-[11px] font-medium text-foreground/90 shadow-2xs">
-          <span className="size-2 rounded-full bg-saffron" />
-          <span>His Majesty the Fourth Druk Gyalpo • Founding Royal Benefactor</span>
         </div>
       </section>
 

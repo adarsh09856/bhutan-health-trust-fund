@@ -94,7 +94,7 @@ function AboutOrganizationPage() {
   const { customSections } = Route.useLoaderData();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
         badge="Institutional Profile"
         title="Our Organization & Royal Mandate"
@@ -175,7 +175,123 @@ function AboutOrganizationPage() {
         </div>
       </section>
 
-      {/* 2a. Three Strategic Objectives (Slide 4) */}
+      {/* 2. Annexure 1: Organizational Structure of the Secretariat (Second Card/Section) */}
+      <section id="organogram" className="mx-auto max-w-7xl scroll-mt-32 px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-structure-tree">
+        <SectionEditBadge
+          label="Approved Organogram"
+          pageSlug="about-organization"
+          sectionId="org-structure-tree"
+          studioHref="/admin/page-editor?slug=about-organization"
+          initialData={{
+            title: "Organizational Structure of the Secretariat",
+            subtitle: "Annexure 1 • Formally approved governance hierarchy from the Board of Trustees to operational divisions.",
+            badge: "Annexure 1 • Organizational Structure",
+          }}
+        />
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
+            Annexure 1 • Official Structure
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            Organizational Structure of the Secretariat
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm font-light">
+            Formally approved governance hierarchy illustrating the direct line of accountability from the Board of Trustees to operational divisions.
+          </p>
+        </div>
+
+        {/* Clean Organogram Diagram - Matching Official Document */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm">
+          <div className="max-w-4xl mx-auto">
+            {/* Level 1: Board */}
+            <div className="flex justify-center">
+              <div className="w-64 bg-slate-50 border-2 border-slate-800 rounded-xl p-3.5 text-center shadow-xs">
+                <span className="font-serif font-bold text-base text-slate-900 block">Board</span>
+                <span className="text-[10px] text-slate-500 font-sans block mt-0.5">High-Level Governance</span>
+              </div>
+            </div>
+
+            {/* Vertical Line from Board down */}
+            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+
+            {/* Horizontal Branch to Asset Management Committee on Left */}
+            <div className="relative">
+              {/* Center vertical continue line */}
+              <div className="w-0.5 h-20 bg-slate-700 mx-auto" />
+
+              {/* Connecting branch to AMC */}
+              <div className="sm:absolute sm:top-1/2 sm:right-1/2 sm:-translate-y-1/2 flex items-center justify-center my-2 sm:my-0">
+                <div className="w-56 bg-slate-50 border-2 border-slate-800 rounded-xl p-3 text-center shadow-xs">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 block leading-snug">
+                    Asset Management Committee
+                  </span>
+                  <span className="text-[10px] text-amber-700 font-sans block mt-0.5 font-semibold">Specialized Advisory Sub-committee</span>
+                </div>
+                <div className="hidden sm:block w-16 md:w-24 h-0.5 bg-slate-700" />
+              </div>
+            </div>
+
+            {/* Level 2: Director */}
+            <div className="flex justify-center">
+              <div className="w-64 bg-slate-50 border-2 border-slate-800 rounded-xl p-3.5 text-center shadow-xs">
+                <span className="font-serif font-bold text-base text-slate-900 block">Director</span>
+                <span className="text-[10px] text-teal-700 font-sans block mt-0.5 font-semibold">Dr. Gyambo Sithey, PhD</span>
+              </div>
+            </div>
+
+            {/* Stem Down to 4 Divisions */}
+            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+
+            {/* Horizontal Bar across all 4 Divisions */}
+            <div className="hidden sm:block w-[88%] h-0.5 bg-slate-700 mx-auto" />
+
+            {/* 4 Division Drops & Boxes */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-0 sm:pt-0">
+              {/* Division 1 */}
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-xl p-3.5 text-center shadow-xs min-h-[76px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Investment Management Division
+                  </span>
+                </div>
+              </div>
+
+              {/* Division 2 */}
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-xl p-3.5 text-center shadow-xs min-h-[76px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Administration & Finance Division
+                  </span>
+                </div>
+              </div>
+
+              {/* Division 3 */}
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-xl p-3.5 text-center shadow-xs min-h-[76px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Programme Division
+                  </span>
+                </div>
+              </div>
+
+              {/* Division 4 */}
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-xl p-3.5 text-center shadow-xs min-h-[76px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Monitoring & Evaluation Division
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Three Strategic Objectives (Slide 4) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-objectives">
         <SectionEditBadge
           label="Three Strategic Objectives"
@@ -385,119 +501,6 @@ function AboutOrganizationPage() {
               <p className="text-xs text-slate-600 font-light leading-relaxed">
                 Guided by the Investment Policy Statement (IPS), diversified across domestic bonds, bank deposits, and secure offshore holdings via ADB.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Annexure 1: Organizational Structure of the Secretariat (Exact match to WhatsApp Briefing & Slide 10) */}
-      <section id="organogram" className="mx-auto max-w-7xl scroll-mt-32 px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-structure-tree">
-        <SectionEditBadge
-          label="Approved Organogram"
-          pageSlug="about-organization"
-          sectionId="org-structure-tree"
-          studioHref="/admin/page-editor?slug=about-organization"
-          initialData={{
-            title: "Organizational Structure of the Secretariat",
-            subtitle: "Annexure 1 • Formally approved governance hierarchy from the Board of Trustees to operational divisions.",
-            badge: "Annexure 1 • Organizational Structure",
-          }}
-        />
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
-            Annexure 1 • Official Structure
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-            Organizational Structure of the Secretariat
-          </h2>
-          <p className="text-slate-600 text-xs sm:text-sm font-light">
-            Formally approved governance hierarchy illustrating the direct line of accountability from the Board of Trustees to operational divisions.
-          </p>
-        </div>
-
-        {/* Clean Organogram Diagram - Matching WhatsApp Document Exactly */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm">
-          <div className="max-w-4xl mx-auto">
-            {/* Level 1: Board */}
-            <div className="flex justify-center">
-              <div className="w-56 bg-slate-50 border-2 border-slate-700 rounded-xl p-3.5 text-center shadow-xs">
-                <span className="font-serif font-bold text-base text-slate-900 block">Board</span>
-              </div>
-            </div>
-
-            {/* Vertical Line from Board down */}
-            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
-
-            {/* Horizontal Branch to Asset Management Committee on Left */}
-            <div className="relative">
-              {/* Center vertical continue line */}
-              <div className="w-0.5 h-16 bg-slate-700 mx-auto" />
-
-              {/* Horizontal connecting arm to AMC on the left */}
-              <div className="absolute top-1/2 right-1/2 w-32 sm:w-48 h-0.5 bg-slate-700 -translate-y-1/2" />
-
-              {/* AMC Box positioned to the left */}
-              <div className="absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-[-8.5rem] sm:translate-x-[-12.5rem] w-44 sm:w-56 bg-slate-50 border-2 border-slate-700 rounded-xl p-2.5 sm:p-3 text-center shadow-xs">
-                <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 block leading-snug">
-                  Asset Management Committee
-                </span>
-              </div>
-            </div>
-
-            {/* Level 2: Director */}
-            <div className="flex justify-center">
-              <div className="w-56 bg-slate-50 border-2 border-slate-700 rounded-xl p-3.5 text-center shadow-xs">
-                <span className="font-serif font-bold text-base text-slate-900 block">Director</span>
-              </div>
-            </div>
-
-            {/* Stem Down to 4 Divisions */}
-            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
-
-            {/* Horizontal Bar across all 4 Divisions */}
-            <div className="hidden sm:block w-[88%] h-0.5 bg-slate-700 mx-auto" />
-
-            {/* 4 Division Drops & Boxes */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-4 pt-0 sm:pt-0">
-              {/* Division 1 */}
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-700 rounded-xl p-3.5 text-center shadow-xs min-h-[72px] flex items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Investment Management Division
-                  </span>
-                </div>
-              </div>
-
-              {/* Division 2 */}
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-700 rounded-xl p-3.5 text-center shadow-xs min-h-[72px] flex items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Administration & Finance Division
-                  </span>
-                </div>
-              </div>
-
-              {/* Division 3 */}
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-700 rounded-xl p-3.5 text-center shadow-xs min-h-[72px] flex items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Programme Division
-                  </span>
-                </div>
-              </div>
-
-              {/* Division 4 */}
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-700 rounded-xl p-3.5 text-center shadow-xs min-h-[72px] flex items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Monitoring & Evaluation Division
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

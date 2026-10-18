@@ -92,7 +92,7 @@ function CommitteesPage() {
   const { customSections } = Route.useLoaderData();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
         badge="Fiduciary Committees"
         title="Asset Management & Governance Committees"

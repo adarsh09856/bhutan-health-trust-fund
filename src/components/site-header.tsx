@@ -103,7 +103,7 @@ export function SiteHeader() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Clean, Dignified Institutional Palette - No clunky box highlights) */}
           <nav className="hidden xl:flex items-center gap-1">
             {/* 1. About Us with Dropdown */}
             <div
@@ -113,12 +113,14 @@ export function SiteHeader() {
             >
               <Link
                 to="/about/organization"
-                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
-                  location.pathname.startsWith("/about") ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
+                  location.pathname.startsWith("/about")
+                    ? "text-primary font-bold border-b-2 border-primary"
+                    : "text-slate-700 font-semibold hover:text-primary"
                 }`}
               >
                 <span>About Us</span>
-                <ChevronDown className="size-3.5 transition-transform duration-200" />
+                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
               </Link>
 
               {openDropdown === "about" && (
@@ -179,7 +181,19 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* 2. Our Work & Impact with Dropdown */}
+            {/* 2. Our Story (Direct Link) */}
+            <Link
+              to="/our-story"
+              className={`px-3.5 py-2 text-sm transition-colors ${
+                location.pathname === "/our-story"
+                  ? "text-primary font-bold border-b-2 border-primary"
+                  : "text-slate-700 font-semibold hover:text-primary"
+              }`}
+            >
+              Our Story
+            </Link>
+
+            {/* 3. Our Work & Impact with Dropdown */}
             <div
               className="relative py-2"
               onMouseEnter={() => setOpenDropdown("work")}
@@ -187,14 +201,14 @@ export function SiteHeader() {
             >
               <Link
                 to="/our-impact"
-                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
                   location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
-                    ? "text-saffron bg-soft-orange/50"
-                    : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                    ? "text-primary font-bold border-b-2 border-primary"
+                    : "text-slate-700 font-semibold hover:text-primary"
                 }`}
               >
                 <span>Our Work</span>
-                <ChevronDown className="size-3.5 transition-transform duration-200" />
+                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
               </Link>
 
               {openDropdown === "work" && (
@@ -223,7 +237,7 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* 3. Resources with Full Subpages Dropdown */}
+            {/* 4. Resources with Full Subpages Dropdown */}
             <div
               className="relative py-2"
               onMouseEnter={() => setOpenDropdown("resources")}
@@ -231,14 +245,14 @@ export function SiteHeader() {
             >
               <Link
                 to="/resources"
-                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
                   location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports")
-                    ? "text-saffron bg-soft-orange/50"
-                    : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                    ? "text-primary font-bold border-b-2 border-primary"
+                    : "text-slate-700 font-semibold hover:text-primary"
                 }`}
               >
                 <span>Resources</span>
-                <ChevronDown className="size-3.5 transition-transform duration-200" />
+                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
               </Link>
 
               {openDropdown === "resources" && (
@@ -318,7 +332,7 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* 4. News & Events with Full Subpages Dropdown */}
+            {/* 5. News & Events with Full Subpages Dropdown */}
             <div
               className="relative py-2"
               onMouseEnter={() => setOpenDropdown("news")}
@@ -326,12 +340,14 @@ export function SiteHeader() {
             >
               <Link
                 to="/news"
-                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
-                  location.pathname.startsWith("/news") ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
+                  location.pathname.startsWith("/news")
+                    ? "text-primary font-bold border-b-2 border-primary"
+                    : "text-slate-700 font-semibold hover:text-primary"
                 }`}
               >
                 <span>News & Events</span>
-                <ChevronDown className="size-3.5 transition-transform duration-200" />
+                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
               </Link>
 
               {openDropdown === "news" && (
@@ -391,35 +407,27 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* 5. Track Donation */}
-            <Link
-              to="/track-donation"
-              className={`px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
-                location.pathname === "/track-donation" ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
-              }`}
-            >
-              Track Donation
-            </Link>
-
-            {/* 6. Contact Us */}
+            {/* 6. Contact Us (Direct Link) */}
             <Link
               to="/contact"
-              className={`px-3 py-2 text-sm font-semibold transition-colors rounded-lg ${
-                location.pathname === "/contact" ? "text-saffron bg-soft-orange/50" : "text-foreground/80 hover:text-saffron hover:bg-muted"
+              className={`px-3.5 py-2 text-sm transition-colors ${
+                location.pathname === "/contact"
+                  ? "text-primary font-bold border-b-2 border-primary"
+                  : "text-slate-700 font-semibold hover:text-primary"
               }`}
             >
               Contact Us
             </Link>
           </nav>
 
-          {/* Action CTAs: Donate Now in Saffron */}
+          {/* Action CTAs: Donate in Saffron */}
           <div className="flex items-center gap-2">
             <Link
               to="/donate"
               className="inline-flex items-center gap-2 rounded-full bg-saffron px-5 py-2.5 text-sm font-bold text-saffron-foreground shadow-card hover:opacity-90 transition active:scale-95"
             >
               <Heart className="size-4 fill-current" />
-              <span>Donate Now</span>
+              <span>Donate</span>
             </Link>
 
             {/* Mobile Menu Hamburger */}

@@ -141,7 +141,7 @@ function OurStoryPage() {
       : officialMilestones;
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       {/* 1. Dignified Hero Header using Standard PageHero */}
       <PageHero
         badge="The Chronicle of Health Sovereignty • 1998–2026"
