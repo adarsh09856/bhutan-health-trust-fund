@@ -87,40 +87,43 @@ export function SiteHeader() {
 
       {/* 2. Main Institutional Navigation Bar */}
       <div className="bg-white">
-        <div className="container-page flex h-20 items-center justify-between gap-4">
+        <div className="container-page flex h-20 items-center justify-between gap-2 xl:gap-4">
           {/* Logo & Royal Proclamation */}
-          <Link to="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="size-12 rounded-xl bg-gradient-to-br from-amber-50 via-white to-slate-50 border border-border p-1 shadow-card grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+            <div className="size-11 sm:size-12 rounded-xl bg-gradient-to-br from-amber-50 via-white to-slate-50 border border-border p-1 shadow-card grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
               <img src={logo} alt="Bhutan Health Trust Fund Emblem" className="h-full w-full object-contain" />
             </div>
-            <div className="leading-tight">
-              <div className="text-primary font-bold text-base sm:text-lg tracking-tight group-hover:text-primary/90">
+            <div className="leading-tight shrink-0">
+              <div className="text-primary font-bold text-sm sm:text-base lg:text-lg tracking-tight whitespace-nowrap group-hover:text-primary/90">
                 BHUTAN HEALTH TRUST FUND
               </div>
-              <div className="hidden sm:block text-[11px] text-muted-foreground mt-0.5">
+              <div className="hidden 2xl:block text-[11px] text-muted-foreground mt-0.5 whitespace-nowrap">
                 Ensuring equitable access to essential medicines and vaccines
+              </div>
+              <div className="hidden sm:block 2xl:hidden text-[10px] text-muted-foreground mt-0.5 whitespace-nowrap">
+                Autonomous Statutory Trust Fund • Est. 1998
               </div>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links (Clean, Dignified Institutional Palette - No clunky box highlights) */}
-          <nav className="hidden xl:flex items-center gap-1">
+          {/* Desktop Navigation Links (Clean, Dignified Institutional Palette - Zero vertical text wrapping) */}
+          <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5 shrink-0">
             {/* 1. About Us with Dropdown */}
             <div
-              className="relative py-2"
+              className="relative py-2 shrink-0"
               onMouseEnter={() => setOpenDropdown("about")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <Link
                 to="/about/organization"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
                   location.pathname.startsWith("/about")
-                    ? "text-primary font-bold border-b-2 border-primary"
-                    : "text-slate-700 font-semibold hover:text-primary"
+                    ? "bg-primary/10 text-primary font-bold"
+                    : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span>About Us</span>
-                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
+                <span className="whitespace-nowrap">About Us</span>
+                <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
               {openDropdown === "about" && (
@@ -184,31 +187,31 @@ export function SiteHeader() {
             {/* 2. Our Story (Direct Link) */}
             <Link
               to="/our-story"
-              className={`px-3.5 py-2 text-sm transition-colors ${
+              className={`whitespace-nowrap shrink-0 inline-flex items-center px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
                 location.pathname === "/our-story"
-                  ? "text-primary font-bold border-b-2 border-primary"
-                  : "text-slate-700 font-semibold hover:text-primary"
+                  ? "bg-primary/10 text-primary font-bold"
+                  : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
               }`}
             >
-              Our Story
+              <span className="whitespace-nowrap">Our Story</span>
             </Link>
 
             {/* 3. Our Work & Impact with Dropdown */}
             <div
-              className="relative py-2"
+              className="relative py-2 shrink-0"
               onMouseEnter={() => setOpenDropdown("work")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <Link
                 to="/our-impact"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
                   location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
-                    ? "text-primary font-bold border-b-2 border-primary"
-                    : "text-slate-700 font-semibold hover:text-primary"
+                    ? "bg-primary/10 text-primary font-bold"
+                    : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span>Our Work</span>
-                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
+                <span className="whitespace-nowrap">Our Work</span>
+                <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
               {openDropdown === "work" && (
@@ -239,20 +242,20 @@ export function SiteHeader() {
 
             {/* 4. Resources with Full Subpages Dropdown */}
             <div
-              className="relative py-2"
+              className="relative py-2 shrink-0"
               onMouseEnter={() => setOpenDropdown("resources")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <Link
                 to="/resources"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
                   location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports")
-                    ? "text-primary font-bold border-b-2 border-primary"
-                    : "text-slate-700 font-semibold hover:text-primary"
+                    ? "bg-primary/10 text-primary font-bold"
+                    : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span>Resources</span>
-                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
+                <span className="whitespace-nowrap">Resources</span>
+                <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
               {openDropdown === "resources" && (
@@ -334,20 +337,20 @@ export function SiteHeader() {
 
             {/* 5. News & Events with Full Subpages Dropdown */}
             <div
-              className="relative py-2"
+              className="relative py-2 shrink-0"
               onMouseEnter={() => setOpenDropdown("news")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <Link
                 to="/news"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-sm transition-colors ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
                   location.pathname.startsWith("/news")
-                    ? "text-primary font-bold border-b-2 border-primary"
-                    : "text-slate-700 font-semibold hover:text-primary"
+                    ? "bg-primary/10 text-primary font-bold"
+                    : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span>News & Events</span>
-                <ChevronDown className="size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200" />
+                <span className="whitespace-nowrap">News & Events</span>
+                <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
               {openDropdown === "news" && (
@@ -410,23 +413,23 @@ export function SiteHeader() {
             {/* 6. Contact Us (Direct Link) */}
             <Link
               to="/contact"
-              className={`px-3.5 py-2 text-sm transition-colors ${
+              className={`whitespace-nowrap shrink-0 inline-flex items-center px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
                 location.pathname === "/contact"
-                  ? "text-primary font-bold border-b-2 border-primary"
-                  : "text-slate-700 font-semibold hover:text-primary"
+                  ? "bg-primary/10 text-primary font-bold"
+                  : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
               }`}
             >
-              Contact Us
+              <span className="whitespace-nowrap">Contact Us</span>
             </Link>
           </nav>
 
           {/* Action CTAs: Donate in Saffron */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <Link
               to="/donate"
-              className="inline-flex items-center gap-2 rounded-full bg-saffron px-5 py-2.5 text-sm font-bold text-saffron-foreground shadow-card hover:opacity-90 transition active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-full bg-saffron px-4 2xl:px-5 py-2 text-xs 2xl:text-sm font-bold text-saffron-foreground shadow-card hover:opacity-90 transition active:scale-95 whitespace-nowrap shrink-0"
             >
-              <Heart className="size-4 fill-current" />
+              <Heart className="size-3.5 2xl:size-4 fill-current shrink-0" />
               <span>Donate</span>
             </Link>
 
