@@ -437,14 +437,14 @@ export function DzongkhagExplorer() {
                         }`}
                       />
                     </div>
-                    <div className="font-serif text-sm font-semibold text-slate-900 mt-1 group-hover:text-emerald-900 transition">
+                    <div className="font-sans text-sm font-semibold text-slate-900 mt-1 group-hover:text-emerald-900 transition">
                       {d.name}
                     </div>
                   </div>
 
                   <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-sans">
                     <span className="text-slate-500">{d.bhuCount} BHUs</span>
-                    <span className="text-emerald-800 font-medium font-serif">{d.disbursedNu}</span>
+                    <span className="text-emerald-800 font-medium font-sans">{d.disbursedNu}</span>
                   </div>
                 </button>
               );
@@ -460,7 +460,7 @@ export function DzongkhagExplorer() {
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-[#00A896]/30 text-[#0B4F42] text-[10px] font-bold uppercase tracking-wider font-sans shadow-2xs">
                 {activeDzongkhag.region} Region • {activeDzongkhag.dzongkha}
               </span>
-              <h4 className="font-serif text-2xl sm:text-3xl font-black text-[#0B4F42] mt-2 tracking-tight">
+              <h4 className="font-sans text-2xl sm:text-3xl font-black text-[#0B4F42] mt-2 tracking-tight">
                 {activeDzongkhag.name} Dzongkhag
               </h4>
             </div>
@@ -476,7 +476,7 @@ export function DzongkhagExplorer() {
               <span className="text-[#0B4F42]/70 text-[11px] font-sans flex items-center gap-1 font-semibold">
                 <Users className="h-3.5 w-3.5 text-[#00A896]" /> Population Reach
               </span>
-              <div className="font-serif text-lg font-bold text-[#0B4F42]">
+              <div className="font-sans text-lg font-bold text-[#0B4F42]">
                 {activeDzongkhag.population}
               </div>
             </div>
@@ -485,7 +485,7 @@ export function DzongkhagExplorer() {
               <span className="text-[#0B4F42]/70 text-[11px] font-sans flex items-center gap-1 font-semibold">
                 <Building2 className="h-3.5 w-3.5 text-amber-600" /> Health Facilities
               </span>
-              <div className="font-serif text-base font-bold text-[#0B4F42]">
+              <div className="font-sans text-base font-bold text-[#0B4F42]">
                 {activeDzongkhag.bhuCount} BHUs + {activeDzongkhag.hospitals} Hosp
               </div>
             </div>
@@ -521,7 +521,7 @@ export function DzongkhagExplorer() {
           {/* Annual Allocation Total */}
           <div className="pt-2 flex items-center justify-between border-t border-[#00A896]/20 text-xs">
             <span className="text-[#0B4F42]/80 font-sans font-medium">Annual Commodity Allocation:</span>
-            <span className="font-serif text-xl font-black text-[#0B4F42] font-mono">
+            <span className="font-sans text-xl font-black text-[#0B4F42] font-mono">
               {activeDzongkhag.disbursedNu} / Year
             </span>
           </div>

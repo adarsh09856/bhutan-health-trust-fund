@@ -36,7 +36,7 @@ export function PortfolioAllocationCharts() {
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800">
                 Endowment Asset Structure
               </span>
-              <h4 className="font-serif text-lg font-bold text-slate-900 mt-0.5">
+              <h4 className="font-sans text-lg font-bold text-slate-900 mt-0.5">
                 Onshore vs. Offshore Allocation
               </h4>
             </div>
@@ -112,7 +112,7 @@ export function PortfolioAllocationCharts() {
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-800">
                 Statutory Fiduciary Policy
               </span>
-              <h4 className="font-serif text-lg font-bold text-slate-900 mt-0.5">
+              <h4 className="font-sans text-lg font-bold text-slate-900 mt-0.5">
                 70 / 20 / 10 Spending Allocation
               </h4>
             </div>

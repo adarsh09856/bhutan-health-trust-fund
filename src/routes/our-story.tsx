@@ -25,8 +25,7 @@ import lyonpoSangayPhoto from "@/assets/bhtf/lyonpo_sangay_ngedup.png";
 import historyKing from "@/assets/reference/history_fourth_king.webp";
 import historyCharter from "@/assets/reference/history_charter_1992.webp";
 import historyMou from "@/assets/reference/history_mou.webp";
-import historyEndowment from "@/assets/reference/history_endowment.webp";
-import { FundGrowthTimeline } from "@/components/fund-growth-timeline";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/our-story")({
   loader: async () => {
@@ -167,56 +166,35 @@ function OurStoryPage() {
             badge: "Founding Leadership & Royal Beneficence",
           }}
         />
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-6">
-          <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#00A896] font-mono block">
-              Founding Leadership & Royal Beneficence
+        <div className="bg-white border border-border rounded-3xl p-6 sm:p-10 lg:p-12 shadow-card space-y-6">
+          <div className="max-w-3xl space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron block">
+              Founding Leadership & Royal Beneficence • Geneva 1998
             </span>
-
-            <h2 className="font-serif text-2xl sm:text-4xl font-black text-[#0B4F42] leading-tight">
-              A Sovereign Gift to Safeguard Universal Healthcare
+            <h2 className="text-2xl sm:text-4xl font-bold text-primary">
+              The Sovereign Vision of Universal Healthcare
             </h2>
-
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-light font-sans">
-              Under the benevolent reign of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, healthcare was enshrined as a sacred right in Bhutan. Recognizing that external donor financing is temporary and vulnerable to global economic shocks, the Royal Government took the historic step to build a self-reliant sovereign endowment.
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Launched at the 51st World Health Assembly in Geneva on 12 May 1998, the Bhutan Health Trust Fund established a global precedent: guaranteeing that universal access to free childhood vaccines and essential medicines would remain ring-fenced and protected in perpetuity.
             </p>
-
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-light font-sans">
-              Launched at the 51st World Health Assembly in Geneva on 12 May 1998 under Health Minister Lyonpo Sangay Ngedup, the Bhutan Health Trust Fund established a global precedent: guaranteeing that universal access to free childhood vaccines and essential medicines would remain ring-fenced and protected in perpetuity.
-            </p>
-
-            <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-slate-700">
-              <div className="flex items-center gap-2 bg-[#EAF6F5] px-3.5 py-2 rounded-xl border border-[#00A896]/30 text-[#0B4F42]">
-                <ShieldCheck className="h-4 w-4 text-[#00A896]" />
-                <span>Enacted by Royal Charter (2000)</span>
-              </div>
-              <div className="flex items-center gap-2 bg-[#FAF8F3] px-3.5 py-2 rounded-xl border border-slate-200 text-[#0B4F42]">
-                <Heart className="h-4 w-4 text-[#EE6C8A]" />
-                <span>100% Ring-Fenced Health Corpus (Nu. 4.8B)</span>
-              </div>
-              <div className="flex items-center gap-2 bg-amber-50 px-3.5 py-2 rounded-xl border border-amber-200 text-amber-900">
-                <Landmark className="h-4 w-4 text-amber-600" />
-                <span>Sovereign 1:1 RGOB Matching Fund</span>
-              </div>
-            </div>
           </div>
 
           {/* Dual Tribute Cards: His Majesty the 4th King & Lyonpo Sangay Ngedup */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
             {/* Card 1: His Majesty the Fourth Druk Gyalpo */}
-            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#00A896]/50 transition-all duration-300">
+            <div className="bg-slate-50 border border-border rounded-3xl overflow-hidden shadow-xs flex flex-col justify-between group hover:border-saffron/50 transition-all duration-300">
               <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
                 <img
                   src={kingPortrait}
                   alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-[center_16%] group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-bold">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-saffron text-saffron-foreground font-bold">
                     Royal Visionary & Benefactor
                   </span>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold mt-1 text-white leading-snug">
+                  <h3 className="text-lg sm:text-xl font-bold mt-1 text-white leading-snug">
                     His Majesty the Fourth Druk Gyalpo
                   </h3>
                   <p className="text-xs text-amber-200/90 font-light">
@@ -225,31 +203,31 @@ function OurStoryPage() {
                 </div>
               </div>
               <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
-                <div className="relative pl-4 border-l-2 border-amber-400">
-                  <p className="text-xs sm:text-sm text-slate-700 italic font-serif leading-relaxed">
+                <div className="relative pl-4 border-l-2 border-saffron">
+                  <p className="text-xs sm:text-sm text-foreground italic leading-relaxed">
                     "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. BHTF stands as a sacred trust of self-reliance for generations to come."
                   </p>
                 </div>
-                <p className="text-[11px] text-slate-500 font-light leading-relaxed pt-2 border-t border-slate-100">
-                  Enacted the Royal Charter on 12 May 2000, establishing the autonomous legal framework that forever protects basic healthcare financing in Bhutan.
+                <p className="text-[11px] text-muted-foreground font-light leading-relaxed pt-2 border-t border-border">
+                  Enacted the Royal Charter on 3 August 2000, establishing the autonomous legal framework that forever protects basic healthcare financing in Bhutan.
                 </p>
               </div>
             </div>
 
             {/* Card 2: Lyonpo Sangay Ngedup */}
-            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#00A896]/50 transition-all duration-300">
+            <div className="bg-slate-50 border border-border rounded-3xl overflow-hidden shadow-xs flex flex-col justify-between group hover:border-primary/50 transition-all duration-300">
               <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
                 <img
                   src={lyonpoSangayPhoto}
                   alt="Lyonpo Sangay Ngedup, Minister for Health and Education (1998)"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-[center_16%] group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#00A896] text-white font-bold">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary text-white font-bold">
                     Founding Architect • WHO Geneva 1998
                   </span>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold mt-1 text-white leading-snug">
+                  <h3 className="text-lg sm:text-xl font-bold mt-1 text-white leading-snug">
                     Lyonpo Sangay Ngedup
                   </h3>
                   <p className="text-xs text-emerald-200/90 font-light">
@@ -258,29 +236,18 @@ function OurStoryPage() {
                 </div>
               </div>
               <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
-                <div className="relative pl-4 border-l-2 border-[#00A896]">
-                  <p className="text-xs sm:text-sm text-slate-700 italic font-serif leading-relaxed">
+                <div className="relative pl-4 border-l-2 border-primary">
+                  <p className="text-xs sm:text-sm text-foreground italic leading-relaxed">
                     "A tree is only as strong as the hands that first planted it. Lyonpo Sangay Ngedup laid the foundation of BHTF, and its founding members nurtured it into life. We remain forever grateful for their vision and contributions."
                   </p>
                 </div>
-                <p className="text-[11px] text-slate-500 font-light leading-relaxed pt-2 border-t border-slate-100">
+                <p className="text-[11px] text-muted-foreground font-light leading-relaxed pt-2 border-t border-border">
                   Led the historic Bhutanese delegation to the 51st World Health Assembly in Geneva on 12 May 1998, mobilizing international partners to seed the world's first sovereign health trust fund.
                 </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* 2b. Growth of the Fund Progression Timeline (National Strategy Record) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="fund-growth-timeline">
-        <SectionEditBadge
-          label="Growth of the Fund"
-          pageSlug="our-story"
-          sectionId="fund-growth-timeline"
-          studioHref="/admin/metrics"
-        />
-        <FundGrowthTimeline />
       </section>
 
       {/* 3. Official Historical Milestones (1998 - 2026) */}
@@ -459,14 +426,17 @@ function OurStoryPage() {
             </p>
           </div>
           <Link
-            to="/get-involved"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-sm shadow-md transition shrink-0 active:scale-95 cursor-pointer"
+            to="/donate"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-saffron text-saffron-foreground font-bold text-sm shadow-card hover:opacity-90 transition shrink-0 active:scale-95"
           >
-            <Heart className="h-4 w-4 fill-slate-950" />
-            <span>DONATE NOW</span>
+            <Heart className="h-4 w-4 fill-current" />
+            <span>DONATE NOW (1:1 Matched)</span>
           </Link>
         </div>
       </section>
+
+      {/* Floating Sub-pages Sticky Bottom Capsule */}
+      <AboutBottomCapsule />
     </div>
   );
 }

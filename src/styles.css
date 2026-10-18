@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -6,13 +6,15 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Institutional Premium Design System — Bhutan Health Trust Fund
- * Editorial Typography (Fraunces + Plus Jakarta Sans) & Sovereign Disciplined Palette
+ * Bhutan Health Trust Fund (BHTF) Design System
+ * Clean Institutional Architecture (DHI & BTFEC Standard)
+ * Plus Jakarta Sans Typography & Sovereign Corporate Palette
  */
 
 @theme inline {
-  --font-serif: "Fraunces", Georgia, serif;
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -21,6 +23,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -40,83 +43,77 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-saffron: var(--saffron);
+  --color-saffron-foreground: var(--saffron-foreground);
+  --color-deep-blue: var(--deep-blue);
+  --color-soft-blue: var(--soft-blue);
+  --color-soft-orange: var(--soft-orange);
+  --color-soft-green: var(--soft-green);
+  --color-soft-red: var(--soft-red);
+  --color-soft-purple: var(--soft-purple);
 
   /* Light Institutional Theme Tokens */
-  --color-page-bg: #FAF8F3;
+  --color-page-bg: #FFFFFF;
   --color-aqua-tint: #EAF6F5;
   --color-sky-tint: #E3F1F6;
   --color-aquamarine: #00A896;
-  --color-deep-teal: #0B4F42;
-  --color-lotus-pink: #EE6C8A;
-  --color-soft-pink: #F7CAD0;
-  --color-gold: #D4A237;
+  --color-deep-teal: #0c2b5e;
+  --color-gold: #f59e0b;
   --color-dark-green: #061713;
 
   /* Sovereign Institutional Palette Tokens */
-  --color-ink: #0B4F42;
+  --color-ink: #0c2b5e;
   --color-ink-dark: #071512;
-  --color-ink-card: #EAF6F5;
-  --color-ink-muted: #17382f;
-  --color-gold-light: #e8c16d;
-  --color-gold-dark: #b68525;
-  --color-gold-soft: #fcf6e8;
-  --color-cream: #faf8f3;
-  --color-cream-subtle: #f3efe5;
-  --color-paper: #f4f1ea;
-  --color-charcoal: #121816;
-
-  /* Official BHTF Emblem Brand Palette */
-  --color-aquamarine-dark: #026c5f;
-  --color-aquamarine-light: #e0f7f4;
-  --color-lotus-pink-light: #f7cad0;
-  --color-lotus-pink-subtle: #fdf2f4;
-  --color-bhtf-forest: #0B4F42;
-
-  /* Legacy BHTF color mappings */
-  --color-bhtf-pine-dark: #0B4F42;
-  --color-bhtf-pine: #143d32;
-  --color-bhtf-ochre: #d4a237;
-  --color-bhtf-ochre-light: #e8c16d;
-  --color-bhtf-paper: #faf8f3;
-  --color-bhtf-paper-subtle: #f3efe5;
-  --color-bhtf-charcoal: #121816;
+  --color-ink-card: #f8fafc;
+  --color-ink-muted: #1e293b;
+  --color-cream: #ffffff;
+  --color-cream-subtle: #f8fafc;
+  --color-paper: #ffffff;
+  --color-charcoal: #0f172a;
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.99 0.002 247);
-  --foreground: oklch(0.14 0.03 260);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0.04 250);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.14 0.03 260);
+  --card-foreground: oklch(0.2 0.04 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.14 0.03 260);
-  --primary: oklch(0.24 0.05 250);
+  --popover-foreground: oklch(0.2 0.04 250);
+
+  /* Brand: deep navy blue (BHTF primary) */
+  --primary: oklch(0.32 0.11 255);
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.55 0.16 155);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.96 0.005 250);
-  --muted-foreground: oklch(0.48 0.03 255);
-  --accent: oklch(0.55 0.16 155);
+
+  /* Saffron orange CTA */
+  --saffron: oklch(0.72 0.18 50);
+  --saffron-foreground: oklch(1 0 0);
+
+  --deep-blue: oklch(0.28 0.12 258);
+  --soft-blue: oklch(0.95 0.03 250);
+  --soft-orange: oklch(0.96 0.04 60);
+  --soft-green: oklch(0.95 0.05 155);
+  --soft-red: oklch(0.95 0.04 25);
+  --soft-purple: oklch(0.95 0.04 290);
+
+  --secondary: oklch(0.96 0.02 250);
+  --secondary-foreground: oklch(0.25 0.08 255);
+  --muted: oklch(0.97 0.01 250);
+  --muted-foreground: oklch(0.5 0.03 255);
+  --accent: oklch(0.72 0.18 50);
   --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.92 0.008 255);
-  --input: oklch(0.92 0.008 255);
-  --ring: oklch(0.55 0.16 155);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.01 250);
+  --input: oklch(0.92 0.01 250);
+  --ring: oklch(0.72 0.18 50);
+
+  --gradient-hero: linear-gradient(135deg, oklch(0.98 0.02 240) 0%, oklch(0.92 0.04 230) 100%);
+  --gradient-stats: linear-gradient(135deg, oklch(0.32 0.11 255) 0%, oklch(0.4 0.13 260) 100%);
+  --gradient-footer: linear-gradient(180deg, oklch(0.28 0.12 258) 0%, oklch(0.22 0.1 260) 100%);
+  --shadow-card: 0 4px 24px -8px oklch(0.32 0.11 255 / 0.15);
+  --shadow-elevated: 0 10px 40px -12px oklch(0.32 0.11 255 / 0.25);
 }
 
 .dark {
@@ -132,13 +129,13 @@
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(0.22 0.03 260);
   --muted-foreground: oklch(0.7 0.03 255);
-  --accent: oklch(0.55 0.16 155);
+  --accent: oklch(0.72 0.18 50);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.55 0.16 155);
+  --ring: oklch(0.72 0.18 50);
 }
 
 @layer base {
@@ -157,14 +154,15 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-display);
     overflow-x: hidden;
     min-height: 100vh;
   }
 
-  /* GPU layer isolation for sticky headers to prevent repaint scroll stutter */
-  header {
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   img {
@@ -172,91 +170,59 @@
   }
 }
 
-/* Custom Floating & Micro-Animations */
-@keyframes float-slow {
-  0%,
-  100% {
-    transform: translateY(0px);
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
-  50% {
-    transform: translateY(-8px);
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
   }
-}
-
-/* Clean Micro-Animations (Hero rise & subtle entry only) */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
+  .bg-gradient-stats {
+    background: var(--gradient-stats);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .bg-gradient-footer {
+    background: var(--gradient-footer);
   }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.4s ease-out forwards;
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* Institutional Light Glass & Ruled Utility Accents */
 .card-light-glass {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 168, 150, 0.22);
-  box-shadow: 0 8px 30px -4px rgba(11, 79, 66, 0.06);
+  border: 1px solid rgba(12, 43, 94, 0.12);
+  box-shadow: 0 8px 30px -4px rgba(12, 43, 94, 0.08);
 }
 
 .hairline-divider {
   height: 1px;
-  background-color: rgba(11, 79, 66, 0.12);
+  background-color: rgba(12, 43, 94, 0.12);
 }
 
-.hairline-divider-aqua {
-  height: 1px;
-  background-color: rgba(0, 168, 150, 0.25);
-}
-
-.hairline-divider-gold {
-  height: 1px;
-  background-color: rgba(212, 162, 55, 0.35);
-}
-
-/* Print CSS for Sovereign Documents & Statutory Watermarks */
-@media print {
-  @page {
-    margin: 1.5cm;
-    size: A4 portrait;
-  }
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  .print-watermark {
-    display: flex !important;
-    opacity: 0.3 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-}
-
-/* 
- * BHTF Visual Live Edit Mode & Section Quick Edit Badges
- * Visible strictly to authenticated staff admins when Visual Edit is toggled ON.
- */
+/* Staff admin live edit mode */
 body.bhtf-visual-edit-on [data-bhtf-section] {
   position: relative !important;
-  outline: 2px dashed rgba(212, 162, 55, 0.75) !important;
+  outline: 2px dashed rgba(245, 158, 11, 0.75) !important;
   outline-offset: -2px;
   transition: outline 0.2s ease, box-shadow 0.2s ease;
 }
 
 body.bhtf-visual-edit-on [data-bhtf-section]:hover {
-  outline: 2.5px solid #d4a237 !important;
-  box-shadow: inset 0 0 0 2px rgba(212, 162, 55, 0.25), 0 0 24px rgba(212, 162, 55, 0.18) !important;
+  outline: 2.5px solid #f59e0b !important;
+  box-shadow: inset 0 0 0 2px rgba(245, 158, 11, 0.25), 0 0 24px rgba(245, 158, 11, 0.18) !important;
 }
 
 .bhtf-section-edit-badge {
@@ -266,4 +232,3 @@ body.bhtf-visual-edit-on [data-bhtf-section]:hover {
 body.bhtf-visual-edit-on .bhtf-section-edit-badge {
   display: flex !important;
 }
-

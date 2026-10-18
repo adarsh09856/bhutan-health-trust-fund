@@ -32,6 +32,14 @@ import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
 import { DisbursementChart } from "@/components/disbursement-chart";
 import { PortfolioAllocationCharts } from "@/components/portfolio-allocation-chart";
+import photoCubicles from "@/assets/field/bhtf_medicine_cubicles.jpg";
+import photoFluVial from "@/assets/field/bhtf_flu_vaccine_vial.jpg";
+import photoPharmacist from "@/assets/field/bhtf_pharmacist_inspection.jpg";
+import photoCentralStore from "@/assets/field/bhtf_central_store.jpg";
+import photoDispensary from "@/assets/field/bhtf_dispensary_pharmacist.jpg";
+import photoCitizenGho from "@/assets/field/bhtf_citizen_receiving_medicine.jpg";
+import photoMaternalCare from "@/assets/field/bhtf_maternal_child_care.jpg";
+import photoPharmacistBanner from "@/assets/field/bhtf_pharmacist_banner.jpg";
 
 export const Route = createFileRoute("/our-work")({
   loader: async () => {
@@ -174,7 +182,7 @@ export function OurWorkExperience({
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
               Nationwide Coverage & Impact
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            <h2 className="font-sans text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
               The Impact: What BHTF Delivers Today
             </h2>
             <p className="text-sm sm:text-base text-slate-700 font-medium">
@@ -184,39 +192,39 @@ export function OurWorkExperience({
 
           {/* 4 Impact Stat Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
               <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
                 <Pill className="h-5 w-5" />
               </div>
               <div className="font-mono text-3xl font-black text-slate-900">438</div>
-              <h4 className="font-serif font-bold text-base text-slate-900">Essential Medicines</h4>
+              <h4 className="font-sans font-bold text-base text-slate-900">Essential Medicines</h4>
               <p className="text-xs text-slate-600 font-light">100% of the National Essential Drugs List financed across all therapy lines.</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
               <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 grid place-items-center">
                 <HeartPulse className="h-5 w-5" />
               </div>
               <div className="font-mono text-3xl font-black text-slate-900">65–110</div>
-              <h4 className="font-serif font-bold text-base text-slate-900">Traditional Medicines</h4>
+              <h4 className="font-sans font-bold text-base text-slate-900">Traditional Medicines</h4>
               <p className="text-xs text-slate-600 font-light">65 core traditional formulations and 110 total indigenous remedies funded.</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
               <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-700 grid place-items-center">
                 <Syringe className="h-5 w-5" />
               </div>
               <div className="font-mono text-3xl font-black text-slate-900">4</div>
-              <h4 className="font-serif font-bold text-base text-slate-900">Routine Vaccines</h4>
+              <h4 className="font-sans font-bold text-base text-slate-900">Routine Vaccines</h4>
               <p className="text-xs text-slate-600 font-light">Pentavalent, PCV, Seasonal Flu, and HPV shielding infants, youth, and elderly.</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-emerald-300 transition space-y-2">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
               <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 grid place-items-center">
                 <Building2 className="h-5 w-5" />
               </div>
               <div className="font-mono text-3xl font-black text-slate-900">100%</div>
-              <h4 className="font-serif font-bold text-base text-slate-900">Facility Coverage</h4>
+              <h4 className="font-sans font-bold text-base text-slate-900">Facility Coverage</h4>
               <p className="text-xs text-slate-600 font-light">Every referral hospital, district hospital, and Primary Health Centre across all 20 Dzongkhags.</p>
             </div>
           </div>
@@ -361,18 +369,18 @@ export function OurWorkExperience({
           {/* Side-by-Side Quotes */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Quote 1: HM Fourth Druk Gyalpo */}
-            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-4">
+            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-card flex flex-col justify-between space-y-4">
               <div className="space-y-3">
                 <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
                   <Quote className="h-5 w-5" />
                 </div>
-                <p className="font-serif text-base sm:text-lg text-slate-900 italic leading-relaxed">
+                <p className="font-sans text-base sm:text-lg text-slate-900 font-medium italic leading-relaxed">
                   "No Bhutanese should ever have to choose between their health and their livelihood."
                 </p>
               </div>
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-slate-900">His Majesty the Fourth Druk Gyalpo</h4>
+                  <h4 className="font-sans font-bold text-sm text-slate-900">His Majesty the Fourth Druk Gyalpo</h4>
                   <p className="text-xs text-amber-700 font-medium">Jigme Singye Wangchuck • Royal Charter 2000</p>
                 </div>
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">
@@ -382,18 +390,18 @@ export function OurWorkExperience({
             </div>
 
             {/* Quote 2: Constitution Article 9 */}
-            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-4">
+            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-card flex flex-col justify-between space-y-4">
               <div className="space-y-3">
                 <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
-                <p className="font-serif text-base sm:text-lg text-slate-900 italic leading-relaxed">
+                <p className="font-sans text-base sm:text-lg text-slate-900 font-medium italic leading-relaxed">
                   "The State shall provide free access to basic public health services in both modern and traditional medicines."
                 </p>
               </div>
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-slate-900">The Constitution of the Kingdom of Bhutan</h4>
+                  <h4 className="font-sans font-bold text-sm text-slate-900">The Constitution of the Kingdom of Bhutan</h4>
                   <p className="text-xs text-emerald-700 font-medium">Article 9, Section 21 • Principles of State Policy</p>
                 </div>
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900">
@@ -405,21 +413,21 @@ export function OurWorkExperience({
 
           {/* 3 Metric Tiles (Slide 9) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-2 text-center">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-card space-y-2 text-center">
               <div className="font-mono text-3xl sm:text-4xl font-black text-amber-600">0</div>
-              <h4 className="font-serif text-sm font-bold text-slate-900">Citizens Billed</h4>
+              <h4 className="font-sans text-sm font-bold text-slate-900">Citizens Billed</h4>
               <p className="text-xs text-slate-500 font-light">Zero out-of-pocket costs for essential medicines or routine vaccines at all public facilities.</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-2 text-center">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-card space-y-2 text-center">
               <div className="font-mono text-3xl sm:text-4xl font-black text-emerald-700">253 → 438</div>
-              <h4 className="font-serif text-sm font-bold text-slate-900">Essential & Traditional Medicines</h4>
+              <h4 className="font-sans text-sm font-bold text-slate-900">Essential & Traditional Medicines</h4>
               <p className="text-xs text-slate-500 font-light">Expanded from 253 to 438 essential modern medicines plus 110 traditional medicinal formulations.</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-2 text-center">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-card space-y-2 text-center">
               <div className="font-mono text-3xl sm:text-4xl font-black text-teal-700">90,167+</div>
-              <h4 className="font-serif text-sm font-bold text-slate-900">Citizens Protected Annually</h4>
+              <h4 className="font-sans text-sm font-bold text-slate-900">Citizens Protected Annually</h4>
               <p className="text-xs text-slate-500 font-light">Babies, adolescent girls, elderly, and high-risk patients protected against vaccine-preventable diseases.</p>
             </div>
           </div>
@@ -516,6 +524,126 @@ export function OurWorkExperience({
         </div>
       </section>
 
+      {/* Authentic Field Photography & Cold-Chain Logistics Gallery */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="field-gallery">
+        <SectionEditBadge
+          label="Field Operations & Logistics Gallery"
+          pageSlug={pageSlug}
+          sectionId="field-gallery"
+          studioHref="/admin/media"
+          initialData={{
+            title: "Authentic Field Operations & Cold-Chain Logistics",
+            subtitle: "Real photographic documentation of BHTF-financed medicines, cold-chain vaccines, dispensary logistics, and patient care across Bhutan.",
+            badge: "Field Documentation",
+          }}
+        />
+        <div className="space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+              Field Documentation & Cold-Chain Custody
+            </span>
+            <h2 className="font-sans text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Authentic Healthcare Delivery Across the Kingdom
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-light">
+              Real photographic documentation of BHTF-financed medicines, cold-chain vaccines, hospital dispensaries, and clinical services.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card group">
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+                <img src={photoCubicles} alt="Standardized Medicine Cubicles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider font-bold">
+                  Essential Drug Storage
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h4 className="font-sans font-bold text-slate-900 text-sm">Organized Essential Drug Storage</h4>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  Carefully partitioned cubicles housing the 438 essential modern medicines to prevent stockouts and support rapid fulfillment.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card group">
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+                <img src={photoFluVial} alt="Influenza Vaccine Cold Chain" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span className="absolute top-3 left-3 bg-amber-900/80 backdrop-blur-md text-amber-200 text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider font-bold">
+                  Cold-Chain Biologics
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h4 className="font-sans font-bold text-slate-900 text-sm">Life-Saving Vaccine Vials</h4>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  WHO-prequalified seasonal influenza and routine childhood vaccines kept at rigorous +2°C to +8°C cold chain temperatures.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card group">
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+                <img src={photoPharmacist} alt="Pharmacist Quality Inspection" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span className="absolute top-3 left-3 bg-emerald-900/80 backdrop-blur-md text-emerald-200 text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider font-bold">
+                  Quality Assurance
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h4 className="font-sans font-bold text-slate-900 text-sm">Batch Testing & Quality Oversight</h4>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  Rigorous physical inspection and DRA regulatory batch verification before dispatch to national referral centers.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card group">
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+                <img src={photoDispensary} alt="Hospital Dispensary Counter" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span className="absolute top-3 left-3 bg-teal-900/80 backdrop-blur-md text-teal-200 text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider font-bold">
+                  Hospital Pharmacy
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h4 className="font-sans font-bold text-slate-900 text-sm">Dispensary Operations & Patient Care</h4>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  Frontline pharmacists dispensing BHTF-financed treatments directly to patients at hospital outpatient pharmacies.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card group">
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+                <img src={photoCitizenGho} alt="Citizen Receiving Medication" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span className="absolute top-3 left-3 bg-blue-900/80 backdrop-blur-md text-blue-200 text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider font-bold">
+                  Constitutional Right
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h4 className="font-sans font-bold text-slate-900 text-sm">100% Free Medication at Point of Care</h4>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  Bhutanese citizen receiving prescribed medication at zero out-of-pocket cost, fulfilling Article 9 Section 21.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card group">
+              <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+                <img src={photoCentralStore} alt="Strategic Reserve Storehouse" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span className="absolute top-3 left-3 bg-indigo-900/80 backdrop-blur-md text-indigo-200 text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider font-bold">
+                  National Buffer Reserve
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h4 className="font-sans font-bold text-slate-900 text-sm">Strategic Central Medical Storehouse</h4>
+                <p className="text-xs text-slate-600 font-light leading-relaxed">
+                  Bulk stockpiles and emergency therapeutic reserves ensuring no health facility runs out of vital supplies.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2c. Essential Drug Formulary & Expenditure Ranking (Slide 6 & Chart 1) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="top-medicines">
         <SectionEditBadge
@@ -529,13 +657,13 @@ export function OurWorkExperience({
             badge: "Procurement Transparency",
           }}
         />
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-card space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
                 FY 2025–2026 Formulary Ranking
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+              <h2 className="font-sans text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
                 Top Ten Essential Medicines Financed by BHTF
               </h2>
               <p className="text-slate-600 text-xs sm:text-sm mt-2 max-w-2xl font-light">
@@ -607,7 +735,7 @@ export function OurWorkExperience({
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
               Sustainable Health Financing Structure
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            <h2 className="font-sans text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
               How the Fund is Financed
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-light">
@@ -618,7 +746,7 @@ export function OurWorkExperience({
           {/* Two Income Streams + Financing Gap Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Stream 1 */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-card flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
@@ -630,7 +758,7 @@ export function OurWorkExperience({
                 </div>
                 <div>
                   <div className="font-mono text-2xl sm:text-3xl font-black text-slate-900">Nu. 318M</div>
-                  <h4 className="font-serif font-bold text-base text-slate-900 mt-1">Investment Returns</h4>
+                  <h4 className="font-sans font-bold text-base text-slate-900 mt-1">Investment Returns</h4>
                 </div>
                 <p className="text-xs text-slate-600 font-light leading-relaxed">
                   Average annual return generated by the endowment corpus across onshore domestic term deposits, bonds, and offshore ADB global market investments.
@@ -642,7 +770,7 @@ export function OurWorkExperience({
             </div>
 
             {/* Stream 2 */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-card flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
@@ -654,7 +782,7 @@ export function OurWorkExperience({
                 </div>
                 <div>
                   <div className="font-mono text-2xl sm:text-3xl font-black text-slate-900">~Nu. 450M</div>
-                  <h4 className="font-serif font-bold text-base text-slate-900 mt-1">Health Contribution</h4>
+                  <h4 className="font-sans font-bold text-base text-slate-900 mt-1">Health Contribution</h4>
                 </div>
                 <p className="text-xs text-slate-600 font-light leading-relaxed">
                   1% statutory monthly payroll deduction from the gross salaries of all civil servants and formally employed citizens nationwide.
@@ -666,7 +794,7 @@ export function OurWorkExperience({
             </div>
 
             {/* Financing Gap & RGOB Multiplier */}
-            <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-md flex flex-col justify-between space-y-4 border border-slate-800">
+            <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-card flex flex-col justify-between space-y-4 border border-slate-800">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="h-10 w-10 rounded-xl bg-amber-400/20 text-amber-300 grid place-items-center">
@@ -678,7 +806,7 @@ export function OurWorkExperience({
                 </div>
                 <div>
                   <div className="font-mono text-2xl sm:text-3xl font-black text-amber-400">~Nu. 240M</div>
-                  <h4 className="font-serif font-bold text-base text-white mt-1">Annual Financing Gap</h4>
+                  <h4 className="font-sans font-bold text-base text-white mt-1">Annual Financing Gap</h4>
                 </div>
                 <p className="text-xs text-slate-300 font-light leading-relaxed">
                   Rising procurement needs (Nu. 557M+ scaling to Nu. 613M in 2025–26) exceed current investment returns (Nu. 318M), bridged by Health Contributions and RGOB matching.

@@ -20,6 +20,8 @@ import {
 import newsVaccine from "@/assets/news-vaccine.jpg";
 import newsCommunity from "@/assets/news-community.jpg";
 import newsReport from "@/assets/news-report.jpg";
+import newsBbsBroadcast from "@/assets/field/bhtf_bbs_broadcast.jpg";
+import newsCitizenMedicine from "@/assets/field/bhtf_citizen_receiving_medicine.jpg";
 
 export const Route = createFileRoute("/news")({
   validateSearch: (search: Record<string, unknown>): { category?: string } => ({
@@ -51,7 +53,7 @@ export const Route = createFileRoute("/news")({
       {
         name: "description",
         content:
-          "Official press releases, vaccine campaigns, annual reports, and healthcare commodity updates from Bhutan Health Trust Fund.",
+          "Official press releases, BBS TV news broadcasts, vaccine campaigns, annual reports, and healthcare commodity updates from Bhutan Health Trust Fund.",
       },
     ],
   }),
@@ -61,51 +63,67 @@ export const Route = createFileRoute("/news")({
 const fallbackArticles: NewsArticle[] = [
   {
     id: 1,
-    slug: "nationwide-influenza-vaccination-2024",
-    title: "BHTF supports nationwide influenza vaccination program for 2024-2025",
-    category: "Immunization",
-    author: "BHTF Communications",
-    coverImage: "/src/assets/news-vaccine.jpg",
+    slug: "bbs-tv-bhtf-essential-medicines-report",
+    title: "BBS TV News Report: Bhutan Health Trust Fund Sustaining Free Essential Medicines & Routine Vaccines Nationwide",
+    category: "OFFICIAL_NEWS",
+    author: "Bhutan Broadcasting Service (BBS)",
+    coverImage: "/src/assets/field/bhtf_bbs_broadcast.jpg",
     excerpt:
-      "Over 200,000 doses of seasonal influenza vaccines are being deployed across all twenty dzongkhags to protect high-risk populations.",
-    content: "The Bhutan Health Trust Fund (BHTF) has mobilized complete financial backing for the 2024-2025 Nationwide Seasonal Influenza Vaccination Campaign in close collaboration with the Department of Public Health, Ministry of Health.",
+      "National television broadcast highlights BHTF's perpetual funding mechanism securing uninterrupted supply of 438 essential drugs and life-saving childhood vaccines without any cost to citizens.",
+    content: "The Bhutan Broadcasting Service (BBS) broadcast an in-depth special report highlighting the vital constitutional role of the Bhutan Health Trust Fund (BHTF) in safeguarding free universal healthcare across all 20 Dzongkhags. The report emphasized that through prudent endowment investment and 1:1 RGOB matching, Bhutan continues to achieve zero stockouts of life-saving medicines.",
     isPublished: true,
-    viewsCount: 1420,
-    publishedAt: new Date("2024-11-15"),
-    createdAt: new Date("2024-11-15"),
-    updatedAt: new Date("2024-11-15"),
+    viewsCount: 2840,
+    publishedAt: new Date("2026-10-15"),
+    createdAt: new Date("2026-10-15"),
+    updatedAt: new Date("2026-10-15"),
   },
   {
     id: 2,
-    slug: "strengthening-primary-healthcare-remote-bhutan",
-    title: "Strengthening primary healthcare across remote communities in Bhutan",
-    category: "Essential Medicines",
-    author: "Program Operations Team",
-    coverImage: "/src/assets/news-community.jpg",
+    slug: "bhtf-foundation-day-2026",
+    title: "Upcoming: 28th BHTF Foundation Day & Sovereign Donors Assembly (11 Nov 2026)",
+    category: "EVENTS",
+    author: "Secretariat Planning",
+    coverImage: "/src/assets/news-report.jpg",
     excerpt:
-      "BHTF expands financing to outreach clinics and Basic Health Units serving Bhutan's most geographically isolated settlements.",
-    content: "Ensuring equity in healthcare delivery is central to Gross National Happiness. This month, BHTF completed the second-quarter disbursement for essential commodity procurement, bolstering over 200 Basic Health Units (BHUs) and 450 Outreach Clinics (ORCs) across Bhutan.",
+      "Commemorating the auspicious Birth Anniversary of His Majesty the Fourth Druk Gyalpo and convening philanthropic partners at Le Meridien Thimphu.",
+    content: "In commemoration of the auspicious Birth Anniversary of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, the Bhutan Health Trust Fund will host the 28th Foundation Day and Sovereign Donors Assembly on 11 November 2026.",
     isPublished: true,
-    viewsCount: 980,
-    publishedAt: new Date("2024-10-02"),
-    createdAt: new Date("2024-10-02"),
-    updatedAt: new Date("2024-10-02"),
+    viewsCount: 1520,
+    publishedAt: new Date("2026-10-10"),
+    createdAt: new Date("2026-10-10"),
+    updatedAt: new Date("2026-10-10"),
   },
   {
     id: 3,
-    slug: "bhtf-annual-report-2023-released",
-    title: "BHTF Annual Report 2023: Celebrating Resilience and Financial Sustainability",
-    category: "Governance",
-    author: "Governance & Planning",
-    coverImage: "/src/assets/news-report.jpg",
+    slug: "nationwide-influenza-vaccination-2026",
+    title: "BHTF Finances 2026–2027 Nationwide Seasonal Influenza Vaccination Campaign",
+    category: "FIELD_ACTIVITIES",
+    author: "BHTF Communications",
+    coverImage: "/src/assets/news-vaccine.jpg",
     excerpt:
-      "The latest audited report confirms full coverage of essential primary healthcare commodities with zero stockouts nationwide.",
-    content: "The Secretariat of the Bhutan Health Trust Fund is pleased to announce the release of its Comprehensive Annual Report and Audited Financial Statements for FY 2023-2024.",
+      "Over 66,238 doses of seasonal influenza vaccines deployed across all twenty dzongkhags protecting elderly citizens, high-risk groups, and healthcare workers.",
+    content: "The Bhutan Health Trust Fund (BHTF) has mobilized complete financial backing for the Nationwide Seasonal Influenza Vaccination Campaign in close collaboration with the Department of Public Health, Ministry of Health.",
     isPublished: true,
-    viewsCount: 750,
-    publishedAt: new Date("2024-08-20"),
-    createdAt: new Date("2024-08-20"),
-    updatedAt: new Date("2024-08-20"),
+    viewsCount: 1980,
+    publishedAt: new Date("2026-09-28"),
+    createdAt: new Date("2026-09-28"),
+    updatedAt: new Date("2026-09-28"),
+  },
+  {
+    id: 4,
+    slug: "rseb-green-bond-secondary-listing",
+    title: "Upcoming: National Day Sovereign Green Health Bond Secondary Listing (17 Dec 2026)",
+    category: "EVENTS",
+    author: "Investment Division",
+    coverImage: "/src/assets/field/bhtf_citizen_receiving_medicine.jpg",
+    excerpt:
+      "BHTF and Royal Securities Exchange of Bhutan (RSEB) to ring-fence capital allocations for high-altitude cold-chain expansion.",
+    content: "The Investment Division of BHTF in partnership with the Royal Securities Exchange of Bhutan (RSEB) will conduct the secondary listing of the Sovereign Green Health Bond on National Day, 17 December 2026.",
+    isPublished: true,
+    viewsCount: 1150,
+    publishedAt: new Date("2026-09-15"),
+    createdAt: new Date("2026-09-15"),
+    updatedAt: new Date("2026-09-15"),
   },
 ];
 
@@ -143,10 +161,12 @@ function NewsPage() {
   }, []);
 
   const getImage = (img: string) => {
+    if (img.includes("bbs_broadcast")) return newsBbsBroadcast;
+    if (img.includes("citizen")) return newsCitizenMedicine;
     if (img.includes("vaccine")) return newsVaccine;
     if (img.includes("community")) return newsCommunity;
     if (img.includes("report")) return newsReport;
-    return newsVaccine;
+    return newsBbsBroadcast;
   };
 
   const categories = [

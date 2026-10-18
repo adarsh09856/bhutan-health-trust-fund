@@ -26,6 +26,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/organization")({
   loader: async () => {
@@ -105,159 +106,75 @@ function AboutOrganizationPage() {
         ]}
       />
 
-      {/* Internal Navigation Sub-Bar */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
-        <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex items-center justify-start sm:justify-start gap-2 text-xs font-bold overflow-x-auto no-scrollbar sm:flex-wrap">
-          <Link
-            to="/about/organization"
-            className="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-xs shrink-0 whitespace-nowrap"
-          >
-            Our Organization & Organogram
-          </Link>
-          <Link
-            to="/about/trustees"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
-          >
-            Board of Trustees
-          </Link>
-          <Link
-            to="/about/committees"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
-          >
-            Asset Management Committee
-          </Link>
-          <Link
-            to="/about/secretariat"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
-          >
-            Secretariat & Staff
-          </Link>
-          <Link
-            to="/our-story"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-amber-700 hover:bg-amber-50 transition shrink-0 whitespace-nowrap"
-          >
-            Our Story & History →
-          </Link>
-        </div>
-      </section>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <a href="#organogram" className="inline-flex items-center gap-2 rounded-xl border border-emerald-800 bg-white px-5 py-3 text-sm font-bold text-emerald-900 shadow-sm hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800">
-          View the official organogram <span aria-hidden="true">↓</span>
-        </a>
-      </div>
-
       {/* Custom Page Renderer if edited by admin */}
       {customSections && customSections.length > 0 && (
         <PageRenderer sections={customSections} pageSlug="about-organization" />
       )}
 
-      {/* 1. Sovereign Mandate & Legal Status */}
+      {/* 1. Official Section 1: About Us, Mandate, Vision, Mission, Governance, Operating Model */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-mandate">
-        <SectionEditBadge
-          label="Sovereign Mandate & Charter"
-          pageSlug="about-organization"
-          sectionId="org-mandate"
-          studioHref="/admin/page-editor?slug=about-organization"
-          initialData={{
-            title: "Healthcare as a Sacred Constitutional Guarantee",
-            subtitle: "Article 9 of the Constitution of the Kingdom of Bhutan solemnly mandates that the State shall provide free access to basic public health services in both modern and traditional medicines.",
-            badge: "Constitutional Mandate",
-          }}
-        />
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold font-mono border border-emerald-200">
-              <Landmark className="h-3.5 w-3.5 text-emerald-700" />
-              <span>Article 9, Constitution of the Kingdom of Bhutan</span>
-            </div>
-
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.12]">
-              Healthcare as a Sacred Constitutional Guarantee
+        <div className="bg-white border border-border rounded-3xl p-6 sm:p-10 lg:p-12 shadow-card space-y-8">
+          <div className="max-w-3xl space-y-4">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+              Statutory Profile • Royal Charter 2000
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-primary">
+              About the Bhutan Health Trust Fund
             </h2>
-
-            <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed font-light">
-              <p>
-                In the Kingdom of Bhutan, healthcare is not treated as a commodity, but as a fundamental human right guaranteed to every citizen. Under the benevolence and vision of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck, the Bhutan Health Trust Fund was established to ensure that universal access to free primary healthcare is safeguarded from economic volatility and international donor shifts.
-              </p>
-              <p>
-                Operating as an independent statutory autonomous trust fund, BHTF manages a permanent sovereign endowment whose capital is preserved in perpetuity. The investment income earned annually is earmarked exclusively for procuring 100% of routine childhood vaccines, 438 essential medicines, 110 traditional formulations (gSo-ba Rig-pa), and high-altitude solar cold chain infrastructure across all 205 remote gewogs in 20 Dzongkhags.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1">
-                <span className="font-serif text-2xl font-bold text-emerald-800 block">100%</span>
-                <span className="font-bold text-slate-900 block">Universal Free Coverage</span>
-                <p className="text-slate-500 font-light">438 Essential Drugs & 4 Key Vaccines</p>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1">
-                <span className="font-serif text-2xl font-bold text-amber-700 block">Nu. 4.8B+</span>
-                <span className="font-bold text-slate-900 block">Ring-Fenced Corpus</span>
-                <p className="text-slate-500 font-light">Permanent endowment with capital preservation</p>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1">
-                <span className="font-serif text-2xl font-bold text-teal-700 block">20 / 20</span>
-                <span className="font-bold text-slate-900 block">Dzongkhags Buffer</span>
-                <p className="text-slate-500 font-light">Uninterrupted stockouts buffer for 205 gewogs</p>
-              </div>
-            </div>
+            <p className="text-base sm:text-lg text-foreground/80 leading-relaxed">
+              The Bhutan Health Trust Fund (BHTF) is a national trust established to support the sustainability of free primary healthcare services in Bhutan. Guided by its royal charter, BHTF finances essential medicines and vaccines through investment returns and health contributions, helping ensure continued access to essential healthcare for the people of Bhutan.
+            </p>
           </div>
 
-          {/* Right Column: Royal Charter Seal & Key Statutory Articles */}
-          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-3xl p-7 sm:p-9 shadow-md space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-800 border border-amber-300 grid place-items-center font-serif text-lg font-bold">
-                  ༄༅།
-                </div>
-                <div>
-                  <h3 className="font-serif text-base font-bold text-slate-900">Royal Charter Mandate</h3>
-                  <span className="text-[11px] text-slate-500 font-mono">Issued 3 August 2000</span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+            <div className="p-5 rounded-2xl bg-soft-orange border border-saffron/20 space-y-2">
+              <div className="flex items-center gap-2 text-saffron font-bold text-sm">
+                <Target className="size-4 shrink-0" />
+                <span>Our Mandate</span>
               </div>
-              <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                Statutory Authority
-              </span>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                To ensure sustainable financing for essential medicines and vaccines through prudent fund management and responsible investment.
+              </p>
             </div>
 
-            <div className="space-y-4 text-xs text-slate-700 leading-relaxed font-light">
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                <ShieldCheck className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block mb-0.5">Article 1 • Autonomous Legal Status</strong>
-                  The Fund shall exist as an autonomous body with perpetual succession, common seal, and power to hold and dispose of property.
-                </div>
+            <div className="p-5 rounded-2xl bg-soft-blue border border-primary/20 space-y-2">
+              <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                <Eye className="size-4 shrink-0" />
+                <span>Our Vision</span>
               </div>
-
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                <Lock className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block mb-0.5">Article 4 • Capital Ring-Fencing</strong>
-                  The core capital of the Trust Fund shall remain inviolate; under no circumstances shall the capital corpus be liquidated for operational costs.
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                <Scale className="h-4 w-4 text-blue-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block mb-0.5">Article 7 • Royal Audit Authority (RAA)</strong>
-                  All accounts and financial transactions shall be subjected to annual statutory audit by the Royal Audit Authority of Bhutan.
-                </div>
-              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                A Bhutan where every citizen has uninterrupted access to essential medicines and vaccines, now and for generations to come.
+              </p>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span className="text-slate-500 font-medium">Full Charter Documentation</span>
-              <Link
-                to="/reports"
-                className="font-bold text-emerald-800 hover:text-emerald-950 inline-flex items-center gap-1"
-              >
-                <span>View Legal Documents</span>
-                <span>→</span>
-              </Link>
+            <div className="p-5 rounded-2xl bg-soft-green border border-[oklch(0.85_0.08_155)] space-y-2">
+              <div className="flex items-center gap-2 text-[oklch(0.4_0.15_155)] font-bold text-sm">
+                <Heart className="size-4 shrink-0" />
+                <span>Our Mission</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                To mobilise, invest, and prudently manage a dedicated health endowment to generate sustainable income for financing essential medicines, vaccines, and related supplies.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-soft-purple border border-[oklch(0.85_0.08_290)] space-y-2">
+              <div className="flex items-center gap-2 text-[oklch(0.45_0.18_290)] font-bold text-sm">
+                <ShieldCheck className="size-4 shrink-0" />
+                <span>Governance</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                BHTF operates under the guidance of its board of directors, supported by the Asset Management Committee (AMC) and the secretariat, ensuring accountability, transparency, and sound governance.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-slate-50 border border-border space-y-2 lg:col-span-2">
+              <div className="flex items-center gap-2 text-foreground font-bold text-sm">
+                <Coins className="size-4 text-saffron shrink-0" />
+                <span>Our Operating Model</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                The fund generates investment returns and receives health contributions to finance essential medicines and vaccines, while preserving its long-term financial sustainability through capital preservation.
+              </p>
             </div>
           </div>
         </div>
@@ -1040,6 +957,9 @@ function AboutOrganizationPage() {
           </Link>
         </div>
       </section>
+
+      {/* Floating Sub-pages Sticky Bottom Capsule */}
+      <AboutBottomCapsule />
     </div>
   );
 }

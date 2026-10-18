@@ -11,14 +11,11 @@ import {
   Loader2,
   Heart,
   ShieldCheck,
-  Building2,
-  ArrowUpRight,
-  Sparkles,
+  Send,
 } from "lucide-react";
 import { subscribeNewsletter } from "@/lib/api/public.functions";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
-import { institutionalConfig } from "@/config/institutional";
 
 export function SiteFooter() {
   const [email, setEmail] = useState("");
@@ -43,258 +40,224 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="bg-[#EAF6F5] text-slate-700 mt-20 border-t border-[#00A896]/20 relative overflow-hidden">
-      {/* Upper Banner: Emergency Helpline Awareness */}
-      <div className="bg-[#0B4F42] text-white border-b border-[#00A896]/20 px-4 py-3.5 relative z-10">
-        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4 text-xs font-sans">
+    <footer className="bg-gradient-footer text-white mt-20 relative overflow-hidden">
+      {/* 1. Emergency Helpline Bar */}
+      <div className="bg-saffron text-saffron-foreground border-b border-white/10 px-4 py-2.5">
+        <div className="container-page flex flex-wrap items-center justify-between gap-4 text-xs font-medium">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-slate-100">
+            <span className="size-2 rounded-full bg-white animate-pulse" />
+            <span>
               National Emergency Health Helpline:{" "}
-              <strong className="text-amber-300 font-serif text-sm ml-1">
+              <strong className="text-sm font-bold underline decoration-white/50 underline-offset-2 ml-1">
                 112
               </strong>{" "}
               (Toll-Free, 24/7 Nationwide)
             </span>
           </div>
-          <div className="flex items-center gap-4 text-slate-300 text-xs">
-            <span className="text-emerald-300 font-medium">Royal Government of Bhutan Partner</span>
-            <span className="hidden sm:inline text-white/30">•</span>
-            <span className="hidden sm:inline text-amber-200 font-medium">
-              WHO Collaborating Sovereign Trust
-            </span>
+          <div className="flex items-center gap-4 text-xs">
+            <span>Royal Government of Bhutan • Sovereign Match 1:1</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline">DRC Tax Exemption Reg. No. E-73</span>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Links */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Column 1: Institutional Overview */}
+      {/* 2. Main Footer Grid */}
+      <div className="container-page py-16 grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
+        {/* Col 1: Brand & Royal Mandate */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-2xl bg-white p-1.5 shadow-xs shrink-0 border border-[#00A896]/25">
-              <img src={logo} alt="BHTF Emblem" className="h-full w-full object-contain" />
+            <div className="size-12 rounded-2xl bg-white p-1.5 shadow-card shrink-0">
+              <img src={logo} alt="BHTF Emblem" className="size-full object-contain" />
             </div>
             <div>
-              <span className="text-[10px] text-[#00A896] font-semibold tracking-wider block font-sans">
-                ༄༅། །འབྲུག་གི་གསོ་བའི་དད་རྟེན་མ་དངུལ། །།
+              <span className="text-[10px] text-saffron font-bold tracking-wider block">
+                ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ།
               </span>
-              <h3 className="font-serif text-base font-bold text-[#0B4F42]">Bhutan Health Trust Fund</h3>
+              <h3 className="text-base font-bold text-white tracking-tight">Bhutan Health Trust Fund</h3>
             </div>
           </div>
 
-          <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
-            Established under Royal Charter to guarantee perpetual sovereign financing for essential
-            medicines, life-saving vaccines, and primary healthcare commodities across all 20
-            Dzongkhags in the Kingdom of Bhutan.
+          <p className="text-xs text-white/75 leading-relaxed">
+            Established under Royal Charter in Geneva to guarantee uninterrupted sovereign financing for essential
+            medicines and universal vaccines across all 20 Dzongkhags in Bhutan.
           </p>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-[#00A896] font-medium font-sans">
-            <ShieldCheck className="h-4 w-4 text-[#00A896]" />
-            <span>Autonomous & Fully Audited Entity</span>
+          <div className="pt-2 flex items-center gap-2 text-xs text-saffron font-semibold">
+            <ShieldCheck className="size-4 shrink-0" />
+            <span>Autonomous Statutory Entity • Royal Charter 2000</span>
           </div>
         </div>
 
-        {/* Column 2: Quick Links */}
+        {/* Col 2: About BHTF */}
         <div>
-          <h4 className="font-serif text-sm font-semibold text-[#0B4F42] mb-4 tracking-wide flex items-center gap-2">
-            <Sparkles className="h-3.5 w-3.5 text-[#00A896]" />
-            <span>Institutional Portals</span>
-          </h4>
-          <ul className="space-y-2.5 text-xs text-slate-600 font-sans">
+          <h4 className="font-bold text-sm mb-4 text-white">About BHTF</h4>
+          <ul className="space-y-2.5 text-xs text-white/75">
             <li>
-              <Link
-                to="/about"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> About Us & Secretariat Organogram
+              <Link to="/about" className="hover:text-saffron transition-colors">
+                Vision & Mandate
               </Link>
             </li>
             <li>
-              <Link
-                to="/our-story"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Our Story & Milestones (1998–2026)
+              <Link to="/about/organization" className="hover:text-saffron transition-colors">
+                Organization & Organogram
               </Link>
             </li>
             <li>
-              <Link
-                to="/our-work"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Our Impact & 20 Dzongkhags Reach
+              <Link to="/about/trustees" className="hover:text-saffron transition-colors">
+                Board of Trustees
               </Link>
             </li>
             <li>
-              <Link
-                to="/reports"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Resources & Window Financing
+              <Link to="/about/committees" className="hover:text-saffron transition-colors">
+                Asset Management Committee
               </Link>
             </li>
             <li>
-              <Link
-                to="/news"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> News, Events & Announcements
+              <Link to="/about/secretariat" className="hover:text-saffron transition-colors">
+                Secretariat & Staff
               </Link>
             </li>
             <li>
-              <Link
-                to="/our-impact"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Field Activities & Supply Chains
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/track-donation"
-                className="hover:text-[#00A896] transition flex items-center gap-1.5"
-              >
-                <ArrowUpRight className="h-3 w-3 text-slate-400" /> Track Donation / Tax Voucher
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/get-involved"
-                className="hover:text-amber-700 transition flex items-center gap-1.5 font-bold text-amber-800"
-              >
-                <Heart className="h-3.5 w-3.5 fill-amber-500 text-amber-600" /> Donate Now
+              <Link to="/our-story" className="hover:text-saffron transition-colors">
+                Our Story (1998–2026)
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Column 3: Secretariat Contact */}
+        {/* Col 3: Resources & Impact */}
         <div>
-          <h4 className="font-serif text-sm font-semibold text-[#0B4F42] mb-4 tracking-wide flex items-center gap-2">
-            <Building2 className="h-3.5 w-3.5 text-[#00A896]" />
-            <span>Secretariat Directory</span>
-          </h4>
-          <ul className="space-y-3.5 text-xs text-slate-600 font-sans">
-            <li className="flex items-start gap-2.5">
-              <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-amber-600" />
-              <span>{institutionalConfig.secretariatAddress}</span>
+          <h4 className="font-bold text-sm mb-4 text-white">Impact & Formularies</h4>
+          <ul className="space-y-2.5 text-xs text-white/75">
+            <li>
+              <Link to="/our-impact" className="hover:text-saffron transition-colors">
+                Commodity Disbursements
+              </Link>
             </li>
-            <li className="flex items-center gap-2.5">
-              <Phone className="h-4 w-4 shrink-0 text-[#00A896]" />
-              <a
-                href={`tel:${institutionalConfig.secretariatPhone.replace(/[^0-9+]/g, "")}`}
-                className="hover:text-[#0B4F42] transition"
-              >
-                {institutionalConfig.secretariatPhone}
-              </a>
+            <li>
+              <Link to="/our-work" className="hover:text-saffron transition-colors">
+                438 Essential Medicines
+              </Link>
             </li>
-            <li className="flex items-center gap-2.5">
-              <Mail className="h-4 w-4 shrink-0 text-[#00A896]" />
-              <a
-                href={`mailto:${institutionalConfig.secretariatEmail}`}
-                className="hover:text-[#0B4F42] transition"
-              >
-                {institutionalConfig.secretariatEmail}
-              </a>
+            <li>
+              <Link to="/our-work" className="hover:text-saffron transition-colors">
+                110 Traditional Remedies (gSo-ba Rig-pa)
+              </Link>
             </li>
-            <li className="pt-1">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-1.5 text-amber-800 font-bold hover:text-amber-900 transition"
-              >
-                Send Citizen Message →
+            <li>
+              <Link to="/reports" className="hover:text-saffron transition-colors">
+                RAA Certified Audits
+              </Link>
+            </li>
+            <li>
+              <Link to="/policies" className="hover:text-saffron transition-colors">
+                Investment Policies
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Column 4: Newsletter & Socials */}
+        {/* Col 4: Get Involved */}
         <div>
-          <h4 className="font-serif text-sm font-semibold text-[#0B4F42] mb-4 tracking-wide">
-            Official Bulletins
-          </h4>
-          <p className="text-xs text-slate-600 mb-3 leading-relaxed font-sans font-light">
-            Subscribe to receive audited financial statements, procurement notices, and national
-            health milestones.
-          </p>
+          <h4 className="font-bold text-sm mb-4 text-white">Contribute</h4>
+          <ul className="space-y-2.5 text-xs text-white/75">
+            <li>
+              <Link to="/donate" className="hover:text-saffron transition-colors font-semibold text-saffron">
+                Donate to Health Fund (1:1 Matched)
+              </Link>
+            </li>
+            <li>
+              <Link to="/donate" className="hover:text-saffron transition-colors">
+                DRC Tax Relief (E-73)
+              </Link>
+            </li>
+            <li>
+              <Link to="/news" className="hover:text-saffron transition-colors">
+                11 Nov BHTF Day
+              </Link>
+            </li>
+            <li>
+              <Link to="/news" className="hover:text-saffron transition-colors">
+                17 Dec RSEB Crowd Fundraising
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-saffron transition-colors">
+                Strategic Partnerships
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-          <form onSubmit={handleSubscribe} className="flex flex-col gap-2 mb-5">
-            <div className="relative">
+        {/* Col 5: Contact & Newsletter */}
+        <div className="space-y-4">
+          <h4 className="font-bold text-sm text-white">Contact Us</h4>
+          <ul className="space-y-2.5 text-xs text-white/80">
+            <li className="flex items-start gap-2">
+              <MapPin className="size-4 text-saffron shrink-0 mt-0.5" />
+              <span>Lower Motithang, Thori Lam, Thimphu, Bhutan</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone className="size-4 text-saffron shrink-0" />
+              <span>+975 2 328999</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <Mail className="size-4 text-saffron shrink-0" />
+              <span>bhtf@bhtf.bt</span>
+            </li>
+          </ul>
+
+          <div className="pt-2">
+            <div className="text-xs font-semibold mb-2 text-white/90">Official Bulletins</div>
+            <form onSubmit={handleSubscribe} className="flex gap-1.5">
               <input
                 type="email"
-                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="official.email@organization.bt"
-                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#00A896] transition font-sans"
+                placeholder="Enter email..."
+                className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-saffron flex-1"
+                required
               />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#D4A237] hover:bg-[#b68525] text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition duration-150 flex items-center justify-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50 font-sans"
-            >
-              {loading ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              ) : (
-                "Subscribe to Bulletins"
-              )}
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-saffron text-saffron-foreground px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-90 transition shrink-0"
+              >
+                {loading ? <Loader2 className="size-3.5 animate-spin" /> : <Send className="size-3.5" />}
+              </button>
+            </form>
+          </div>
 
-          {/* Social Links */}
-          <div className="space-y-2">
-            <span className="text-[11px] text-slate-500 font-sans block">
-              Follow Official Channels:
-            </span>
-            <div className="flex gap-2">
-              {[
-                { icon: Facebook, href: "https://facebook.com/bhtf.bt", label: "Facebook" },
-                { icon: Twitter, href: "https://twitter.com/bhtf_bhutan", label: "Twitter" },
-                { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
-                { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-              ].map((s, i) => (
-                <a
-                  key={i}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  className="h-8 w-8 grid place-items-center rounded-xl bg-white hover:bg-slate-50 text-slate-600 hover:text-[#00A896] border border-slate-200 transition shadow-xs"
-                >
-                  <s.icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
+          <div className="pt-1 flex gap-2">
+            {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
+              <a
+                key={i}
+                href="https://facebook.com/bhutanhealthtrustfund"
+                target="_blank"
+                rel="noreferrer"
+                className="grid place-items-center size-8 rounded-full bg-white/10 hover:bg-saffron hover:text-saffron-foreground transition text-white/80"
+              >
+                <Icon className="size-3.5" />
+              </a>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Copyright & Legal Bar (Single Slim Dark Green Band) */}
-      <div className="border-t border-slate-200/60 bg-[#061713] px-4 py-4 relative z-10 text-white/80">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 text-center sm:text-left font-sans">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <span>© {new Date().getFullYear()} Bhutan Health Trust Fund.</span>
-            <span className="hidden sm:inline">•</span>
-            <span>Royal Charter Autonomous Statutory Entity.</span>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 text-slate-400">
-            <Link to="/policies" className="hover:text-amber-300 transition">
-              Privacy Policy
+      {/* 3. Bottom Legal Strip */}
+      <div className="border-t border-white/10">
+        <div className="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/60">
+          <p>© {new Date().getFullYear()} Bhutan Health Trust Fund. Royal Charter Statutory Body. All Rights Reserved.</p>
+          <div className="flex gap-5 text-xs">
+            <Link to="/policies" className="hover:text-saffron transition">
+              Statutory Policies
             </Link>
-            <span>•</span>
-            <Link to="/policies" className="hover:text-amber-300 transition">
-              Terms & Conditions
+            <Link to="/reports" className="hover:text-saffron transition">
+              Audits
             </Link>
-            <span>•</span>
-            <Link to="/policies" className="hover:text-amber-300 transition">
-              Anti-Corruption Policy
-            </Link>
-            <span>•</span>
-            <Link to="/policies" className="hover:text-amber-300 transition">
-              Whistleblower Protection
+            <Link to="/contact" className="hover:text-saffron transition">
+              Contact
             </Link>
           </div>
         </div>

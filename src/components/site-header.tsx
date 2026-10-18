@@ -1,690 +1,295 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   Heart,
-  LogIn,
   Menu,
   Phone,
   Mail,
   MapPin,
+  Globe,
+  Search,
   X,
-  LayoutDashboard,
   ChevronDown,
-  ChevronRight,
-  Sparkles,
-  ShieldCheck,
-  Building,
-  FileText,
-  Syringe,
-  Pill,
-  Award,
-  Lock,
-  Globe2,
-  Newspaper,
-  HeartHandshake,
   Landmark,
-  Calendar,
-  Megaphone,
-  Briefcase,
+  ShieldCheck,
+  Scale,
+  Users,
   BookOpen,
+  FileText,
+  Activity,
+  Calendar,
+  Sparkles,
 } from "lucide-react";
-import { useAdminAuth } from "@/lib/admin-auth";
 import logo from "@/assets/logo.png";
+import { useAdminAuth } from "@/lib/admin-auth";
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
-  const { user, adminBarCollapsed } = useAdminAuth();
   const location = useLocation();
-  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { user } = useAdminAuth();
 
-  const toggleMobileCategory = (cat: string) => {
-    setExpandedMobileCategory((prev) => (prev === cat ? null : cat));
-  };
-
-  const showAdminBar = Boolean(
-    user && !adminBarCollapsed && !location.pathname.startsWith("/admin")
-  );
-
-  // Scroll listener for sticky glass elevation
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Close mobile menu & dropdown on route change
   useEffect(() => {
     setMobileMenuOpen(false);
     setOpenDropdown(null);
   }, [location.pathname]);
 
-  const handleMouseEnter = (name: string) => {
-    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setOpenDropdown(name);
-  };
-
-  const handleMouseLeave = () => {
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setOpenDropdown(null);
-    }, 150);
-  };
-
   return (
-    <header
-      className={`fixed left-0 right-0 z-40 w-full pointer-events-none transition-all duration-300 ease-in-out ${
-        showAdminBar
-          ? scrolled
-            ? "top-10 pt-0 px-0 sm:px-4 lg:px-6"
-            : "top-10 pt-2 px-3 sm:px-6 lg:px-8"
-          : scrolled
-            ? "top-0 pt-0 px-0 sm:px-4 lg:px-6"
-            : "top-0 pt-3 sm:pt-4 px-3 sm:px-6 lg:px-8"
-      }`}
-    >
-      {/* Editorial Glass Capsule Navigation Island */}
-      <div
-        className={`mx-auto max-w-7xl flex items-center justify-between gap-2 sm:gap-3 pointer-events-auto transition-all duration-300 ease-in-out ${
-          scrolled
-            ? "w-full rounded-none sm:rounded-b-2xl bg-white/98 backdrop-blur-2xl border-b sm:border-x border-slate-200/90 shadow-[0_12px_35px_rgba(11,79,66,0.12)] px-3 sm:px-7 py-1.5 sm:py-2.5"
-            : "w-full rounded-full bg-white/92 backdrop-blur-xl border border-[#00A896]/20 shadow-xs px-3 sm:px-6 py-1.5 sm:py-2.5"
-        }`}
-      >
-        {/* Logo & Dzongkha Title */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 sm:gap-3.5 group shrink-0 whitespace-nowrap"
-        >
-          <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-amber-50/80 via-white to-emerald-50/80 border border-amber-300/40 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
-            <img
-              src={logo}
-              alt="Bhutan Health Trust Fund Emblem"
-              className="h-full w-full object-contain"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[9px] sm:text-[11px] font-bold text-emerald-800 tracking-wider flex items-center gap-1 font-sans">
-              ༄༅། །འབྲུག་གི་གསོ་བའི་དད་རྟེན་མ་དངུལ། །།
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 transition-all">
+      {/* 1. Top Utility Bar in Saffron */}
+      <div className="bg-saffron text-saffron-foreground text-xs shadow-xs">
+        <div className="container-page flex h-9 items-center justify-between gap-4">
+          <span className="hidden sm:inline font-medium">
+            ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ། — Working together for a healthier Bhutan
+          </span>
+          <span className="sm:hidden font-medium">Healthier Bhutan • BHTF</span>
+
+          <div className="flex items-center gap-3 sm:gap-5">
+            <a href="tel:+9752328999" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition">
+              <Phone className="size-3.5" />
+              <span>+975 2 328999</span>
+            </a>
+            <a href="mailto:bhtf@bhtf.bt" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition">
+              <Mail className="size-3.5" />
+              <span>bhtf@bhtf.bt</span>
+            </a>
+            <span className="hidden lg:inline-flex items-center gap-1.5">
+              <MapPin className="size-3.5" />
+              <span>Lower Motithang, Thimphu</span>
             </span>
-            <span className="font-serif text-xs sm:text-base md:text-lg font-bold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-900 transition truncate max-w-[125px] xs:max-w-[210px] sm:max-w-none">
-              Bhutan Health Trust Fund
+            <span className="inline-flex items-center gap-1.5 font-bold">
+              <Globe className="size-3.5" />
+              <span>EN</span>
             </span>
-          </div>
-        </Link>
-
-        {/* Desktop Strict 6 Main Navigation Items */}
-        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-slate-100/80 backdrop-blur-md p-1 rounded-full border border-slate-200/80 shadow-inner shrink-0">
-          {/* 1. ABOUT US Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("about")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Link
-              to="/about"
-              className={`inline-flex items-center gap-1 px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                location.pathname.startsWith("/about")
-                  ? "bg-[#0B4F42] text-white shadow-xs"
-                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-              }`}
-            >
-              <span>ABOUT US</span>
-              <ChevronDown className="h-3 w-3" />
-            </Link>
-
-            {openDropdown === "about" && (
-              <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                {/* 1. Organization & Organogram */}
-                <Link
-                  to="/about/organization"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
-                    <Landmark className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      Our Organization & Organogram
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Royal Charter mandate & Annexure 1 Organogram
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 2. Board of Trustees */}
-                <Link
-                  to="/about/trustees"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-500 group-hover:text-white transition">
-                    <ShieldCheck className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
-                      Board of Trustees
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Apex ministerial governance & fiduciary oversight
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 3. Asset Management Committee */}
-                <Link
-                  to="/about/committees"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <Landmark className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
-                      Asset Management Committee
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Fiduciary investment parameters & risk oversight
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 4. Secretariat & Staff */}
-                <Link
-                  to="/about/secretariat"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-teal-50 text-teal-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-teal-600 group-hover:text-white transition">
-                    <Building className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-teal-700 transition">
-                      Secretariat & Staff
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Directorate, personnel roster & headquarters
-                    </p>
-                  </div>
-                </Link>
-              </div>
+            {user && (
+              <Link
+                to="/admin/dashboard"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-black/20 hover:bg-black/30 text-[11px] font-bold"
+              >
+                Admin
+              </Link>
             )}
           </div>
-
-          {/* 2. OUR STORY */}
-          <Link
-            to="/our-story"
-            className={`px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 ${
-              location.pathname.startsWith("/our-story")
-                ? "bg-[#0B4F42] text-white shadow-xs"
-                : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-            }`}
-          >
-            OUR STORY
-          </Link>
-
-          {/* 3. OUR IMPACT */}
-          <Link
-            to="/our-impact"
-            className={`px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 ${
-              location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
-                ? "bg-[#0B4F42] text-white shadow-xs"
-                : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-            }`}
-          >
-            OUR IMPACT
-          </Link>
-
-          {/* 4. RESOURCES Dropdown (Dedicated Routes: Advocacy Materials, Annual Reports, Audit Report) */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("resources")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Link
-              to="/resources/annual-reports"
-              className={`inline-flex items-center gap-1 px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/policies")
-                  ? "bg-[#0B4F42] text-white shadow-xs"
-                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-              }`}
-            >
-              <span>RESOURCES</span>
-              <ChevronDown className="h-3 w-3" />
-            </Link>
-
-            {openDropdown === "resources" && (
-              <div className="absolute top-full left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                {/* 1. Annual Reports */}
-                <Link
-                  to="/resources/annual-reports"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <Building className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
-                      Annual Reports
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Comprehensive annual operational & statutory summaries (1992–2025)
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 2. Financial Reports */}
-                <Link
-                  to="/resources/financial-reports"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
-                    <ShieldCheck className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      Financial Reports
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Royal Audit Authority (RAA) audited financial statements
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 3. Other Publications */}
-                <Link
-                  to="/resources/other-publications"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-purple-50 text-purple-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition">
-                    <BookOpen className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-purple-700 transition">
-                      Other Publications
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Surveys, policy studies & technical research publications
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* 5. NEWS & EVENTS Dropdown (Dedicated Routes: Upcoming events, announcement, career) */}
-          <div
-            className="relative"
-            onMouseEnter={() => handleMouseEnter("news")}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Link
-              to="/news"
-              className={`inline-flex items-center gap-1 px-2.5 xl:px-3.5 py-1.5 text-[11px] xl:text-xs font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                location.pathname.startsWith("/news")
-                  ? "bg-[#0B4F42] text-white shadow-xs"
-                  : "text-[#0B4F42] hover:text-[#00A896] hover:bg-[#EAF6F5]"
-              }`}
-            >
-              <span>NEWS & EVENTS</span>
-              <ChevronDown className="h-3 w-3" />
-            </Link>
-
-            {openDropdown === "news" && (
-              <div className="absolute top-full right-0 lg:left-0 mt-2 w-80 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl shadow-2xl p-2.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                {/* 1. Upcoming Events */}
-                <Link
-                  to="/news/events"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-amber-600 group-hover:text-white transition">
-                    <Calendar className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition">
-                      Upcoming Events
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Symposiums, campaigns & national health commemorations
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 2. Announcement */}
-                <Link
-                  to="/news/announcements"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition">
-                    <Megaphone className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 transition">
-                      Announcement
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Official notifications, circulars & board resolutions
-                    </p>
-                  </div>
-                </Link>
-
-                {/* 3. Career */}
-                <Link
-                  to="/news/careers"
-                  className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition text-left group"
-                >
-                  <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 mt-0.5 group-hover:bg-emerald-600 group-hover:text-white transition">
-                    <Briefcase className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition">
-                      Career
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-snug font-normal">
-                      Job vacancies, consultancy tenders & recruitments
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-        </nav>
-
-        {/* Action Group: Track Donation Link + Prominent DONATE CTA */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0 whitespace-nowrap">
-          {/* Subtle Clickable Track Donation Link (Visible on xl screens to maintain clean spacing) */}
-          <Link
-            to="/track-donation"
-            className="hidden xl:inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B4F42] hover:text-[#00A896] hover:underline px-2.5 py-1.5 transition-colors whitespace-nowrap cursor-pointer"
-            title="Track donation pledge & verify 1:1 RGOB match"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-            <span>Track Donation</span>
-          </Link>
-
-          {/* 6. Clean, Attractive & Highly Clickable DONATE CTA */}
-          <Link
-            to="/donate"
-            className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-6 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-[11px] sm:text-xs font-black shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_22px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shrink-0"
-          >
-            <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-slate-950 text-slate-950 shrink-0" />
-            <span className="tracking-wide font-sans">DONATE</span>
-          </Link>
-
-          {/* Mobile Hamburger Toggle */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 shadow-xs transition focus:outline-none cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5 text-slate-900" />
-            ) : (
-              <Menu className="h-5 w-5 text-slate-900" />
-            )}
-          </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu - Clean Hierarchical Accordions Matching Desktop */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden mx-auto max-w-7xl mt-2 border border-slate-200/90 bg-white/98 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 space-y-3 shadow-2xl animate-in slide-in-from-top-2 duration-150 pointer-events-auto max-h-[85vh] overflow-y-auto">
-          <div className="bg-gradient-to-b from-slate-50 to-slate-100/70 p-2 rounded-2xl border border-slate-200 space-y-1">
-            {/* 1. Home */}
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
-                location.pathname === "/" ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
-              }`}
-            >
-              <span>Home</span>
-              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname === "/" ? "text-amber-400" : "text-slate-400"}`} />
-            </Link>
+      {/* 2. Main Institutional Navigation Bar */}
+      <div className="border-b border-border bg-white">
+        <div className="container-page flex h-20 items-center justify-between gap-4">
+          {/* Logo & Royal Proclamation */}
+          <Link to="/" className="flex items-center gap-3 shrink-0 group">
+            <div className="size-12 rounded-xl bg-gradient-to-br from-amber-50 via-white to-slate-50 border border-border p-1 shadow-card grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
+              <img src={logo} alt="Bhutan Health Trust Fund Emblem" className="h-full w-full object-contain" />
+            </div>
+            <div className="leading-tight">
+              <div className="text-primary font-bold text-base sm:text-lg tracking-tight group-hover:text-primary/90">
+                BHUTAN HEALTH TRUST FUND
+              </div>
+              <div className="hidden sm:block text-[11px] text-muted-foreground mt-0.5">
+                Ensuring equitable access to essential medicines and vaccines
+              </div>
+            </div>
+          </Link>
 
-            {/* 2. ABOUT US (Dropdown Accordion - Matching Desktop) */}
-            <div className="rounded-xl overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleMobileCategory("about")}
-                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
-                  location.pathname.startsWith("/about")
-                    ? "bg-[#0B4F42]/10 text-[#0B4F42] font-black"
-                    : "text-slate-800 hover:bg-white"
+          {/* Desktop Navigation Links */}
+          <nav className="hidden xl:flex items-center gap-1">
+            {/* 1. About Us with Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenDropdown("about")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              <Link
+                to="/about"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors relative ${
+                  location.pathname.startsWith("/about") ? "text-saffron" : "text-foreground/80 hover:text-saffron"
                 }`}
               >
                 <span>About Us</span>
-                <ChevronDown
-                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${
-                    expandedMobileCategory === "about" ? "rotate-180 text-[#0B4F42]" : ""
-                  }`}
-                />
-              </button>
+                <ChevronDown className="size-3.5" />
+              </Link>
 
-              {expandedMobileCategory === "about" && (
-                <div className="bg-white/95 rounded-xl m-1 p-1.5 space-y-1 border border-slate-200/80 shadow-xs animate-in fade-in duration-150">
+              {openDropdown === "about" && (
+                <div className="absolute top-full left-0 mt-1 w-72 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
                   <Link
                     to="/about/organization"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
                   >
-                    <Landmark className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
-                    <span>Our Organization & Organogram</span>
+                    <Landmark className="size-4 text-primary" />
+                    <div>
+                      <div>Our Organization & Organogram</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Royal Charter & Divisions</div>
+                    </div>
                   </Link>
                   <Link
                     to="/about/trustees"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
                   >
-                    <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-                    <span>Board of Trustees</span>
+                    <ShieldCheck className="size-4 text-primary" />
+                    <div>
+                      <div>Board of Trustees</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Apex ministerial leadership</div>
+                    </div>
                   </Link>
                   <Link
                     to="/about/committees"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-800 transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
                   >
-                    <Landmark className="h-3.5 w-3.5 text-blue-600 shrink-0" />
-                    <span>Asset Management Committee</span>
+                    <Scale className="size-4 text-primary" />
+                    <div>
+                      <div>Asset Management Committee</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Prudent endowment governance</div>
+                    </div>
                   </Link>
                   <Link
                     to="/about/secretariat"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-muted text-xs font-semibold text-foreground transition"
                   >
-                    <Building className="h-3.5 w-3.5 text-teal-600 shrink-0" />
-                    <span>Secretariat & Staff</span>
+                    <Users className="size-4 text-primary" />
+                    <div>
+                      <div>Secretariat & Staff</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Headquarters administration</div>
+                    </div>
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* 3. OUR STORY */}
+            {/* 2. Our Story */}
             <Link
               to="/our-story"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
-                location.pathname.startsWith("/our-story") ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
+                location.pathname === "/our-story" ? "text-saffron" : "text-foreground/80 hover:text-saffron"
               }`}
             >
-              <span>Our Story</span>
-              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname.startsWith("/our-story") ? "text-amber-400" : "text-slate-400"}`} />
+              Our Story
             </Link>
 
-            {/* 4. OUR IMPACT */}
+            {/* 3. Impact */}
             <Link
               to="/our-impact"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
                 location.pathname.startsWith("/our-impact") || location.pathname.startsWith("/our-work")
-                  ? "bg-[#0B4F42] text-white shadow-xs"
-                  : "text-slate-700 hover:bg-white"
+                  ? "text-saffron"
+                  : "text-foreground/80 hover:text-saffron"
               }`}
             >
-              <span>Our Impact</span>
-              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname.startsWith("/our-impact") ? "text-amber-400" : "text-slate-400"}`} />
+              Impact
             </Link>
 
-            {/* 5. RESOURCES (Dropdown Accordion - Matching Desktop: Annual Reports, Financial Reports, Other Publications) */}
-            <div className="rounded-xl overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleMobileCategory("resources")}
-                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
-                  location.pathname.startsWith("/resources") || location.pathname.startsWith("/reports") || location.pathname.startsWith("/annual-reports") || location.pathname.startsWith("/financial-reports") || location.pathname.startsWith("/other-publications")
-                    ? "bg-[#0B4F42]/10 text-[#0B4F42] font-black"
-                    : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <span>Resources</span>
-                <ChevronDown
-                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${
-                    expandedMobileCategory === "resources" ? "rotate-180 text-[#0B4F42]" : ""
-                  }`}
-                />
-              </button>
-
-              {expandedMobileCategory === "resources" && (
-                <div className="bg-white/95 rounded-xl m-1 p-1.5 space-y-1 border border-slate-200/80 shadow-xs animate-in fade-in duration-150">
-                  <Link
-                    to="/resources/annual-reports"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-800 transition"
-                  >
-                    <Building className="h-3.5 w-3.5 text-blue-600 shrink-0" />
-                    <span>Annual Reports</span>
-                  </Link>
-                  <Link
-                    to="/resources/financial-reports"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition"
-                  >
-                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                    <span>Financial Reports</span>
-                  </Link>
-                  <Link
-                    to="/resources/other-publications"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-purple-50 hover:text-purple-800 transition"
-                  >
-                    <BookOpen className="h-3.5 w-3.5 text-purple-600 shrink-0" />
-                    <span>Other Publications</span>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* 6. NEWS & EVENTS (Dropdown Accordion - Matching Desktop: Upcoming Events, Announcement, Career) */}
-            <div className="rounded-xl overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleMobileCategory("news")}
-                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
-                  location.pathname.startsWith("/news")
-                    ? "bg-[#0B4F42]/10 text-[#0B4F42] font-black"
-                    : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <span>News & Events</span>
-                <ChevronDown
-                  className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${
-                    expandedMobileCategory === "news" ? "rotate-180 text-[#0B4F42]" : ""
-                  }`}
-                />
-              </button>
-
-              {expandedMobileCategory === "news" && (
-                <div className="bg-white/95 rounded-xl m-1 p-1.5 space-y-1 border border-slate-200/80 shadow-xs animate-in fade-in duration-150">
-                  <Link
-                    to="/news/events"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition"
-                  >
-                    <Calendar className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-                    <span>Upcoming Events</span>
-                  </Link>
-                  <Link
-                    to="/news/announcements"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-800 transition"
-                  >
-                    <Megaphone className="h-4 w-4 text-blue-600 shrink-0" />
-                    <span>Announcement</span>
-                  </Link>
-                  <Link
-                    to="/news/careers"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition"
-                  >
-                    <Briefcase className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                    <span>Career</span>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* 7. Track Donation */}
+            {/* 4. Resources */}
             <Link
-              to="/track-donation"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
-                location.pathname === "/track-donation" ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              to="/reports"
+              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
+                location.pathname.startsWith("/reports") || location.pathname.startsWith("/resources")
+                  ? "text-saffron"
+                  : "text-foreground/80 hover:text-saffron"
               }`}
             >
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                <span>Track Donation</span>
-              </div>
-              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                1:1 RGOB Match
-              </span>
+              Resources
             </Link>
 
-            {/* 8. Contact Secretariat */}
+            {/* 5. News and Events */}
             <Link
-              to="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition ${
-                location.pathname === "/contact" ? "bg-[#0B4F42] text-white shadow-xs" : "text-slate-700 hover:bg-white"
+              to="/news"
+              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
+                location.pathname.startsWith("/news") ? "text-saffron" : "text-foreground/80 hover:text-saffron"
               }`}
             >
-              <span>Contact Secretariat</span>
-              <ChevronRight className={`h-3.5 w-3.5 ${location.pathname === "/contact" ? "text-amber-400" : "text-slate-400"}`} />
+              News & Events
             </Link>
-          </div>
 
-          <div className="pt-1 flex flex-col gap-2">
+            {/* 6. Donate */}
             <Link
               to="/donate"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs shadow-md whitespace-nowrap active:scale-95 transition-transform"
+              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
+                location.pathname === "/donate" ? "text-saffron" : "text-foreground/80 hover:text-saffron"
+              }`}
             >
-              <Heart className="h-4 w-4 fill-slate-950 text-slate-950" /> DONATE NOW (1:1 MATCHED)
+              Donate
             </Link>
 
-            {user ? (
-              <Link
-                to="/admin/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs shadow-xs whitespace-nowrap"
-              >
-                <LayoutDashboard className="h-4 w-4 text-amber-400" /> Open Admin Dashboard
-              </Link>
-            ) : (
-              <Link
-                to="/admin/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center gap-2 py-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 font-medium text-xs whitespace-nowrap"
-              >
-                <Lock className="h-3.5 w-3.5 text-slate-400" /> Admin Portal
-              </Link>
-            )}
+            {/* 7. Contact Us */}
+            <Link
+              to="/contact"
+              className={`px-3 py-2 text-sm font-semibold transition-colors relative ${
+                location.pathname === "/contact" ? "text-saffron" : "text-foreground/80 hover:text-saffron"
+              }`}
+            >
+              Contact Us
+            </Link>
+          </nav>
+
+          {/* Action CTAs: Donate Now in Saffron */}
+          <div className="flex items-center gap-2">
+            <Link
+              to="/donate"
+              className="inline-flex items-center gap-2 rounded-full bg-saffron px-5 py-2.5 text-sm font-bold text-saffron-foreground shadow-card hover:opacity-90 transition active:scale-95"
+            >
+              <Heart className="size-4 fill-current" />
+              <span>Donate Now</span>
+            </Link>
+
+            {/* Mobile Menu Hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              className="xl:hidden grid place-items-center size-10 rounded-lg border border-border hover:bg-muted transition text-foreground"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
           </div>
         </div>
-      )}
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <nav className="xl:hidden border-t border-border bg-white animate-in slide-in-from-top-2 duration-200">
+            <div className="container-page py-4 flex flex-col space-y-2">
+              <div className="font-bold text-xs uppercase tracking-wider text-muted-foreground px-3 pt-1">
+                Main Menu
+              </div>
+              <Link to="/" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                Home
+              </Link>
+              <div className="pl-3 space-y-1 border-l-2 border-saffron/30 ml-3">
+                <Link to="/about" className="block py-1.5 text-sm font-medium text-foreground hover:text-saffron">
+                  About Us (Overview)
+                </Link>
+                <Link to="/about/organization" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
+                  • Organization & Organogram
+                </Link>
+                <Link to="/about/trustees" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
+                  • Board of Trustees
+                </Link>
+                <Link to="/about/committees" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
+                  • Asset Management Committee
+                </Link>
+                <Link to="/about/secretariat" className="block py-1 text-xs text-muted-foreground hover:text-saffron">
+                  • Secretariat & Staff
+                </Link>
+              </div>
+              <Link to="/our-story" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                Our Story
+              </Link>
+              <Link to="/our-impact" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                Impact
+              </Link>
+              <Link to="/reports" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                Resources & Reports
+              </Link>
+              <Link to="/news" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                News & Events
+              </Link>
+              <Link to="/donate" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                Donate (1:1 Matched)
+              </Link>
+              <Link to="/contact" className="px-3 py-2 text-sm font-semibold text-foreground hover:text-saffron">
+                Contact Us
+              </Link>
+            </div>
+          </nav>
+        )}
+      </div>
     </header>
   );
 }

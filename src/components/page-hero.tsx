@@ -69,7 +69,7 @@ export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) 
         )}
 
         {/* Main Title & Subtitle */}
-        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0B4F42] leading-[1.12] max-w-4xl">
+        <h1 className="font-sans text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15] max-w-4xl">
           {title}
         </h1>
 

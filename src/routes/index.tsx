@@ -1,51 +1,41 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import {
-  getPublicImpactMetrics,
-  getPublicSettings,
-  getPublicNews,
-  getPublicPage,
-} from "@/lib/api/public.functions";
-import type { ImpactMetric, NewsArticle, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer, HeroBlock } from "@/components/page-renderer";
-import { SectionEditBadge } from "@/components/public/section-edit-badge";
-
+import { useState } from "react";
 import {
   Users,
-  FileText,
   ShieldCheck,
-  HandHeart,
-  ArrowRight,
-  BarChart3,
-  Pill,
-  Lock,
-  Sparkles,
-  Calendar,
-  MapPin,
-  Syringe,
-  Activity,
-  HeartHandshake,
-  CheckCircle2,
-  TrendingUp,
-  Award,
-  ThermometerSnowflake,
   Heart,
-  Globe,
+  Sparkles,
+  ArrowRight,
+  Pill,
+  Syringe,
+  ThermometerSnowflake,
+  FileText,
+  Calendar,
+  MessageCircle,
+  Play,
+  CheckCircle2,
   Building2,
-  Quote,
-  Clock,
   Scale,
-  Stethoscope,
-  Zap,
+  Award,
+  Download,
+  Phone,
+  Mail,
 } from "lucide-react";
+
 import kingPortrait from "@/assets/king_portrait_fourth.jpg";
-import { useCountUp } from "@/hooks/use-count-up";
-import {
-  StatementLayout,
-  RuledLedgerLayout,
-  TwoColumnNarrativeLayout,
-  DocumentRegisterLayout,
-} from "@/components/institutional-layouts";
+import heroMountain from "@/assets/hero-bhutan.jpg";
+
+// Client Field Photos
+import imgDispensary from "@/assets/field/bhtf_dispensary_pharmacist.jpg";
+import imgCubicles from "@/assets/field/bhtf_medicine_cubicles.jpg";
+import imgCitizen from "@/assets/field/bhtf_citizen_receiving_medicine.jpg";
+import imgCentralStore from "@/assets/field/bhtf_central_store.jpg";
+import imgBbs from "@/assets/field/bhtf_bbs_broadcast.jpg";
+import imgVaccineVial from "@/assets/field/bhtf_flu_vaccine_vial.jpg";
+import imgTraditionalMed from "@/assets/field/bhtf_traditional_medicine.png";
+import imgMaternalCare from "@/assets/field/bhtf_maternal_child_care.jpg";
+
+// Partner Logos
 import logoRgob from "@/assets/bhtf/partners/rgob.png";
 import logoWho from "@/assets/bhtf/partners/who.jpg";
 import logoUnicef from "@/assets/bhtf/partners/unicef.png";
@@ -55,56 +45,10 @@ import logoSaveChildren from "@/assets/bhtf/partners/save_the_children.png";
 import logoSumitomo from "@/assets/bhtf/partners/sumitomo.png";
 import logoAusAid from "@/assets/bhtf/partners/aus_aid.png";
 
-import imgLhuntse from "@/assets/bhtf/field/lhuntse_clinic.jpg";
-import imgHaa from "@/assets/bhtf/field/haa_hospital.jpg";
-import imgVaccine from "@/assets/bhtf/field/vaccine_delivery.jpg";
-import imgMedicines from "@/assets/bhtf/field/essential_medicines_stock.jpg";
-
-import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
-import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
-import trusteeDrPhub from "@/assets/bhtf/trustees/dr_phub_tshering.jpg";
-import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
-import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
-import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
-import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
-import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-
 export const Route = createFileRoute("/")({
-  loader: async () => {
-    try {
-      const [page, metrics, settings, news] = await Promise.all([
-        getPublicPage({ data: { slug: "home" } }).catch(() => null),
-        getPublicImpactMetrics().catch(() => []),
-        getPublicSettings().catch(() => ({})),
-        getPublicNews().catch(() => []),
-      ]);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
-      return {
-        customSections: sections,
-        liveMetrics: metrics || [],
-        settings: settings || {},
-        liveNews: (news || []).slice(0, 4),
-      };
-    } catch {
-      return {
-        customSections: null,
-        liveMetrics: [],
-        settings: {},
-        liveNews: [],
-      };
-    }
-  },
   head: () => ({
     meta: [
-      { title: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
+      { title: "Bhutan Health Trust Fund — Building a Healthier Bhutan" },
       {
         name: "description",
         content:
@@ -112,221 +56,816 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  component: Index,
+  component: HomePage,
 });
 
+const QUICK_LINKS = [
+  {
+    icon: Pill,
+    label: "Essential Medicines",
+    sub: "438 Modern Formulations",
+    color: "bg-soft-blue text-primary",
+    to: "/our-work",
+  },
+  {
+    icon: Syringe,
+    label: "Vaccine Security",
+    sub: "100% Childhood & Flu",
+    color: "bg-soft-orange text-saffron",
+    to: "/our-work",
+  },
+  {
+    icon: Sparkles,
+    label: "Traditional Medicine",
+    sub: "110 gSo-ba Rig-pa Formulations",
+    color: "bg-soft-green text-[oklch(0.45_0.15_155)]",
+    to: "/our-work",
+  },
+  {
+    icon: ThermometerSnowflake,
+    label: "Cold Chain Network",
+    sub: "20 Dzongkhags Monitoring",
+    color: "bg-soft-purple text-[oklch(0.5_0.18_290)]",
+    to: "/our-impact",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Universal Access",
+    sub: "100% Free at Point of Care",
+    color: "bg-soft-red text-[oklch(0.55_0.2_25)]",
+    to: "/about",
+  },
+  {
+    icon: Scale,
+    label: "Window Financing",
+    sub: "Quarterly DMS Releases",
+    color: "bg-soft-blue text-primary",
+    to: "/resources/annual-reports",
+  },
+];
 
+const STATS = [
+  { value: "Nu. 4.8B+", label: "Sovereign Endowment", sub: "Ring-fenced principal", icon: ShieldCheck },
+  { value: "100%", label: "Free Primary Healthcare", sub: "Zero out-of-pocket costs", icon: Heart },
+  { value: "438 + 110", label: "Medicines & Formulations", sub: "Modern + Traditional", icon: Pill },
+  { value: "20 / 20", label: "Dzongkhags Covered", sub: "205 gewog health units", icon: Users },
+  { value: "1:1", label: "Sovereign Match", sub: "Guaranteed by RGoB", icon: Sparkles },
+];
 
-// Institutional Ledger Data & Regional Distribution
-const fiduciaryLedgerRows = [
+const NEWS = [
+  {
+    title: "BBS Special Report: BHTF Ensures Unbroken Pharmaceutical Reserves Across Remote Gewogs",
+    date: "14 October 2026",
+    img: imgBbs,
+    to: "/news",
+    source: "BBS TV News",
+  },
+  {
+    title: "Annual Seasonal Influenza Vaccination Rollout Achieves 97.4% Target Coverage",
+    date: "28 September 2026",
+    img: imgVaccineVial,
+    to: "/news",
+    source: "MOH / BHTF",
+  },
+  {
+    title: "Expansion of Indigenous gSo-ba Rig-pa Therapies Across Regional Traditional Hospitals",
+    date: "15 September 2026",
+    img: imgTraditionalMed,
+    to: "/news",
+    source: "Traditional Medicine Division",
+  },
+];
+
+const UPCOMING_EVENTS = [
+  {
+    month: "NOV",
+    day: "11",
+    title: "Annual BHTF Day 2026",
+    desc: "Commemoration of the Sovereign Healthcare Endowment & Public Accountability Filing.",
+    place: "Clock Tower & BHTF Headquarters, Thimphu",
+  },
+  {
+    month: "DEC",
+    day: "17",
+    title: "National Crowd Fundraising Initiative",
+    desc: "Strategic public health mobilization in collaboration with the Royal Securities Exchange of Bhutan (RSEB).",
+    place: "RSEB Financial Centre, Thimphu & Nationwide Online",
+  },
+];
+
+const FIELD_DISPATCHES = [
+  {
+    img: imgDispensary,
+    tag: "Hospital Outpatient Dispensary",
+    title: "Essential Medicines Dispensed Free of Charge",
+    caption: "Uniformed hospital pharmacists dispense verified pharmaceuticals directly to citizens under royal mandate.",
+    badge: "100% Free at Point of Delivery",
+  },
+  {
+    img: imgCubicles,
+    tag: "District Hospital Inventory",
+    title: "Organized Cubicle Storage & Batch Control",
+    caption: "Modular inventory cubicles maintaining zero-stockout levels of essential medicines in district health centers.",
+    badge: "Zero Stockout Protocol",
+  },
+  {
+    img: imgCitizen,
+    tag: "Universal Healthcare Guarantee",
+    title: "No Citizen Billed for Care",
+    caption: "A Bhutanese citizen receiving life-saving prescription medicines at the hospital counter without payment.",
+    badge: "Sacred Constitutional Trust",
+  },
+  {
+    img: imgCentralStore,
+    tag: "Central Medical Store Warehouse",
+    title: "Strategic Multi-Month National Reserves",
+    caption: "High-capacity pallet racking shielding the Kingdom against international pharmaceutical supply chain interruptions.",
+    badge: "National Supply Buffer",
+  },
+];
+
+const FIDUCIARY_ROWS = [
   {
     label: "Sovereign Health Corpus (Endowment Principal)",
     figure: "Nu. 4,798,965,306.85",
-    code: "CORPUS-AUDIT-2026",
     subtext: "Ring-fenced statutory capital invested under Royal Charter (~Nu. 4.8B as of 30 June 2026).",
   },
   {
     label: "Annual Commodity Procurement Yield Disbursement",
     figure: "Nu. 557,734,000",
-    code: "DISB-FY24-25",
     subtext: "Disbursed quarterly for 438 essential drugs, 110 traditional remedies, and 4 routine vaccines.",
+  },
+  {
+    label: "Cumulative Procurement Disbursements (1998–2026)",
+    figure: "Nu. 4,370,000,000+",
+    subtext: "Direct financing for essential healthcare commodities without depleting the core corpus.",
   },
   {
     label: "Citizens Protected Across 20 Dzongkhags",
     figure: "780,000+",
-    code: "COVERAGE-MOH",
     subtext: "Universal healthcare guarantee delivered across all 205 remote gewog Primary Health Units.",
   },
   {
     label: "Essential Medicines & Traditional Formulations",
     figure: "438 Modern + 110 Traditional",
-    code: "NEML-REV-V2",
-    subtext: "100% of National Essential Drugs List and 65 core gSo-ba Rig-pa formulations.",
+    subtext: "100% of National Essential Drugs List and 110 core gSo-ba Rig-pa formulations.",
   },
   {
-    label: "Routine National Immunization Antigens Financed",
-    figure: "4 Key Antigens",
-    code: "EPI-WHO-GAVI",
-    subtext: "Pentavalent, PCV, HPV, and seasonal Influenza sustained in perpetuity.",
+    label: "Routine National Immunization Coverage",
+    figure: "97.4% – 99.8%",
+    subtext: "Pentavalent (98.9%), PCV (98.7%), Seasonal Influenza (97.4%), and HPV (99.8%).",
   },
 ];
 
-const recentAuditDocuments = [
-  {
-    id: "audit-2025",
-    title: "Annual Financial & Operational Audit Report (FY 2024–2025)",
-    referenceNo: "RAA-BHTF-2025-01",
-    date: "June 2026",
-    formatSize: "PDF, 4.2 MB",
-    category: "Audit Report",
-    downloadUrl: "/reports",
-  },
-  {
-    id: "royal-charter",
-    title: "Royal Charter of the Bhutan Health Trust Fund (Official Enactment)",
-    referenceNo: "ROYAL-CHARTER-2000",
-    date: "August 2000",
-    formatSize: "PDF, 1.8 MB",
-    category: "Legal Charter",
-    downloadUrl: "/reports",
-  },
-  {
-    id: "essential-drugs",
-    title: "National Essential Drugs List & Vaccine Cold-Chain Protocol",
-    referenceNo: "MOH-NEDL-REV8",
-    date: "January 2026",
-    formatSize: "PDF, 2.4 MB",
-    category: "Formulary",
-    downloadUrl: "/reports",
-  },
-];
-
-function HomepageNews({ articles }: { articles: NewsArticle[] }) {
-  const latest = articles.filter((article) => article.isPublished).slice(0, 4);
-  if (!latest.length) return null;
-  return (
-    <section className="border-t border-slate-200 bg-white py-16" aria-labelledby="home-news-title">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div><p className="text-xs font-bold uppercase tracking-widest text-emerald-800">Latest updates</p><h2 id="home-news-title" className="font-serif text-3xl font-bold text-slate-900">News & Events</h2></div>
-          <Link to="/news" search={{}} className="text-sm font-bold text-emerald-800 hover:underline">View all news →</Link>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-          {latest.map((article) => <Link key={article.id} to="/news/$slug" params={{ slug: article.slug }} search={{}} className="group overflow-hidden rounded-xl border border-slate-200 bg-[#FAF8F3] hover:border-emerald-600 hover:shadow-lg transition">
-            {article.coverImage && <img src={article.coverImage} alt="" className="h-44 w-full object-cover" loading="lazy" />}
-            <div className="p-5"><p className="mb-2 text-xs text-slate-500">{new Date(article.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p><h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800">{article.title}</h3><p className="mt-2 line-clamp-3 text-sm text-slate-600">{article.excerpt}</p></div>
-          </Link>)}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const dzongkhagRegions = [
+const DZONGKHAG_DATA = [
   {
     region: "Western Region",
     dzongkhags: [
-      { name: "Thimphu", bhus: "14 BHUs", allocation: "Nu. 42.5M" },
-      { name: "Paro", bhus: "12 BHUs", allocation: "Nu. 18.2M" },
-      { name: "Haa", bhus: "7 BHUs", allocation: "Nu. 9.4M" },
-      { name: "Chhukha", bhus: "16 BHUs", allocation: "Nu. 26.8M" },
-      { name: "Samtse", bhus: "18 BHUs", allocation: "Nu. 22.1M" },
-      { name: "Gasa", bhus: "5 BHUs", allocation: "Nu. 7.8M" },
+      { name: "Thimphu", bhus: "1 Regional Referral + 18 PHUs", allocation: "100% Buffer" },
+      { name: "Chhukha", bhus: "1 General Hosp + 14 PHUs", allocation: "100% Buffer" },
+      { name: "Paro", bhus: "1 District Hosp + 12 PHUs", allocation: "100% Buffer" },
+      { name: "Haa", bhus: "1 District Hosp + 8 PHUs", allocation: "100% Buffer" },
+      { name: "Samtse", bhus: "1 District Hosp + 16 PHUs", allocation: "100% Buffer" },
     ],
   },
   {
     region: "Central Region",
     dzongkhags: [
-      { name: "Punakha", bhus: "11 BHUs", allocation: "Nu. 12.8M" },
-      { name: "Wangdue Phodrang", bhus: "15 BHUs", allocation: "Nu. 16.5M" },
-      { name: "Trongsa", bhus: "8 BHUs", allocation: "Nu. 10.2M" },
-      { name: "Bumthang", bhus: "9 BHUs", allocation: "Nu. 11.6M" },
-      { name: "Dagana", bhus: "12 BHUs", allocation: "Nu. 13.4M" },
-      { name: "Tsirang", bhus: "10 BHUs", allocation: "Nu. 11.9M" },
-      { name: "Sarpang", bhus: "14 BHUs", allocation: "Nu. 21.4M" },
-      { name: "Zhemgang", bhus: "14 BHUs", allocation: "Nu. 11.2M" },
+      { name: "Bumthang", bhus: "1 District Hosp + 8 PHUs", allocation: "100% Buffer" },
+      { name: "Trongsa", bhus: "1 District Hosp + 9 PHUs", allocation: "100% Buffer" },
+      { name: "Sarpang", bhus: "1 Regional Referral + 14 PHUs", allocation: "100% Buffer" },
+      { name: "Zhemgang", bhus: "1 District Hosp + 13 PHUs", allocation: "100% Buffer" },
+      { name: "Dagana", bhus: "1 District Hosp + 11 PHUs", allocation: "100% Buffer" },
+      { name: "Tsirang", bhus: "1 District Hosp + 12 PHUs", allocation: "100% Buffer" },
+      { name: "Wangdue Phodrang", bhus: "1 District Hosp + 15 PHUs", allocation: "100% Buffer" },
+      { name: "Punakha", bhus: "1 District Hosp + 11 PHUs", allocation: "100% Buffer" },
+      { name: "Gasa", bhus: "1 District Hosp + 4 PHUs", allocation: "100% Buffer" },
     ],
   },
   {
     region: "Eastern Region",
     dzongkhags: [
-      { name: "Mongar", bhus: "21 BHUs", allocation: "Nu. 24.5M" },
-      { name: "Trashigang", bhus: "20 BHUs", allocation: "Nu. 25.8M" },
-      { name: "Trashiyangtse", bhus: "9 BHUs", allocation: "Nu. 10.5M" },
-      { name: "Lhuentse", bhus: "11 BHUs", allocation: "Nu. 9.8M" },
-      { name: "Pema Gatshel", bhus: "13 BHUs", allocation: "Nu. 12.3M" },
-      { name: "Samdrup Jongkhar", bhus: "14 BHUs", allocation: "Nu. 18.9M" },
+      { name: "Mongar", bhus: "1 Regional Referral + 21 PHUs", allocation: "100% Buffer" },
+      { name: "Trashigang", bhus: "1 District Hosp + 20 PHUs", allocation: "100% Buffer" },
+      { name: "Trashiyangtse", bhus: "1 District Hosp + 9 PHUs", allocation: "100% Buffer" },
+      { name: "Lhuentse", bhus: "1 District Hosp + 10 PHUs", allocation: "100% Buffer" },
+      { name: "Pemagatshel", bhus: "1 District Hosp + 11 PHUs", allocation: "100% Buffer" },
+      { name: "Samdrup Jongkhar", bhus: "1 District Hosp + 13 PHUs", allocation: "100% Buffer" },
     ],
   },
 ];
 
-function RuledDzongkhagMatrix() {
-  return (
-    <section className="py-14 sm:py-18 bg-white border-b border-slate-200/80 text-slate-900">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-1.5">
-            <span className="text-[11px] font-mono font-bold tracking-widest text-amber-800 uppercase block">
-              Equitable Kingdom-Wide Distribution
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
-              Nationwide Coverage Across All 20 Dzongkhags
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-sans font-light">
-              Equitable primary healthcare commodity buffer maintained across all 205 remote gewogs and regional distribution centers.
-            </p>
-          </div>
-          <Link
-            to="/our-work"
-            className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-amber-800 hover:text-amber-900 shrink-0 hover:underline"
-          >
-            <span>View Detailed Commodity Allocations</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
+const PARTNERS = [
+  { name: "Royal Government of Bhutan", role: "Founding Sovereign & 1:1 Match", logo: logoRgob },
+  { name: "World Health Organization", role: "Global Technical Partner", logo: logoWho },
+  { name: "UNICEF", role: "Cold Chain & Vaccine Logistics", logo: logoUnicef },
+  { name: "Asian Development Bank", role: "Development Partner", logo: logoAdb },
+  { name: "Bill & Melinda Gates Foundation", role: "Philanthropic Grantor", logo: logoGates },
+  { name: "Save the Children", role: "Maternal & Child Health", logo: logoSaveChildren },
+  { name: "Sumitomo Mitsui Banking Corp", role: "Institutional Grantor", logo: logoSumitomo },
+  { name: "Australian Aid", role: "Bilateral Partner (ACCF)", logo: logoAusAid },
+];
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-          {dzongkhagRegions.map((reg) => (
-            <div key={reg.region} className="border-t border-slate-300 pt-3 space-y-2">
-              <div className="font-serif text-sm font-bold text-slate-900 uppercase tracking-wider pb-1 border-b border-slate-200">
-                {reg.region}
+function HomePage() {
+  return (
+    <div className="bg-background text-foreground">
+      {/* 1. HERO SECTION (Left: Vision & Buttons | Right: Full Image of 4th King & Mountain Atmosphere & 4 Badges) */}
+      <section className="relative overflow-hidden bg-gradient-hero border-b border-border">
+        {/* Mountain Atmosphere Contour in Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-[0.07] pointer-events-none mix-blend-multiply"
+          style={{ backgroundImage: `url(${heroMountain})` }}
+        />
+
+        <div className="container-page py-12 lg:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center relative z-10">
+          {/* Left Column: Vision & Royal Mandate */}
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-soft-orange px-3.5 py-1 text-xs font-semibold text-saffron mb-5 border border-saffron/20 shadow-2xs">
+              <Sparkles className="size-3.5" />
+              <span>Royal Charter Statutory Trust Fund • Established 1998</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary leading-[1.08] tracking-tight">
+              Building a<br />Healthier Bhutan
+            </h1>
+
+            <div className="h-1.5 w-24 bg-saffron rounded-full my-6" />
+
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
+              The Bhutan Health Trust Fund sustainably finances essential medicines and vaccines to strengthen primary
+              healthcare and protect the well-being of every Bhutanese citizen.
+            </p>
+
+            {/* Authentic 2004 Royal Vision Callout */}
+            <div className="my-6 p-4 sm:p-5 rounded-2xl bg-white/95 border border-border shadow-card space-y-2">
+              <p className="text-sm sm:text-base font-semibold text-primary italic leading-snug">
+                “No Bhutanese should ever have to choose between their health and their livelihood.”
+              </p>
+              <div className="flex items-center gap-2 pt-1 border-t border-border/60">
+                <span className="size-2 rounded-full bg-saffron" />
+                <span className="text-xs font-bold text-foreground">
+                  His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck
+                </span>
+                <span className="text-[11px] text-muted-foreground hidden sm:inline">(2004)</span>
               </div>
-              <div className="divide-y divide-slate-100">
-                {reg.dzongkhags.map((d) => (
-                  <div key={d.name} className="py-2 flex items-baseline justify-between text-xs">
-                    <div>
-                      <span className="font-semibold text-slate-900">{d.name}</span>
-                      <span className="text-slate-400 font-mono text-[10px] ml-1.5">({d.bhus})</span>
-                    </div>
-                    <span className="font-mono font-bold text-slate-700">{d.allocation}</span>
+            </div>
+
+            {/* Action CTA Pills */}
+            <div className="mt-8 flex flex-wrap gap-3 items-center">
+              <Link
+                to="/our-impact"
+                className="inline-flex items-center gap-2 rounded-full bg-saffron px-6 py-3 text-sm font-bold text-saffron-foreground shadow-elevated hover:opacity-90 transition active:scale-95"
+              >
+                <span>Explore Our Impact</span>
+                <ArrowRight className="size-4" />
+              </Link>
+
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 rounded-full bg-background border border-border px-6 py-3 text-sm font-semibold hover:bg-muted transition text-foreground"
+              >
+                <span>About BHTF</span>
+                <Play className="size-3.5 fill-current text-primary" />
+              </Link>
+
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-card hover:bg-primary/90 transition"
+              >
+                <Heart className="size-3.5 fill-current text-saffron" />
+                <span>Donate (1:1 Matched)</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Full Image of His Majesty the Fourth Druk Gyalpo + 4 Floating Badges */}
+          <div className="relative">
+            {/* The Full Image Container */}
+            <div className="relative rounded-3xl overflow-hidden shadow-elevated border border-white/80 bg-white aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] xl:aspect-[5/4] group">
+              <img
+                src={kingPortrait}
+                alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
+                className="w-full h-full object-cover object-[center_16%] transition-transform duration-500 group-hover:scale-[1.02]"
+                width={1200}
+                height={1500}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+
+              {/* Title Tag on Image */}
+              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-white text-left pointer-events-none max-w-[85%]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-saffron font-bold block mb-1">
+                  Founding Royal Benefactor
+                </span>
+                <div className="text-sm sm:text-base font-bold leading-tight drop-shadow-md">
+                  His Majesty the Fourth Druk Gyalpo
+                </div>
+                <div className="text-xs text-white/80 font-normal">
+                  Creator of the Bhutan Health Trust Fund (Royal Charter 2000)
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Floating Card with 4 Feature Badges */}
+            <div className="hidden md:block absolute -bottom-6 -right-2 lg:-right-4 xl:right-4 bg-white/95 backdrop-blur-xl rounded-2xl shadow-elevated p-4 sm:p-5 w-76 sm:w-80 space-y-3 border border-border">
+              {[
+                {
+                  icon: Pill,
+                  color: "bg-soft-orange text-saffron",
+                  t: "Improving Access",
+                  s: "438 essential medicines & 110 traditional",
+                },
+                {
+                  icon: ShieldCheck,
+                  color: "bg-soft-blue text-primary",
+                  t: "Strengthening Primary",
+                  s: "Healthcare systems across 20 Dzongkhags",
+                },
+                {
+                  icon: Heart,
+                  color: "bg-soft-green text-[oklch(0.45_0.15_155)]",
+                  t: "Protecting Well-being",
+                  s: "100% free healthcare at point of delivery",
+                },
+                {
+                  icon: Sparkles,
+                  color: "bg-soft-purple text-[oklch(0.5_0.18_290)]",
+                  t: "Collaborating for Future",
+                  s: "RGoB permanent 1:1 sovereign match",
+                },
+              ].map((c) => (
+                <div key={c.t} className="flex items-center gap-3">
+                  <div className={`size-9 rounded-lg grid place-items-center ${c.color} shrink-0`}>
+                    <c.icon className="size-4" />
                   </div>
-                ))}
+                  <div>
+                    <div className="text-xs font-bold text-foreground leading-tight">{c.t}</div>
+                    <div className="text-[11px] text-muted-foreground leading-tight">{c.s}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile Badges Layout (< md) */}
+            <div className="md:hidden mt-4 grid grid-cols-2 gap-2 bg-white rounded-2xl p-3 border border-border shadow-card">
+              {[
+                { icon: Pill, color: "text-saffron", t: "438+110 Drugs", s: "Essential Formulary" },
+                { icon: ShieldCheck, color: "text-primary", t: "20 Dzongkhags", s: "Kingdom-Wide" },
+                { icon: Heart, color: "text-emerald-600", t: "100% Free", s: "Zero Billing" },
+                { icon: Sparkles, color: "text-purple-600", t: "1:1 Matched", s: "Sovereign Endowment" },
+              ].map((m) => (
+                <div key={m.t} className="flex items-center gap-2 p-2 rounded-xl bg-slate-50">
+                  <m.icon className={`size-4 shrink-0 ${m.color}`} />
+                  <div>
+                    <div className="text-xs font-bold text-foreground leading-tight">{m.t}</div>
+                    <div className="text-[10px] text-muted-foreground">{m.s}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. QUICK LINKS PILL CARDS */}
+      <section className="container-page -mt-4 sm:-mt-8 relative z-20">
+        <div className="bg-white rounded-2xl shadow-elevated p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 border border-border">
+          {QUICK_LINKS.map((q) => (
+            <Link
+              key={q.label}
+              to={q.to}
+              className="group flex flex-col items-center text-center p-3 rounded-xl hover:bg-muted transition"
+            >
+              <div className={`size-13 rounded-full grid place-items-center ${q.color} mb-2 group-hover:scale-105 transition`}>
+                <q.icon className="size-5" />
+              </div>
+              <div className="text-xs sm:text-sm font-bold text-foreground leading-tight">{q.label}</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5 leading-tight">{q.sub}</div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. GRADIENT STATS BAND */}
+      <section className="container-page mt-12 sm:mt-16">
+        <div className="bg-gradient-stats rounded-3xl p-6 sm:p-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-white shadow-elevated">
+          {STATS.map((s) => (
+            <div key={s.label} className="flex items-center gap-3">
+              <div className="size-12 rounded-full bg-saffron/20 grid place-items-center text-saffron shrink-0">
+                <s.icon className="size-6" />
+              </div>
+              <div>
+                <div className="text-xl sm:text-2xl font-bold leading-tight">{s.value}</div>
+                <div className="text-xs text-white/90 font-medium leading-tight mt-0.5">{s.label}</div>
+                <div className="text-[10px] text-white/60 leading-tight">{s.sub}</div>
               </div>
             </div>
           ))}
         </div>
+      </section>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-slate-300 text-[11px] font-mono text-slate-500 gap-2">
-          <div>All 20 Dzongkhags • 205 Primary Health Units • 100% Stockout Guarantee</div>
-          <div>Source: Ministry of Health & BHTF Annual Dzongkhag Distribution Index, 2025–2026</div>
+      {/* 4. 3-COLUMN SECTION: LATEST NEWS | UPCOMING EVENTS | PUBLICATIONS */}
+      <section className="container-page mt-14 sm:mt-16 grid lg:grid-cols-3 gap-6">
+        {/* Col 1: Latest News with BBS Broadcast */}
+        <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-saffron uppercase tracking-wider block">
+                  Media & Dispatches
+                </span>
+                <h3 className="font-bold text-lg text-primary">Latest News</h3>
+              </div>
+              <Link to="/news" className="text-xs text-saffron font-bold inline-flex items-center gap-1 hover:underline">
+                View All <ArrowRight className="size-3" />
+              </Link>
+            </div>
+
+            <div className="space-y-4">
+              {NEWS.map((n) => (
+                <Link key={n.title} to={n.to} className="flex gap-3 group cursor-pointer">
+                  <div className="size-20 rounded-xl overflow-hidden shadow-2xs shrink-0 border border-border bg-slate-100">
+                    <img src={n.img} alt={n.title} className="size-full object-cover group-hover:scale-105 transition" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold leading-snug group-hover:text-saffron transition line-clamp-2">
+                      {n.title}
+                    </div>
+                    <div className="text-[10px] text-muted-foreground mt-1.5 flex items-center gap-1.5 font-medium">
+                      <span>{n.date}</span>
+                      <span>•</span>
+                      <span className="text-primary font-semibold">{n.source}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
 
-function PartnerLogosStrip() {
-  const partners = [
-    { name: "Royal Government of Bhutan", label: "Founding Sovereign", logo: logoRgob },
-    { name: "World Health Organization", label: "Global Technical Partner", logo: logoWho },
-    { name: "UNICEF", label: "Cold Chain & Vaccine Logistics", logo: logoUnicef },
-    { name: "Asian Development Bank", label: "Development Partner", logo: logoAdb },
-    { name: "Bill & Melinda Gates Foundation", label: "Philanthropic Grantor", logo: logoGates },
-    { name: "Save the Children", label: "Maternal & Child Health", logo: logoSaveChildren },
-    { name: "Sumitomo Mitsui Banking Corp", label: "Institutional Grantor", logo: logoSumitomo },
-    { name: "Australian Aid", label: "Bilateral Partner", logo: logoAusAid },
-  ];
+        {/* Col 2: Upcoming Events (11 Nov BHTF Day & 17 Dec RSEB) */}
+        <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-saffron uppercase tracking-wider block">
+                  Official Calendar
+                </span>
+                <h3 className="font-bold text-lg text-primary">Upcoming Events</h3>
+              </div>
+              <Link to="/news" className="text-xs text-saffron font-bold inline-flex items-center gap-1 hover:underline">
+                Calendar <ArrowRight className="size-3" />
+              </Link>
+            </div>
 
-  return (
-    <section className="py-12 bg-white border-b border-slate-200/80 text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="space-y-5">
+              {UPCOMING_EVENTS.map((e) => (
+                <div key={e.title} className="flex gap-3.5 items-start">
+                  <div className="rounded-2xl bg-soft-orange text-saffron grid place-items-center w-14 h-14 shrink-0 leading-none border border-saffron/20 shadow-2xs">
+                    <div className="text-center">
+                      <div className="text-[10px] font-black uppercase tracking-wider">{e.month}</div>
+                      <div className="text-xl font-black mt-0.5">{e.day}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-foreground leading-snug">{e.title}</div>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{e.desc}</p>
+                    <div className="text-[11px] text-saffron font-semibold mt-1.5 flex items-center gap-1">
+                      <span>📍 {e.place}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 p-3 rounded-xl bg-soft-blue text-xs text-primary font-medium border border-primary/20">
+            Commemorating 26 years of universal primary healthcare financing.
+          </div>
+        </div>
+
+        {/* Col 3: Key Publications & Formularies */}
+        <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-saffron uppercase tracking-wider block">
+                  Statutory Register
+                </span>
+                <h3 className="font-bold text-lg text-primary">Certified Publications</h3>
+              </div>
+              <Link to="/reports" className="text-xs text-saffron font-bold inline-flex items-center gap-1 hover:underline">
+                Audit Vault <ArrowRight className="size-3" />
+              </Link>
+            </div>
+
+            <ul className="space-y-3">
+              {[
+                { title: "Annual Audit Report (FY 2024–2025)", ref: "RAA-BHTF-2025-01", type: "RAA Certified PDF" },
+                { title: "National Essential Drugs Formulary (8th Edition)", ref: "MOH-EDP-2024", type: "438 Modern Formulations" },
+                { title: "Traditional Medicine Formulary (gSo-ba Rig-pa)", ref: "DTMS-BHTF-V2", type: "110 Remedies & Therapies" },
+                { title: "Window Financing Operational Manual", ref: "SOP-WF-2024", type: "Quarterly DMS Protocols" },
+              ].map((pub) => (
+                <li key={pub.title} className="p-2.5 rounded-xl border border-border hover:border-saffron/40 hover:bg-slate-50 transition group">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start gap-2.5">
+                      <FileText className="size-4 text-primary shrink-0 mt-0.5 group-hover:text-saffron transition" />
+                      <div>
+                        <div className="text-xs font-bold text-foreground leading-snug group-hover:text-primary">
+                          {pub.title}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground mt-0.5">{pub.ref} • {pub.type}</div>
+                      </div>
+                    </div>
+                    <Download className="size-3.5 text-muted-foreground group-hover:text-saffron shrink-0" />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-5">
+            <Link
+              to="/reports"
+              className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary text-xs font-bold transition text-center"
+            >
+              <span>Access All Statutory Audit Filings</span>
+              <ArrowRight className="size-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. AUTHENTIC PHOTO FIELD DISPATCHES */}
+      <section className="container-page mt-16 sm:mt-20">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-saffron font-mono">
+              <ShieldCheck className="size-3.5" />
+              <span>Authentic Field Operations • No Stock Photos</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary mt-1">
+              Field Operations & Nationwide Healthcare Logistics
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-2xl mt-1">
+              Photographs documenting the real-world impact of BHTF across hospitals, remote gewog dispensaries, and national warehouses.
+            </p>
+          </div>
+          <Link
+            to="/our-impact"
+            className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:text-saffron transition shrink-0"
+          >
+            <span>Explore Full Impact Portfolio</span>
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {FIELD_DISPATCHES.map((d) => (
+            <div
+              key={d.title}
+              className="bg-white rounded-3xl overflow-hidden border border-border shadow-card flex flex-col group hover:shadow-elevated transition-all duration-300"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                <img
+                  src={d.img}
+                  alt={d.title}
+                  className="size-full object-cover group-hover:scale-105 transition duration-500"
+                />
+                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 text-white backdrop-blur-md text-[10px] font-bold">
+                  {d.tag}
+                </span>
+              </div>
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h4 className="text-sm font-bold text-primary leading-snug group-hover:text-saffron transition">
+                    {d.title}
+                  </h4>
+                  <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+                    {d.caption}
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-border flex items-center justify-between text-[11px] font-semibold text-primary">
+                  <span>{d.badge}</span>
+                  <CheckCircle2 className="size-3.5 text-saffron shrink-0" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 6. TRADITIONAL MEDICINE & THERAPIES (gSo-ba Rig-pa) SHOWCASE */}
+      <section className="container-page mt-16 sm:mt-20">
+        <div className="rounded-3xl bg-soft-green/60 border border-[oklch(0.85_0.08_155)] p-6 sm:p-10 lg:p-12 grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center">
+          <div className="space-y-4">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[oklch(0.4_0.15_155)]">
+              gSo-ba Rig-pa • Traditional Medicine Financing
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary">
+              Preserving Bhutan’s Sacred Healing Heritage: 110 Traditional Formulations
+            </h3>
+            <p className="text-sm text-foreground/80 leading-relaxed">
+              In accordance with Royal Charter mandate, BHTF finances not only modern pharmaceuticals but also 110 essential
+              traditional medicines (gSo-ba Rig-pa) manufactured at the National Traditional Medicine Hospital in Thimphu.
+            </p>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              {[
+                { title: "110 Formulations", desc: "Herbal pills, powders, decoctions, and mineral remedies." },
+                { title: "Traditional Therapies", desc: "Chulum herbal baths, Lang-dug herbal steam, and Dug-pob." },
+                { title: "20 Dzongkhags Reach", desc: "Dispensed at traditional units in all district hospitals." },
+                { title: "100% Free Access", desc: "Zero patient billing for authentic indigenous healthcare." },
+              ].map((item) => (
+                <div key={item.title} className="p-3 rounded-2xl bg-white/90 border border-[oklch(0.85_0.08_155)] shadow-2xs">
+                  <div className="text-xs font-bold text-primary">{item.title}</div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative rounded-2xl overflow-hidden shadow-elevated border border-white aspect-[4/3] bg-white">
+            <img
+              src={imgTraditionalMed}
+              alt="Traditional Bhutanese Medicines and Therapies (gSo-ba Rig-pa)"
+              className="size-full object-cover"
+            />
+            <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md rounded-xl p-2 text-white text-[11px] text-center font-medium">
+              Authentic gSo-ba Rig-pa essential traditional medications financed by BHTF
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. STATUTORY FIDUCIARY LEDGER & 20 DZONGKHAGS MATRIX */}
+      <section className="container-page mt-16 sm:mt-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+            Audit Certified • Perpetual Stewardship
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary">
+            Statutory Fiduciary & Operational Ledger
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Audited financial benchmarks and nationwide commodity commitments under permanent trust stewardship.
+          </p>
+        </div>
+
+        {/* Ledger Table */}
+        <div className="bg-white rounded-3xl shadow-card border border-border overflow-hidden">
+          <div className="divide-y divide-border">
+            {FIDUCIARY_ROWS.map((row) => (
+              <div key={row.label} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                <div className="space-y-0.5 max-w-xl">
+                  <div className="text-sm font-bold text-foreground">{row.label}</div>
+                  <div className="text-xs text-muted-foreground">{row.subtext}</div>
+                </div>
+                <div className="text-base sm:text-lg font-bold text-primary font-mono sm:text-right shrink-0">
+                  {row.figure}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between text-xs text-muted-foreground gap-2">
+            <div>Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing</div>
+            <Link to="/reports" className="text-saffron font-bold hover:underline">
+              Download Certified RAA Audit Report →
+            </Link>
+          </div>
+        </div>
+
+        {/* 20 Dzongkhags Regional Distribution */}
+        <div className="mt-10 bg-white rounded-3xl shadow-card border border-border p-6 sm:p-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-border gap-2">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+                Equitable Kingdom-Wide Distribution
+              </span>
+              <h3 className="text-xl font-bold text-primary">Nationwide Coverage Across All 20 Dzongkhags</h3>
+            </div>
+            <div className="text-xs text-muted-foreground">205 Remote Gewogs • 100% Stockout Buffer</div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {DZONGKHAG_DATA.map((reg) => (
+              <div key={reg.region} className="space-y-3">
+                <div className="text-xs font-black uppercase tracking-wider text-primary pb-2 border-b-2 border-primary/20">
+                  {reg.region}
+                </div>
+                <div className="divide-y divide-slate-100">
+                  {reg.dzongkhags.map((d) => (
+                    <div key={d.name} className="py-2 flex items-baseline justify-between text-xs">
+                      <div>
+                        <span className="font-bold text-foreground">{d.name}</span>
+                        <span className="text-muted-foreground text-[11px] ml-1.5">({d.bhus})</span>
+                      </div>
+                      <span className="font-mono text-[11px] font-bold text-primary bg-soft-blue px-2 py-0.5 rounded">
+                        {d.allocation}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. WHY SUPPORT BHTF + WHATSAPP INSTANT CHAT */}
+      <section className="container-page mt-16 sm:mt-20 grid lg:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
+        <div className="rounded-3xl bg-soft-orange p-6 sm:p-10 grid sm:grid-cols-2 gap-8 items-center border border-saffron/20 shadow-card">
+          <div className="space-y-4">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+              Public Support & Sovereign 1:1 Match
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary">Why Support BHTF?</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Every Ngultrum you contribute is permanently matched 1:1 by the Royal Government of Bhutan and tax deductible under DRC Registration No. E-73.
+            </p>
+            <div className="space-y-2 pt-2">
+              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
+                <CheckCircle2 className="size-4 text-saffron shrink-0" />
+                <span>Zero administrative deduction from public donations</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
+                <CheckCircle2 className="size-4 text-saffron shrink-0" />
+                <span>Ring-fenced principal invested strictly under Royal Charter</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
+                <CheckCircle2 className="size-4 text-saffron shrink-0" />
+                <span>Immediate tax deduction certificate issued</span>
+              </div>
+            </div>
+            <div className="pt-2">
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-2 rounded-full bg-saffron px-6 py-3 text-sm font-bold text-saffron-foreground shadow-elevated hover:opacity-90 transition"
+              >
+                <Heart className="size-4 fill-current" />
+                <span>Make a Matched Contribution</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden shadow-elevated aspect-[4/3] bg-white border border-white">
+            <img src={imgMaternalCare} alt="Maternal and Child Healthcare in Bhutan" className="size-full object-cover" />
+          </div>
+        </div>
+
+        {/* WhatsApp & Hotline Card */}
+        <div className="rounded-3xl bg-white border border-border shadow-card p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+          <div className="space-y-3">
+            <div className="size-12 rounded-2xl bg-[#25D366] text-white grid place-items-center shadow-card">
+              <MessageCircle className="size-6 fill-current" />
+            </div>
+            <h3 className="text-xl font-bold text-primary">BHTF Direct Support</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Connect directly with our secretariat for contribution queries, tax deduction receipts, or general guidance.
+            </p>
+            <div className="pt-2 space-y-2 text-xs text-foreground font-medium">
+              <div className="flex items-center gap-2">
+                <Phone className="size-4 text-saffron shrink-0" />
+                <span>Landline: +975 2 328999</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="size-4 text-saffron shrink-0" />
+                <span>Email: bhtf@bhtf.bt</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-border">
+            <a
+              href="https://wa.me/9752328999"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-white px-5 py-3 text-xs font-bold hover:opacity-90 transition shadow-card"
+            >
+              <MessageCircle className="size-4 fill-current" />
+              <span>Chat on WhatsApp (+975 2 328999)</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. SOVEREIGN & MULTILATERAL PARTNERS STRIP */}
+      <section className="container-page mt-16 sm:mt-24 mb-16">
         <div className="text-center space-y-2 mb-8">
-          <span className="text-[11px] font-mono font-bold tracking-widest text-emerald-800 uppercase block">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
             Multilateral & Sovereign Alliances
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary">
             Sovereign & Multilateral Founding Partners
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm font-light max-w-2xl mx-auto">
-            Established under Royal Charter in Geneva with initial endowment contributions from the Royal Government of Bhutan and international development partners.
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto">
+            Established under Royal Charter in Geneva with initial endowment contributions from the Royal Government of Bhutan and international partners.
           </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6 items-center">
-          {partners.map((p) => (
+          {PARTNERS.map((p) => (
             <div
               key={p.name}
-              className="group flex flex-col items-center justify-center p-3 rounded-2xl border border-slate-200/80 bg-slate-50/50 hover:bg-white hover:border-emerald-300 hover:shadow-md transition-all duration-200 text-center min-h-[110px]"
+              className="group flex flex-col items-center justify-center p-3 rounded-2xl border border-border bg-white hover:border-saffron hover:shadow-card transition-all duration-200 text-center min-h-[110px]"
             >
               <div className="h-12 w-full flex items-center justify-center mb-2 px-1">
                 <img
@@ -335,844 +874,16 @@ function PartnerLogosStrip() {
                   className="max-h-11 max-w-[90%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-200"
                 />
               </div>
-              <span className="text-[10px] font-bold text-slate-700 leading-tight line-clamp-1">
+              <span className="text-[10px] font-bold text-foreground leading-tight line-clamp-1">
                 {p.name}
               </span>
-              <span className="text-[9px] font-mono text-slate-400 mt-0.5 line-clamp-1">
-                {p.label}
+              <span className="text-[9px] text-muted-foreground mt-0.5 line-clamp-1">
+                {p.role}
               </span>
             </div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-function FieldDispatchesGrid() {
-  const dispatches = [
-    {
-      img: imgLhuntse,
-      dzongkhag: "Eastern Dzongkhag",
-      title: "Lhuentse Remote Gewog Primary Clinic",
-      desc: "Guaranteed year-round buffer stock of 438 essential pharmaceuticals and routine vaccines maintained at 2,400m altitude.",
-      code: "FIELD-OPS-LHUENTSE",
-    },
-    {
-      img: imgHaa,
-      dzongkhag: "Western Frontier",
-      title: "Haa District Hospital Cold Chain Storage",
-      desc: "Solar-backed continuous temperature monitoring safeguarding WHO-prequalified antigens through extreme winter freezes.",
-      code: "FIELD-OPS-HAA",
-    },
-    {
-      img: imgVaccine,
-      dzongkhag: "Kingdom-Wide Fleet",
-      title: "Universal Vaccine Cold-Chain Logistics",
-      desc: "Direct quarterly shipments guaranteeing uninterrupted potency across 205 primary health units and gewog dispensaries.",
-      code: "LOGISTICS-COLD-CHAIN",
-    },
-    {
-      img: imgMedicines,
-      dzongkhag: "Central Depot",
-      title: "National Essential Drugs Warehouse",
-      desc: "Mandatory 6-month national buffer shielding the Kingdom against international biopharmaceutical supply disruptions.",
-      code: "CENTRAL-DEPOT-PHUENTSHOLING",
-    },
-  ];
-
-  return (
-    <section className="py-16 sm:py-20 bg-[#FAF8F3] border-b border-slate-200/80 text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2">
-            <span className="text-[11px] font-mono font-bold tracking-widest text-emerald-800 uppercase block">
-              Field Operations & Verification
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
-              Primary Health Units in Every Gewog
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-light max-w-2xl">
-              Photographic dispatches directly from public healthcare clinics and cold-chain hubs financed by the BHTF endowment.
-            </p>
-          </div>
-          <Link
-            to="/our-impact"
-            className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-emerald-800 hover:text-emerald-900 shrink-0 hover:underline"
-          >
-            <span>Explore Nationwide Logistics</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {dispatches.map((item) => (
-            <div
-              key={item.title}
-              className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="aspect-[16/10] bg-slate-100 overflow-hidden relative">
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-md text-amber-300 text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full border border-amber-400/30">
-                    {item.dzongkhag}
-                  </div>
-                </div>
-                <div className="p-5 space-y-2">
-                  <h3 className="font-serif text-base font-bold text-slate-900 leading-snug group-hover:text-emerald-800 transition">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed font-light">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-              <div className="px-5 pb-5 pt-0">
-                <span className="text-[10px] font-mono text-slate-400 block border-t border-slate-100 pt-2">
-                  {item.code}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WindowFinancingHighlightCard() {
-  return (
-    <section className="py-14 sm:py-18 bg-white border-b border-slate-200/80">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl bg-gradient-to-br from-emerald-950 via-[#07241C] to-slate-950 p-8 sm:p-12 border border-emerald-500/30 shadow-2xl text-white overflow-hidden">
-          <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-            <div className="lg:col-span-2 space-y-4">
-              <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider">
-                <Sparkles className="h-3 w-3 text-amber-400" />
-                <span>Quarterly Requisition Mechanism</span>
-              </div>
-              <h2 className="font-serif text-2xl sm:text-4xl font-black text-white tracking-tight">
-                Window Financing Protocol for Primary Health Supplies
-              </h2>
-              <p className="text-slate-300 text-xs sm:text-sm font-light leading-relaxed max-w-2xl">
-                Statutory endowment earnings are released directly to the Department of Medical Services (DMS) via the Ministry of Finance across four quarterly disbursements (Q1–Q4). Every disbursement is conditioned upon verified physical inventory reconciliations and WHO batch certificates, shielding the Kingdom's primary healthcare from budget shocks.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                  <div className="font-mono text-base font-bold text-amber-300">Q1 Tranche</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Vaccine Procurement</div>
-                </div>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                  <div className="font-mono text-base font-bold text-amber-300">Q2 Tranche</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Essential Medicines</div>
-                </div>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                  <div className="font-mono text-base font-bold text-amber-300">Q3 Tranche</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Diagnostic Kits</div>
-                </div>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-                  <div className="font-mono text-base font-bold text-amber-300">Q4 Tranche</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Cold-Chain Maintenance</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
-              <Link
-                to="/resources/window-financing"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all active:scale-95 text-center"
-              >
-                <span>Examine Window Financing Protocol</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                to="/resources"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs border border-white/20 transition-all text-center"
-              >
-                <FileText className="h-4 w-4 text-emerald-300" />
-                <span>Download RAA Certified Audit Reports</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function TrusteesLeadershipShowcase() {
-  const trustees = [
-    {
-      name: "Lyonpo Tandin Wangchuk",
-      role: "Chairperson",
-      title: "Hon'ble Minister for Health, RGOB",
-      badge: "Cabinet Chair",
-      photo: trusteeLyonpoTandin,
-      duty: "Ministerial leadership, sovereign health financing & universal healthcare alignment (Cabinet Order C-3/4(4)/2024/35).",
-    },
-    {
-      name: "Lopen Tshering Wangchuk",
-      role: "Trustee (Monastic Representative)",
-      title: "Secretary, Monastic Council Zhung Dratshang",
-      badge: "Zhung Dratshang",
-      photo: trusteeLopenTshering,
-      duty: "Ethical fiduciary stewardship, compassionate healthcare & monastic community outreach.",
-    },
-    {
-      name: "Ms. Ugyen Choden",
-      role: "Trustee & AMC Chairperson",
-      title: "Deputy Governor, Royal Monetary Authority (RMA)",
-      badge: "AMC Chair / RMA",
-      photo: trusteeUgyenChoden,
-      duty: "Chairs the Asset Management Committee, overseeing capital preservation, asset allocation & liquidity.",
-    },
-    {
-      name: "Mr. Chencho T. Namgay",
-      role: "Trustee & Member AMC",
-      title: "CEO, National Pension & Provident Fund (NPPF)",
-      badge: "AMC Member / NPPF",
-      photo: trusteeChenchoNamgay,
-      duty: "Institutional fund management, portfolio risk controls & endowment growth strategies.",
-    },
-    {
-      name: "Mr. Norbu Dendup",
-      role: "Trustee & Member AMC",
-      title: "Director, Department of Treasury & Accounts, MoF",
-      badge: "AMC Member / MoF",
-      photo: trusteeNorbuDendup,
-      duty: "Public financial management, 1:1 RGOB matching fund releases & treasury coordination.",
-    },
-    {
-      name: "Mr. Pema Tshering",
-      role: "Trustee (Independent Director)",
-      title: "Former CEO, T Bank Ltd. (Financial Sector Specialist)",
-      badge: "Financial Specialist",
-      photo: trusteePemaTshering,
-      duty: "Independent fiduciary oversight, commercial banking expertise & governance audit.",
-    },
-    {
-      name: "Dr. Phub Tshering",
-      role: "Trustee (Clinical Specialist)",
-      title: "Medical Director, JDWNRH",
-      badge: "Clinical Specialist",
-      photo: trusteeDrPhub,
-      duty: "Therapeutic efficacy reviews, National Essential Drugs List & referral hospital alignment.",
-    },
-    {
-      name: "Dr. Gyambo Sithey, PhD",
-      role: "Director",
-      title: "BHTF Secretariat",
-      badge: "Director",
-      photo: trusteeDrGyambo,
-      duty: "Executive administration, board resolutions execution & nationwide procurement disbursements.",
-    },
-  ];
-
-  return (
-    <section id="trustees-showcase" className="py-16 sm:py-20 bg-white border-b border-slate-200/80 text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2">
-            <span className="text-[11px] font-mono font-bold tracking-widest text-emerald-800 uppercase block">
-              Sovereign Fiduciary Governance
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
-              High-Level Board of Trustees
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-light max-w-2xl">
-              Distinguished ministerial leadership, fiscal specialists, and monastic trustees safeguarding universal health security under Royal Charter mandate.
-            </p>
-          </div>
-          <Link
-            to="/about/trustees"
-            className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-emerald-800 hover:text-emerald-900 shrink-0 hover:underline"
-          >
-            <span>View All 8 Statutory Trustees & Governance Terms</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {trustees.map((t) => (
-            <div
-              key={t.name}
-              className="bg-[#FAF8F3] rounded-3xl p-5 border border-slate-200/90 hover:border-emerald-400 hover:shadow-xl hover:bg-white transition-all duration-300 flex flex-col justify-between space-y-4 group"
-            >
-              <div className="space-y-3.5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="relative h-20 w-20 rounded-2xl overflow-hidden border-2 border-emerald-600/40 shadow-md shrink-0 bg-slate-100 ring-2 ring-emerald-50">
-                    <img
-                      src={t.photo}
-                      alt={t.name}
-                      className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <span className={`text-[9px] font-extrabold px-2.5 py-0.5 rounded-full border shrink-0 ${
-                    t.badge === "Chairperson"
-                      ? "bg-amber-100 text-amber-900 border-amber-300"
-                      : "bg-emerald-50 text-emerald-800 border-emerald-200"
-                  }`}>
-                    {t.badge}
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
-                    {t.name}
-                  </h3>
-                  <div className="text-[11px] font-semibold text-emerald-800 mt-0.5">
-                    {t.role}
-                  </div>
-                  {t.title && (
-                    <div className="text-[10px] text-slate-500 font-medium mt-0.5 leading-tight">
-                      {t.title}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="pt-2.5 border-t border-slate-200/70 flex items-center justify-between text-[10px] text-slate-400 font-mono">
-                <span className="flex items-center gap-1">
-                  <ShieldCheck className="h-3 w-3 text-emerald-600" />
-                  <span>Statutory Fiduciary</span>
-                </span>
-                <Link
-                  to="/about/trustees"
-                  className="text-emerald-700 font-bold hover:underline"
-                >
-                  Profile →
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Index() {
-  const loaderData = Route.useLoaderData();
-  const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>(loaderData?.liveMetrics || []);
-  const [settings, setSettings] = useState<Record<string, string>>(loaderData?.settings || {});
-  const [liveNews, setLiveNews] = useState<NewsArticle[]>(loaderData?.liveNews || []);
-  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
-    loaderData?.customSections || null,
-  );
-
-  useEffect(() => {
-    getPublicPage({ data: { slug: "home" } })
-      .then((page) => {
-        if (page && page.status === "published") {
-          try {
-            const parsed = JSON.parse(page.sectionsJson);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              setCustomSections(parsed);
-            }
-          } catch {}
-        }
-      })
-      .catch(() => {});
-
-    getPublicImpactMetrics()
-      .then((res) => {
-        if (res && res.length > 0) setLiveMetrics(res);
-      })
-      .catch(() => {});
-
-    getPublicSettings()
-      .then((res) => {
-        if (res) setSettings(res);
-      })
-      .catch(() => {});
-
-    getPublicNews()
-      .then((res) => {
-        if (res && res.length > 0) setLiveNews(res.slice(0, 4));
-      })
-      .catch(() => {});
-  }, []);
-
-  // Render custom CMS sections if published by admin
-  const isCustomEdited = customSections && customSections.length > 0;
-  if (isCustomEdited) {
-    const hasHero = customSections[0]?.type === "hero";
-    return (
-      <div className={`flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900 min-h-screen ${hasHero ? "pt-0" : "pt-24 sm:pt-28"}`}>
-        {settings["announcement_banner_enabled"] === "true" && settings["announcement_banner"] && !hasHero && (
-          <div className="mx-auto max-w-7xl w-full px-4 mb-6">
-            <div className="bg-[#EAF6F5] text-[#0B4F42] text-xs font-semibold py-2.5 px-5 rounded-2xl text-center border border-[#00A896]/30 flex items-center justify-center gap-2.5 shadow-sm">
-              <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#D4A237]" />
-              <span>{settings["announcement_banner"]}</span>
-            </div>
-          </div>
-        )}
-        {/* Custom Page Renderer */}
-        <PageRenderer sections={customSections} interactive={false} pageSlug="home" />
-
-        {/* Founding Partners Strip */}
-        <div className="relative" data-bhtf-section="partners-strip">
-          <SectionEditBadge
-            label="Founding Partners"
-            pageSlug="home"
-            sectionId="partners-strip"
-            studioHref="/admin/page-editor?slug=home"
-          />
-          <PartnerLogosStrip />
-        </div>
-
-        {/* Rich Institutional Content Sections Enriched on Homepage */}
-        <div className="relative" data-bhtf-section="fiduciary-ledger">
-          <SectionEditBadge
-            label="Fiduciary Ledger"
-            pageSlug="home"
-            sectionId="fiduciary-ledger"
-            studioHref="/admin/metrics"
-            initialData={{
-              title: "Statutory Fiduciary & Operational Ledger",
-              subtitle: "Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship.",
-              badge: "Audit Certified",
-            }}
-          />
-          <RuledLedgerLayout
-            title="Statutory Fiduciary & Operational Ledger"
-            subtitle="Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship."
-            sourceLine="Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing, FY 2024–2025"
-            theme="parchment"
-            rows={fiduciaryLedgerRows}
-          />
-        </div>
-
-        <div className="relative" data-bhtf-section="commodities-formulary">
-          <SectionEditBadge
-            label="Vaccines & Commodities"
-            pageSlug="home"
-            sectionId="commodities-formulary"
-            studioHref="/admin/programs"
-            initialData={{
-              title: "Universal Vaccine & Primary Formulary Financing",
-              subtitle: "438 Modern + 110 Traditional Medicines Financed in Perpetuity",
-              badge: "Statutory Allocation",
-            }}
-          />
-          <TwoColumnNarrativeLayout
-            sectionTitle="Universal Vaccine & Primary Formulary Financing"
-            referenceCode="Statutory Mandate & Allocation"
-            paragraphs={[
-              "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines, 438 essential modern medicines, and 110 traditional formulations (gSo-ba Rig-pa) directly for every hospital and gewog clinic in the Kingdom.",
-              "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 4.8B remains untouched in perpetuity.",
-            ]}
-            actionLink={{
-              label: "Examine Financed Commodities & Formularies",
-              to: "/our-impact",
-            }}
-            theme="parchment"
-          />
-        </div>
-
-        {/* Field Operations & Cold Chain Dispatches */}
-        <div className="relative" data-bhtf-section="field-dispatches">
-          <SectionEditBadge
-            label="Field Dispatches"
-            pageSlug="home"
-            sectionId="field-dispatches"
-            studioHref="/admin/gallery"
-            initialData={{
-              title: "Primary Health Units in Every Gewog",
-              subtitle: "Photographic dispatches directly from public healthcare clinics and cold-chain hubs.",
-              badge: "Field Operations",
-            }}
-          />
-          <FieldDispatchesGrid />
-        </div>
-
-        <div className="relative" data-bhtf-section="dzongkhag-coverage">
-          <SectionEditBadge
-            label="20 Dzongkhags Allocation"
-            pageSlug="home"
-            sectionId="dzongkhag-coverage"
-            studioHref="/admin/metrics"
-            initialData={{
-              title: "Nationwide Coverage Across All 20 Dzongkhags",
-              subtitle: "Equitable primary healthcare commodity buffer maintained across all 205 remote gewogs.",
-              badge: "Kingdom-Wide Distribution",
-            }}
-          />
-          <RuledDzongkhagMatrix />
-        </div>
-
-        {/* Window Financing Highlight Showcase */}
-        <div className="relative" data-bhtf-section="window-financing">
-          <SectionEditBadge
-            label="Window Financing Protocol"
-            pageSlug="home"
-            sectionId="window-financing"
-            studioHref="/admin/page-editor?slug=window-financing"
-            initialData={{
-              title: "Autonomous Sovereign Window Financing Protocol",
-              subtitle: "Quarterly capital releases backed by inventory reconciliations and WHO/DRA compliance.",
-              badge: "Statutory Mechanism",
-              primaryCtaText: "Review Operational Protocol",
-              primaryCtaUrl: "/resources/window-financing",
-            }}
-          />
-          <WindowFinancingHighlightCard />
-        </div>
-
-        <div className="relative" data-bhtf-section="governance-triple-lock">
-          <SectionEditBadge
-            label="Governance & Triple-Lock"
-            pageSlug="home"
-            sectionId="governance-triple-lock"
-            studioHref="/admin/policies"
-            initialData={{
-              title: "Governance, Legal Structure & Statutory Triple-Lock",
-              subtitle: "Royal Charter mandate safeguarded by capital ring-fencing, RAA audits & committee oversight.",
-              badge: "Triple-Lock Guarantee",
-            }}
-          />
-          <TwoColumnNarrativeLayout
-            sectionTitle="Governance, Legal Structure & Statutory Triple-Lock"
-            referenceCode="Charter Compliance & Oversight"
-            paragraphs={[
-              "BHTF operates under a strict Royal Charter mandate governed by a high-level Board of Trustees chaired by the Hon'ble Minister for Health. The Fund's fiduciary integrity is safeguarded by an institutional triple-lock: statutory capital ring-fencing prohibiting principal invasion, mandatory annual audits by the Royal Audit Authority (RAA), and independent oversight by the Asset Management and Technical Advisory Committees.",
-              "Disbursements follow an uncompromising window financing mechanism. Annual procurement capital is released quarterly to the Department of Medical Services (DMS) via the Ministry of Finance only upon submission of physical inventory reconciliations and WHO/DRA batch compliance certificates.",
-            ]}
-            actionLink={{
-              label: "Review Board of Trustees & Governance Structure",
-              to: "/about/trustees",
-            }}
-            theme="forest"
-          />
-        </div>
-
-        {/* High-Level Board of Trustees Showcase with Authentic Portraits */}
-        <div className="relative" data-bhtf-section="trustees-roster">
-          <SectionEditBadge
-            label="Board of Trustees"
-            pageSlug="home"
-            sectionId="trustees-roster"
-            studioHref="/admin/trustees"
-            initialData={{
-              title: "High-Level Board of Trustees",
-              subtitle: "Distinguished ministerial leadership, fiscal specialists, and monastic trustees safeguarding universal health security.",
-              badge: "Board Leadership",
-            }}
-          />
-          <TrusteesLeadershipShowcase />
-        </div>
-
-        <div className="relative" data-bhtf-section="audit-publications">
-          <SectionEditBadge
-            label="Audit Register & Publications"
-            pageSlug="home"
-            sectionId="audit-publications"
-            studioHref="/admin/reports"
-            initialData={{
-              title: "Statutory Publications & Certified Audit Register",
-              subtitle: "Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny.",
-              badge: "Official Filings",
-            }}
-          />
-          <DocumentRegisterLayout
-            title="Statutory Publications & Certified Audit Register"
-            subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
-            documents={recentAuditDocuments}
-            theme="parchment"
-          />
-        </div>
-
-        <div className="relative" data-bhtf-section="tax-matching">
-          <SectionEditBadge
-            label="1:1 Match & DRC Tax Relief"
-            pageSlug="home"
-            sectionId="tax-matching"
-            studioHref="/admin/donations"
-            initialData={{
-              title: "1:1 Sovereign Match & DRC Tax Deductibility",
-              subtitle: "DRC Reg. No. E-73 • Tax Deductible with Dollar-for-Dollar Sovereign Match",
-              badge: "Royal Decree & Fiscal Law",
-              primaryCtaText: "Contribute to Corpus (1:1 Matched)",
-              primaryCtaUrl: "/donate",
-            }}
-          />
-          <TwoColumnNarrativeLayout
-            sectionTitle="1:1 Sovereign Match & DRC Tax Deductibility"
-            referenceCode="DRC Reg. No. E-73 • Circular DRC/TAX-A&L/DO-16/399"
-            paragraphs={[
-              "All contributions made by the nationals of Bhutan to the BHTF are tax deductible under Tax Exemption Registration No. E-73 of the Department of Revenue & Customs (DRC), Ministry of Finance. As per DRC Circular Ref. No. DRC/TAX-A&L/DO-16/399 (12 February 2025), donations are tax-exempt up to 5% of Assessed Net Profit for BIT/CIT payers, and up to 5% of Assessed Adjusted Gross Income for PIT payers.",
-              "Furthermore, the Royal Government of Bhutan commits a permanent dollar-for-dollar (1:1) sovereign match to every citizen and institutional Ngultrum contributed, instantly doubling the enduring health financing capacity of every contribution.",
-            ]}
-            actionLink={{
-              label: "Contribute to the Sovereign Health Endowment (1:1 Matched)",
-              to: "/donate",
-            }}
-            theme="parchment"
-          />
-        </div>
-        <HomepageNews articles={liveNews} />
-      </div>
-    );
-  }
-
-
-  return (
-    <div className="flex flex-col gap-0 bg-[#FAF8F3] text-slate-900 selection:bg-amber-200 selection:text-slate-900">
-      {/* 1. Sovereign Hero Section: Full 100dvh Unobstructed King Portrait + Scroll-Driven Translucent Card Elevation */}
-      <div className="relative" data-bhtf-section="home-hero">
-        <SectionEditBadge
-          label="Hero Banner"
-          pageSlug="home"
-          sectionId="home-hero"
-          studioHref="/admin/page-editor?slug=home"
-          initialData={{
-            title: "Healthy People. Stronger Bhutan.",
-            subtitle: "Sovereign healthcare financing guaranteeing uninterrupted essential medicines and universal vaccines for every citizen across all 20 Dzongkhags.",
-            badge: "Royal Charter Statutory Trust Fund",
-            primaryCtaText: "Contribute to Corpus (1:1 Matched)",
-            primaryCtaUrl: "/donate",
-            secondaryCtaText: "Explore Commodities Formulary",
-            secondaryCtaUrl: "/our-impact",
-            backgroundImage: settings["hero_background_image"],
-          }}
-        />
-        <HeroBlock section={{ id: "hero-main", type: "hero", order: 0, isVisible: true, backgroundImage: settings["hero_background_image"] }} />
-      </div>
-
-      {/* 2. Statement of Royal Mandate (Layout 1) */}
-      <div className="relative" data-bhtf-section="royal-mandate">
-        <SectionEditBadge
-          label="Royal Mandate Proclamation"
-          pageSlug="home"
-          sectionId="royal-mandate"
-          studioHref="/admin/page-editor?slug=home"
-          initialData={{
-            title: "The Royal Mandate of Sustainable Healthcare",
-            content: "No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come.",
-            badge: "Royal Charter Proclamation",
-            subtitle: "His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck",
-          }}
-        />
-        <StatementLayout
-          proclamation="No citizen of Bhutan should ever suffer or be deprived of life-saving medical care due to lack of essential drugs or vaccines. The Bhutan Health Trust Fund stands as a sacred trust of self-reliance for generations to come."
-          citation="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-          legalBasis="ROYAL CHARTER PROCLAMATION • 3 AUGUST 2000"
-          theme="parchment"
-        />
-      </div>
-
-      {/* Sovereign Founding & Multilateral Partners Strip */}
-      <div className="relative" data-bhtf-section="partners-strip">
-        <SectionEditBadge
-          label="Founding Partners"
-          pageSlug="home"
-          sectionId="partners-strip"
-          studioHref="/admin/page-editor?slug=home"
-        />
-        <PartnerLogosStrip />
-      </div>
-
-      {/* 3. Statutory Fiduciary & Operational Ledger (Layout 2) */}
-      <div className="relative" data-bhtf-section="fiduciary-ledger">
-        <SectionEditBadge
-          label="Fiduciary Ledger"
-          pageSlug="home"
-          sectionId="fiduciary-ledger"
-          studioHref="/admin/metrics"
-          initialData={{
-            title: "Statutory Fiduciary & Operational Ledger",
-            subtitle: "Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship.",
-            badge: "Audit Certified",
-          }}
-        />
-        <RuledLedgerLayout
-          title="Statutory Fiduciary & Operational Ledger"
-          subtitle="Key financial benchmarks and nationwide commodity commitments under permanent trust stewardship."
-          sourceLine="Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing, FY 2024–2025"
-          theme="parchment"
-          rows={fiduciaryLedgerRows}
-        />
-      </div>
-
-      {/* 4. What the Fund Finances (Layout 3: Two-Column Narrative) */}
-      <div className="relative" data-bhtf-section="commodities-formulary">
-        <SectionEditBadge
-          label="Vaccines & Commodities"
-          pageSlug="home"
-          sectionId="commodities-formulary"
-          studioHref="/admin/programs"
-          initialData={{
-            title: "Universal Vaccine & Primary Formulary Financing",
-            subtitle: "438 Modern + 110 Traditional Medicines Financed in Perpetuity",
-            badge: "Statutory Allocation",
-          }}
-        />
-        <TwoColumnNarrativeLayout
-          sectionTitle="Universal Vaccine & Primary Formulary Financing"
-          referenceCode="Statutory Mandate & Allocation"
-          paragraphs={[
-            "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines, 438 essential modern medicines, and 110 traditional formulations (gSo-ba Rig-pa) directly for every hospital and gewog clinic in the Kingdom.",
-            "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 4.8B remains untouched in perpetuity.",
-          ]}
-          actionLink={{
-            label: "Examine Financed Commodities & Formularies",
-            to: "/our-impact",
-          }}
-          theme="parchment"
-        />
-      </div>
-
-      {/* Field Operations & Cold Chain Dispatches */}
-      <div className="relative" data-bhtf-section="field-dispatches">
-        <SectionEditBadge
-          label="Field Dispatches"
-          pageSlug="home"
-          sectionId="field-dispatches"
-          studioHref="/admin/gallery"
-          initialData={{
-            title: "Primary Health Units in Every Gewog",
-            subtitle: "Photographic dispatches directly from public healthcare clinics and cold-chain hubs.",
-            badge: "Field Operations",
-          }}
-        />
-        <FieldDispatchesGrid />
-      </div>
-
-      {/* 5. Nationwide Coverage Across All 20 Dzongkhags (Ruled Regional Matrix) */}
-      <div className="relative" data-bhtf-section="dzongkhag-coverage">
-        <SectionEditBadge
-          label="20 Dzongkhags Allocation"
-          pageSlug="home"
-          sectionId="dzongkhag-coverage"
-          studioHref="/admin/metrics"
-          initialData={{
-            title: "Nationwide Coverage Across All 20 Dzongkhags",
-            subtitle: "Equitable primary healthcare commodity buffer maintained across all 205 remote gewogs.",
-            badge: "Kingdom-Wide Distribution",
-          }}
-        />
-        <RuledDzongkhagMatrix />
-      </div>
-
-      {/* Window Financing Highlight Showcase */}
-      <div className="relative" data-bhtf-section="window-financing">
-        <SectionEditBadge
-          label="Window Financing Protocol"
-          pageSlug="home"
-          sectionId="window-financing"
-          studioHref="/admin/page-editor?slug=window-financing"
-          initialData={{
-            title: "Autonomous Sovereign Window Financing Protocol",
-            subtitle: "Quarterly capital releases backed by inventory reconciliations and WHO/DRA compliance.",
-            badge: "Statutory Mechanism",
-            primaryCtaText: "Review Operational Protocol",
-            primaryCtaUrl: "/resources/window-financing",
-          }}
-        />
-        <WindowFinancingHighlightCard />
-      </div>
-
-      {/* 6. Governance, Legal Structure & Statutory Triple-Lock (Layout 3: Forest Theme) */}
-      <div className="relative" data-bhtf-section="governance-triple-lock">
-        <SectionEditBadge
-          label="Governance & Triple-Lock"
-          pageSlug="home"
-          sectionId="governance-triple-lock"
-          studioHref="/admin/policies"
-          initialData={{
-            title: "Governance, Legal Structure & Statutory Triple-Lock",
-            subtitle: "Royal Charter mandate safeguarded by capital ring-fencing, RAA audits & committee oversight.",
-            badge: "Triple-Lock Guarantee",
-          }}
-        />
-        <TwoColumnNarrativeLayout
-          sectionTitle="Governance, Legal Structure & Statutory Triple-Lock"
-          referenceCode="Charter Compliance & Oversight"
-          paragraphs={[
-            "BHTF operates under a strict Royal Charter mandate governed by a high-level Board of Trustees chaired by the Hon'ble Minister for Health. The Fund's fiduciary integrity is safeguarded by an institutional triple-lock: statutory capital ring-fencing prohibiting principal invasion, mandatory annual audits by the Royal Audit Authority (RAA), and independent oversight by the Asset Management and Technical Advisory Committees.",
-            "Disbursements follow an uncompromising window financing mechanism. Annual procurement capital is released quarterly to the Department of Medical Services (DMS) via the Ministry of Finance only upon submission of physical inventory reconciliations and WHO/DRA batch compliance certificates.",
-          ]}
-          actionLink={{
-            label: "Review Board of Trustees & Governance Structure",
-            to: "/about/trustees",
-          }}
-          theme="forest"
-        />
-      </div>
-
-      {/* High-Level Board of Trustees Showcase with Authentic Portraits */}
-      <div className="relative" data-bhtf-section="trustees-roster">
-        <SectionEditBadge
-          label="Board of Trustees"
-          pageSlug="home"
-          sectionId="trustees-roster"
-          studioHref="/admin/trustees"
-          initialData={{
-            title: "High-Level Board of Trustees",
-            subtitle: "Distinguished ministerial leadership, fiscal specialists, and monastic trustees safeguarding universal health security.",
-            badge: "Board Leadership",
-          }}
-        />
-        <TrusteesLeadershipShowcase />
-      </div>
-
-      {/* 7. Statutory Publications & Certified Audit Register (Layout 4) */}
-      <div className="relative" data-bhtf-section="audit-publications">
-        <SectionEditBadge
-          label="Audit Register & Publications"
-          pageSlug="home"
-          sectionId="audit-publications"
-          studioHref="/admin/reports"
-          initialData={{
-            title: "Statutory Publications & Certified Audit Register",
-            subtitle: "Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny.",
-            badge: "Official Filings",
-          }}
-        />
-        <DocumentRegisterLayout
-          title="Statutory Publications & Certified Audit Register"
-          subtitle="Unedited official filings, audited accounts, and statutory governance instruments available for public scrutiny."
-          documents={recentAuditDocuments}
-          theme="parchment"
-        />
-      </div>
-
-      {/* 8. Sovereign Matching & Permanent DRC Tax Exemption (Layout 3) */}
-      <div className="relative" data-bhtf-section="tax-matching">
-        <SectionEditBadge
-          label="1:1 Match & DRC Tax Relief"
-          pageSlug="home"
-          sectionId="tax-matching"
-          studioHref="/admin/donations"
-          initialData={{
-            title: "1:1 Sovereign Match & DRC Tax Deductibility",
-            subtitle: "DRC Reg. No. E-73 • Tax Deductible with Dollar-for-Dollar Sovereign Match",
-            badge: "Royal Decree & Fiscal Law",
-            primaryCtaText: "Contribute to Corpus (1:1 Matched)",
-            primaryCtaUrl: "/donate",
-          }}
-        />
-        <TwoColumnNarrativeLayout
-          sectionTitle="1:1 Sovereign Match & DRC Tax Deductibility"
-          referenceCode="DRC Reg. No. E-73 • Circular DRC/TAX-A&L/DO-16/399"
-          paragraphs={[
-            "All contributions made by the nationals of Bhutan to the BHTF are tax deductible under Tax Exemption Registration No. E-73 of the Department of Revenue & Customs (DRC), Ministry of Finance. As per DRC Circular Ref. No. DRC/TAX-A&L/DO-16/399 (12 February 2025), donations are tax-exempt up to 5% of Assessed Net Profit for BIT/CIT payers, and up to 5% of Assessed Adjusted Gross Income for PIT payers.",
-            "Furthermore, the Royal Government of Bhutan commits a permanent dollar-for-dollar (1:1) sovereign match to every citizen and institutional Ngultrum contributed, instantly doubling the enduring health financing capacity of every contribution.",
-          ]}
-          actionLink={{
-            label: "Contribute to the Sovereign Health Endowment (1:1 Matched)",
-            to: "/donate",
-          }}
-          theme="parchment"
-        />
-      </div>
-      <HomepageNews articles={liveNews} />
+      </section>
     </div>
   );
 }

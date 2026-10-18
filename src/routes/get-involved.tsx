@@ -445,8 +445,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                     {w.badge}
                   </span>
                 </div>
-                <h3 className="font-serif font-bold text-slate-900 text-base">{w.title}</h3>
-                <p className="font-serif italic font-bold text-xs text-emerald-800 leading-snug">
+                <h3 className="font-sans font-bold text-slate-900 text-base">{w.title}</h3>
+                <p className="font-sans italic font-bold text-xs text-emerald-800 leading-snug">
                   {w.caption}
                 </p>
                 <p className="text-xs text-slate-600 leading-relaxed font-light">{w.text}</p>
@@ -494,7 +494,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <div className="bg-[#FAF8F3] border border-amber-200/90 rounded-2xl p-4 sm:p-5 flex items-start gap-3 shadow-2xs">
               <Quote className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="font-serif text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
+                <p className="font-sans text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
                   "Your gift protects the health of every Bhutanese forever."
                 </p>
                 <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider block">
@@ -506,7 +506,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <div className="bg-[#EAF6F5] border border-[#00A896]/30 rounded-2xl p-4 sm:p-5 flex items-start gap-3 shadow-2xs">
               <Quote className="h-5 w-5 text-[#00A896] shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="font-serif text-xs sm:text-sm font-bold text-[#0B4F42] italic leading-snug">
+                <p className="font-sans text-xs sm:text-sm font-bold text-[#0B4F42] italic leading-snug">
                   "No Bhutanese should ever have to choose between their health and their
                   livelihood."
                 </p>
@@ -524,7 +524,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 <Sparkles className="h-4 w-4 text-emerald-600" />
               </div>
               <div>
-                <div className="font-serif text-sm font-bold text-slate-900">
+                <div className="font-sans text-sm font-bold text-slate-900">
                   “Give generously, save on tax.”
                 </div>
                 <p className="text-[11px] text-slate-600 font-light">
@@ -569,7 +569,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                       DRC Reg. No. E-73 Tax Deductible
                     </span>
                   </div>
-                  <p className="font-serif italic text-xs font-bold text-emerald-950 bg-white/90 border border-emerald-300 rounded-xl p-3 max-w-lg mx-auto leading-relaxed shadow-2xs">
+                  <p className="font-sans italic text-xs font-bold text-emerald-950 bg-white/90 border border-emerald-300 rounded-xl p-3 max-w-lg mx-auto leading-relaxed shadow-2xs">
                     “Thank you — doubled by the Royal Government's 1:1 match! Your gift is preserved
                     forever, and its interest helps supply vaccines and medicines across Bhutan.”
                   </p>
@@ -1033,7 +1033,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Dedicate Your Donation (Tribute)
                   </label>
-                  <span className="text-[11px] font-serif italic text-emerald-800 font-semibold">
+                  <span className="text-[11px] font-sans italic text-emerald-800 font-semibold">
                     “Turn a celebration into a lifesaving gift.”
                   </span>
                 </div>
@@ -1178,7 +1178,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-700" />
             <span>Section 7 • Institutional Financial Architecture</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+          <h2 className="font-sans text-3xl sm:text-4xl font-black text-slate-900">
             How BHTF Is Sustained
           </h2>
           <p className="text-slate-600 text-sm font-light leading-relaxed">
@@ -1196,7 +1196,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
               Stream 1 • Working Citizen Solidarity
             </span>
-            <h3 className="font-serif text-lg font-bold text-slate-900">1% Health Contribution</h3>
+            <h3 className="font-sans text-lg font-bold text-slate-900">1% Health Contribution</h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
               1% of the monthly gross salary of working employees across Bhutan — public and civil
               servants, as well as private and corporate employees. 100% of all health contributions
@@ -1212,7 +1212,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider block">
               Stream 2 • Capital Portfolio Yields
             </span>
-            <h3 className="font-serif text-lg font-bold text-slate-900">
+            <h3 className="font-sans text-lg font-bold text-slate-900">
               Endowment Investment Income
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
@@ -1230,7 +1230,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <span className="text-[10px] font-mono font-bold text-teal-800 uppercase tracking-wider block">
               Stream 3 • Philanthropic & Sovereign Match
             </span>
-            <h3 className="font-serif text-lg font-bold text-slate-900">
+            <h3 className="font-sans text-lg font-bold text-slate-900">
               1:1 RGOB Matched Donations
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-light">
@@ -1269,7 +1269,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 <Calendar className="h-3.5 w-3.5 text-amber-400" />
                 <span>Events: Coming Together for a Healthier Bhutan</span>
               </div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-black text-white mt-2">
+              <h2 className="font-sans text-2xl sm:text-3xl font-black text-white mt-2">
                 Collective Mobilisation for Sovereign Health
               </h2>
             </div>
@@ -1290,7 +1290,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   11 November 2026
                 </span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-white">
+              <h3 className="font-sans text-xl font-bold text-white">
                 Fundraising Events — 11 November 2026
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
@@ -1312,7 +1312,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   Strategic Alliance
                 </span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-white">
+              <h3 className="font-sans text-xl font-bold text-white">
                 RSEBL Fundraising Initiatives
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
@@ -1351,7 +1351,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
                 Official Banking Protocols
               </span>
-              <h3 className="font-serif text-2xl font-black text-slate-900">
+              <h3 className="font-sans text-2xl font-black text-slate-900">
                 Direct Banking & Offshore Remittance Channels
               </h3>
             </div>
@@ -1364,7 +1364,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <div className="bg-[#FAF8F3] border border-amber-200/80 rounded-2xl p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Building className="h-4 w-4 text-emerald-800" />
-                <h4 className="font-serif text-sm font-bold text-slate-900">
+                <h4 className="font-sans text-sm font-bold text-slate-900">
                   Domestic Contributions (Within Bhutan)
                 </h4>
               </div>
@@ -1395,7 +1395,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             <div className="bg-[#FAF8F3] border border-emerald-200/80 rounded-2xl p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-emerald-800" />
-                <h4 className="font-serif text-sm font-bold text-slate-900">
+                <h4 className="font-sans text-sm font-bold text-slate-900">
                   International & Diaspora Remittance (USD Wire)
                 </h4>
               </div>

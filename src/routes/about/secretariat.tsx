@@ -22,8 +22,9 @@ import {
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
 import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
-import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
+import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/secretariat")({
   loader: async () => {
@@ -72,41 +73,7 @@ function SecretariatPage() {
         ]}
       />
 
-      {/* Sub-Navigation Pill Bar */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
-        <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-lg flex items-center justify-start sm:justify-start gap-2 text-xs font-bold overflow-x-auto no-scrollbar sm:flex-wrap">
-          <Link
-            to="/about/organization"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
-          >
-            Our Organization & Organogram
-          </Link>
-          <Link
-            to="/about/trustees"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
-          >
-            Board of Trustees
-          </Link>
-          <Link
-            to="/about/committees"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition shrink-0 whitespace-nowrap"
-          >
-            Asset Management Committee
-          </Link>
-          <Link
-            to="/about/secretariat"
-            className="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-xs shrink-0 whitespace-nowrap"
-          >
-            Secretariat & Staff
-          </Link>
-          <Link
-            to="/our-story"
-            className="px-4 py-2 rounded-xl text-slate-700 hover:text-amber-700 hover:bg-amber-50 transition shrink-0 whitespace-nowrap"
-          >
-            Our Story & History →
-          </Link>
-        </div>
-      </section>
+
 
       {/* Executive Overview Banner & Link to Organogram under Our Organization */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-overview">
@@ -313,6 +280,9 @@ function SecretariatPage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Bottom Navigation Capsule for About Sub-Pages */}
+      <AboutBottomCapsule />
     </div>
   );
 }
