@@ -268,54 +268,38 @@ const PARTNERS = [
 function HomePage() {
   return (
     <div className="bg-background text-foreground">
-      {/* 1. HERO SECTION (Widescreen King Portrait on desktop, dedicated royal card on mobile) */}
-      <section className="relative overflow-hidden min-h-[520px] lg:min-h-[640px] xl:min-h-[680px] flex items-center border-b border-border bg-[#F5F2EB] md:bg-[#BFA26F]">
-        {/* Full Seamless Portrait Background with His Majesty clearly on the right on desktop */}
+      {/* 1. HERO SECTION (Continuous Widescreen King Portrait Background on all devices) */}
+      <section className="relative overflow-hidden min-h-[540px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px] flex items-center border-b border-border bg-[#BFA26F]">
+        {/* Full Seamless Portrait Background with His Majesty on the right on all devices */}
         <div
-          className="hidden md:block absolute inset-0 bg-cover bg-no-repeat bg-right lg:bg-center"
+          className="absolute inset-0 bg-cover bg-no-repeat bg-[center_right] sm:bg-right lg:bg-center"
           style={{ backgroundImage: `url(${kingHeroWidescreen})` }}
         />
 
-        <div className="container-page py-10 sm:py-12 lg:py-20 relative z-10 w-full">
-          {/* Left Column: Vision, Royal Mandate & Shorter Transparent Quote */}
-          <div className="max-w-2xl lg:max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/80 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-4 sm:mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
+        {/* Subtle executive light scrim overlay ensuring 100% crisp typography on mobile & desktop without washing out the photo */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/95 via-[#FAF8F5]/85 to-transparent sm:from-[#FAF8F5]/90 sm:via-[#FAF8F5]/40 sm:to-transparent" />
+
+        <div className="container-page py-10 sm:py-14 lg:py-20 relative z-10 w-full">
+          {/* Left Column: Vision, Royal Mandate & Clean Frosted Quote */}
+          <div className="max-w-xl lg:max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/85 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-4 sm:mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
               <Sparkles className="size-3.5 text-amber-400" />
               <span>1:1 Sovereign Match</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
-              Building a<br className="hidden sm:inline" /> Healthier Bhutan
+              Building a<br />Healthier Bhutan
             </h1>
 
             <div className="h-1.5 w-20 sm:w-24 bg-amber-500 rounded-full my-4 sm:my-5" />
 
-            <p className="text-sm sm:text-base lg:text-lg text-slate-800 sm:text-slate-900/90 font-medium leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-900 font-medium leading-relaxed max-w-lg">
               The Bhutan Health Trust Fund sustainably finances essential medicines and vaccines to strengthen primary
               healthcare and protect the well-being of every Bhutanese citizen.
             </p>
 
-            {/* Mobile-only King portrait banner so His Majesty is prominently visible and respectful, with ZERO text overlapping his face */}
-            <div className="md:hidden my-5 rounded-2xl overflow-hidden border border-amber-600/30 shadow-md bg-white">
-              <div className="aspect-[16/11] w-full overflow-hidden bg-slate-100">
-                <img
-                  src={kingHeroWidescreen}
-                  alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-                  className="w-full h-full object-cover object-[75%_center]"
-                />
-              </div>
-              <div className="p-3.5 bg-white border-t border-slate-100 text-center space-y-1">
-                <p className="text-xs font-bold text-slate-900 italic leading-snug">
-                  “No Bhutanese should ever have to choose between their health and their livelihood.”
-                </p>
-                <div className="text-[11px] font-semibold text-emerald-800">
-                  HM the Fourth Druk Gyalpo Jigme Singye Wangchuck
-                </div>
-              </div>
-            </div>
-
-            {/* Desktop Shorter, Transparent Frosted Glass Royal Vision Callout */}
-            <div className="hidden md:block my-5 p-3 sm:p-3.5 rounded-2xl bg-white/75 backdrop-blur-md border border-white/80 shadow-xs space-y-1.5 max-w-lg">
+            {/* Transparent Frosted Glass Royal Vision Callout */}
+            <div className="my-5 p-3 sm:p-3.5 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-xs space-y-1.5 max-w-lg">
               <p className="text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
                 “No Bhutanese should ever have to choose between their health and their livelihood.”
               </p>
@@ -332,7 +316,7 @@ function HomePage() {
             <div className="mt-6 sm:mt-7 flex flex-wrap gap-3 items-center">
               <Link
                 to="/donate"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-6 py-3 text-sm font-bold text-white shadow-elevated transition active:scale-95 flex-1 sm:flex-none"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-6 py-3 text-sm font-bold text-white shadow-elevated transition active:scale-95 whitespace-nowrap"
               >
                 <Heart className="size-4 fill-current text-amber-300" />
                 <span>Donate (1:1 Sovereign Match)</span>
@@ -340,7 +324,7 @@ function HomePage() {
 
               <Link
                 to="/our-impact"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white hover:bg-slate-50 border border-slate-300 px-6 py-3 text-sm font-bold text-slate-900 shadow-xs transition active:scale-95 flex-1 sm:flex-none"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white/90 hover:bg-white border border-slate-300 px-6 py-3 text-sm font-bold text-slate-900 shadow-xs transition active:scale-95 whitespace-nowrap"
               >
                 <span>Explore Our Impact</span>
                 <ArrowRight className="size-4 text-emerald-800" />
@@ -351,7 +335,7 @@ function HomePage() {
       </section>
 
       {/* 2. QUICK LINKS PILL CARDS */}
-      <section className="container-page -mt-4 sm:-mt-8 relative z-20">
+      <section className="container-page mt-4 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-2xl shadow-elevated p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 border border-border">
           {QUICK_LINKS.map((q) => (
             <Link
