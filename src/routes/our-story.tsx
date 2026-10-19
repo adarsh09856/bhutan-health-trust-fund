@@ -25,6 +25,7 @@ import lyonpoSangayPhoto from "@/assets/bhtf/lyonpo_sangay_ngedup.png";
 import historyKing from "@/assets/reference/history_fourth_king.webp";
 import historyCharter from "@/assets/reference/history_charter_1992.webp";
 import historyMou from "@/assets/reference/history_mou.webp";
+import historyEndowment from "@/assets/reference/history_endowment.webp";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/our-story")({

@@ -19,6 +19,7 @@ import {
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
+import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import { PortfolioAllocationCharts } from "@/components/portfolio-allocation-chart";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
