@@ -70,7 +70,7 @@ const QUICK_LINKS = [
     icon: Syringe,
     label: "Vaccine Security",
     sub: "100% Childhood & Flu",
-    color: "bg-soft-orange text-saffron",
+    color: "bg-amber-50 text-amber-800 border border-amber-200/60",
     to: "/our-work",
   },
   {
@@ -268,35 +268,54 @@ const PARTNERS = [
 function HomePage() {
   return (
     <div className="bg-background text-foreground">
-      {/* 1. HERO SECTION (Widescreen King Portrait with His Majesty on the right, extended natural wall on left, clear & vivid with zero haze) */}
-      <section className="relative overflow-hidden min-h-[560px] lg:min-h-[640px] xl:min-h-[680px] flex items-center border-b border-border bg-[#BFA26F]">
-        {/* Full Seamless Portrait Background with His Majesty clearly on the right and extended background on the left */}
+      {/* 1. HERO SECTION (Widescreen King Portrait on desktop, dedicated royal card on mobile) */}
+      <section className="relative overflow-hidden min-h-[520px] lg:min-h-[640px] xl:min-h-[680px] flex items-center border-b border-border bg-[#F5F2EB] md:bg-[#BFA26F]">
+        {/* Full Seamless Portrait Background with His Majesty clearly on the right on desktop */}
         <div
-          className="absolute inset-0 bg-cover bg-no-repeat bg-right lg:bg-center"
+          className="hidden md:block absolute inset-0 bg-cover bg-no-repeat bg-right lg:bg-center"
           style={{ backgroundImage: `url(${kingHeroWidescreen})` }}
         />
 
-        <div className="container-page py-12 lg:py-20 relative z-10 w-full">
+        <div className="container-page py-10 sm:py-12 lg:py-20 relative z-10 w-full">
           {/* Left Column: Vision, Royal Mandate & Shorter Transparent Quote */}
           <div className="max-w-2xl lg:max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/80 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/80 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-4 sm:mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
               <Sparkles className="size-3.5 text-amber-400" />
-              <span>1:1</span>
+              <span>1:1 Sovereign Match</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.08] tracking-tight">
-              Building a<br />Healthier Bhutan
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
+              Building a<br className="hidden sm:inline" /> Healthier Bhutan
             </h1>
 
-            <div className="h-1.5 w-24 bg-amber-500 rounded-full my-5" />
+            <div className="h-1.5 w-20 sm:w-24 bg-amber-500 rounded-full my-4 sm:my-5" />
 
-            <p className="text-base sm:text-lg text-slate-900/90 font-medium leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-800 sm:text-slate-900/90 font-medium leading-relaxed">
               The Bhutan Health Trust Fund sustainably finances essential medicines and vaccines to strengthen primary
               healthcare and protect the well-being of every Bhutanese citizen.
             </p>
 
-            {/* Shorter, Transparent Frosted Glass Royal Vision Callout (User requested: "4th make shoter and the transpernt ok") */}
-            <div className="my-5 p-3 sm:p-3.5 rounded-2xl bg-white/75 backdrop-blur-md border border-white/80 shadow-xs space-y-1.5 max-w-lg">
+            {/* Mobile-only King portrait banner so His Majesty is prominently visible and respectful, with ZERO text overlapping his face */}
+            <div className="md:hidden my-5 rounded-2xl overflow-hidden border border-amber-600/30 shadow-md bg-white">
+              <div className="aspect-[16/11] w-full overflow-hidden bg-slate-100">
+                <img
+                  src={kingHeroWidescreen}
+                  alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
+                  className="w-full h-full object-cover object-[75%_center]"
+                />
+              </div>
+              <div className="p-3.5 bg-white border-t border-slate-100 text-center space-y-1">
+                <p className="text-xs font-bold text-slate-900 italic leading-snug">
+                  “No Bhutanese should ever have to choose between their health and their livelihood.”
+                </p>
+                <div className="text-[11px] font-semibold text-emerald-800">
+                  HM the Fourth Druk Gyalpo Jigme Singye Wangchuck
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Shorter, Transparent Frosted Glass Royal Vision Callout */}
+            <div className="hidden md:block my-5 p-3 sm:p-3.5 rounded-2xl bg-white/75 backdrop-blur-md border border-white/80 shadow-xs space-y-1.5 max-w-lg">
               <p className="text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
                 “No Bhutanese should ever have to choose between their health and their livelihood.”
               </p>
@@ -309,30 +328,22 @@ function HomePage() {
               </div>
             </div>
 
-            {/* Action CTA Pills: User requested "only donate" */}
-            <div className="mt-7 flex flex-wrap gap-3 items-center">
-              <Link
-                to="/our-impact"
-                className="inline-flex items-center gap-2 rounded-full bg-saffron px-6 py-3 text-sm font-bold text-saffron-foreground shadow-elevated hover:opacity-90 transition active:scale-95"
-              >
-                <span>Explore Our Impact</span>
-                <ArrowRight className="size-4" />
-              </Link>
-
-              <Link
-                to="/about/organization"
-                className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-slate-300 px-6 py-3 text-sm font-semibold hover:bg-white transition text-slate-900 shadow-xs"
-              >
-                <span>About BHTF</span>
-                <Play className="size-3.5 fill-current text-primary" />
-              </Link>
-
+            {/* Action CTA Pills: Clean, responsive layout */}
+            <div className="mt-6 sm:mt-7 flex flex-wrap gap-3 items-center">
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-card hover:bg-primary/90 transition"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-6 py-3 text-sm font-bold text-white shadow-elevated transition active:scale-95 flex-1 sm:flex-none"
               >
-                <Heart className="size-3.5 fill-current text-saffron" />
-                <span>Donate</span>
+                <Heart className="size-4 fill-current text-amber-300" />
+                <span>Donate (1:1 Sovereign Match)</span>
+              </Link>
+
+              <Link
+                to="/our-impact"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white hover:bg-slate-50 border border-slate-300 px-6 py-3 text-sm font-bold text-slate-900 shadow-xs transition active:scale-95 flex-1 sm:flex-none"
+              >
+                <span>Explore Our Impact</span>
+                <ArrowRight className="size-4 text-emerald-800" />
               </Link>
             </div>
           </div>
@@ -363,7 +374,7 @@ function HomePage() {
         <div className="bg-gradient-stats rounded-3xl p-6 sm:p-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-white shadow-elevated">
           {STATS.map((s) => (
             <div key={s.label} className="flex items-center gap-3">
-              <div className="size-12 rounded-full bg-saffron/20 grid place-items-center text-saffron shrink-0">
+              <div className="size-12 rounded-full bg-white/10 grid place-items-center text-amber-300 shrink-0 border border-white/15">
                 <s.icon className="size-6" />
               </div>
               <div>
@@ -383,12 +394,12 @@ function HomePage() {
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
               <div>
-                <span className="text-[10px] font-mono font-bold text-saffron uppercase tracking-wider block">
+                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
                   Media & Dispatches
                 </span>
                 <h3 className="font-bold text-lg text-primary">Latest News</h3>
               </div>
-              <Link to="/news" className="text-xs text-saffron font-bold inline-flex items-center gap-1 hover:underline">
+              <Link to="/news" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
                 View All <ArrowRight className="size-3" />
               </Link>
             </div>
@@ -400,7 +411,7 @@ function HomePage() {
                     <img src={n.img} alt={n.title} className="size-full object-cover group-hover:scale-105 transition" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold leading-snug group-hover:text-saffron transition line-clamp-2">
+                    <div className="text-xs font-bold leading-snug group-hover:text-emerald-800 transition line-clamp-2">
                       {n.title}
                     </div>
                     <div className="text-[10px] text-muted-foreground mt-1.5 flex items-center gap-1.5 font-medium">
@@ -420,12 +431,12 @@ function HomePage() {
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
               <div>
-                <span className="text-[10px] font-mono font-bold text-saffron uppercase tracking-wider block">
+                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
                   Official Calendar
                 </span>
                 <h3 className="font-bold text-lg text-primary">Upcoming Events</h3>
               </div>
-              <Link to="/news" className="text-xs text-saffron font-bold inline-flex items-center gap-1 hover:underline">
+              <Link to="/news" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
                 Calendar <ArrowRight className="size-3" />
               </Link>
             </div>
@@ -433,7 +444,7 @@ function HomePage() {
             <div className="space-y-5">
               {UPCOMING_EVENTS.map((e) => (
                 <div key={e.title} className="flex gap-3.5 items-start">
-                  <div className="rounded-2xl bg-soft-orange text-saffron grid place-items-center w-14 h-14 shrink-0 leading-none border border-saffron/20 shadow-2xs">
+                  <div className="rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center w-14 h-14 shrink-0 leading-none border border-emerald-200/80 shadow-2xs">
                     <div className="text-center">
                       <div className="text-[10px] font-black uppercase tracking-wider">{e.month}</div>
                       <div className="text-xl font-black mt-0.5">{e.day}</div>
@@ -442,7 +453,7 @@ function HomePage() {
                   <div>
                     <div className="text-sm font-bold text-foreground leading-snug">{e.title}</div>
                     <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{e.desc}</p>
-                    <div className="text-[11px] text-saffron font-semibold mt-1.5 flex items-center gap-1">
+                    <div className="text-[11px] text-emerald-700 font-semibold mt-1.5 flex items-center gap-1">
                       <span>📍 {e.place}</span>
                     </div>
                   </div>
@@ -461,12 +472,12 @@ function HomePage() {
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
               <div>
-                <span className="text-[10px] font-mono font-bold text-saffron uppercase tracking-wider block">
+                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
                   Statutory Register
                 </span>
                 <h3 className="font-bold text-lg text-primary">Certified Publications</h3>
               </div>
-              <Link to="/reports" className="text-xs text-saffron font-bold inline-flex items-center gap-1 hover:underline">
+              <Link to="/reports" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
                 Audit Vault <ArrowRight className="size-3" />
               </Link>
             </div>
@@ -478,10 +489,10 @@ function HomePage() {
                 { title: "Traditional Medicine Formulary (gSo-ba Rig-pa)", ref: "DTMS-BHTF-V2", type: "110 Remedies & Therapies" },
                 { title: "Window Financing Operational Manual", ref: "SOP-WF-2024", type: "Quarterly DMS Protocols" },
               ].map((pub) => (
-                <li key={pub.title} className="p-2.5 rounded-xl border border-border hover:border-saffron/40 hover:bg-slate-50 transition group">
+                <li key={pub.title} className="p-2.5 rounded-xl border border-border hover:border-emerald-400 hover:bg-slate-50 transition group">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-start gap-2.5">
-                      <FileText className="size-4 text-primary shrink-0 mt-0.5 group-hover:text-saffron transition" />
+                      <FileText className="size-4 text-primary shrink-0 mt-0.5 group-hover:text-emerald-700 transition" />
                       <div>
                         <div className="text-xs font-bold text-foreground leading-snug group-hover:text-primary">
                           {pub.title}
@@ -489,7 +500,7 @@ function HomePage() {
                         <div className="text-[10px] text-muted-foreground mt-0.5">{pub.ref} • {pub.type}</div>
                       </div>
                     </div>
-                    <Download className="size-3.5 text-muted-foreground group-hover:text-saffron shrink-0" />
+                    <Download className="size-3.5 text-muted-foreground group-hover:text-emerald-700 shrink-0" />
                   </div>
                 </li>
               ))}
@@ -685,35 +696,35 @@ function HomePage() {
 
       {/* 8. WHY SUPPORT BHTF + WHATSAPP INSTANT CHAT */}
       <section className="container-page mt-16 sm:mt-20 grid lg:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
-        <div className="rounded-3xl bg-soft-orange p-6 sm:p-10 grid sm:grid-cols-2 gap-8 items-center border border-saffron/20 shadow-card">
+        <div className="rounded-3xl bg-gradient-to-br from-[#0B4F42] to-[#062822] text-white p-6 sm:p-10 grid sm:grid-cols-2 gap-8 items-center border border-emerald-600/30 shadow-card">
           <div className="space-y-4">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-300">
               Public Support & Sovereign 1:1 Match
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-primary">Why Support BHTF?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white">Why Support BHTF?</h3>
+            <p className="text-sm text-white/80 leading-relaxed font-light">
               Every Ngultrum you contribute is permanently matched 1:1 by the Royal Government of Bhutan and tax deductible under DRC Registration No. E-73.
             </p>
             <div className="space-y-2 pt-2">
-              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
-                <CheckCircle2 className="size-4 text-saffron shrink-0" />
+              <div className="flex items-center gap-2 text-xs font-medium text-white/90">
+                <CheckCircle2 className="size-4 text-amber-300 shrink-0" />
                 <span>Zero administrative deduction from public donations</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
-                <CheckCircle2 className="size-4 text-saffron shrink-0" />
+              <div className="flex items-center gap-2 text-xs font-medium text-white/90">
+                <CheckCircle2 className="size-4 text-amber-300 shrink-0" />
                 <span>Ring-fenced principal invested strictly under Royal Charter</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
-                <CheckCircle2 className="size-4 text-saffron shrink-0" />
+              <div className="flex items-center gap-2 text-xs font-medium text-white/90">
+                <CheckCircle2 className="size-4 text-amber-300 shrink-0" />
                 <span>Immediate tax deduction certificate issued</span>
               </div>
             </div>
             <div className="pt-2">
               <Link
                 to="/donate"
-                className="inline-flex items-center gap-2 rounded-full bg-saffron px-6 py-3 text-sm font-bold text-saffron-foreground shadow-elevated hover:opacity-90 transition"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-emerald-950 px-6 py-3 text-sm font-bold shadow-elevated hover:bg-emerald-50 transition"
               >
-                <Heart className="size-4 fill-current" />
+                <Heart className="size-4 fill-current text-rose-600" />
                 <span>Make a Matched Contribution</span>
               </Link>
             </div>

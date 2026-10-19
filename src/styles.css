@@ -59,7 +59,7 @@
   --color-sky-tint: #E3F1F6;
   --color-aquamarine: #00A896;
   --color-deep-teal: #0B4F42;
-  --color-gold: #f59e0b;
+  --color-gold: #C59B27;
   --color-dark-green: #061713;
 
   /* Sovereign Institutional Palette Tokens */
@@ -86,13 +86,13 @@
   --primary: oklch(0.35 0.09 175);
   --primary-foreground: oklch(0.99 0 0);
 
-  /* Saffron Gold CTA */
-  --saffron: oklch(0.74 0.18 65);
+  /* Sovereign Royal Gold CTA (Refined from loud orange) */
+  --saffron: oklch(0.68 0.12 78);
   --saffron-foreground: oklch(1 0 0);
 
   --deep-blue: oklch(0.24 0.08 175);
   --soft-blue: oklch(0.96 0.03 175);
-  --soft-orange: oklch(0.97 0.04 65);
+  --soft-orange: oklch(0.985 0.01 80);
   --soft-green: oklch(0.96 0.05 155);
   --soft-red: oklch(0.96 0.04 25);
   --soft-purple: oklch(0.96 0.04 290);
@@ -101,13 +101,13 @@
   --secondary-foreground: oklch(0.25 0.08 175);
   --muted: oklch(0.97 0.01 175);
   --muted-foreground: oklch(0.48 0.03 200);
-  --accent: oklch(0.74 0.18 65);
+  --accent: oklch(0.68 0.12 78);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.92 0.01 175);
   --input: oklch(0.92 0.01 175);
-  --ring: oklch(0.74 0.18 65);
+  --ring: oklch(0.35 0.09 175);
 
   --gradient-hero: linear-gradient(135deg, #FAF8F5 0%, #F0F7F4 100%);
   --gradient-stats: linear-gradient(135deg, #0B4F42 0%, #07382F 100%);

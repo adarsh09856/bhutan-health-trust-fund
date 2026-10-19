@@ -199,11 +199,11 @@ export function SiteFooter() {
               <span>Lower Motithang, Thori Lam, Thimphu, Bhutan</span>
             </li>
             <li className="flex items-center gap-2">
-              <Phone className="size-4 text-saffron shrink-0" />
+              <Phone className="size-4 text-emerald-400 shrink-0" />
               <span>+975 2 328999</span>
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="size-4 text-saffron shrink-0" />
+              <Mail className="size-4 text-emerald-400 shrink-0" />
               <span>bhtf@bhtf.bt</span>
             </li>
           </ul>
@@ -216,13 +216,13 @@ export function SiteFooter() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email..."
-                className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-saffron flex-1"
+                className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-400 flex-1"
                 required
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-saffron text-saffron-foreground px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-90 transition shrink-0"
+                className="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-emerald-500 transition shrink-0"
               >
                 {loading ? <Loader2 className="size-3.5 animate-spin" /> : <Send className="size-3.5" />}
               </button>
@@ -236,7 +236,7 @@ export function SiteFooter() {
                 href="https://facebook.com/bhutanhealthtrustfund"
                 target="_blank"
                 rel="noreferrer"
-                className="grid place-items-center size-8 rounded-full bg-white/10 hover:bg-saffron hover:text-saffron-foreground transition text-white/80"
+                className="grid place-items-center size-8 rounded-full bg-white/10 hover:bg-emerald-600 hover:text-white transition text-white/80"
               >
                 <Icon className="size-3.5" />
               </a>
@@ -250,13 +250,13 @@ export function SiteFooter() {
         <div className="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/60">
           <p>© {new Date().getFullYear()} Bhutan Health Trust Fund. Royal Charter Statutory Body. All Rights Reserved.</p>
           <div className="flex gap-5 text-xs">
-            <Link to="/policies" className="hover:text-saffron transition">
+            <Link to="/policies" className="hover:text-emerald-300 transition">
               Statutory Policies
             </Link>
-            <Link to="/reports" className="hover:text-saffron transition">
+            <Link to="/reports" className="hover:text-emerald-300 transition">
               Audits
             </Link>
-            <Link to="/contact" className="hover:text-saffron transition">
+            <Link to="/contact" className="hover:text-emerald-300 transition">
               Contact
             </Link>
           </div>

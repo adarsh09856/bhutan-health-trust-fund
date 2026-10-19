@@ -75,42 +75,7 @@ function SecretariatPage() {
 
 
 
-      {/* Executive Overview Banner & Link to Organogram under Our Organization */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-overview">
-        <SectionEditBadge
-          label="Secretariat Operations"
-          pageSlug="about-secretariat"
-          sectionId="secretariat-overview"
-          studioHref="/admin/page-editor?slug=about-secretariat"
-          initialData={{
-            title: "Executive Arm of the Health Trust Fund",
-            subtitle: "The Secretariat manages daily fiduciary investments, international vaccine procurement, and healthcare distributions under Board governance.",
-            badge: "Operational Secretariat",
-          }}
-        />
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
-              Operational Secretariat
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
-              Executive Arm of the Health Trust Fund
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-light leading-relaxed">
-              Operating under the direct supervision of the Director and the Board of Trustees, the Secretariat executes statutory health endowment investments, nationwide commodity procurement, and cold-chain logistics across all 20 Dzongkhags.
-            </p>
-          </div>
-          <Link
-            to="/about/organization"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition text-xs font-bold shrink-0 shadow-xs"
-          >
-            <span>View Approved Organogram Tree</span>
-            <ArrowRight className="h-4 w-4 text-amber-400" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Secretariat Staff Profiles */}
+      {/* Secretariat Staff Profiles in Clean NPPF Institutional Style */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-roster">
         <SectionEditBadge
           label="Secretariat Personnel Roster"
@@ -130,109 +95,144 @@ function SecretariatPage() {
           <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
             Secretariat Directorate & Officers
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-3 font-light">
+          <p className="text-slate-600 text-xs sm:text-sm mt-2.5 font-light">
             Dedicated professionals managing fiduciary operations, international commodity procurement, and statutory compliance.
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
-          {/* 1. Director Card */}
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
-                <img
-                  src={drGyamboDirector}
-                  alt="Dr. Gyambo Sithey, PhD"
-                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-3.5 space-y-1">
-                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full inline-block">
-                  Directorate
-                </span>
-                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Dr. Gyambo Sithey, PhD</h3>
-                <p className="text-[11px] font-semibold text-teal-700">Director</p>
-              </div>
+        {/* 1. Director Featured Leadership Card (NPPF Core Management Pattern) */}
+        <div className="max-w-md mx-auto mb-10 sm:mb-12">
+          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md transition text-center flex flex-col items-center">
+            <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/90 mb-4 shadow-2xs">
+              <img
+                src={drGyamboDirector}
+                alt="Dr. Gyambo Sithey, PhD"
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
             </div>
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+              Dr. Gyambo Sithey, PhD
+            </h3>
+            <p className="text-xs sm:text-sm font-semibold text-emerald-800 mt-1">
+              Director, Secretariat
+            </p>
+            <p className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+              Executive Head of Operations & Member Secretary to the Board
+            </p>
+            <span className="inline-block text-[10px] font-mono font-bold text-emerald-900 bg-emerald-50 border border-emerald-200 px-3 py-0.5 rounded-full mt-3">
+              Directorate Leadership
+            </span>
           </div>
+        </div>
 
-          {/* 2. Senior Program Officer Card */}
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
+        {/* 2. Key Officers & Staff (NPPF Senior Management Grid Pattern) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Senior Program Officer */}
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
+            <div className="flex flex-col items-center w-full">
+              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
                   src={staffFinance}
                   alt="Ms. Tshering Choden"
-                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                 />
               </div>
-              <div className="p-3.5 space-y-1">
-                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full inline-block">
-                  Programme Division
-                </span>
-                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Ms. Tshering Choden</h3>
-                <p className="text-[11px] font-semibold text-emerald-700">Senior Program Officer</p>
+              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
+                Ms. Tshering Choden
+              </h3>
+              <div className="text-xs font-semibold text-emerald-800 mt-1">
+                Senior Program Officer
               </div>
+              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                Programme Division
+              </div>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+              <span>Programme Operations</span>
             </div>
           </div>
 
-          {/* 3. Senior Investment Officer Card (Third Sequence) */}
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
+          {/* Senior Investment Officer */}
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
+            <div className="flex flex-col items-center w-full">
+              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
                   src={staffThinley}
                   alt="Mr. Thinley Wangchuk"
-                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                 />
               </div>
-              <div className="p-3.5 space-y-1">
-                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full inline-block">
-                  Investment Management
-                </span>
-                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Mr. Thinley Wangchuk</h3>
-                <p className="text-[11px] font-semibold text-teal-700">Senior Investment Officer</p>
+              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
+                Mr. Thinley Wangchuk
+              </h3>
+              <div className="text-xs font-semibold text-emerald-800 mt-1">
+                Senior Investment Officer
               </div>
+              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                Investment Management
+              </div>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+              <span>Endowment Yields</span>
             </div>
           </div>
 
-          {/* 4. Accounts Officer Card */}
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
+          {/* Accounts Officer */}
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
+            <div className="flex flex-col items-center w-full">
+              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
                   src={staffSonamChojay}
                   alt="Mr. Sonam Chojay"
-                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                 />
               </div>
-              <div className="p-3.5 space-y-1">
-                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full inline-block">
-                  Admin & Finance
-                </span>
-                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Mr. Sonam Chojay</h3>
-                <p className="text-[11px] font-semibold text-amber-700">Accounts Officer</p>
+              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
+                Mr. Sonam Chojay
+              </h3>
+              <div className="text-xs font-semibold text-emerald-800 mt-1">
+                Accounts Officer
               </div>
+              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                Admin & Finance Division
+              </div>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+              <span>Fiduciary Compliance</span>
             </div>
           </div>
 
-          {/* 5. Driver Card */}
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="aspect-[4/5] bg-[#F5F4EF] p-2 overflow-hidden flex items-center justify-center">
+          {/* Driver */}
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
+            <div className="flex flex-col items-center w-full">
+              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
                   src={staffProcurement}
                   alt="Mr. Rinchen Phuntsho"
-                  className="w-full h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                 />
               </div>
-              <div className="p-3.5 space-y-1">
-                <span className="text-[9px] font-mono uppercase tracking-wider font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full inline-block">
-                  Support Logistics
-                </span>
-                <h3 className="font-serif text-sm font-bold text-slate-900 leading-snug">Mr. Rinchen Phuntsho</h3>
-                <p className="text-[11px] font-semibold text-slate-700">Driver</p>
+              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
+                Mr. Rinchen Phuntsho
+              </h3>
+              <div className="text-xs font-semibold text-emerald-800 mt-1">
+                Driver
               </div>
+              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                Support Logistics
+              </div>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+              <span>Field Transport</span>
             </div>
           </div>
         </div>

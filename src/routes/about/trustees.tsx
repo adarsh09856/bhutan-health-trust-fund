@@ -210,46 +210,7 @@ function TrusteesPage() {
 
 
 
-      {/* Statutory Mandate Overview */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-composition">
-        <SectionEditBadge
-          label="Terms of Reference"
-          pageSlug="about-trustees"
-          sectionId="trustees-composition"
-          studioHref="/admin/trustees"
-          initialData={{
-            title: "Composition, Fiduciary Duty & Terms of Reference",
-            subtitle: "Pursuant to the Royal Charter granted by His Majesty the Fourth Druk Gyalpo, the Board of Trustees sits as the supreme governing authority.",
-            badge: "Royal Charter Mandated Governance",
-          }}
-        />
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-8 space-y-4">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-              Royal Charter Mandated Governance
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
-              Composition, Fiduciary Duty & Terms of Reference
-            </h2>
-            <p className="text-sm text-slate-600 leading-relaxed font-light">
-              Pursuant to the Royal Charter granted by His Majesty the Fourth Druk Gyalpo, the Board of Trustees sits as the supreme governing authority of the Trust Fund. The Board brings together the Minister for Health, Finance Secretary, international public health specialists, and eminent civil society appointees to protect the sovereign endowment and authorize healthcare disbursements.
-            </p>
-          </div>
-
-          <div className="lg:col-span-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2 text-xs">
-            <div className="font-bold text-slate-900 uppercase font-mono tracking-wider">
-              Statutory Terms
-            </div>
-            <div className="text-slate-600 space-y-1">
-              <div>• <strong>Meeting Cadence:</strong> Biannual statutory reviews & ad-hoc emergency sessions.</div>
-              <div>• <strong>Quorum:</strong> Minimum two-thirds voting membership required.</div>
-              <div>• <strong>Audit Inspection:</strong> Directly reports to the Royal Audit Authority.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Complete Trustees Gallery Grid */}
+      {/* Complete Trustees Gallery Grid in Clean NPPF Institutional Style */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-roster">
         <SectionEditBadge
           label="Board of Trustees Roster"
@@ -262,63 +223,81 @@ function TrusteesPage() {
             badge: "Official Directory • High-Level Trustees",
           }}
         />
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-black uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <span className="text-xs font-bold uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
             Official Directory • High-Level Trustees
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
             Members of the Board of Trustees
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-3 font-light">
+          <p className="text-slate-600 text-xs sm:text-sm mt-2.5 font-light">
             Distinguished leaders entrusted with safeguarding universal health security across all 20 Dzongkhags.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {displayTrustees.map((t, idx) => (
+        {/* Chairperson Featured Leadership Card (NPPF Core Management Pattern) */}
+        {displayTrustees.length > 0 && (
+          <div className="max-w-md mx-auto mb-10 sm:mb-12">
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md transition text-center flex flex-col items-center">
+              <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/90 mb-4 shadow-2xs">
+                <img
+                  src={displayTrustees[0].photo}
+                  alt={displayTrustees[0].name}
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                {displayTrustees[0].name}
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-emerald-800 mt-1">
+                {displayTrustees[0].role}
+              </p>
+              {displayTrustees[0].organization && (
+                <p className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                  {displayTrustees[0].organization}
+                </p>
+              )}
+              <span className="inline-block text-[10px] font-mono font-bold text-amber-900 bg-amber-50 border border-amber-200 px-3 py-0.5 rounded-full mt-3">
+                {displayTrustees[0].badge || "Chairperson"}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Trustees Grid (NPPF Members Pattern) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+          {displayTrustees.slice(1).map((t, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:border-emerald-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4 group"
+              className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
             >
-              <div className="space-y-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-2xl overflow-hidden border-2 border-emerald-600/50 shadow-lg shrink-0 bg-slate-100 ring-4 ring-emerald-50">
-                    <img
-                      src={t.photo}
-                      alt={t.name || t.role}
-                      className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full border shrink-0 ${
-                    t.badge === "Chairperson"
-                      ? "bg-amber-50 text-amber-900 border-amber-300"
-                      : t.badge === "Member Secretary" || t.badge === "Director"
-                      ? "bg-teal-50 text-teal-900 border-teal-300"
-                      : "bg-emerald-50 text-emerald-800 border-emerald-200"
-                  }`}>
-                    {t.badge}
-                  </span>
+              <div className="flex flex-col items-center w-full">
+                <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
+                  <img
+                    src={t.photo}
+                    alt={t.name || t.role}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
                 </div>
 
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
-                    {t.name}
-                  </h3>
-                  <div className="text-xs font-semibold text-emerald-800 mt-0.5">
-                    {t.role}
-                  </div>
-                  {t.organization && (
-                    <div className="text-xs text-slate-500 font-medium mt-0.5">
-                      {t.organization}
-                    </div>
-                  )}
+                <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
+                  {t.name}
+                </h3>
+                <div className="text-xs font-semibold text-emerald-800 mt-1">
+                  {t.role}
                 </div>
+                {t.organization && (
+                  <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                    {t.organization}
+                  </div>
+                )}
               </div>
 
-              <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs text-slate-400 font-semibold">
-                <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-                <span>Statutory Fiduciary Oversight</span>
+              <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                <span>Statutory Fiduciary Trustee</span>
               </div>
             </div>
           ))}

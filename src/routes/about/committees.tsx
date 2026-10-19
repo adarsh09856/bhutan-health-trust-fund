@@ -162,38 +162,34 @@ function CommitteesPage() {
               <UserCheck className="h-4 w-4 text-emerald-700" />
               <span>Asset Management Committee Members</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {amcMembers.map((m, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#FAF8F3] rounded-2xl p-5 border border-slate-200 shadow-2xs hover:border-amber-300 hover:shadow-md transition duration-200 flex flex-col justify-between space-y-3"
+                  className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="h-16 w-16 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-white">
-                        <img
-                          src={m.photo}
-                          alt={m.name}
-                          className="h-full w-full object-cover object-top"
-                          loading="lazy"
-                        />
-                      </div>
-                      <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-900 border border-amber-300">
-                        {m.badge}
-                      </span>
+                  <div className="flex flex-col items-center w-full">
+                    <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-3.5 shadow-2xs">
+                      <img
+                        src={m.photo}
+                        alt={m.name}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
                     </div>
-                    <div>
-                      <h4 className="font-serif text-sm font-bold text-slate-900 leading-snug">
-                        {m.name}
-                      </h4>
-                      <p className="text-[11px] font-semibold text-emerald-800 mt-0.5">
-                        {m.committeeRole}
-                      </p>
-                      <p className="text-[10px] text-slate-500 font-medium">
-                        {m.title}
-                      </p>
-                    </div>
+                    <h4 className="font-serif text-base font-bold text-slate-900 leading-snug">
+                      {m.name}
+                    </h4>
+                    <p className="text-xs font-semibold text-emerald-800 mt-1">
+                      {m.committeeRole}
+                    </p>
+                    <p className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                      {m.title}
+                    </p>
                   </div>
+                  <span className="inline-block text-[10px] font-mono font-medium text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full mt-3">
+                    {m.badge}
+                  </span>
                 </div>
               ))}
             </div>

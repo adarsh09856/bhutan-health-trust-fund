@@ -48,8 +48,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90 transition-all border-b border-border shadow-xs">
-      {/* 1. Top Utility Bar in Bhutan Royal Saffron */}
-      <div className="bg-saffron text-saffron-foreground text-xs shadow-xs">
+      {/* 1. Top Utility Bar in Sovereign Royal Emerald */}
+      <div className="bg-[#0B4F42] text-white/95 text-xs shadow-xs border-b border-emerald-900/40">
         <div className="container-page flex h-8 items-center justify-between gap-4">
           <span className="hidden sm:inline font-medium">
             ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ། — Working together for a healthier Bhutan
@@ -57,11 +57,11 @@ export function SiteHeader() {
           <span className="sm:hidden font-medium">Healthier Bhutan • BHTF</span>
 
           <div className="flex items-center gap-3 sm:gap-5">
-            <a href="tel:+9752328999" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-85 transition">
+            <a href="tel:+9752328999" className="hidden md:inline-flex items-center gap-1.5 hover:text-amber-300 transition">
               <Phone className="size-3.5" />
               <span>+975 2 328999</span>
             </a>
-            <a href="mailto:bhtf@bhtf.bt" className="hidden md:inline-flex items-center gap-1.5 hover:opacity-85 transition">
+            <a href="mailto:bhtf@bhtf.bt" className="hidden md:inline-flex items-center gap-1.5 hover:text-amber-300 transition">
               <Mail className="size-3.5" />
               <span>bhtf@bhtf.bt</span>
             </a>
@@ -76,7 +76,7 @@ export function SiteHeader() {
             {user && (
               <Link
                 to="/admin/dashboard"
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-black/20 hover:bg-black/30 text-[11px] font-bold"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[11px] font-bold text-white"
               >
                 Admin
               </Link>
@@ -423,13 +423,13 @@ export function SiteHeader() {
             </Link>
           </nav>
 
-          {/* Action CTAs: Donate in Saffron */}
+          {/* Action CTAs: Donate in Sovereign Institutional Teal */}
           <div className="flex items-center gap-2 shrink-0">
             <Link
               to="/donate"
-              className="inline-flex items-center gap-1.5 rounded-full bg-saffron px-4 2xl:px-5 py-2 text-xs 2xl:text-sm font-bold text-saffron-foreground shadow-card hover:opacity-90 transition active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-4 2xl:px-5 py-2 text-xs 2xl:text-sm font-bold text-white shadow-sm ring-1 ring-emerald-700/40 transition active:scale-95 whitespace-nowrap shrink-0"
             >
-              <Heart className="size-3.5 2xl:size-4 fill-current shrink-0" />
+              <Heart className="size-3.5 2xl:size-4 fill-current shrink-0 text-amber-300" />
               <span>Donate</span>
             </Link>
 
@@ -663,20 +663,20 @@ export function SiteHeader() {
               </Link>
               <Link
                 to="/donate"
-                className="mx-2 mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-saffron px-4 py-2.5 text-sm font-bold text-saffron-foreground shadow-card"
+                className="mx-2 mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-[#0B4F42] hover:bg-[#073C32] px-4 py-2.5 text-sm font-bold text-white shadow-sm"
               >
-                <Heart className="size-4 fill-current" />
+                <Heart className="size-4 fill-current text-amber-300" />
                 <span>Donate (1:1 Sovereign Match)</span>
               </Link>
 
               {/* Mobile Quick Support Info */}
               <div className="pt-4 px-3 text-xs text-muted-foreground space-y-2 border-t border-border mt-3">
                 <div className="flex items-center gap-2">
-                  <Phone className="size-3.5 text-saffron" />
+                  <Phone className="size-3.5 text-emerald-700" />
                   <span>+975 2 328999</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Mail className="size-3.5 text-saffron" />
+                  <Mail className="size-3.5 text-emerald-700" />
                   <span>bhtf@bhtf.bt</span>
                 </div>
               </div>
