@@ -50,7 +50,7 @@ export const Route = createFileRoute("/about/secretariat")({
       {
         name: "description",
         content:
-          "Official Secretariat organizational structure, Director's office, approved division staffing cadres (Annexure 1), and operational leadership of BHTF.",
+          "Official Secretariat organizational structure, Director Dr. Gyambo Sithey, 4 core operational divisions, and key staff profiles.",
       },
     ],
   }),
@@ -63,19 +63,146 @@ function SecretariatPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
-        badge="Executive Operations"
-        title="Secretariat & Organizational Structure"
-        subtitle="The executive arm executing daily health endowment investments, international vaccine procurement, and primary medicine distributions across Bhutan."
+        badge="Section 1.3 • Executive Structure"
+        title="Secretariat and organizational chart"
+        subtitle="The executive arm of the Bhutan Health Trust Fund executing day-to-day operations, endowment investments, and healthcare procurement disbursements."
         breadcrumb={[
           { label: "Home", to: "/" },
-          { label: "About Us", to: "/about" },
-          { label: "Secretariat & Organogram" },
+          { label: "About Us", to: "/about/organization" },
+          { label: "Secretariat and organogram" },
         ]}
       />
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="about-secretariat" />
+      )}
 
+      {/* 1. Official Section 1.3 Organogram Chart */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-organogram">
+        <SectionEditBadge
+          label="Secretariat Organogram"
+          pageSlug="about-secretariat"
+          sectionId="secretariat-organogram"
+          studioHref="/admin/page-editor?slug=about-secretariat"
+          initialData={{
+            title: "1.3 Secretariat and Organizational Chart",
+            subtitle: "Approved organizational structure of the Secretariat with 4 core divisions.",
+            badge: "Section 1.3 • Organogram",
+          }}
+        />
 
-      {/* Secretariat Staff Profiles in Clean NPPF Institutional Style */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
+              Section 1.3 • Organizational Chart
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+              Secretariat and Organizational Chart
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm font-light">
+              Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions.
+            </p>
+          </div>
+
+          {/* Clean Organogram Diagram */}
+          <div className="max-w-4xl mx-auto pt-4">
+            {/* Level 1: Board */}
+            <div className="flex justify-center">
+              <div className="w-64 bg-slate-50 border-2 border-slate-800 rounded-2xl p-4 text-center shadow-xs">
+                <span className="font-serif font-bold text-base text-slate-900 block">Board of Trustees</span>
+                <span className="text-[10px] text-slate-500 font-sans block mt-0.5">High-Level Governance</span>
+              </div>
+            </div>
+
+            {/* Vertical Line */}
+            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+
+            {/* Horizontal Branch to AMC */}
+            <div className="relative">
+              <div className="w-0.5 h-20 bg-slate-700 mx-auto" />
+              <div className="sm:absolute sm:top-1/2 sm:right-1/2 sm:-translate-y-1/2 flex items-center justify-center my-2 sm:my-0">
+                <div className="w-60 bg-amber-50/70 border-2 border-amber-800/80 rounded-2xl p-3 text-center shadow-xs">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 block leading-snug">
+                    Asset Management Committee
+                  </span>
+                  <span className="text-[10px] text-amber-800 font-sans block mt-0.5 font-semibold">Specialized Advisory Sub-committee</span>
+                </div>
+                <div className="hidden sm:block w-16 md:w-20 h-0.5 bg-slate-700" />
+              </div>
+            </div>
+
+            {/* Level 2: Director */}
+            <div className="flex justify-center">
+              <div className="w-64 bg-slate-50 border-2 border-slate-800 rounded-2xl p-4 text-center shadow-xs">
+                <span className="font-serif font-bold text-base text-slate-900 block">Director</span>
+                <span className="text-[11px] text-emerald-800 font-sans block mt-0.5 font-semibold">Dr. Gyambo Sithey, PhD</span>
+                <span className="text-[10px] text-slate-500 font-sans block">Member Secretary & Executive Head</span>
+              </div>
+            </div>
+
+            {/* Stem Down to 4 Divisions */}
+            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+            <div className="hidden sm:block w-[88%] h-0.5 bg-slate-700 mx-auto" />
+
+            {/* 4 Divisions matching Section 1.3 */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-0 sm:pt-0">
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Investment Management Division
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Administration & Finance Division
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Programme Division
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Monitoring & Evaluation Division
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Official Document Organogram Graphic */}
+          <div className="pt-6 border-t border-slate-100 flex flex-col items-center text-center space-y-3">
+            <span className="text-xs font-mono text-slate-500 uppercase tracking-wider">
+              Official Organogram Graphic from Write-up
+            </span>
+            <div className="max-w-2xl rounded-2xl overflow-hidden border border-slate-200 shadow-2xs bg-slate-50 p-2">
+              <img
+                src="/images/official/image6.png"
+                alt="BHTF Secretariat Organizational Structure Chart"
+                className="w-full h-auto object-contain rounded-xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Secretariat Staff Profiles in Clean NPPF Institutional Style */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-roster">
         <SectionEditBadge
           label="Secretariat Personnel Roster"
@@ -173,7 +300,7 @@ function SecretariatPage() {
                 Senior Investment Officer
               </div>
               <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                Investment Management
+                Investment Management Division
               </div>
             </div>
             <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
@@ -200,7 +327,7 @@ function SecretariatPage() {
                 Accounts Officer
               </div>
               <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                Admin & Finance Division
+                Administration & Finance Division
               </div>
             </div>
             <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
@@ -238,7 +365,7 @@ function SecretariatPage() {
         </div>
       </section>
 
-      {/* Secretariat Contact Details & Office Location */}
+      {/* Secretariat Official Contact Details & Office Location (Section 7) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-contact">
         <SectionEditBadge
           label="Secretariat Contact & HQ"
@@ -247,35 +374,39 @@ function SecretariatPage() {
           studioHref="/admin/settings"
           initialData={{
             title: "Bhutan Health Trust Fund Office",
-            subtitle: "Operating from the BTFEC Office Building in Genyen Lam, Thimphu, serving all primary healthcare units across the Kingdom.",
-            badge: "Secretariat Headquarters",
+            subtitle: "Lower Motithang, Thori Lam, Thimphu, Bhutan",
+            badge: "Section 7 • Official Contact",
           }}
         />
         <div className="bg-gradient-to-br from-slate-900 via-[#071914] to-emerald-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300 font-bold">
-              Secretariat Headquarters
+              Section 7 • Official Contact
             </span>
             <h3 className="font-serif text-2xl sm:text-3xl font-black text-white">
               Bhutan Health Trust Fund Office
             </h3>
             <p className="text-slate-300 text-xs sm:text-sm font-light max-w-xl">
-              Operating from the BTFEC Office Building in Genyen Lam, Thimphu, serving all primary healthcare units across the Kingdom.
+              For any enquiries, please contact us at bhtf@bhtf.bt or visit the BHTF office in Thimphu.
             </p>
           </div>
 
           <div className="space-y-3 text-xs text-slate-200 shrink-0">
             <div className="flex items-center gap-3">
               <MapPin className="h-4 w-4 text-emerald-400" />
-              <span>BTFEC Office Building, Genyen Lam, Thimphu, Bhutan</span>
+              <span>Lower Motithang, Thori Lam, Thimphu, Bhutan</span>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-emerald-400" />
-              <span>+975 2 322424</span>
+              <span>02-338636 / 338637 / 77348083</span>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="h-4 w-4 text-emerald-400" />
               <span>bhtf@bhtf.bt</span>
+            </div>
+            <div className="flex items-center gap-3 text-emerald-300 font-mono">
+              <span className="font-bold">WhatsApp:</span>
+              <span>77348083</span>
             </div>
           </div>
         </div>

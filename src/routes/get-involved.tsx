@@ -84,25 +84,25 @@ const ways = [
     badge: "1:1 Sovereign Match",
   },
   {
-    icon: Award,
-    title: "Tax Exemption (DRC E-73)",
-    caption: "“Give generously. Save on tax, as per DRC Circular DRC/TAX-A&L/DO-16/399.”",
-    text: "Tax-exempt under DRC Reg. No. E-73. Limits: BIT/CIT payers up to 5% of Assessed Net Profit; PIT payers up to 5% of Assessed Adjusted Gross Income.",
-    badge: "Circular DRC/TAX-A&L/DO-16/399",
-  },
-  {
     icon: Lock,
     title: "Capital Preservation",
-    caption: "“Your gift is preserved, not spent — working for Bhutan's health every year.”",
-    text: "Your donated capital is never spent — only invested. It stays protected in the Fund forever.",
-    badge: "Corpus Protected Forever",
+    caption: "“Preserving capital for future generations.”",
+    text: "A key principle of the Fund is the preservation of its principal capital. By financing healthcare needs through investment income rather than drawing on the principal, BHTF aims to safeguard its financial resources for future generations.",
+    badge: "Corpus Protected",
   },
   {
     icon: TrendingUp,
-    title: "Return on Investment (RoI)",
-    caption: "“Interest that saves lives. That's the real return.”",
-    text: "Only the interest earned from the Fund is used — to finance vaccines, essential medicines, and emergency health supplies across Bhutan.",
-    badge: "Life-Saving Returns",
+    title: "70–20–10 Operating Model",
+    caption: "“Sustainable financing for healthcare.”",
+    text: "70% of investment income is allocated to finance the procurement of national essential medicines and vaccines, 20% is reinvested to support capital growth, and 10% is allocated to cover operational expenses.",
+    badge: "Operating Model",
+  },
+  {
+    icon: Award,
+    title: "Tax Exemption (DRC E-73)",
+    caption: "“Give generously, save on tax.”",
+    text: "All contributions made by Bhutanese nationals to BHTF are tax-deductible under Tax Exemption Registration No. E-73 of the Department of Revenue and Customs, Ministry of Finance.",
+    badge: "DRC Reg. No. E-73",
   },
 ];
 
@@ -210,6 +210,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
     channel: string;
     completedAt: string;
   } | null>(null);
+
+  // Official Media Lightbox Preview Modal State
+  const [previewImage, setPreviewImage] = useState<{ src: string; title: string } | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -403,10 +406,23 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
   return (
     <div className="public-editorial-page donation-editorial-page space-y-14 sm:space-y-20 pb-20">
       <PageHero
-        badge={pageHeroSection?.badge || "DRC Reg. No. E-73 • 1:1 RGOB Match"}
-        title={pageHeroSection?.title || "Donate — Bhutan Health Trust Fund"}
-        subtitle={pageHeroSection?.subtitle || "Your gift protects the health of every Bhutanese, forever."}
+        badge={pageHeroSection?.badge || "Section 6 · Support Free Primary Healthcare"}
+        title={pageHeroSection?.title || "Donate"}
+        subtitle={
+          pageHeroSection?.subtitle ||
+          "Every contribution makes a difference. BHTF warmly welcomes support from individuals, organisations, and well-wishers in Bhutan and around the world to help sustain access to essential medicines and vaccines for the people of Bhutan. Your generosity helps strengthen the Fund's commitment to free primary healthcare for present and future generations."
+        }
       />
+
+      {/* Rallying Theme Callout (Section 6 Verbatim) */}
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 -mt-8 sm:-mt-12 relative z-10 text-center">
+        <div className="inline-flex items-center gap-3 bg-emerald-900 text-amber-200 px-6 py-3.5 rounded-2xl shadow-lg border border-amber-400/30">
+          <Sparkles className="h-5 w-5 text-amber-400 shrink-0" />
+          <span className="font-serif italic text-sm sm:text-base md:text-lg font-bold">
+            “Together, we can help sustain healthcare for all.”
+          </span>
+        </div>
+      </div>
 
       {/* Custom Page Renderer if edited by admin */}
       {customSections && customSections.some((section) => section.type !== "hero") && (
@@ -1328,101 +1344,307 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
         </div>
       </section>
 
-      {/* Official Verified Banking Remittance Details Directory (Section 7 Verbatim) */}
+      {/* Section 6: Ways to Donate */}
       <section
-        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
-        data-bhtf-section="donate-banking-channels"
+        id="ways-to-donate"
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative"
+        data-bhtf-section="donate-ways"
       >
         <SectionEditBadge
-          label="Banking Channels & Accounts"
+          label="Ways to Donate & Remittance"
           pageSlug="get-involved"
-          sectionId="donate-banking-channels"
+          sectionId="donate-ways"
           studioHref="/admin/settings"
           initialData={{
-            title: "Direct Banking & Offshore Remittance Channels",
-            subtitle:
-              "Official domestic Ngultrum accounts and international USD SWIFT wire routing verified by BHTF Finance.",
-            badge: "Official Banking Protocols",
+            title: "Ways to Donate",
+            subtitle: "Domestic and international contribution channels supporting Bhutan Health Trust Fund.",
+            badge: "Section 6 · Ways to Donate",
           }}
         />
-        <div className="editorial-card p-6 sm:p-10 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
+            Section 6 · Contributions
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+            Ways to Donate
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Support BHTF domestically within Bhutan or internationally through verified sovereign channels.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Domestic Contributions Card */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
+            <div className="space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-800 grid place-items-center">
+                    <Building className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider block">
+                      Within Bhutan
+                    </span>
+                    <h3 className="font-sans text-xl font-bold text-slate-900">
+                      Domestic
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200">
+                  BTN (Nu.)
+                </span>
+              </div>
+
+              {/* Official Image Graphic from Docx */}
+              <div
+                className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group shadow-2xs"
+                onClick={() => setPreviewImage({ src: "/images/official/image5.png", title: "Domestic Contributions & QR Codes" })}
+              >
+                <img
+                  src="/images/official/image5.png"
+                  alt="BHTF Domestic Donation QR and Account Guidance"
+                  className="w-full h-auto object-cover group-hover:scale-101 transition duration-300"
+                />
+                <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-white text-xs font-bold">
+                  <span>Click to view full image</span>
+                </div>
+              </div>
+
+              {/* Verified Domestic Account Details */}
+              <div className="space-y-2 text-xs font-mono">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Bank Name:</span>
+                  <span className="font-bold text-slate-900">Bank of Bhutan Limited</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Account Number:</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-emerald-800 text-sm">100782506</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy("100782506")}
+                      className="p-1 text-slate-400 hover:text-emerald-700 cursor-pointer"
+                      title="Copy Account Number"
+                    >
+                      <Copy className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Mobile Banking:</span>
+                  <span className="font-medium text-slate-900 font-sans">
+                    mBoB, mPay, ePay, TPay, RMA BFS
+                  </span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Secretariat Address:</span>
+                  <span className="font-medium text-slate-900 font-sans">
+                    Lower Motithang, Thori Lam, Thimphu, Bhutan
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <a
+                href="#donate-form"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs transition"
+              >
+                <span>Make a Donation Pledge / Generate Stamped Certificate</span>
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* International Contributions Card */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
+            <div className="space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-blue-50 text-blue-800 grid place-items-center">
+                    <Globe className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono font-bold text-blue-800 uppercase tracking-wider block">
+                      Global & Diaspora
+                    </span>
+                    <h3 className="font-sans text-xl font-bold text-slate-900">
+                      International
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-900 border border-blue-200">
+                  USD SWIFT Wire
+                </span>
+              </div>
+
+              {/* Official Image Graphic from Docx */}
+              <div
+                className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group shadow-2xs"
+                onClick={() => setPreviewImage({ src: "/images/official/image4.png", title: "International Wire & SWIFT Guidance" })}
+              >
+                <img
+                  src="/images/official/image4.png"
+                  alt="BHTF International Wire and Remittance Guidelines"
+                  className="w-full h-auto object-cover group-hover:scale-101 transition duration-300"
+                />
+                <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-white text-xs font-bold">
+                  <span>Click to view full image</span>
+                </div>
+              </div>
+
+              {/* Verified International SWIFT Account Details */}
+              <div className="space-y-2 text-xs font-mono">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Beneficiary Bank:</span>
+                  <span className="font-medium text-slate-900 font-sans">Bank of Bhutan Ltd., Thimphu Branch</span>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">SWIFT Code:</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-900 font-mono">BHUBBTBT022</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy("BHUBBTBT022")}
+                      className="p-1 text-slate-400 hover:text-emerald-700 cursor-pointer"
+                      title="Copy SWIFT Code"
+                    >
+                      <Copy className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Beneficiary Account:</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-emerald-800 text-sm">100931468</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy("100931468")}
+                      className="p-1 text-slate-400 hover:text-emerald-700 cursor-pointer"
+                      title="Copy Account Number"
+                    >
+                      <Copy className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                  <span className="text-slate-600 font-sans">Account Name:</span>
+                  <span className="font-bold text-slate-900 font-sans">Bhutan Health Trust Fund</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <a
+                href="#donate-form"
+                onClick={() => setPaymentMethod("INTERNATIONAL_CARD")}
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs transition"
+              >
+                <span>International Card Checkout (Razorpay)</span>
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 6: Join Membership */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8" id="membership">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
-                Official Banking Protocols
+                Section 6 · Membership Movement
               </span>
-              <h3 className="font-sans text-2xl font-black text-slate-900">
-                Direct Banking & Offshore Remittance Channels
-              </h3>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                Join Membership
+              </h2>
             </div>
-            <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 self-start">
-              Verified by BHTF Finance
+            <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 self-start">
+              Sustaining Healthcare For All
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[#FAF8F3] border border-amber-200/80 rounded-2xl p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Building className="h-4 w-4 text-emerald-800" />
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Domestic Contributions (Within Bhutan)
-                </h4>
-              </div>
-              <div className="space-y-2 text-xs font-mono">
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">Bank Name:</span>
-                  <span className="font-bold text-slate-900">Bank of Bhutan Limited</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">Account Number:</span>
-                  <span className="font-bold text-emerald-800 text-sm">100782506</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">Mobile Apps:</span>
-                  <span className="font-medium text-slate-900 font-sans">
-                    mBoB, mPay, ePay, TPay
-                  </span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">In-Person / Mail:</span>
-                  <span className="font-medium text-slate-900 font-sans">
-                    BTFEC Building, Genyen Lam, Thimphu
-                  </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Embedded Official Image Graphic */}
+            <div className="lg:col-span-7">
+              <div
+                className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group shadow-2xs"
+                onClick={() => setPreviewImage({ src: "/images/official/image3.png", title: "Join Membership Program & Contribution Tiers" })}
+              >
+                <img
+                  src="/images/official/image3.png"
+                  alt="Join Membership Program BHTF"
+                  className="w-full h-auto object-contain max-h-[500px] group-hover:scale-101 transition duration-300"
+                />
+                <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-white text-xs font-bold">
+                  <span>Click to view full image</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#FAF8F3] border border-emerald-200/80 rounded-2xl p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4 text-emerald-800" />
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  International & Diaspora Remittance (USD Wire)
-                </h4>
+            {/* Information & Action Details */}
+            <div className="lg:col-span-5 space-y-5">
+              <div className="space-y-3">
+                <h3 className="text-lg font-bold text-slate-900">
+                  Become a Life or Annual Member of BHTF
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+                  Join hundreds of committed citizens, organisations, and institutional partners who contribute regularly to the Bhutan Health Trust Fund.
+                </p>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
+                  Membership contributions are pooled into the protected endowment capital, ensuring ongoing investment returns that finance essential medicines and vaccines in perpetuity.
+                </p>
               </div>
-              <div className="space-y-2 text-xs font-mono">
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">SWIFT Code:</span>
-                  <span className="font-bold text-slate-900">BHUBBTBT022</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">Beneficiary Account:</span>
-                  <span className="font-bold text-emerald-800 text-sm">100931468</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">Account Name:</span>
-                  <span className="font-bold text-slate-900 font-sans">
-                    Bhutan Health Trust Fund
-                  </span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex justify-between items-center">
-                  <span className="text-slate-600">Beneficiary Bank:</span>
-                  <span className="font-medium text-slate-900 font-sans">
-                    Bank of Bhutan Ltd., Thimphu Branch
-                  </span>
-                </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-950 text-xs leading-relaxed space-y-1">
+                <span className="font-bold text-amber-900 block">Enrollment Note:</span>
+                <p>
+                  To register your membership or for corporate/employee payroll giving programs, please contact the BHTF Secretariat at <a href="mailto:bhtf@bhtf.bt" className="underline font-bold">bhtf@bhtf.bt</a> or call <span className="font-mono font-semibold">02-338636 / 77348083</span>.
+                </p>
+              </div>
+
+              <div>
+                <a
+                  href="mailto:bhtf@bhtf.bt?subject=BHTF%20Membership%20Enrollment%20Inquiry"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition"
+                >
+                  <Send className="h-4 w-4" />
+                  <span>Contact Secretariat to Join</span>
+                </a>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Section 6: Tax Exemption Verbatim Callout */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" id="tax-exemption">
+        <div className="bg-white border-2 border-emerald-600/30 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex items-start gap-4">
+            <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center shrink-0 border border-emerald-200">
+              <Award className="h-6 w-6 text-emerald-700" />
+            </div>
+            <div className="space-y-1.5 max-w-3xl">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 block">
+                Department of Revenue & Customs • Ministry of Finance
+              </span>
+              <h3 className="font-sans text-xl font-bold text-slate-900">
+                Tax Exemption
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+                All contributions made by Bhutanese nationals to BHTF are tax-deductible under Tax Exemption Registration No. E-73 of the Department of Revenue and Customs, Ministry of Finance.
+              </p>
+              <p className="text-[11px] text-slate-500 font-light">
+                Statutory limits as per DRC Circular Ref. No. DRC/TAX-A&L/DO-16/399: BIT/CIT payers up to 5% of Assessed Net Profit; PIT payers up to 5% of Assessed Adjusted Gross Income.
+              </p>
+            </div>
+          </div>
+          <span className="text-xs font-mono font-bold px-4 py-2 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-300 shrink-0 self-start md:self-center">
+            DRC Reg. No. E-73
+          </span>
         </div>
       </section>
 
@@ -1606,6 +1828,51 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {/* Official Media Lightbox Preview Modal */}
+      {previewImage && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150"
+          onClick={() => setPreviewImage(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full bg-white rounded-3xl p-5 shadow-2xl border border-slate-200 overflow-hidden space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-600"></span>
+                <h3 className="font-sans font-bold text-slate-900 text-sm sm:text-base">
+                  {previewImage.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPreviewImage(null)}
+                className="p-1 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer transition"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="max-h-[75vh] overflow-auto rounded-2xl bg-slate-50 p-2 flex items-center justify-center">
+              <img
+                src={previewImage.src}
+                alt={previewImage.title}
+                className="max-h-[70vh] w-auto object-contain rounded-xl shadow-xs"
+              />
+            </div>
+            <div className="flex justify-between items-center pt-1 text-xs text-slate-500">
+              <span>Official Bhutan Health Trust Fund Documentation</span>
+              <button
+                type="button"
+                onClick={() => setPreviewImage(null)}
+                className="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -7,14 +7,10 @@ import { PageRenderer } from "@/components/page-renderer";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   ShieldCheck,
-  Award,
   Landmark,
   Scale,
   Building,
-  Users2,
   CheckCircle2,
-  Calendar,
-  Lock,
 } from "lucide-react";
 import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
 import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
@@ -23,7 +19,6 @@ import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
-import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/trustees")({
@@ -49,37 +44,38 @@ export const Route = createFileRoute("/about/trustees")({
   },
   head: () => ({
     meta: [
-      { title: "Board of Trustees & Fiduciary Governance | Bhutan Health Trust Fund" },
+      { title: "Board of Trustees | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Official directory of the High-Level Board of Trustees of the Bhutan Health Trust Fund, ministerial governance, and fiduciary oversight.",
+          "Official directory of the Board of Trustees of the Bhutan Health Trust Fund (Table 1.1), ministerial leadership, and fiduciary governance.",
       },
     ],
   }),
   component: TrusteesPage,
 });
 
+// Official Board of Trustees (Table 1.1 from official write-up)
 const staticTrustees = [
   {
-    name: "Lyonpo Tandin Wangchuk",
+    name: "HE Lyonpo Tandin Wangchuk",
     role: "Chairperson",
-    organization: "Hon'ble Minister for Health, Royal Government of Bhutan",
-    badge: "Cabinet Chair",
-    desc: "Appointed Chairperson under Cabinet Order C-3/4(4)/2024/35. Provides ministerial leadership, steering sovereign health financing and aligning BHTF disbursements with universal healthcare priorities.",
+    organization: "Minister, Ministry of Health",
+    badge: "Chairperson",
+    desc: "Provides ministerial leadership, steering sovereign health financing and aligning BHTF disbursements with universal healthcare priorities.",
     photo: trusteeLyonpoTandin,
   },
   {
     name: "Lopen Tshering Wangchuk",
-    role: "Trustee (Monastic Representative)",
-    organization: "Secretary, Monastic Council Zhung Dratshang",
+    role: "Trustee",
+    organization: "Secretary, Monastic Council for Administration and Development Affairs, Zhung Dratshang",
     badge: "Zhung Dratshang",
     desc: "Represents the Central Monastic Body (Zhung Dratshang), upholding ethical fiduciary responsibility, spiritual stewardship, and compassionate healthcare across the Kingdom.",
     photo: trusteeLopenTshering,
   },
   {
     name: "Ms. Ugyen Choden",
-    role: "Trustee & Chairperson of AMC",
+    role: "Trustee & AMC Chairperson",
     organization: "Deputy Governor, Royal Monetary Authority (RMA)",
     badge: "Central Bank / AMC Chair",
     desc: "Brings extensive central banking, monetary policy, and financial regulatory expertise. Chairs the BHTF Asset Management Committee (AMC) overseeing capital preservation and asset allocation.",
@@ -87,16 +83,16 @@ const staticTrustees = [
   },
   {
     name: "Mr. Chencho T. Namgay",
-    role: "Trustee & Member AMC",
-    organization: "CEO, National Pension & Provident Fund (NPPF)",
+    role: "Trustee & AMC Member",
+    organization: "Chief Executive Officer, National Pension and Provident Fund (NPPF)",
     badge: "Pension Fund / AMC Member",
     desc: "Provides institutional investment acumen, large-scale portfolio management insight, and fiduciary risk oversight as a member of the Board and Asset Management Committee.",
     photo: trusteeChenchoNamgay,
   },
   {
     name: "Mr. Norbu Dendup",
-    role: "Trustee & Member AMC",
-    organization: "Director, Department of Treasury & Accounts, Ministry of Finance",
+    role: "Trustee & AMC Member",
+    organization: "Director, Department of Treasury and Accounts, Ministry of Finance",
     badge: "Ministry of Finance / AMC Member",
     desc: "Oversees public financial management, treasury coordination, and sovereign endowment governance, serving on the Board and Asset Management Committee.",
     photo: trusteeNorbuDendup,
@@ -104,26 +100,18 @@ const staticTrustees = [
   {
     name: "Mr. Pema Tshering",
     role: "Trustee (Independent Director)",
-    organization: "Former CEO, T Bank Ltd. (Financial Sector Specialist)",
+    organization: "Independent Director / Former CEO, T Bank Ltd.",
     badge: "Financial Sector Specialist",
     desc: "Serves as an independent fiduciary expert with decades of commercial banking, capital markets, and corporate governance leadership in Bhutan.",
     photo: trusteePemaTshering,
   },
   {
     name: "Dr. Phub Tshering",
-    role: "Trustee (Clinical & Medical Specialist)",
+    role: "Trustee",
     organization: "Medical Director, Jigme Dorji Wangchuck National Referral Hospital (JDWNRH)",
     badge: "Clinical Specialist",
-    bio: "Provides high-level clinical guidance, therapeutic efficacy reviews, and medical formulary alignment directly representing the nation's premier tertiary healthcare institution.",
+    desc: "Provides high-level clinical guidance, therapeutic efficacy reviews, and medical formulary alignment directly representing the nation's premier tertiary healthcare institution.",
     photo: trusteeDrPhub,
-  },
-  {
-    name: "Dr. Gyambo Sithey, PhD",
-    role: "Director",
-    organization: "BHTF Secretariat",
-    badge: "Director",
-    desc: "Leads day-to-day operations of the BHTF Secretariat, execution of statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.",
-    photo: trusteeDrGyambo,
   },
 ];
 
@@ -151,7 +139,6 @@ function TrusteesPage() {
     Ugyen: trusteeUgyenChoden,
     Norbu: trusteeNorbuDendup,
     Chencho: trusteeChenchoNamgay,
-    Gyambo: trusteeDrGyambo,
   };
 
   const defaultPhotoList = [
@@ -162,7 +149,6 @@ function TrusteesPage() {
     trusteeNorbuDendup,
     trusteePemaTshering,
     trusteeDrPhub,
-    trusteeDrGyambo,
   ];
 
   const resolvePhoto = (name: string, photo: string | null, idx = 0) => {
@@ -179,16 +165,14 @@ function TrusteesPage() {
 
   const displayTrustees =
     trusteesList.length >= 7
-      ? trusteesList.map((t, idx) => ({
+      ? trusteesList.slice(0, 7).map((t, idx) => ({
           name: t.name,
           role: t.role,
-          organization: t.organization || "Board of Trustees, BHTF",
+          organization: t.organization || staticTrustees[idx]?.organization || "Board of Trustees, BHTF",
           badge:
             t.badge ||
             (idx === 0 || t.name.toLowerCase().includes("tandin")
               ? "Chairperson"
-              : t.role.toLowerCase().includes("secretary")
-              ? "Member Secretary"
               : "Trustee"),
           desc: t.bio || staticTrustees[idx]?.desc || "Statutory fiduciary trustee managing health endowment allocations.",
           photo: resolvePhoto(t.name, t.photoUrl, idx),
@@ -198,17 +182,20 @@ function TrusteesPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
-        badge="Sovereign Governance"
-        title="Board of Trustees & Oversight"
-        subtitle="High-level fiduciary stewardship entrusted by Royal Charter with the perpetual management and statutory allocation of the Bhutan Health Trust Fund."
+        badge="Section 1.1 • Fiduciary Governance"
+        title="Board of trustees"
+        subtitle="The Bhutan Health Trust Fund operates under the guidance of the Board of Directors, headed by a Chairperson, providing strategic direction, accountability, and long-term sustainability."
         breadcrumb={[
           { label: "Home", to: "/" },
-          { label: "About Us", to: "/about" },
-          { label: "Board of Trustees" },
+          { label: "About Us", to: "/about/organization" },
+          { label: "Board of trustees" },
         ]}
       />
 
-
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="about-trustees" />
+      )}
 
       {/* Complete Trustees Gallery Grid in Clean NPPF Institutional Style */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-roster">
@@ -218,20 +205,20 @@ function TrusteesPage() {
           sectionId="trustees-roster"
           studioHref="/admin/trustees"
           initialData={{
-            title: "Members of the Board of Trustees",
-            subtitle: "Distinguished leaders entrusted with safeguarding universal health security across all 20 Dzongkhags.",
-            badge: "Official Directory • High-Level Trustees",
+            title: "1.1 Board of trustees",
+            subtitle: "Table 1.1 official listing of Board of Trustees members and their positions.",
+            badge: "Table 1.1 • Board of Trustees",
           }}
         />
         <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-800 block mb-2 font-mono">
-            Official Directory • High-Level Trustees
+            Table 1.1 • High-Level Governance
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-            Members of the Board of Trustees
+            Board of trustees
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-2.5 font-light">
-            Distinguished leaders entrusted with safeguarding universal health security across all 20 Dzongkhags.
+            Providing strategic direction and ensuring effective governance, accountability, and the long-term sustainability of the Fund.
           </p>
         </div>
 

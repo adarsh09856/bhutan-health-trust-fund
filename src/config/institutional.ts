@@ -16,8 +16,11 @@ export interface InstitutionalConfig {
   emergencyHelpline: string;
   emergencyHelplineLabel: string;
   secretariatPhone: string;
+  secretariatWhatsApp?: string;
   secretariatEmail: string;
   secretariatAddress: string;
+  secretariatWebsite?: string;
+  secretariatFacebook?: string;
   bankAccountBOB: string;
   bankAccountBNB: string;
   bankAccountUSD: string;
@@ -43,11 +46,14 @@ export const institutionalConfig: InstitutionalConfig = {
   emergencyHelpline: process.env.BHTF_EMERGENCY_HELPLINE || "112",
   emergencyHelplineLabel: "Toll-Free 24/7 Nationwide Emergency Medical Logistics",
 
-  // Secretariat Communication Details (Docx Version 2 Section 13)
-  secretariatPhone: process.env.BHTF_SECRETARIAT_PHONE || "+975 2 322424",
+  // Secretariat Communication Details (Docx Version 2 Section 7)
+  secretariatPhone: process.env.BHTF_SECRETARIAT_PHONE || "02-338636 / 338637 / 77348083",
+  secretariatWhatsApp: "77348083",
   secretariatEmail: process.env.BHTF_SECRETARIAT_EMAIL || "bhtf@bhtf.bt",
   secretariatAddress:
-    process.env.BHTF_SECRETARIAT_ADDRESS || "BTFEC Office Building, Genyen Lam, Thimphu, Bhutan",
+    process.env.BHTF_SECRETARIAT_ADDRESS || "Lower Motithang, Thori Lam, Thimphu, Bhutan",
+  secretariatWebsite: "www.bhtf.bt",
+  secretariatFacebook: "https://www.facebook.com/profile.php?id=100006126615023",
 
   // Official Treasury Bank Accounts (Docx Version 2 Section 7)
   bankAccountBOB: process.env.BHTF_BANK_ACCOUNT_BOB || "100782506",

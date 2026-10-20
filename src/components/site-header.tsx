@@ -57,9 +57,9 @@ export function SiteHeader() {
           <span className="sm:hidden font-medium">Healthier Bhutan • BHTF</span>
 
           <div className="flex items-center gap-3 sm:gap-5">
-            <a href="tel:+9752328999" className="hidden md:inline-flex items-center gap-1.5 hover:text-amber-300 transition">
+            <a href="tel:02338636" className="hidden md:inline-flex items-center gap-1.5 hover:text-amber-300 transition">
               <Phone className="size-3.5" />
-              <span>+975 2 328999</span>
+              <span>02-338636 / 338637 / 77348083</span>
             </a>
             <a href="mailto:bhtf@bhtf.bt" className="hidden md:inline-flex items-center gap-1.5 hover:text-amber-300 transition">
               <Mail className="size-3.5" />
@@ -127,25 +127,15 @@ export function SiteHeader() {
               </Link>
 
               {openDropdown === "about" && (
-                <div className="absolute top-full left-0 w-76 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
-                  <Link
-                    to="/about/organization"
-                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
-                  >
-                    <Landmark className="size-4 text-primary shrink-0" />
-                    <div>
-                      <div>Our Organization & Organogram</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Royal Charter & Cadre Divisions</div>
-                    </div>
-                  </Link>
+                <div className="absolute top-full left-0 w-80 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
                   <Link
                     to="/about/trustees"
                     className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
                   >
                     <ShieldCheck className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Board of Trustees</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Apex ministerial leadership</div>
+                      <div>Board of trustees (with photos)</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Apex governing body & ministerial leadership</div>
                     </div>
                   </Link>
                   <Link
@@ -154,8 +144,8 @@ export function SiteHeader() {
                   >
                     <Scale className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Asset Management Committee</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Prudent endowment governance</div>
+                      <div>Asset management committee</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Endowment stewardship & investment oversight</div>
                     </div>
                   </Link>
                   <Link
@@ -164,19 +154,19 @@ export function SiteHeader() {
                   >
                     <Users className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Secretariat & Staff</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Executive operations & Directorate</div>
+                      <div>Secretariat and organizational chart</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Directorate & 4 operational divisions</div>
                     </div>
                   </Link>
                   <div className="pt-1 mt-1 border-t border-border/60">
                     <Link
-                      to="/our-story"
-                      className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-orange text-xs font-semibold text-foreground transition"
+                      to="/about/organization"
+                      className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-xs font-semibold text-foreground transition"
                     >
-                      <BookOpen className="size-4 text-saffron shrink-0" />
+                      <Landmark className="size-4 text-primary shrink-0" />
                       <div>
-                        <div>Our Story & 26-Yr Timeline</div>
-                        <div className="text-[10px] text-muted-foreground font-normal">Geneva Launch (1998) to Present</div>
+                        <div>About Bhutan Health Trust Fund</div>
+                        <div className="text-[10px] text-muted-foreground font-normal">Mandate, Vision, Mission & Operating Model</div>
                       </div>
                     </Link>
                   </div>
@@ -196,7 +186,7 @@ export function SiteHeader() {
               <span className="whitespace-nowrap">Our Story</span>
             </Link>
 
-            {/* 3. Our Work & Impact with Dropdown */}
+            {/* 3. Impact with Dropdown */}
             <div
               className="relative py-2 shrink-0"
               onMouseEnter={() => setOpenDropdown("work")}
@@ -210,7 +200,7 @@ export function SiteHeader() {
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span className="whitespace-nowrap">Our Work</span>
+                <span className="whitespace-nowrap">Impact</span>
                 <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
@@ -335,7 +325,7 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* 5. News & Events with Full Subpages Dropdown */}
+            {/* 5. News and Events with Full Subpages Dropdown */}
             <div
               className="relative py-2 shrink-0"
               onMouseEnter={() => setOpenDropdown("news")}
@@ -349,7 +339,7 @@ export function SiteHeader() {
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span className="whitespace-nowrap">News & Events</span>
+                <span className="whitespace-nowrap">News and Events</span>
                 <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
@@ -475,46 +465,48 @@ export function SiteHeader() {
                 {mobileExpandedSection === "about" && (
                   <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl my-1 border border-border/40">
                     <Link
-                      to="/about/organization"
-                      className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
-                    >
-                      • Our Organization & Organogram
-                    </Link>
-                    <Link
                       to="/about/trustees"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Board of Trustees
+                      • Board of trustees (with photos)
                     </Link>
                     <Link
                       to="/about/committees"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Asset Management Committee
+                      • Asset management committee
                     </Link>
                     <Link
                       to="/about/secretariat"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Secretariat & Staff
+                      • Secretariat and organizational chart
                     </Link>
                     <Link
-                      to="/our-story"
-                      className="block py-1.5 px-2 text-xs font-semibold text-saffron hover:underline"
+                      to="/about/organization"
+                      className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
                     >
-                      • Our Story & 26-Yr Timeline
+                      • About BHTF (Mandate & Vision)
                     </Link>
                   </div>
                 )}
               </div>
 
-              {/* Accordion 2: Our Work */}
+              {/* Direct Link: Our Story */}
+              <Link
+                to="/our-story"
+                className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg border-b border-border/60"
+              >
+                Our Story
+              </Link>
+
+              {/* Accordion 2: Impact */}
               <div className="border-b border-border/60 pb-1">
                 <button
                   onClick={() => toggleMobileSection("work")}
                   className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
                 >
-                  <span>Our Work & Impact</span>
+                  <span>Impact</span>
                   <ChevronDown
                     className={`size-4 text-muted-foreground transition-transform duration-200 ${
                       mobileExpandedSection === "work" ? "rotate-180" : ""
@@ -533,7 +525,7 @@ export function SiteHeader() {
                       to="/our-work"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Essential Medicines & Traditional Therapies
+                      • 438 Essential Medicines & Vaccines
                     </Link>
                   </div>
                 )}
@@ -600,13 +592,13 @@ export function SiteHeader() {
                 )}
               </div>
 
-              {/* Accordion 4: News & Events */}
+              {/* Accordion 4: News and Events */}
               <div className="border-b border-border/60 pb-1">
                 <button
                   onClick={() => toggleMobileSection("news")}
                   className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
                 >
-                  <span>News & Events</span>
+                  <span>News and Events</span>
                   <ChevronDown
                     className={`size-4 text-muted-foreground transition-transform duration-200 ${
                       mobileExpandedSection === "news" ? "rotate-180" : ""
@@ -673,7 +665,7 @@ export function SiteHeader() {
               <div className="pt-4 px-3 text-xs text-muted-foreground space-y-2 border-t border-border mt-3">
                 <div className="flex items-center gap-2">
                   <Phone className="size-3.5 text-emerald-700" />
-                  <span>+975 2 328999</span>
+                  <span>02-338636 / 338637 / 77348083</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="size-3.5 text-emerald-700" />

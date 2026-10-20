@@ -17,6 +17,8 @@ import {
   Building2,
   ShieldCheck,
   Award,
+  Globe,
+  MessageCircle,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -43,11 +45,11 @@ export const Route = createFileRoute("/contact")({
   },
   head: () => ({
     meta: [
-      { title: "Contact Secretariat | Bhutan Health Trust Fund" },
+      { title: "Contact Us | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Connect with the Bhutan Health Trust Fund Secretariat at BTFEC Office Building, Genyen Lam, Thimphu for citizen inquiries, donor partnerships, and official communications.",
+          "Contact the Bhutan Health Trust Fund Secretariat at Lower Motithang, Thori Lam, Thimphu, Bhutan. Telephone: 02-338636 / 338637 / 77348083, WhatsApp: 77348083, Email: bhtf@bhtf.bt.",
       },
     ],
   }),
@@ -93,7 +95,7 @@ const faqs = [
   },
   {
     q: "Where is the BHTF Secretariat located and how can I contact them?",
-    a: "The Secretariat is located at BTFEC Office Building, Genyen Lam, Thimphu, Bhutan. You can contact the Secretariat by phone at +975 2 322424, email at bhtf@bhtf.bt, or visit during official working hours (Monday-Friday, 9:00 AM - 5:00 PM BST).",
+    a: "The Secretariat is located at Lower Motithang, Thori Lam, Thimphu, Bhutan. You can contact the Secretariat by phone at 02-338636 / 338637 / 77348083, WhatsApp at 77348083, email at bhtf@bhtf.bt, or visit the BHTF office in Thimphu.",
   },
 ];
 
@@ -158,9 +160,9 @@ function ContactPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
       <PageHero
-        badge="Citizen & Partner Secretariat"
-        title="Contact the Secretariat"
-        subtitle="Direct communication channels for public health inquiries, donor partnerships, and official administrative requests."
+        badge="Section 7 · Secretariat Directory"
+        title="Contact Us"
+        subtitle="For any enquiries, please contact us at bhtf@bhtf.bt or visit the BHTF office in Thimphu."
       />
 
       {/* Custom Page Renderer if edited by admin */}
@@ -175,19 +177,24 @@ function ContactPage() {
           sectionId="contact-directory"
           studioHref="/admin/inquiries"
           initialData={{
-            title: "Contact the Secretariat",
-            subtitle: "Direct communication channels for public health inquiries, donor partnerships, and official administrative requests.",
-            badge: "Citizen & Partner Secretariat",
+            title: "Contact Us",
+            subtitle: "For any enquiries, please contact us at bhtf@bhtf.bt or visit the BHTF office in Thimphu.",
+            badge: "Section 7 · Secretariat Directory",
           }}
         />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           {/* Contact Details Column (4 Cols) */}
           <div className="lg:col-span-4 space-y-6">
             <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-xs space-y-6">
-              <h3 className="font-black text-lg text-slate-900 border-b pb-4 flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-emerald-700" />
-                <span>Secretariat Directory</span>
-              </h3>
+              <div className="border-b border-slate-100 pb-4">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800">
+                  Official Secretariat
+                </span>
+                <h3 className="font-sans text-xl font-bold text-slate-900 mt-1 flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-emerald-700" />
+                  <span>Bhutan Health Trust Fund</span>
+                </h3>
+              </div>
 
               <div className="space-y-5 text-xs sm:text-sm">
                 <div className="flex items-start gap-3">
@@ -195,15 +202,11 @@ function ContactPage() {
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-extrabold text-slate-900 block">
-                      Secretariat Headquarters
+                    <span className="font-bold text-slate-900 block">
+                      Address
                     </span>
-                    {/* Section 0 Institutional Config // TODO-VERIFY */}
                     <span className="text-slate-600 leading-snug block mt-0.5">
                       {settings["secretariat_address"] || institutionalConfig.secretariatAddress}
-                    </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">
-                      (Adjacent to Ministry of Health)
                     </span>
                   </div>
                 </div>
@@ -213,18 +216,27 @@ function ContactPage() {
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-extrabold text-slate-900 block">Telephone Desks</span>
-                    {/* Section 0 Institutional Config // TODO-VERIFY */}
-                    <span className="text-slate-600 block mt-0.5 font-mono">
-                      {settings["secretariat_phone"] || institutionalConfig.secretariatPhone}
+                    <span className="font-bold text-slate-900 block">Contact Numbers</span>
+                    <span className="text-slate-700 block mt-0.5 font-mono font-medium">
+                      02-338636 / 338637 / 77348083
                     </span>
-                    <span className="text-[11px] text-emerald-700 font-bold block mt-0.5">
-                      Emergency Helpline:{" "}
-                      {settings["emergency_hotline"] || institutionalConfig.emergencyHelpline} (
-                      {settings["emergency_hotline_label"] ||
-                        institutionalConfig.emergencyHelplineLabel}
-                      )
-                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-emerald-50 text-emerald-700 grid place-items-center shrink-0 border border-emerald-200">
+                    <MessageCircle className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-slate-900 block">WhatsApp</span>
+                    <a
+                      href="https://wa.me/97577348083"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-700 hover:underline block mt-0.5 font-mono font-semibold"
+                    >
+                      77348083
+                    </a>
                   </div>
                 </div>
 
@@ -233,39 +245,66 @@ function ContactPage() {
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-extrabold text-slate-900 block">Official Inquiries</span>
-                    {/* Section 0 Institutional Config // TODO-VERIFY */}
+                    <span className="font-bold text-slate-900 block">Email</span>
                     <a
-                      href={`mailto:${settings["secretariat_email"] || institutionalConfig.secretariatEmail}`}
-                      className="text-slate-600 hover:text-emerald-700 transition block mt-0.5 font-mono"
+                      href="mailto:bhtf@bhtf.bt"
+                      className="text-slate-700 hover:text-emerald-700 transition block mt-0.5 font-mono font-semibold"
                     >
-                      {settings["secretariat_email"] || institutionalConfig.secretariatEmail}
+                      bhtf@bhtf.bt
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-2xl bg-amber-50 text-amber-700 grid place-items-center shrink-0 border border-amber-200">
+                    <Globe className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-slate-900 block">Website & Social Media</span>
+                    <a
+                      href="https://www.bhtf.bt"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-700 hover:text-emerald-700 transition block mt-0.5 font-mono font-semibold"
+                    >
+                      www.bhtf.bt
+                    </a>
+                    <a
+                      href="https://www.facebook.com/profile.php?id=100006126615023"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline text-xs mt-1 inline-flex items-center gap-1 font-sans"
+                    >
+                      Official Facebook Page &rarr;
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-slate-100 text-slate-700 grid place-items-center shrink-0 border border-slate-200">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-extrabold text-slate-900 block">
-                      Secretariat Office Hours
+                    <span className="font-bold text-slate-900 block">
+                      Office Hours
                     </span>
                     <span className="text-slate-600 block mt-0.5">
-                      Monday – Friday: 9:00 AM – 5:00 PM
-                    </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">
-                      (BST Bhutan Standard Time, UTC+6)
+                      Monday – Friday: 9:00 AM – 5:00 PM (BST)
                     </span>
                   </div>
                 </div>
+              </div>
+
+              {/* Exact Enquiries Callout */}
+              <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-emerald-950 text-xs leading-relaxed space-y-1">
+                <p className="font-semibold text-emerald-900">Official Note:</p>
+                <p>For any enquiries, please contact us at <a href="mailto:bhtf@bhtf.bt" className="underline font-bold">bhtf@bhtf.bt</a> or visit the BHTF office in Thimphu.</p>
               </div>
             </div>
 
             {/* Statutory Trust Guarantee Box */}
             <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-950 to-slate-900 text-white border border-emerald-500/30 space-y-2 shadow-md">
-              <span className="text-amber-400 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-amber-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <ShieldCheck className="h-4 w-4" /> Royal Charter Fiduciary Oversight
               </span>
               <p className="text-xs text-slate-300 leading-relaxed font-normal">

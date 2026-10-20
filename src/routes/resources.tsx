@@ -59,9 +59,9 @@ export const Route = createFileRoute("/resources")({
       <ReportsExperience
         customSections={loaderData?.customSections}
         initialReports={loaderData?.initialReports}
-        badge="Official Repository"
-        title="Resources, Official Documents & Certified Audits"
-        subtitle="Access statutory filings, audited financial statements (2005–2025), Royal Charter proclamations, and quarterly window financing documentation."
+        badge="Section 4 • Downloadable Documents"
+        title="Resources"
+        subtitle="This section provides downloadable documents including Annual reports, Audited financial statements, Policies, Royal Charter, Investment policy, and Publications."
         pageSlug="resources"
         initialCategory={search?.category}
       />

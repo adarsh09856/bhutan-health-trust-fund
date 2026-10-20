@@ -25,11 +25,11 @@ export const Route = createFileRoute("/donate")({
   },
   head: () => ({
     meta: [
-      { title: "Donate to BHTF — 1:1 RGOB Sovereign Matched Healthcare Endowment" },
+      { title: "Donate — Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Make an official contribution to Bhutan Health Trust Fund. 1:1 RGOB Golden Match, DRC tax exemption (Reg. E-73), instant official voucher and live tracking.",
+          "Every contribution makes a difference. BHTF warmly welcomes support from individuals, organisations, and well-wishers in Bhutan and around the world to help sustain access to essential medicines and vaccines for the people of Bhutan.",
       },
     ],
   }),

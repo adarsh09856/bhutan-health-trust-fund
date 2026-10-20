@@ -159,12 +159,12 @@ export function OurWorkExperience({
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
       <PageHero
-        badge="Anchoring Sustainable Health Financing • 1998–2026"
-        title="Our Programs & Financed Commodities"
-        subtitle="Ensuring no hospital, clinic, or health post across Bhutan faces stockouts of life-saving medicines or vaccines."
+        badge="Section 3 • Healthcare Impact"
+        title="Impact"
+        subtitle="BHTF contributes to the sustainability of free primary healthcare in Bhutan by financing national essential medicines and vaccines through investment returns and health contributions."
       />
 
-      {/* The Impact: What BHTF Delivers Today (Slide 8 / Screenshot 6) */}
+      {/* Official Section 3: Impact & What BHTF Delivers Today */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="today-impact-summary">
         <SectionEditBadge
           label="What BHTF Delivers Today"
@@ -172,20 +172,23 @@ export function OurWorkExperience({
           sectionId="today-impact-summary"
           studioHref="/admin/page-editor?slug=our-work"
           initialData={{
-            title: "The Impact: What BHTF Delivers Today",
+            title: "3. Impact — What BHTF delivers today",
             subtitle: "No Bhutanese citizen has ever been billed for an essential medicine or vaccine.",
-            badge: "Nationwide Coverage & Impact",
+            badge: "Section 3 • Impact",
           }}
         />
         <div className="space-y-6">
-          <div className="text-center max-w-3xl mx-auto space-y-2">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-              Nationwide Coverage & Impact
+              Section 3 • Impact Overview
             </span>
-            <h2 className="font-sans text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              The Impact: What BHTF Delivers Today
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              What BHTF Delivers Today
             </h2>
             <p className="text-sm sm:text-base text-slate-700 font-medium">
+              Through prudent financial management, the Fund continues supply of national essential medicines and vaccines and strengthens the long-term sustainability of primary healthcare financing for the people of Bhutan.
+            </p>
+            <p className="text-base sm:text-lg text-emerald-900 font-bold font-serif">
               No Bhutanese citizen has ever been billed for an essential medicine or vaccine.
             </p>
           </div>

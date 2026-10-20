@@ -196,9 +196,9 @@ function NewsPage() {
   return (
     <div className="space-y-12 sm:space-y-16 pb-20 bg-[#FAF8F3]">
       <PageHero
-        badge="Official Media Room"
-        title="News, Media & Press Releases"
-        subtitle="Authoritative coverage of national health financing milestones, vaccine supply chains, and community health impacts."
+        badge="Section 5 • Official Updates"
+        title="News and Events"
+        subtitle="Discover the latest news, activities, and milestones of the Bhutan Health Trust Fund. From key developments and strategic partnerships to official engagements and events, this section highlights BHTF’s continued efforts to safeguard the Fund and sustain essential healthcare financing for the people of Bhutan."
       />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 relative" data-bhtf-section="news-bulletins">

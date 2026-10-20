@@ -148,12 +148,13 @@ export function ReportsExperience({
   };
 
   const categories = [
-    { id: "ALL", label: "All Publications" },
-    { id: "Advocacy", label: "Advocacy Materials" },
-    { id: "Annual Report", label: "Annual Reports" },
-    { id: "Financial", label: "Audit Report" },
-    { id: "Governance", label: "Governance & Charters" },
-    { id: "Strategy", label: "Strategic Plans" },
+    { id: "ALL", label: "All Documents" },
+    { id: "Annual Report", label: "Annual reports" },
+    { id: "Financial", label: "Audited financial statements" },
+    { id: "Policies", label: "Policies" },
+    { id: "Charter", label: "Royal Charter" },
+    { id: "Investment", label: "Investment policy" },
+    { id: "Publications", label: "Publications" },
   ];
 
   const filtered = reports.filter((r) => {
@@ -164,8 +165,12 @@ export function ReportsExperience({
     const matchesCategory =
       selectedCategory === "ALL" ||
       r.category === selectedCategory ||
-      (selectedCategory === "Advocacy" && (r.category === "Research" || r.category === "Advocacy" || r.category === "Publications")) ||
-      (selectedCategory === "Financial" && (r.category === "Financial" || r.category === "Audit"));
+      (selectedCategory === "Annual Report" && r.category.toLowerCase().includes("annual")) ||
+      (selectedCategory === "Financial" && (r.category === "Financial" || r.category === "Audit" || r.title.toLowerCase().includes("audit") || r.title.toLowerCase().includes("financial"))) ||
+      (selectedCategory === "Policies" && (r.category === "Policies" || r.category === "Governance" || r.title.toLowerCase().includes("policy"))) ||
+      (selectedCategory === "Charter" && (r.category === "Charter" || r.category === "Governance" || r.title.toLowerCase().includes("charter"))) ||
+      (selectedCategory === "Investment" && (r.category === "Investment" || r.category === "Strategy" || r.title.toLowerCase().includes("investment") || r.title.toLowerCase().includes("ips"))) ||
+      (selectedCategory === "Publications" && (r.category === "Publications" || r.category === "Advocacy" || r.category === "Research" || r.title.toLowerCase().includes("publication")));
     return matchesSearch && matchesCategory;
   });
 

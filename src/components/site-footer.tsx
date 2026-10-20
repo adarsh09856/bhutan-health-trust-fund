@@ -200,11 +200,15 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2">
               <Phone className="size-4 text-emerald-400 shrink-0" />
-              <span>+975 2 328999</span>
+              <span>02-338636 / 338637 / 77348083</span>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="size-4 text-emerald-400 shrink-0" />
               <span>bhtf@bhtf.bt</span>
+            </li>
+            <li className="flex items-center gap-2 text-xs text-white/70">
+              <span className="font-mono text-emerald-300 font-bold">WhatsApp:</span>
+              <span>77348083</span>
             </li>
           </ul>
 
@@ -230,10 +234,19 @@ export function SiteFooter() {
           </div>
 
           <div className="pt-1 flex gap-2">
-            {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
+            <a
+              href="https://www.facebook.com/profile.php?id=100006126615023"
+              target="_blank"
+              rel="noreferrer"
+              className="grid place-items-center size-8 rounded-full bg-white/10 hover:bg-emerald-600 hover:text-white transition text-white/80"
+              aria-label="Official BHTF Facebook Profile"
+            >
+              <Facebook className="size-3.5" />
+            </a>
+            {[Twitter, Youtube, Linkedin].map((Icon, i) => (
               <a
                 key={i}
-                href="https://facebook.com/bhutanhealthtrustfund"
+                href="https://www.bhtf.bt"
                 target="_blank"
                 rel="noreferrer"
                 className="grid place-items-center size-8 rounded-full bg-white/10 hover:bg-emerald-600 hover:text-white transition text-white/80"

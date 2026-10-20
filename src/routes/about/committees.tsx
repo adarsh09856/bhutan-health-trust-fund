@@ -8,19 +8,14 @@ import {
   Scale,
   ShieldCheck,
   TrendingUp,
-  Award,
   Landmark,
-  FileText,
-  Lock,
+  Coins,
   CheckCircle2,
-  PieChart,
-  UserCheck,
+  Users,
 } from "lucide-react";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
-import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-import { PortfolioAllocationCharts } from "@/components/portfolio-allocation-chart";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/committees")({
@@ -43,49 +38,42 @@ export const Route = createFileRoute("/about/committees")({
   },
   head: () => ({
     meta: [
-      { title: "Asset Management & Audit Committees | Bhutan Health Trust Fund" },
+      { title: "Asset Management Committee (AMC) | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Official terms of reference, investment guidelines, and governance parameters of the BHTF Asset Management Committee (AMC) and Governance & Audit Committee.",
+          "Official directory and mandate of the BHTF Asset Management Committee (AMC), Table 1.2 members, and the 70–20–10 operating model.",
       },
     ],
   }),
   component: CommitteesPage,
 });
 
+// Official Asset Management Committee (Table 1.2 from official write-up)
 const amcMembers = [
   {
     name: "Ms. Ugyen Choden",
-    committeeRole: "Chairperson, Asset Management Committee",
-    title: "Deputy Governor, Royal Monetary Authority (RMA)",
-    badge: "AMC Chairperson",
+    committeeRole: "Chairperson",
+    title: "Deputy Governor, RMA",
+    badge: "Chairperson (AMC)",
     desc: "Provides high-level central banking, liquidity, and macroeconomic portfolio oversight, guiding BHTF capital preservation strategies.",
     photo: trusteeUgyenChoden,
   },
   {
     name: "Mr. Chencho T. Namgay",
-    committeeRole: "Member, Asset Management Committee",
-    title: "CEO, National Pension & Provident Fund (NPPF)",
-    badge: "Institutional Portfolio",
+    committeeRole: "Member",
+    title: "Chief Executive Officer, NPPF",
+    badge: "Member (AMC)",
     desc: "Brings extensive institutional fund management, asset allocation, and risk management insight from Bhutan's premier pension fiduciary.",
     photo: trusteeChenchoNamgay,
   },
   {
     name: "Mr. Norbu Dendup",
-    committeeRole: "Member, Asset Management Committee",
-    title: "Director, Department of Treasury & Accounts, MoF",
-    badge: "Treasury & Sovereign Fiduciary",
-    desc: "Oversees public debt parameters, sovereign treasury allocations, and statutory matching fund coordination under the Ministry of Finance.",
+    committeeRole: "Member",
+    title: "Director, Department of Treasury and Accounts, MoF",
+    badge: "Member (AMC)",
+    desc: "Oversees public financial management, treasury coordination, and sovereign endowment governance under the Ministry of Finance.",
     photo: trusteeNorbuDendup,
-  },
-  {
-    name: "Dr. Gyambo Sithey, PhD",
-    committeeRole: "Director / Member Secretary",
-    title: "Director, BHTF Secretariat",
-    badge: "Director",
-    desc: "Executes AMC strategic investment mandates, portfolio oversight, and statutory reporting.",
-    photo: trusteeDrGyambo,
   },
 ];
 
@@ -95,346 +83,143 @@ function CommitteesPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
-        badge="Fiduciary Committees"
-        title="Asset Management & Governance Committees"
-        subtitle="Specialized statutory committees providing investment stewardship, capital preservation parameters, and independent audit oversight directly to the Board of Trustees."
+        badge="Section 1.2 • Fiduciary Oversight"
+        title="Asset management committee"
+        subtitle="To strengthen financial stewardship and investment oversight, the Board appoints an Asset Management Committee (AMC), which supports the responsible management of the Fund’s assets."
         breadcrumb={[
           { label: "Home", to: "/" },
-          { label: "About Us", to: "/about" },
-          { label: "Committees" },
+          { label: "About Us", to: "/about/organization" },
+          { label: "Asset management committee" },
         ]}
       />
 
+      {/* Custom Page Renderer if edited by admin */}
+      {customSections && customSections.length > 0 && (
+        <PageRenderer sections={customSections} pageSlug="about-committees" />
+      )}
 
-
-      {/* 1. Asset Management Committee (AMC) Overview */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="amc-overview">
+      {/* 1. Official AMC Table 1.2 Members Gallery (NPPF Pattern) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="amc-roster">
         <SectionEditBadge
           label="Asset Management Committee (AMC)"
           pageSlug="about-committees"
-          sectionId="amc-overview"
+          sectionId="amc-roster"
           studioHref="/admin/page-editor?slug=about-committees"
           initialData={{
-            title: "Asset Management Committee (AMC)",
-            subtitle: "Fiduciary investment sub-committee providing portfolio risk management, capital preservation parameters, and asset allocation oversight.",
-            badge: "Fiduciary Investment Sub-Committee",
+            title: "1.2 Asset management committee (AMC)",
+            subtitle: "Table 1.2 official members and positions of the Asset Management Committee.",
+            badge: "Table 1.2 • AMC Members",
           }}
         />
+
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-800 block">
+            Table 1.2 • Investment Stewardship
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            Asset management committee (AMC)
+          </h2>
+          <p className="text-slate-600 text-xs sm:text-sm mt-2.5 font-light">
+            Supporting the responsible management of the Fund’s assets in line with its mandate and objectives to safeguard resources for essential medicines and vaccines.
+          </p>
+        </div>
+
+        {/* 3 AMC Members in Clean NPPF Institutional Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          {amcMembers.map((m, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-amber-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
+            >
+              <div className="flex flex-col items-center w-full">
+                <div className="w-40 h-40 sm:w-44 sm:h-44 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/90 mb-4 shadow-2xs">
+                  <img
+                    src={m.photo}
+                    alt={m.name}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+
+                <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-amber-800 transition leading-snug">
+                  {m.name}
+                </h3>
+                <div className="text-xs font-semibold text-amber-800 mt-1">
+                  {m.committeeRole}
+                </div>
+                <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
+                  {m.title}
+                </div>
+              </div>
+
+              <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+                <span>{m.badge}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 2. Official 70–20–10 Operating Model & Capital Preservation Policy */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="amc-operating-model">
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-800">
-                Fiduciary Investment Sub-Committee
+                Investment Strategy Statement
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
-                Asset Management Committee (AMC)
-              </h2>
+              <h3 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
+                The 70–20–10 Operating Model
+              </h3>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold font-mono">
               <Scale className="h-3.5 w-3.5 text-amber-700" />
-              <span>Investment Oversight</span>
+              <span>Prudent Capital Governance</span>
             </div>
           </div>
 
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
-            <div className="font-bold text-slate-900 font-mono uppercase tracking-wider text-xs">
-              Core AMC Responsibilities
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-700">
-              <div className="flex items-start gap-2.5 bg-white p-4 rounded-xl border border-slate-200/80">
-                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span>Enforcing capital preservation guidelines across all bank deposits and bonds.</span>
-              </div>
-              <div className="flex items-start gap-2.5 bg-white p-4 rounded-xl border border-slate-200/80">
-                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span>Reviewing quarterly yield performance against inflation and healthcare cost trends.</span>
-              </div>
-              <div className="flex items-start gap-2.5 bg-white p-4 rounded-xl border border-slate-200/80">
-                <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span>Approving multi-currency diversification (BTN, INR, USD) to mitigate foreign exchange risks.</span>
-              </div>
-            </div>
-          </div>
+          <div className="space-y-4 text-slate-700 text-sm leading-relaxed font-sans">
+            <p>
+              As per the Investment Strategy Statement, the Bhutan Health Trust Fund follows a <strong>70–20–10 operating model</strong> to ensure the sustainable financing of national essential medicines and vaccines in Bhutan. Under this model:
+            </p>
 
-          {/* AMC Appointed Members Gallery */}
-          <div className="space-y-4 pt-4 border-t border-slate-100">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 uppercase tracking-wider">
-              <UserCheck className="h-4 w-4 text-emerald-700" />
-              <span>Asset Management Committee Members</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {amcMembers.map((m, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
-                >
-                  <div className="flex flex-col items-center w-full">
-                    <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-3.5 shadow-2xs">
-                      <img
-                        src={m.photo}
-                        alt={m.name}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h4 className="font-serif text-base font-bold text-slate-900 leading-snug">
-                      {m.name}
-                    </h4>
-                    <p className="text-xs font-semibold text-emerald-800 mt-1">
-                      {m.committeeRole}
-                    </p>
-                    <p className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                      {m.title}
-                    </p>
-                  </div>
-                  <span className="inline-block text-[10px] font-mono font-medium text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full mt-3">
-                    {m.badge}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Investment Asset Allocation Strategy Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4">
-            <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
-              <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
-                <Lock className="h-4 w-4" />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900">Capital Preservation</h3>
-              <p className="text-xs text-slate-600 leading-relaxed font-light">
-                Zero capital erosion mandate. The principal corpus (Nu. 4.8B) cannot be touched or utilized for operational expenses.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
-              <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900">Yield Optimization</h3>
-              <p className="text-xs text-slate-600 leading-relaxed font-light">
-                Investment yields fund 100% of 4 routine vaccines, 438 essential medicines, and 110 traditional formulations.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-2">
-              <div className="h-9 w-9 rounded-xl bg-teal-50 text-teal-800 grid place-items-center">
-                <PieChart className="h-4 w-4" />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900">Prudent Diversification</h3>
-              <p className="text-xs text-slate-600 leading-relaxed font-light">
-                Allocated across sovereign bonds, high-grade domestic debt, and secure international offshore holdings.
-              </p>
-            </div>
-          </div>
-
-          {/* Section 6 Official Portfolio Breakdown Table */}
-          <div className="pt-8 border-t border-slate-100 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800">
-                  Section 6: Investment Portfolio Structure
-                </span>
-                <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900">
-                  Onshore & Offshore Endowment Asset Allocation
-                </h3>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-bold font-mono">
-                <span>Fund Total: Nu. 4,798,965,306.85</span>
-              </div>
-            </div>
-
-            <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-2xs">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-mono uppercase tracking-wider text-[10px]">
-                  <tr>
-                    <th className="py-3 px-4">Investment Class / Instrument</th>
-                    <th className="py-3 px-4 text-right">Holding Value (Nu.)</th>
-                    <th className="py-3 px-4 text-right">% of Total Endowment</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 font-sans">
-                  <tr className="bg-slate-50/50 font-bold text-slate-900">
-                    <td colSpan={3} className="py-2 px-4 text-[11px] text-emerald-900 font-mono">
-                      A. Onshore Investments (Domestic Financial Sector)
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Fixed Deposits (Domestic Commercial Banks)</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">1,905,600,000.00</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">39.71%</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Long-Term Annuity Scheme</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">645,000,000.00</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">13.44%</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Corporate Bonds (Bhutan Power Corporation)</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">500,000,000.00</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">10.42%</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Listed Equity Shares (Bhutan National Bank Ltd.)</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">148,999,386.85</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">3.10%</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 pl-6">• Listed Equity Shares (GIC-Bhutan Reinsurance)</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">10,000,023.05</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">0.21%</td>
-                  </tr>
-                  <tr className="bg-emerald-50/40 font-bold text-emerald-950 border-t border-emerald-200">
-                    <td className="py-2.5 px-4 pl-6">Subtotal — Onshore Investments</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-black">3,209,599,409.90</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-black">66.88%</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 font-medium">B. Operational Bank Savings Deposits (Liquidity Reserve)</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">445,514,253.34</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">9.28%</td>
-                  </tr>
-                  <tr className="hover:bg-slate-50/50">
-                    <td className="py-2.5 px-4 text-slate-800 font-medium">C. Offshore Investments (USD 12,084,796.72 in Global Assets)</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-medium text-slate-900">1,143,851,643.61</td>
-                    <td className="py-2.5 px-4 text-right font-mono text-slate-600">23.84%</td>
-                  </tr>
-                  <tr className="bg-slate-900 text-white font-bold text-sm border-t-2 border-slate-900">
-                    <td className="py-3 px-4">Total Endowment Corpus (Audited Sovereign Fund)</td>
-                    <td className="py-3 px-4 text-right font-mono font-black text-amber-300">Nu. 4,798,965,306.85</td>
-                    <td className="py-3 px-4 text-right font-mono text-emerald-400">100.00%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Interactive Visual Portfolio Allocation & Spending Donut Charts */}
-            <PortfolioAllocationCharts />
-
-            {/* Visual 70/20/10 Ratio Bar */}
-            <div className="pt-2">
-              <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-700 mb-2">
-                <span>Statutory 70 / 20 / 10 Spending Allocation Policy</span>
-                <span className="text-emerald-800">100% Ring-Fenced Endowment Yield</span>
-              </div>
-              <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex shadow-inner border border-slate-200">
-                <div style={{ width: "70%" }} className="bg-emerald-600 h-full transition-all" title="70% Procurement" />
-                <div style={{ width: "20%" }} className="bg-amber-500 h-full transition-all" title="20% Capital Growth" />
-                <div style={{ width: "10%" }} className="bg-teal-600 h-full transition-all" title="10% Operations" />
-              </div>
-            </div>
-
-            {/* IPS Spending Policy Highlight */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-              <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">
-                <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider">
-                  Spending Policy (70%)
-                </span>
-                <p className="font-serif text-sm font-bold text-slate-900">Essential Drugs & Vaccines</p>
-                <p className="text-[11px] text-slate-600 font-light">
-                  70% of net investment yields directly fund universal vaccines, 438 essential drugs, and 110 traditional remedies.
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
+              <div className="bg-[#FAF8F3] border border-emerald-200/80 rounded-2xl p-5 space-y-2">
+                <div className="text-3xl font-black font-mono text-emerald-800">70%</div>
+                <h4 className="font-serif font-bold text-base text-slate-900">Procurement Financing</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  70% of investment income is allocated to finance the procurement of national essential medicines and vaccines.
                 </p>
               </div>
 
-              <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">
-                <span className="text-[10px] font-mono font-bold text-amber-800 uppercase tracking-wider">
-                  Capital Growth (20%)
-                </span>
-                <p className="font-serif text-sm font-bold text-slate-900">Endowment Reinvestment</p>
-                <p className="text-[11px] text-slate-600 font-light">
-                  20% of annual net income is automatically reinvested to protect the corpus against inflation and preserve real value.
+              <div className="bg-[#FAF8F3] border border-amber-200/80 rounded-2xl p-5 space-y-2">
+                <div className="text-3xl font-black font-mono text-amber-800">20%</div>
+                <h4 className="font-serif font-bold text-base text-slate-900">Capital Reinvestment</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  20% is reinvested to support the growth of the Fund’s capital and protect purchasing power against inflation.
                 </p>
               </div>
 
-              <div className="bg-[#FAF8F3] p-4 rounded-xl border border-slate-200 space-y-1">
-                <span className="text-[10px] font-mono font-bold text-teal-800 uppercase tracking-wider">
-                  Operations Cap (10%)
-                </span>
-                <p className="font-serif text-sm font-bold text-slate-900">Strict Fiduciary Efficiency</p>
-                <p className="text-[11px] text-slate-600 font-light">
-                  Statutory 10% ceiling for administration. In practice, only ~4% is utilized, with the remaining 6% returned to corpus.
+              <div className="bg-[#FAF8F3] border border-teal-200/80 rounded-2xl p-5 space-y-2">
+                <div className="text-3xl font-black font-mono text-teal-800">10%</div>
+                <h4 className="font-serif font-bold text-base text-slate-900">Operational Expenses</h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  10% is allocated to cover operational expenses of the Secretariat, ensuring maximum resource efficiency.
                 </p>
               </div>
             </div>
 
-            {/* National Strategic Doubling Roadmap Target (Workshop Slide 5) */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-900 to-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-3">
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-widest block">
-                  Strategic Roadmap 2026–2030 • Fund Expansion Target
-                </span>
-                <h4 className="font-serif text-base font-bold text-white">
-                  Target: Doubling the Endowment Corpus from Nu. 4.3B to roughly Nu. 8.6 Billion
-                </h4>
-                <p className="text-xs text-slate-300 font-light max-w-2xl">
-                  Following the audited FY 2024–25 baseline of Nu. 4.31B and reaching Nu. 4.8B in 2026, the Asset Management Committee is establishing policy space for offshore asset diversification and 1:1 RGOB matched institutional giving to achieve roughly Nu. 8.6 Billion in capital preservation.
-                </p>
-              </div>
-              <div className="px-4 py-2 rounded-xl bg-amber-400 text-slate-950 font-black text-xs font-mono shrink-0 text-center">
-                Target: Nu. 8.6B
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Governance & Audit Committee (GAC) Overview */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="gac-overview">
-        <SectionEditBadge
-          label="Governance & Audit Committee (GAC)"
-          pageSlug="about-committees"
-          sectionId="gac-overview"
-          studioHref="/admin/policies"
-          initialData={{
-            title: "Governance & Audit Committee (GAC)",
-            subtitle: "Statutory compliance, independent audit oversight, and anti-corruption safeguards directly reporting to the Royal Audit Authority.",
-            badge: "Statutory Compliance",
-          }}
-        />
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
-            <div className="space-y-1">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-teal-800">
-                Statutory Compliance
-              </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
-                Governance & Audit Committee (GAC)
-              </h2>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-50 text-teal-900 border border-teal-300 text-xs font-bold font-mono">
-              <ShieldCheck className="h-3.5 w-3.5 text-teal-700" />
-              <span>Statutory Compliance</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-7 space-y-4 text-slate-700 text-sm leading-relaxed font-light">
-              <p>
-                The Governance & Audit Committee (GAC) operates as an independent audit safeguard, ensuring that all financial operations comply with Royal Audit Authority (RAA) statutory standards, public procurement norms, and the BHTF Financial Management System (FMS).
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-3 mt-6">
+              <h4 className="font-serif font-bold text-base text-slate-900">
+                Principal Capital Preservation Principle
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
+                A key principle of the Fund is the preservation of its principal capital. By financing healthcare needs through investment income rather than drawing on the principal, BHTF aims to safeguard its financial resources for future generations.
               </p>
-              <p>
-                The committee conducts internal control assessments, reviews external audit observations, inspects international procurement bidding records, and upholds transparent whistleblower and anti-corruption protections.
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
+                Any remaining funding gap is supplemented by a <strong>1% health contribution</strong> deducted from the monthly gross salaries of salaried employees in the country. Together, this financing mechanism supports the continued availability of national essential medicines and vaccines while strengthening the Fund’s long-term financial sustainability and its commitment to Bhutan’s free primary healthcare system.
               </p>
-            </div>
-
-            <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 text-xs">
-              <div className="font-bold text-slate-900 font-mono uppercase tracking-wider">
-                Auditing & Transparency Mandate
-              </div>
-              <div className="space-y-2 text-slate-600">
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span>Supervising annual clean audit certification with the Royal Audit Authority.</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span>Ensuring ring-fenced verification of donor funds and corporate CSR matching.</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span>Monitoring compliance with the statutory Procurement Rules and Regulations (PRR).</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
