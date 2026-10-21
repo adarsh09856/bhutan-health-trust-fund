@@ -17,8 +17,8 @@ const ABOUT_SUB_TABS: SubTab[] = [
   },
   {
     to: "/about/organization",
-    label: "Organization & Mandate",
-    shortLabel: "Mandate",
+    label: "Organization & Organogram",
+    shortLabel: "Organization",
     icon: Target,
   },
   {
@@ -35,7 +35,7 @@ const ABOUT_SUB_TABS: SubTab[] = [
   },
   {
     to: "/about/secretariat",
-    label: "Secretariat & Organogram",
+    label: "Secretariat",
     shortLabel: "Secretariat",
     icon: Users,
   },

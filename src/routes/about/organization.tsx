@@ -23,11 +23,11 @@ import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 export const Route = createFileRoute("/about/organization")({
   head: () => ({
     meta: [
-      { title: "Organization & Mandate | Bhutan Health Trust Fund" },
+      { title: "Organization, Mandate & Organogram | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Official Mandate, Vision, Mission, Governance Framework, and 70–20–10 Sustainable Healthcare Financing Model of the Bhutan Health Trust Fund.",
+          "Official Mandate, Vision, Mission, Royal Charter Governance Framework, Organogram, and 70–20–10 Operating Model of the Bhutan Health Trust Fund.",
       },
     ],
   }),
@@ -38,9 +38,9 @@ function AboutOrganizationPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
-        badge="Institutional Foundations"
+        badge="Institutional Governance"
         title="Organization & Mandate"
-        subtitle="Official Mandate, Vision, Mission, Governance Framework, and the 70–20–10 Sustainable Healthcare Financing Model."
+        subtitle="Official Mandate, Vision, Mission, Royal Charter Governance Framework, and Organizational Structure."
         breadcrumb={[
           { label: "Home", to: "/" },
           { label: "About Us", to: "/about" },
@@ -197,7 +197,148 @@ function AboutOrganizationPage() {
         </div>
       </section>
 
-      {/* 3. Sub-pages Quick Link Cards */}
+      {/* 3. Official Organizational Chart (Organogram) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-organogram">
+        <SectionEditBadge
+          label="Organizational Chart (Organogram)"
+          pageSlug="about-organization"
+          sectionId="org-organogram"
+          studioHref="/admin/page-editor?slug=about-organization"
+          initialData={{
+            title: "Organizational Structure & Governance Organogram",
+            subtitle: "Approved organizational structure of the Bhutan Health Trust Fund.",
+            badge: "Institutional Organogram",
+          }}
+        />
+
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
+              Section 1.3 • Governance Architecture
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+              Organizational Chart (Organogram)
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm font-light">
+              Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions.
+            </p>
+          </div>
+
+          {/* Interactive Organogram Diagram */}
+          <div className="max-w-4xl mx-auto pt-4">
+            {/* Level 1: Board of Trustees */}
+            <div className="flex justify-center">
+              <Link
+                to="/about/trustees"
+                className="w-72 bg-slate-50 hover:bg-emerald-50/50 border-2 border-slate-800 hover:border-emerald-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
+              >
+                <span className="font-serif font-bold text-base text-slate-900 group-hover:text-emerald-900 block">
+                  Board of Trustees
+                </span>
+                <span className="text-[10px] text-slate-500 group-hover:text-emerald-700 font-sans block mt-0.5">
+                  High-Level Governance • 7 Trustees (Table 1.1) →
+                </span>
+              </Link>
+            </div>
+
+            {/* Vertical Line */}
+            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+
+            {/* Horizontal Branch to AMC */}
+            <div className="relative">
+              <div className="w-0.5 h-20 bg-slate-700 mx-auto" />
+              <div className="sm:absolute sm:top-1/2 sm:right-1/2 sm:-translate-y-1/2 flex items-center justify-center my-2 sm:my-0">
+                <Link
+                  to="/about/committees"
+                  className="w-64 bg-amber-50/70 hover:bg-amber-100/70 border-2 border-amber-800/80 hover:border-amber-900 rounded-2xl p-3 text-center shadow-xs transition group cursor-pointer block"
+                >
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 group-hover:text-amber-950 block leading-snug">
+                    Asset Management Committee
+                  </span>
+                  <span className="text-[10px] text-amber-800 font-sans block mt-0.5 font-semibold">
+                    Specialized Advisory Sub-committee (Table 1.2) →
+                  </span>
+                </Link>
+                <div className="hidden sm:block w-16 md:w-20 h-0.5 bg-slate-700" />
+              </div>
+            </div>
+
+            {/* Level 2: Director */}
+            <div className="flex justify-center">
+              <Link
+                to="/about/secretariat"
+                className="w-72 bg-slate-50 hover:bg-teal-50/50 border-2 border-slate-800 hover:border-teal-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
+              >
+                <span className="font-serif font-bold text-base text-slate-900 group-hover:text-teal-900 block">
+                  Director
+                </span>
+                <span className="text-[11px] text-emerald-800 font-sans block mt-0.5 font-semibold">
+                  Dr. Gyambo Sithey, PhD
+                </span>
+                <span className="text-[10px] text-slate-500 group-hover:text-teal-700 font-sans block">
+                  Member Secretary & Executive Head →
+                </span>
+              </Link>
+            </div>
+
+            {/* Stem Down to 4 Divisions */}
+            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+            <div className="hidden sm:block w-[88%] h-0.5 bg-slate-700 mx-auto" />
+
+            {/* 4 Divisions matching Section 1.3 */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-0 sm:pt-0">
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Investment Management Division
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Administration & Finance Division
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Programme Division
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
+                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
+                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                    Monitoring & Evaluation Division
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Secretariat Link Callout */}
+            <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+              <Link
+                to="/about/secretariat"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-emerald-800 text-white text-xs font-semibold shadow-xs transition duration-200"
+              >
+                <span>View Secretariat Team & Key Personnel</span>
+                <ArrowRight className="size-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Sub-pages Quick Link Cards */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="border-t border-slate-200/80 pt-10">
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 block mb-1">
@@ -247,10 +388,10 @@ function AboutOrganizationPage() {
               <Building className="h-5 w-5" />
             </div>
             <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-teal-800 transition">
-              Secretariat and organizational chart →
+              Secretariat Directorate & Personnel →
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
-              Executive arm headed by Director Dr. Gyambo Sithey, PhD, with 4 operational divisions.
+              Executive arm headed by Director Dr. Gyambo Sithey, PhD, with key operational officers.
             </p>
           </Link>
         </div>

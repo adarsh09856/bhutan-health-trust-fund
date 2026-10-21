@@ -100,7 +100,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link to="/about/organization" className="hover:text-emerald-300 transition-colors">
-                Organization & Mandate
+                Organization & Organogram
               </Link>
             </li>
             <li>
@@ -115,7 +115,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link to="/about/secretariat" className="hover:text-emerald-300 transition-colors">
-                Secretariat & Organogram
+                Secretariat
               </Link>
             </li>
             <li>

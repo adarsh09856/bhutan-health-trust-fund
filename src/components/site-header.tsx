@@ -145,8 +145,8 @@ export function SiteHeader() {
                   >
                     <Target className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Organization & Mandate</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Mandate, Vision, Mission & 70-20-10 Model</div>
+                      <div>Organization & Organogram</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Mandate, Vision, Mission & Organizational Chart</div>
                     </div>
                   </Link>
                   <Link
@@ -175,8 +175,8 @@ export function SiteHeader() {
                   >
                     <Users className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Secretariat and organizational chart</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Directorate & 4 operational divisions</div>
+                      <div>Secretariat</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Directorate leadership & operational officers</div>
                     </div>
                   </Link>
                 </div>
@@ -483,7 +483,7 @@ export function SiteHeader() {
                       to="/about/organization"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Organization & Mandate
+                      • Organization & Organogram
                     </Link>
                     <Link
                       to="/about/trustees"
@@ -501,7 +501,7 @@ export function SiteHeader() {
                       to="/about/secretariat"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Secretariat and organizational chart
+                      • Secretariat
                     </Link>
                   </div>
                 )}

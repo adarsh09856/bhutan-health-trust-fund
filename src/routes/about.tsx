@@ -157,7 +157,7 @@ function AboutUsMainPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
-          {/* Card 1: Organization & Mandate */}
+          {/* Card 1: Organization & Organogram */}
           <Link
             to="/about/organization"
             className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between"
@@ -167,17 +167,17 @@ function AboutUsMainPage() {
                 <Target className="size-6 text-emerald-800" />
               </div>
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 block">
-                Statutory Mandate
+                Statutory Mandate & Organogram
               </span>
               <h4 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
-                Organization & Mandate
+                Organization & Organogram
               </h4>
               <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
-                Our Mandate, Vision, Mission, and the 70–20–10 sustainable healthcare financing model.
+                Our Mandate, Vision, Mission, 70–20–10 financial model, and full organizational chart.
               </p>
             </div>
             <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-800">
-              <span>View Mandate</span>
+              <span>View Organization</span>
               <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
@@ -232,7 +232,7 @@ function AboutUsMainPage() {
             </div>
           </Link>
 
-          {/* Card 4: Secretariat and Organogram */}
+          {/* Card 4: Secretariat */}
           <Link
             to="/about/secretariat"
             className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between"
@@ -245,14 +245,14 @@ function AboutUsMainPage() {
                 Section 1.3 • Executive Arm
               </span>
               <h4 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
-                Secretariat & Organogram
+                Secretariat & Personnel
               </h4>
               <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
                 Director Dr. Gyambo Sithey, 4 core operational divisions, and key officer profiles.
               </p>
             </div>
             <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-800">
-              <span>View Structure</span>
+              <span>View Secretariat</span>
               <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>

@@ -26,11 +26,11 @@ import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 export const Route = createFileRoute("/about/secretariat")({
   head: () => ({
     meta: [
-      { title: "Secretariat & Organogram | Bhutan Health Trust Fund" },
+      { title: "Secretariat & Key Personnel | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Official Secretariat organizational structure, Director Dr. Gyambo Sithey, 4 core operational divisions, and key staff profiles.",
+          "Official Secretariat executive structure, Director Dr. Gyambo Sithey, 4 core operational divisions, and key staff profiles.",
       },
     ],
   }),
@@ -41,121 +41,124 @@ function SecretariatPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
-        badge="Section 1.3 • Executive Structure"
-        title="Secretariat and organizational chart"
+        badge="Executive Directorate"
+        title="Secretariat"
         subtitle="The executive arm of the Bhutan Health Trust Fund executing day-to-day operations, endowment investments, and healthcare procurement disbursements."
         breadcrumb={[
           { label: "Home", to: "/" },
           { label: "About Us", to: "/about" },
-          { label: "Secretariat and organogram" },
+          { label: "Secretariat" },
         ]}
       />
 
-      {/* 1. Official Section 1.3 Organogram Chart */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-organogram">
+      {/* 1. Core Secretariat Operational Divisions */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-divisions">
         <SectionEditBadge
-          label="Secretariat Organogram"
+          label="Secretariat Operational Divisions"
           pageSlug="about-secretariat"
-          sectionId="secretariat-organogram"
+          sectionId="secretariat-divisions"
           studioHref="/admin/page-editor?slug=about-secretariat"
           initialData={{
-            title: "1.3 Secretariat and Organizational Chart",
-            subtitle: "Approved organizational structure of the Secretariat with 4 core divisions.",
-            badge: "Section 1.3 • Organogram",
+            title: "Secretariat Operational Divisions",
+            subtitle: "Four operational divisions executing day-to-day management and procurement.",
+            badge: "Operational Structure",
           }}
         />
 
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
-              Section 1.3 • Organizational Chart
+              Section 1.3 • Operational Divisions
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-              Secretariat and Organizational Chart
+              Secretariat Operational Divisions
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm font-light">
-              Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions.
+              Under the leadership of the Director & Member Secretary, the Secretariat manages four specialized operational divisions to fulfill the statutory objectives of the Fund.
             </p>
           </div>
 
-          {/* Clean Organogram Diagram */}
-          <div className="max-w-4xl mx-auto pt-4">
-            {/* Level 1: Board */}
-            <div className="flex justify-center">
-              <div className="w-64 bg-slate-50 border-2 border-slate-800 rounded-2xl p-4 text-center shadow-xs">
-                <span className="font-serif font-bold text-base text-slate-900 block">Board of Trustees</span>
-                <span className="text-[10px] text-slate-500 font-sans block mt-0.5">High-Level Governance</span>
+          {/* 4 Divisions Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-2">
+            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
+                  <TrendingUp className="h-5 w-5" />
+                </div>
+                <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                  Investment Management Division
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Oversees endowment portfolio management, yield generation, onshore/offshore asset allocations, and liquidity monitoring.
+                </p>
+              </div>
+              <div className="text-[11px] font-mono font-semibold text-emerald-800 pt-2 border-t border-slate-200/70">
+                Endowment Stewardship
               </div>
             </div>
 
-            {/* Vertical Line */}
-            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
-
-            {/* Horizontal Branch to AMC */}
-            <div className="relative">
-              <div className="w-0.5 h-20 bg-slate-700 mx-auto" />
-              <div className="sm:absolute sm:top-1/2 sm:right-1/2 sm:-translate-y-1/2 flex items-center justify-center my-2 sm:my-0">
-                <div className="w-60 bg-amber-50/70 border-2 border-amber-800/80 rounded-2xl p-3 text-center shadow-xs">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 block leading-snug">
-                    Asset Management Committee
-                  </span>
-                  <span className="text-[10px] text-amber-800 font-sans block mt-0.5 font-semibold">Specialized Advisory Sub-committee</span>
+            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
+                  <Building2 className="h-5 w-5" />
                 </div>
-                <div className="hidden sm:block w-16 md:w-20 h-0.5 bg-slate-700" />
+                <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                  Administration & Finance Division
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Manages statutory accounting, financial audit compliance, budgeting, human resources, and general administrative services.
+                </p>
+              </div>
+              <div className="text-[11px] font-mono font-semibold text-amber-800 pt-2 border-t border-slate-200/70">
+                Statutory Fiduciary
               </div>
             </div>
 
-            {/* Level 2: Director */}
-            <div className="flex justify-center">
-              <div className="w-64 bg-slate-50 border-2 border-slate-800 rounded-2xl p-4 text-center shadow-xs">
-                <span className="font-serif font-bold text-base text-slate-900 block">Director</span>
-                <span className="text-[11px] text-emerald-800 font-sans block mt-0.5 font-semibold">Dr. Gyambo Sithey, PhD</span>
-                <span className="text-[10px] text-slate-500 font-sans block">Member Secretary & Executive Head</span>
+            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-800 grid place-items-center">
+                  <Activity className="h-5 w-5" />
+                </div>
+                <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                  Programme Division
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Coordinates directly with the Ministry of Health (MoH) for national essential medicine (438 items) and vaccine procurement disbursement.
+                </p>
+              </div>
+              <div className="text-[11px] font-mono font-semibold text-teal-800 pt-2 border-t border-slate-200/70">
+                Commodity Procurement
               </div>
             </div>
 
-            {/* Stem Down to 4 Divisions */}
-            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
-            <div className="hidden sm:block w-[88%] h-0.5 bg-slate-700 mx-auto" />
-
-            {/* 4 Divisions matching Section 1.3 */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-0 sm:pt-0">
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Investment Management Division
-                  </span>
+            <div className="bg-[#FAF8F3] border border-slate-200/90 rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="h-10 w-10 rounded-xl bg-sky-50 text-sky-800 grid place-items-center">
+                  <FileText className="h-5 w-5" />
                 </div>
+                <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                  Monitoring & Evaluation Division
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                  Assesses supply chain effectiveness, verifies commodity delivery across 20 dzongkhags, and monitors healthcare outcomes.
+                </p>
               </div>
-
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Administration & Finance Division
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Programme Division
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <div className="hidden sm:block w-0.5 h-6 bg-slate-700" />
-                <div className="w-full bg-slate-50 border-2 border-slate-800 rounded-2xl p-3.5 text-center shadow-xs min-h-[82px] flex flex-col items-center justify-center">
-                  <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 leading-snug">
-                    Monitoring & Evaluation Division
-                  </span>
-                </div>
+              <div className="text-[11px] font-mono font-semibold text-sky-800 pt-2 border-t border-slate-200/70">
+                Quality & Verification
               </div>
             </div>
+          </div>
+
+          {/* Reference Link to Organization & Organogram */}
+          <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <span>To view the overarching governance hierarchy and reporting lines:</span>
+            <Link
+              to="/about/organization"
+              className="inline-flex items-center gap-1.5 font-semibold text-emerald-800 hover:text-emerald-950 transition"
+            >
+              <span>View Organizational Chart (Organogram) in Organization & Mandate</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </section>
