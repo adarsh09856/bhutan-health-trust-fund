@@ -1,9 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicTrustees, getPublicPage } from "@/lib/api/public.functions";
-import type { Trustee, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   ShieldCheck,
@@ -22,26 +18,6 @@ import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/trustees")({
-  loader: async () => {
-    try {
-      const [trustees, page] = await Promise.all([
-        getPublicTrustees().catch(() => []),
-        getPublicPage({ data: { slug: "about-trustees" } }).catch(() => null),
-      ]);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
-      return { liveTrustees: trustees || [], customSections: sections };
-    } catch {
-      return { liveTrustees: [], customSections: null };
-    }
-  },
   head: () => ({
     meta: [
       { title: "Board of Trustees | Bhutan Health Trust Fund" },
@@ -116,68 +92,7 @@ const staticTrustees = [
 ];
 
 function TrusteesPage() {
-  const { liveTrustees, customSections } = Route.useLoaderData();
-  const [trusteesList, setTrusteesList] = useState<Trustee[]>(liveTrustees);
-
-  useEffect(() => {
-    if (liveTrustees.length === 0) {
-      getPublicTrustees()
-        .then((res) => {
-          if (res && res.length > 0) setTrusteesList(res);
-        })
-        .catch(() => {});
-    }
-  }, [liveTrustees]);
-
-  const trusteeFallbackPhotos: Record<string, string> = {
-    Tandin: trusteeLyonpoTandin,
-    "Tshering Wangchuk": trusteeLopenTshering,
-    Lopen: trusteeLopenTshering,
-    Choten: trusteeLopenTshering,
-    Phub: trusteeDrPhub,
-    Pema: trusteePemaTshering,
-    Ugyen: trusteeUgyenChoden,
-    Norbu: trusteeNorbuDendup,
-    Chencho: trusteeChenchoNamgay,
-  };
-
-  const defaultPhotoList = [
-    trusteeLyonpoTandin,
-    trusteeLopenTshering,
-    trusteeUgyenChoden,
-    trusteeChenchoNamgay,
-    trusteeNorbuDendup,
-    trusteePemaTshering,
-    trusteeDrPhub,
-  ];
-
-  const resolvePhoto = (name: string, photo: string | null, idx = 0) => {
-    if (photo && (photo.startsWith("http://") || photo.startsWith("https://") || photo.startsWith("data:"))) {
-      return photo;
-    }
-    for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
-      if (name.toLowerCase().includes(key.toLowerCase())) {
-        return p;
-      }
-    }
-    return defaultPhotoList[idx % defaultPhotoList.length];
-  };
-
-  const displayTrustees =
-    trusteesList.length >= 7
-      ? trusteesList.slice(0, 7).map((t, idx) => ({
-          name: t.name,
-          role: t.role,
-          organization: t.organization || staticTrustees[idx]?.organization || "Board of Trustees, BHTF",
-          badge:
-            t.badge ||
-            (idx === 0 || t.name.toLowerCase().includes("tandin")
-              ? "Chairperson"
-              : "Trustee"),
-          desc: t.bio || staticTrustees[idx]?.desc || "Statutory fiduciary trustee managing health endowment allocations.",
-          photo: resolvePhoto(t.name, t.photoUrl, idx),
-        }))
-      : staticTrustees;
+  const displayTrustees = staticTrustees;
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
@@ -191,11 +106,6 @@ function TrusteesPage() {
           { label: "Board of trustees" },
         ]}
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="about-trustees" />
-      )}
 
       {/* Complete Trustees Gallery Grid in Clean NPPF Institutional Style */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-roster">

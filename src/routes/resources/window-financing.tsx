@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
 import { getPublicPage } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Sparkles,

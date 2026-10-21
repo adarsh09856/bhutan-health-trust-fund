@@ -7,7 +7,6 @@ import {
   getPublicPage,
 } from "@/lib/api/public.functions";
 import type { Program, ProcurementStep, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 import {

@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { submitContactInquiry, getPublicFaqs, getPublicSettings, getPublicPage } from "@/lib/api/public.functions";
-import type { Faq, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
+import { submitContactInquiry, getPublicFaqs, getPublicSettings } from "@/lib/api/public.functions";
+import type { Faq } from "@/lib/db/schema";
 import {
   MapPin,
   Phone,
@@ -26,23 +25,6 @@ import { institutionalConfig } from "@/config/institutional";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/contact")({
-  loader: async () => {
-    try {
-      const page = await getPublicPage({ data: { slug: "contact" } }).catch(() => null);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
-      return { customSections: sections };
-    } catch {
-      return { customSections: null };
-    }
-  },
   head: () => ({
     meta: [
       { title: "Contact Us | Bhutan Health Trust Fund" },
@@ -100,7 +82,6 @@ const faqs = [
 ];
 
 function ContactPage() {
-  const { customSections } = Route.useLoaderData();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -164,11 +145,6 @@ function ContactPage() {
         title="Contact Us"
         subtitle="For any enquiries, please contact us at bhtf@bhtf.bt or visit the BHTF office in Thimphu."
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="contact" />
-      )}
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="contact-directory">
         <SectionEditBadge

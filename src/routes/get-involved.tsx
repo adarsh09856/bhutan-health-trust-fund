@@ -11,7 +11,6 @@ import {
   getPublicPage,
 } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import {
   Heart,
   Handshake,
@@ -423,11 +422,6 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
           </span>
         </div>
       </div>
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.some((section) => section.type !== "hero") && (
-        <PageRenderer sections={customSections.filter((section) => section.type !== "hero")} pageSlug="get-involved" />
-      )}
 
       {/* 4 Core Pillars of Donation */}
       <section

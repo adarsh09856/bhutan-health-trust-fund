@@ -1,8 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { getPublicPage } from "@/lib/api/public.functions";
-import type { PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import {
   ShieldCheck,
   Target,
@@ -24,23 +21,6 @@ import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/organization")({
-  loader: async () => {
-    try {
-      const page = await getPublicPage({ data: { slug: "about-organization" } }).catch(() => null);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
-      return { customSections: sections };
-    } catch {
-      return { customSections: null };
-    }
-  },
   head: () => ({
     meta: [
       { title: "About Us & Royal Charter Mandate | Bhutan Health Trust Fund" },
@@ -55,8 +35,6 @@ export const Route = createFileRoute("/about/organization")({
 });
 
 function AboutOrganizationPage() {
-  const { customSections } = Route.useLoaderData();
-
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
@@ -69,11 +47,6 @@ function AboutOrganizationPage() {
           { label: "Organization & Mandate" },
         ]}
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="about-organization" />
-      )}
 
       {/* 1. Official Section 1 Narrative: 4 Official Paragraphs */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-about-narrative">
@@ -347,21 +320,6 @@ function AboutOrganizationPage() {
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Official Document Organogram Image View */}
-          <div className="pt-6 border-t border-slate-100 flex flex-col items-center text-center space-y-3">
-            <span className="text-xs font-mono text-slate-500 uppercase tracking-wider">
-              Official Organogram Graphic from Write-up
-            </span>
-            <div className="max-w-2xl rounded-2xl overflow-hidden border border-slate-200 shadow-2xs bg-slate-50 p-2">
-              <img
-                src="/images/official/image6.png"
-                alt="BHTF Secretariat Organizational Structure Chart"
-                className="w-full h-auto object-contain rounded-xl"
-                loading="lazy"
-              />
             </div>
           </div>
         </div>

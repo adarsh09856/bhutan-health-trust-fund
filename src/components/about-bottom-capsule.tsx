@@ -69,7 +69,7 @@ export function AboutBottomCapsule() {
                   : "text-slate-700 hover:text-primary hover:bg-slate-100/80"
               }`}
             >
-              <Icon className={`size-3.5 sm:size-4 shrink-0 ${isActive ? "text-saffron" : "text-slate-500"}`} />
+              <Icon className={`size-3.5 sm:size-4 shrink-0 ${isActive ? "text-emerald-300" : "text-slate-500"}`} />
               <span className="hidden sm:inline">{tab.label}</span>
               <span className="sm:hidden">{tab.shortLabel}</span>
             </Link>

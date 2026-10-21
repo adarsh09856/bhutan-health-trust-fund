@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
 import { getPublicReports, trackReportDownload, getPublicPage } from "@/lib/api/public.functions";
 import type { Report, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import {
   FileText,
   Download,
@@ -28,26 +27,12 @@ export const Route = createFileRoute("/reports")({
   }),
   loader: async () => {
     try {
-      const [page, reports] = await Promise.all([
-        getPublicPage({ data: { slug: "reports" } }).catch(() => null),
-        getPublicReports().catch(() => []),
-      ]);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
+      const reports = await getPublicReports().catch(() => []);
       return {
-        customSections: sections,
         initialReports: reports || [],
       };
     } catch {
       return {
-        customSections: null,
         initialReports: [],
       };
     }
@@ -181,11 +166,6 @@ export function ReportsExperience({
         title={title}
         subtitle={subtitle}
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug={pageSlug} />
-      )}
 
       {/* Transparency Metric Highlights */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="transparency-highlights">
@@ -461,7 +441,6 @@ function ReportsPage() {
   const search = Route.useSearch();
   return (
     <ReportsExperience
-      customSections={loaderData?.customSections}
       initialReports={loaderData?.initialReports}
       pageSlug="reports"
       initialCategory={search?.category}

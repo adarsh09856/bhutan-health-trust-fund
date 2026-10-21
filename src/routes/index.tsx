@@ -507,7 +507,7 @@ function HomePage() {
       <section className="container-page mt-16 sm:mt-20">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-saffron font-mono">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 font-mono">
               <ShieldCheck className="size-3.5" />
               <span>Authentic Field Operations • No Stock Photos</span>
             </div>
@@ -520,7 +520,7 @@ function HomePage() {
           </div>
           <Link
             to="/our-impact"
-            className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:text-saffron transition shrink-0"
+            className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:text-emerald-800 transition shrink-0"
           >
             <span>Explore Full Impact Portfolio</span>
             <ArrowRight className="size-3.5" />
@@ -545,7 +545,7 @@ function HomePage() {
               </div>
               <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                 <div>
-                  <h4 className="text-sm font-bold text-primary leading-snug group-hover:text-saffron transition">
+                  <h4 className="text-sm font-bold text-primary leading-snug group-hover:text-emerald-800 transition">
                     {d.title}
                   </h4>
                   <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
@@ -554,7 +554,7 @@ function HomePage() {
                 </div>
                 <div className="pt-2 border-t border-border flex items-center justify-between text-[11px] font-semibold text-primary">
                   <span>{d.badge}</span>
-                  <CheckCircle2 className="size-3.5 text-saffron shrink-0" />
+                  <CheckCircle2 className="size-3.5 text-emerald-700 shrink-0" />
                 </div>
               </div>
             </div>
@@ -607,7 +607,7 @@ function HomePage() {
       {/* 7. STATUTORY FIDUCIARY LEDGER & 20 DZONGKHAGS MATRIX */}
       <section className="container-page mt-16 sm:mt-20">
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
             Audit Certified • Perpetual Stewardship
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-primary">
@@ -635,7 +635,7 @@ function HomePage() {
           </div>
           <div className="p-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between text-xs text-muted-foreground gap-2">
             <div>Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing</div>
-            <Link to="/reports" className="text-saffron font-bold hover:underline">
+            <Link to="/reports" className="text-emerald-800 font-bold hover:underline">
               Download Certified RAA Audit Report →
             </Link>
           </div>
@@ -645,7 +645,7 @@ function HomePage() {
         <div className="mt-10 bg-white rounded-3xl shadow-card border border-border p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-border gap-2">
             <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
                 Equitable Kingdom-Wide Distribution
               </span>
               <h3 className="text-xl font-bold text-primary">Nationwide Coverage Across All 20 Dzongkhags</h3>
@@ -731,11 +731,11 @@ function HomePage() {
             </p>
             <div className="pt-2 space-y-2 text-xs text-foreground font-medium">
               <div className="flex items-center gap-2">
-                <Phone className="size-4 text-saffron shrink-0" />
-                <span>Landline: +975 2 328999</span>
+                <Phone className="size-4 text-emerald-700 shrink-0" />
+                <span>Phone: 02-338636 / 338637 / 77348083</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="size-4 text-saffron shrink-0" />
+                <Mail className="size-4 text-emerald-700 shrink-0" />
                 <span>Email: bhtf@bhtf.bt</span>
               </div>
             </div>
@@ -743,13 +743,13 @@ function HomePage() {
 
           <div className="mt-6 pt-4 border-t border-border">
             <a
-              href="https://wa.me/9752328999"
+              href="https://wa.me/97577348083"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-white px-5 py-3 text-xs font-bold hover:opacity-90 transition shadow-card"
             >
               <MessageCircle className="size-4 fill-current" />
-              <span>Chat on WhatsApp (+975 2 328999)</span>
+              <span>Chat on WhatsApp (+975 77348083)</span>
             </a>
           </div>
         </div>
@@ -758,7 +758,7 @@ function HomePage() {
       {/* 9. SOVEREIGN & MULTILATERAL PARTNERS STRIP */}
       <section className="container-page mt-16 sm:mt-24 mb-16">
         <div className="text-center space-y-2 mb-8">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-saffron">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
             Multilateral & Sovereign Alliances
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-primary">
@@ -773,7 +773,7 @@ function HomePage() {
           {PARTNERS.map((p) => (
             <div
               key={p.name}
-              className="group flex flex-col items-center justify-center p-3 rounded-2xl border border-border bg-white hover:border-saffron hover:shadow-card transition-all duration-200 text-center min-h-[110px]"
+              className="group flex flex-col items-center justify-center p-3 rounded-2xl border border-border bg-white hover:border-emerald-600 hover:shadow-card transition-all duration-200 text-center min-h-[110px]"
             >
               <div className="h-12 w-full flex items-center justify-center mb-2 px-1">
                 <img

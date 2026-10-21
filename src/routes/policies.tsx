@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
-import { getPublicPolicies, getPublicPage } from "@/lib/api/public.functions";
-import type { Policy, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
+import { getPublicPolicies } from "@/lib/api/public.functions";
+import type { Policy } from "@/lib/db/schema";
 import { institutionalConfig } from "@/config/institutional";
 import {
   ShieldCheck,
@@ -23,23 +22,6 @@ import { toast } from "sonner";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/policies")({
-  loader: async () => {
-    try {
-      const page = await getPublicPage({ data: { slug: "policies" } }).catch(() => null);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
-      return { customSections: sections };
-    } catch {
-      return { customSections: null };
-    }
-  },
   head: () => ({
     meta: [
       { title: "Governance & Policies | Bhutan Health Trust Fund" },
@@ -54,7 +36,6 @@ export const Route = createFileRoute("/policies")({
 });
 
 export function PoliciesPage() {
-  const { customSections } = Route.useLoaderData();
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -124,11 +105,6 @@ export function PoliciesPage() {
         title="Governance, Policies & Ethics"
         subtitle="Institutional regulations, statutory anti-corruption safeguards, and quality assurance frameworks of the Bhutan Health Trust Fund."
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="policies" />
-      )}
 
       {/* Main Content Area */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative" data-bhtf-section="policies-register">

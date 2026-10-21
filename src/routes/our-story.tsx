@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { PageHero } from "@/components/page-hero";
 import { getPublicMilestones, getPublicPage } from "@/lib/api/public.functions";
 import type { Milestone, PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Sparkles,
@@ -27,26 +26,12 @@ import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 export const Route = createFileRoute("/our-story")({
   loader: async () => {
     try {
-      const [page, milestones] = await Promise.all([
-        getPublicPage({ data: { slug: "our-story" } }).catch(() => null),
-        getPublicMilestones().catch(() => []),
-      ]);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
+      const milestones = await getPublicMilestones().catch(() => []);
       return {
-        customSections: sections,
         liveMilestones: milestones || [],
       };
     } catch {
       return {
-        customSections: null,
         liveMilestones: [],
       };
     }
@@ -125,9 +110,6 @@ const officialMilestones = [
 function OurStoryPage() {
   const loaderData = Route.useLoaderData();
   const [liveMilestones, setLiveMilestones] = useState<Milestone[]>(loaderData?.liveMilestones || []);
-  const [customSections, setCustomSections] = useState<PageBlockSection[] | null>(
-    loaderData?.customSections || null,
-  );
 
   useEffect(() => {
     getPublicMilestones()
@@ -159,11 +141,6 @@ function OurStoryPage() {
           { label: "Our Story" },
         ]}
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="our-story" />
-      )}
 
       {/* 2. Official Section 2 Story Narrative */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="story-narrative">

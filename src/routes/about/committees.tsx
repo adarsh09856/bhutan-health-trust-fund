@@ -1,8 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import { getPublicPage } from "@/lib/api/public.functions";
-import type { PageBlockSection } from "@/lib/db/schema";
-import { PageRenderer } from "@/components/page-renderer";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Scale,
@@ -19,23 +16,6 @@ import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 
 export const Route = createFileRoute("/about/committees")({
-  loader: async () => {
-    try {
-      const page = await getPublicPage({ data: { slug: "about-committees" } }).catch(() => null);
-      let sections: PageBlockSection[] | null = null;
-      if (page && page.status === "published") {
-        try {
-          const parsed = JSON.parse(page.sectionsJson);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            sections = parsed;
-          }
-        } catch {}
-      }
-      return { customSections: sections };
-    } catch {
-      return { customSections: null };
-    }
-  },
   head: () => ({
     meta: [
       { title: "Asset Management Committee (AMC) | Bhutan Health Trust Fund" },
@@ -78,8 +58,6 @@ const amcMembers = [
 ];
 
 function CommitteesPage() {
-  const { customSections } = Route.useLoaderData();
-
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
@@ -92,11 +70,6 @@ function CommitteesPage() {
           { label: "Asset management committee" },
         ]}
       />
-
-      {/* Custom Page Renderer if edited by admin */}
-      {customSections && customSections.length > 0 && (
-        <PageRenderer sections={customSections} pageSlug="about-committees" />
-      )}
 
       {/* 1. Official AMC Table 1.2 Members Gallery (NPPF Pattern) */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="amc-roster">

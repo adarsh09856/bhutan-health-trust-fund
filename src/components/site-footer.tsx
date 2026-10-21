@@ -42,13 +42,13 @@ export function SiteFooter() {
   return (
     <footer className="bg-gradient-footer text-white mt-20 relative overflow-hidden">
       {/* 1. Emergency Helpline Bar */}
-      <div className="bg-saffron text-saffron-foreground border-b border-white/10 px-4 py-2.5">
+      <div className="bg-[#052e25] text-emerald-200 border-b border-emerald-800/40 px-4 py-2.5">
         <div className="container-page flex flex-wrap items-center justify-between gap-4 text-xs font-medium">
           <div className="flex items-center gap-2">
-            <span className="size-2 rounded-full bg-white animate-pulse" />
+            <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>
               National Emergency Health Helpline:{" "}
-              <strong className="text-sm font-bold underline decoration-white/50 underline-offset-2 ml-1">
+              <strong className="text-sm font-bold underline decoration-white/50 underline-offset-2 ml-1 text-white">
                 112
               </strong>{" "}
               (Toll-Free, 24/7 Nationwide)
@@ -71,7 +71,7 @@ export function SiteFooter() {
               <img src={logo} alt="BHTF Emblem" className="size-full object-contain" />
             </div>
             <div>
-              <span className="text-[10px] text-saffron font-bold tracking-wider block">
+              <span className="text-[10px] text-emerald-400 font-bold tracking-wider block">
                 ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ།
               </span>
               <h3 className="text-base font-bold text-white tracking-tight">Bhutan Health Trust Fund</h3>
@@ -83,7 +83,7 @@ export function SiteFooter() {
             medicines and universal vaccines across all 20 Dzongkhags in Bhutan.
           </p>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-saffron font-semibold">
+          <div className="pt-2 flex items-center gap-2 text-xs text-emerald-300 font-semibold">
             <ShieldCheck className="size-4 shrink-0" />
             <span>Autonomous Statutory Entity • Royal Charter 2000</span>
           </div>
@@ -94,32 +94,32 @@ export function SiteFooter() {
           <h4 className="font-bold text-sm mb-4 text-white">About BHTF</h4>
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
-              <Link to="/about" className="hover:text-saffron transition-colors">
+              <Link to="/about" className="hover:text-emerald-300 transition-colors">
                 Vision & Mandate
               </Link>
             </li>
             <li>
-              <Link to="/about/organization" className="hover:text-saffron transition-colors">
+              <Link to="/about/organization" className="hover:text-emerald-300 transition-colors">
                 Organization & Organogram
               </Link>
             </li>
             <li>
-              <Link to="/about/trustees" className="hover:text-saffron transition-colors">
+              <Link to="/about/trustees" className="hover:text-emerald-300 transition-colors">
                 Board of Trustees
               </Link>
             </li>
             <li>
-              <Link to="/about/committees" className="hover:text-saffron transition-colors">
+              <Link to="/about/committees" className="hover:text-emerald-300 transition-colors">
                 Asset Management Committee
               </Link>
             </li>
             <li>
-              <Link to="/about/secretariat" className="hover:text-saffron transition-colors">
+              <Link to="/about/secretariat" className="hover:text-emerald-300 transition-colors">
                 Secretariat & Staff
               </Link>
             </li>
             <li>
-              <Link to="/our-story" className="hover:text-saffron transition-colors">
+              <Link to="/our-story" className="hover:text-emerald-300 transition-colors">
                 Our Story (1998–2026)
               </Link>
             </li>
@@ -131,27 +131,27 @@ export function SiteFooter() {
           <h4 className="font-bold text-sm mb-4 text-white">Impact & Formularies</h4>
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
-              <Link to="/our-impact" className="hover:text-saffron transition-colors">
+              <Link to="/our-impact" className="hover:text-emerald-300 transition-colors">
                 Commodity Disbursements
               </Link>
             </li>
             <li>
-              <Link to="/our-work" className="hover:text-saffron transition-colors">
+              <Link to="/our-work" className="hover:text-emerald-300 transition-colors">
                 438 Essential Medicines
               </Link>
             </li>
             <li>
-              <Link to="/our-work" className="hover:text-saffron transition-colors">
+              <Link to="/our-work" className="hover:text-emerald-300 transition-colors">
                 110 Traditional Remedies (gSo-ba Rig-pa)
               </Link>
             </li>
             <li>
-              <Link to="/reports" className="hover:text-saffron transition-colors">
+              <Link to="/reports" className="hover:text-emerald-300 transition-colors">
                 RAA Certified Audits
               </Link>
             </li>
             <li>
-              <Link to="/policies" className="hover:text-saffron transition-colors">
+              <Link to="/policies" className="hover:text-emerald-300 transition-colors">
                 Investment Policies
               </Link>
             </li>
@@ -163,27 +163,27 @@ export function SiteFooter() {
           <h4 className="font-bold text-sm mb-4 text-white">Contribute</h4>
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
-              <Link to="/donate" className="hover:text-saffron transition-colors font-semibold text-saffron">
+              <Link to="/donate" className="hover:text-emerald-300 transition-colors font-semibold text-emerald-400">
                 Donate to Health Fund (1:1 Matched)
               </Link>
             </li>
             <li>
-              <Link to="/donate" className="hover:text-saffron transition-colors">
+              <Link to="/donate" className="hover:text-emerald-300 transition-colors">
                 DRC Tax Relief (E-73)
               </Link>
             </li>
             <li>
-              <Link to="/news" className="hover:text-saffron transition-colors">
+              <Link to="/news" className="hover:text-emerald-300 transition-colors">
                 11 Nov BHTF Day
               </Link>
             </li>
             <li>
-              <Link to="/news" className="hover:text-saffron transition-colors">
+              <Link to="/news" className="hover:text-emerald-300 transition-colors">
                 17 Dec RSEB Crowd Fundraising
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-saffron transition-colors">
+              <Link to="/contact" className="hover:text-emerald-300 transition-colors">
                 Strategic Partnerships
               </Link>
             </li>
@@ -195,7 +195,7 @@ export function SiteFooter() {
           <h4 className="font-bold text-sm text-white">Contact Us</h4>
           <ul className="space-y-2.5 text-xs text-white/80">
             <li className="flex items-start gap-2">
-              <MapPin className="size-4 text-saffron shrink-0 mt-0.5" />
+              <MapPin className="size-4 text-emerald-400 shrink-0 mt-0.5" />
               <span>Lower Motithang, Thori Lam, Thimphu, Bhutan</span>
             </li>
             <li className="flex items-center gap-2">
