@@ -46,7 +46,7 @@ function SecretariatPage() {
         subtitle="The executive arm of the Bhutan Health Trust Fund executing day-to-day operations, endowment investments, and healthcare procurement disbursements."
         breadcrumb={[
           { label: "Home", to: "/" },
-          { label: "About Us", to: "/about/organization" },
+          { label: "About Us", to: "/about" },
           { label: "Secretariat and organogram" },
         ]}
       />

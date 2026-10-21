@@ -95,12 +95,12 @@ export function SiteFooter() {
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
               <Link to="/about" className="hover:text-emerald-300 transition-colors">
-                Vision & Mandate
+                About Us Overview
               </Link>
             </li>
             <li>
               <Link to="/about/organization" className="hover:text-emerald-300 transition-colors">
-                Organization & Organogram
+                Organization & Mandate
               </Link>
             </li>
             <li>
@@ -115,7 +115,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link to="/about/secretariat" className="hover:text-emerald-300 transition-colors">
-                Secretariat & Staff
+                Secretariat & Organogram
               </Link>
             </li>
             <li>

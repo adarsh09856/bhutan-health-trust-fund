@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Scale,
   Users,
+  Target,
   BookOpen,
   FileText,
   Activity,
@@ -115,9 +116,9 @@ export function SiteHeader() {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <Link
-                to="/about/organization"
+                to="/about"
                 className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2.5 2xl:px-3.5 py-1.5 text-xs 2xl:text-sm rounded-full transition-all duration-150 ${
-                  location.pathname.startsWith("/about")
+                  location.pathname === "/about" || location.pathname.startsWith("/about/")
                     ? "bg-primary/10 text-primary font-bold"
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
@@ -128,6 +129,26 @@ export function SiteHeader() {
 
               {openDropdown === "about" && (
                 <div className="absolute top-full left-0 w-80 bg-white rounded-2xl shadow-elevated border border-border p-2 space-y-1 animate-in fade-in duration-150 z-50">
+                  <Link
+                    to="/about"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Landmark className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>About Us Overview</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Founding narrative & 26-year mission</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/about/organization"
+                    className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
+                  >
+                    <Target className="size-4 text-primary shrink-0" />
+                    <div>
+                      <div>Organization & Mandate</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">Mandate, Vision, Mission & 70-20-10 Model</div>
+                    </div>
+                  </Link>
                   <Link
                     to="/about/trustees"
                     className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-soft-blue text-xs font-semibold text-foreground transition"
@@ -158,18 +179,6 @@ export function SiteHeader() {
                       <div className="text-[10px] text-muted-foreground font-normal">Directorate & 4 operational divisions</div>
                     </div>
                   </Link>
-                  <div className="pt-1 mt-1 border-t border-border/60">
-                    <Link
-                      to="/about/organization"
-                      className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-xs font-semibold text-foreground transition"
-                    >
-                      <Landmark className="size-4 text-primary shrink-0" />
-                      <div>
-                        <div>About Bhutan Health Trust Fund</div>
-                        <div className="text-[10px] text-muted-foreground font-normal">Mandate, Vision, Mission & Operating Model</div>
-                      </div>
-                    </Link>
-                  </div>
                 </div>
               )}
             </div>
@@ -465,6 +474,18 @@ export function SiteHeader() {
                 {mobileExpandedSection === "about" && (
                   <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl my-1 border border-border/40">
                     <Link
+                      to="/about"
+                      className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
+                    >
+                      • About Us Overview
+                    </Link>
+                    <Link
+                      to="/about/organization"
+                      className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
+                    >
+                      • Organization & Mandate
+                    </Link>
+                    <Link
                       to="/about/trustees"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
@@ -481,12 +502,6 @@ export function SiteHeader() {
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
                       • Secretariat and organizational chart
-                    </Link>
-                    <Link
-                      to="/about/organization"
-                      className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
-                    >
-                      • About BHTF (Mandate & Vision)
                     </Link>
                   </div>
                 )}

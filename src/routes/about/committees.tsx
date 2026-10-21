@@ -66,7 +66,7 @@ function CommitteesPage() {
         subtitle="To strengthen financial stewardship and investment oversight, the Board appoints an Asset Management Committee (AMC), which supports the responsible management of the Fund’s assets."
         breadcrumb={[
           { label: "Home", to: "/" },
-          { label: "About Us", to: "/about/organization" },
+          { label: "About Us", to: "/about" },
           { label: "Asset management committee" },
         ]}
       />

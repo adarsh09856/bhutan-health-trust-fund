@@ -102,7 +102,7 @@ function TrusteesPage() {
         subtitle="The Bhutan Health Trust Fund operates under the guidance of the Board of Directors, headed by a Chairperson, providing strategic direction, accountability, and long-term sustainability."
         breadcrumb={[
           { label: "Home", to: "/" },
-          { label: "About Us", to: "/about/organization" },
+          { label: "About Us", to: "/about" },
           { label: "Board of trustees" },
         ]}
       />

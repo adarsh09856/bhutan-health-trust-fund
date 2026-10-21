@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Landmark, ShieldCheck, Scale, Users, BookOpen } from "lucide-react";
+import { Landmark, ShieldCheck, Scale, Users, BookOpen, Target } from "lucide-react";
 
 interface SubTab {
   to: string;
@@ -10,10 +10,16 @@ interface SubTab {
 
 const ABOUT_SUB_TABS: SubTab[] = [
   {
-    to: "/about/organization",
-    label: "Organization & Organogram",
-    shortLabel: "Organogram",
+    to: "/about",
+    label: "About Us",
+    shortLabel: "About",
     icon: Landmark,
+  },
+  {
+    to: "/about/organization",
+    label: "Organization & Mandate",
+    shortLabel: "Mandate",
+    icon: Target,
   },
   {
     to: "/about/trustees",
@@ -29,7 +35,7 @@ const ABOUT_SUB_TABS: SubTab[] = [
   },
   {
     to: "/about/secretariat",
-    label: "Secretariat & Staff",
+    label: "Secretariat & Organogram",
     shortLabel: "Secretariat",
     icon: Users,
   },
