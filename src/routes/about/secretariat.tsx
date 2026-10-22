@@ -17,10 +17,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-import staffThinley from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
+import staffThinleyWangchuk from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
 import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
-import staffProcurement from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
-import staffFinance from "@/assets/bhtf/secretariat/tshering_choden.jpg";
+import staffRinchenPhuntsho from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
+import staffTsheringChoden from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -226,7 +226,7 @@ function SecretariatPage() {
               <img
                 src={drGyamboDirector}
                 alt="Dr. Gyambo Sithey, PhD"
-                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
             </div>
@@ -252,9 +252,9 @@ function SecretariatPage() {
             <div className="flex flex-col items-center w-full">
               <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
-                  src={staffFinance}
+                  src={staffTsheringChoden}
                   alt="Ms. Tshering Choden"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
@@ -279,9 +279,9 @@ function SecretariatPage() {
             <div className="flex flex-col items-center w-full">
               <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
-                  src={staffThinley}
+                  src={staffThinleyWangchuk}
                   alt="Mr. Thinley Wangchuk"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
@@ -308,7 +308,7 @@ function SecretariatPage() {
                 <img
                   src={staffSonamChojay}
                   alt="Mr. Sonam Chojay"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
@@ -333,9 +333,9 @@ function SecretariatPage() {
             <div className="flex flex-col items-center w-full">
               <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
                 <img
-                  src={staffProcurement}
+                  src={staffRinchenPhuntsho}
                   alt="Mr. Rinchen Phuntsho"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
