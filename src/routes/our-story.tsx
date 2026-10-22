@@ -179,72 +179,82 @@ function OurStoryPage() {
 
           {/* Dual Tribute Cards: His Majesty the Fourth Druk Gyalpo & Lyonpo Sangay Ngedup */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-            {/* Card 1: His Majesty the Fourth Druk Gyalpo with image1.png */}
-            <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-xs flex flex-col justify-between group hover:border-emerald-300 transition-all duration-300">
-              <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
-                <img
-                  src="/images/official/image1.png"
-                  alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-bold">
+            {/* Card 1: His Majesty the Fourth Druk Gyalpo with full, dignified portrait */}
+            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-7 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-amber-300/80 transition-all duration-300 group">
+              <div className="space-y-4">
+                {/* Dignified Header: Royal Badge & Title */}
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300/80 font-bold inline-block">
                     {isDzongkha ? "རྒྱལ་པོའི་སྦྱིན་བདག" : "Royal Benefactor"}
                   </span>
-                  <h3 className="text-lg sm:text-xl font-bold mt-1 text-white leading-snug font-serif">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug font-serif">
                     {isDzongkha ? "མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག" : "His Majesty the Fourth Druk Gyalpo"}
                   </h3>
-                  <p className="text-xs text-amber-200/90 font-light">
+                  <p className="text-xs text-slate-500 font-sans">
                     {isDzongkha ? "འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག • རྒྱལ་པོའི་བཀའ་ཤོག་ ༢༠༠༠" : "Jigme Singye Wangchuck • Royal Charter 2000"}
                   </p>
                 </div>
-              </div>
-              <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
-                <div className="relative pl-4 border-l-2 border-amber-500">
-                  <p className="text-sm sm:text-base text-slate-900 italic font-serif leading-relaxed">
-                    {t(
-                      "quote_king_text",
-                      "“No Bhutanese should ever have to choose between their health and their livelihood.”"
-                    )}
-                  </p>
-                  <p className="text-xs text-slate-500 font-sans mt-2">
-                    {isDzongkha ? "— མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག ༢༠༠༤" : "— His Majesty the Fourth Druk Gyalpo, 2004"}
-                  </p>
+
+                {/* Dignified Portrait Plate: Full Face, Crown & Robes Cleanly Visible without Dark Gradients */}
+                <div className="relative h-64 sm:h-72 w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+                  <img
+                    src="/images/official/image1.png"
+                    alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
+                    className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                    loading="lazy"
+                  />
                 </div>
+              </div>
+
+              {/* Royal Quote Callout */}
+              <div className="mt-5 p-5 rounded-2xl bg-[#FAF8F3] border-l-4 border-amber-500 border border-slate-200/70">
+                <p className="text-sm sm:text-base text-slate-900 italic font-serif leading-relaxed">
+                  {t(
+                    "quote_king_text",
+                    "“No Bhutanese should ever have to choose between their health and their livelihood.”"
+                  )}
+                </p>
+                <p className="text-xs text-slate-600 font-sans mt-2 font-semibold">
+                  {isDzongkha ? "— མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག ༢༠༠༤" : "— His Majesty the Fourth Druk Gyalpo, 2004"}
+                </p>
               </div>
             </div>
 
-            {/* Card 2: Lyonpo Sangay Ngedup with image2.png */}
-            <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-xs flex flex-col justify-between group hover:border-emerald-300 transition-all duration-300">
-              <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-100">
-                <img
-                  src="/images/official/image2.png"
-                  alt="Hon'ble former Health Minister, Lyonpo Sangay Ngedup"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold">
+            {/* Card 2: Lyonpo Sangay Ngedup */}
+            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-7 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-emerald-300/80 transition-all duration-300 group">
+              <div className="space-y-4">
+                {/* Founding Architect Header */}
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300/80 font-bold inline-block">
                     {isDzongkha ? "གཞི་བཙུགས་འཆར་བཀོད་པ།" : "Founding Architect"}
                   </span>
-                  <h3 className="text-lg sm:text-xl font-bold mt-1 text-white leading-snug font-serif">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug font-serif">
                     {isDzongkha ? "བློན་པོ་ སངས་རྒྱས་དངོས་གྲུབ།" : "Lyonpo Sangay Ngedup"}
                   </h3>
-                  <p className="text-xs text-emerald-200/90 font-light">
+                  <p className="text-xs text-slate-500 font-sans">
                     {isDzongkha ? "གསོ་བའི་བློན་པོ་ཟུར་པ། • འཕྲོད་བསྟེན་དོན་ལུ་གོམ་བགྲོད (༢༠༠༢)" : "Hon'ble Former Health Minister • Move for Health (2002)"}
                   </p>
                 </div>
-              </div>
-              <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
-                <div className="relative pl-4 border-l-2 border-emerald-600">
-                  <p className="text-sm sm:text-base text-slate-900 italic font-serif leading-relaxed">
-                    {t(
-                      "quote_lyonpo_text",
-                      "“A tree is only as strong as the hands that first planted it. Lyonpo Sangay Ngedup laid the foundation of BHTF, and its founding members nurtured it into life. We remain forever grateful for their vision and contributions.”"
-                    )}
-                  </p>
+
+                {/* Portrait Plate: Full Face & Robes Cleanly Visible */}
+                <div className="relative h-64 sm:h-72 w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+                  <img
+                    src="/images/official/image2.png"
+                    alt="Hon'ble former Health Minister, Lyonpo Sangay Ngedup"
+                    className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                    loading="lazy"
+                  />
                 </div>
+              </div>
+
+              {/* Quote Callout */}
+              <div className="mt-5 p-5 rounded-2xl bg-[#FAF8F3] border-l-4 border-emerald-600 border border-slate-200/70">
+                <p className="text-sm sm:text-base text-slate-900 italic font-serif leading-relaxed">
+                  {t(
+                    "quote_lyonpo_text",
+                    "“A tree is only as strong as the hands that first planted it. Lyonpo Sangay Ngedup laid the foundation of BHTF, and its founding members nurtured it into life. We remain forever grateful for their vision and contributions.”"
+                  )}
+                </p>
               </div>
             </div>
           </div>
