@@ -110,13 +110,13 @@ export function SiteHeader() {
       <div className="bg-white">
         <div className="container-page flex h-20 items-center justify-between gap-2 xl:gap-4">
           {/* Logo & Royal Proclamation (Official Dzongkha & English Brand Display) */}
-          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-            <div className="size-12 sm:size-14 rounded-2xl bg-white border border-slate-200/90 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 group">
+            <div className="size-13 sm:size-15 md:size-16 rounded-full bg-white border border-slate-200/90 p-0.5 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
               <img src={logo} alt="Bhutan Health Trust Fund Emblem" className="h-full w-full object-contain" />
             </div>
             <div className="leading-tight shrink-0">
               {/* Official Dzongkha Calligraphy Inscription from Logo Emblem */}
-              <div className="font-dzongkha text-xs sm:text-[13px] font-bold text-amber-950 tracking-normal leading-tight group-hover:text-emerald-900 transition">
+              <div className="font-dzongkha text-xs sm:text-[14px] font-bold text-amber-950 tracking-normal leading-tight group-hover:text-emerald-900 transition">
                 ༄༅༎ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ ༎
               </div>
               <div className="text-primary font-black text-sm sm:text-base lg:text-lg tracking-tight whitespace-nowrap group-hover:text-primary/90 mt-0.5">

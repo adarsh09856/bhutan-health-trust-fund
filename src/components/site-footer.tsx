@@ -77,7 +77,7 @@ export function SiteFooter() {
         {/* Col 1: Brand & Royal Mandate */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="size-12 rounded-2xl bg-white p-1.5 shadow-card shrink-0">
+            <div className="size-14 rounded-full bg-white p-1 shadow-card shrink-0 grid place-items-center">
               <img src={logo} alt="BHTF Emblem" className="size-full object-contain" />
             </div>
             <div>
