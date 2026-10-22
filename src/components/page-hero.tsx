@@ -5,27 +5,40 @@ import kingPortrait from "@/assets/king_portrait_fourth.jpg";
 
 interface PageHeroProps {
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   badge?: string;
   breadcrumb?: { label: string; to?: string }[];
+  children?: React.ReactNode;
+  className?: string;
 }
 
 import { ShieldCheck } from "lucide-react";
 
-export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) {
+export function PageHero({
+  title,
+  subtitle,
+  badge,
+  breadcrumb,
+  children,
+  className,
+}: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#E3F1F6] via-[#FAF8F3] to-[#FAF8F3] text-slate-900 pt-24 sm:pt-28 pb-12 sm:pb-16 border-b border-slate-200/90">
+    <section
+      className={`relative overflow-hidden bg-gradient-to-b from-[#E3F1F6] via-[#FAF8F3] to-[#FAF8F3] text-slate-900 pt-14 sm:pt-16 pb-10 sm:pb-14 border-b border-slate-200/90 ${
+        className || ""
+      }`}
+    >
       {/* Authentic Portrait of His Majesty The Fourth Druk Gyalpo with crisp, dignified visibility */}
       <div
-        className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none opacity-[0.28] sm:opacity-[0.32] transition-opacity duration-300"
+        className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none opacity-[0.22] sm:opacity-[0.28] transition-opacity duration-300"
         style={{
           backgroundImage: `url(${kingPortrait})`,
           backgroundPosition: "right 15%",
         }}
       />
       {/* Soft gradient mask to preserve high contrast for left-aligned typography */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F3] via-[#FAF8F3]/85 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F3] via-[#FAF8F3]/50 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F3] via-[#FAF8F3]/90 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F3] via-[#FAF8F3]/60 to-transparent pointer-events-none" />
       {/* Subtle top gold accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4A237]/40 to-transparent pointer-events-none" />
 
@@ -40,21 +53,23 @@ export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) 
             <span>Home</span>
           </Link>
           <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
-          {breadcrumb ? (
-            breadcrumb.map((b, idx) => (
-              <div key={idx} className="flex items-center gap-1.5">
-                {b.to ? (
-                  <Link to={b.to} className="hover:text-[#00A896] transition font-medium text-slate-600">
-                    {b.label}
-                  </Link>
-                ) : (
-                  <span className="text-[#0B4F42] font-bold">{b.label}</span>
-                )}
-                {idx < breadcrumb.length - 1 && (
-                  <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
-                )}
-              </div>
-            ))
+          {breadcrumb && breadcrumb.filter((b) => b.to !== "/" && b.label.toLowerCase() !== "home" && b.label !== "གདོང་ཤོག").length > 0 ? (
+            breadcrumb
+              .filter((b) => b.to !== "/" && b.label.toLowerCase() !== "home" && b.label !== "གདོང་ཤོག")
+              .map((b, idx, arr) => (
+                <div key={idx} className="flex items-center gap-1.5">
+                  {b.to ? (
+                    <Link to={b.to} className="hover:text-[#00A896] transition font-medium text-slate-600">
+                      {b.label}
+                    </Link>
+                  ) : (
+                    <span className="text-[#0B4F42] font-bold">{b.label}</span>
+                  )}
+                  {idx < arr.length - 1 && (
+                    <ChevronRight className="h-3.5 w-3.5 text-slate-400" />
+                  )}
+                </div>
+              ))
           ) : (
             <span className="text-[#0B4F42] font-bold">{title}</span>
           )}
@@ -74,10 +89,12 @@ export function PageHero({ title, subtitle, badge, breadcrumb }: PageHeroProps) 
         </h1>
 
         {subtitle && (
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 max-w-3xl leading-relaxed font-sans font-light">
+          <div className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 max-w-3xl leading-relaxed font-sans font-light">
             {subtitle}
-          </p>
+          </div>
         )}
+
+        {children && <div className="mt-6">{children}</div>}
       </div>
     </section>
   );

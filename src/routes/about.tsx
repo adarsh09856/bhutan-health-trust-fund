@@ -51,52 +51,64 @@ function AboutUsMainPage() {
   const { t, isDzongkha } = useLanguage();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
+    <div className="space-y-12 sm:space-y-16 pb-36 sm:pb-44 bg-[#FAF8F3]">
+      {/* 1. Primary Statutory Hero with Official Narrative Directly in View (Matches Client Spec) */}
       <PageHero
-        badge={isDzongkha ? "སྡེ་ཚན་ ༡ • ལས་ཚོགས་ངོ་སྤྲོད།" : "Section 1 • Institutional Profile"}
-        title={t("nav_about_us", "About Us")}
-        subtitle={
+        badge={
           isDzongkha
-            ? "ད་ལྟོ་དང་མ་འོངས་པའི་མི་རབས་ཚུ་གི་དོན་ལུ་ རིན་མེད་འཕྲོད་བསྟེན་ཞབས་ཏོག་དང་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས། སྨན་ཁབ་ཚུ་ རྒྱུན་སྐྱོང་འབད་དོ།"
-            : "Sustaining free primary healthcare, essential medicines, and vaccines for present and future generations of Bhutan."
+            ? "ཁྲིམས་མཐུན་ངོ་སྤྲོད། • རྒྱལ་པོའི་བཀའ་ཤོག་ ༢༠༠༠"
+            : "STATUTORY PROFILE • ROYAL CHARTER 2000"
         }
-        breadcrumb={[
-          { label: t("nav_home", "Home"), to: "/" },
-          { label: t("nav_about_us", "About Us") },
-        ]}
-      />
+        title={
+          isDzongkha
+            ? "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་གྱི་སྐོར།"
+            : "About the Bhutan Health Trust Fund"
+        }
+        breadcrumb={[{ label: t("nav_about_us", "About Us") }]}
+      >
+        <div className="relative" data-bhtf-section="about-us-narrative">
+          <SectionEditBadge
+            label="About Us Narrative"
+            pageSlug="about"
+            sectionId="about-us-narrative"
+            studioHref="/admin/page-editor?slug=about"
+            initialData={{
+              title: "About the Bhutan Health Trust Fund",
+              subtitle: "Official narrative approved by the BHTF Secretariat.",
+              badge: "STATUTORY PROFILE • ROYAL CHARTER 2000",
+            }}
+          />
 
-      {/* 1. Official Section 1 Narrative: 4 Official Paragraphs */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="about-us-narrative">
-        <SectionEditBadge
-          label="About Us Narrative"
-          pageSlug="about"
-          sectionId="about-us-narrative"
-          studioHref="/admin/page-editor?slug=about"
-          initialData={{
-            title: "About the Bhutan Health Trust Fund",
-            subtitle: "Official narrative approved by the BHTF Secretariat.",
-            badge: "Section 1 • About Us",
-          }}
-        />
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-8">
-          <div className="space-y-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-              {isDzongkha ? "ཁྲིམས་མཐུན་ངོ་སྤྲོད། • རྒྱལ་པོའི་བཀའ་ཤོག་ ༢༠༠༠" : "Statutory Profile • Royal Charter 2000"}
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              {isDzongkha ? "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་གྱི་སྐོར།" : "About the Bhutan Health Trust Fund"}
-            </h2>
-          </div>
+          {/* Official 4-Paragraph Narrative Directly Inside the Hero View */}
+          <div className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/90 shadow-sm space-y-4 max-w-5xl">
+            <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed font-sans">
+              <p className="font-normal text-slate-800">{t("about_p1")}</p>
+              <p className="font-normal text-slate-800">{t("about_p2")}</p>
+              <p className="font-normal text-slate-800">{t("about_p3")}</p>
+              <p className="font-normal text-slate-800">{t("about_p4")}</p>
+            </div>
 
-          <div className="space-y-5 text-slate-700 text-sm sm:text-base leading-relaxed font-sans">
-            <p>{t("about_p1")}</p>
-            <p>{t("about_p2")}</p>
-            <p>{t("about_p3")}</p>
-            <p>{t("about_p4")}</p>
+            {/* Quick Action Navigation Buttons */}
+            <div className="pt-4 border-t border-slate-200/70 flex flex-wrap gap-3 items-center">
+              <Link
+                to="/donate"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-sm transition active:scale-95 whitespace-nowrap"
+              >
+                <Heart className="size-4 fill-current text-amber-300" />
+                <span>{t("home_btn_donate", "Donate (1:1 Sovereign Match)")}</span>
+              </Link>
+
+              <Link
+                to="/about/organization"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white hover:bg-slate-50 border border-slate-300 px-5 py-2.5 text-xs sm:text-sm font-bold text-slate-900 shadow-2xs transition active:scale-95 whitespace-nowrap"
+              >
+                <span>{t("nav_organization", "Organization & Organogram")}</span>
+                <ArrowRight className="size-3.5 text-emerald-800" />
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
+      </PageHero>
 
       {/* 2. Official Impact Benchmarks Banner */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
