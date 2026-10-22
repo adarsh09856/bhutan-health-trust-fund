@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useAdminAuth } from "@/lib/admin-auth";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,6 +37,7 @@ export function SiteHeader() {
   const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null);
   const location = useLocation();
   const { user } = useAdminAuth();
+  const { lang, toggleLang, t, isDzongkha } = useLanguage();
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -52,12 +54,16 @@ export function SiteHeader() {
       {/* 1. Top Utility Bar in Sovereign Royal Emerald */}
       <div className="bg-[#0B4F42] text-white/95 text-xs shadow-xs border-b border-emerald-900/40">
         <div className="container-page flex h-8 items-center justify-between gap-4">
-          <span className="hidden sm:inline font-medium">
-            ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ། — Working together for a healthier Bhutan
+          <span className="hidden sm:inline font-medium font-dzongkha">
+            {isDzongkha
+              ? "༄༅༎ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ ༎ — འཕྲོད་བསྟེན་ལྡན་པའི་འབྲུག་རྒྱལ་ཁབ་ཀྱི་དོན་ལུ་ མཉམ་རུབ་ཐོག་ལཱ་འབད་དོ།"
+              : "༄༅༎ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ ༎ — Working together for a healthier Bhutan"}
           </span>
-          <span className="sm:hidden font-medium">Healthier Bhutan • BHTF</span>
+          <span className="sm:hidden font-medium font-dzongkha">
+            {isDzongkha ? "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ།" : "Healthier Bhutan • BHTF"}
+          </span>
 
-          <div className="flex items-center gap-3 sm:gap-5">
+          <div className="flex items-center gap-2.5 sm:gap-4">
             <a href="tel:02338636" className="hidden md:inline-flex items-center gap-1.5 hover:text-amber-300 transition">
               <Phone className="size-3.5" />
               <span>02-338636 / 338637 / 77348083</span>
@@ -68,18 +74,32 @@ export function SiteHeader() {
             </a>
             <span className="hidden lg:inline-flex items-center gap-1.5">
               <MapPin className="size-3.5" />
-              <span>Lower Motithang, Thimphu</span>
+              <span>{t("topbar_address", "Lower Motithang, Thimphu")}</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 font-bold">
-              <Globe className="size-3.5" />
-              <span>EN</span>
-            </span>
+
+            {/* Language Switcher Interactive Button (EN <-> DZ) */}
+            <button
+              type="button"
+              onClick={toggleLang}
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition cursor-pointer text-xs font-bold text-white border border-white/25 shadow-2xs"
+              title={isDzongkha ? "Switch to English (EN)" : "རྫོང་ཁ་ལུ་སོར། (Switch to Dzongkha)"}
+              aria-label="Toggle language between English and Dzongkha"
+            >
+              <Globe className="size-3.5 text-amber-300" />
+              <span className={isDzongkha ? "font-dzongkha" : "font-bold"}>
+                {lang === "en" ? "EN" : "རྫོང་ཁ"}
+              </span>
+              <span className="text-[10px] text-white/70 font-normal">
+                ({lang === "en" ? "རྫོང་ཁ" : "EN"})
+              </span>
+            </button>
+
             {user && (
               <Link
                 to="/admin/dashboard"
                 className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[11px] font-bold text-white"
               >
-                Admin
+                {t("nav_admin", "Admin")}
               </Link>
             )}
           </div>
@@ -89,20 +109,24 @@ export function SiteHeader() {
       {/* 2. Main Institutional Navigation Bar */}
       <div className="bg-white">
         <div className="container-page flex h-20 items-center justify-between gap-2 xl:gap-4">
-          {/* Logo & Royal Proclamation */}
+          {/* Logo & Royal Proclamation (Official Dzongkha & English Brand Display) */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-            <div className="size-11 sm:size-12 rounded-xl bg-gradient-to-br from-amber-50 via-white to-slate-50 border border-border p-1 shadow-card grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
+            <div className="size-12 sm:size-14 rounded-2xl bg-white border border-slate-200/90 p-1 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
               <img src={logo} alt="Bhutan Health Trust Fund Emblem" className="h-full w-full object-contain" />
             </div>
             <div className="leading-tight shrink-0">
-              <div className="text-primary font-bold text-sm sm:text-base lg:text-lg tracking-tight whitespace-nowrap group-hover:text-primary/90">
+              {/* Official Dzongkha Calligraphy Inscription from Logo Emblem */}
+              <div className="font-dzongkha text-xs sm:text-[13px] font-bold text-amber-950 tracking-normal leading-tight group-hover:text-emerald-900 transition">
+                ༄༅༎ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ ༎
+              </div>
+              <div className="text-primary font-black text-sm sm:text-base lg:text-lg tracking-tight whitespace-nowrap group-hover:text-primary/90 mt-0.5">
                 BHUTAN HEALTH TRUST FUND
               </div>
-              <div className="hidden 2xl:block text-[11px] text-muted-foreground mt-0.5 whitespace-nowrap">
-                Ensuring equitable access to essential medicines and vaccines
+              <div className="hidden 2xl:block text-[10px] sm:text-[11px] text-muted-foreground mt-0.5 whitespace-nowrap">
+                {t("brand_tagline", "Ensuring equitable access to essential medicines and vaccines")}
               </div>
               <div className="hidden sm:block 2xl:hidden text-[10px] text-muted-foreground mt-0.5 whitespace-nowrap">
-                Autonomous Statutory Trust Fund • Est. 1998
+                {t("brand_badge", "Autonomous Statutory Trust Fund • Est. 1998")}
               </div>
             </div>
           </Link>
@@ -123,7 +147,7 @@ export function SiteHeader() {
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span className="whitespace-nowrap">About Us</span>
+                <span className="whitespace-nowrap">{t("nav_about_us", "About Us")}</span>
                 <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
@@ -135,8 +159,8 @@ export function SiteHeader() {
                   >
                     <Landmark className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>About Us Overview</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Founding narrative & 26-year mission</div>
+                      <div>{t("nav_about_overview", "About Us Overview")}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{t("nav_about_overview_desc", "Founding narrative & 26-year mission")}</div>
                     </div>
                   </Link>
                   <Link
@@ -145,8 +169,8 @@ export function SiteHeader() {
                   >
                     <Target className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Organization & Organogram</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Mandate, Vision, Mission & Organizational Chart</div>
+                      <div>{t("nav_organization", "Organization & Organogram")}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{t("nav_organization_desc", "Mandate, Vision, Mission & Organizational Chart")}</div>
                     </div>
                   </Link>
                   <Link
@@ -155,8 +179,8 @@ export function SiteHeader() {
                   >
                     <ShieldCheck className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Board of trustees (with photos)</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Apex governing body & ministerial leadership</div>
+                      <div>{t("nav_trustees", "Board of trustees (with photos)")}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{t("nav_trustees_desc", "Apex governing body & ministerial leadership")}</div>
                     </div>
                   </Link>
                   <Link
@@ -165,8 +189,8 @@ export function SiteHeader() {
                   >
                     <Scale className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Asset management committee</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Endowment stewardship & investment oversight</div>
+                      <div>{t("nav_amc", "Asset management committee")}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{t("nav_amc_desc", "Endowment stewardship & investment oversight")}</div>
                     </div>
                   </Link>
                   <Link
@@ -175,8 +199,8 @@ export function SiteHeader() {
                   >
                     <Users className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Secretariat</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Directorate leadership & operational officers</div>
+                      <div>{t("nav_secretariat", "Secretariat")}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{t("nav_secretariat_desc", "Directorate leadership & operational officers")}</div>
                     </div>
                   </Link>
                 </div>
@@ -192,7 +216,7 @@ export function SiteHeader() {
                   : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
               }`}
             >
-              <span className="whitespace-nowrap">Our Story</span>
+              <span className="whitespace-nowrap">{t("nav_our_story", "Our Story")}</span>
             </Link>
 
             {/* 3. Impact with Dropdown */}
@@ -209,7 +233,7 @@ export function SiteHeader() {
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span className="whitespace-nowrap">Impact</span>
+                <span className="whitespace-nowrap">{t("nav_impact", "Impact")}</span>
                 <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
@@ -253,7 +277,7 @@ export function SiteHeader() {
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span className="whitespace-nowrap">Resources</span>
+                <span className="whitespace-nowrap">{t("nav_resources", "Resources")}</span>
                 <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
@@ -265,8 +289,8 @@ export function SiteHeader() {
                   >
                     <BookOpen className="size-4 text-primary shrink-0" />
                     <div>
-                      <div className="font-bold">Official Publications Archive</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Central statutory document repository</div>
+                      <div className="font-bold">{isDzongkha ? "གཞུང་འབྲེལ་ཡིག་ཆ་མཛོད་ཁང་།" : "Official Publications Archive"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "ཁྲིམས་མཐུན་ཡིག་ཆའི་མཛོད་ཁང་ལྟེ་བ།" : "Central statutory document repository"}</div>
                     </div>
                   </Link>
                   <div className="h-px bg-border/60 my-1" />
@@ -276,8 +300,8 @@ export function SiteHeader() {
                   >
                     <FileText className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Annual Reports</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Yearly operational filings & governance</div>
+                      <div>{isDzongkha ? "ལོ་བསྟར་སྙན་ཞུ།" : "Annual Reports"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "ལོ་རིམ་ལག་ལེན་དང་བདག་སྐྱོང་སྙན་ཞུ།" : "Yearly operational filings & governance"}</div>
                     </div>
                   </Link>
                   <Link
@@ -286,8 +310,8 @@ export function SiteHeader() {
                   >
                     <FileSpreadsheet className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Financial Statements</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Portfolio yields & balance sheets</div>
+                      <div>{isDzongkha ? "དངུལ་རྩིས་གསལ་བཤད།" : "Financial Statements"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "མ་རྩའི་འོང་འབབ་དང་རྩིས་ཁྲ།" : "Portfolio yields & balance sheets"}</div>
                     </div>
                   </Link>
                   <Link
@@ -296,8 +320,8 @@ export function SiteHeader() {
                   >
                     <ShieldCheck className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Certified Audit Reports</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Royal Audit Authority (RAA) certificates</div>
+                      <div>{isDzongkha ? "རྩིས་ཞིབ་གྲུབ་པའི་སྙན་ཞུ།" : "Certified Audit Reports"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "རྒྱལ་གཞུང་རྩིས་ཞིབ་དབང་འཛིན་གྱི་ལག་ཁྱེར།" : "Royal Audit Authority (RAA) certificates"}</div>
                     </div>
                   </Link>
                   <Link
@@ -306,8 +330,8 @@ export function SiteHeader() {
                   >
                     <Scale className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Window Financing Requisitions</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Quarterly DMS procurement releases</div>
+                      <div>{isDzongkha ? "སྒོ་འབྱེད་དངུལ་རྩིས་མཁོ་འདོན།" : "Window Financing Requisitions"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "བཞི་དཔྱའི་སྨན་རྫས་མཁོ་སྒྲུབ་གཏོང་ལེན།" : "Quarterly DMS procurement releases"}</div>
                     </div>
                   </Link>
                   <Link
@@ -316,8 +340,8 @@ export function SiteHeader() {
                   >
                     <Megaphone className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Advocacy & IEC Materials</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Community health guides & brochures</div>
+                      <div>{isDzongkha ? "རྒྱབ་སྐྱོར་དང་བརྡ་དོན་རྒྱུ་ཆས།" : "Advocacy & IEC Materials"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "མི་སྡེའི་འཕྲོད་བསྟེན་ལམ་སྟོན་དང་ཡིག་ཆས།" : "Community health guides & brochures"}</div>
                     </div>
                   </Link>
                   <Link
@@ -326,8 +350,8 @@ export function SiteHeader() {
                   >
                     <Layers className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Formularies & Other Publications</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Drug formularies & strategic charters</div>
+                      <div>{isDzongkha ? "སྨན་ཐོ་དང་དཔེ་སྐྲུན་གཞན་དག" : "Formularies & Other Publications"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "རྒྱལ་ཡོངས་སྨན་ཐོ་དང་བཅའ་ཁྲིམས།" : "Drug formularies & strategic charters"}</div>
                     </div>
                   </Link>
                 </div>
@@ -348,7 +372,7 @@ export function SiteHeader() {
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
                 }`}
               >
-                <span className="whitespace-nowrap">News and Events</span>
+                <span className="whitespace-nowrap">{t("nav_news", "News and Events")}</span>
                 <ChevronDown className="size-3 2xl:size-3.5 text-slate-400 group-hover:text-primary transition-transform duration-200 shrink-0" />
               </Link>
 
@@ -360,8 +384,8 @@ export function SiteHeader() {
                   >
                     <Activity className="size-4 text-primary shrink-0" />
                     <div>
-                      <div className="font-bold">Latest News & BBS Dispatches</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Field coverage & national reports</div>
+                      <div className="font-bold">{isDzongkha ? "ད་ལྟོའི་གནས་ཚུལ་དང་ རྒྱང་བསྒྲགས།" : "Latest News & BBS Dispatches"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "ས་གནས་གནས་ཚུལ་དང་ རྒྱལ་ཡོངས་སྙན་ཞུ།" : "Field coverage & national reports"}</div>
                     </div>
                   </Link>
                   <div className="h-px bg-border/60 my-1" />
@@ -371,8 +395,8 @@ export function SiteHeader() {
                   >
                     <Megaphone className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Press Releases & Announcements</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Official secretariat circulars</div>
+                      <div>{isDzongkha ? "གསར་འགོད་གསལ་བསྒྲགས་དང་ བརྡ་ཐོ།" : "Press Releases & Announcements"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "དྲུང་ཆེན་ཡིག་ཚང་གི་བཀོད་རྒྱ།" : "Official secretariat circulars"}</div>
                     </div>
                   </Link>
                   <Link
@@ -381,8 +405,8 @@ export function SiteHeader() {
                   >
                     <Calendar className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Official Events Calendar</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Annual BHTF Day & RSEB Mobilization</div>
+                      <div>{isDzongkha ? "གཞུང་འབྲེལ་མཛད་སྒོའི་ཟླ་ཐོ།" : "Official Events Calendar"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "ལོ་བསྟར་མ་དངུལ་ཉིན་མ་དང་ ཞལ་འདེབས་ལས་རིམ།" : "Annual BHTF Day & RSEB Mobilization"}</div>
                     </div>
                   </Link>
                   <Link
@@ -391,8 +415,8 @@ export function SiteHeader() {
                   >
                     <Briefcase className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Careers & Consultancies</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">Official vacancies & RFP tenders</div>
+                      <div>{isDzongkha ? "ལཱ་གཡོག་དང་ གྲོས་བསྟུན་པའི་གོ་སྐབས།" : "Careers & Consultancies"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "གཞུང་འབྲེལ་ས་སྟོང་དང་ རིན་བསྡུར་བརྡ་ཐོ།" : "Official vacancies & RFP tenders"}</div>
                     </div>
                   </Link>
                   <Link
@@ -401,8 +425,8 @@ export function SiteHeader() {
                   >
                     <Sparkles className="size-4 text-primary shrink-0" />
                     <div>
-                      <div>Media Gallery</div>
-                      <div className="text-[10px] text-muted-foreground font-normal">High-resolution field photo archive</div>
+                      <div>{isDzongkha ? "བརྙན་དཔར་མཛོད་ཁང་།" : "Media Gallery"}</div>
+                      <div className="text-[10px] text-muted-foreground font-normal">{isDzongkha ? "ས་གནས་འཕྲོད་བསྟེན་གྱི་པར་རིས།" : "High-resolution field photo archive"}</div>
                     </div>
                   </Link>
                 </div>
@@ -418,7 +442,7 @@ export function SiteHeader() {
                   : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
               }`}
             >
-              <span className="whitespace-nowrap">Contact Us</span>
+              <span className="whitespace-nowrap">{t("nav_contact", "Contact Us")}</span>
             </Link>
           </nav>
 
@@ -429,7 +453,7 @@ export function SiteHeader() {
               className="inline-flex items-center gap-1.5 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-4 2xl:px-5 py-2 text-xs 2xl:text-sm font-bold text-white shadow-sm ring-1 ring-emerald-700/40 transition active:scale-95 whitespace-nowrap shrink-0"
             >
               <Heart className="size-3.5 2xl:size-4 fill-current shrink-0 text-amber-300" />
-              <span>Donate</span>
+              <span>{t("nav_donate", "Donate")}</span>
             </Link>
 
             {/* Mobile Menu Hamburger */}
@@ -447,15 +471,28 @@ export function SiteHeader() {
         {mobileMenuOpen && (
           <nav className="xl:hidden border-t border-border bg-white animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
             <div className="container-page py-4 flex flex-col space-y-1">
-              <div className="font-bold text-xs uppercase tracking-wider text-muted-foreground px-3 pt-1 pb-2">
-                Navigation Menu
+              {/* Mobile Drawer Language Switcher Bar */}
+              <div className="flex items-center justify-between px-3 pt-1 pb-3 border-b border-border/60 mb-2">
+                <span className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                  {isDzongkha ? "འགྲུལ་བསྐྱོད་ཐོ་དེབ།" : "Navigation Menu"}
+                </span>
+                <button
+                  type="button"
+                  onClick={toggleLang}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold transition active:scale-95"
+                >
+                  <Globe className="size-3.5 text-emerald-700" />
+                  <span className={isDzongkha ? "font-bold" : "font-dzongkha text-xs"}>
+                    {lang === "en" ? "རྫོང་ཁ་ལུ་སོར།" : "Switch to English"}
+                  </span>
+                </button>
               </div>
 
               <Link
                 to="/"
                 className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg"
               >
-                Home
+                {t("nav_home", "Home")}
               </Link>
 
               {/* Accordion 1: About Us */}
@@ -464,7 +501,7 @@ export function SiteHeader() {
                   onClick={() => toggleMobileSection("about")}
                   className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
                 >
-                  <span>About Us</span>
+                  <span>{t("nav_about_us", "About Us")}</span>
                   <ChevronDown
                     className={`size-4 text-muted-foreground transition-transform duration-200 ${
                       mobileExpandedSection === "about" ? "rotate-180" : ""
@@ -477,31 +514,31 @@ export function SiteHeader() {
                       to="/about"
                       className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
                     >
-                      • About Us Overview
+                      • {t("nav_about_overview", "About Us Overview")}
                     </Link>
                     <Link
                       to="/about/organization"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Organization & Organogram
+                      • {t("nav_organization", "Organization & Organogram")}
                     </Link>
                     <Link
                       to="/about/trustees"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Board of trustees (with photos)
+                      • {t("nav_trustees", "Board of trustees (with photos)")}
                     </Link>
                     <Link
                       to="/about/committees"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Asset management committee
+                      • {t("nav_amc", "Asset management committee")}
                     </Link>
                     <Link
                       to="/about/secretariat"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Secretariat
+                      • {t("nav_secretariat", "Secretariat")}
                     </Link>
                   </div>
                 )}
@@ -512,7 +549,7 @@ export function SiteHeader() {
                 to="/our-story"
                 className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg border-b border-border/60"
               >
-                Our Story
+                {t("nav_our_story", "Our Story")}
               </Link>
 
               {/* Accordion 2: Impact */}
@@ -521,7 +558,7 @@ export function SiteHeader() {
                   onClick={() => toggleMobileSection("work")}
                   className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
                 >
-                  <span>Impact</span>
+                  <span>{t("nav_impact", "Impact")}</span>
                   <ChevronDown
                     className={`size-4 text-muted-foreground transition-transform duration-200 ${
                       mobileExpandedSection === "work" ? "rotate-180" : ""
@@ -534,13 +571,13 @@ export function SiteHeader() {
                       to="/our-impact"
                       className="block py-1.5 px-2 text-xs font-semibold text-primary hover:underline"
                     >
-                      • Healthcare Impact Overview (20 Dzongkhags)
+                      • {isDzongkha ? "འཕྲོད་བསྟེན་གྲུབ་འབྲས་སྤྱི་མཐོང་ (རྫོང་ཁག་ ༢༠)" : "Healthcare Impact Overview (20 Dzongkhags)"}
                     </Link>
                     <Link
                       to="/our-work"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • 438 Essential Medicines & Vaccines
+                      • {isDzongkha ? "ཉེ་བར་མཁོ་བའི་སྨན་རྫས་ ༤༣༨ དང་ སྨན་ཁབ།" : "438 Essential Medicines & Vaccines"}
                     </Link>
                   </div>
                 )}
@@ -552,7 +589,7 @@ export function SiteHeader() {
                   onClick={() => toggleMobileSection("resources")}
                   className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
                 >
-                  <span>Resources & Certified Audits</span>
+                  <span>{t("nav_resources", "Resources")}</span>
                   <ChevronDown
                     className={`size-4 text-muted-foreground transition-transform duration-200 ${
                       mobileExpandedSection === "resources" ? "rotate-180" : ""
@@ -565,43 +602,43 @@ export function SiteHeader() {
                       to="/resources"
                       className="block py-1.5 px-2 text-xs font-bold text-primary hover:underline"
                     >
-                      • All Statutory Publications Archive
+                      • {isDzongkha ? "གཞུང་འབྲེལ་ཡིག་ཆ་མཛོད་ཁང་།" : "All Statutory Publications Archive"}
                     </Link>
                     <Link
                       to="/resources/annual-reports"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Annual Reports
+                      • {isDzongkha ? "ལོ་བསྟར་སྙན་ཞུ།" : "Annual Reports"}
                     </Link>
                     <Link
                       to="/resources/financial-reports"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Financial Statements
+                      • {isDzongkha ? "དངུལ་རྩིས་གསལ་བཤད།" : "Financial Statements"}
                     </Link>
                     <Link
                       to="/resources/audit-reports"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Certified Audit Reports (RAA)
+                      • {isDzongkha ? "རྩིས་ཞིབ་གྲུབ་པའི་སྙན་ཞུ།" : "Certified Audit Reports (RAA)"}
                     </Link>
                     <Link
                       to="/resources/window-financing"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Window Financing Requisitions
+                      • {isDzongkha ? "སྒོ་འབྱེད་དངུལ་རྩིས་མཁོ་འདོན།" : "Window Financing Requisitions"}
                     </Link>
                     <Link
                       to="/resources/advocacy"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Advocacy & IEC Materials
+                      • {isDzongkha ? "རྒྱབ་སྐྱོར་དང་བརྡ་དོན་རྒྱུ་ཆས།" : "Advocacy & IEC Materials"}
                     </Link>
                     <Link
                       to="/resources/other-publications"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Formularies & Other Publications
+                      • {isDzongkha ? "སྨན་ཐོ་དང་དཔེ་སྐྲུན་གཞན་དག" : "Formularies & Other Publications"}
                     </Link>
                   </div>
                 )}
@@ -613,7 +650,7 @@ export function SiteHeader() {
                   onClick={() => toggleMobileSection("news")}
                   className="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg text-left"
                 >
-                  <span>News and Events</span>
+                  <span>{t("nav_news", "News and Events")}</span>
                   <ChevronDown
                     className={`size-4 text-muted-foreground transition-transform duration-200 ${
                       mobileExpandedSection === "news" ? "rotate-180" : ""
@@ -626,31 +663,31 @@ export function SiteHeader() {
                       to="/news"
                       className="block py-1.5 px-2 text-xs font-bold text-primary hover:underline"
                     >
-                      • Latest News & BBS Dispatches
+                      • {isDzongkha ? "ད་ལྟོའི་གནས་ཚུལ་དང་ རྒྱང་བསྒྲགས།" : "Latest News & BBS Dispatches"}
                     </Link>
                     <Link
                       to="/news/announcements"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Press Releases & Announcements
+                      • {isDzongkha ? "གསར་འགོད་གསལ་བསྒྲགས་དང་ བརྡ་ཐོ།" : "Press Releases & Announcements"}
                     </Link>
                     <Link
                       to="/news/events"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Official Events Calendar
+                      • {isDzongkha ? "གཞུང་འབྲེལ་མཛད་སྒོའི་ཟླ་ཐོ།" : "Official Events Calendar"}
                     </Link>
                     <Link
                       to="/news/careers"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Career Opportunities & Consultancies
+                      • {isDzongkha ? "ལཱ་གཡོག་དང་ གྲོས་བསྟུན་པའི་གོ་སྐབས།" : "Career Opportunities & Consultancies"}
                     </Link>
                     <Link
                       to="/news/media"
                       className="block py-1.5 px-2 text-xs font-semibold text-foreground/80 hover:underline"
                     >
-                      • Media Gallery
+                      • {isDzongkha ? "བརྙན་དཔར་མཛོད་ཁང་།" : "Media Gallery"}
                     </Link>
                   </div>
                 )}
@@ -660,20 +697,20 @@ export function SiteHeader() {
                 to="/track-donation"
                 className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg"
               >
-                Track Donation
+                {isDzongkha ? "ཞལ་འདེབས་བདའ་ཟུན།" : "Track Donation"}
               </Link>
               <Link
                 to="/contact"
                 className="px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted rounded-lg"
               >
-                Contact Us
+                {t("nav_contact", "Contact Us")}
               </Link>
               <Link
                 to="/donate"
                 className="mx-2 mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-[#0B4F42] hover:bg-[#073C32] px-4 py-2.5 text-sm font-bold text-white shadow-sm"
               >
                 <Heart className="size-4 fill-current text-amber-300" />
-                <span>Donate (1:1 Sovereign Match)</span>
+                <span>{isDzongkha ? "ཞལ་འདེབས་ཕུལ། (གཞུང་གི་མཉམ་སྦྱོར)" : "Donate (1:1 Sovereign Match)"}</span>
               </Link>
 
               {/* Mobile Quick Support Info */}

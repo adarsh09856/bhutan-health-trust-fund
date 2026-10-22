@@ -10,6 +10,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { AdminAuthProvider } from "@/lib/admin-auth";
+import { LanguageProvider } from "@/lib/i18n/language-context";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
@@ -122,7 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Noto+Sans+Tibetan:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap",
       },
       {
         rel: "stylesheet",
@@ -157,17 +158,19 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AdminAuthProvider>
-        <ConfirmationProvider>
-        <div className="flex min-h-screen flex-col bg-background text-foreground">
-          <AdminTopBar />
-          {!isAdminRoute && <SiteHeader />}
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          {!isAdminRoute && <SiteFooter />}
-        </div>
-        <Toaster position="top-right" richColors />
-        </ConfirmationProvider>
+        <LanguageProvider>
+          <ConfirmationProvider>
+            <div className="flex min-h-screen flex-col bg-background text-foreground">
+              <AdminTopBar />
+              {!isAdminRoute && <SiteHeader />}
+              <main className="flex-1">
+                <Outlet />
+              </main>
+              {!isAdminRoute && <SiteFooter />}
+            </div>
+            <Toaster position="top-right" richColors />
+          </ConfirmationProvider>
+        </LanguageProvider>
       </AdminAuthProvider>
     </QueryClientProvider>
   );

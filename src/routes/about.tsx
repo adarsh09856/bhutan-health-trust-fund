@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -47,15 +48,21 @@ function AboutRouteComponent() {
 }
 
 function AboutUsMainPage() {
+  const { t, isDzongkha } = useLanguage();
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       <PageHero
-        badge="Section 1 • Institutional Profile"
-        title="About Us"
-        subtitle="Sustaining free primary healthcare, essential medicines, and vaccines for present and future generations of Bhutan."
+        badge={isDzongkha ? "སྡེ་ཚན་ ༡ • ལས་ཚོགས་ངོ་སྤྲོད།" : "Section 1 • Institutional Profile"}
+        title={t("nav_about_us", "About Us")}
+        subtitle={
+          isDzongkha
+            ? "ད་ལྟོ་དང་མ་འོངས་པའི་མི་རབས་ཚུ་གི་དོན་ལུ་ རིན་མེད་འཕྲོད་བསྟེན་ཞབས་ཏོག་དང་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས། སྨན་ཁབ་ཚུ་ རྒྱུན་སྐྱོང་འབད་དོ།"
+            : "Sustaining free primary healthcare, essential medicines, and vaccines for present and future generations of Bhutan."
+        }
         breadcrumb={[
-          { label: "Home", to: "/" },
-          { label: "About Us" },
+          { label: t("nav_home", "Home"), to: "/" },
+          { label: t("nav_about_us", "About Us") },
         ]}
       />
 
@@ -75,26 +82,18 @@ function AboutUsMainPage() {
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-8">
           <div className="space-y-3">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-              Statutory Profile • Royal Charter 2000
+              {isDzongkha ? "ཁྲིམས་མཐུན་ངོ་སྤྲོད། • རྒྱལ་པོའི་བཀའ་ཤོག་ ༢༠༠༠" : "Statutory Profile • Royal Charter 2000"}
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              About the Bhutan Health Trust Fund
+              {isDzongkha ? "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་གྱི་སྐོར།" : "About the Bhutan Health Trust Fund"}
             </h2>
           </div>
 
           <div className="space-y-5 text-slate-700 text-sm sm:text-base leading-relaxed font-sans">
-            <p>
-              The Bhutan Health Trust Fund (BHTF) is a symbol of compassion, shared responsibility and Bhutan’s enduring commitment to the health and well-being of its people. Inspired by the vision of His Majesty the Fourth Druk Gyalpo, Jigme Singye Wangchuck, the Fund was established to help sustain Bhutan’s free primary healthcare service and ensure that essential medicines and vaccines remain accessible to all. It was officially launched on 12 May 1998 at the World Health Organization headquarters in Geneva, and received its formal legal foundation through the Royal Charter issued on 3 August 2000. Since 2018, the Fund has become a self-independent autonomous agency and continues to uphold a simple yet profound mission to protect lives and safeguard the health of present and future generations.
-            </p>
-            <p>
-              Over the past two decades, the Bhutan Health Trust Fund has grown into a vital pillar of sustainable healthcare financing in Bhutan. Beginning with support for vaccines, the Fund expanded its assistance to include essential medicines in 2014. Today, it supports the procurement of 438 national essential medicines, 110 traditional medicines and four key vaccines, with an annual commitment of approximately Nu. 600 million. To date, the Fund has disbursed Nu. 4.3 billion towards essential medicines and vaccines, helping strengthen the delivery of free primary healthcare services across the country. Behind these figures are countless lives touched, families supported and communities given greater peace of mind through access to essential healthcare.
-            </p>
-            <p>
-              The spirit of collective care has always been at the heart of the Fund. In 2002, the “Move for Health” initiative, led by the then Health Minister, Lyonpo Sangay Ngedup, brought people together through a remarkable journey from Trashigang to Thimphu. Raising nearly USD 2 million, the initiative demonstrated how the compassion, generosity and determination of individuals and communities can contribute to a healthier nation. This legacy of shared responsibility continues to inspire the Fund’s work today.
-            </p>
-            <p>
-              With the support of the Royal Government of Bhutan, development partners, institutions, businesses and generous individuals, the Bhutan Health Trust Fund continues to build a sustainable foundation for essential healthcare. Every contribution represents more than financial support; it is an investment in human life, dignity and the well-being of future generations. Guided by the values of accountability, sustainability and service, the Fund remains committed to ensuring that no one is left behind in accessing essential medicines and vaccines. Its story is ultimately a story of a nation caring for its people, united by the belief that a healthy population is the foundation of a happy and thriving Bhutan.
-            </p>
+            <p>{t("about_p1")}</p>
+            <p>{t("about_p2")}</p>
+            <p>{t("about_p3")}</p>
+            <p>{t("about_p4")}</p>
           </div>
         </div>
       </section>

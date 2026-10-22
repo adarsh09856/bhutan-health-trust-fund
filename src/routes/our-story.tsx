@@ -22,6 +22,7 @@ import historyCharter from "@/assets/reference/history_charter_1992.webp";
 import historyMou from "@/assets/reference/history_mou.webp";
 import historyEndowment from "@/assets/reference/history_endowment.webp";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export const Route = createFileRoute("/our-story")({
   loader: async () => {
@@ -49,67 +50,10 @@ export const Route = createFileRoute("/our-story")({
   component: OurStoryPage,
 });
 
-// Official BHTF Historical Milestones (Section 2 from official write-up)
-const officialMilestones = [
-  {
-    year: "1998",
-    title: "Launched in Geneva",
-    desc: "BHTF launched on 12th May at the World Health Organization headquarters in Geneva.",
-    era: "FOUNDATIONAL YEARS (1998–2006)",
-  },
-  {
-    year: "2000",
-    title: "Royal Charter issued",
-    desc: "Secretariat established; Charter issued by the Fourth Druk Gyalpo on 3rd August.",
-    era: "FOUNDATIONAL YEARS (1998–2006)",
-  },
-  {
-    year: "2003",
-    title: "Vaccine financing begins",
-    desc: "First funding for primary health care vaccines.",
-    era: "FOUNDATIONAL YEARS (1998–2006)",
-  },
-  {
-    year: "2006",
-    title: "National campaigns",
-    desc: "Supported nationwide Measles & Rubella campaign; financed the Hepatitis B drive.",
-    era: "FOUNDATIONAL YEARS (1998–2006)",
-  },
-  {
-    year: "2014–15",
-    title: "Health Contribution transferred",
-    desc: "HC moved to BHTF; Fund began financing both essential drugs and vaccines.",
-    era: "SCALING TO NATIONAL COVERAGE (2014–2026)",
-  },
-  {
-    year: "2017",
-    title: "HPV vaccine co-financed",
-    desc: "Co-financed with the Australian Cervical Cancer Foundation (ACCF).",
-    era: "SCALING TO NATIONAL COVERAGE (2014–2026)",
-  },
-  {
-    year: "2018",
-    title: "Autonomous & Pentavalent",
-    desc: "Delinked from MoH; supported Pentavalent Vaccine introduction with GAVI.",
-    era: "SCALING TO NATIONAL COVERAGE (2014–2026)",
-  },
-  {
-    year: "2019",
-    title: "PCV & Influenza funded",
-    desc: "Funded introduction of Pneumococcal Conjugate and Influenza vaccines.",
-    era: "SCALING TO NATIONAL COVERAGE (2014–2026)",
-  },
-  {
-    year: "2026",
-    title: "26 years of service to the nation",
-    desc: "26 unbroken years sustaining primary healthcare financing for essential medicines and vaccines across all 20 Dzongkhags.",
-    era: "SCALING TO NATIONAL COVERAGE (2014–2026)",
-  },
-];
-
 function OurStoryPage() {
   const loaderData = Route.useLoaderData();
   const [liveMilestones, setLiveMilestones] = useState<Milestone[]>(loaderData?.liveMilestones || []);
+  const { t, isDzongkha } = useLanguage();
 
   useEffect(() => {
     getPublicMilestones()
@@ -119,26 +63,78 @@ function OurStoryPage() {
       .catch(() => {});
   }, []);
 
-  const milestonesToRender =
-    liveMilestones.length >= 9
-      ? liveMilestones.map((m, idx) => ({
-          year: m.year,
-          title: m.title,
-          desc: m.description,
-          era: officialMilestones[idx]?.era || "Milestone",
-        }))
-      : officialMilestones;
+  const localizedMilestones = [
+    {
+      year: "1998",
+      title: t("milestone_1998_title", "Launched in Geneva"),
+      desc: t("milestone_1998_desc", "BHTF launched on 12th May at the World Health Organization headquarters in Geneva."),
+      era: isDzongkha ? "༡༩༩༨-༢༠༠༦ · གཞི་བཙུགས་དུས་རབས།" : "FOUNDATIONAL YEARS (1998–2006)",
+    },
+    {
+      year: "2000",
+      title: t("milestone_2000_title", "Royal Charter issued"),
+      desc: t("milestone_2000_desc", "Secretariat established; Charter issued by the Fourth Druk Gyalpo on 3rd August."),
+      era: isDzongkha ? "༡༩༩༨-༢༠༠༦ · གཞི་བཙུགས་དུས་རབས།" : "FOUNDATIONAL YEARS (1998–2006)",
+    },
+    {
+      year: "2003",
+      title: t("milestone_2003_title", "Vaccine financing begins"),
+      desc: t("milestone_2003_desc", "First funding for primary health care vaccines."),
+      era: isDzongkha ? "༡༩༩༨-༢༠༠༦ · གཞི་བཙུགས་དུས་རབས།" : "FOUNDATIONAL YEARS (1998–2006)",
+    },
+    {
+      year: "2006",
+      title: t("milestone_2006_title", "National campaigns"),
+      desc: t("milestone_2006_desc", "Supported nationwide Measles & Rubella campaign; financed the Hepatitis B drive."),
+      era: isDzongkha ? "༡༩༩༨-༢༠༠༦ · གཞི་བཙུགས་དུས་རབས།" : "FOUNDATIONAL YEARS (1998–2006)",
+    },
+    {
+      year: "2014–15",
+      title: t("milestone_2014_title", "Health Contribution transferred"),
+      desc: t("milestone_2014_desc", "HC moved to BHTF; Fund began financing both essential drugs and vaccines."),
+      era: isDzongkha ? "༢༠༡༤-༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།" : "SCALING TO NATIONAL COVERAGE (2014–2026)",
+    },
+    {
+      year: "2017",
+      title: t("milestone_2017_title", "HPV vaccine co-financed"),
+      desc: t("milestone_2017_desc", "Co-financed with the Australian Cervical Cancer Foundation (ACCF)."),
+      era: isDzongkha ? "༢༠༡༤-༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།" : "SCALING TO NATIONAL COVERAGE (2014–2026)",
+    },
+    {
+      year: "2018",
+      title: t("milestone_2018_title", "Autonomous & Pentavalent"),
+      desc: t("milestone_2018_desc", "Delinked from MoH; supported Pentavalent Vaccine introduction with GAVI."),
+      era: isDzongkha ? "༢༠༡༤-༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།" : "SCALING TO NATIONAL COVERAGE (2014–2026)",
+    },
+    {
+      year: "2019",
+      title: t("milestone_2019_title", "PCV & Influenza funded"),
+      desc: t("milestone_2019_desc", "Funded introduction of Pneumococcal Conjugate and Influenza vaccines."),
+      era: isDzongkha ? "༢༠༡༤-༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།" : "SCALING TO NATIONAL COVERAGE (2014–2026)",
+    },
+    {
+      year: "2026",
+      title: t("milestone_2026_title", "26 years of service to the nation"),
+      desc: t("milestone_2026_desc", "26 unbroken years sustaining primary healthcare financing for essential medicines and vaccines across all 20 Dzongkhags."),
+      era: isDzongkha ? "༢༠༡༤-༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།" : "SCALING TO NATIONAL COVERAGE (2014–2026)",
+    },
+  ];
+
+  const milestonesToRender = localizedMilestones;
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
       {/* 1. Dignified Hero Header */}
       <PageHero
-        badge="Section 2 • Historical Journey"
-        title="Our Story"
-        subtitle="The founding chronicle of the Bhutan Health Trust Fund and 26 years of service to the nation."
+        badge={t("story_page_badge", "Section 2 • Historical Journey")}
+        title={t("story_page_title", "Our Story")}
+        subtitle={t(
+          "story_page_subtitle",
+          "The founding chronicle of the Bhutan Health Trust Fund and 26 years of service to the nation."
+        )}
         breadcrumb={[
-          { label: "Home", to: "/" },
-          { label: "Our Story" },
+          { label: t("nav_home", "Home"), to: "/" },
+          { label: t("story_page_title", "Our Story") },
         ]}
       />
 
@@ -159,19 +155,25 @@ function OurStoryPage() {
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-6">
           <div className="space-y-2">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
-              Founding Mandate • Est. 1998
+              {t("story_mandate_badge", "Founding Mandate • Est. 1998")}
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Our Story
+              {t("story_page_title", "Our Story")}
             </h2>
           </div>
 
           <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed font-sans">
             <p>
-              The Bhutan Health Trust Fund (BHTF) was established in 1998 with the objective of ensuring sustainable financing for essential medicines and vaccines in Bhutan. The Fund received its royal charter in 2000, which provides the foundation for its mandate and operations.
+              {t(
+                "story_p1",
+                "The Bhutan Health Trust Fund (BHTF) was established in 1998 with the objective of ensuring sustainable financing for essential medicines and vaccines in Bhutan. The Fund received its royal charter in 2000, which provides the foundation for its mandate and operations."
+              )}
             </p>
             <p>
-              Since its establishment, BHTF has continued to strengthen its financial sustainability through prudent fund management and investment, supporting the continued provision of essential medicines and vaccines for the people of Bhutan.
+              {t(
+                "story_p2",
+                "Since its establishment, BHTF has continued to strengthen its financial sustainability through prudent fund management and investment, supporting the continued provision of essential medicines and vaccines for the people of Bhutan."
+              )}
             </p>
           </div>
 
@@ -188,23 +190,26 @@ function OurStoryPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-bold">
-                    Royal Benefactor
+                    {isDzongkha ? "རྒྱལ་པོའི་སྦྱིན་བདག" : "Royal Benefactor"}
                   </span>
                   <h3 className="text-lg sm:text-xl font-bold mt-1 text-white leading-snug font-serif">
-                    His Majesty the Fourth Druk Gyalpo
+                    {isDzongkha ? "མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག" : "His Majesty the Fourth Druk Gyalpo"}
                   </h3>
                   <p className="text-xs text-amber-200/90 font-light">
-                    Jigme Singye Wangchuck • Royal Charter 2000
+                    {isDzongkha ? "འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག • རྒྱལ་པོའི་བཀའ་ཤོག་ ༢༠༠༠" : "Jigme Singye Wangchuck • Royal Charter 2000"}
                   </p>
                 </div>
               </div>
               <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
                 <div className="relative pl-4 border-l-2 border-amber-500">
                   <p className="text-sm sm:text-base text-slate-900 italic font-serif leading-relaxed">
-                    “No Bhutanese should ever have to choose between their health and their livelihood.”
+                    {t(
+                      "quote_king_text",
+                      "“No Bhutanese should ever have to choose between their health and their livelihood.”"
+                    )}
                   </p>
                   <p className="text-xs text-slate-500 font-sans mt-2">
-                    — His Majesty the Fourth Druk Gyalpo, 2004
+                    {isDzongkha ? "— མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག ༢༠༠༤" : "— His Majesty the Fourth Druk Gyalpo, 2004"}
                   </p>
                 </div>
               </div>
@@ -221,20 +226,23 @@ function OurStoryPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold">
-                    Founding Architect
+                    {isDzongkha ? "གཞི་བཙུགས་འཆར་བཀོད་པ།" : "Founding Architect"}
                   </span>
                   <h3 className="text-lg sm:text-xl font-bold mt-1 text-white leading-snug font-serif">
-                    Lyonpo Sangay Ngedup
+                    {isDzongkha ? "བློན་པོ་ སངས་རྒྱས་དངོས་གྲུབ།" : "Lyonpo Sangay Ngedup"}
                   </h3>
                   <p className="text-xs text-emerald-200/90 font-light">
-                    Hon'ble Former Health Minister • Move for Health (2002)
+                    {isDzongkha ? "གསོ་བའི་བློན་པོ་ཟུར་པ། • འཕྲོད་བསྟེན་དོན་ལུ་གོམ་བགྲོད (༢༠༠༢)" : "Hon'ble Former Health Minister • Move for Health (2002)"}
                   </p>
                 </div>
               </div>
               <div className="p-6 space-y-3 bg-white flex-1 flex flex-col justify-between">
                 <div className="relative pl-4 border-l-2 border-emerald-600">
                   <p className="text-sm sm:text-base text-slate-900 italic font-serif leading-relaxed">
-                    “A tree is only as strong as the hands that first planted it. Lyonpo Sangay Ngedup laid the foundation of BHTF, and its founding members nurtured it into life. We remain forever grateful for their vision and contributions.”
+                    {t(
+                      "quote_lyonpo_text",
+                      "“A tree is only as strong as the hands that first planted it. Lyonpo Sangay Ngedup laid the foundation of BHTF, and its founding members nurtured it into life. We remain forever grateful for their vision and contributions.”"
+                    )}
                   </p>
                 </div>
               </div>
@@ -259,13 +267,15 @@ function OurStoryPage() {
 
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
-            Milestones Timeline
+            {isDzongkha ? "བྱུང་རབས་ལམ་འགྲོས།" : "Milestones Timeline"}
           </span>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-serif">
-            26 Years of Service: Milestones
+            {isDzongkha ? "རྒྱལ་ཁབ་ལུ་ ལོ་ངོ་ ༢༦ གི་ཞབས་ཏོག: བྱུང་རབས་རིམ་པ།" : "26 Years of Service: Milestones"}
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm font-light">
-            From launch in Geneva to a nationwide immunization backbone — the programmatic journey behind the Fund.
+            {isDzongkha
+              ? "ཇི་ནི་བཱ་ལུ་ འགོ་འབྱེད་མཛད་པ་ལས་ རྒྱལ་ཡོངས་ཀྱི་ སྨན་ཁབ་སྲུང་སྐྱོབ་ཀྱི་ ཀ་ཆེན་ལུ་གྱུར་ཚུན་གྱི་ ལམ་འགྲོས།"
+              : "From launch in Geneva to a nationwide immunization backbone — the programmatic journey behind the Fund."}
           </p>
         </div>
 
@@ -276,7 +286,7 @@ function OurStoryPage() {
               {idx === 0 && (
                 <div className="relative pl-6 sm:pl-10 -ml-1 sm:-ml-4 mb-6">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950 text-amber-300 border border-emerald-700/60 text-xs font-mono font-bold shadow-xs">
-                    <span>1998–2006 · FOUNDATIONAL YEARS</span>
+                    <span>{isDzongkha ? "༡༩༩༨–༢༠༠༦ · གཞི་བཙུགས་དུས་རབས།" : "1998–2006 · FOUNDATIONAL YEARS"}</span>
                   </div>
                 </div>
               )}
@@ -285,7 +295,7 @@ function OurStoryPage() {
               {m.year.includes("2014") && (
                 <div className="relative pl-6 sm:pl-10 -ml-1 sm:-ml-4 my-8">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-emerald-400 border border-slate-700 text-xs font-mono font-bold shadow-xs">
-                    <span>2014–2026 · SCALING TO NATIONAL COVERAGE</span>
+                    <span>{isDzongkha ? "༢༠༡༤–༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།" : "2014–2026 · SCALING TO NATIONAL COVERAGE"}</span>
                   </div>
                 </div>
               )}
@@ -321,10 +331,14 @@ function OurStoryPage() {
         <div className="bg-[#EAF6F5] text-slate-900 rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs border border-[#00A896]/30">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black font-serif text-[#0B4F42]">
-              Safeguard Health Sovereignty for Future Generations
+              {isDzongkha
+                ? "མ་འོངས་མི་རབས་ཚུ་གི་དོན་ལུ་ འཕྲོད་བསྟེན་རང་དབང་སྲུང་སྐྱོབ་མཛད།"
+                : "Safeguard Health Sovereignty for Future Generations"}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 max-w-xl font-light">
-              Your contribution represents more than financial support; it is an investment in human life, dignity and the well-being of future generations.
+              {isDzongkha
+                ? "ཁྱོད་ཀྱི་ཞལ་འདེབས་འདི་ དངུལ་གྱི་རྒྱབ་སྐྱོར་ཙམ་མིན་པར་ འགྲོ་བ་མིའི་ཚེ་སྲོག་དང་ ཆེ་མཐོང་། མ་འོངས་མི་རབས་ཀྱི་ བདེ་སྐྱིད་ལུ་ མ་རྩ་བཙུགས་བཞག་འབད་མི་ཅིག་ཨིན།"
+                : "Your contribution represents more than financial support; it is an investment in human life, dignity and the well-being of future generations."}
             </p>
           </div>
           <Link
@@ -332,7 +346,7 @@ function OurStoryPage() {
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0B4F42] text-white font-bold text-sm shadow-md hover:bg-[#073C32] transition shrink-0 active:scale-95"
           >
             <Heart className="h-4 w-4 fill-current text-amber-300" />
-            <span>Donate Now</span>
+            <span>{t("btn_donate_now", "Donate to BHTF")}</span>
           </Link>
         </div>
       </section>

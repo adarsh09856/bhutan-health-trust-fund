@@ -1,9 +1,12 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { Landmark, ShieldCheck, Scale, Users, BookOpen, Target } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 interface SubTab {
   to: string;
+  labelKey: string;
   label: string;
+  shortLabelKey: string;
   shortLabel: string;
   icon: React.ElementType;
 }
@@ -11,37 +14,49 @@ interface SubTab {
 const ABOUT_SUB_TABS: SubTab[] = [
   {
     to: "/about",
+    labelKey: "capsule_about",
     label: "About Us",
+    shortLabelKey: "capsule_about",
     shortLabel: "About",
     icon: Landmark,
   },
   {
     to: "/about/organization",
+    labelKey: "capsule_org",
     label: "Organization & Organogram",
+    shortLabelKey: "capsule_org",
     shortLabel: "Organization",
     icon: Target,
   },
   {
     to: "/about/trustees",
+    labelKey: "capsule_trustees",
     label: "Board of Trustees",
+    shortLabelKey: "capsule_trustees",
     shortLabel: "Trustees",
     icon: ShieldCheck,
   },
   {
     to: "/about/committees",
+    labelKey: "capsule_amc",
     label: "Asset Management Committee",
+    shortLabelKey: "capsule_amc",
     shortLabel: "AMC",
     icon: Scale,
   },
   {
     to: "/about/secretariat",
+    labelKey: "capsule_secretariat",
     label: "Secretariat",
+    shortLabelKey: "capsule_secretariat",
     shortLabel: "Secretariat",
     icon: Users,
   },
   {
     to: "/our-story",
-    label: "Our Story & 26-Yr Timeline",
+    labelKey: "capsule_story",
+    label: "Our Story",
+    shortLabelKey: "capsule_story",
     shortLabel: "Our Story",
     icon: BookOpen,
   },
@@ -50,6 +65,7 @@ const ABOUT_SUB_TABS: SubTab[] = [
 export function AboutBottomCapsule() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { t, isDzongkha } = useLanguage();
 
   return (
     <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] sm:max-w-max pointer-events-none animate-in fade-in slide-in-from-bottom-3 duration-300">
@@ -58,12 +74,14 @@ export function AboutBottomCapsule() {
         className="pointer-events-auto bg-white/90 backdrop-blur-2xl border border-slate-200/90 shadow-[0_12px_40px_-8px_rgba(12,43,94,0.25)] rounded-full p-1.5 flex items-center gap-1 overflow-x-auto no-scrollbar ring-1 ring-black/5"
       >
         <span className="hidden md:inline-flex items-center text-[10px] font-mono uppercase tracking-wider font-bold text-primary/70 px-3 py-1 bg-slate-100/80 rounded-full shrink-0">
-          About BHTF
+          {isDzongkha ? "སྐོར།" : "About BHTF"}
         </span>
 
         {ABOUT_SUB_TABS.map((tab) => {
           const isActive = currentPath === tab.to;
           const Icon = tab.icon;
+          const label = t(tab.labelKey, tab.label);
+          const shortLabel = t(tab.shortLabelKey, tab.shortLabel);
 
           return (
             <Link
@@ -76,8 +94,8 @@ export function AboutBottomCapsule() {
               }`}
             >
               <Icon className={`size-3.5 sm:size-4 shrink-0 ${isActive ? "text-emerald-300" : "text-slate-500"}`} />
-              <span className="hidden sm:inline">{tab.label}</span>
-              <span className="sm:hidden">{tab.shortLabel}</span>
+              <span className="hidden sm:inline">{label}</span>
+              <span className="sm:hidden">{shortLabel}</span>
             </Link>
           );
         })}

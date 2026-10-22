@@ -16,10 +16,12 @@ import {
 import { subscribeNewsletter } from "@/lib/api/public.functions";
 import logo from "@/assets/logo.png";
 import { toast } from "sonner";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function SiteFooter() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const { lang, t, isDzongkha } = useLanguage();
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,17 +49,25 @@ export function SiteFooter() {
           <div className="flex items-center gap-2">
             <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>
-              National Emergency Health Helpline:{" "}
+              {isDzongkha
+                ? "རྒྱལ་ཡོངས་འཕྲོད་བསྟེན་ཉེན་འཕྲང་བརྒྱུད་འཕྲིན་:"
+                : "National Emergency Health Helpline:"}{" "}
               <strong className="text-sm font-bold underline decoration-white/50 underline-offset-2 ml-1 text-white">
                 112
               </strong>{" "}
-              (Toll-Free, 24/7 Nationwide)
+              {isDzongkha ? "(རིན་མེད། ཉིན་མཚན་མེད་པར)" : "(Toll-Free, 24/7 Nationwide)"}
             </span>
           </div>
           <div className="flex items-center gap-4 text-xs">
-            <span>Royal Government of Bhutan • Sovereign Match 1:1</span>
+            <span>
+              {isDzongkha
+                ? "འབྲུག་གཞུང་ • ༡:༡ རྒྱལ་གཞུང་འདྲ་མཉམ་གཏོང་ལེན།"
+                : "Royal Government of Bhutan • Sovereign Match 1:1"}
+            </span>
             <span className="hidden sm:inline">•</span>
-            <span className="hidden sm:inline">DRC Tax Exemption Reg. No. E-73</span>
+            <span className="hidden sm:inline">
+              {isDzongkha ? "དཔྱ་ཁྲལ་གུ་ཡངས་ཨང་ E-73" : "DRC Tax Exemption Reg. No. E-73"}
+            </span>
           </div>
         </div>
       </div>
@@ -71,56 +81,60 @@ export function SiteFooter() {
               <img src={logo} alt="BHTF Emblem" className="size-full object-contain" />
             </div>
             <div>
-              <span className="text-[10px] text-emerald-400 font-bold tracking-wider block">
-                ༄༅། །འབྲུག་གི་འཕྲོད་བསྟེན་གཞི་མ།
+              <span className="font-dzongkha text-xs text-amber-300 font-bold tracking-normal block leading-tight">
+                ༄༅༎ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ ༎
               </span>
-              <h3 className="text-base font-bold text-white tracking-tight">Bhutan Health Trust Fund</h3>
+              <h3 className="text-base font-bold text-white tracking-tight mt-0.5">
+                Bhutan Health Trust Fund
+              </h3>
             </div>
           </div>
 
-          <p className="text-xs text-white/75 leading-relaxed">
-            Established under Royal Charter in Geneva to guarantee uninterrupted sovereign financing for essential
-            medicines and universal vaccines across all 20 Dzongkhags in Bhutan.
+          <p className="text-xs text-white/75 leading-relaxed font-sans">
+            {t(
+              "footer_charter_note",
+              "Established under Royal Charter in Geneva to guarantee uninterrupted sovereign financing for essential medicines and universal vaccines across all 20 Dzongkhags in Bhutan."
+            )}
           </p>
 
           <div className="pt-2 flex items-center gap-2 text-xs text-emerald-300 font-semibold">
             <ShieldCheck className="size-4 shrink-0" />
-            <span>Autonomous Statutory Entity • Royal Charter 2000</span>
+            <span>{t("brand_badge", "Autonomous Statutory Entity • Royal Charter 2000")}</span>
           </div>
         </div>
 
         {/* Col 2: About BHTF */}
         <div>
-          <h4 className="font-bold text-sm mb-4 text-white">About BHTF</h4>
+          <h4 className="font-bold text-sm mb-4 text-white">{t("footer_col_about", "About BHTF")}</h4>
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
               <Link to="/about" className="hover:text-emerald-300 transition-colors">
-                About Us Overview
+                {t("nav_about_overview", "About Us Overview")}
               </Link>
             </li>
             <li>
               <Link to="/about/organization" className="hover:text-emerald-300 transition-colors">
-                Organization & Organogram
+                {t("nav_organization", "Organization & Organogram")}
               </Link>
             </li>
             <li>
               <Link to="/about/trustees" className="hover:text-emerald-300 transition-colors">
-                Board of Trustees
+                {t("nav_trustees", "Board of Trustees")}
               </Link>
             </li>
             <li>
               <Link to="/about/committees" className="hover:text-emerald-300 transition-colors">
-                Asset Management Committee
+                {t("nav_amc", "Asset Management Committee")}
               </Link>
             </li>
             <li>
               <Link to="/about/secretariat" className="hover:text-emerald-300 transition-colors">
-                Secretariat
+                {t("nav_secretariat", "Secretariat")}
               </Link>
             </li>
             <li>
               <Link to="/our-story" className="hover:text-emerald-300 transition-colors">
-                Our Story (1998–2026)
+                {t("nav_our_story", "Our Story (1998–2026)")}
               </Link>
             </li>
           </ul>
@@ -128,31 +142,31 @@ export function SiteFooter() {
 
         {/* Col 3: Resources & Impact */}
         <div>
-          <h4 className="font-bold text-sm mb-4 text-white">Impact & Formularies</h4>
+          <h4 className="font-bold text-sm mb-4 text-white">{t("footer_col_formularies", "Impact & Formularies")}</h4>
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
               <Link to="/our-impact" className="hover:text-emerald-300 transition-colors">
-                Commodity Disbursements
+                {isDzongkha ? "འཕྲོད་བསྟེན་མཁོ་ཆས་གཏོང་ལེན།" : "Commodity Disbursements"}
               </Link>
             </li>
             <li>
               <Link to="/our-work" className="hover:text-emerald-300 transition-colors">
-                438 Essential Medicines
+                {isDzongkha ? "ཉེ་བར་མཁོ་བའི་སྨན་རྫས་ ༤༣༨" : "438 Essential Medicines"}
               </Link>
             </li>
             <li>
               <Link to="/our-work" className="hover:text-emerald-300 transition-colors">
-                110 Traditional Remedies (gSo-ba Rig-pa)
+                {isDzongkha ? "གསོ་བ་རིག་པའི་སྨན་སྦྱོར་ ༡༡༠" : "110 Traditional Remedies (gSo-ba Rig-pa)"}
               </Link>
             </li>
             <li>
-              <Link to="/reports" className="hover:text-emerald-300 transition-colors">
-                RAA Certified Audits
+              <Link to="/resources/audit-reports" className="hover:text-emerald-300 transition-colors">
+                {isDzongkha ? "རྩིས་ཞིབ་གྲུབ་པའི་སྙན་ཞུ།" : "RAA Certified Audits"}
               </Link>
             </li>
             <li>
-              <Link to="/policies" className="hover:text-emerald-300 transition-colors">
-                Investment Policies
+              <Link to="/resources" className="hover:text-emerald-300 transition-colors">
+                {isDzongkha ? "མ་རྩ་བཙུགས་བཞག་སྲིད་བྱུས།" : "Investment Policies"}
               </Link>
             </li>
           </ul>
@@ -160,31 +174,31 @@ export function SiteFooter() {
 
         {/* Col 4: Get Involved */}
         <div>
-          <h4 className="font-bold text-sm mb-4 text-white">Contribute</h4>
+          <h4 className="font-bold text-sm mb-4 text-white">{t("footer_col_contribute", "Contribute")}</h4>
           <ul className="space-y-2.5 text-xs text-white/75">
             <li>
               <Link to="/donate" className="hover:text-emerald-300 transition-colors font-semibold text-emerald-400">
-                Donate to Health Fund (1:1 Matched)
+                {isDzongkha ? "འཕྲོད་བསྟེན་མ་དངུལ་ལུ་ ཞལ་འདེབས།" : "Donate to Health Fund (1:1 Matched)"}
               </Link>
             </li>
             <li>
               <Link to="/donate" className="hover:text-emerald-300 transition-colors">
-                DRC Tax Relief (E-73)
+                {isDzongkha ? "དཔྱ་ཁྲལ་གུ་ཡངས། (E-73)" : "DRC Tax Relief (E-73)"}
               </Link>
             </li>
             <li>
               <Link to="/news" className="hover:text-emerald-300 transition-colors">
-                11 Nov BHTF Day
+                {isDzongkha ? "སྤྱི་ཟླ་ ༡༡ པའི་ཚེས་ ༡༡ མ་དངུལ་ཉིན་མ།" : "11 Nov BHTF Day"}
               </Link>
             </li>
             <li>
               <Link to="/news" className="hover:text-emerald-300 transition-colors">
-                17 Dec RSEB Crowd Fundraising
+                {isDzongkha ? "སྤྱི་ཟླ་ ༡༢ པའི་ཚེས་ ༡༧ མ་དངུལ་བསྡུ་སྒྲིལ།" : "17 Dec RSEB Crowd Fundraising"}
               </Link>
             </li>
             <li>
               <Link to="/contact" className="hover:text-emerald-300 transition-colors">
-                Strategic Partnerships
+                {isDzongkha ? "ཐབས་བྱུས་མཉམ་འབྲེལ།" : "Strategic Partnerships"}
               </Link>
             </li>
           </ul>
@@ -192,11 +206,13 @@ export function SiteFooter() {
 
         {/* Col 5: Contact & Newsletter */}
         <div className="space-y-4">
-          <h4 className="font-bold text-sm text-white">Contact Us</h4>
+          <h4 className="font-bold text-sm text-white">
+            {t("nav_contact", "Contact Us")}
+          </h4>
           <ul className="space-y-2.5 text-xs text-white/80">
             <li className="flex items-start gap-2">
               <MapPin className="size-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span>Lower Motithang, Thori Lam, Thimphu, Bhutan</span>
+              <span>{t("topbar_address", "Lower Motithang, Thori Lam, Thimphu, Bhutan")}</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="size-4 text-emerald-400 shrink-0" />
@@ -213,13 +229,15 @@ export function SiteFooter() {
           </ul>
 
           <div className="pt-2">
-            <div className="text-xs font-semibold mb-2 text-white/90">Official Bulletins</div>
+            <div className="text-xs font-semibold mb-2 text-white/90">
+              {isDzongkha ? "གཞུང་འབྲེལ་བརྡ་དོན།" : "Official Bulletins"}
+            </div>
             <form onSubmit={handleSubscribe} className="flex gap-1.5">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter email..."
+                placeholder={isDzongkha ? "གློག་འཕྲིན་བཙུགས་གནང་..." : "Enter email..."}
                 className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-400 flex-1"
                 required
               />
@@ -261,16 +279,21 @@ export function SiteFooter() {
       {/* 3. Bottom Legal Strip */}
       <div className="border-t border-white/10">
         <div className="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/60">
-          <p>© {new Date().getFullYear()} Bhutan Health Trust Fund. Royal Charter Statutory Body. All Rights Reserved.</p>
+          <p>
+            © {new Date().getFullYear()}{" "}
+            {isDzongkha
+              ? "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ། རྒྱལ་པོའི་བཀའ་ཤོག་ཅན་གྱི་ཁྲིམས་མཐུན་ལས་ཚོགས། ཐོབ་དབང་ཡོངས་རྫོགས་ཡོད།"
+              : "Bhutan Health Trust Fund. Royal Charter Statutory Body. All Rights Reserved."}
+          </p>
           <div className="flex gap-5 text-xs">
             <Link to="/policies" className="hover:text-emerald-300 transition">
-              Statutory Policies
+              {isDzongkha ? "ཁྲིམས་མཐུན་སྲིད་བྱུས།" : "Statutory Policies"}
             </Link>
             <Link to="/reports" className="hover:text-emerald-300 transition">
-              Audits
+              {isDzongkha ? "རྩིས་ཞིབ།" : "Audits"}
             </Link>
             <Link to="/contact" className="hover:text-emerald-300 transition">
-              Contact
+              {t("nav_contact", "Contact")}
             </Link>
           </div>
         </div>

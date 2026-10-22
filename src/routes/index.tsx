@@ -21,6 +21,7 @@ import {
   Phone,
   Mail,
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 import kingHeroWidescreen from "@/assets/king_hero_widescreen.jpg";
 
@@ -266,6 +267,86 @@ const PARTNERS = [
 ];
 
 function HomePage() {
+  const { t, isDzongkha } = useLanguage();
+
+  const localizedQuickLinks = [
+    {
+      icon: Pill,
+      label: t("ql_essential_meds", "Essential Medicines"),
+      sub: t("ql_essential_meds_sub", "438 Modern Formulations"),
+      color: "bg-soft-blue text-primary",
+      to: "/our-work",
+    },
+    {
+      icon: Syringe,
+      label: t("ql_vaccine_sec", "Vaccine Security"),
+      sub: t("ql_vaccine_sec_sub", "100% Childhood & Flu"),
+      color: "bg-amber-50 text-amber-800 border border-amber-200/60",
+      to: "/our-work",
+    },
+    {
+      icon: Sparkles,
+      label: t("ql_traditional_med", "Traditional Medicine"),
+      sub: t("ql_traditional_med_sub", "110 gSo-ba Rig-pa Formulations"),
+      color: "bg-soft-green text-[oklch(0.45_0.15_155)]",
+      to: "/our-work",
+    },
+    {
+      icon: ThermometerSnowflake,
+      label: t("ql_cold_chain", "Cold Chain Network"),
+      sub: t("ql_cold_chain_sub", "20 Dzongkhags Monitoring"),
+      color: "bg-soft-purple text-[oklch(0.5_0.18_290)]",
+      to: "/our-impact",
+    },
+    {
+      icon: ShieldCheck,
+      label: t("ql_universal_access", "Universal Access"),
+      sub: t("ql_universal_access_sub", "100% Free at Point of Care"),
+      color: "bg-soft-red text-[oklch(0.55_0.2_25)]",
+      to: "/about",
+    },
+    {
+      icon: Scale,
+      label: t("ql_window_financing", "Window Financing"),
+      sub: t("ql_window_financing_sub", "Quarterly DMS Releases"),
+      color: "bg-soft-blue text-primary",
+      to: "/resources/annual-reports",
+    },
+  ];
+
+  const localizedStats = [
+    {
+      value: "Nu. 4.8B+",
+      label: t("stat_sovereign_endowment", "Sovereign Endowment"),
+      sub: t("stat_ringfenced", "Ring-fenced principal"),
+      icon: ShieldCheck,
+    },
+    {
+      value: "100%",
+      label: t("stat_free_healthcare", "Free Primary Healthcare"),
+      sub: t("stat_zero_cost", "Zero out-of-pocket costs"),
+      icon: Heart,
+    },
+    {
+      value: "438 + 110",
+      label: t("stat_meds_formulations", "Medicines & Formulations"),
+      sub: t("stat_modern_trad", "Modern + Traditional"),
+      icon: Pill,
+    },
+    {
+      value: "20 / 20",
+      label: t("stat_dzongkhags_covered", "Dzongkhags Covered"),
+      sub: t("stat_phu_units", "205 gewog health units"),
+      icon: Users,
+    },
+    {
+      value: "1:1",
+      label: t("stat_sovereign_match", "Sovereign Match"),
+      sub: t("stat_guaranteed_rgob", "Guaranteed by RGoB"),
+      icon: Sparkles,
+    },
+  ];
+
   return (
     <div className="bg-background text-foreground">
       {/* 1. HERO SECTION (Continuous Widescreen King Portrait Background on all devices) */}
@@ -284,29 +365,36 @@ function HomePage() {
           <div className="max-w-xl lg:max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/85 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-4 sm:mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
               <Sparkles className="size-3.5 text-amber-400" />
-              <span>1:1 Sovereign Match</span>
+              <span>{t("home_hero_match_badge", "1:1 Sovereign Match")}</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
-              Building a<br />Healthier Bhutan
+              {t("home_hero_title_1", "Building a")}<br />{t("home_hero_title_2", "Healthier Bhutan")}
             </h1>
 
             <div className="h-1.5 w-20 sm:w-24 bg-amber-500 rounded-full my-4 sm:my-5" />
 
             <p className="text-sm sm:text-base lg:text-lg text-slate-900 font-medium leading-relaxed max-w-lg">
-              The Bhutan Health Trust Fund sustainably finances essential medicines and vaccines to strengthen primary
-              healthcare and protect the well-being of every Bhutanese citizen.
+              {t(
+                "home_hero_desc",
+                "The Bhutan Health Trust Fund sustainably finances essential medicines and vaccines to strengthen primary healthcare and protect the well-being of every Bhutanese citizen."
+              )}
             </p>
 
             {/* Transparent Frosted Glass Royal Vision Callout */}
             <div className="my-5 p-3 sm:p-3.5 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-xs space-y-1.5 max-w-lg">
               <p className="text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
-                “No Bhutanese should ever have to choose between their health and their livelihood.”
+                {t(
+                  "quote_king_text",
+                  "“No Bhutanese should ever have to choose between their health and their livelihood.”"
+                )}
               </p>
               <div className="flex items-center gap-2 pt-1 border-t border-slate-900/10">
                 <span className="size-1.5 rounded-full bg-amber-500" />
                 <span className="text-[11px] font-bold text-slate-900">
-                  HM the Fourth Druk Gyalpo Jigme Singye Wangchuck
+                  {isDzongkha
+                    ? "མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་ འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག་མཆོག"
+                    : "HM the Fourth Druk Gyalpo Jigme Singye Wangchuck"}
                 </span>
                 <span className="text-[10px] text-slate-600 hidden sm:inline">(2004)</span>
               </div>
@@ -319,14 +407,14 @@ function HomePage() {
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-6 py-3 text-sm font-bold text-white shadow-elevated transition active:scale-95 whitespace-nowrap"
               >
                 <Heart className="size-4 fill-current text-amber-300" />
-                <span>Donate (1:1 Sovereign Match)</span>
+                <span>{t("home_btn_donate", "Donate (1:1 Sovereign Match)")}</span>
               </Link>
 
               <Link
                 to="/our-impact"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white/90 hover:bg-white border border-slate-300 px-6 py-3 text-sm font-bold text-slate-900 shadow-xs transition active:scale-95 whitespace-nowrap"
               >
-                <span>Explore Our Impact</span>
+                <span>{t("home_btn_explore_impact", "Explore Our Impact")}</span>
                 <ArrowRight className="size-4 text-emerald-800" />
               </Link>
             </div>
@@ -337,7 +425,7 @@ function HomePage() {
       {/* 2. QUICK LINKS PILL CARDS */}
       <section className="container-page mt-4 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-2xl shadow-elevated p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 border border-border">
-          {QUICK_LINKS.map((q) => (
+          {localizedQuickLinks.map((q) => (
             <Link
               key={q.label}
               to={q.to}
@@ -356,7 +444,7 @@ function HomePage() {
       {/* 3. GRADIENT STATS BAND */}
       <section className="container-page mt-12 sm:mt-16">
         <div className="bg-gradient-stats rounded-3xl p-6 sm:p-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-white shadow-elevated">
-          {STATS.map((s) => (
+          {localizedStats.map((s) => (
             <div key={s.label} className="flex items-center gap-3">
               <div className="size-12 rounded-full bg-white/10 grid place-items-center text-amber-300 shrink-0 border border-white/15">
                 <s.icon className="size-6" />

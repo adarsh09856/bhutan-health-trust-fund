@@ -232,3 +232,26 @@ body.bhtf-visual-edit-on [data-bhtf-section]:hover {
 body.bhtf-visual-edit-on .bhtf-section-edit-badge {
   display: flex !important;
 }
+
+/* Dzongkha / Tibetan Native Typography Standard */
+.font-dzongkha,
+html[lang="dz"],
+html[lang="dz"] body {
+  font-family: "Noto Sans Tibetan", "Jomolhari", "DDC Uchen", "Tibetan Machine Uni", system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+html[lang="dz"] .font-serif,
+html[lang="dz"] .font-display,
+html[lang="dz"] .font-sans,
+html[lang="dz"] h1,
+html[lang="dz"] h2,
+html[lang="dz"] h3,
+html[lang="dz"] h4,
+html[lang="dz"] p,
+html[lang="dz"] span,
+html[lang="dz"] button,
+html[lang="dz"] a {
+  font-family: "Noto Sans Tibetan", "Jomolhari", "DDC Uchen", "Tibetan Machine Uni", system-ui, -apple-system, sans-serif;
+}
+
