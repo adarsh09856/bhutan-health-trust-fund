@@ -195,12 +195,12 @@ function OurStoryPage() {
                   </p>
                 </div>
 
-                {/* Dignified Portrait Plate: Full Face, Crown & Robes Cleanly Visible without Dark Gradients */}
-                <div className="relative h-64 sm:h-72 w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+                {/* Dignified Portrait Plate: Full Face & Robes 100% Visible & Centered */}
+                <div className="relative h-72 sm:h-80 md:h-[340px] w-full overflow-hidden rounded-2xl bg-[#FAF8F3] border border-slate-200/90 shadow-2xs flex items-center justify-center p-2 sm:p-3">
                   <img
                     src="/images/official/image1.png"
                     alt="His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck"
-                    className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                    className="max-h-full max-w-full w-auto h-auto object-contain object-center rounded-xl shadow-xs transition-transform duration-300 group-hover:scale-[1.02]"
                     loading="lazy"
                   />
                 </div>
@@ -236,12 +236,12 @@ function OurStoryPage() {
                   </p>
                 </div>
 
-                {/* Portrait Plate: Full Face & Robes Cleanly Visible */}
-                <div className="relative h-64 sm:h-72 w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+                {/* Portrait Plate: Full Face & Robes 100% Visible & Centered */}
+                <div className="relative h-72 sm:h-80 md:h-[340px] w-full overflow-hidden rounded-2xl bg-[#FAF8F3] border border-slate-200/90 shadow-2xs flex items-center justify-center p-2 sm:p-3">
                   <img
                     src="/images/official/image2.png"
                     alt="Hon'ble former Health Minister, Lyonpo Sangay Ngedup"
-                    className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                    className="max-h-full max-w-full w-auto h-auto object-contain object-center rounded-xl shadow-xs transition-transform duration-300 group-hover:scale-[1.02]"
                     loading="lazy"
                   />
                 </div>
