@@ -174,12 +174,12 @@ function TrusteesPage() {
         {/* Chairperson Featured Leadership Card (NPPF Core Management Pattern) */}
         {displayTrustees.length > 0 && (
           <div className="max-w-md mx-auto mb-10 sm:mb-12">
-            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md transition text-center flex flex-col items-center">
-              <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/90 mb-4 shadow-2xs">
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm hover:shadow-md transition text-center flex flex-col items-center">
+              <div className="w-52 h-52 sm:w-56 sm:h-56 rounded-2xl overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 border border-slate-200/90 mb-4 shadow-2xs flex items-center justify-center p-2">
                 <img
                   src={displayTrustees[0].photo}
                   alt={displayTrustees[0].name}
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-contain object-center hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
@@ -206,19 +206,19 @@ function TrusteesPage() {
           {displayTrustees.slice(1).map((tItem, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
+              className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
             >
               <div className="flex flex-col items-center w-full">
-                <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
+                <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 border border-slate-200/80 mb-4 shadow-2xs flex items-center justify-center p-2">
                   <img
                     src={tItem.photo}
                     alt={tItem.name || tItem.role}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
                 </div>
 
-                <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
                   {tItem.name}
                 </h3>
                 <div className="text-xs font-semibold text-emerald-800 mt-1">

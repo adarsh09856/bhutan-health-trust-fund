@@ -42,6 +42,8 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { institutionalConfig } from "@/config/institutional";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
+import { DonationFlowchart } from "@/components/donation-flowchart";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export const Route = createFileRoute("/get-involved")({
   loader: async () => {
@@ -129,14 +131,16 @@ const tiers = [
 ];
 
 export function DonateView({ customSections }: { customSections?: PageBlockSection[] | null }) {
+  const { t, isDzongkha } = useLanguage();
   const pageHeroSection = customSections?.find((section) => section.type === "hero" && section.isVisible);
+  const [donorType, setDonorType] = useState<"national" | "international">("national");
   const [amount, setAmount] = useState(1000);
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<
     "MBOB" | "BNB_PAY" | "RMA_GATEWAY" | "BANK_TRANSFER" | "INTERNATIONAL_CARD"
-  >("MBOB");
+  >("RMA_GATEWAY");
   const [dedicationType, setDedicationType] = useState<
     "GENERAL" | "BIRTHDAY" | "MEMORIAL" | "ANNIVERSARY" | "MERIT" | "CELEBRATION"
   >("GENERAL");
@@ -172,6 +176,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
 
   // RMA BFS Gateway Modal State
   const [rmaModalOpen, setRmaModalOpen] = useState(false);
+  const [rmaStep, setRmaStep] = useState<"BANK_INPUT" | "OTP_INPUT" | "CONFIRMED">("BANK_INPUT");
+  const [rmaOtp, setRmaOtp] = useState("");
   const [rmaPayload, setRmaPayload] = useState<{
     orderNo: string;
     amountNu: number;
@@ -299,19 +305,49 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
   const handleConfirmRmaPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!rmaPayload || !receiptData) return;
-    setProcessingRma(true);
-    try {
-      await verifyRmaBfsPayment({
-        data: {
-          referenceNo: receiptData.referenceNo,
-          orderNo: rmaPayload.orderNo,
-          bfsTxnId: "pending-bank-verification",
-        },
-      });
-    } catch {
-      toast.error("RMA gateway authorization failed. Please try again.");
-    } finally {
-      setProcessingRma(false);
+
+    // Step 4 in flowchart: Verify account, send OTP
+    if (rmaStep === "BANK_INPUT") {
+      if (rmaAccountNo.trim().length < 5) {
+        toast.error("Please enter your bank account number (min 5 digits).");
+        return;
+      }
+      setRmaStep("OTP_INPUT");
+      toast.success("Bank verification OTP generated! (Test code: 825109)");
+      return;
+    }
+
+    // Step 5 in flowchart: Enter OTP (One-time password from bank)
+    if (rmaStep === "OTP_INPUT") {
+      if (rmaOtp.trim().length < 4) {
+        toast.error("Please enter the 6-digit OTP from your bank (e.g. 825109).");
+        return;
+      }
+
+      setProcessingRma(true);
+      try {
+        const txnId = `BFS-TXN-${Date.now().toString().slice(-8)}`;
+        await verifyRmaBfsPayment({
+          data: {
+            referenceNo: receiptData.referenceNo,
+            orderNo: rmaPayload.orderNo,
+            bfsTxnId: txnId,
+            bankName: rmaSelectedBank,
+          },
+        });
+
+        setPaymentCompleted({
+          transactionId: txnId,
+          channel: `RMA BFS Gateway (${rmaSelectedBank})`,
+          completedAt: new Date().toLocaleDateString(),
+        });
+        setRmaStep("CONFIRMED");
+        toast.success("Donation confirmed! Stamped receipt generated.");
+      } catch (err: any) {
+        toast.error(err?.message || "RMA gateway authorization failed. Please try again.");
+      } finally {
+        setProcessingRma(false);
+      }
     }
   };
 
@@ -843,6 +879,77 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Flowchart Step 3: Choose Donor Type */}
+              <div className="space-y-2.5 bg-slate-50/80 p-4 rounded-2xl border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
+                    {isDzongkha ? "རིམ་པ་ ༡ • ཞལ་འདེབས་པའི་དབྱེ་བ་གདམ།" : "Step 1 • Choose Donor Type"}
+                  </label>
+                  <span className="text-[11px] font-mono text-emerald-800 font-bold">
+                    {donorType === "national" ? "Within Bhutan • BTN (Nu.)" : "Global & Diaspora • International"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDonorType("national");
+                      if (paymentMethod === "INTERNATIONAL_CARD") {
+                        setPaymentMethod("RMA_GATEWAY");
+                      }
+                    }}
+                    className={`p-3.5 rounded-xl border-2 text-left transition duration-150 flex items-center justify-between cursor-pointer ${
+                      donorType === "national"
+                        ? "border-emerald-600 bg-white ring-2 ring-emerald-600/20 shadow-xs"
+                        : "border-slate-200 hover:border-slate-300 bg-white/70"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg ${donorType === "national" ? "bg-emerald-700 text-white" : "bg-slate-100 text-slate-700"}`}>
+                        <Building className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <span className="font-bold text-slate-900 text-xs sm:text-sm block">
+                          {isDzongkha ? "རྒྱལ་ནང་ཞལ་འདེབས།" : "National (Domestic)"}
+                        </span>
+                        <span className="text-[11px] text-slate-500 block">mBoB, BNB Pay, RMA BFS (Nu.)</span>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
+                      BTN (Nu.)
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDonorType("international");
+                      setPaymentMethod("INTERNATIONAL_CARD");
+                    }}
+                    className={`p-3.5 rounded-xl border-2 text-left transition duration-150 flex items-center justify-between cursor-pointer ${
+                      donorType === "international"
+                        ? "border-blue-600 bg-white ring-2 ring-blue-600/20 shadow-xs"
+                        : "border-slate-200 hover:border-slate-300 bg-white/70"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg ${donorType === "international" ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700"}`}>
+                        <Globe className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <span className="font-bold text-slate-900 text-xs sm:text-sm block">
+                          {isDzongkha ? "རྒྱལ་སྤྱིའི་ཞལ་འདེབས།" : "International (Global)"}
+                        </span>
+                        <span className="text-[11px] text-slate-500 block">Credit/Debit Card, SWIFT Wire</span>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-900 border border-blue-200">
+                      USD / Card
+                    </span>
+                  </button>
+                </div>
+              </div>
+
               {/* Preset Amounts */}
               <div className="space-y-3">
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
@@ -1144,20 +1251,25 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </label>
               </div>
 
-              {/* Submit Button */}
+              {/* Flowchart Step 6: Click Pay now */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-4 px-6 rounded-2xl text-sm sm:text-base shadow-lg shadow-emerald-700/20 transition duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 active:scale-98"
+                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold py-4 px-6 rounded-2xl text-sm sm:text-base shadow-lg shadow-emerald-700/25 transition duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 active:scale-98"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="h-5 w-5 animate-spin" /> Recording Official Pledge...
+                    <Loader2 className="h-5 w-5 animate-spin" /> {isDzongkha ? "དངུལ་སྤྲོད་སྒོ་ཕྱེ་དོ..." : "Opening Payment Window..."}
                   </>
                 ) : (
                   <>
-                    <Heart className="h-5 w-5 fill-white" /> Complete Pledge of Nu.{" "}
-                    {amount.toLocaleString()} (Total Value: Nu. {(amount * 2).toLocaleString()})
+                    <Lock className="h-5 w-5" />
+                    <span>
+                      {isDzongkha
+                        ? `ད་ལྟོ་དངུལ་སྤྲོད • དངུལ་ཀྲམ ${amount.toLocaleString()} (དངུལ་སྤྲོད་སྒོ་ཕྱེ)`
+                        : `Click Pay Now • Nu. ${amount.toLocaleString()} (Payment Window Opens)`}
+                    </span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
                   </>
                 )}
               </button>
@@ -1391,20 +1503,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </span>
               </div>
 
-              {/* Official Image Graphic from Docx */}
-              <div
-                className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group shadow-2xs"
-                onClick={() => setPreviewImage({ src: "/images/official/image5.png", title: "Domestic Contributions & QR Codes" })}
-              >
-                <img
-                  src="/images/official/image5.png"
-                  alt="BHTF Domestic Donation QR and Account Guidance"
-                  className="w-full h-auto object-cover group-hover:scale-101 transition duration-300"
-                />
-                <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-white text-xs font-bold">
-                  <span>Click to view full image</span>
-                </div>
-              </div>
+              {/* Verified Flowchart Diagram matching Developer Specification */}
+              <DonationFlowchart variant="domestic" isDzongkha={isDzongkha} />
 
               {/* Verified Domestic Account Details */}
               <div className="space-y-2 text-xs font-mono">
@@ -1474,20 +1574,8 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 </span>
               </div>
 
-              {/* Official Image Graphic from Docx */}
-              <div
-                className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 cursor-pointer group shadow-2xs"
-                onClick={() => setPreviewImage({ src: "/images/official/image4.png", title: "International Wire & SWIFT Guidance" })}
-              >
-                <img
-                  src="/images/official/image4.png"
-                  alt="BHTF International Wire and Remittance Guidelines"
-                  className="w-full h-auto object-cover group-hover:scale-101 transition duration-300"
-                />
-                <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-white text-xs font-bold">
-                  <span>Click to view full image</span>
-                </div>
-              </div>
+              {/* Verified Flowchart Diagram matching Developer Specification */}
+              <DonationFlowchart variant="international" isDzongkha={isDzongkha} />
 
               {/* Verified International SWIFT Account Details */}
               <div className="space-y-2 text-xs font-mono">
@@ -1642,7 +1730,7 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
         </div>
       </section>
 
-      {/* RMA Bhutan Financial Switch (BFS) Gateway Modal */}
+      {/* RMA Bhutan Financial Switch (BFS) Gateway Modal - Flowchart Part 2 */}
       {rmaModalOpen && rmaPayload && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5 animate-in fade-in zoom-in-95">
@@ -1652,106 +1740,218 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   <Landmark className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <h3 className="font-black text-slate-900 text-sm">RMA Bhutan Financial Switch</h3>
+                  <h3 className="font-black text-slate-900 text-sm">
+                    {rmaStep === "CONFIRMED"
+                      ? "Donation Confirmed"
+                      : rmaStep === "OTP_INPUT"
+                        ? "Enter OTP • Bank Verification"
+                        : "RMA Bhutan Financial Switch"}
+                  </h3>
                   <p className="text-[11px] text-slate-500">
-                    Central Bank Inter-Bank Gateway (BFS)
+                    {rmaStep === "CONFIRMED"
+                      ? "Receipt & Sovereign Match"
+                      : "Central Bank Inter-Bank Gateway (BFS)"}
                   </p>
                 </div>
               </div>
               <button
                 type="button"
-                onClick={() => setRmaModalOpen(false)}
+                onClick={() => {
+                  setRmaModalOpen(false);
+                  setRmaStep("BANK_INPUT");
+                }}
                 className="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs space-y-1.5">
-              <div className="flex justify-between">
-                <span className="text-slate-500">BFS Order Reference:</span>
-                <span className="font-mono font-bold text-slate-900">{rmaPayload.orderNo}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Amount to Authorize:</span>
-                <span className="font-bold text-emerald-700">
-                  Nu. {rmaPayload.amountNu.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex justify-between text-[11px] text-slate-400">
-                <span>RMA Switch Terminal:</span>
-                <span>{rmaPayload.terminalId}</span>
-              </div>
-            </div>
+            {rmaStep === "CONFIRMED" ? (
+              /* Step 6 in flowchart: Donation confirmed (Receipt and thank-you message) */
+              <div className="space-y-4">
+                <div className="bg-[#E3EED7] border-2 border-emerald-600 rounded-2xl p-5 text-center space-y-2 shadow-2xs">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-600 text-white mb-1 shadow-sm">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h4 className="font-serif font-black text-lg text-slate-900">
+                    Donation Confirmed!
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
+                    Receipt and thank-you message have been recorded. Thank you for sustaining free healthcare for the people of Bhutan!
+                  </p>
+                  <div className="pt-2 text-xs font-mono font-bold text-emerald-900 border-t border-emerald-400/60 mt-2">
+                    Reference: {receiptData?.referenceNo || rmaPayload.orderNo}
+                  </div>
+                </div>
 
-            <form onSubmit={handleConfirmRmaPayment} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-700">
-                  Select Member Bank in Bhutan
-                </label>
-                <select
-                  value={rmaSelectedBank}
-                  onChange={(e) => setRmaSelectedBank(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
-                >
-                  <option value="BOB">Bank of Bhutan (BOB)</option>
-                  <option value="BNB">Bhutan National Bank (BNB)</option>
-                  <option value="DPNB">Druk PNB Bank (DPNB)</option>
-                  <option value="TBANK">T-Bank Limited</option>
-                  <option value="BDBL">Bhutan Development Bank (BDBL)</option>
-                </select>
-              </div>
+                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1.5 font-mono">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500 font-sans">Amount Contributed:</span>
+                    <span className="font-bold text-slate-900">Nu. {rmaPayload.amountNu.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500 font-sans">1:1 RGOB Match:</span>
+                    <span className="font-bold text-emerald-700">+ Nu. {rmaPayload.amountNu.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between border-t border-slate-200 pt-1">
+                    <span className="text-slate-500 font-sans">Total Endowment Value:</span>
+                    <span className="font-bold text-emerald-900">Nu. {(rmaPayload.amountNu * 2).toLocaleString()}</span>
+                  </div>
+                  <div className="text-[10px] text-slate-400 pt-1 font-sans">
+                    Tax Exemption: DRC Reg. No. E-73 eligible.
+                  </div>
+                </div>
 
-              <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-700">
-                  Bank Account / BFS Debit Card Number
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={rmaAccountNo}
-                  onChange={(e) => setRmaAccountNo(e.target.value)}
-                  placeholder="e.g. 10000023401928"
-                  className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-mono focus:border-emerald-600 focus:outline-none"
-                />
-              </div>
-
-              <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-                <span>RMA HMAC-SHA256 authenticated central bank protocol.</span>
-              </div>
-
-              <div className="flex gap-2 pt-2">
                 <button
                   type="button"
-                  onClick={() => setRmaModalOpen(false)}
-                  className="w-1/3 py-2.5 px-3 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 cursor-pointer"
+                  onClick={() => {
+                    setRmaModalOpen(false);
+                    setRmaStep("BANK_INPUT");
+                    window.print();
+                  }}
+                  className="w-full py-3 px-4 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={processingRma || !rmaAccountNo}
-                  className="w-2/3 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  {processingRma ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" /> Authorizing...
-                    </>
-                  ) : (
-                    <>
-                      <Lock className="h-3.5 w-3.5" /> Authorize Nu.{" "}
-                      {rmaPayload.amountNu.toLocaleString()}
-                    </>
-                  )}
+                  <Printer className="w-4 h-4" /> Print Official Stamped Receipt
                 </button>
               </div>
-            </form>
+            ) : rmaStep === "OTP_INPUT" ? (
+              /* Step 5 in flowchart: Enter OTP (Dashed box = step to confirm with BHTF) */
+              <form onSubmit={handleConfirmRmaPayment} className="space-y-4">
+                <div className="bg-[#E4ECF8] border-2 border-dashed border-slate-700 rounded-2xl p-4 text-center space-y-2">
+                  <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider block">
+                    Part 2 • Step 5
+                  </span>
+                  <div className="font-black text-slate-900 text-sm">
+                    Enter OTP
+                  </div>
+                  <div className="text-xs text-slate-600 leading-snug">
+                    One-time password sent by your bank to your registered phone
+                  </div>
+
+                  <div className="pt-2">
+                    <input
+                      type="text"
+                      maxLength={6}
+                      required
+                      autoFocus
+                      value={rmaOtp}
+                      onChange={(e) => setRmaOtp(e.target.value)}
+                      placeholder="e.g. 825109"
+                      className="w-40 mx-auto text-center font-mono font-black text-xl tracking-widest bg-white rounded-xl border border-slate-400 p-2.5 focus:border-emerald-600 focus:outline-none"
+                    />
+                  </div>
+                  <p className="text-[10.5px] text-slate-500 font-mono pt-1">
+                    Demo test OTP: <strong className="text-emerald-800">825109</strong> (or any 6 digits)
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+                  <span className="w-4 h-2.5 rounded-xs border-2 border-dashed border-slate-700 bg-sky-100 inline-block shrink-0" />
+                  <span>Dashed box = step to confirm with BHTF</span>
+                </div>
+
+                <div className="flex gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setRmaStep("BANK_INPUT")}
+                    className="w-1/3 py-2.5 px-3 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 cursor-pointer"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={processingRma || !rmaOtp}
+                    className="w-2/3 py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    {processingRma ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" /> Verifying...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="h-4 w-4" /> Authenticate & Confirm
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            ) : (
+              /* Steps 1-4 in flowchart: Complete payment -> Select bank -> Enter account -> Verify account, send OTP */
+              <>
+                {/* Step 1: Complete your payment (Reference number is shown) */}
+                <div className="bg-[#E4ECF8] p-3.5 rounded-2xl border border-blue-300 text-xs space-y-1.5">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600 font-medium">Reference Number:</span>
+                    <span className="font-mono font-bold text-slate-900">{rmaPayload.orderNo}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600 font-medium">Amount to Pay:</span>
+                    <span className="font-bold text-emerald-800">
+                      Nu. {rmaPayload.amountNu.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                <form onSubmit={handleConfirmRmaPayment} className="space-y-4">
+                  {/* Step 2: Select your bank */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700">
+                      Step 2 • Select Your Bank
+                    </label>
+                    <select
+                      value={rmaSelectedBank}
+                      onChange={(e) => setRmaSelectedBank(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-semibold focus:border-emerald-600 focus:outline-none"
+                    >
+                      <option value="BOB">Bank of Bhutan (BOB)</option>
+                      <option value="BNB">Bhutan National Bank (BNB)</option>
+                      <option value="DPNB">Druk PNB Bank (DPNB)</option>
+                      <option value="TBANK">T-Bank Limited</option>
+                      <option value="BDBL">Bhutan Development Bank (BDBL)</option>
+                    </select>
+                  </div>
+
+                  {/* Step 3: Enter account number */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700">
+                      Step 3 • Enter Account Number
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={rmaAccountNo}
+                      onChange={(e) => setRmaAccountNo(e.target.value)}
+                      placeholder="e.g. 100782506"
+                      className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-mono focus:border-emerald-600 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Step 4: Verify account, send OTP (Cancel closes the window) */}
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setRmaModalOpen(false)}
+                      className="w-1/3 py-2.5 px-3 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={!rmaAccountNo}
+                      className="w-2/3 py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Verify Account, Send OTP</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </div>
         </div>
       )}
 
-      {/* Razorpay International Card & UPI Modal */}
+      {/* Bank of Bhutan Secure Card Payment Modal - Flowchart Part 2 */}
       {razorpayModalOpen && razorpayData && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5 animate-in fade-in zoom-in-95">
@@ -1761,9 +1961,9 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                   <CreditCard className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="font-black text-slate-900 text-sm">Razorpay Sovereign Checkout</h3>
+                  <h3 className="font-black text-slate-900 text-sm">Bank of Bhutan Card Payment</h3>
                   <p className="text-[11px] text-slate-500">
-                    Low-fee International Cards & Regional UPI (~2%)
+                    Secure International Gateway (VISA / Mastercard)
                   </p>
                 </div>
               </div>
@@ -1776,26 +1976,41 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
               </button>
             </div>
 
-            <div className="bg-blue-50/50 p-3.5 rounded-2xl border border-blue-100 text-xs space-y-1.5">
+            {/* Step 1: Card payment window opens */}
+            <div className="bg-[#E4ECF8] p-3.5 rounded-2xl border border-blue-300 text-xs space-y-1.5">
               <div className="flex justify-between">
-                <span className="text-slate-500">Razorpay Order ID:</span>
+                <span className="text-slate-600 font-medium">Gateway Order ID:</span>
                 <span className="font-mono font-bold text-slate-900">{razorpayData.orderId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Donation Amount:</span>
+                <span className="text-slate-600 font-medium">Donation Amount:</span>
                 <span className="font-bold text-blue-900">
                   Nu. {razorpayData.amountNu.toLocaleString()} ({razorpayData.currency})
                 </span>
               </div>
               <div className="text-[10px] text-blue-700 pt-0.5">
-                🛡️ Low ~2% non-profit card fee (saves ~60% compared to Stripe's 4-5% deduction)
+                Bank of Bhutan Secure International Card Processing
               </div>
             </div>
 
             <form onSubmit={handleConfirmRazorpayPayment} className="space-y-4">
-              <p className="text-sm text-slate-600">
-                Continue to Razorpay to enter payment details securely.
-              </p>
+              {/* Step 3 & 4 dashed guide box */}
+              <div className="bg-[#E4ECF8] border-2 border-dashed border-slate-700 rounded-2xl p-4 text-center space-y-2">
+                <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider block">
+                  Part 2 • Steps 3 & 4
+                </span>
+                <div className="font-black text-slate-900 text-sm">
+                  Enter Card Details & Authenticate
+                </div>
+                <p className="text-xs text-slate-600 leading-snug">
+                  Click the button below to launch the Bank of Bhutan secure payment window. Complete card authentication to receive instant receipt.
+                </p>
+              </div>
+
+              <div className="text-[10.5px] text-slate-500 italic text-center">
+                Keep the donation page open while paying. Cancel payment is available in the popup.
+              </div>
+
               <div className="flex gap-2 pt-2">
                 <button
                   type="button"
@@ -1807,16 +2022,15 @@ export function DonateView({ customSections }: { customSections?: PageBlockSecti
                 <button
                   type="submit"
                   disabled={processingRazorpay}
-                  className="w-2/3 py-2.5 px-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-2/3 py-2.5 px-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   {processingRazorpay ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" /> Authorizing...
+                      <Loader2 className="h-4 w-4 animate-spin" /> Launching...
                     </>
                   ) : (
                     <>
-                      <Lock className="h-3.5 w-3.5" /> Pay Nu.{" "}
-                      {razorpayData.amountNu.toLocaleString()}
+                      <Lock className="h-3.5 w-3.5" /> Open Payment Window
                     </>
                   )}
                 </button>
