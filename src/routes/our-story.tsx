@@ -21,7 +21,6 @@ import historyKing from "@/assets/reference/history_fourth_king.webp";
 import historyCharter from "@/assets/reference/history_charter_1992.webp";
 import historyMou from "@/assets/reference/history_mou.webp";
 import historyEndowment from "@/assets/reference/history_endowment.webp";
-import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 export const Route = createFileRoute("/our-story")({
@@ -123,7 +122,7 @@ function OurStoryPage() {
   const milestonesToRender = localizedMilestones;
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 bg-[#FAF8F3]">
       {/* 1. Dignified Hero Header */}
       <PageHero
         badge={t("story_page_badge", "Section 2 • Historical Journey")}
@@ -360,9 +359,6 @@ function OurStoryPage() {
           </Link>
         </div>
       </section>
-
-      {/* Floating Sub-pages Sticky Bottom Capsule */}
-      <AboutBottomCapsule />
     </div>
   );
 }

@@ -19,7 +19,6 @@ import {
   Syringe,
 } from "lucide-react";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
-import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 export const Route = createFileRoute("/about")({
@@ -51,7 +50,7 @@ function AboutUsMainPage() {
   const { t, isDzongkha } = useLanguage();
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-36 sm:pb-44 bg-[#FAF8F3]">
+    <div className="space-y-12 sm:space-y-16 pb-16 sm:pb-24 bg-[#FAF8F3]">
       {/* 1. Primary Statutory Hero with Official Narrative Directly in View (Matches Client Spec) */}
       <PageHero
         badge={
@@ -226,9 +225,6 @@ function AboutUsMainPage() {
           </Link>
         </div>
       </section>
-
-      {/* Floating Bottom Navigation Capsule for About Sub-Pages */}
-      <AboutBottomCapsule />
     </div>
   );
 }
