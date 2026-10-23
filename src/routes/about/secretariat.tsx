@@ -1,24 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageHero } from "@/components/page-hero";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Building2,
-  Users2,
   TrendingUp,
   FileText,
-  ShieldCheck,
-  CheckCircle2,
   Activity,
-  Briefcase,
-  Layers,
   Phone,
   Mail,
   MapPin,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import drGyamboDirector from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-import staffThinleyWangchuk from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
 import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
+import staffThinleyWangchuk from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
 import staffRinchenPhuntsho from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
 import staffTsheringChoden from "@/assets/bhtf/secretariat/tshering_choden.jpg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
@@ -38,8 +35,359 @@ export const Route = createFileRoute("/about/secretariat")({
   component: SecretariatPage,
 });
 
+interface SecretariatMember {
+  id: string;
+  orderNumber: number;
+  name: string;
+  nameDz: string;
+  designation: string;
+  designationDz: string;
+  division: string;
+  divisionDz: string;
+  badge: string;
+  badgeDz: string;
+  bio: string;
+  bioDz: string;
+  tags: string[];
+  tagsDz: string[];
+  email: string;
+  phone: string;
+  location: string;
+  locationDz: string;
+  image: string;
+}
+
+const secretariatMembers: SecretariatMember[] = [
+  {
+    id: "director-gyambo-sithey",
+    orderNumber: 1,
+    name: "Dr. Gyambo Sithey, PhD",
+    nameDz: "སྐུ་ཞབས་ འགྱུར་མེད་སྲིད་ཐེད། (འབུམ་རམས་པ།)",
+    designation: "Director & Member Secretary",
+    designationDz: "མདོ་ཆེན། དྲུང་ཆེན་ཡིག་ཚང་། (ཚོགས་ཆུང་གི་དྲུང་ཆེན།)",
+    division: "Directorate & Executive Governance",
+    divisionDz: "མདོ་ཆེན་དབུ་ཁྲིད་དང་ ལག་ལེན་གཙོ་འཛིན།",
+    badge: "Directorate Leadership",
+    badgeDz: "མདོ་ཆེན་དབུ་ཁྲིད།",
+    bio: "Dr. Gyambo Sithey serves as the Director of the Bhutan Health Trust Fund Secretariat and Member Secretary to the Board of Trustees. With extensive leadership in public health policy, epidemiological research, and health financing, Dr. Sithey oversees the execution of Board policies, endowment capital growth, bilateral donor partnerships, and statutory governance to ensure Bhutan's lifelong supply of free primary healthcare.",
+    bioDz: "འབུམ་རམས་པ་ འགྱུར་མེད་སྲིད་ཐེད་མཆོག་གིས་ དྲུང་ཆེན་ཡིག་ཚང་གི་མདོ་ཆེན་དང་ བཀོད་ཚོགས་ཀྱི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་དོ་ཡོད། མི་མང་གསོ་བའི་སྲིད་བྱུས་དང་ ནད་ཡམས་ཞིབ་འཇུག གསོ་བའི་དངུལ་རྩིས་ཐད་ ཉམས་མྱོང་རྒྱ་ཆེན་ཡོད་མི་ མདོ་ཆེན་གྱིས་ བཀོད་ཚོགས་ཀྱི་བཀའ་རྒྱ་ལག་ལེན་འཐབ་ནི་དང་ མ་རྩ་རྒྱས་སྐྱེད་ དེ་ལས་ རིན་མེད་གསོ་བའི་ཞབས་ཏོག་གཏན་འཇགས་སྦེ་ བཞག་ཐབས་ལུ་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: [
+      "Public Health Policy",
+      "Endowment Governance",
+      "WHO / Donor Liaison",
+      "Statutory Board Oversight",
+    ],
+    tagsDz: [
+      "མི་མང་གསོ་བའི་སྲིད་བྱུས།",
+      "མ་རྩ་བདག་སྐྱོང་།",
+      "རྒྱལ་སྤྱིའི་མཉམ་འབྲེལ།",
+      "བཀོད་ཚོགས་དྲུང་ཆེན།",
+    ],
+    email: "bhtf@bhtf.bt",
+    phone: "02-338636 / 338637",
+    location: "Secretariat HQ, Motithang, Thimphu",
+    locationDz: "དྲུང་ཆེན་ཡིག་ཚང་ལྟེ་བ། མོ་ཏི་ཐང་། ཐིམ་ཕུག",
+    image: drGyamboDirector,
+  },
+  {
+    id: "officer-sonam-chojay",
+    orderNumber: 2,
+    name: "Mr. Sonam Chojay",
+    nameDz: "སྐུ་ཞབས་ བསོད་ནམས་ཆོས་རྒྱལ།",
+    designation: "Accounts Officer",
+    designationDz: "རྩིས་ཁྲ་འགོ་དཔོན།",
+    division: "Administration & Finance Division",
+    divisionDz: "སྲིད་སྐྱོང་དང་ དངུལ་རྩིས་སྡེ་ཚན།",
+    badge: "Fiduciary Accounting",
+    badgeDz: "ཁྲིམས་མཐུན་དངུལ་རྩིས།",
+    bio: "Mr. Sonam Chojay oversees statutory accounting, financial reporting, and expenditure controls across the BHTF Secretariat. He ensures compliance with Royal Audit Authority (RAA) standards, manages disbursement audits for primary healthcare procurements, and coordinates annual statutory financial statements.",
+    bioDz: "སྐུ་ཞབས་ བསོད་ནམས་ཆོས་རྒྱལ་གྱིས་ དྲུང་ཆེན་ཡིག་ཚང་གི་ ཁྲིམས་མཐུན་རྩིས་ཁྲ་དང་ དངུལ་རྩིས་སྙན་ཞུ། ཟད་འགྲོ་ཚུལ་མཐུན་དོ་དམ་ཚུ་ འགན་ལེན་འབད་དོ་ཡོད། རྒྱལ་གཞུང་རྩིས་ཞིབ་དབང་འཛིན་གྱི་ ཁྲིམས་ལུགས་དང་བསྟུན་ རྒྱལ་སྤྱིའི་སྨན་རྫས་མཁོ་སྒྲུབ་ཀྱི་ དངུལ་སྤྲོད་ཚུ་ དྭངས་གསལ་ཅན་སྦེ་ ལག་ལེན་འཐབ་དོ་ཡོད།",
+    tags: [
+      "RAA Audit Compliance",
+      "Procurement Disbursement",
+      "Financial Reporting",
+      "Internal Controls",
+    ],
+    tagsDz: [
+      "རྩིས་ཞིབ་བསྟུན་སྒྲིག",
+      "མཁོ་སྒྲུབ་དངུལ་སྤྲོད།",
+      "དངུལ་རྩིས་སྙན་ཞུ།",
+      "ནང་འཁོད་དོ་དམ།",
+    ],
+    email: "bhtf@bhtf.bt",
+    phone: "02-338636 / Ext. 104",
+    location: "Secretariat HQ, Motithang, Thimphu",
+    locationDz: "དྲུང་ཆེན་ཡིག་ཚང་ལྟེ་བ། མོ་ཏི་ཐང་། ཐིམ་ཕུག",
+    image: staffSonamChojay,
+  },
+  {
+    id: "officer-thinley-wangchuk",
+    orderNumber: 3,
+    name: "Mr. Thinley Wangchuk",
+    nameDz: "སྐུ་ཞབས་ འཕྲིན་ལས་དབང་ཕྱུག",
+    designation: "Senior Investment Officer",
+    designationDz: "མ་རྩ་བཙུགས་བཞག་འགོ་དཔོན་གཙོ་འཛིན།",
+    division: "Investment Management Division",
+    divisionDz: "མ་རྩ་བདག་སྐྱོང་སྡེ་ཚན།",
+    badge: "Portfolio & Yields",
+    badgeDz: "མ་རྩ་འོང་འབབ།",
+    bio: "Mr. Thinley Wangchuk spearheads endowment fund investment portfolios, asset allocation strategies, and liquidity management. He focuses on yield optimization across Royal Government Treasury Bonds, commercial term deposits, and sovereign investment instruments to safeguard BHTF's capital reserves in perpetuity.",
+    bioDz: "སྐུ་ཞབས་ འཕྲིན་ལས་དབང་ཕྱུག་གིས་ མ་རྩ་བཙུགས་བཞག་གི་ སྲིད་བྱུས་དང་ མ་དངུལ་སྐྱེད་འཕེལ་གྱི་ འཆར་གཞི་ཚུ་ འགན་ལེན་འབད་དོ་ཡོད། རྒྱལ་གཞུང་བུན་འཛིན་ (Treasury Bonds) དང་ ཚོང་འབྲེལ་སྐྱེད་འཕེལ་མ་རྩ་ཚུ་ ཉེན་སྲུང་ཅན་སྦེ་ བཞག་ཐོག་ལས་ མ་རྩའི་དངུལ་ཕོགས་ གཏན་འཇགས་འོང་ཐབས་ལུ་ ཕྱག་ལཱ་གནང་དོ་ཡོད།",
+    tags: [
+      "Treasury Bonds (>5% Yield)",
+      "Asset Allocation",
+      "Liquidity Monitoring",
+      "Yield Optimization",
+    ],
+    tagsDz: [
+      "རྒྱལ་གཞུང་བུན་འཛིན།",
+      "མ་རྩ་བགོ་བཀྲམ།",
+      "དངུལ་རྐྱང་ཉེན་སྲུང་།",
+      "སྐྱེད་འཕེལ་དོ་དམ།",
+    ],
+    email: "bhtf@bhtf.bt",
+    phone: "02-338636 / Ext. 102",
+    location: "Secretariat HQ, Motithang, Thimphu",
+    locationDz: "དྲུང་ཆེན་ཡིག་ཚང་ལྟེ་བ། མོ་ཏི་ཐང་། ཐིམ་ཕུག",
+    image: staffThinleyWangchuk,
+  },
+  {
+    id: "staff-rinchen-phuntsho",
+    orderNumber: 4,
+    name: "Mr. Rinchen Phuntsho",
+    nameDz: "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས།",
+    designation: "Driver / Support Logistics",
+    designationDz: "སྣུམ་འཁོར་གཏོང་མི། (འགྲོ་འགྲུལ་དང་ རྒྱབ་སྐྱོར་དོ་དམ།)",
+    division: "Support Logistics & Field Operations",
+    divisionDz: "རྒྱབ་སྐྱོར་དོ་དམ་དང་ འགྲོ་འགྲུལ་ལས་དོན།",
+    badge: "Field Logistics",
+    badgeDz: "འགྲོ་འགྲུལ་སྐྱེལ་འདྲེན།",
+    bio: "Mr. Rinchen Phuntsho manages essential transport logistics, emergency delivery support, and official mobility for the BHTF Secretariat. He ensures safe, reliable transit for critical documents, medical procurement coordination, and official Secretariat operations across Bhutan.",
+    bioDz: "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས་ཀྱིས་ དྲུང་ཆེན་ཡིག་ཚང་གི་ འགྲོ་འགྲུལ་སྐྱེལ་འདྲེན་དང་ གློ་བུར་རྒྱབ་སྐྱོར་གྱི་ ལས་དོན་ཚུ་ འགན་ལེན་འབད་དོ་ཡོད། སྨན་རྫས་དང་ སྨན་ཁབ་མཁོ་སྒྲུབ་ཀྱི་ ཡིག་ཆ་གལ་ཅན་ཚུ་ ཉེན་སྲུང་ཅན་སྦེ་ སྐྱེལ་འདྲེན་འབད་ནི་དང་ ཡིག་ཚང་གི་ ལས་དོན་འགྲོ་འགྲུལ་ཚུ་ ཚུལ་མཐུན་སྦེ་ འགན་ལེན་འབད་དོ་ཡོད།",
+    tags: [
+      "Transport Logistics",
+      "Emergency Fleet Operations",
+      "Regulatory Dispatch",
+      "Field Mobility",
+    ],
+    tagsDz: [
+      "འགྲོ་འགྲུལ་སྐྱེལ་འདྲེན།",
+      "གློ་བུར་སྐྱེལ་འདྲེན་རྒྱབ་སྐྱོར།",
+      "ཡིག་ཆ་སྐྱེལ་སྤྲོད།",
+      "ས་གནས་འགྲོ་འགྲུལ།",
+    ],
+    email: "bhtf@bhtf.bt",
+    phone: "02-338636",
+    location: "Secretariat HQ, Motithang, Thimphu",
+    locationDz: "དྲུང་ཆེན་ཡིག་ཚང་ལྟེ་བ། མོ་ཏི་ཐང་། ཐིམ་ཕུག",
+    image: staffRinchenPhuntsho,
+  },
+  {
+    id: "officer-tshering-choden",
+    orderNumber: 5,
+    name: "Ms. Tshering Choden",
+    nameDz: "སྐུ་ཞབས་ ཚེ་རིང་ཆོས་ལྡན།",
+    designation: "Senior Program Officer",
+    designationDz: "ལས་རིམ་འགོ་དཔོན་གཙོ་འཛིན།",
+    division: "Programme Division",
+    divisionDz: "ལས་རིམ་སྡེ་ཚན།",
+    badge: "Commodity Procurement",
+    badgeDz: "སྨན་རྫས་མཁོ་སྒྲུབ།",
+    bio: "Ms. Tshering Choden coordinates nationwide procurement programs for 438 essential drugs, traditional medicines, and universal vaccines. Working closely with the Ministry of Health and international suppliers (UNICEF/WHO), she monitors supply chain integrity and national healthcare needs.",
+    bioDz: "སྐུ་ཞབས་ ཚེ་རིང་ཆོས་ལྡན་གྱིས་ གལ་ཆེ་བའི་སྨན་རྫས་ ༤༣༨ དང་ གསོ་རིག་སྨན་རྫས། དེ་ལས་ ཨ་ལོའི་སྨན་ཁབ་ཚུ་ རྒྱལ་ཡོངས་ལུ་ མཁོ་སྒྲུབ་འབད་ནིའི་ ལས་རིམ་ཚུ་ འགོ་འདྲེན་འཐབ་དོ་ཡོད། གསོ་བའི་ལྷན་ཁག་དང་ UNICEF, WHO ཚུ་དང་ མཉམ་འབྲེལ་ཐོག་ལས་ རྫོང་ཁག་ ༢༠ གི་ སྨན་ཁང་ཚུ་ནང་ སྨན་རྫས་ཚུ་ དུས་ཐོག་ལུ་ ལྷོད་ཐབས་ལུ་ ལྟ་རྟོག་འབད་དོ་ཡོད།",
+    tags: [
+      "438 Essential Medicines",
+      "Universal Child Vaccines",
+      "UNICEF Supply Chain",
+      "Cold-Chain Monitoring",
+    ],
+    tagsDz: [
+      "གལ་ཆེ་བའི་སྨན་རྫས་ ༤༣༨",
+      "ཨ་ལོའི་སྨན་ཁབ།",
+      "UNICEF མཁོ་སྒྲུབ།",
+      "བསིལ་མཛོད་ལྟ་རྟོག",
+    ],
+    email: "bhtf@bhtf.bt",
+    phone: "02-338636 / Ext. 101",
+    location: "Secretariat HQ, Motithang, Thimphu",
+    locationDz: "དྲུང་ཆེན་ཡིག་ཚང་ལྟེ་བ། མོ་ཏི་ཐང་། ཐིམ་ཕུག",
+    image: staffTsheringChoden,
+  },
+];
+
+function SecretariatMemberCard({
+  member,
+  isActive,
+  onToggle,
+  isDzongkha,
+}: {
+  member: SecretariatMember;
+  isActive: boolean;
+  onToggle: () => void;
+  isDzongkha: boolean;
+}) {
+  return (
+    <div
+      onClick={onToggle}
+      className={`group relative w-full rounded-3xl bg-white border-2 transition-all duration-300 shadow-sm hover:shadow-2xl overflow-hidden cursor-pointer flex flex-col ${
+        isActive
+          ? "border-emerald-600 ring-4 ring-emerald-500/20 shadow-2xl"
+          : "border-slate-200/90 hover:border-emerald-500/60"
+      }`}
+      style={{ minHeight: "530px" }}
+    >
+      {/* Front Face: Large centered uncropped photo + clean footer */}
+      <div className="flex flex-col h-full w-full">
+        {/* Photo Container: Generous height, centered photo, zero cropping */}
+        <div className="relative w-full h-[360px] sm:h-[390px] bg-gradient-to-b from-[#f8fafc] via-[#f1f5f9] to-[#e2e8f0]/40 flex items-center justify-center p-6 overflow-hidden">
+          {/* Subtle decorative background pattern */}
+          <div className="absolute inset-0 bg-[radial-gradient(#059669_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
+
+          {/* Centered, completely uncropped photo */}
+          <img
+            src={member.image}
+            alt={isDzongkha ? member.nameDz : member.name}
+            className="w-full h-full object-contain object-center drop-shadow-md group-hover:scale-105 transition-transform duration-500 relative z-10"
+            loading="lazy"
+          />
+
+          {/* Order Number & Role Badge */}
+          <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-900/85 backdrop-blur-sm text-white font-mono text-xs font-bold shadow-sm">
+              {member.orderNumber}
+            </span>
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-emerald-900 border border-emerald-200/80 shadow-2xs">
+              {isDzongkha ? member.badgeDz : member.badge}
+            </span>
+          </div>
+
+          {/* Interactive Cue Badge */}
+          <div className="absolute bottom-3 right-3 z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+            <span className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-emerald-900 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border border-emerald-200/80 shadow-2xs">
+              <Sparkles className="w-3 h-3 text-emerald-600" />
+              <span>{isDzongkha ? "ཁ་གསལ་གཟིགས།" : "Hover for Bio"}</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Front Footer Info */}
+        <div className="p-5 sm:p-6 bg-white border-t border-slate-100 flex-1 flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] font-mono uppercase tracking-widest text-emerald-800 font-bold block mb-1">
+              {isDzongkha ? member.divisionDz : member.division}
+            </span>
+            <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900 group-hover:text-emerald-900 transition-colors leading-tight">
+              {isDzongkha ? member.nameDz : member.name}
+            </h3>
+            <p className="text-xs sm:text-sm font-semibold text-emerald-700 mt-1">
+              {isDzongkha ? member.designationDz : member.designation}
+            </p>
+          </div>
+
+          <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+            <span className="font-mono text-[11px]">BHTF Secretariat</span>
+            <span className="text-emerald-800 font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+              <span>{isDzongkha ? "ལོ་རྒྱུས་རྒྱས་པ།" : "View Details"}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* DHI Signature Hover Reveal Overlay */}
+      <div
+        className={`absolute inset-0 bg-white/98 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 z-20 rounded-3xl border-2 border-emerald-600/50 shadow-2xl ${
+          isActive
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+        }`}
+      >
+        {/* Top Header */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-2">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+              {isDzongkha ? member.divisionDz : member.division}
+            </span>
+            <span className="font-mono text-xs text-slate-400 font-bold">
+              #{member.orderNumber}
+            </span>
+          </div>
+          <div>
+            <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900 leading-snug">
+              {isDzongkha ? member.nameDz : member.name}
+            </h3>
+            <p className="text-xs sm:text-sm font-bold text-emerald-800 mt-0.5">
+              {isDzongkha ? member.designationDz : member.designation}
+            </p>
+          </div>
+        </div>
+
+        {/* Middle: Institutional Bio & Responsibilities */}
+        <div className="my-3 py-2 border-y border-slate-200/80 overflow-y-auto max-h-[220px] sm:max-h-[250px] pr-1 space-y-3">
+          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
+            {isDzongkha ? member.bioDz : member.bio}
+          </p>
+
+          {/* Focus Tags */}
+          <div className="pt-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block mb-1.5">
+              {isDzongkha ? "གཙོ་བོའི་ལས་འགན།" : "Core Institutional Focus"}
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {(isDzongkha ? member.tagsDz : member.tags).map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="text-[11px] font-sans font-medium px-2.5 py-1 rounded-lg bg-emerald-50/80 text-emerald-900 border border-emerald-200/60"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom: Official Contact & Credentials */}
+        <div className="space-y-2 pt-1 text-xs text-slate-600">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2 text-slate-700 font-medium">
+              <Mail className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+              <a
+                href={`mailto:${member.email}`}
+                className="hover:text-emerald-900 hover:underline font-mono text-[11px]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {member.email}
+              </a>
+            </div>
+            <div className="flex items-center gap-2 text-slate-700 font-medium">
+              <Phone className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+              <span className="font-mono text-[11px]">{member.phone}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
+              <span>{isDzongkha ? member.locationDz : member.location}</span>
+            </div>
+            <span className="text-slate-400 font-mono text-[10px]">
+              {isDzongkha ? "(ཨེབ་སྟེ་བསྡམས)" : "(Tap to close)"}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SecretariatPage() {
   const { t, isDzongkha } = useLanguage();
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+
+  const handleToggleCard = (id: string) => {
+    setActiveCardId((prev) => (prev === id ? null : id));
+  };
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
@@ -192,7 +540,7 @@ function SecretariatPage() {
         </div>
       </section>
 
-      {/* 2. Secretariat Staff Profiles in Clean NPPF Institutional Style */}
+      {/* 2. Secretariat Staff Profiles: Large Cards with DHI-Style Interactive Hover Reveal */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="secretariat-roster">
         <SectionEditBadge
           label="Secretariat Personnel Roster"
@@ -205,155 +553,48 @@ function SecretariatPage() {
             badge: "Executive Leadership & Key Personnel",
           }}
         />
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block mb-2">
+
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
             {isDzongkha ? "ལག་ལེན་དབུ་ཁྲིད་དང་ གཙོ་བོའི་འགོ་དཔོན་ཚུ།" : "Executive Leadership & Key Personnel"}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">
             {isDzongkha ? "དྲུང་ཆེན་ཡིག་ཚང་གི་ དབུ་ཁྲིད་དང་ འགོ་དཔོན་ཚུ།" : "Secretariat Directorate & Officers"}
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2.5 font-light">
+          <p className="text-slate-600 text-sm sm:text-base font-light max-w-2xl mx-auto">
             {isDzongkha
-              ? "དངུལ་རྩིས་ལག་ལེན་དང་ རྒྱལ་སྤྱིའི་སྨན་རྫས་མཁོ་སྒྲུབ། ཁྲིམས་མཐུན་བསྟུན་སྒྲིག་ཚུ་ འགན་ལེན་འབད་མི་ དམིགས་བསལ་འགོ་དཔོན་ཚུ།"
-              : "Dedicated professionals managing fiduciary operations, international commodity procurement, and statutory compliance."}
+              ? "ཁ་གསལ་གཟིགས་ནིའི་དོན་ལུ་ འགོ་དཔོན་གྱི་པར་གུར་ མཛུབ་རིས་ (Hover) བཞག་གནང་། འགོ་དཔོན་རེ་རེ་བཞིན་གྱི་ ལོ་རྒྱུས་དང་ འགན་ཁུར་ འབྲེལ་གཏུགས་ཚུ་ གསལ་ཏོག་ཏོ་སྦེ་ མཐོང་ཚུགས།"
+              : "Hover over any profile card to reveal institutional biographies, statutory responsibilities, and official contact channels."}
           </p>
-        </div>
-
-        {/* 1. Director Featured Leadership Card (NPPF Core Management Pattern) */}
-        <div className="max-w-md mx-auto mb-10 sm:mb-12">
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md transition text-center flex flex-col items-center">
-            <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/90 mb-4 shadow-2xs">
-              <img
-                src={drGyamboDirector}
-                alt="Dr. Gyambo Sithey, PhD"
-                className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-              />
-            </div>
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-900 leading-snug">
-              {t("organogram_director_name", "Dr. Gyambo Sithey, PhD")}
-            </h3>
-            <p className="text-xs sm:text-sm font-semibold text-emerald-800 mt-1">
-              {isDzongkha ? "མདོ་ཆེན། དྲུང་ཆེན་ཡིག་ཚང་།" : "Director, Secretariat"}
-            </p>
-            <p className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-              {t("organogram_director_sub", "Member Secretary & Executive Head")}
-            </p>
-            <span className="inline-block text-[10px] font-mono font-bold text-emerald-900 bg-emerald-50 border border-emerald-200 px-3 py-0.5 rounded-full mt-3">
-              {isDzongkha ? "མདོ་ཆེན་དབུ་ཁྲིད།" : "Directorate Leadership"}
+          <div className="pt-2 flex items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-3.5 py-1 rounded-full shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+              <span>{isDzongkha ? "པར་གུར་ Hover འབད་དེ་ ཁ་གསལ་གཟིགས།" : "Interactive Hover Reveal (DHI Style)"}</span>
             </span>
           </div>
         </div>
 
-        {/* 2. Key Officers & Staff (NPPF Senior Management Grid Pattern) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Senior Program Officer */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
-            <div className="flex flex-col items-center w-full">
-              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
-                <img
-                  src={staffTsheringChoden}
-                  alt="Ms. Tshering Choden"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
-                {isDzongkha ? "སྐུ་ཞབས་ ཚེ་རིང་ཆོས་ལྡན།" : "Ms. Tshering Choden"}
-              </h3>
-              <div className="text-xs font-semibold text-emerald-800 mt-1">
-                {isDzongkha ? "ལས་རིམ་འགོ་དཔོན་གཙོ་འཛིན།" : "Senior Program Officer"}
-              </div>
-              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                {t("div_programme", "Programme Division")}
-              </div>
-            </div>
-            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-              <span>{isDzongkha ? "ལས་རིམ་ལག་ལེན།" : "Programme Operations"}</span>
-            </div>
-          </div>
+        {/* 1. Director Featured Leadership Card (#1 Dr. Gyambo Sithey, PhD) */}
+        <div className="max-w-xl mx-auto mb-10 sm:mb-14">
+          <SecretariatMemberCard
+            member={secretariatMembers[0]}
+            isActive={activeCardId === secretariatMembers[0].id}
+            onToggle={() => handleToggleCard(secretariatMembers[0].id)}
+            isDzongkha={isDzongkha}
+          />
+        </div>
 
-          {/* Senior Investment Officer */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
-            <div className="flex flex-col items-center w-full">
-              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
-                <img
-                  src={staffThinleyWangchuk}
-                  alt="Mr. Thinley Wangchuk"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
-                {isDzongkha ? "སྐུ་ཞབས་ འཕྲིན་ལས་དབང་ཕྱུག" : "Mr. Thinley Wangchuk"}
-              </h3>
-              <div className="text-xs font-semibold text-emerald-800 mt-1">
-                {isDzongkha ? "མ་རྩ་བཙུགས་བཞག་འགོ་དཔོན་གཙོ་འཛིན།" : "Senior Investment Officer"}
-              </div>
-              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                {t("div_investment", "Investment Management Division")}
-              </div>
-            </div>
-            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-              <span>{isDzongkha ? "མ་རྩ་འོང་འབབ།" : "Endowment Yields"}</span>
-            </div>
-          </div>
-
-          {/* Accounts Officer */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
-            <div className="flex flex-col items-center w-full">
-              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
-                <img
-                  src={staffSonamChojay}
-                  alt="Mr. Sonam Chojay"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
-                {isDzongkha ? "སྐུ་ཞབས་ བསོད་ནམས་ཆོས་རྒྱལ།" : "Mr. Sonam Chojay"}
-              </h3>
-              <div className="text-xs font-semibold text-emerald-800 mt-1">
-                {isDzongkha ? "རྩིས་ཁྲ་འགོ་དཔོན།" : "Accounts Officer"}
-              </div>
-              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                {t("div_admin", "Administration & Finance Division")}
-              </div>
-            </div>
-            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-              <span>{isDzongkha ? "དངུལ་རྩིས་བསྟུན་སྒྲིག" : "Fiduciary Compliance"}</span>
-            </div>
-          </div>
-
-          {/* Driver */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 text-center flex flex-col items-center justify-between group">
-            <div className="flex flex-col items-center w-full">
-              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/80 mb-4 shadow-2xs">
-                <img
-                  src={staffRinchenPhuntsho}
-                  alt="Mr. Rinchen Phuntsho"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-emerald-800 transition leading-snug">
-                {isDzongkha ? "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས།" : "Mr. Rinchen Phuntsho"}
-              </h3>
-              <div className="text-xs font-semibold text-emerald-800 mt-1">
-                {isDzongkha ? "སྣུམ་འཁོར་གཏོང་མི།" : "Driver"}
-              </div>
-              <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                {isDzongkha ? "རྒྱབ་སྐྱོར་དོ་དམ།" : "Support Logistics"}
-              </div>
-            </div>
-            <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-              <span>{isDzongkha ? "འགྲོ་འགྲུལ་སྐྱེལ་འདྲེན།" : "Field Transport"}</span>
-            </div>
-          </div>
+        {/* 2. Key Officers & Staff Large 2-Column Grid (#2 Sonam Chojay, #3 Thinley Wangchuk, #4 Rinchen Phuntsho, #5 Tshering Choden) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+          {secretariatMembers.slice(1).map((member) => (
+            <SecretariatMemberCard
+              key={member.id}
+              member={member}
+              isActive={activeCardId === member.id}
+              onToggle={() => handleToggleCard(member.id)}
+              isDzongkha={isDzongkha}
+            />
+          ))}
         </div>
       </section>
 
