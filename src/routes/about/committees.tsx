@@ -1,20 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageHero } from "@/components/page-hero";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Scale,
-  ShieldCheck,
-  TrendingUp,
-  Landmark,
-  Coins,
-  CheckCircle2,
-  Users,
+  Sparkles,
 } from "lucide-react";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { FiduciaryMemberCard, type FiduciaryMember } from "@/components/fiduciary-member-card";
 
 export const Route = createFileRoute("/about/committees")({
   head: () => ({
@@ -30,44 +27,100 @@ export const Route = createFileRoute("/about/committees")({
   component: CommitteesPage,
 });
 
+const amcMembersList: FiduciaryMember[] = [
+  {
+    id: "amc-ugyen",
+    orderNumber: 1,
+    name: "Ms. Ugyen Choden",
+    nameDz: "སྐུ་ཞབས་ ཨོ་རྒྱན་ཆོས་ལྡན།",
+    role: "Chairperson, Asset Management Committee",
+    roleDz: "ཚོགས་གཙོ། མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་།",
+    organization: "Deputy Governor, Royal Monetary Authority (RMA)",
+    organizationDz: "དངུལ་ལས་དབང་འཛིན་གྱི་ ལས་ཚབ་མངའ་བདག",
+    badge: "Chairperson (AMC) • Table 1.2",
+    badgeDz: "AMC ཚོགས་གཙོ།",
+    desc: "Provides high-level central banking, liquidity, and macroeconomic portfolio oversight, guiding BHTF capital preservation strategies, offshore foreign exchange investments, and yield optimization benchmarks.",
+    descDz: "རྒྱལ་གཞུང་དངུལ་ལས་དབང་འཛིན་གྱི་ ཉམས་མྱོང་དང་བསྟུན་ མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་གི་ ཚོགས་གཙོ་སྦེ་ མ་དངུལ་སྐྱེད་འཕེལ་དང་ ༧༠-༢༠-༡༠ ལག་ལེན་ཐབས་བྱུས་ཚུ་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: [
+      "Central Banking",
+      "Monetary Policy",
+      "70-20-10 Model",
+      "Foreign Reserves",
+    ],
+    tagsDz: [
+      "དངུལ་ཁང་སྲིད་བྱུས།",
+      "མ་རྩ་བཙུགས་བཞག",
+      "༧༠-༢༠-༡༠ ལམ་ལུགས།",
+      "ཕྱི་དངུལ་ཉེན་སྲུང་།",
+    ],
+    photo: trusteeUgyenChoden,
+    theme: "amber",
+  },
+  {
+    id: "amc-chencho",
+    orderNumber: 2,
+    name: "Mr. Chencho T. Namgay",
+    nameDz: "སྐུ་ཞབས་ སྤེན་ཅོ་ ཏི་ རྣམ་རྒྱལ།",
+    role: "Member, Asset Management Committee",
+    roleDz: "ཚོགས་མི། མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་།",
+    organization: "Chief Executive Officer, National Pension and Provident Fund (NPPF)",
+    organizationDz: "གཙོ་འཛིན་འགོ་དཔོན། རྒྱལ་ཡོངས་རྒས་ཕོགས་དང་ ལྟོ་ཕོགས་མ་དངུལ།",
+    badge: "Member (AMC) • Table 1.2",
+    badgeDz: "AMC ཚོགས་མི།",
+    desc: "Brings extensive institutional fund management, asset allocation, and risk management insight from Bhutan's premier pension fiduciary, advising on fixed-income yields and corpus diversification.",
+    descDz: "རྒྱལ་ཡོངས་རྒས་ཕོགས་མ་དངུལ་ (NPPF) གི་ གཙོ་འཛིན་འགོ་དཔོན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ སྐུ་ཞབས་ཀྱིས་ མ་རྩ་བགོ་བཀྲམ་དང་ ཉེན་ཁ་དོ་དམ་གྱི་ གྲོས་སྟོན་གནང་དོ་ཡོད།",
+    tags: [
+      "Institutional Investment",
+      "Pension Funds",
+      "Risk Governance",
+      "Fixed Income",
+    ],
+    tagsDz: [
+      "མ་རྩ་བགོ་བཀྲམ།",
+      "ཉེན་ཁ་དོ་དམ།",
+      "སྐྱེད་འཕེལ་ཐབས་བྱུས།",
+      "ཚོགས་ཆུང་ཚོགས་མི།",
+    ],
+    photo: trusteeChenchoNamgay,
+    theme: "amber",
+  },
+  {
+    id: "amc-norbu",
+    orderNumber: 3,
+    name: "Mr. Norbu Dendup",
+    nameDz: "སྐུ་ཞབས་ ནོར་བུ་དོན་གྲུབ།",
+    role: "Member, Asset Management Committee",
+    roleDz: "ཚོགས་མི། མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་།",
+    organization: "Director, Department of Treasury and Accounts, Ministry of Finance",
+    organizationDz: "མདོ་ཆེན། རྩིས་མཛོད་དང་རྩིས་ཁྲ་ལས་ཁུངས། དངུལ་རྩིས་ལྷན་ཁག",
+    badge: "Member (AMC) • Table 1.2",
+    badgeDz: "AMC ཚོགས་མི།",
+    desc: "Oversees public financial management, treasury coordination, and sovereign endowment governance under the Ministry of Finance, coordinating Royal Government Treasury Bonds (>5% yield).",
+    descDz: "དངུལ་རྩིས་ལྷན་ཁག་གི་ མདོ་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ སྐུ་ཞབས་ཀྱིས་ གཞུང་གི་བུན་འཛིན་དང་ རྒྱལ་གཞུང་རྩིས་མཛོད་ མཉམ་འབྲེལ་གྱི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: [
+      "Treasury Bonds (>5% Yield)",
+      "Public Accounts",
+      "Sovereign Debt",
+      "Fiscal Compliance",
+    ],
+    tagsDz: [
+      "རྒྱལ་གཞུང་རྩིས་མཛོད།",
+      "གཞུང་གི་བུན་འཛིན།",
+      "འཆར་དངུལ་མཉམ་སྦྱོར།",
+      "རྩིས་ཞིབ་དོ་དམ།",
+    ],
+    photo: trusteeNorbuDendup,
+    theme: "amber",
+  },
+];
+
 function CommitteesPage() {
   const { t, isDzongkha } = useLanguage();
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const displayAmcMembers = [
-    {
-      name: t("trustee_ugyen_name", "Ms. Ugyen Choden"),
-      committeeRole: t("trustee_ugyen_role", "Chairperson"),
-      title: t("trustee_ugyen_org", "Deputy Governor, RMA"),
-      badge: t("amc_chair_badge", "Chairperson (AMC)"),
-      desc: t(
-        "trustee_ugyen_desc",
-        "Provides high-level central banking, liquidity, and macroeconomic portfolio oversight, guiding BHTF capital preservation strategies."
-      ),
-      photo: trusteeUgyenChoden,
-    },
-    {
-      name: t("trustee_chencho_name", "Mr. Chencho T. Namgay"),
-      committeeRole: t("amc_member_badge", "Member"),
-      title: t("trustee_chencho_org", "Chief Executive Officer, NPPF"),
-      badge: t("amc_member_badge", "Member (AMC)"),
-      desc: t(
-        "trustee_chencho_desc",
-        "Brings extensive institutional fund management, asset allocation, and risk management insight from Bhutan's premier pension fiduciary."
-      ),
-      photo: trusteeChenchoNamgay,
-    },
-    {
-      name: t("trustee_norbu_name", "Mr. Norbu Dendup"),
-      committeeRole: t("amc_member_badge", "Member"),
-      title: t("trustee_norbu_org", "Director, Department of Treasury and Accounts, MoF"),
-      badge: t("amc_member_badge", "Member (AMC)"),
-      desc: t(
-        "trustee_norbu_desc",
-        "Oversees public financial management, treasury coordination, and sovereign endowment governance under the Ministry of Finance."
-      ),
-      photo: trusteeNorbuDendup,
-    },
-  ];
+  const handleToggleCard = (id: string) => {
+    setActiveCardId((prev) => (prev === id ? null : id));
+  };
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-36 sm:pb-44 bg-[#FAF8F3]">
@@ -85,7 +138,7 @@ function CommitteesPage() {
         ]}
       />
 
-      {/* 1. Official AMC Table 1.2 Members Gallery (NPPF Pattern) */}
+      {/* 1. Official AMC Table 1.2 Members Gallery in Large Cards with DHI-Style Interactive Hover Reveal */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="amc-roster">
         <SectionEditBadge
           label="Asset Management Committee (AMC)"
@@ -99,54 +152,36 @@ function CommitteesPage() {
           }}
         />
 
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-800 block">
             {t("amc_table_badge", "Table 1.2 • Investment Stewardship")}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">
             {t("amc_page_title", "Asset management committee (AMC)")}
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2.5 font-light">
-            {t(
-              "amc_page_subtitle",
-              "Supporting the responsible management of the Fund’s assets in line with its mandate and objectives to safeguard resources for essential medicines and vaccines."
-            )}
+          <p className="text-slate-600 text-sm sm:text-base font-light max-w-2xl mx-auto">
+            {isDzongkha
+              ? "ཁ་གསལ་གཟིགས་ནིའི་དོན་ལུ་ ཚོགས་ཆུང་ཚོགས་མིའི་པར་གུར་ མཛུབ་རིས་ (Hover) བཞག་གནང་། མ་རྩ་བདག་སྐྱོང་དང་ མ་དངུལ་སྐྱེད་འཕེལ་གྱི་ འགན་ཁུར་ཚུ་ གསལ་ཏོག་ཏོ་སྦེ་ མཐོང་ཚུགས།"
+              : "Hover over any committee card to reveal specialized investment mandates, portfolio oversight responsibilities, and fiduciary credentials."}
           </p>
+          <div className="pt-2 flex items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-amber-900 bg-amber-50 border border-amber-200/80 px-3.5 py-1 rounded-full shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+              <span>{isDzongkha ? "པར་གུར་ Hover འབད་དེ་ ཁ་གསལ་གཟིགས།" : "Interactive Hover Reveal (DHI Style)"}</span>
+            </span>
+          </div>
         </div>
 
-        {/* 3 AMC Members in Clean NPPF Institutional Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
-          {displayAmcMembers.map((m, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-amber-300 transition-all duration-300 text-center flex flex-col items-center justify-between group"
-            >
-              <div className="flex flex-col items-center w-full">
-                <div className="w-40 h-40 sm:w-44 sm:h-44 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200/90 mb-4 shadow-2xs">
-                  <img
-                    src={m.photo}
-                    alt={m.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                </div>
-
-                <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-amber-800 transition leading-snug">
-                  {m.name}
-                </h3>
-                <div className="text-xs font-semibold text-amber-800 mt-1">
-                  {m.committeeRole}
-                </div>
-                <div className="text-xs text-slate-500 font-normal mt-1 leading-relaxed">
-                  {m.title}
-                </div>
-              </div>
-
-              <div className="pt-3 mt-4 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
-                <ShieldCheck className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-                <span>{m.badge}</span>
-              </div>
-            </div>
+        {/* 3 AMC Members in Large Responsive 3-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
+          {amcMembersList.map((member) => (
+            <FiduciaryMemberCard
+              key={member.id}
+              member={member}
+              isActive={activeCardId === member.id}
+              onToggle={() => handleToggleCard(member.id)}
+              isDzongkha={isDzongkha}
+            />
           ))}
         </div>
       </section>
