@@ -18,6 +18,7 @@ import staffSonamChojay from "@/assets/bhtf/secretariat/sonam_chojay.jpg";
 import staffThinleyWangchuk from "@/assets/bhtf/secretariat/thinley_wangchuk_v2026_sharp.jpg";
 import staffRinchenPhuntsho from "@/assets/bhtf/secretariat/rinchen_phuntsho.jpg";
 import staffTsheringChoden from "@/assets/bhtf/secretariat/tshering_choden.jpg";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 export const Route = createFileRoute("/about/secretariat")({
@@ -389,7 +390,7 @@ function SecretariatPage() {
   };
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-28 sm:pb-36 bg-[#FAF8F3]">
       <PageHero
         badge={t("secretariat_page_badge", "Executive Directorate")}
         title={t("secretariat_page_title", "Secretariat")}
@@ -645,6 +646,9 @@ function SecretariatPage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Bottom Navigation Capsule for About Sub-Pages */}
+      <AboutBottomCapsule />
     </div>
   );
 }

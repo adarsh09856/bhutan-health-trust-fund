@@ -10,6 +10,7 @@ import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { FiduciaryMemberCard, type FiduciaryMember } from "@/components/fiduciary-member-card";
 
@@ -235,7 +236,7 @@ function TrusteesPage() {
   };
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-28 sm:pb-36 bg-[#FAF8F3]">
       <PageHero
         badge={t("trustees_page_badge", "Section 1.1 • Fiduciary Governance")}
         title={t("trustees_page_title", "Board of trustees")}
@@ -307,6 +308,9 @@ function TrusteesPage() {
           ))}
         </div>
       </section>
+
+      {/* Floating Sub-pages Sticky Bottom Capsule */}
+      <AboutBottomCapsule />
     </div>
   );
 }

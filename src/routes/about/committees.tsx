@@ -9,6 +9,7 @@ import {
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { FiduciaryMemberCard, type FiduciaryMember } from "@/components/fiduciary-member-card";
 
@@ -122,7 +123,7 @@ function CommitteesPage() {
   };
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-16 sm:pb-24 bg-[#FAF8F3]">
+    <div className="space-y-16 sm:space-y-24 pb-28 sm:pb-36 bg-[#FAF8F3]">
       <PageHero
         badge={t("amc_page_badge", "Section 1.2 • Fiduciary Oversight")}
         title={t("amc_page_title", "Asset management committee")}
@@ -266,6 +267,9 @@ function CommitteesPage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Sub-pages Sticky Bottom Capsule */}
+      <AboutBottomCapsule />
     </div>
   );
 }
