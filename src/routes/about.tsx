@@ -110,50 +110,7 @@ function AboutUsMainPage() {
         </div>
       </PageHero>
 
-      {/* 2. Official Impact Benchmarks Banner */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#0B4F42] to-[#073C32] text-white rounded-3xl p-8 sm:p-12 shadow-lg border border-emerald-700/40 space-y-6">
-          <div className="space-y-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-300">
-              Enduring Stewardship • Verified Scale
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-black text-white">
-              Sovereign Health Security at a Glance
-            </h3>
-            <p className="text-xs sm:text-sm text-emerald-100 font-light max-w-2xl">
-              Unbroken healthcare commodity financing protecting every citizen across all 20 Dzongkhags.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-            <div className="bg-white/10 rounded-2xl p-5 border border-white/10 text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-amber-300">438</div>
-              <div className="text-xs font-semibold text-white mt-1">Essential Modern Medicines</div>
-              <div className="text-[11px] text-emerald-200/80 mt-0.5">100% of National List</div>
-            </div>
-
-            <div className="bg-white/10 rounded-2xl p-5 border border-white/10 text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-emerald-300">110</div>
-              <div className="text-xs font-semibold text-white mt-1">Traditional Formulations</div>
-              <div className="text-[11px] text-emerald-200/80 mt-0.5">gSo-ba Rig-pa Therapies</div>
-            </div>
-
-            <div className="bg-white/10 rounded-2xl p-5 border border-white/10 text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-teal-200">4 Key</div>
-              <div className="text-xs font-semibold text-white mt-1">Universal Vaccines</div>
-              <div className="text-[11px] text-emerald-200/80 mt-0.5">Penta, PCV, HPV, Flu</div>
-            </div>
-
-            <div className="bg-white/10 rounded-2xl p-5 border border-white/10 text-center">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-amber-300">Nu. 4.3B</div>
-              <div className="text-xs font-semibold text-white mt-1">Disbursed to Date</div>
-              <div className="text-[11px] text-emerald-200/80 mt-0.5">~Nu. 600M Annual Budget</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. About Us Governance & Institutional Navigation Cards */}
+      {/* 2. About Us Governance & Institutional Navigation Cards */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="border-t border-slate-200/80 pt-10">
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 block mb-1">
