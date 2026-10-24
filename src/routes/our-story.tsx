@@ -156,8 +156,10 @@ function OurStoryPage() {
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
               {t("story_mandate_badge", "Founding Mandate • Est. 1998")}
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              {t("story_page_title", "Our Story")}
+            <h2 className="font-serif text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              {isDzongkha
+                ? "གཞི་བཙུགས་ཀྱི་ལོ་རྒྱུས་དང་ རྒྱལ་པོའི་མཐོང་སྣང་།"
+                : "Founding Chronicle & Royal Vision"}
             </h2>
           </div>
 

@@ -156,8 +156,10 @@ function CommitteesPage() {
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-800 block">
             {t("amc_table_badge", "Table 1.2 • Investment Stewardship")}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">
-            {t("amc_page_title", "Asset management committee (AMC)")}
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            {isDzongkha
+              ? "རེའུ་མིག་ ༡.༢ • མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་གི་ཚོགས་མི་ཚུ།"
+              : "Table 1.2 • Investment Sub-Committee Roster"}
           </h2>
           <p className="text-slate-600 text-sm sm:text-base font-light max-w-2xl mx-auto">
             {isDzongkha

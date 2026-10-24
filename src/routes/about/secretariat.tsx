@@ -425,7 +425,7 @@ function SecretariatPage() {
               {isDzongkha ? "དབྱེ་ཚན་ ༡.༣ • ལག་ལེན་སྡེ་ཚན་ཚུ།" : "Section 1.3 • Operational Divisions"}
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-              {t("secretariat_divisions_title", "Secretariat Operational Divisions")}
+              {isDzongkha ? "ལག་ལེན་སྡེ་ཚན་ཚུ།" : "Core Operational Divisions"}
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm font-light">
               {t(
@@ -558,8 +558,8 @@ function SecretariatPage() {
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
             {isDzongkha ? "ལག་ལེན་དབུ་ཁྲིད་དང་ གཙོ་བོའི་འགོ་དཔོན་ཚུ།" : "Executive Leadership & Key Personnel"}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">
-            {isDzongkha ? "དྲུང་ཆེན་ཡིག་ཚང་གི་ དབུ་ཁྲིད་དང་ འགོ་དཔོན་ཚུ།" : "Secretariat Directorate & Officers"}
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            {isDzongkha ? "དབུ་ཁྲིད་དང་ གཙོ་བོའི་འགོ་དཔོན་ཚུ།" : "Executive Directorate & Key Personnel"}
           </h2>
           <p className="text-slate-600 text-sm sm:text-base font-light max-w-2xl mx-auto">
             {isDzongkha

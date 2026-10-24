@@ -269,8 +269,10 @@ function TrusteesPage() {
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-800 block font-mono">
             {t("trustees_table_badge", "Table 1.1 • High-Level Governance")}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">
-            {t("trustees_page_title", "Board of trustees")}
+          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
+            {isDzongkha
+              ? "རེའུ་མིག་ ༡.༡ • བཀོད་ཚོགས་ཀྱི་འཐུས་མི་ཚུ།"
+              : "Table 1.1 • Fiduciary Board of Directors"}
           </h2>
           <p className="text-slate-600 text-sm sm:text-base font-light max-w-2xl mx-auto">
             {isDzongkha
