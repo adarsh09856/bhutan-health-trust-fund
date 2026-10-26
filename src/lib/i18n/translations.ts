@@ -328,21 +328,49 @@ export const translations: TranslationDictionary = {
     en: "About Us",
     dz: "ང་བཅས་སྐོར།",
   },
+  capsule_about_short: {
+    en: "About",
+    dz: "སྐོར།",
+  },
   capsule_org: {
+    en: "Organization",
+    dz: "ལས་ཁུངས།",
+  },
+  capsule_org_full: {
     en: "Organization & Organogram",
     dz: "ལས་ཁུངས་དང་བཀོད་རིམ།",
+  },
+  capsule_org_short: {
+    en: "Org",
+    dz: "ལས་ཁུངས།",
   },
   capsule_trustees: {
     en: "Board of Trustees",
     dz: "བདག་སྐྱོང་ལྷན་ཚོགས།",
   },
+  capsule_trustees_short: {
+    en: "Trustees",
+    dz: "ལྷན་ཚོགས།",
+  },
   capsule_amc: {
+    en: "Asset Management",
+    dz: "མ་རྩ་འཛིན་སྐྱོང་།",
+  },
+  capsule_amc_full: {
     en: "Asset Management Committee",
     dz: "མ་རྩ་འཛིན་སྐྱོང་ཚོགས་ཆུང་།",
+  },
+  capsule_amc_short: {
+    en: "AMC",
+    dz: "AMC",
   },
   capsule_secretariat: {
     en: "Secretariat",
     dz: "དྲུང་ཆེན་ཡིག་ཚང་།",
+  },
+  capsule_secretariat_short: {
+    en: "Secretariat",
+    dz: "དྲུང་ཆེན།",
   },
   capsule_story: {
     en: "Our Story",
