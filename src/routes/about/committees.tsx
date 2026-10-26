@@ -9,6 +9,7 @@ import {
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
+import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { FiduciaryMemberCard, type FiduciaryMember } from "@/components/fiduciary-member-card";
@@ -112,6 +113,34 @@ const amcMembersList: FiduciaryMember[] = [
     photo: trusteeNorbuDendup,
     theme: "amber",
   },
+  {
+    id: "amc-gyambo",
+    orderNumber: 4,
+    name: "Mr. Gyambo Sithey, PhD",
+    nameDz: "སྐུ་ཞབས་ རྒྱལ་མཚན་སི་ཐེ། (འབུམ་རམས་པ)",
+    role: "Director & Member Secretary, AMC",
+    roleDz: "མདོ་ཆེན། / ཚོགས་མི་དྲུང་ཆེན། (AMC)",
+    organization: "Director, Bhutan Health Trust Fund Secretariat",
+    organizationDz: "མདོ་ཆེན། འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ དྲུང་ཆེན་ཡིག་ཚང་།",
+    badge: "Director / Member Secretary",
+    badgeDz: "AMC ཚོགས་མི་དྲུང་ཆེན།",
+    desc: "Serves as Member Secretary to the Asset Management Committee, executing strategic investment mandates, portfolio allocation decisions, and liquidity deployment under the 70–20–10 model. Coordinates quarterly investment reviews and statutory yield reporting to the Board.",
+    descDz: "མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་གི་ ཚོགས་མི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་སྟེ་ མ་དངུལ་སྐྱེད་འཕེལ་དང་ ༧༠-༢༠-༡༠ ལག་ལེན་ཐབས་བྱུས་ཚུ་ ལག་ལེན་འཐབ་ནི་དང་ བཀོད་ཚོགས་ལུ་ དུས་ཐོག་སྙན་ཞུ་ཕུལ་དོ་ཡོད།",
+    tags: [
+      "Investment Execution",
+      "Member Secretary",
+      "Operational Liquidity",
+      "Statutory Reporting",
+    ],
+    tagsDz: [
+      "མ་རྩ་ལག་ལེན།",
+      "ཚོགས་མི་དྲུང་ཆེན།",
+      "དངུལ་རྩིས་ལྟ་རྟོག",
+      "ཁྲིམས་མཐུན་སྙན་ཞུ།",
+    ],
+    photo: trusteeDrGyambo,
+    theme: "amber",
+  },
 ];
 
 function CommitteesPage() {
@@ -174,8 +203,8 @@ function CommitteesPage() {
           </div>
         </div>
 
-        {/* 3 AMC Members in Large Responsive 3-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
+        {/* 4 AMC Members (Chairperson, 2 Members, Director & Member Secretary) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {amcMembersList.map((member) => (
             <FiduciaryMemberCard
               key={member.id}

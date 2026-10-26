@@ -10,6 +10,7 @@ import trusteePemaTshering from "@/assets/bhtf/trustees/pema_tshering.jpg";
 import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
+import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { FiduciaryMemberCard, type FiduciaryMember } from "@/components/fiduciary-member-card";
@@ -225,6 +226,34 @@ const trusteesList: FiduciaryMember[] = [
     photo: trusteeDrPhub,
     theme: "emerald",
   },
+  {
+    id: "trustee-gyambo",
+    orderNumber: 8,
+    name: "Mr. Gyambo Sithey, PhD",
+    nameDz: "སྐུ་ཞབས་ རྒྱལ་མཚན་སི་ཐེ། (འབུམ་རམས་པ)",
+    role: "Director & Member Secretary",
+    roleDz: "མདོ་ཆེན། / ཚོགས་མི་དྲུང་ཆེན།",
+    organization: "Director, Bhutan Health Trust Fund Secretariat",
+    organizationDz: "མདོ་ཆེན། འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ དྲུང་ཆེན་ཡིག་ཚང་།",
+    badge: "Member Secretary • Article 5.3",
+    badgeDz: "ཚོགས་མི་དྲུང་ཆེན།",
+    desc: "Serves as the ex-officio Member Secretary of the Board of Trustees pursuant to Article 5, Clause 5.3 of the Royal Charter. Heads the Secretariat in executing all Board decisions, managing sovereign endowment disbursements, and steering nationwide healthcare financing.",
+    descDz: "རྒྱལ་པོའི་བཀའ་ཤོག་གི་དགོངས་དོན་ལྟར་ བཀོད་ཚོགས་ཀྱི་ ཚོགས་མི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་སྟེ་ བཀོད་ཚོགས་ཀྱི་གྲོས་ཆོད་ཚུ་ ལག་ལེན་འཐབ་ནི་དང་ དྲུང་ཆེན་ཡིག་ཚང་གི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: [
+      "Ex-Officio Member Secretary",
+      "Executive Directorate",
+      "Board Governance",
+      "Operations & Policy",
+    ],
+    tagsDz: [
+      "ཚོགས་མི་དྲུང་ཆེན།",
+      "དྲུང་ཆེན་ཡིག་ཚང་།",
+      "བཀོད་ཚོགས་གྲོས་ཆོད།",
+      "སྲིད་བྱུས་ལག་ལེན།",
+    ],
+    photo: trusteeDrGyambo,
+    theme: "emerald",
+  },
 ];
 
 function TrusteesPage() {
@@ -298,8 +327,8 @@ function TrusteesPage() {
         </div>
 
         {/* 2. Key Trustees Large 3-Column Grid (#2 to #7) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
-          {trusteesList.slice(1).map((member) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto mb-12 sm:mb-16">
+          {trusteesList.slice(1, 7).map((member) => (
             <FiduciaryMemberCard
               key={member.id}
               member={member}
@@ -308,6 +337,24 @@ function TrusteesPage() {
               isDzongkha={isDzongkha}
             />
           ))}
+        </div>
+
+        {/* 3. Director & Member Secretary Featured Anchor Card (#8 Mr. Gyambo Sithey, PhD) */}
+        <div className="max-w-xl mx-auto pt-6 border-t border-slate-200/80">
+          <div className="text-center mb-6 space-y-1">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-800">
+              {isDzongkha ? "ལས་འཛིན་དབུ་ཁྲིད། • རྩ་ཁྲིམས་ ༥.༣" : "Executive Directorate • Article 5.3"}
+            </span>
+            <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900">
+              {isDzongkha ? "མདོ་ཆེན་དང་ ཚོགས་མི་དྲུང་ཆེན།" : "Director & Member Secretary"}
+            </h3>
+          </div>
+          <FiduciaryMemberCard
+            member={trusteesList[7]}
+            isActive={activeCardId === trusteesList[7].id}
+            onToggle={() => handleToggleCard(trusteesList[7].id)}
+            isDzongkha={isDzongkha}
+          />
         </div>
       </section>
 

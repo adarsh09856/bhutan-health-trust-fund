@@ -61,7 +61,7 @@ const secretariatMembers: SecretariatMember[] = [
   {
     id: "director-gyambo-sithey",
     orderNumber: 1,
-    name: "Dr. Gyambo Sithey, PhD",
+    name: "Mr. Gyambo Sithey, PhD",
     nameDz: "སྐུ་ཞབས་ འགྱུར་མེད་སྲིད་ཐེད། (འབུམ་རམས་པ།)",
     designation: "Director & Member Secretary",
     designationDz: "མདོ་ཆེན། དྲུང་ཆེན་ཡིག་ཚང་། (ཚོགས་ཆུང་གི་དྲུང་ཆེན།)",
