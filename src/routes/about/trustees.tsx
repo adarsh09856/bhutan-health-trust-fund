@@ -59,36 +59,8 @@ const trusteesList: FiduciaryMember[] = [
     theme: "emerald",
   },
   {
-    id: "trustee-gyambo",
-    orderNumber: 2,
-    name: "Mr. Gyambo Sithey, PhD",
-    nameDz: "སྐུ་ཞབས་ རྒྱལ་མཚན་སི་ཐེ། (འབུམ་རམས་པ)",
-    role: "Director & Member Secretary",
-    roleDz: "མདོ་ཆེན། / ཚོགས་མི་དྲུང་ཆེན།",
-    organization: "Director, Bhutan Health Trust Fund Secretariat",
-    organizationDz: "མདོ་ཆེན། འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ དྲུང་ཆེན་ཡིག་ཚང་།",
-    badge: "Director & Member Secretary • Article 5.3",
-    badgeDz: "མདོ་ཆེན་ / ཚོགས་མི་དྲུང་ཆེན།",
-    desc: "Serves as the ex-officio Member Secretary of the Board of Trustees pursuant to Article 5, Clause 5.3 of the Royal Charter. Heads the Secretariat in executing all Board decisions, managing sovereign endowment disbursements, and steering nationwide healthcare financing.",
-    descDz: "རྒྱལ་པོའི་བཀའ་ཤོག་གི་དགོངས་དོན་ལྟར་ བཀོད་ཚོགས་ཀྱི་ ཚོགས་མི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་སྟེ་ བཀོད་ཚོགས་ཀྱི་གྲོས་ཆོད་ཚུ་ ལག་ལེན་འཐབ་ནི་དང་ དྲུང་ཆེན་ཡིག་ཚང་གི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
-    tags: [
-      "Ex-Officio Member Secretary",
-      "Executive Directorate",
-      "Board Governance",
-      "Operations & Policy",
-    ],
-    tagsDz: [
-      "ཚོགས་མི་དྲུང་ཆེན།",
-      "དྲུང་ཆེན་ཡིག་ཚང་།",
-      "བཀོད་ཚོགས་གྲོས་ཆོད།",
-      "སྲིད་བྱུས་ལག་ལེན།",
-    ],
-    photo: trusteeDrGyambo,
-    theme: "emerald",
-  },
-  {
     id: "trustee-lopen",
-    orderNumber: 3,
+    orderNumber: 2,
     name: "Lopen Tshering Wangchuk",
     nameDz: "སློབ་དཔོན་ ཚེ་རིང་དབང་ཕྱུག",
     role: "Trustee",
@@ -116,7 +88,7 @@ const trusteesList: FiduciaryMember[] = [
   },
   {
     id: "trustee-ugyen",
-    orderNumber: 4,
+    orderNumber: 3,
     name: "Ms. Ugyen Choden",
     nameDz: "སྐུ་ཞབས་ ཨོ་རྒྱན་ཆོས་ལྡན།",
     role: "Trustee & AMC Chairperson",
@@ -144,7 +116,7 @@ const trusteesList: FiduciaryMember[] = [
   },
   {
     id: "trustee-chencho",
-    orderNumber: 5,
+    orderNumber: 4,
     name: "Mr. Chencho T. Namgay",
     nameDz: "སྐུ་ཞབས་ སྤེན་ཅོ་ ཏི་ རྣམ་རྒྱལ།",
     role: "Trustee & AMC Member",
@@ -172,7 +144,7 @@ const trusteesList: FiduciaryMember[] = [
   },
   {
     id: "trustee-norbu",
-    orderNumber: 6,
+    orderNumber: 5,
     name: "Mr. Norbu Dendup",
     nameDz: "སྐུ་ཞབས་ ནོར་བུ་དོན་གྲུབ།",
     role: "Trustee & AMC Member",
@@ -200,7 +172,7 @@ const trusteesList: FiduciaryMember[] = [
   },
   {
     id: "trustee-pema",
-    orderNumber: 7,
+    orderNumber: 6,
     name: "Mr. Pema Tshering",
     nameDz: "སྐུ་ཞབས་ པདྨ་ཚེ་རིང་།",
     role: "Trustee (Independent Director)",
@@ -228,7 +200,7 @@ const trusteesList: FiduciaryMember[] = [
   },
   {
     id: "trustee-phub",
-    orderNumber: 8,
+    orderNumber: 7,
     name: "Dr. Phub Tshering",
     nameDz: "འབུམ་རམས་པ་ ཕུར་བུ་ཚེ་རིང་།",
     role: "Trustee",
@@ -252,6 +224,34 @@ const trusteesList: FiduciaryMember[] = [
       "སྨན་གྱི་སྤུས་ཚད།",
     ],
     photo: trusteeDrPhub,
+    theme: "emerald",
+  },
+  {
+    id: "trustee-gyambo",
+    orderNumber: 8,
+    name: "Mr. Gyambo Sithey, PhD",
+    nameDz: "སྐུ་ཞབས་ རྒྱལ་མཚན་སི་ཐེ། (འབུམ་རམས་པ)",
+    role: "Director & Member Secretary",
+    roleDz: "མདོ་ཆེན། / ཚོགས་མི་དྲུང་ཆེན།",
+    organization: "Director, Bhutan Health Trust Fund Secretariat",
+    organizationDz: "མདོ་ཆེན། འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ དྲུང་ཆེན་ཡིག་ཚང་།",
+    badge: "Director & Member Secretary • Article 5.3",
+    badgeDz: "མདོ་ཆེན་ / ཚོགས་མི་དྲུང་ཆེན།",
+    desc: "Serves as the ex-officio Member Secretary of the Board of Trustees pursuant to Article 5, Clause 5.3 of the Royal Charter. Heads the Secretariat in executing all Board decisions, managing sovereign endowment disbursements, and steering nationwide healthcare financing.",
+    descDz: "རྒྱལ་པོའི་བཀའ་ཤོག་གི་དགོངས་དོན་ལྟར་ བཀོད་ཚོགས་ཀྱི་ ཚོགས་མི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་སྟེ་ བཀོད་ཚོགས་ཀྱི་གྲོས་ཆོད་ཚུ་ ལག་ལེན་འཐབ་ནི་དང་ དྲུང་ཆེན་ཡིག་ཚང་གི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: [
+      "Ex-Officio Member Secretary",
+      "Executive Directorate",
+      "Board Governance",
+      "Operations & Policy",
+    ],
+    tagsDz: [
+      "ཚོགས་མི་དྲུང་ཆེན།",
+      "དྲུང་ཆེན་ཡིག་ཚང་།",
+      "བཀོད་ཚོགས་གྲོས་ཆོད།",
+      "སྲིད་བྱུས་ལག་ལེན།",
+    ],
+    photo: trusteeDrGyambo,
     theme: "emerald",
   },
 ];
@@ -316,60 +316,45 @@ function TrusteesPage() {
           </div>
         </div>
 
-        {/* 1. Apex Board Governance: Chairperson & Director */}
-        <div className="max-w-xl mx-auto mb-12 sm:mb-16 space-y-8 sm:space-y-10">
-          {/* Minister (Chairperson) */}
-          <div className="space-y-3">
-            <div className="text-center">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-800">
-                {isDzongkha ? "ཚོགས་གཙོ། • རེའུ་མིག་ ༡.༡" : "Board Chairperson • Table 1.1"}
-              </span>
-            </div>
-            <FiduciaryMemberCard
-              member={trusteesList[0]}
-              isActive={activeCardId === trusteesList[0].id}
-              onToggle={() => handleToggleCard(trusteesList[0].id)}
-              isDzongkha={isDzongkha}
-            />
-          </div>
-
-          {/* Director & Member Secretary (Directly below the Minister) */}
-          <div className="space-y-3 pt-6 sm:pt-8 border-t border-slate-200/80">
-            <div className="text-center">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-800">
-                {isDzongkha ? "མདོ་ཆེན་དང་ ཚོགས་མི་དྲུང་ཆེན། • རྩ་ཁྲིམས་ ༥.༣" : "Director & Member Secretary • Article 5.3"}
-              </span>
-            </div>
-            <FiduciaryMemberCard
-              member={trusteesList[1]}
-              isActive={activeCardId === trusteesList[1].id}
-              onToggle={() => handleToggleCard(trusteesList[1].id)}
-              isDzongkha={isDzongkha}
-            />
-          </div>
+        {/* 1. Chairperson Featured Leadership Card (#1 HE Lyonpo Tandin Wangchuk) */}
+        <div className="max-w-xl mx-auto mb-10 sm:mb-14">
+          <FiduciaryMemberCard
+            member={trusteesList[0]}
+            isActive={activeCardId === trusteesList[0].id}
+            onToggle={() => handleToggleCard(trusteesList[0].id)}
+            isDzongkha={isDzongkha}
+          />
         </div>
 
-        {/* 2. Fiduciary Board Trustees 6-Member Grid (#3 to #8) */}
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 space-y-1">
+        {/* 2. Key Trustees Large 3-Column Grid (#2 to #7) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto mb-12 sm:mb-16">
+          {trusteesList.slice(1, 7).map((member) => (
+            <FiduciaryMemberCard
+              key={member.id}
+              member={member}
+              isActive={activeCardId === member.id}
+              onToggle={() => handleToggleCard(member.id)}
+              isDzongkha={isDzongkha}
+            />
+          ))}
+        </div>
+
+        {/* 3. Director & Member Secretary Featured Anchor Card (#8 Mr. Gyambo Sithey, PhD) */}
+        <div className="max-w-xl mx-auto pt-8 border-t border-slate-200/80">
+          <div className="text-center mb-6 space-y-1">
             <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-800">
-              {isDzongkha ? "བཀོད་ཚོགས་ཀྱི་འཐུས་མི་ཚུ།" : "Board Trustees"}
+              {isDzongkha ? "ལས་འཛིན་དབུ་ཁྲིད། • རྩ་ཁྲིམས་ ༥.༣" : "Executive Directorate • Article 5.3"}
             </span>
             <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900">
-              {isDzongkha ? "བློ་གཏད་ཚོགས་མི་ཚུ།" : "Fiduciary Trustees"}
+              {isDzongkha ? "མདོ་ཆེན་དང་ ཚོགས་མི་དྲུང་ཆེན།" : "Director & Member Secretary"}
             </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {trusteesList.slice(2).map((member) => (
-              <FiduciaryMemberCard
-                key={member.id}
-                member={member}
-                isActive={activeCardId === member.id}
-                onToggle={() => handleToggleCard(member.id)}
-                isDzongkha={isDzongkha}
-              />
-            ))}
-          </div>
+          <FiduciaryMemberCard
+            member={trusteesList[7]}
+            isActive={activeCardId === trusteesList[7].id}
+            onToggle={() => handleToggleCard(trusteesList[7].id)}
+            isDzongkha={isDzongkha}
+          />
         </div>
       </section>
 
