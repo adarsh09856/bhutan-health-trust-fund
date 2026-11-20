@@ -17,6 +17,7 @@ import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { AdminTopBar } from "@/components/admin/admin-topbar";
+import { PublicPageSections } from "@/components/public/public-page-sections";
 
 function NotFoundComponent() {
   return (
@@ -170,6 +171,7 @@ function RootComponent() {
               {!isAdminRoute && <SiteHeader />}
               <main className="flex-1">
                 <Outlet />
+                {!isAdminRoute && <PublicPageSections />}
               </main>
               {!isAdminRoute && <SiteFooter />}
             </div>

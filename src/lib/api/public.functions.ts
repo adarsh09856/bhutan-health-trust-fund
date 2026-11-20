@@ -19,12 +19,81 @@ export const submitContactInquiry = createServerFn({ method: "POST" })
       subject: data.subject.trim(),
       message: data.message.trim(),
       status: "UNREAD",
+      channel: "WEB",
     });
 
     return {
       success: true,
       inquiryId: inquiry.id,
       message: "Thank you for reaching out. The BHTF Secretariat has received your message.",
+    };
+  });
+
+// --- Submit Membership Application (Institutional & Individual) ---
+export const submitMembershipApplication = createServerFn({ method: "POST" })
+  .validator(
+    z
+      .object({
+        type: z.enum(["INSTITUTIONAL", "INDIVIDUAL"]),
+        applicantName: z.string().trim().min(2, "Applicant / contact name is required").max(120),
+        email: z.string().trim().email("Valid email address is required").max(254),
+        phone: z.string().trim().min(6, "Valid phone number is required").max(32),
+        dzongkhag: z.string().trim().min(2).max(80),
+        organizationName: z.string().trim().max(160).optional(),
+        designation: z.string().trim().max(120).optional(),
+        notes: z.string().trim().max(1200).optional(),
+        website: z.string().max(200).optional(),
+      })
+      .superRefine((data, context) => {
+        if (data.type === "INSTITUTIONAL" && !data.organizationName?.trim()) {
+          context.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["organizationName"],
+            message: "Organization name is required for institutional applications.",
+          });
+        }
+      }),
+  )
+  .handler(async ({ data }) => {
+    const isInstitutional = data.type === "INSTITUTIONAL";
+    const referenceNo = `BHTF-MEM-${isInstitutional ? "INST" : "IND"}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    if (data.website?.trim()) {
+      return { success: true, referenceNo, message: "Your application has been received." };
+    }
+
+    const applicantLabel = isInstitutional ? data.organizationName!.trim() : data.applicantName;
+    const subject = `${isInstitutional ? "Institutional" : "Individual"} Membership Application — ${applicantLabel} — ${referenceNo}`;
+    const structuredMessage = [
+      `Membership reference: ${referenceNo}`,
+      `Application type: ${isInstitutional ? "Institutional" : "Individual"}`,
+      `Applicant / contact: ${data.applicantName}`,
+      isInstitutional ? `Organization: ${data.organizationName}` : null,
+      isInstitutional && data.designation ? `Contact role: ${data.designation}` : null,
+      `Email: ${data.email.toLowerCase()}`,
+      `Phone: ${data.phone}`,
+      `Dzongkhag: ${data.dzongkhag}`,
+      data.notes ? `Additional information: ${data.notes}` : null,
+      `Submitted: ${new Date().toISOString()}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const inquiry = await db.createInquiry({
+      name: data.applicantName,
+      email: data.email.trim().toLowerCase(),
+      subject,
+      message: structuredMessage,
+      status: "UNREAD",
+      channel: isInstitutional ? "MEMBERSHIP_INSTITUTIONAL" : "MEMBERSHIP_INDIVIDUAL",
+      loggedBy: "Public Membership Portal",
+    });
+
+    return {
+      success: true,
+      referenceNo,
+      inquiryId: inquiry.id,
+      applicantName: data.applicantName,
+      message: "Your membership application has been received by the Secretariat for review.",
     };
   });
 
@@ -47,15 +116,17 @@ export const getPublicPaymentConfig = createServerFn({ method: "GET" }).handler(
 
   return {
     razorpay: {
-      isEnabled: true,
+      isEnabled: Boolean(razorpay?.isEnabled && razorpay.keyId && razorpay.keySecret),
       isLiveMode: razorpay?.isLiveMode ?? false,
-      keyId: razorpay?.keyId || "rzp_test_bhtf_live",
+      keyId: razorpay?.isEnabled && razorpay.keyId && razorpay.keySecret ? razorpay.keyId : null,
     },
     rmaBfs: {
-      isEnabled: true,
-      isLiveMode: rmaBfs?.isLiveMode ?? true,
-      merchantId: rmaBfs?.merchantId || "BHTF_RMA_MERCHANT",
-      gatewayUrl: rmaBfs?.gatewayUrl || "https://bfs.rma.org.bt/bfsgateway",
+      // The current project has no verified RMA request signing or callback
+      // protocol. Do not advertise or accept this gateway until that is added.
+      isEnabled: false,
+      isLiveMode: false,
+      merchantId: rmaBfs?.merchantId || "",
+      gatewayUrl: rmaBfs?.gatewayUrl || "",
     },
     banking: {
       bobAccountNo: fin.bankAccountBOB || settingsMap["bob_account_no"] || "BHTF-BOB-XXXXXX",
@@ -72,10 +143,10 @@ export const getPublicPaymentConfig = createServerFn({ method: "GET" }).handler(
 export const initiateDonationPayment = createServerFn({ method: "POST" })
   .validator(
     z.object({
-      donorName: z.string().min(2, "Donor name is required"),
-      donorEmail: z.string().email("Valid email is required"),
-      donorPhone: z.string().optional(),
-      amountNu: z.number().min(50, "Minimum donation is Nu. 50"),
+      donorName: z.string().trim().min(2, "Donor name is required").max(120),
+      donorEmail: z.string().trim().email("Valid email is required").max(254),
+      donorPhone: z.string().trim().max(32).optional(),
+      amountNu: z.number().finite().min(50, "Minimum donation is Nu. 50").max(100_000_000),
       paymentMethod: z.enum([
         "MBOB",
         "BNB_PAY",
@@ -84,12 +155,44 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
         "RAZORPAY",
         "INTERNATIONAL_CARD",
       ]),
-      message: z.string().optional(),
+      message: z.string().max(2000).optional(),
       isAnonymous: z.boolean().default(false),
     }),
   )
   .handler(async ({ data }) => {
     const refNo = `BHTF-DON-${crypto.randomInt(100000, 1000000)}`;
+
+    if (data.paymentMethod === "RMA_GATEWAY") {
+      throw new Error("RMA checkout is unavailable until the bank's signed payment protocol is configured.");
+    }
+
+    let razorpayOrderId: string | null = null;
+    let razorpayKeyId: string | null = null;
+    if (data.paymentMethod === "RAZORPAY" || data.paymentMethod === "INTERNATIONAL_CARD") {
+      const gw = await db.getPaymentGateway("RAZORPAY");
+      if (!gw?.isEnabled || !gw.keyId || !gw.keySecret) {
+        throw new Error("Card checkout is not configured. Please use a bank transfer or contact the Secretariat.");
+      }
+      const authHeader = `Basic ${Buffer.from(`${gw.keyId}:${gw.keySecret}`).toString("base64")}`;
+      const response = await fetch("https://api.razorpay.com/v1/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: authHeader },
+        body: JSON.stringify({
+          amount: Math.round(data.amountNu * 100),
+          currency: "INR",
+          receipt: refNo,
+          notes: { referenceNo: refNo, donorEmail: data.donorEmail, donorName: data.donorName },
+        }),
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!response.ok) throw new Error("The card payment provider could not create an order. No pledge was recorded.");
+      const order = await response.json();
+      if (typeof order.id !== "string" || !order.id.startsWith("order_")) {
+        throw new Error("The card payment provider returned an invalid order. No pledge was recorded.");
+      }
+      razorpayOrderId = order.id;
+      razorpayKeyId = gw.keyId;
+    }
 
     const donation = await db.createDonation({
       referenceNo: refNo,
@@ -102,75 +205,18 @@ export const initiateDonationPayment = createServerFn({ method: "POST" })
       status: "PENDING",
       message: data.message?.trim(),
       isAnonymous: data.isAnonymous,
+      gatewaySessionId: razorpayOrderId,
     });
-
-    // 1. RMA Payment Gateway (Bhutan Financial Switch)
-    if (data.paymentMethod === "RMA_GATEWAY") {
-      const gw = await db.getPaymentGateway("RMA_BFS");
-      const orderNo = `BFS-ORD-${crypto.randomInt(100000, 999999)}`;
-      return {
-        success: true,
-        referenceNo: refNo,
-        amountNu: data.amountNu,
-        paymentMethod: data.paymentMethod,
-        rmaPayload: {
-          orderNo,
-          amountNu: data.amountNu,
-          merchantId: gw?.merchantId || "BHTF-ROYAL-MERCHANT",
-          terminalId: "BHTF-BFS-TERM-01",
-          checksum: "rma-bfs-verified-checksum",
-          gatewayUrl: gw?.gatewayUrl || "https://bfs.rma.org.bt/payment/process",
-        },
-      };
-    }
 
     // 2. Razorpay / International Card
     if (data.paymentMethod === "RAZORPAY" || data.paymentMethod === "INTERNATIONAL_CARD") {
-      const gw = await db.getPaymentGateway("RAZORPAY");
-      let razorpayOrderId = `order_bob_${crypto.randomInt(100000, 999999)}`;
-      const keyId = gw?.keyId || "rzp_test_bhtf_sovereign";
-
-      if (gw?.isEnabled && gw?.keyId && gw?.keySecret) {
-        try {
-          const authHeader = `Basic ${Buffer.from(`${gw.keyId}:${gw.keySecret}`).toString("base64")}`;
-          const res = await fetch("https://api.razorpay.com/v1/orders", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: authHeader,
-            },
-            body: JSON.stringify({
-              amount: Math.round(data.amountNu * 100), // in subunits (paisa/chhertum)
-              currency: "INR",
-              receipt: refNo,
-              notes: {
-                referenceNo: refNo,
-                donorEmail: data.donorEmail,
-                donorName: data.donorName,
-              },
-            }),
-          });
-
-          if (res.ok) {
-            const orderData = await res.json();
-            razorpayOrderId = orderData.id;
-          }
-        } catch {
-          // Keep mock order ID for seamless testing
-        }
-      }
-
-      await db.updateDonationPayment(refNo, {
-        gatewaySessionId: razorpayOrderId,
-      });
-
       return {
         success: true,
         referenceNo: refNo,
         amountNu: data.amountNu,
         paymentMethod: data.paymentMethod,
         razorpayOrderId,
-        razorpayKeyId: keyId,
+        razorpayKeyId,
         currency: "INR",
         createdAt: donation.createdAt,
       };
@@ -229,15 +275,27 @@ export const verifyRazorpayPayment = createServerFn({ method: "POST" })
     ) {
       throw new Error("This donation already has a different verified payment.");
     }
-    const paymentResponse = await fetch(`https://api.razorpay.com/v1/payments/${encodeURIComponent(data.razorpayPaymentId)}`, {
-      headers: { Authorization: `Basic ${Buffer.from(`${gw.keyId}:${secret}`).toString("base64")}` },
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!paymentResponse.ok) throw new Error("The payment provider could not confirm this payment.");
+    const paymentResponse = await fetch(
+      `https://api.razorpay.com/v1/payments/${encodeURIComponent(data.razorpayPaymentId)}`,
+      {
+        headers: {
+          Authorization: `Basic ${Buffer.from(`${gw.keyId}:${secret}`).toString("base64")}`,
+        },
+        signal: AbortSignal.timeout(10000),
+      },
+    );
+    if (!paymentResponse.ok)
+      throw new Error("The payment provider could not confirm this payment.");
     const payment = await paymentResponse.json();
-    if (payment.status !== "captured" || payment.order_id !== donation.gatewaySessionId ||
-        payment.amount !== Math.round(donation.amountNu * 100) || payment.currency !== "INR") {
-      throw new Error("Payment has not been captured for the expected order and amount. Your pledge remains pending.");
+    if (
+      payment.status !== "captured" ||
+      payment.order_id !== donation.gatewaySessionId ||
+      payment.amount !== Math.round(donation.amountNu * 100) ||
+      payment.currency !== "INR"
+    ) {
+      throw new Error(
+        "Payment has not been captured for the expected order and amount. Your pledge remains pending.",
+      );
     }
 
     const updated = await db.updateDonationPayment(data.referenceNo, {
@@ -268,23 +326,8 @@ export const verifyRmaBfsPayment = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    const updated = await db.updateDonationPayment(data.referenceNo, {
-      status: "COMPLETED",
-      gatewayTransactionId: data.bfsTxnId || `BFS-TXN-${Date.now()}`,
-      gatewaySessionId: data.orderNo,
-      gatewayStatus: "AUTHORIZED_BFS",
-      paymentMetadata: JSON.stringify({
-        channel: "RMA_BFS",
-        bankName: data.bankName || "Bank of Bhutan",
-        verifiedAt: new Date().toISOString(),
-      }),
-      completedAt: new Date(),
-    });
-
-    return {
-      success: true,
-      donation: updated,
-    };
+    void data;
+    throw new Error("RMA payment confirmation is unavailable until a signed bank callback is configured.");
   });
 
 // --- Submit Bank Journal / Remittance Verification ---
@@ -347,17 +390,25 @@ export const getPublicNewsBySlug = createServerFn({ method: "GET" })
 // --- Get Public Reports ---
 export const getPublicReports = createServerFn({ method: "GET" }).handler(async () => {
   const reports = await db.getAllReports();
-  return reports.map(report => {
+  return reports.map((report) => {
     let fileAvailable = /^https?:\/\//i.test(report.fileUrl);
     if (report.fileUrl.startsWith("/") && !report.fileUrl.startsWith("//")) {
       try {
-        const fileName = decodeURIComponent(new URL(report.fileUrl, "http://localhost").pathname).slice(1);
-        fileAvailable = ["public", ".output/public"].some(directory => {
+        const fileName = decodeURIComponent(
+          new URL(report.fileUrl, "http://localhost").pathname,
+        ).slice(1);
+        fileAvailable = ["public", ".output/public"].some((directory) => {
           const root = path.resolve(process.cwd(), directory);
           const target = path.resolve(root, fileName);
-          return target.startsWith(`${root}${path.sep}`) && fs.existsSync(target) && fs.statSync(target).isFile();
+          return (
+            target.startsWith(`${root}${path.sep}`) &&
+            fs.existsSync(target) &&
+            fs.statSync(target).isFile()
+          );
         });
-      } catch { fileAvailable = false; }
+      } catch {
+        fileAvailable = false;
+      }
     }
     return { ...report, fileAvailable };
   });
@@ -386,20 +437,33 @@ export const lookupDonation = createServerFn({ method: "POST" })
   .validator(
     z.object({
       referenceNo: z.string().min(3, "Reference number is required"),
-      donorEmail: z.string().email("Valid donor email is required"),
+      donorEmail: z.string().optional(),
     }),
   )
   .handler(async ({ data }) => {
     const donation = await db.findDonationByReference(data.referenceNo.trim());
 
+    if (!donation) {
+      return {
+        success: false as const,
+        error:
+          "No contribution record found matching Reference Number '" +
+          data.referenceNo.trim() +
+          "'. Please verify the reference number on your deposit voucher or pledge confirmation.",
+      };
+    }
+
     if (
-      !donation ||
+      data.donorEmail &&
+      data.donorEmail.trim() &&
       donation.donorEmail.toLowerCase().trim() !== data.donorEmail.toLowerCase().trim()
     ) {
       return {
         success: false as const,
         error:
-          "No contribution record found matching that Reference Number and Donor Email. Please verify both details.",
+          "The email provided does not match the record on file for Reference Number '" +
+          data.referenceNo.trim() +
+          "'.",
       };
     }
 

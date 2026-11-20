@@ -23,7 +23,7 @@ export const Route = createFileRoute("/news/announcements")({
       {
         name: "description",
         content:
-          "Official public notices, Board of Trustees resolutions, procurement circulars, and executive press releases from the Bhutan Health Trust Fund.",
+          "Official public notices, Board of Directors resolutions, procurement circulars, and executive press releases from the Bhutan Health Trust Fund.",
       },
     ],
   }),
@@ -47,19 +47,19 @@ const officialAnnouncements: AnnouncementRecord[] = [
   {
     id: "ann-2025-01",
     refCode: "BHTF/SEC/RES/2025/12",
-    title: "Board of Trustees Resolution: Approval of FY 2025–2026 National Medicine Allocations",
+    title: "Board of Directors Resolution: Approval of FY 2025–2026 National Medicine Allocations",
     category: "Board Resolution",
     date: "October 01, 2025",
     isUrgent: true,
     summary:
-      "The Board of Trustees formally approves the disbursement ceiling of Nu. 557.734 Million for the procurement of 438 essential modern medicines, 110 traditional remedies, and four routine vaccines.",
+      "The Board of Directors formally approves the disbursement ceiling of Nu. 557.734 Million for the procurement of 438 essential modern medicines, 110 traditional remedies, and four routine vaccines.",
     content: [
-      "In its 48th statutory session, the Board of Trustees ratified the quarterly Window Financing schedule submitted by the Ministry of Health.",
+      "In its 48th statutory session, the Board of Directors ratified the quarterly Window Financing schedule submitted by the Ministry of Health.",
       "100% of funding is generated from endowment investments with zero impairment of the core Nu. 4.8B ring-fenced principal.",
       "Priority procurement authorization granted for alpine solar cold-chain replacements across northern district hospitals.",
     ],
     fileSize: "1.4 MB",
-    authority: "Board of Trustees Secretariat",
+    authority: "Board of Directors Secretariat",
   },
   {
     id: "ann-2025-02",
@@ -71,7 +71,7 @@ const officialAnnouncements: AnnouncementRecord[] = [
       "Guidance for corporate donors and citizens claiming statutory tax deductions under Income Tax Act Section 44 and Royal Charter Article 7.8.",
     content: [
       "All direct donations to the Bhutan Health Trust Fund qualify for up to 5% taxable income deduction upon presentation of official BHTF receipt.",
-      "Every Nu. 1 contributed by private benefactors is matched 1:1 by the Royal Government of Bhutan directly into the endowment principal.",
+      "Every Nu. 1 contributed by private benefactors is deposited directly into the endowment principal.",
       "Digital tax receipts can be instantly verified through the BHTF Donation Tracking Portal.",
     ],
     fileSize: "850 KB",
@@ -140,7 +140,7 @@ function AnnouncementsPage() {
       <PageHero
         badge="Official Public Gazette"
         title="Official Announcements & Board Circulars"
-        subtitle="Authoritative circulars, ministerial notifications, Board of Trustees resolutions, and statutory compliance advisories."
+        subtitle="Authoritative circulars, ministerial notifications, Board of Directors resolutions, and statutory compliance advisories."
         breadcrumb={[
           { label: "Home", to: "/" },
           { label: "News & Events", to: "/news" },
@@ -156,7 +156,7 @@ function AnnouncementsPage() {
           studioHref="/admin/news"
           initialData={{
             title: "Official Announcements & Board Circulars",
-            subtitle: "Authoritative circulars, ministerial notifications, Board of Trustees resolutions, and statutory compliance advisories.",
+            subtitle: "Authoritative circulars, ministerial notifications, Board of Directors resolutions, and statutory compliance advisories.",
             badge: "Official Public Gazette",
           }}
         />

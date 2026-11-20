@@ -35,11 +35,11 @@ const ABOUT_SUB_TABS: SubTab[] = [
   {
     to: "/about/trustees",
     labelKey: "capsule_trustees",
-    label: "Board of Trustees",
+    label: "Board of Directors",
     midLabelKey: "capsule_trustees_short",
-    midLabel: "Trustees",
+    midLabel: "Directors",
     shortLabelKey: "capsule_trustees_short",
-    shortLabel: "Trustees",
+    shortLabel: "Directors",
     icon: ShieldCheck,
   },
   {

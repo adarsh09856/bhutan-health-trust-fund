@@ -79,8 +79,8 @@ function AdminSetupPage() {
         },
       });
 
-      if (res.success && res.user && res.token) {
-        login(res.user, res.token);
+      if (res.success && res.user) {
+        login(res.user);
         toast.success(
           "Initial Super Administrator successfully provisioned! Redirecting to CRM...",
         );

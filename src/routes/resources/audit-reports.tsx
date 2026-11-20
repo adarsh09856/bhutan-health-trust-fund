@@ -75,7 +75,7 @@ const auditReportsArchive: AuditReportRecord[] = [
     releaseDate: "June 2024",
     refCode: "RAA/BHTF/AR-2024/03",
     description:
-      "Statutory verification of the 1:1 RGOB Sovereign Matching grant, bank interest income reconciliations with the Bank of Bhutan, and Window Financing transfers to the Ministry of Health.",
+      "Statutory verification of endowment investments, bank interest income reconciliations with the Bank of Bhutan, and Window Financing transfers to the Ministry of Health.",
     certifiedFigures: [
       { label: "Audited Principal", value: "Nu. 4,520,120,400.00" },
       { label: "Procurement Outflow", value: "Nu. 512,400,000.00" },

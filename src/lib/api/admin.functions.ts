@@ -3,6 +3,7 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
+import { randomUUID } from "node:crypto";
 import { db } from "../db";
 import { defaultCorePages } from "../db/default-pages";
 import { requireAdminFromRequest, requireSuperAdminFromRequest } from "../auth.server";
@@ -249,6 +250,87 @@ export const getAdminInquiries = createServerFn({ method: "GET" }).handler(async
   await requireAdminFromRequest();
   return await db.getAllInquiries();
 });
+
+export const getAdminMembershipApplications = createServerFn({ method: "GET" }).handler(
+  async () => {
+    await requireAdminFromRequest();
+    return (await db.getAllInquiries()).filter(
+      (inquiry) =>
+        inquiry.channel?.startsWith("MEMBERSHIP") ||
+        inquiry.subject.toLowerCase().includes("membership application"),
+    );
+  },
+);
+
+const membershipApplicationInput = z.object({
+  type: z.enum(["INDIVIDUAL", "INSTITUTIONAL"]),
+  applicantName: z.string().trim().min(2).max(120),
+  organizationName: z.string().trim().max(160).optional(),
+  designation: z.string().trim().max(120).optional(),
+  email: z.string().trim().email().max(254),
+  phone: z.string().trim().min(6).max(32),
+  dzongkhag: z.string().trim().min(2).max(80),
+  notes: z.string().trim().max(1200).optional(),
+});
+
+function buildMembershipInquiry(
+  data: z.infer<typeof membershipApplicationInput>,
+  referenceNo: string,
+) {
+  const institutional = data.type === "INSTITUTIONAL";
+  if (institutional && !data.organizationName?.trim()) {
+    throw new Error("Organization name is required for institutional applications.");
+  }
+  const subject = `${institutional ? "Institutional" : "Individual"} Membership Application — ${institutional ? data.organizationName : data.applicantName} — ${referenceNo}`;
+  const message = [
+    `Membership reference: ${referenceNo}`,
+    `Application type: ${institutional ? "Institutional" : "Individual"}`,
+    `Applicant / contact: ${data.applicantName}`,
+    institutional ? `Organization: ${data.organizationName}` : null,
+    institutional && data.designation ? `Contact role: ${data.designation}` : null,
+    `Email: ${data.email.toLowerCase()}`,
+    `Phone: ${data.phone}`,
+    `Dzongkhag: ${data.dzongkhag}`,
+    data.notes ? `Additional information: ${data.notes}` : null,
+    `Recorded by Secretariat: ${new Date().toISOString()}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+  return {
+    name: data.applicantName,
+    email: data.email.toLowerCase(),
+    subject,
+    message,
+    channel: institutional ? "MEMBERSHIP_INSTITUTIONAL" : "MEMBERSHIP_INDIVIDUAL",
+  } as const;
+}
+
+export const createAdminMembershipApplication = createServerFn({ method: "POST" })
+  .validator(membershipApplicationInput)
+  .handler(async ({ data }) => {
+    await requireAdminFromRequest();
+    const referenceNo = `BHTF-MEM-${data.type === "INSTITUTIONAL" ? "INST" : "IND"}-${randomUUID().slice(0, 8).toUpperCase()}`;
+    const inquiry = await db.createInquiry({
+      ...buildMembershipInquiry(data, referenceNo),
+      status: "UNREAD",
+      loggedBy: "BHTF Secretariat Admin",
+    });
+    return inquiry;
+  });
+
+export const updateAdminMembershipApplication = createServerFn({ method: "POST" })
+  .validator(membershipApplicationInput.extend({ id: z.number() }))
+  .handler(async ({ data }) => {
+    await requireAdminFromRequest();
+    const current = (await db.getAllInquiries()).find((item) => item.id === data.id);
+    if (!current || !current.channel?.startsWith("MEMBERSHIP")) {
+      throw new Error("Membership application was not found.");
+    }
+    const ref =
+      current.message.match(/BHTF-MEM-[A-Z]+-[A-Z0-9-]+/)?.[0] ||
+      `BHTF-MEM-${data.type === "INSTITUTIONAL" ? "INST" : "IND"}-${current.id}`;
+    return await db.updateInquiryDetails(data.id, buildMembershipInquiry(data, ref));
+  });
 
 export const createAdminInquiry = createServerFn({ method: "POST" })
   .validator(
@@ -755,11 +837,14 @@ export const updateAdminUser = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const admin = await requireSuperAdminFromRequest();
     const users = await db.getAllUsers();
-    const current = users.find(user => user.id === data.id);
+    const current = users.find((user) => user.id === data.id);
     if (!current) throw new Error("User was not found.");
-    if (current.role === "SUPER_ADMIN" && current.isActive &&
-        (data.role === "EDITOR" || data.isActive === false) &&
-        users.filter(user => user.role === "SUPER_ADMIN" && user.isActive).length <= 1) {
+    if (
+      current.role === "SUPER_ADMIN" &&
+      current.isActive &&
+      (data.role === "EDITOR" || data.isActive === false) &&
+      users.filter((user) => user.role === "SUPER_ADMIN" && user.isActive).length <= 1
+    ) {
       throw new Error("Keep at least one active Super Administrator.");
     }
     const updateData: any = {};
@@ -787,7 +872,12 @@ export const updateAdminUser = createServerFn({ method: "POST" })
       entity: "USER",
       entityId: String(data.id),
       details: `Updated parameters: ${Object.keys(updateData).join(", ")}`,
-      newValue: JSON.stringify({ name: updateData.name, role: updateData.role, isActive: updateData.isActive, passwordChanged: Boolean(data.password) }),
+      newValue: JSON.stringify({
+        name: updateData.name,
+        role: updateData.role,
+        isActive: updateData.isActive,
+        passwordChanged: Boolean(data.password),
+      }),
       reason: data.reason,
     });
 
@@ -1575,25 +1665,25 @@ export const saveQuickSectionEdit = createServerFn({ method: "POST" })
   .validator(
     z.object({
       pageSlug: z.string(),
-      sectionId: z.string(),
+      sectionId: z.string().min(1).max(120),
       updates: z.object({
-        title: z.string().optional(),
-        subtitle: z.string().optional(),
-        badge: z.string().optional(),
-        content: z.string().optional(),
-        dzongkhaText: z.string().optional(),
-        primaryCtaText: z.string().optional(),
-        primaryCtaUrl: z.string().optional(),
-        secondaryCtaText: z.string().optional(),
-        secondaryCtaUrl: z.string().optional(),
-        bgVariant: z.string().optional(),
-        backgroundImage: z.string().optional(),
-        items: z.array(z.any()).optional(),
+        title: z.string().max(300).optional(),
+        subtitle: z.string().max(1000).optional(),
+        badge: z.string().max(200).optional(),
+        content: z.string().max(20000).optional(),
+        dzongkhaText: z.string().max(10000).optional(),
+        primaryCtaText: z.string().max(150).optional(),
+        primaryCtaUrl: z.string().max(2048).optional(),
+        secondaryCtaText: z.string().max(150).optional(),
+        secondaryCtaUrl: z.string().max(2048).optional(),
+        bgVariant: z.string().max(80).optional(),
+        backgroundImage: z.string().max(2048).optional(),
+        items: z.array(z.record(z.string(), z.unknown())).max(100).optional(),
       }),
     }),
   )
   .handler(async ({ data }) => {
-    await requireAdminFromRequest();
+    const admin = await requireAdminFromRequest();
     const slug = data.pageSlug.trim().toLowerCase();
 
     // Check if this is a site setting edit
@@ -1610,7 +1700,7 @@ export const saveQuickSectionEdit = createServerFn({ method: "POST" })
     }
 
     // Load existing page from DB
-    let page = await db.getPageBySlug(slug);
+    const page = await db.getPageBySlug(slug);
     let sections: any[] = [];
     let pageTitle = slug;
 
@@ -1664,7 +1754,7 @@ export const saveQuickSectionEdit = createServerFn({ method: "POST" })
     // Record audit log
     try {
       await db.logAuditEvent({
-        userEmail: "admin@bhtf.bt",
+        userEmail: admin.email,
         action: "UPDATE",
         entity: "PAGE_SECTION",
         entityId: `${slug}/${data.sectionId}`,
@@ -1695,7 +1785,19 @@ export const uploadAsset = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const admin = await requireAdminFromRequest();
     const timestamp = Date.now();
-    const allowedExtensions = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif", ".svg", ".pdf", ".doc", ".docx", ".zip"]);
+    const allowedExtensions = new Set([
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".gif",
+      ".webp",
+      ".avif",
+      ".svg",
+      ".pdf",
+      ".doc",
+      ".docx",
+      ".zip",
+    ]);
     if (!allowedExtensions.has(path.extname(data.fileName).toLowerCase())) {
       throw new Error("Choose an image, PDF, Word document or ZIP archive.");
     }
@@ -1712,8 +1814,12 @@ export const uploadAsset = createServerFn({ method: "POST" })
     if (!sizeBytes || sizeBytes > 50 * 1024 * 1024) {
       throw new Error("Upload must contain a file of at most 50MB.");
     }
-    if (path.extname(data.fileName).toLowerCase() === ".svg" &&
-        /<\s*(script|foreignObject)|\bon\w+\s*=|javascript:|<!DOCTYPE|<!ENTITY/i.test(buffer.toString("utf8"))) {
+    if (
+      path.extname(data.fileName).toLowerCase() === ".svg" &&
+      /<\s*(script|foreignObject)|\bon\w+\s*=|javascript:|<!DOCTYPE|<!ENTITY/i.test(
+        buffer.toString("utf8"),
+      )
+    ) {
       throw new Error("SVG uploads must not contain scripts or active content.");
     }
 

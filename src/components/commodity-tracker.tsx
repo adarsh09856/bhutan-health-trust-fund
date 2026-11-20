@@ -62,7 +62,7 @@ const commodityCategories: CommodityCategory[] = [
     leadTime: "Quarterly Scheduled",
     qualityStandard: "National Essential Drugs List (NEDL)",
     description:
-      "Uninterrupted procurement of 438 essential modern medicines (100% of NEDL) and 110 indigenous gSo-ba Rig-pa traditional remedies (including 65 core formulations).",
+      "Uninterrupted procurement of 438 essential modern medicines (100% of NEDL) and 110 indigenous so-wai rigpa traditional remedies (including 65 core formulations).",
     keyItems: [
       "Broad-Spectrum Antibiotics (Amoxicillin, Ceftriaxone)",
       "Cardiovascular & Antihypertensives (Amlodipine, Enalapril)",

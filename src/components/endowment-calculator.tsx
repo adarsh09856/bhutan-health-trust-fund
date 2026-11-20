@@ -13,8 +13,7 @@ import {
 export function EndowmentCalculator() {
   const [pledgeAmount, setPledgeAmount] = useState(2500);
 
-  const matchedAmount = pledgeAmount;
-  const totalValue = pledgeAmount * 2;
+  const totalValue = pledgeAmount;
 
   // Real-world healthcare impact approximations
   const vaccineDoses = Math.floor(totalValue / 50); // ~Nu. 50 per vaccine dose
@@ -27,14 +26,14 @@ export function EndowmentCalculator() {
       <div className="relative z-10 max-w-3xl space-y-2">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF8F3] border border-amber-500/30 text-amber-800 text-xs font-semibold">
           <Sparkles className="h-3.5 w-3.5 text-amber-600 fill-amber-500" />
-          <span>Statutory 1:1 RGOB Sovereign Matching Multiplier</span>
+          <span>Sovereign Healthcare Endowment • Direct Impact</span>
         </div>
         <h3 className="font-serif text-2xl sm:text-4xl font-normal text-slate-900 tracking-tight">
-          Double Your Impact with Royal Government Matching
+          Calculate Your Healthcare Impact
         </h3>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-          Under the Royal Charter, every Ngultrum pledged to the Bhutan Health Trust Fund is matched
-          1:1 by the Royal Government of Bhutan to build a permanent, ring-fenced healthcare shield.
+          Under the Royal Charter, every Ngultrum pledged to the Bhutan Health Trust Fund directly finances
+          essential medicines and vaccines to build a permanent, ring-fenced healthcare shield.
         </p>
       </div>
 
@@ -82,32 +81,23 @@ export function EndowmentCalculator() {
             </div>
           </div>
 
-          {/* 1:1 Matching Equation Display */}
-          <div className="grid grid-cols-3 gap-3 text-center">
+          {/* Impact Matrix Display */}
+          <div className="grid grid-cols-2 gap-3 text-center">
             <div className="bg-white p-4 rounded-xl border border-slate-200/80">
               <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block font-sans">
-                Your Pledge
+                Your Contribution
               </span>
               <span className="font-serif text-base sm:text-lg font-light text-slate-900 mt-1 block">
                 Nu. {pledgeAmount.toLocaleString()}
               </span>
             </div>
 
-            <div className="bg-[#FAF8F3] p-4 rounded-xl border border-amber-300/60">
-              <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider block font-sans">
-                + RGOB Match
-              </span>
-              <span className="font-serif text-base sm:text-lg font-normal text-amber-700 mt-1 block">
-                Nu. {matchedAmount.toLocaleString()}
-              </span>
-            </div>
-
             <div className="bg-[#0B1F1A] text-white p-4 rounded-xl border border-amber-400/30">
               <span className="text-[11px] font-medium text-emerald-300 uppercase tracking-wider block font-sans">
-                = Total Impact
+                Direct Impact
               </span>
               <span className="font-serif text-base sm:text-lg font-light text-amber-300 mt-1 block">
-                Nu. {totalValue.toLocaleString()}
+                100% Ring-Fenced
               </span>
             </div>
           </div>
@@ -124,8 +114,8 @@ export function EndowmentCalculator() {
                 What Nu. {totalValue.toLocaleString()} Procures:
               </h4>
             </div>
-            <div className="h-10 w-10 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30 grid place-items-center font-bold text-xs font-mono">
-              2X
+            <div className="h-10 px-3 rounded-xl bg-amber-400/15 text-amber-300 border border-amber-400/30 grid place-items-center font-bold text-xs font-mono">
+              100%
             </div>
           </div>
 

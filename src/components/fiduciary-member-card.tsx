@@ -1,5 +1,4 @@
 import React from "react";
-import { Sparkles, ArrowRight, ShieldCheck, MapPin } from "lucide-react";
 
 export interface FiduciaryMember {
   id: string;
@@ -17,6 +16,7 @@ export interface FiduciaryMember {
   tags: string[];
   tagsDz?: string[];
   photo: string;
+  fallbackPhoto?: string;
   theme?: "emerald" | "amber";
 }
 
@@ -44,23 +44,33 @@ export function FiduciaryMemberCard({
       : "border-slate-200/90 hover:border-emerald-500/60";
 
   const hoverBorderColor = isAmber ? "border-amber-600/50" : "border-emerald-600/50";
-  const badgeBg = isAmber ? "bg-amber-50 text-amber-900 border-amber-200/80" : "bg-emerald-50 text-emerald-900 border-emerald-200/80";
   const roleTextColor = isAmber ? "text-amber-800" : "text-emerald-800";
-  const dotColor = isAmber ? "bg-amber-600" : "bg-emerald-600";
-  const tagBg = isAmber ? "bg-amber-50/80 text-amber-950 border-amber-200/60" : "bg-emerald-50/80 text-emerald-950 border-emerald-200/60";
-  const arrowColor = isAmber ? "text-amber-800 group-hover:text-amber-950" : "text-emerald-800 group-hover:text-emerald-950";
+  const tagBg = isAmber
+    ? "bg-amber-50/80 text-amber-950 border-amber-200/60"
+    : "bg-emerald-50/80 text-emerald-950 border-emerald-200/60";
 
   const displayName = isDzongkha && member.nameDz ? member.nameDz : member.name;
   const displayRole = isDzongkha && member.roleDz ? member.roleDz : member.role;
-  const displayOrg = isDzongkha && member.organizationDz ? member.organizationDz : member.organization;
-  const displayBadge = isDzongkha && member.badgeDz ? member.badgeDz : member.badge;
+  const displayOrg =
+    isDzongkha && member.organizationDz ? member.organizationDz : member.organization;
   const displayDesc = isDzongkha && member.descDz ? member.descDz : member.desc;
   const displayTags = isDzongkha && member.tagsDz ? member.tagsDz : member.tags;
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onToggle();
+    }
+  };
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-expanded={isActive}
+      aria-label={`${displayName}: ${isActive ? "hide details" : "show details"}`}
       onClick={onToggle}
-      className={`group relative w-full rounded-3xl bg-white border-2 transition-all duration-300 shadow-sm hover:shadow-2xl overflow-hidden cursor-pointer flex flex-col ${borderColor}`}
+      onKeyDown={handleKeyDown}
+      className={`group relative w-full rounded-3xl bg-white border-2 transition-all duration-300 shadow-sm hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700 overflow-hidden cursor-pointer flex flex-col ${borderColor}`}
       style={{ minHeight: "530px" }}
     >
       {/* Front Face: Large centered uncropped photo + clean footer */}
@@ -76,37 +86,32 @@ export function FiduciaryMemberCard({
             }`}
           />
 
+          <span className="absolute left-4 top-4 z-20 inline-flex size-8 items-center justify-center rounded-full bg-slate-900/90 font-mono text-xs font-bold text-white shadow-md ring-2 ring-white">
+            {member.orderNumber}
+          </span>
+
           {/* Centered, completely uncropped photo */}
           <img
             src={member.photo}
             alt={displayName}
             className="w-full h-full object-contain object-center drop-shadow-md group-hover:scale-105 transition-transform duration-500 relative z-10"
             loading="lazy"
+            onError={(event) => {
+              const image = event.currentTarget;
+              if (member.fallbackPhoto && image.dataset.fallbackApplied !== "true") {
+                image.dataset.fallbackApplied = "true";
+                image.src = member.fallbackPhoto;
+              }
+            }}
           />
-
-          {/* Order Number & Role Badge */}
-          <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-900/85 backdrop-blur-sm text-white font-mono text-xs font-bold shadow-sm">
-              {member.orderNumber}
-            </span>
-            <span className={`text-[11px] font-mono font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm border shadow-2xs ${badgeBg}`}>
-              {displayBadge}
-            </span>
-          </div>
-
-          {/* Interactive Cue Badge */}
-          <div className="absolute bottom-3 right-3 z-10 opacity-80 group-hover:opacity-100 transition-opacity">
-            <span className={`inline-flex items-center gap-1 text-[11px] font-mono font-semibold bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-full border shadow-2xs ${badgeBg}`}>
-              <Sparkles className={`w-3 h-3 ${isAmber ? "text-amber-600" : "text-emerald-600"}`} />
-              <span>{isDzongkha ? "ཁ་གསལ་གཟིགས།" : "Hover for Mandate"}</span>
-            </span>
-          </div>
         </div>
 
         {/* Front Footer Info */}
         <div className="p-5 sm:p-6 bg-white border-t border-slate-100 flex-1 flex flex-col justify-between">
           <div>
-            <span className={`text-[11px] font-mono uppercase tracking-widest font-bold block mb-1 ${roleTextColor}`}>
+            <span
+              className={`text-[11px] font-mono uppercase tracking-widest font-bold block mb-1 ${roleTextColor}`}
+            >
               {displayOrg}
             </span>
             <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900 group-hover:text-slate-950 transition-colors leading-tight">
@@ -116,14 +121,6 @@ export function FiduciaryMemberCard({
               {displayRole}
             </p>
           </div>
-
-          <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-            <span className="font-mono text-[11px]">BHTF Governance</span>
-            <span className={`font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 ${arrowColor}`}>
-              <span>{isDzongkha ? "ལོ་རྒྱུས་རྒྱས་པ།" : "View Mandate"}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </span>
-          </div>
         </div>
       </div>
 
@@ -132,30 +129,18 @@ export function FiduciaryMemberCard({
         className={`absolute inset-0 bg-white/98 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 z-20 rounded-3xl border-2 ${hoverBorderColor} shadow-2xl ${
           isActive
             ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+            : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-visible:opacity-100 group-focus-visible:pointer-events-auto"
         }`}
       >
-        {/* Top Header */}
+        {/* Mandate details */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <span className={`inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${badgeBg}`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
-              {displayBadge}
-            </span>
-            <span className="font-mono text-xs text-slate-400 font-bold">
-              #{member.orderNumber}
-            </span>
-          </div>
+          <span className="font-mono text-xs font-bold text-slate-400">#{member.orderNumber}</span>
           <div>
             <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900 leading-snug">
               {displayName}
             </h3>
-            <p className={`text-xs sm:text-sm font-bold mt-0.5 ${roleTextColor}`}>
-              {displayRole}
-            </p>
-            <p className="text-xs text-slate-500 font-medium">
-              {displayOrg}
-            </p>
+            <p className={`text-xs sm:text-sm font-bold mt-0.5 ${roleTextColor}`}>{displayRole}</p>
+            <p className="text-xs text-slate-500 font-medium">{displayOrg}</p>
           </div>
         </div>
 
@@ -183,23 +168,11 @@ export function FiduciaryMemberCard({
           </div>
         </div>
 
-        {/* Bottom: Organization & Tap Close */}
-        <div className="space-y-2 pt-1 text-xs text-slate-600">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 text-slate-700 font-medium">
-              <ShieldCheck className={`w-3.5 h-3.5 ${roleTextColor} shrink-0`} />
-              <span className="text-[11px] font-mono">Fiduciary Governance</span>
-            </div>
-            <span className="font-mono text-[11px] text-slate-400">BHTF Table {member.theme === "amber" ? "1.2" : "1.1"}</span>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-100">
-            <span>Bhutan Health Trust Fund</span>
-            <span className="text-slate-400 font-mono text-[10px]">
-              {isDzongkha ? "(ཨེབ་སྟེ་བསྡམས)" : "(Tap to close)"}
-            </span>
-          </div>
-        </div>
+        <p className="text-[11px] text-slate-500">
+          {isDzongkha
+            ? "ཞིབ་ཕྲ་བསྡམ་པའི་དོན་ལུ་སླར་ཡང་ཨེབ།"
+            : "Select this card again to close details."}
+        </p>
       </div>
     </div>
   );

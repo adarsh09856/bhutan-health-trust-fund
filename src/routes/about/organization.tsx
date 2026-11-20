@@ -1,34 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/page-hero";
-import {
-  ShieldCheck,
-  Target,
-  Eye,
-  Heart,
-  Landmark,
-  Scale,
-  Building,
-  CheckCircle2,
-  FileText,
-  Lock,
-  Coins,
-  ArrowRight,
-  Users,
-  Sparkles,
-  Layers,
-} from "lucide-react";
-import { SectionEditBadge } from "@/components/public/section-edit-badge";
+import { PageRenderer } from "@/components/page-renderer";
 import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { getPublicPage } from "@/lib/api/public.functions";
+import type { PageBlockSection } from "@/lib/db/schema";
 
 export const Route = createFileRoute("/about/organization")({
+  loader: async () => ({
+    page: await getPublicPage({ data: { slug: "about-organization" } }).catch(() => null),
+  }),
   head: () => ({
     meta: [
-      { title: "Organization, Mandate & Organogram | Bhutan Health Trust Fund" },
+      { title: "Organogram | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Official Mandate, Vision, Mission, Royal Charter Governance Framework, Organogram, and 70–20–10 Operating Model of the Bhutan Health Trust Fund.",
+          "Official Organizational Chart and Governance Organogram of the Bhutan Health Trust Fund.",
       },
     ],
   }),
@@ -36,236 +24,51 @@ export const Route = createFileRoute("/about/organization")({
 });
 
 function AboutOrganizationPage() {
-  const { t, isDzongkha } = useLanguage();
+  const { page } = Route.useLoaderData();
+  const { t } = useLanguage();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-28 sm:pb-36 bg-[#FAF8F3]">
+    <div className="space-y-8 sm:space-y-10 pb-28 sm:pb-36 bg-[#FAF8F3]">
       <PageHero
-        badge={isDzongkha ? "གཞུང་འབྲེལ་བདག་སྐྱོང་།" : "Institutional Governance"}
-        title={t("nav_organization", "Organization & Mandate")}
-        subtitle={
-          isDzongkha
-            ? "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་གྱི་གཞུང་འབྲེལ་འགན་དབང་། མཐོང་སྣང་། དམིགས་ཡུལ། བདག་སྐྱོང་དང་བཀོད་རིམ་རེའུ་མིག"
-            : "Official Mandate, Vision, Mission, Royal Charter Governance Framework, and Organizational Structure."
-        }
+        title={t("organogram_title", "Organogram")}
         breadcrumb={[
           { label: t("nav_home", "Home"), to: "/" },
           { label: t("nav_about_us", "About Us"), to: "/about" },
-          { label: t("nav_organization", "Organization & Mandate") },
+          { label: t("nav_organogram", "Organogram") },
         ]}
       />
 
-      {/* 1. Official Mandate, Vision, Mission Cards */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-core-tenets">
-        <SectionEditBadge
-          label="Core Institutional Tenets"
-          pageSlug="about-organization"
-          sectionId="org-core-tenets"
-          studioHref="/admin/page-editor?slug=about-organization"
-          initialData={{
-            title: "Mandate, Vision & Mission",
-            subtitle: "Official statutory tenets of the Bhutan Health Trust Fund.",
-            badge: "Institutional Foundations",
-          }}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Mandate */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-7 shadow-xs hover:border-emerald-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center">
-                <Target className="size-6 text-emerald-800" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-slate-900">
-                {t("tenet_mandate_title", "Our Mandate")}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-                {t(
-                  "tenet_mandate_text",
-                  "To ensure sustainable financing for essential medicines and vaccines through prudent fund management and responsible investment."
-                )}
-              </p>
-            </div>
-            <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold">
-              <CheckCircle2 className="size-3.5" />
-              <span>{isDzongkha ? "ཀུན་ཁྱབ་འཕྲོད་བསྟེན་ཁག་འཁྱགས།" : "Universal Healthcare Guarantee"}</span>
-            </div>
-          </div>
-
-          {/* Vision */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-7 shadow-xs hover:border-amber-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-800 grid place-items-center">
-                <Eye className="size-6 text-amber-800" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-slate-900">
-                {t("tenet_vision_title", "Our Vision")}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-                {t(
-                  "tenet_vision_text",
-                  "A Bhutan where every citizen has uninterrupted access to essential medicines and vaccines, now and for generations to come."
-                )}
-              </p>
-            </div>
-            <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-[11px] text-amber-800 font-semibold">
-              <CheckCircle2 className="size-3.5" />
-              <span>{isDzongkha ? "མི་རབས་ཕུགས་བརྟན།" : "Intergenerational Equity"}</span>
-            </div>
-          </div>
-
-          {/* Mission */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-7 shadow-xs hover:border-teal-300 transition-all duration-300 space-y-3 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="h-12 w-12 rounded-2xl bg-teal-50 text-teal-800 grid place-items-center">
-                <Heart className="size-6 text-teal-800" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-slate-900">
-                {t("tenet_mission_title", "Our Mission")}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-                {t(
-                  "tenet_mission_text",
-                  "To mobilise, invest, and prudently manage a dedicated health endowment to generate sustainable income for financing essential medicines, vaccines, and related health supplies."
-                )}
-              </p>
-            </div>
-            <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-[11px] text-teal-800 font-semibold">
-              <CheckCircle2 className="size-3.5" />
-              <span>{isDzongkha ? "བརྟན་བཞུགས་ཅན་གྱི་སྨན་རྫས་ཉེན་སྲུང་།" : "Sustainable Commodity Security"}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Governance Framework & Operating Model (70–20–10) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-governance-model">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Governance */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-7 sm:p-9 shadow-xs space-y-4 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-mono font-bold">
-                <ShieldCheck className="size-3.5 text-emerald-800" />
-                <span>{isDzongkha ? "བདག་སྐྱོང་དང་ ལྟ་རྟོག" : "Governance & Oversight"}</span>
-              </div>
-              <h3 className="font-serif text-2xl font-bold text-slate-900">
-                {t("governance_title", "Governance Framework")}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
-                {t("governance_desc")}
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 flex flex-wrap gap-4 text-xs font-semibold">
-              <Link to="/about/trustees" className="text-emerald-800 hover:underline inline-flex items-center gap-1">
-                <span>{isDzongkha ? "བདག་སྐྱོང་ལྷན་ཚོགས་ (རེའུ་མིག་ ༡.༡) བལྟ།" : "View Board of Trustees (Table 1.1)"}</span>
-                <ArrowRight className="size-3" />
-              </Link>
-              <Link to="/about/committees" className="text-amber-800 hover:underline inline-flex items-center gap-1">
-                <span>{isDzongkha ? "མ་རྩ་འཛིན་སྐྱོང་ཚོགས་ཆུང་ (རེའུ་མིག་ ༡.༢) བལྟ།" : "Asset Management Committee (Table 1.2)"}</span>
-                <ArrowRight className="size-3" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Operating Model (70–20–10) & Capital Preservation */}
-          <div className="bg-gradient-to-br from-[#0B4F42] to-[#073C32] text-white rounded-3xl p-7 sm:p-9 shadow-lg space-y-5 flex flex-col justify-between border border-emerald-700/40">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-mono font-bold border border-white/10">
-                <Coins className="size-3.5 text-amber-300" />
-                <span>{t("model_title", "70–20–10 Operating Model")}</span>
-              </div>
-              <h3 className="font-serif text-2xl font-bold text-white">
-                {t("model_title", "Our Operating Model")}
-              </h3>
-              <p className="text-xs sm:text-sm text-emerald-50/90 leading-relaxed font-sans">
-                {t("model_desc")}
-              </p>
-
-              {/* Three Stream Breakdown */}
-              <div className="grid grid-cols-3 gap-3 pt-1">
-                <div className="bg-white/10 rounded-2xl p-3 border border-white/10 text-center">
-                  <div className="text-xl sm:text-2xl font-black font-mono text-amber-300">70%</div>
-                  <div className="text-[10px] sm:text-xs text-white/90 font-medium mt-1 leading-tight">
-                    {t("model_70_title", "Medicines & Vaccines Procurement")}
-                  </div>
-                </div>
-                <div className="bg-white/10 rounded-2xl p-3 border border-white/10 text-center">
-                  <div className="text-xl sm:text-2xl font-black font-mono text-emerald-300">20%</div>
-                  <div className="text-[10px] sm:text-xs text-white/90 font-medium mt-1 leading-tight">
-                    {t("model_20_title", "Reinvested for Capital Growth")}
-                  </div>
-                </div>
-                <div className="bg-white/10 rounded-2xl p-3 border border-white/10 text-center">
-                  <div className="text-xl sm:text-2xl font-black font-mono text-teal-200">10%</div>
-                  <div className="text-[10px] sm:text-xs text-white/90 font-medium mt-1 leading-tight">
-                    {t("model_10_title", "Operational Expenses")}
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-2 text-xs sm:text-sm text-emerald-50/90 leading-relaxed space-y-2 font-sans border-t border-white/10">
-                <p>
-                  <strong>{t("preservation_title", "Principal Preservation:")}</strong>{" "}
-                  {t(
-                    "preservation_text",
-                    "A key principle of the Fund is the preservation of its principal capital. By financing healthcare needs through investment income rather than drawing on the principal, BHTF aims to safeguard its financial resources for future generations."
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Official Organizational Chart (Organogram) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="org-organogram">
-        <SectionEditBadge
-          label="Organizational Chart (Organogram)"
-          pageSlug="about-organization"
-          sectionId="org-organogram"
-          studioHref="/admin/page-editor?slug=about-organization"
-          initialData={{
-            title: "Organizational Structure & Governance Organogram",
-            subtitle: "Approved organizational structure of the Bhutan Health Trust Fund.",
-            badge: "Institutional Organogram",
-          }}
-        />
-
+      {/* Official Organizational Chart (Organogram) Brought to the Top */}
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
+        data-bhtf-section="org-organogram"
+      >
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-12 shadow-sm space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800 block">
-              {isDzongkha ? "སྡེ་ཚན་ ༡.༣ • བདག་སྐྱོང་བཀོད་རིམ།" : "Section 1.3 • Governance Architecture"}
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-              {t("organogram_title", "Organizational Chart (Organogram)")}
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-light">
-              {t(
-                "organogram_subtitle",
-                "Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions."
-              )}
-            </p>
-          </div>
-
           {/* Interactive Organogram Diagram */}
           <div className="max-w-4xl mx-auto pt-4">
-            {/* Level 1: Board of Trustees */}
+            <p className="max-w-2xl mx-auto mb-8 text-center text-sm sm:text-base leading-relaxed text-slate-600">
+              {t(
+                "organogram_subtitle",
+                "Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions.",
+              )}
+            </p>
+            {/* Level 1: Board of Directors */}
             <div className="flex justify-center">
               <Link
                 to="/about/trustees"
-                className="w-80 bg-slate-50 hover:bg-emerald-50/50 border-2 border-slate-800 hover:border-emerald-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
+                className="w-full max-w-sm bg-slate-50 hover:bg-emerald-50/50 border-2 border-slate-800 hover:border-emerald-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
               >
                 <span className="font-serif font-bold text-base text-slate-900 group-hover:text-emerald-900 block">
                   {t("organogram_board", "Board of Trustees")}
                 </span>
-                <span className="text-[10px] text-slate-500 group-hover:text-emerald-700 font-sans block mt-0.5">
-                  {t("organogram_board_sub", "High-Level Governance • 7 Trustees (Table 1.1) →")}
+                <span className="mt-1 block text-xs sm:text-sm text-slate-600">
+                  {t("organogram_board_sub", "High-Level Governance • 7 Trustees (Table 1.1)")}
                 </span>
               </Link>
             </div>
 
             {/* Vertical Line */}
-            <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
+              <div className="w-0.5 h-8 bg-slate-700 mx-auto" />
 
             {/* Horizontal Branch to AMC */}
             <div className="relative">
@@ -273,13 +76,13 @@ function AboutOrganizationPage() {
               <div className="sm:absolute sm:top-1/2 sm:right-1/2 sm:-translate-y-1/2 flex items-center justify-center my-2 sm:my-0">
                 <Link
                   to="/about/committees"
-                  className="w-72 bg-amber-50/70 hover:bg-amber-100/70 border-2 border-amber-800/80 hover:border-amber-900 rounded-2xl p-3 text-center shadow-xs transition group cursor-pointer block"
+                  className="w-full max-w-xs bg-amber-50/70 hover:bg-amber-100/70 border-2 border-amber-800/80 hover:border-amber-900 rounded-2xl p-3 text-center shadow-xs transition group cursor-pointer block"
                 >
                   <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 group-hover:text-amber-950 block leading-snug">
                     {t("organogram_amc", "Asset Management Committee")}
                   </span>
-                  <span className="text-[10px] text-amber-800 font-sans block mt-0.5 font-semibold">
-                    {t("organogram_amc_sub", "Specialized Advisory Sub-committee (Table 1.2) →")}
+                  <span className="mt-1 block text-xs text-slate-600">
+                    {t("organogram_amc_sub", "Specialized Advisory Sub-committee (Table 1.2)")}
                   </span>
                 </Link>
                 <div className="hidden sm:block w-16 md:w-20 h-0.5 bg-slate-700" />
@@ -290,16 +93,16 @@ function AboutOrganizationPage() {
             <div className="flex justify-center">
               <Link
                 to="/about/secretariat"
-                className="w-80 bg-slate-50 hover:bg-teal-50/50 border-2 border-slate-800 hover:border-teal-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
+                className="w-full max-w-sm bg-slate-50 hover:bg-teal-50/50 border-2 border-slate-800 hover:border-teal-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
               >
                 <span className="font-serif font-bold text-base text-slate-900 group-hover:text-teal-900 block">
                   {t("organogram_director", "Director")}
                 </span>
-                <span className="text-[11px] text-emerald-800 font-sans block mt-0.5 font-semibold">
+                <span className="mt-1 block text-sm font-semibold text-slate-800">
                   {t("organogram_director_name", "Dr. Gyambo Sithey, PhD")}
                 </span>
-                <span className="text-[10px] text-slate-500 group-hover:text-teal-700 font-sans block">
-                  {t("organogram_director_sub", "Member Secretary & Executive Head →")}
+                <span className="mt-1 block text-xs sm:text-sm text-slate-600">
+                  {t("organogram_director_sub", "Member Secretary & Executive Head")}
                 </span>
               </Link>
             </div>
@@ -346,87 +149,13 @@ function AboutOrganizationPage() {
                 </div>
               </div>
             </div>
-
-            {/* Secretariat Link Callout */}
-            <div className="mt-8 pt-6 border-t border-slate-100 text-center">
-              <Link
-                to="/about/secretariat"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-emerald-800 text-white text-xs font-semibold shadow-xs transition duration-200"
-              >
-                <span>{isDzongkha ? "དྲུང་ཆེན་ཡིག་ཚང་གི་ལས་བྱེདཔ་ཚུ་བལྟ།" : "View Secretariat Team & Key Personnel"}</span>
-                <ArrowRight className="size-3.5" />
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Sub-pages Quick Link Cards */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="border-t border-slate-200/80 pt-10">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 block mb-1">
-            {isDzongkha ? "བདག་སྐྱོང་གོ་རིམ།" : "Governance Hierarchy"}
-          </span>
-          <h3 className="font-serif text-2xl font-bold text-slate-900">
-            {isDzongkha ? "བདག་སྐྱོང་དབུ་ཁྲིད་དང་ དྲུང་ཆེན་ཡིག་ཚང་ལུ་གཟིགས།" : "Explore Fiduciary Leadership & Secretariat"}
-          </h3>
-        </div>
+      <PageRenderer sections={(page?.sections || []) as PageBlockSection[]} pageSlug="about-organization" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link
-            to="/about/trustees"
-            className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 group space-y-3"
-          >
-            <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
-              <Landmark className="h-5 w-5" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
-              {t("nav_trustees", "Board of trustees (with photos)")} →
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
-              {isDzongkha
-                ? "གསོ་བའི་བློན་པོ་ དྲག་ཤོས་ རྟནྡྲིན་དབང་ཕྱུག་མཆོག་གིས་ དབུ་ཁྲིད་པའི་ བདག་སྐྱོང་ལྷན་ཚོགས་ཀྱི་འཐུས་མི་ ༧།"
-                : "7 Apex governing trustees chaired by HE Lyonpo Tandin Wangchuk, Minister for Health."}
-            </p>
-          </Link>
-
-          <Link
-            to="/about/committees"
-            className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-amber-400 transition-all duration-300 group space-y-3"
-          >
-            <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
-              <Scale className="h-5 w-5" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-amber-800 transition">
-              {t("nav_amc", "Asset management committee")} →
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
-              {isDzongkha
-                ? "རྒྱལ་གཞུང་དངུལ་ལས་དབང་འཛིན་གྱི་ ལས་རོགས་ཧོད་འཛིན་ ཨོ་རྒྱན་ཆོས་ལྡན་གྱིས་ དབུ་ཁྲིད་པའི་ འཐུས་མི་ ༣ ཅན་གྱི་ཚོགས་ཆུང་།"
-                : "3-member fiduciary sub-committee chaired by Ms. Ugyen Choden, Deputy Governor, RMA."}
-            </p>
-          </Link>
-
-          <Link
-            to="/about/secretariat"
-            className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-teal-400 transition-all duration-300 group space-y-3"
-          >
-            <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-800 grid place-items-center">
-              <Building className="h-5 w-5" />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-teal-800 transition">
-              {t("nav_secretariat", "Secretariat")} →
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
-              {isDzongkha
-                ? "མདོ་ཆེན་ དྲག་ཤོས་ རྒྱལ་མཚན་སི་ཐེ་གིས་ དབུ་ཁྲིད་པའི་ ལག་ལེན་ཡིག་ཚང་དང་ ལས་བྱེདཔ།"
-                : "Executive arm headed by Director Dr. Gyambo Sithey, PhD, with key operational officers."}
-            </p>
-          </Link>
-        </div>
-      </section>
-
-      {/* Floating Sub-pages Sticky Bottom Capsule */}
+      {/* Floating Bottom Sub-pages Navigation Capsule */}
       <AboutBottomCapsule />
     </div>
   );

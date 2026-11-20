@@ -376,7 +376,7 @@ export function UniversalLiveSectionEditor({
                       type="text"
                       value={primaryCtaText}
                       onChange={(e) => setPrimaryCtaText(e.target.value)}
-                      placeholder="e.g. Contribute (1:1 Matched)"
+                      placeholder="e.g. Contribute to Fund"
                       className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-amber-400 text-xs"
                     />
                   </div>

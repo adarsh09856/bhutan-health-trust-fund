@@ -13,6 +13,8 @@ export interface SectionEditBadgeProps {
   sectionId: string;
   studioHref: string;
   initialData?: UniversalLiveSectionEditorProps["initialData"];
+  /** Set only for CMS-rendered sections whose data is read from page.sectionsJson. */
+  quickEditSupported?: boolean;
   className?: string;
   onSaved?: (updatedSection: any) => void;
 }
@@ -23,6 +25,7 @@ export function SectionEditBadge({
   sectionId,
   studioHref,
   initialData,
+  quickEditSupported = false,
   className = "top-3 right-3",
   onSaved,
 }: SectionEditBadgeProps) {
@@ -78,15 +81,21 @@ export function SectionEditBadge({
         </div>
 
         <div className="flex items-center gap-1.5 ml-2 border-l border-slate-700 pl-2">
-          <button
-            type="button"
-            onClick={handleQuickEditClick}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold border border-amber-400/40 transition-colors cursor-pointer"
-            title={`Quick edit "${label}" in an on-page modal`}
-          >
-            <Zap className="w-2.5 h-2.5" />
-            <span>Quick Edit</span>
-          </button>
+          {quickEditSupported ? (
+            <button
+              type="button"
+              onClick={handleQuickEditClick}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold border border-amber-400/40 transition-colors cursor-pointer"
+              title={`Quick edit "${label}" in an on-page modal`}
+            >
+              <Zap className="w-2.5 h-2.5" />
+              <span>Quick Edit</span>
+            </button>
+          ) : (
+            <span className="px-2 py-0.5 text-amber-100/80" title="Manage this content in its linked admin studio">
+              Managed in Studio
+            </span>
+          )}
 
           <Link
             to={studioHref}

@@ -71,7 +71,27 @@ export function PageRenderer({
   onSelectSection?: (id: string) => void;
   pageSlug?: string;
 }) {
-  const visibleSections = sections
+  const [renderedSections, setRenderedSections] = React.useState(sections);
+
+  useEffect(() => setRenderedSections(sections), [sections]);
+
+  useEffect(() => {
+    const applySavedSection = (event: Event) => {
+      const detail = (event as CustomEvent<{ pageSlug?: string; sectionId?: string; updatedSection?: PageBlockSection }>).detail;
+      if (detail?.pageSlug !== pageSlug || !detail.sectionId || !detail.updatedSection) return;
+      setRenderedSections((current) => {
+        const index = current.findIndex((section) => section.id === detail.sectionId);
+        if (index < 0) return current;
+        const next = [...current];
+        next[index] = { ...next[index], ...detail.updatedSection };
+        return next;
+      });
+    };
+    window.addEventListener("bhtf:section-updated", applySavedSection);
+    return () => window.removeEventListener("bhtf:section-updated", applySavedSection);
+  }, [pageSlug]);
+
+  const visibleSections = renderedSections
     .filter((s) => (interactive ? true : s.isVisible))
     .sort((a, b) => a.order - b.order);
 
@@ -113,6 +133,7 @@ export function PageRenderer({
               sectionId={sec.id}
               studioHref={`/admin/page-editor?slug=${pageSlug}`}
               initialData={sec}
+              quickEditSupported
             />
           )}
 
@@ -836,7 +857,7 @@ function InteractiveToolsBlock({ section }: { section: PageBlockSection }) {
             {section.title || "Interactive Sovereign Portals & Transparency Tools"}
           </h2>
           <p className="text-base text-slate-600 font-sans leading-relaxed">
-            {section.subtitle || "Explore national health commodity supply chains, all 20 Dzongkhags cold-chain coverage, and simulate your 1:1 RGOB matched pledge."}
+            {section.subtitle || "Explore national health commodity supply chains, all 20 Dzongkhags cold-chain coverage, and healthcare impact."}
           </p>
         </div>
 

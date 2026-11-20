@@ -32,22 +32,6 @@ const AdminAuthContext = createContext<AdminAuthContextType>({
   refreshSession: async () => {},
 });
 
-const TOKEN_KEY = "bhtf_admin_token";
-const USER_KEY = "bhtf_admin_user";
-const COOKIE_NAME = "bhtf_admin_session";
-
-function setSessionCookie(token: string) {
-  if (typeof document !== "undefined") {
-    document.cookie = `${COOKIE_NAME}=${encodeURIComponent(token)}; path=/; max-age=604800; SameSite=Lax; Secure`;
-  }
-}
-
-function clearSessionCookie() {
-  if (typeof document !== "undefined") {
-    document.cookie = `${COOKIE_NAME}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-  }
-}
-
 export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AdminUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -55,48 +39,33 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const [adminBarCollapsed, setAdminBarCollapsed] = useState(false);
   const router = useRouter();
 
-  const verifySession = async (existingToken: string) => {
+  const verifySession = async () => {
     try {
-      const res = await verifyCurrentSession({ data: { token: existingToken } });
+      const res = await verifyCurrentSession({ data: {} });
       if (res && res.user) {
         setUser(res.user);
-        setToken(existingToken);
-        setSessionCookie(existingToken);
-        localStorage.setItem(USER_KEY, JSON.stringify(res.user));
+        setToken(null);
       } else {
-        // Session was revoked in PostgreSQL or account deactivated
         handleLocalLogout();
       }
     } catch {
-      // Network error; preserve local cached user temporarily
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    try {
-      const storedToken = localStorage.getItem(TOKEN_KEY);
-      const storedUser = localStorage.getItem(USER_KEY);
-      if (storedToken && storedUser) {
-        setUser(JSON.parse(storedUser));
-        setToken(storedToken);
-        setSessionCookie(storedToken);
-        verifySession(storedToken);
-      } else {
-        setIsLoading(false);
-      }
-    } catch {
-      setIsLoading(false);
-    }
+    localStorage.removeItem("bhtf_admin_token");
+    localStorage.removeItem("bhtf_admin_user");
+    void verifySession();
   }, []);
 
-  const login = (newUser: AdminUser, newToken: string) => {
+  const login = (newUser: AdminUser) => {
     setUser(newUser);
-    setToken(newToken);
-    localStorage.setItem(TOKEN_KEY, newToken);
-    localStorage.setItem(USER_KEY, JSON.stringify(newUser));
-    setSessionCookie(newToken);
+    setToken(null);
+    localStorage.removeItem("bhtf_admin_token");
+    localStorage.removeItem("bhtf_admin_user");
   };
 
   const handleLocalLogout = () => {
@@ -104,21 +73,16 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
-    clearSessionCookie();
   };
 
   const logout = () => {
-    if (token) {
-      adminLogout({ data: { token } }).catch(() => {});
-    }
+    adminLogout({ data: {} }).catch(() => {});
     handleLocalLogout();
     router.navigate({ to: "/admin/login" });
   };
 
   const refreshSession = async () => {
-    if (token) {
-      await verifySession(token);
-    }
+    await verifySession();
   };
 
   return (

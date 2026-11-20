@@ -157,7 +157,7 @@ export function DisbursementChart() {
             <span>The Fiscal Sustainability Imperative (Slide 14)</span>
           </div>
           <p className="text-xs text-slate-700 leading-relaxed font-light">
-            Healthcare commodity costs grow at <strong>~11% annually</strong> while portfolio returns average <strong>7.7%</strong>. Doubling the capital corpus to <strong>Nu. 8.6B by 2030</strong> with RGOB 1:1 matching guarantees perpetual health sovereignty.
+            Healthcare commodity costs grow at <strong>~11% annually</strong> while portfolio returns average <strong>7.7%</strong>. Growing the capital corpus to <strong>Nu. 8.6B by 2030</strong> guarantees perpetual health sovereignty.
           </p>
         </div>
       </div>

@@ -176,8 +176,7 @@ export function AdminDonationsPage() {
       "Email",
       "Phone",
       "Amount (Nu)",
-      "1:1 RGOB Match (Nu)",
-      "Total Health Yield (Nu)",
+      "Tax Exemption (DRC E-73)",
       "Payment Method",
       "Status",
       "Date",
@@ -189,8 +188,7 @@ export function AdminDonationsPage() {
       d.donorEmail,
       d.donorPhone || "",
       d.amountNu,
-      d.amountNu,
-      d.amountNu * 2,
+      "Eligible (DRC E-73)",
       d.paymentMethod,
       d.status,
       new Date(d.createdAt).toISOString(),
@@ -227,7 +225,7 @@ export function AdminDonationsPage() {
     .filter((d) => d.status === "COMPLETED" || d.status === "VERIFIED")
     .reduce((sum, d) => sum + d.amountNu, 0);
 
-  const totalYield = totalPublicAmount * 2; // 1:1 RGOB Sovereign Matching Multiplier
+  const totalYield = totalPublicAmount;
 
   return (
     <AdminShell>
@@ -244,7 +242,7 @@ export function AdminDonationsPage() {
               Donors & Pledges CRM
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Verify incoming citizen and corporate pledges, audit sovereign matching yields, and
+              Verify incoming citizen and corporate pledges, manage donation records, and
               generate official DRC tax vouchers.
             </p>
           </div>
@@ -284,25 +282,25 @@ export function AdminDonationsPage() {
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              1:1 RGOB Sovereign Match
+              DRC Tax Exemption Status
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-amber-700 font-mono">
-              + Nu. {totalPublicAmount.toLocaleString()}
+            <div className="text-2xl sm:text-3xl font-black text-emerald-800 font-mono">
+              100% Eligible
             </div>
-            <span className="text-xs font-medium text-amber-800 font-bold block">
-              100% Guaranteed by Ministry of Finance
+            <span className="text-xs font-medium text-emerald-800 font-bold block">
+              Official DRC Reg. No. E-73
             </span>
           </div>
 
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-2">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Total Combined Healthcare Yield
+              Total Fiduciary Healthcare Yield
             </span>
-            <div className="text-2xl sm:text-3xl font-black text-blue-700 font-mono">
+            <div className="text-2xl sm:text-3xl font-black text-emerald-700 font-mono">
               Nu. {totalYield.toLocaleString()}
             </div>
-            <span className="text-xs font-medium text-blue-700 font-bold block">
-              Doubled Purchasing Power
+            <span className="text-xs font-medium text-emerald-800 font-bold block">
+              Direct Health Fund Impact
             </span>
           </div>
         </div>
@@ -377,7 +375,7 @@ export function AdminDonationsPage() {
                     <th className="py-3.5 px-5">Reference No</th>
                     <th className="py-3.5 px-5">Donor & Tier</th>
                     <th className="py-3.5 px-5">Public Amount</th>
-                    <th className="py-3.5 px-5">1:1 RGOB Yield</th>
+                    <th className="py-3.5 px-5">DRC Tax Status</th>
                     <th className="py-3.5 px-5">Payment Mode</th>
                     <th className="py-3.5 px-5">Status</th>
                     <th className="py-3.5 px-5 text-right">Actions</th>
@@ -406,8 +404,8 @@ export function AdminDonationsPage() {
                           Nu. {d.amountNu.toLocaleString()}
                         </td>
 
-                        <td className="py-4 px-5 font-black text-emerald-700 font-mono text-sm">
-                          Nu. {(d.amountNu * 2).toLocaleString()}
+                        <td className="py-4 px-5 font-bold text-emerald-800 text-xs">
+                          DRC Reg. E-73
                         </td>
 
                         <td className="py-4 px-5">
@@ -524,11 +522,9 @@ export function AdminDonationsPage() {
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block font-medium">
-                      1:1 RGOB Sovereign Match:
-                    </span>
-                    <span className="font-mono font-black text-emerald-700">
-                      + Nu. {selectedDonation.amountNu.toLocaleString()}
+                    <span className="text-slate-400 block font-medium">Tax Exemption:</span>
+                    <span className="font-bold text-emerald-700">
+                      DRC Reg. No. E-73
                     </span>
                   </div>
                 </div>
@@ -700,18 +696,18 @@ export function AdminDonationsPage() {
                     </div>
                     <div>
                       <span className="text-slate-500 text-[11px] block">
-                        1:1 RGOB Sovereign Match:
+                        Tax Exemption Status:
                       </span>
                       <span className="text-base font-mono font-black text-emerald-700">
-                        + Nu. {selectedDonation.amountNu.toLocaleString()}
+                        DRC Reg. No. E-73
                       </span>
                     </div>
                     <div>
                       <span className="text-slate-500 text-[11px] block">
-                        Total Healthcare Yield:
+                        Total Healthcare Augmentation:
                       </span>
-                      <span className="text-base font-mono font-black text-blue-700">
-                        Nu. {(selectedDonation.amountNu * 2).toLocaleString()}
+                      <span className="text-base font-mono font-black text-emerald-800">
+                        Nu. {selectedDonation.amountNu.toLocaleString()}
                       </span>
                     </div>
                     <div>

@@ -815,7 +815,7 @@ export function OurWorkExperience({
                 </p>
               </div>
               <div className="pt-3 border-t border-slate-800 text-[11px] font-medium text-emerald-400">
-                1:1 Sovereign RGOB matching guarantee
+                Ring-fenced sovereign healthcare endowment
               </div>
             </div>
           </div>
@@ -892,7 +892,7 @@ export function OurWorkExperience({
           studioHref="/admin/donations"
           initialData={{
             title: "Help Safeguard Essential Medicine Buffers",
-            subtitle: "Your donations are directly multiplied 1:1 by the Royal Government of Bhutan to fund vital supplies.",
+            subtitle: "Your donations are directly ring-fenced to fund vital supplies across all 20 Dzongkhags.",
             primaryCtaText: "Donate to the Trust Fund",
             primaryCtaUrl: "/donate",
           }}
@@ -903,8 +903,7 @@ export function OurWorkExperience({
               Help Safeguard Essential Medicine Buffers
             </h3>
             <p className="text-xs sm:text-sm text-emerald-100 max-w-xl">
-              Your donations are directly multiplied 1:1 by the Royal Government of Bhutan to fund
-              vital supplies.
+              Your donations are directly ring-fenced to fund vital supplies across all 20 Dzongkhags.
             </p>
           </div>
           <Link

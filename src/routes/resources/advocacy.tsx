@@ -87,8 +87,8 @@ const advocacyArchive: AdvocacyItem[] = [
     pages: 44,
     year: "2023",
     description:
-      "Commemorative institutional brochure documenting the statutory 1:1 RGOB matching mechanism, Nu. 4.8B endowment preservation rule, and free healthcare mandate.",
-    highlights: ["Royal Charter 2000 Principles", "1:1 Sovereign Match Formula", "Generational Equity"],
+      "Commemorative institutional brochure documenting the Nu. 4.8B endowment preservation rule and free healthcare mandate.",
+    highlights: ["Royal Charter 2000 Principles", "Endowment Capital Preservation", "Generational Equity"],
     coverGradient: "from-amber-600 to-amber-950",
     downloadUrl: "#",
   },
@@ -101,8 +101,8 @@ const advocacyArchive: AdvocacyItem[] = [
     pages: 52,
     year: "2024",
     description:
-      "Comprehensive clinical guide for Primary Health Units (BHUs) outlining the 438 essential drugs and 65 core gSo-ba Rig-pa traditional remedies 100% financed by BHTF.",
-    highlights: ["National Essential Drug List (NEDL)", "gSo-ba Rig-pa Formulary", "Stockout Zero Protocol"],
+      "Comprehensive clinical guide for Primary Health Units (BHUs) outlining the 438 essential drugs and 65 core so-wai rigpa traditional remedies 100% financed by BHTF.",
+    highlights: ["National Essential Drug List (NEDL)", "so-wai rigpa Formulary", "Stockout Zero Protocol"],
     coverGradient: "from-teal-700 to-emerald-950",
     downloadUrl: "#",
   },

@@ -79,7 +79,7 @@ const quarters = [
     icon: Sparkles,
     color: "bg-purple-50 text-purple-700 border-purple-200",
     details:
-      "Third tranche release supporting 438 essential modern medicines and 110 traditional gSo-ba Rig-pa formulations nationwide.",
+      "Third tranche release supporting 438 essential modern medicines and 110 traditional so-wai rigpa formulations nationwide.",
   },
   {
     quarter: "Quarter 4 (Last Week of June)",
@@ -416,7 +416,7 @@ function WindowFinancingPage() {
               Permanent Health Security for All 20 Dzongkhags
             </h3>
             <p className="text-slate-700 text-xs sm:text-sm font-light leading-relaxed">
-              Every Ngultrum contributed to the Bhutan Health Trust Fund expands the window financing yield capacity and is matched 1:1 by the Royal Government of Bhutan.
+              Every Ngultrum contributed to the Bhutan Health Trust Fund expands the window financing yield capacity to sustain essential medicines.
             </p>
           </div>
 
@@ -432,7 +432,7 @@ function WindowFinancingPage() {
               to="/donate"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all active:scale-95 text-center"
             >
-              <span>Contribute (1:1 Matched)</span>
+              <span>Contribute to Fund</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

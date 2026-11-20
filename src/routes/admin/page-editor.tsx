@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter, useSearch } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAdminAuth } from "@/lib/admin-auth";
 import {
   getAdminPages,
@@ -42,14 +42,14 @@ const DEFAULT_CORE_PAGES_MENU = [
   { slug: "home", title: "Home Page", path: "/" },
   { slug: "about", title: "About Us (Main Institutional Overview)", path: "/about" },
   { slug: "about-organization", title: "About: Organization & Mandate", path: "/about/organization" },
-  { slug: "about-trustees", title: "About: Board of Trustees", path: "/about/trustees" },
+  { slug: "about-trustees", title: "About: Board of Directors", path: "/about/trustees" },
   { slug: "about-committees", title: "About: Asset Management & Committees", path: "/about/committees" },
   { slug: "about-secretariat", title: "About: Secretariat & Organogram", path: "/about/secretariat" },
   { slug: "our-story", title: "Our Story & Historical Milestones", path: "/our-story" },
-  { slug: "our-impact", title: "Our Impact & Healthcare Commodities", path: "/our-impact" },
+  { slug: "our-work", title: "Our Impact & Healthcare Commodities", path: "/our-impact" },
   { slug: "resources", title: "Resources: Official Documents & Audits", path: "/resources" },
   { slug: "window-financing", title: "Resources: Window Financing Protocol", path: "/resources/window-financing" },
-  { slug: "donate", title: "Donate & Support (1:1 Matched)", path: "/donate" },
+  { slug: "donate", title: "Donate & Support", path: "/donate" },
   { slug: "news", title: "News & Media Bulletins", path: "/news" },
   { slug: "track-donation", title: "Track Donation & Tax Voucher", path: "/track-donation" },
   { slug: "reports", title: "Reports & Financial Audits", path: "/reports" },
@@ -88,6 +88,7 @@ export function AdminPageEditor() {
   const [newTitle, setNewTitle] = useState("");
   const [newSlug, setNewSlug] = useState("");
   const [creatingPage, setCreatingPage] = useState(false);
+  const loadRequestId = useRef(0);
 
   const handleCreateNewPage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,13 +121,19 @@ export function AdminPageEditor() {
 
   // Load all pages list and current page details
   const loadPageData = async (targetSlug: string) => {
+    const requestId = ++loadRequestId.current;
     setLoading(true);
+    setCurrentPage(null);
+    setPageTitle("");
+    setSections([]);
+    setSelectedBlockId(null);
     try {
       const [pagesList, page] = await Promise.all([
         getAdminPages(),
         getAdminPage({ data: { slug: targetSlug } }),
       ]);
 
+      if (requestId !== loadRequestId.current) return;
       setAllPages(pagesList);
       if (page) {
         setCurrentPage(page);
@@ -143,18 +150,35 @@ export function AdminPageEditor() {
           setSections([]);
           setSelectedBlockId(null);
         }
+      } else {
+        setCurrentPage(null);
+        setPageTitle(targetSlug);
+        setSections([]);
+        setSelectedBlockId(null);
       }
       setIsDirty(false);
     } catch {
-      toast.error("Failed to load page customizer.");
+      if (requestId === loadRequestId.current) {
+        setCurrentPage(null);
+        setPageTitle(targetSlug);
+        setSections([]);
+        setSelectedBlockId(null);
+        toast.error("Failed to load page customizer.");
+      }
     } finally {
-      setLoading(false);
+      if (requestId === loadRequestId.current) setLoading(false);
     }
   };
 
   useEffect(() => {
     loadPageData(activeSlug);
   }, [activeSlug]);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.navigate({ to: "/admin/login" });
+    }
+  }, [authLoading, user, router]);
 
   const handlePageSwitch = (newSlug: string) => {
     if (isDirty) {
@@ -325,7 +349,7 @@ export function AdminPageEditor() {
           ? `/${activeSlug}`
           : `/p/${activeSlug}`;
 
-  if (authLoading || loading) {
+  if (authLoading || loading || !user) {
     return (
       <div className="h-screen w-screen bg-slate-950 flex flex-col items-center justify-center text-white gap-3">
         <Loader2 className="h-8 w-8 animate-spin text-amber-500" />

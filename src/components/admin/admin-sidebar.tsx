@@ -36,70 +36,71 @@ interface NavGroup {
     to: string;
     label: string;
     icon: any;
-    badgeKey?: "pendingDonations" | "unreadInquiries";
+    badgeKey?: "pendingDonations" | "unreadInquiries" | "pendingMembershipsCount";
   }>;
 }
 
 const navGroups: NavGroup[] = [
   {
-    groupName: "Executive CRM & Donors",
-    badge: "Fiduciary",
+    groupName: "Overview & engagement",
     items: [
-      { to: "/admin/dashboard", label: "Dashboard Overview", icon: LayoutDashboard },
+      { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
       {
         to: "/admin/donations",
-        label: "Donors & Pledges CRM",
+        label: "Donations",
         icon: HeartHandshake,
         badgeKey: "pendingDonations",
       },
       {
         to: "/admin/inquiries",
-        label: "Citizen Inquiries & Ombudsman",
+        label: "Inquiries",
         icon: Mail,
         badgeKey: "unreadInquiries",
       },
-      { to: "/admin/subscribers", label: "Subscribers & Audiences", icon: Users },
+      {
+        to: "/admin/memberships",
+        label: "Memberships",
+        icon: UserCheck,
+        badgeKey: "pendingMembershipsCount",
+      },
+      { to: "/admin/subscribers", label: "Subscribers", icon: Users },
     ],
   },
   {
-    groupName: "Commodities & Procurement",
-    badge: "Supply",
+    groupName: "Programs & reporting",
     items: [
-      { to: "/admin/programs", label: "Essential Medicines & Streams", icon: Activity },
-      { to: "/admin/procurement", label: "Procurement Tenders & Steps", icon: Scale },
-      { to: "/admin/metrics", label: "National Impact Statistics", icon: BarChart3 },
+      { to: "/admin/programs", label: "Programs", icon: Activity },
+      { to: "/admin/procurement", label: "Procurement", icon: Scale },
+      { to: "/admin/metrics", label: "Impact metrics", icon: BarChart3 },
     ],
   },
   {
-    groupName: "Institutional CMS & Media",
-    badge: "Public",
+    groupName: "Public website",
     items: [
-      { to: "/admin/pages", label: "Pages & Templates", icon: Layers },
-      { to: "/admin/page-editor", label: "⚡ Live Page Studio", icon: Sparkles },
-      { to: "/admin/news", label: "News & Press Releases", icon: Newspaper },
-      { to: "/admin/reports", label: "Reports & RAA Audits", icon: FileText },
-      { to: "/admin/policies", label: "Policies & Royal Charters", icon: ShieldCheck },
-      { to: "/admin/gallery", label: "Field Operations Gallery", icon: Camera },
-      { to: "/admin/videos", label: "Public Media & Videos", icon: Video },
+      { to: "/admin/pages", label: "Pages", icon: Layers },
+      { to: "/admin/page-editor", label: "Page editor", icon: Sparkles },
+      { to: "/admin/news", label: "News & events", icon: Newspaper },
+      { to: "/admin/reports", label: "Reports", icon: FileText },
+      { to: "/admin/policies", label: "Policies", icon: ShieldCheck },
+      { to: "/admin/gallery", label: "Gallery", icon: Camera },
+      { to: "/admin/videos", label: "Videos", icon: Video },
     ],
   },
 
   {
-    groupName: "Sovereign Governance",
-    badge: "Charter",
+    groupName: "Governance",
     items: [
-      { to: "/admin/trustees", label: "Board of Trustees", icon: Landmark },
-      { to: "/admin/milestones", label: "Historical Timeline", icon: History },
-      { to: "/admin/faqs", label: "FAQs & Citizen Helpdesk", icon: HelpCircle },
+      { to: "/admin/trustees", label: "Board of directors", icon: Landmark },
+      { to: "/admin/milestones", label: "Our Story timeline", icon: History },
+      { to: "/admin/faqs", label: "FAQs", icon: HelpCircle },
     ],
   },
   {
-    groupName: "System Administration",
-    badge: "RBAC",
+    groupName: "Administration",
     items: [
-      { to: "/admin/users", label: "Users & Roles (RBAC)", icon: UserCheck },
-      { to: "/admin/audit-logs", label: "Security Audit Trail", icon: ShieldAlert },
-      { to: "/admin/settings", label: "Sovereign Site Settings", icon: Sliders },
+      { to: "/admin/users", label: "Users & roles", icon: UserCheck },
+      { to: "/admin/audit-logs", label: "Audit logs", icon: ShieldAlert },
+      { to: "/admin/settings", label: "Settings", icon: Sliders },
     ],
   },
 ];
@@ -107,12 +108,28 @@ const navGroups: NavGroup[] = [
 export function AdminSidebar({ onClose }: { onClose?: () => void }) {
   const location = useLocation();
   const { user, logout } = useAdminAuth();
-  const visibleGroups = navGroups.map(group => ({ ...group, items: group.items.filter(item =>
-    user?.role === "SUPER_ADMIN" || !["/admin/users", "/admin/audit-logs"].includes(item.to)
-  ) }));
-  const [counts, setCounts] = useState<{ pendingDonations: number; unreadInquiries: number }>({
+  const visibleGroups = navGroups.map((group) => ({
+    ...group,
+    items: group.items.filter(
+      (item) =>
+        user?.role === "SUPER_ADMIN" || !["/admin/users", "/admin/audit-logs"].includes(item.to),
+    ),
+  }));
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+    "Overview & engagement": true,
+    "Programs & reporting": true,
+    "Public website": true,
+    Governance: true,
+    Administration: true,
+  });
+  const [counts, setCounts] = useState<{
+    pendingDonations: number;
+    unreadInquiries: number;
+    pendingMembershipsCount: number;
+  }>({
     pendingDonations: 0,
     unreadInquiries: 0,
+    pendingMembershipsCount: 0,
   });
 
   useEffect(() => {
@@ -122,6 +139,7 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
           setCounts({
             pendingDonations: res.pendingDonationsCount || 0,
             unreadInquiries: res.unreadInquiriesCount || 0,
+            pendingMembershipsCount: res.pendingMembershipsCount || 0,
           });
         }
       })
@@ -151,17 +169,28 @@ export function AdminSidebar({ onClose }: { onClose?: () => void }) {
         {visibleGroups.map((group) => (
           <div key={group.groupName} className="space-y-1">
             {/* Group Header */}
-            <div className="text-[10px] uppercase font-black tracking-widest text-amber-400/80 px-3 mb-1.5 flex items-center justify-between">
+            <button
+              type="button"
+              aria-expanded={expandedGroups[group.groupName]}
+              onClick={() =>
+                setExpandedGroups((current) => ({
+                  ...current,
+                  [group.groupName]: !current[group.groupName],
+                }))
+              }
+              className="w-full text-left text-[10px] uppercase font-black tracking-widest text-amber-400/80 px-3 mb-1.5 flex items-center justify-between hover:text-amber-300"
+            >
               <span>{group.groupName}</span>
-              {group.badge && (
-                <span className="text-[9px] bg-emerald-950/90 text-amber-300/90 px-1.5 py-0.5 rounded font-mono border border-emerald-900/60">
-                  {group.badge}
-                </span>
-              )}
-            </div>
+              <span className="flex items-center gap-2">
+                <span className="text-[9px] font-mono text-slate-500">{group.items.length}</span>
+                <ChevronRight
+                  className={`h-3 w-3 transition-transform ${expandedGroups[group.groupName] ? "rotate-90" : ""}`}
+                />
+              </span>
+            </button>
 
             {/* Group Items */}
-            {group.items.map((item) => {
+            {expandedGroups[group.groupName] && group.items.map((item) => {
               const isActive = location.pathname === item.to;
               const badgeCount = item.badgeKey ? (counts as any)[item.badgeKey] : 0;
 

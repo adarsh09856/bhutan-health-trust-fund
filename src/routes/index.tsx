@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Users,
   ShieldCheck,
@@ -8,20 +8,24 @@ import {
   ArrowRight,
   Pill,
   Syringe,
-  ThermometerSnowflake,
   FileText,
   Calendar,
-  MessageCircle,
-  Play,
+  Briefcase,
   CheckCircle2,
-  Building2,
-  Scale,
-  Award,
   Download,
-  Phone,
-  Mail,
+  Activity,
+  HeartPulse,
+  Building2,
+  Award,
+  Stethoscope,
+  Coins,
+  MapPin,
+  Landmark,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { getPublicImpactMetrics, getPublicNews, getPublicPage } from "@/lib/api/public.functions";
+import type { ImpactMetric, NewsArticle, PageBlockSection } from "@/lib/db/schema";
+import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 import kingHeroWidescreen from "@/assets/king_hero_widescreen.jpg";
 
@@ -33,19 +37,31 @@ import imgCentralStore from "@/assets/field/bhtf_central_store.jpg";
 import imgBbs from "@/assets/field/bhtf_bbs_broadcast.jpg";
 import imgVaccineVial from "@/assets/field/bhtf_flu_vaccine_vial.jpg";
 import imgTraditionalMed from "@/assets/field/bhtf_traditional_medicine.png";
-import imgMaternalCare from "@/assets/field/bhtf_maternal_child_care.jpg";
-
-// Partner Logos
-import logoRgob from "@/assets/bhtf/partners/rgob.png";
-import logoWho from "@/assets/bhtf/partners/who.jpg";
-import logoUnicef from "@/assets/bhtf/partners/unicef.png";
-import logoAdb from "@/assets/bhtf/partners/adb.jpg";
-import logoGates from "@/assets/bhtf/partners/bill_gates_foundation.png";
-import logoSaveChildren from "@/assets/bhtf/partners/save_the_children.png";
-import logoSumitomo from "@/assets/bhtf/partners/sumitomo.png";
-import logoAusAid from "@/assets/bhtf/partners/aus_aid.png";
+import newsCommunity from "@/assets/news-community.jpg";
+import newsReport from "@/assets/news-report.jpg";
+import newsVaccine from "@/assets/news-vaccine.jpg";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      const [metrics, news, customPage] = await Promise.all([
+        getPublicImpactMetrics().catch(() => []),
+        getPublicNews().catch(() => []),
+        getPublicPage({ data: { slug: "home" } }).catch(() => null),
+      ]);
+      return {
+        liveMetrics: metrics || [],
+        liveNews: news || [],
+        customPage,
+      };
+    } catch {
+      return {
+        liveMetrics: [],
+        liveNews: [],
+        customPage: null,
+      };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Bhutan Health Trust Fund — Building a Healthier Bhutan" },
@@ -62,7 +78,7 @@ export const Route = createFileRoute("/")({
 const QUICK_LINKS = [
   {
     icon: Pill,
-    label: "Essential Medicines",
+    label: "National Essential Medicines",
     sub: "438 Modern Formulations",
     color: "bg-soft-blue text-primary",
     to: "/our-work",
@@ -77,39 +93,32 @@ const QUICK_LINKS = [
   {
     icon: Sparkles,
     label: "Traditional Medicine",
-    sub: "110 gSo-ba Rig-pa Formulations",
+    sub: "110 so-wai rigpa formulations",
     color: "bg-soft-green text-[oklch(0.45_0.15_155)]",
     to: "/our-work",
-  },
-  {
-    icon: ThermometerSnowflake,
-    label: "Cold Chain Network",
-    sub: "20 Dzongkhags Monitoring",
-    color: "bg-soft-purple text-[oklch(0.5_0.18_290)]",
-    to: "/our-impact",
   },
   {
     icon: ShieldCheck,
     label: "Universal Access",
     sub: "100% Free at Point of Care",
-    color: "bg-soft-red text-[oklch(0.55_0.2_25)]",
-    to: "/about",
+    color: "bg-emerald-50 text-emerald-800 border border-emerald-200/60",
+    to: "/our-work",
   },
   {
-    icon: Scale,
+    icon: Coins,
     label: "Window Financing",
-    sub: "Quarterly DMS Releases",
-    color: "bg-soft-blue text-primary",
-    to: "/resources/annual-reports",
+    sub: "Quarterly Releases",
+    color: "bg-teal-50 text-teal-800 border border-teal-200/60",
+    to: "/our-work",
   },
 ];
 
 const STATS = [
   { value: "Nu. 4.8B+", label: "Sovereign Endowment", sub: "Ring-fenced principal", icon: ShieldCheck },
   { value: "100%", label: "Free Primary Healthcare", sub: "Zero out-of-pocket costs", icon: Heart },
-  { value: "438 + 110", label: "Medicines & Formulations", sub: "Modern + Traditional", icon: Pill },
+  { value: "438 + 110", label: "National Essential Medicines and Traditional Medicines", sub: "", icon: Pill },
   { value: "20 / 20", label: "Dzongkhags Covered", sub: "205 gewog health units", icon: Users },
-  { value: "1:1", label: "Sovereign Match", sub: "Guaranteed by RGoB", icon: Sparkles },
+  { value: "1:1", label: "Sovereign Match", sub: "Guaranteed by RGoB", icon: Landmark },
 ];
 
 const NEWS = [
@@ -128,7 +137,7 @@ const NEWS = [
     source: "MOH / BHTF",
   },
   {
-    title: "Expansion of Indigenous gSo-ba Rig-pa Therapies Across Regional Traditional Hospitals",
+    title: "Expansion of Indigenous so-wai rigpa Therapies Across Regional Traditional Hospitals",
     date: "15 September 2026",
     img: imgTraditionalMed,
     to: "/news",
@@ -184,95 +193,29 @@ const FIELD_DISPATCHES = [
   },
 ];
 
-const FIDUCIARY_ROWS = [
-  {
-    label: "Sovereign Health Corpus (Endowment Principal)",
-    figure: "Nu. 4,798,965,306.85",
-    subtext: "Ring-fenced statutory capital invested under Royal Charter (~Nu. 4.8B as of 30 June 2026).",
-  },
-  {
-    label: "Annual Commodity Procurement Yield Disbursement",
-    figure: "Nu. 557,734,000",
-    subtext: "Disbursed quarterly for 438 essential drugs, 110 traditional remedies, and 4 routine vaccines.",
-  },
-  {
-    label: "Cumulative Procurement Disbursements (1998–2026)",
-    figure: "Nu. 4,370,000,000+",
-    subtext: "Direct financing for essential healthcare commodities without depleting the core corpus.",
-  },
-  {
-    label: "Citizens Protected Across 20 Dzongkhags",
-    figure: "780,000+",
-    subtext: "Universal healthcare guarantee delivered across all 205 remote gewog Primary Health Units.",
-  },
-  {
-    label: "Essential Medicines & Traditional Formulations",
-    figure: "438 Modern + 110 Traditional",
-    subtext: "100% of National Essential Drugs List and 110 core gSo-ba Rig-pa formulations.",
-  },
-  {
-    label: "Routine National Immunization Coverage",
-    figure: "97.4% – 99.8%",
-    subtext: "Pentavalent (98.9%), PCV (98.7%), Seasonal Influenza (97.4%), and HPV (99.8%).",
-  },
-];
-
-const DZONGKHAG_DATA = [
-  {
-    region: "Western Region",
-    dzongkhags: [
-      { name: "Thimphu", bhus: "1 Regional Referral + 18 PHUs", allocation: "100% Buffer" },
-      { name: "Chhukha", bhus: "1 General Hosp + 14 PHUs", allocation: "100% Buffer" },
-      { name: "Paro", bhus: "1 District Hosp + 12 PHUs", allocation: "100% Buffer" },
-      { name: "Haa", bhus: "1 District Hosp + 8 PHUs", allocation: "100% Buffer" },
-      { name: "Samtse", bhus: "1 District Hosp + 16 PHUs", allocation: "100% Buffer" },
-    ],
-  },
-  {
-    region: "Central Region",
-    dzongkhags: [
-      { name: "Bumthang", bhus: "1 District Hosp + 8 PHUs", allocation: "100% Buffer" },
-      { name: "Trongsa", bhus: "1 District Hosp + 9 PHUs", allocation: "100% Buffer" },
-      { name: "Sarpang", bhus: "1 Regional Referral + 14 PHUs", allocation: "100% Buffer" },
-      { name: "Zhemgang", bhus: "1 District Hosp + 13 PHUs", allocation: "100% Buffer" },
-      { name: "Dagana", bhus: "1 District Hosp + 11 PHUs", allocation: "100% Buffer" },
-      { name: "Tsirang", bhus: "1 District Hosp + 12 PHUs", allocation: "100% Buffer" },
-      { name: "Wangdue Phodrang", bhus: "1 District Hosp + 15 PHUs", allocation: "100% Buffer" },
-      { name: "Punakha", bhus: "1 District Hosp + 11 PHUs", allocation: "100% Buffer" },
-      { name: "Gasa", bhus: "1 District Hosp + 4 PHUs", allocation: "100% Buffer" },
-    ],
-  },
-  {
-    region: "Eastern Region",
-    dzongkhags: [
-      { name: "Mongar", bhus: "1 Regional Referral + 21 PHUs", allocation: "100% Buffer" },
-      { name: "Trashigang", bhus: "1 District Hosp + 20 PHUs", allocation: "100% Buffer" },
-      { name: "Trashiyangtse", bhus: "1 District Hosp + 9 PHUs", allocation: "100% Buffer" },
-      { name: "Lhuentse", bhus: "1 District Hosp + 10 PHUs", allocation: "100% Buffer" },
-      { name: "Pemagatshel", bhus: "1 District Hosp + 11 PHUs", allocation: "100% Buffer" },
-      { name: "Samdrup Jongkhar", bhus: "1 District Hosp + 13 PHUs", allocation: "100% Buffer" },
-    ],
-  },
-];
-
-const PARTNERS = [
-  { name: "Royal Government of Bhutan", role: "Founding Sovereign & 1:1 Match", logo: logoRgob },
-  { name: "World Health Organization", role: "Global Technical Partner", logo: logoWho },
-  { name: "UNICEF", role: "Cold Chain & Vaccine Logistics", logo: logoUnicef },
-  { name: "Asian Development Bank", role: "Development Partner", logo: logoAdb },
-  { name: "Bill & Melinda Gates Foundation", role: "Philanthropic Grantor", logo: logoGates },
-  { name: "Save the Children", role: "Maternal & Child Health", logo: logoSaveChildren },
-  { name: "Sumitomo Mitsui Banking Corp", role: "Institutional Grantor", logo: logoSumitomo },
-  { name: "Australian Aid", role: "Bilateral Partner (ACCF)", logo: logoAusAid },
-];
-
 function HomePage() {
+  const loaderData = Route.useLoaderData();
+  const [liveMetrics, setLiveMetrics] = useState<ImpactMetric[]>(loaderData?.liveMetrics || []);
+  const [liveNews, setLiveNews] = useState<NewsArticle[]>(loaderData?.liveNews || []);
   const { t, isDzongkha } = useLanguage();
+
+  useEffect(() => {
+    getPublicImpactMetrics()
+      .then((res) => {
+        if (res && res.length > 0) setLiveMetrics(res);
+      })
+      .catch(() => {});
+    getPublicNews()
+      .then((res) => {
+        if (res && res.length > 0) setLiveNews(res);
+      })
+      .catch(() => {});
+  }, []);
 
   const localizedQuickLinks = [
     {
       icon: Pill,
-      label: t("ql_essential_meds", "Essential Medicines"),
+      label: t("ql_essential_meds", "National Essential Medicines"),
       sub: t("ql_essential_meds_sub", "438 Modern Formulations"),
       color: "bg-soft-blue text-primary",
       to: "/our-work",
@@ -287,34 +230,27 @@ function HomePage() {
     {
       icon: Sparkles,
       label: t("ql_traditional_med", "Traditional Medicine"),
-      sub: t("ql_traditional_med_sub", "110 gSo-ba Rig-pa Formulations"),
+      sub: t("ql_traditional_med_sub", "110 so-wai rigpa formulations"),
       color: "bg-soft-green text-[oklch(0.45_0.15_155)]",
       to: "/our-work",
     },
     {
-      icon: ThermometerSnowflake,
-      label: t("ql_cold_chain", "Cold Chain Network"),
-      sub: t("ql_cold_chain_sub", "20 Dzongkhags Monitoring"),
-      color: "bg-soft-purple text-[oklch(0.5_0.18_290)]",
-      to: "/our-impact",
-    },
-    {
       icon: ShieldCheck,
-      label: t("ql_universal_access", "Universal Access"),
-      sub: t("ql_universal_access_sub", "100% Free at Point of Care"),
-      color: "bg-soft-red text-[oklch(0.55_0.2_25)]",
-      to: "/about",
+      label: isDzongkha ? "ཡོངས་ཁྱབ་ཐོབ་སྐལ།" : "Universal Access",
+      sub: isDzongkha ? "༡༠༠% རིན་མེད་ཞབས་ཏོག" : "100% Free at Point of Care",
+      color: "bg-emerald-50 text-emerald-800 border border-emerald-200/60",
+      to: "/our-work",
     },
     {
-      icon: Scale,
+      icon: Coins,
       label: t("ql_window_financing", "Window Financing"),
-      sub: t("ql_window_financing_sub", "Quarterly DMS Releases"),
-      color: "bg-soft-blue text-primary",
-      to: "/resources/annual-reports",
+      sub: isDzongkha ? "བཞི་དཔྱའི་མ་དངུལ་བཀྲམ་སྤེལ།" : "Quarterly Releases",
+      color: "bg-teal-50 text-teal-800 border border-teal-200/60",
+      to: "/our-work",
     },
   ];
 
-  const localizedStats = [
+  const defaultLocalizedStats = [
     {
       value: "Nu. 4.8B+",
       label: t("stat_sovereign_endowment", "Sovereign Endowment"),
@@ -329,8 +265,8 @@ function HomePage() {
     },
     {
       value: "438 + 110",
-      label: t("stat_meds_formulations", "Medicines & Formulations"),
-      sub: t("stat_modern_trad", "Modern + Traditional"),
+      label: t("stat_meds_formulations", "National Essential Medicines and Traditional Medicines"),
+      sub: "",
       icon: Pill,
     },
     {
@@ -341,11 +277,82 @@ function HomePage() {
     },
     {
       value: "1:1",
-      label: t("stat_sovereign_match", "Sovereign Match"),
-      sub: t("stat_guaranteed_rgob", "Guaranteed by RGoB"),
-      icon: Sparkles,
+      label: isDzongkha ? "གཞུང་གི་འདྲ་མཉམ་རྒྱབ་སྐྱོར།" : "Sovereign Match",
+      sub: isDzongkha ? "འབྲུག་གཞུང་གིས་ཉེན་ལེན་ཡོདཔ།" : "Guaranteed by RGoB",
+      icon: Landmark,
     },
   ];
+
+  // Resolve icon component from string name
+  const resolveMetricIcon = (iconName?: string | null) => {
+    switch (iconName) {
+      case "HeartPulse":
+      case "Heart":
+        return Heart;
+      case "Pill":
+        return Pill;
+      case "Syringe":
+        return Syringe;
+      case "Users":
+        return Users;
+      case "ShieldCheck":
+        return ShieldCheck;
+      case "Coins":
+        return Coins;
+      case "Building2":
+        return Building2;
+      case "Award":
+        return Award;
+      case "Activity":
+        return Activity;
+      default:
+        return Sparkles;
+    }
+  };
+
+  // Dynamic stats merged from Admin CMS
+  const localizedStats = useMemo(() => {
+    return defaultLocalizedStats.map((fallback, index) => {
+      const metric = liveMetrics[index];
+      if (!metric) return fallback;
+      return {
+        ...fallback,
+        value: metric.value || fallback.value,
+        label: index === 2 ? fallback.label : metric.label || fallback.label,
+        sub: index === 2 ? "" : metric.description || fallback.sub,
+        icon: resolveMetricIcon(metric.icon),
+      };
+    });
+  }, [liveMetrics, defaultLocalizedStats]);
+
+  // Dynamic news merged from Admin CMS
+  const effectiveNews = useMemo(() => {
+    const resolveNewsImage = (imgUrl?: string | null, idx: number = 0) => {
+      if (!imgUrl) return [newsVaccine, newsCommunity, newsReport][idx % 3];
+      if (imgUrl.includes("vaccine") || imgUrl.includes("flu")) return newsVaccine;
+      if (imgUrl.includes("community") || imgUrl.includes("remote")) return newsCommunity;
+      if (imgUrl.includes("report") || imgUrl.includes("annual")) return newsReport;
+      if (imgUrl.includes("bbs")) return imgBbs;
+      if (imgUrl.includes("traditional")) return imgTraditionalMed;
+      if (imgUrl.startsWith("http") || imgUrl.startsWith("/")) return imgUrl;
+      return [newsVaccine, newsCommunity, newsReport][idx % 3];
+    };
+
+    if (liveNews && liveNews.length > 0) {
+      return liveNews.slice(0, 3).map((item, idx) => ({
+        title: item.title,
+        date: new Date(item.publishedAt || item.createdAt).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        img: resolveNewsImage(item.coverImage, idx),
+        to: `/news/${item.slug}`,
+        source: item.author || "BHTF Communications",
+      }));
+    }
+    return NEWS;
+  }, [liveNews]);
 
   return (
     <div className="bg-background text-foreground">
@@ -363,11 +370,6 @@ function HomePage() {
         <div className="container-page py-10 sm:py-14 lg:py-20 relative z-10 w-full">
           {/* Left Column: Vision, Royal Mandate & Clean Frosted Quote */}
           <div className="max-w-xl lg:max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/85 text-amber-300 px-3.5 py-1 text-xs font-semibold mb-4 sm:mb-5 border border-amber-400/30 shadow-xs backdrop-blur-md">
-              <Sparkles className="size-3.5 text-amber-400" />
-              <span>{t("home_hero_match_badge", "1:1 Sovereign Match")}</span>
-            </div>
-
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
               {t("home_hero_title_1", "Building a")}<br />{t("home_hero_title_2", "Healthier Bhutan")}
             </h1>
@@ -381,50 +383,30 @@ function HomePage() {
               )}
             </p>
 
-            {/* Transparent Frosted Glass Royal Vision Callout */}
-            <div className="my-5 p-3 sm:p-3.5 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-xs space-y-1.5 max-w-lg">
-              <p className="text-xs sm:text-sm font-bold text-slate-900 italic leading-snug">
+            {/* Royal Vision Callout - clean typography without box background */}
+            <div className="my-5 space-y-1.5 max-w-lg">
+              <p className="text-sm sm:text-base font-bold text-slate-900 italic leading-snug">
                 {t(
                   "quote_king_text",
                   "“No Bhutanese should ever have to choose between their health and their livelihood.”"
                 )}
               </p>
-              <div className="flex items-center gap-2 pt-1 border-t border-slate-900/10">
+              <div className="flex items-center gap-2 pt-1 border-t border-slate-900/15">
                 <span className="size-1.5 rounded-full bg-amber-500" />
-                <span className="text-[11px] font-bold text-slate-900">
+                <span className="text-xs font-bold text-slate-900">
                   {isDzongkha
                     ? "མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་ འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག་མཆོག"
                     : "HM the Fourth Druk Gyalpo Jigme Singye Wangchuck"}
                 </span>
-                <span className="text-[10px] text-slate-600 hidden sm:inline">(2004)</span>
               </div>
-            </div>
-
-            {/* Action CTA Pills: Clean, responsive layout */}
-            <div className="mt-6 sm:mt-7 flex flex-wrap gap-3 items-center">
-              <Link
-                to="/donate"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-6 py-3 text-sm font-bold text-white shadow-elevated transition active:scale-95 whitespace-nowrap"
-              >
-                <Heart className="size-4 fill-current text-amber-300" />
-                <span>{t("home_btn_donate", "Donate (1:1 Sovereign Match)")}</span>
-              </Link>
-
-              <Link
-                to="/our-impact"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white/90 hover:bg-white border border-slate-300 px-6 py-3 text-sm font-bold text-slate-900 shadow-xs transition active:scale-95 whitespace-nowrap"
-              >
-                <span>{t("home_btn_explore_impact", "Explore Our Impact")}</span>
-                <ArrowRight className="size-4 text-emerald-800" />
-              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. QUICK LINKS PILL CARDS */}
+      {/* 2. QUICK LINKS PILL CARDS (5 Essential Pillars) */}
       <section className="container-page mt-4 sm:-mt-8 relative z-20">
-        <div className="bg-white rounded-2xl shadow-elevated p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 border border-border">
+        <div className="bg-white rounded-2xl shadow-elevated p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 border border-border">
           {localizedQuickLinks.map((q) => (
             <Link
               key={q.label}
@@ -442,7 +424,13 @@ function HomePage() {
       </section>
 
       {/* 3. GRADIENT STATS BAND */}
-      <section className="container-page mt-12 sm:mt-16">
+      <section className="container-page mt-12 sm:mt-16 relative" data-bhtf-section="homepage-stats">
+        <SectionEditBadge
+          label="Homepage Impact Metrics"
+          pageSlug="home"
+          sectionId="homepage-stats"
+          studioHref="/admin/metrics"
+        />
         <div className="bg-gradient-stats rounded-3xl p-6 sm:p-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-white shadow-elevated">
           {localizedStats.map((s) => (
             <div key={s.label} className="flex items-center gap-3">
@@ -459,17 +447,23 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 4. 3-COLUMN SECTION: LATEST NEWS | UPCOMING EVENTS | PUBLICATIONS */}
-      <section className="container-page mt-14 sm:mt-16 grid lg:grid-cols-3 gap-6">
-        {/* Col 1: Latest News with BBS Broadcast */}
-        <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between">
+      {/* 4. 3-COLUMN SECTION: NEWS AND EVENTS | ANNOUNCEMENT | PUBLICATIONS */}
+      <section className="container-page mt-14 sm:mt-16 grid lg:grid-cols-3 gap-6 relative" data-bhtf-section="homepage-news">
+        {/* Col 1: NEWS AND EVENTS */}
+        <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between relative">
+          <SectionEditBadge
+            label="Homepage News & BBS Dispatches"
+            pageSlug="home"
+            sectionId="homepage-news"
+            studioHref="/admin/news"
+          />
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
               <div>
                 <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
                   Media & Dispatches
                 </span>
-                <h3 className="font-bold text-lg text-primary">Latest News</h3>
+                <h3 className="font-bold text-lg text-primary">NEWS AND EVENTS</h3>
               </div>
               <Link to="/news" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
                 View All <ArrowRight className="size-3" />
@@ -477,7 +471,7 @@ function HomePage() {
             </div>
 
             <div className="space-y-4">
-              {NEWS.map((n) => (
+              {effectiveNews.map((n) => (
                 <Link key={n.title} to={n.to} className="flex gap-3 group cursor-pointer">
                   <div className="size-20 rounded-xl overflow-hidden shadow-2xs shrink-0 border border-border bg-slate-100">
                     <img src={n.img} alt={n.title} className="size-full object-cover group-hover:scale-105 transition" />
@@ -498,18 +492,18 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Col 2: Upcoming Events (11 Nov BHTF Day & 17 Dec RSEB) */}
+        {/* Col 2: ANNOUNCEMENT */}
         <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
               <div>
                 <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
-                  Official Calendar
+                  Official Notices
                 </span>
-                <h3 className="font-bold text-lg text-primary">Upcoming Events</h3>
+                <h3 className="font-bold text-lg text-primary">ANNOUNCEMENT</h3>
               </div>
-              <Link to="/news" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
-                Calendar <ArrowRight className="size-3" />
+              <Link to="/news/announcements" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
+                All Notices <ArrowRight className="size-3" />
               </Link>
             </div>
 
@@ -539,52 +533,40 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Col 3: Key Publications & Formularies */}
+        {/* Col 3: VACANCIES */}
         <div className="bg-white rounded-3xl shadow-card p-6 border border-border flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-5 pb-3 border-b border-border">
               <div>
                 <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase tracking-wider block">
-                  Statutory Register
+                  Official Recruitment
                 </span>
-                <h3 className="font-bold text-lg text-primary">Certified Publications</h3>
+                <h3 className="font-bold text-lg text-primary">VACANCIES</h3>
               </div>
-              <Link to="/reports" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
-                Audit Vault <ArrowRight className="size-3" />
+              <Link to="/news/careers" className="text-xs text-emerald-800 font-bold inline-flex items-center gap-1 hover:underline">
+                View All <ArrowRight className="size-3" />
               </Link>
             </div>
 
-            <ul className="space-y-3">
-              {[
-                { title: "Annual Audit Report (FY 2024–2025)", ref: "RAA-BHTF-2025-01", type: "RAA Certified PDF" },
-                { title: "National Essential Drugs Formulary (8th Edition)", ref: "MOH-EDP-2024", type: "438 Modern Formulations" },
-                { title: "Traditional Medicine Formulary (gSo-ba Rig-pa)", ref: "DTMS-BHTF-V2", type: "110 Remedies & Therapies" },
-                { title: "Window Financing Operational Manual", ref: "SOP-WF-2024", type: "Quarterly DMS Protocols" },
-              ].map((pub) => (
-                <li key={pub.title} className="p-2.5 rounded-xl border border-border hover:border-emerald-400 hover:bg-slate-50 transition group">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-start gap-2.5">
-                      <FileText className="size-4 text-primary shrink-0 mt-0.5 group-hover:text-emerald-700 transition" />
-                      <div>
-                        <div className="text-xs font-bold text-foreground leading-snug group-hover:text-primary">
-                          {pub.title}
-                        </div>
-                        <div className="text-[10px] text-muted-foreground mt-0.5">{pub.ref} • {pub.type}</div>
-                      </div>
-                    </div>
-                    <Download className="size-3.5 text-muted-foreground group-hover:text-emerald-700 shrink-0" />
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="space-y-4">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800">
+                  <Briefcase className="size-3.5" />
+                  <span>Current Openings</span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  There are currently no active vacancies or open consultancy tenders. All upcoming career opportunities, recruitment announcements, and terms of reference will be published here and advertised in national media.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="mt-5">
             <Link
-              to="/reports"
+              to="/news/careers"
               className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary text-xs font-bold transition text-center"
             >
-              <span>Access All Statutory Audit Filings</span>
+              <span>View Career Notices</span>
               <ArrowRight className="size-3.5" />
             </Link>
           </div>
@@ -595,24 +577,10 @@ function HomePage() {
       <section className="container-page mt-16 sm:mt-20">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 font-mono">
-              <ShieldCheck className="size-3.5" />
-              <span>Authentic Field Operations • No Stock Photos</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-primary mt-1">
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary">
               Field Operations & Nationwide Healthcare Logistics
             </h2>
-            <p className="text-sm text-muted-foreground max-w-2xl mt-1">
-              Photographs documenting the real-world impact of BHTF across hospitals, remote gewog dispensaries, and national warehouses.
-            </p>
           </div>
-          <Link
-            to="/our-impact"
-            className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:text-emerald-800 transition shrink-0"
-          >
-            <span>Explore Full Impact Portfolio</span>
-            <ArrowRight className="size-3.5" />
-          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -627,9 +595,6 @@ function HomePage() {
                   alt={d.title}
                   className="size-full object-cover group-hover:scale-105 transition duration-500"
                 />
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 text-white backdrop-blur-md text-[10px] font-bold">
-                  {d.tag}
-                </span>
               </div>
               <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                 <div>
@@ -640,29 +605,22 @@ function HomePage() {
                     {d.caption}
                   </p>
                 </div>
-                <div className="pt-2 border-t border-border flex items-center justify-between text-[11px] font-semibold text-primary">
-                  <span>{d.badge}</span>
-                  <CheckCircle2 className="size-3.5 text-emerald-700 shrink-0" />
-                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 6. TRADITIONAL MEDICINE & THERAPIES (gSo-ba Rig-pa) SHOWCASE */}
-      <section className="container-page mt-16 sm:mt-20">
+      {/* 6. TRADITIONAL MEDICINE & THERAPIES (SO-WAI RIGPA) SHOWCASE */}
+      <section className="container-page mt-16 sm:mt-20 mb-16">
         <div className="rounded-3xl bg-soft-green/60 border border-[oklch(0.85_0.08_155)] p-6 sm:p-10 lg:p-12 grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center">
           <div className="space-y-4">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[oklch(0.4_0.15_155)]">
-              gSo-ba Rig-pa • Traditional Medicine Financing
-            </span>
             <h3 className="text-2xl sm:text-3xl font-bold text-primary">
               Preserving Bhutan’s Sacred Healing Heritage: 110 Traditional Formulations
             </h3>
             <p className="text-sm text-foreground/80 leading-relaxed">
               In accordance with Royal Charter mandate, BHTF finances not only modern pharmaceuticals but also 110 essential
-              traditional medicines (gSo-ba Rig-pa) manufactured at the National Traditional Medicine Hospital in Thimphu.
+              traditional medicines (so-wai rigpa) manufactured at the National Traditional Medicine Hospital in Thimphu.
             </p>
             <div className="grid grid-cols-2 gap-3 pt-2">
               {[
@@ -682,202 +640,13 @@ function HomePage() {
           <div className="relative rounded-2xl overflow-hidden shadow-elevated border border-white aspect-[4/3] bg-white">
             <img
               src={imgTraditionalMed}
-              alt="Traditional Bhutanese Medicines and Therapies (gSo-ba Rig-pa)"
+              alt="Traditional Bhutanese Medicines and Therapies (so-wai rigpa)"
               className="size-full object-cover"
             />
             <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md rounded-xl p-2 text-white text-[11px] text-center font-medium">
-              Authentic gSo-ba Rig-pa essential traditional medications financed by BHTF
+              Authentic so-wai rigpa essential traditional medications financed by BHTF
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 7. STATUTORY FIDUCIARY LEDGER & 20 DZONGKHAGS MATRIX */}
-      <section className="container-page mt-16 sm:mt-20">
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
-            Audit Certified • Perpetual Stewardship
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary">
-            Statutory Fiduciary & Operational Ledger
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Audited financial benchmarks and nationwide commodity commitments under permanent trust stewardship.
-          </p>
-        </div>
-
-        {/* Ledger Table */}
-        <div className="bg-white rounded-3xl shadow-card border border-border overflow-hidden">
-          <div className="divide-y divide-border">
-            {FIDUCIARY_ROWS.map((row) => (
-              <div key={row.label} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
-                <div className="space-y-0.5 max-w-xl">
-                  <div className="text-sm font-bold text-foreground">{row.label}</div>
-                  <div className="text-xs text-muted-foreground">{row.subtext}</div>
-                </div>
-                <div className="text-base sm:text-lg font-bold text-primary font-mono sm:text-right shrink-0">
-                  {row.figure}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="p-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between text-xs text-muted-foreground gap-2">
-            <div>Source: Royal Audit Authority (RAA) Certified Statements & BHTF Secretariat Annual Filing</div>
-            <Link to="/reports" className="text-emerald-800 font-bold hover:underline">
-              Download Certified RAA Audit Report →
-            </Link>
-          </div>
-        </div>
-
-        {/* 20 Dzongkhags Regional Distribution */}
-        <div className="mt-10 bg-white rounded-3xl shadow-card border border-border p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-border gap-2">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
-                Equitable Kingdom-Wide Distribution
-              </span>
-              <h3 className="text-xl font-bold text-primary">Nationwide Coverage Across All 20 Dzongkhags</h3>
-            </div>
-            <div className="text-xs text-muted-foreground">205 Remote Gewogs • 100% Stockout Buffer</div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {DZONGKHAG_DATA.map((reg) => (
-              <div key={reg.region} className="space-y-3">
-                <div className="text-xs font-black uppercase tracking-wider text-primary pb-2 border-b-2 border-primary/20">
-                  {reg.region}
-                </div>
-                <div className="divide-y divide-slate-100">
-                  {reg.dzongkhags.map((d) => (
-                    <div key={d.name} className="py-2 flex items-baseline justify-between text-xs">
-                      <div>
-                        <span className="font-bold text-foreground">{d.name}</span>
-                        <span className="text-muted-foreground text-[11px] ml-1.5">({d.bhus})</span>
-                      </div>
-                      <span className="font-mono text-[11px] font-bold text-primary bg-soft-blue px-2 py-0.5 rounded">
-                        {d.allocation}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 8. WHY SUPPORT BHTF + WHATSAPP INSTANT CHAT */}
-      <section className="container-page mt-16 sm:mt-20 grid lg:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
-        <div className="rounded-3xl bg-gradient-to-br from-[#0B4F42] to-[#062822] text-white p-6 sm:p-10 grid sm:grid-cols-2 gap-8 items-center border border-emerald-600/30 shadow-card">
-          <div className="space-y-4">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-300">
-              Public Support & Sovereign 1:1 Match
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white">Why Support BHTF?</h3>
-            <p className="text-sm text-white/80 leading-relaxed font-light">
-              Every Ngultrum you contribute is permanently matched 1:1 by the Royal Government of Bhutan and tax deductible under DRC Registration No. E-73.
-            </p>
-            <div className="space-y-2 pt-2">
-              <div className="flex items-center gap-2 text-xs font-medium text-white/90">
-                <CheckCircle2 className="size-4 text-amber-300 shrink-0" />
-                <span>Zero administrative deduction from public donations</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-white/90">
-                <CheckCircle2 className="size-4 text-amber-300 shrink-0" />
-                <span>Ring-fenced principal invested strictly under Royal Charter</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-white/90">
-                <CheckCircle2 className="size-4 text-amber-300 shrink-0" />
-                <span>Immediate tax deduction certificate issued</span>
-              </div>
-            </div>
-            <div className="pt-2">
-              <Link
-                to="/donate"
-                className="inline-flex items-center gap-2 rounded-full bg-white text-emerald-950 px-6 py-3 text-sm font-bold shadow-elevated hover:bg-emerald-50 transition"
-              >
-                <Heart className="size-4 fill-current text-rose-600" />
-                <span>Make a Matched Contribution</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl overflow-hidden shadow-elevated aspect-[4/3] bg-white border border-white">
-            <img src={imgMaternalCare} alt="Maternal and Child Healthcare in Bhutan" className="size-full object-cover" />
-          </div>
-        </div>
-
-        {/* WhatsApp & Hotline Card */}
-        <div className="rounded-3xl bg-white border border-border shadow-card p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
-          <div className="space-y-3">
-            <div className="size-12 rounded-2xl bg-[#25D366] text-white grid place-items-center shadow-card">
-              <MessageCircle className="size-6 fill-current" />
-            </div>
-            <h3 className="text-xl font-bold text-primary">BHTF Direct Support</h3>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Connect directly with our secretariat for contribution queries, tax deduction receipts, or general guidance.
-            </p>
-            <div className="pt-2 space-y-2 text-xs text-foreground font-medium">
-              <div className="flex items-center gap-2">
-                <Phone className="size-4 text-emerald-700 shrink-0" />
-                <span>Phone: 02-338636 / 338637 / 77348083</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="size-4 text-emerald-700 shrink-0" />
-                <span>Email: bhtf@bhtf.bt</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 pt-4 border-t border-border">
-            <a
-              href="https://wa.me/97577348083"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-white px-5 py-3 text-xs font-bold hover:opacity-90 transition shadow-card"
-            >
-              <MessageCircle className="size-4 fill-current" />
-              <span>Chat on WhatsApp (+975 77348083)</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* 9. SOVEREIGN & MULTILATERAL PARTNERS STRIP */}
-      <section className="container-page mt-16 sm:mt-24 mb-16">
-        <div className="text-center space-y-2 mb-8">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
-            Multilateral & Sovereign Alliances
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary">
-            Sovereign & Multilateral Founding Partners
-          </h2>
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto">
-            Established under Royal Charter in Geneva with initial endowment contributions from the Royal Government of Bhutan and international partners.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6 items-center">
-          {PARTNERS.map((p) => (
-            <div
-              key={p.name}
-              className="group flex flex-col items-center justify-center p-3 rounded-2xl border border-border bg-white hover:border-emerald-600 hover:shadow-card transition-all duration-200 text-center min-h-[110px]"
-            >
-              <div className="h-12 w-full flex items-center justify-center mb-2 px-1">
-                <img
-                  src={p.logo}
-                  alt={p.name}
-                  className="max-h-11 max-w-[90%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-200"
-                />
-              </div>
-              <span className="text-[10px] font-bold text-foreground leading-tight line-clamp-1">
-                {p.name}
-              </span>
-              <span className="text-[9px] text-muted-foreground mt-0.5 line-clamp-1">
-                {p.role}
-              </span>
-            </div>
-          ))}
         </div>
       </section>
     </div>

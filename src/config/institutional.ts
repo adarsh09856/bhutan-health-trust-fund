@@ -66,8 +66,8 @@ export const institutionalConfig: InstitutionalConfig = {
   taxExemptionId: process.env.BHTF_TAX_EXEMPTION_ID || "Tax Exemption Registration No. E-73",
   drcCircularRef: "DRC/TAX-A&L/DO-16/399",
 
-  // Sovereign Matching Ratio
-  sovereignMatchRatio: "1:1",
+  // Direct Healthcare Endowment Ratio
+  sovereignMatchRatio: "Direct",
 
   // Tax Certificate Validity Flag
   isTaxCertificateValid: true,

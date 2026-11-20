@@ -77,7 +77,7 @@ const upcomingEventsList: EventItem[] = [
     agenda: [
       "Launch of National Health Crowd Fundraising Platform with RSEB",
       "Corporate Philanthropic and Employee Contribution Drives",
-      "Live Digital Dashboard Demonstrating 1:1 RGOB Sovereign Match",
+      "Live Digital Dashboard Demonstrating National Health Contributions",
     ],
   },
   {

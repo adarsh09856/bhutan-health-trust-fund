@@ -35,9 +35,9 @@ export const defaultCorePages: DefaultPageDef[] = [
   },
   {
     slug: "about-trustees",
-    title: "Board of Trustees | Bhutan Health Trust Fund",
+    title: "Board of Directors | Bhutan Health Trust Fund",
     metaDescription:
-      "Official directory of the Board of Trustees of the Bhutan Health Trust Fund (Table 1.1), ministerial leadership, and fiduciary governance.",
+      "Official directory of the Board of Directors of the Bhutan Health Trust Fund, ministerial leadership, and fiduciary governance.",
     isSystemPage: true,
     sections: [],
   },
@@ -45,7 +45,7 @@ export const defaultCorePages: DefaultPageDef[] = [
     slug: "about-committees",
     title: "Asset Management Committee (AMC) | Bhutan Health Trust Fund",
     metaDescription:
-      "Official directory and mandate of the BHTF Asset Management Committee (AMC), Table 1.2 members, and the 70–20–10 operating model.",
+      "Official directory and mandate of the BHTF Asset Management Committee (AMC), committee members, and the 70–20–10 operating model.",
     isSystemPage: true,
     sections: [],
   },
@@ -117,7 +117,7 @@ export const defaultCorePages: DefaultPageDef[] = [
     slug: "get-involved",
     title: "Donate & Support | Bhutan Health Trust Fund",
     metaDescription:
-      "Sustain universal primary healthcare for Bhutan through 1:1 RGOB matched endowment giving.",
+      "Sustain universal primary healthcare for Bhutan through sovereign endowment giving.",
     isSystemPage: true,
     sections: [],
   },
@@ -125,7 +125,7 @@ export const defaultCorePages: DefaultPageDef[] = [
     slug: "donate",
     title: "Donate & Support | Bhutan Health Trust Fund",
     metaDescription:
-      "Make a contribution to sustain free primary healthcare for Bhutan. 1:1 RGOB matched giving.",
+      "Make a contribution to sustain free primary healthcare for Bhutan. Sovereign endowment fund.",
     isSystemPage: true,
     sections: [],
   },

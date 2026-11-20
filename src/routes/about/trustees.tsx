@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { PageHero } from "@/components/page-hero";
-import { SectionEditBadge } from "@/components/public/section-edit-badge";
+import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
+import { PageRenderer } from "@/components/page-renderer";
+import { getPublicTrustees, getPublicPage } from "@/lib/api/public.functions";
+import type { PageBlockSection, Trustee } from "@/lib/db/schema";
 import { Sparkles } from "lucide-react";
 import trusteeLyonpoTandin from "@/assets/bhtf/trustees/lyonpo_tandin_wangchuk.jpg";
 import trusteeLopenTshering from "@/assets/bhtf/trustees/lopen_tshering_wangchuk.jpg";
@@ -11,18 +14,36 @@ import trusteeUgyenChoden from "@/assets/bhtf/trustees/ugyen_choden.jpg";
 import trusteeNorbuDendup from "@/assets/bhtf/trustees/norbu_dendup.jpeg";
 import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
-import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { FiduciaryMemberCard, type FiduciaryMember } from "@/components/fiduciary-member-card";
 
 export const Route = createFileRoute("/about/trustees")({
+  loader: async () => {
+    try {
+      const [liveTrustees, customPage] = await Promise.all([
+        getPublicTrustees(),
+        getPublicPage({ data: { slug: "about-trustees" } }).catch(() => null),
+      ]);
+      return {
+        liveTrustees: liveTrustees || [],
+        trusteesLoaded: true,
+        customPage,
+      };
+    } catch {
+      return {
+        liveTrustees: [],
+        trusteesLoaded: false,
+        customPage: null,
+      };
+    }
+  },
   head: () => ({
     meta: [
-      { title: "Board of Trustees | Bhutan Health Trust Fund" },
+      { title: "Board of Directors | Bhutan Health Trust Fund" },
       {
         name: "description",
         content:
-          "Official directory of the Board of Trustees of the Bhutan Health Trust Fund (Table 1.1), ministerial leadership, and fiduciary governance.",
+          "Official directory of the Board of Directors of the Bhutan Health Trust Fund, ministerial leadership, and fiduciary governance.",
       },
     ],
   }),
@@ -35,14 +56,15 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 1,
     name: "HE Lyonpo Tandin Wangchuk",
     nameDz: "སྐུ་ཞབས་ བློན་པོ་ བསྟན་འཛིན་དབང་ཕྱུག",
-    role: "Chairperson, Board of Trustees",
-    roleDz: "ཚོགས་གཙོ། བཀོད་ཚོགས་ཀྱི་དབུ་ཁྲིད།",
+    role: "Chairperson",
+    roleDz: "ཚོགས་གཙོ།",
     organization: "Minister, Ministry of Health",
     organizationDz: "གསོ་བའི་བློན་པོ། གསོ་བའི་ལྷན་ཁག",
-    badge: "Chairperson • Table 1.1",
+    badge: "Chairperson",
     badgeDz: "ཚོགས་གཙོ།",
-    desc: "Provides supreme ministerial leadership, steering sovereign health financing policies and aligning BHTF endowment disbursements with Bhutan's constitutional mandate for free universal primary healthcare. Oversees the Board of Trustees in safeguarding long-term fiscal resilience.",
-    descDz: "གསོ་བའི་བློན་པོ་མཆོག་གིས་ བཀོད་ཚོགས་ཀྱི་ཚོགས་གཙོ་སྦེ་ མཛད་འགན་བཞེས་ཏེ་ རྒྱལ་ཁབ་ནང་ རིན་མེད་གསོ་བའི་ཞབས་ཏོག་ གཏན་འཇགས་སྦེ་ བཞག་ཐབས་ལུ་ སྲིད་བྱུས་ཀྱི་ དབུ་ཁྲིད་གནང་དོ་ཡོད།",
+    desc: "Provides supreme ministerial leadership, steering sovereign health financing policies and aligning BHTF endowment disbursements with Bhutan's constitutional mandate for free universal primary healthcare. Oversees the Board of Directors in safeguarding long-term fiscal resilience.",
+    descDz:
+      "གསོ་བའི་བློན་པོ་མཆོག་གིས་ བཀོད་ཚོགས་ཀྱི་ཚོགས་གཙོ་སྦེ་ མཛད་འགན་བཞེས་ཏེ་ རྒྱལ་ཁབ་ནང་ རིན་མེད་གསོ་བའི་ཞབས་ཏོག་ གཏན་འཇགས་སྦེ་ བཞག་ཐབས་ལུ་ སྲིད་བྱུས་ཀྱི་ དབུ་ཁྲིད་གནང་དོ་ཡོད།",
     tags: [
       "Ministerial Leadership",
       "Universal Health Coverage",
@@ -63,26 +85,17 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 2,
     name: "Lopen Tshering Wangchuk",
     nameDz: "སློབ་དཔོན་ ཚེ་རིང་དབང་ཕྱུག",
-    role: "Trustee",
+    role: "Member",
     roleDz: "ཚོགས་མི།",
     organization: "Secretary, Monastic Council for Administration & Development, Zhung Dratshang",
     organizationDz: "དྲུང་ཆེན། གཞུང་གྲྭ་ཚང་།",
-    badge: "Zhung Dratshang Representative",
-    badgeDz: "གཞུང་གྲྭ་ཚང་།",
+    badge: "Member",
+    badgeDz: "ཚོགས་མི།",
     desc: "Represents the Central Monastic Body (Zhung Dratshang), upholding ethical fiduciary responsibility, spiritual stewardship, and compassionate healthcare across the Kingdom. Bridges traditional spiritual values with nationwide health welfare.",
-    descDz: "གཞུང་གྲྭ་ཚང་གི་ སྐུ་ཚབ་སྦེ་ མཛད་འགན་བཞེས་ཏེ་ དམ་པའི་ཆོས་དང་མཐུན་པའི་ བྱམས་སྙིང་རྗེའི་ གསོ་བའི་ཞབས་ཏོག་དང་ ཁྲིམས་མཐུན་བློ་གཏད་ཀྱི་ ཕྱག་ལཱ་གནང་དོ་ཡོད།",
-    tags: [
-      "Ethical Stewardship",
-      "Compassionate Care",
-      "Zhung Dratshang",
-      "Monastic Welfare",
-    ],
-    tagsDz: [
-      "དམ་ཆོས་ལམ་ལུགས།",
-      "བྱམས་སྙིང་རྗེའི་ཞབས་ཏོག",
-      "གཞུང་གྲྭ་ཚང་།",
-      "དགོན་སྡེའི་ཕན་བདེ།",
-    ],
+    descDz:
+      "གཞུང་གྲྭ་ཚང་གི་ སྐུ་ཚབ་སྦེ་ མཛད་འགན་བཞེས་ཏེ་ དམ་པའི་ཆོས་དང་མཐུན་པའི་ བྱམས་སྙིང་རྗེའི་ གསོ་བའི་ཞབས་ཏོག་དང་ ཁྲིམས་མཐུན་བློ་གཏད་ཀྱི་ ཕྱག་ལཱ་གནང་དོ་ཡོད།",
+    tags: ["Ethical Stewardship", "Compassionate Care", "Zhung Dratshang", "Monastic Welfare"],
+    tagsDz: ["དམ་ཆོས་ལམ་ལུགས།", "བྱམས་སྙིང་རྗེའི་ཞབས་ཏོག", "གཞུང་གྲྭ་ཚང་།", "དགོན་སྡེའི་ཕན་བདེ།"],
     photo: trusteeLopenTshering,
     theme: "emerald",
   },
@@ -91,26 +104,17 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 3,
     name: "Ms. Ugyen Choden",
     nameDz: "སྐུ་ཞབས་ ཨོ་རྒྱན་ཆོས་ལྡན།",
-    role: "Trustee & AMC Chairperson",
-    roleDz: "ཚོགས་མི་དང་ མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་གི་ ཚོགས་གཙོ།",
+    role: "Member",
+    roleDz: "ཚོགས་མི།",
     organization: "Deputy Governor, Royal Monetary Authority (RMA)",
     organizationDz: "དངུལ་ལས་དབང་འཛིན་གྱི་ ལས་ཚབ་མངའ་བདག",
-    badge: "Central Bank / AMC Chair",
-    badgeDz: "དངུལ་ལས་དབང་འཛིན།",
-    desc: "Brings extensive central banking, monetary policy, and financial regulatory expertise. As Chairperson of the Asset Management Committee (AMC), she directs the Fund's 70–20–10 investment model, foreign currency allocations, and capital preservation benchmarks.",
-    descDz: "རྒྱལ་གཞུང་དངུལ་ལས་དབང་འཛིན་གྱི་ ཉམས་མྱོང་དང་བསྟུན་ མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་ (AMC) གི་ ཚོགས་གཙོ་སྦེ་ མ་དངུལ་སྐྱེད་འཕེལ་དང་ ༧༠-༢༠-༡༠ ལག་ལེན་ཐབས་བྱུས་ཚུ་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
-    tags: [
-      "Central Banking",
-      "Monetary Policy",
-      "70-20-10 Model",
-      "Foreign Reserves",
-    ],
-    tagsDz: [
-      "དངུལ་ཁང་སྲིད་བྱུས།",
-      "མ་རྩ་བཙུགས་བཞག",
-      "༧༠-༢༠-༡༠ ལམ་ལུགས།",
-      "ཕྱི་དངུལ་ཉེན་སྲུང་།",
-    ],
+    badge: "Member",
+    badgeDz: "ཚོགས་མི།",
+    desc: "Brings central banking, monetary policy, and financial regulatory expertise to the Board’s oversight of the Fund.",
+    descDz:
+      "རྒྱལ་གཞུང་དངུལ་ལས་དབང་འཛིན་གྱི་ ཉམས་མྱོང་དང་བསྟུན་ མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་ (AMC) གི་ ཚོགས་གཙོ་སྦེ་ མ་དངུལ་སྐྱེད་འཕེལ་དང་ ༧༠-༢༠-༡༠ ལག་ལེན་ཐབས་བྱུས་ཚུ་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: ["Central Banking", "Monetary Policy", "Financial Oversight"],
+    tagsDz: ["དངུལ་ཁང་སྲིད་བྱུས།", "མ་རྩ་བཙུགས་བཞག", "༧༠-༢༠-༡༠ ལམ་ལུགས།", "ཕྱི་དངུལ་ཉེན་སྲུང་།"],
     photo: trusteeUgyenChoden,
     theme: "emerald",
   },
@@ -119,26 +123,22 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 4,
     name: "Mr. Chencho T. Namgay",
     nameDz: "སྐུ་ཞབས་ སྤེན་ཅོ་ ཏི་ རྣམ་རྒྱལ།",
-    role: "Trustee & AMC Member",
-    roleDz: "ཚོགས་མི། (མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་གི་ ཚོགས་མི)",
+    role: "Member",
+    roleDz: "ཚོགས་མི།",
     organization: "Chief Executive Officer, National Pension and Provident Fund (NPPF)",
     organizationDz: "གཙོ་འཛིན་འགོ་དཔོན། རྒྱལ་ཡོངས་རྒས་ཕོགས་དང་ ལྟོ་ཕོགས་མ་དངུལ།",
-    badge: "Pension Fiduciary / AMC Member",
-    badgeDz: "NPPF གཙོ་འཛིན།",
+    badge: "Member",
+    badgeDz: "ཚོགས་མི།",
     desc: "Provides institutional investment acumen, large-scale portfolio management insight, and fiduciary risk oversight from Bhutan's premier pension and provident fund institution. Guides risk-adjusted asset returns and diversification.",
-    descDz: "རྒྱལ་ཡོངས་རྒས་ཕོགས་མ་དངུལ་ (NPPF) གི་ གཙོ་འཛིན་འགོ་དཔོན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ སྐུ་ཞབས་ཀྱིས་ མ་རྩ་བགོ་བཀྲམ་དང་ ཉེན་ཁ་དོ་དམ་གྱི་ གྲོས་སྟོན་གནང་དོ་ཡོད།",
+    descDz:
+      "རྒྱལ་ཡོངས་རྒས་ཕོགས་མ་དངུལ་ (NPPF) གི་ གཙོ་འཛིན་འགོ་དཔོན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ སྐུ་ཞབས་ཀྱིས་ མ་རྩ་བགོ་བཀྲམ་དང་ ཉེན་ཁ་དོ་དམ་གྱི་ གྲོས་སྟོན་གནང་དོ་ཡོད།",
     tags: [
       "Institutional Investments",
       "Portfolio Diversification",
       "Risk Governance",
       "Yield Optimization",
     ],
-    tagsDz: [
-      "མ་རྩ་བགོ་བཀྲམ།",
-      "ཉེན་ཁ་དོ་དམ།",
-      "སྐྱེད་འཕེལ་ཐབས་བྱུས།",
-      "ཚོགས་ཆུང་ཚོགས་མི།",
-    ],
+    tagsDz: ["མ་རྩ་བགོ་བཀྲམ།", "ཉེན་ཁ་དོ་དམ།", "སྐྱེད་འཕེལ་ཐབས་བྱུས།", "ཚོགས་ཆུང་ཚོགས་མི།"],
     photo: trusteeChenchoNamgay,
     theme: "emerald",
   },
@@ -147,26 +147,17 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 5,
     name: "Mr. Norbu Dendup",
     nameDz: "སྐུ་ཞབས་ ནོར་བུ་དོན་གྲུབ།",
-    role: "Trustee & AMC Member",
-    roleDz: "ཚོགས་མི། (མ་རྩ་བདག་སྐྱོང་ཚོགས་ཆུང་གི་ ཚོགས་མི)",
+    role: "Member",
+    roleDz: "ཚོགས་མི།",
     organization: "Director, Department of Treasury and Accounts, Ministry of Finance",
     organizationDz: "མདོ་ཆེན། རྩིས་མཛོད་དང་རྩིས་ཁྲ་ལས་ཁུངས། དངུལ་རྩིས་ལྷན་ཁག",
-    badge: "Treasury Governance / AMC Member",
-    badgeDz: "དངུལ་རྩིས་ལྷན་ཁག",
+    badge: "Member",
+    badgeDz: "ཚོགས་མི།",
     desc: "Oversees sovereign public financial management, government treasury bonds, and state budget alignment under the Ministry of Finance. Ensures robust fiduciary integration between the national exchequer and the Health Trust Fund.",
-    descDz: "དངུལ་རྩིས་ལྷན་ཁག་གི་ མདོ་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ སྐུ་ཞབས་ཀྱིས་ གཞུང་གི་བུན་འཛིན་དང་ རྒྱལ་གཞུང་རྩིས་མཛོད་ མཉམ་འབྲེལ་གྱི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
-    tags: [
-      "Public Financial Management",
-      "Treasury Bonds",
-      "Budget Alignment",
-      "Audit Controls",
-    ],
-    tagsDz: [
-      "རྒྱལ་གཞུང་རྩིས་མཛོད།",
-      "གཞུང་གི་བུན་འཛིན།",
-      "འཆར་དངུལ་མཉམ་སྦྱོར།",
-      "རྩིས་ཞིབ་དོ་དམ།",
-    ],
+    descDz:
+      "དངུལ་རྩིས་ལྷན་ཁག་གི་ མདོ་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ སྐུ་ཞབས་ཀྱིས་ གཞུང་གི་བུན་འཛིན་དང་ རྒྱལ་གཞུང་རྩིས་མཛོད་ མཉམ་འབྲེལ་གྱི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    tags: ["Public Financial Management", "Treasury Bonds", "Budget Alignment", "Audit Controls"],
+    tagsDz: ["རྒྱལ་གཞུང་རྩིས་མཛོད།", "གཞུང་གི་བུན་འཛིན།", "འཆར་དངུལ་མཉམ་སྦྱོར།", "རྩིས་ཞིབ་དོ་དམ།"],
     photo: trusteeNorbuDendup,
     theme: "emerald",
   },
@@ -175,20 +166,16 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 6,
     name: "Mr. Pema Tshering",
     nameDz: "སྐུ་ཞབས་ པདྨ་ཚེ་རིང་།",
-    role: "Trustee (Independent Director)",
-    roleDz: "རང་དབང་ཅན་གྱི་ ཚོགས་མི།",
+    role: "Member",
+    roleDz: "ཚོགས་མི།",
     organization: "Independent Fiduciary Expert / Former CEO, T Bank Ltd.",
     organizationDz: "དངུལ་ཁང་གཙོ་འཛིན་ཟུར་པ། ཊི་དངུལ་ཁང་།",
-    badge: "Financial Sector Specialist",
-    badgeDz: "དངུལ་ཁང་ཉམས་མྱོང་ཅན།",
+    badge: "Member",
+    badgeDz: "ཚོགས་མི།",
     desc: "Serves as an independent fiduciary expert with decades of commercial banking, capital markets, and corporate governance leadership in Bhutan. Provides impartial financial oversight and external audit alignment.",
-    descDz: "ཚོང་འབྲེལ་དངུལ་ཁང་དང་ ཚོང་འབྲེལ་མ་རྩ་ དོ་དམ་གྱི་ ཉམས་མྱོང་རྒྱ་ཆེན་ཡོད་མི་ རང་དབང་ཅན་གྱི་ འགོ་དཔོན་སྦེ་ བཀོད་ཚོགས་ནང་ ཕྱག་ལཱ་གནང་དོ་ཡོད།",
-    tags: [
-      "Commercial Banking",
-      "Capital Markets",
-      "Corporate Governance",
-      "Independent Audit",
-    ],
+    descDz:
+      "ཚོང་འབྲེལ་དངུལ་ཁང་དང་ ཚོང་འབྲེལ་མ་རྩ་ དོ་དམ་གྱི་ ཉམས་མྱོང་རྒྱ་ཆེན་ཡོད་མི་ རང་དབང་ཅན་གྱི་ འགོ་དཔོན་སྦེ་ བཀོད་ཚོགས་ནང་ ཕྱག་ལཱ་གནང་དོ་ཡོད།",
+    tags: ["Commercial Banking", "Capital Markets", "Corporate Governance", "Independent Audit"],
     tagsDz: [
       "ཚོང་འབྲེལ་དངུལ་ཁང་།",
       "མ་རྩའི་ཁྲོམ་ར།",
@@ -203,62 +190,115 @@ const trusteesList: FiduciaryMember[] = [
     orderNumber: 7,
     name: "Dr. Phub Tshering",
     nameDz: "འབུམ་རམས་པ་ ཕུར་བུ་ཚེ་རིང་།",
-    role: "Trustee",
+    role: "Member",
     roleDz: "ཚོགས་མི།",
     organization: "Medical Director, Jigme Dorji Wangchuck National Referral Hospital (JDWNRH)",
     organizationDz: "གསོ་རིག་མདོ་ཆེན། རྒྱལ་ཡོངས་གཙོ་བསྟེན་སྨན་ཁང་།",
-    badge: "Clinical Specialist / Tertiary Care",
-    badgeDz: "གསོ་རིག་དམིགས་བསལ་མཁས་པ།",
+    badge: "Member",
+    badgeDz: "ཚོགས་མི།",
     desc: "Provides high-level clinical guidance, therapeutic efficacy reviews, and medical formulary alignment, directly representing the nation's premier tertiary referral hospital. Bridges financial allocations with on-the-ground patient care realities.",
-    descDz: "རྒྱལ་ཡོངས་གཙོ་བསྟེན་སྨན་ཁང་ (JDWNRH) གི་ གསོ་རིག་མདོ་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ འབུམ་རམས་པ་གིས་ སྨན་རྫས་ཀྱི་སྤུས་ཚད་དང་ ནད་པའི་ཞབས་ཏོག་གི་ གྲོས་སྟོན་གནང་དོ་ཡོད།",
-    tags: [
-      "Clinical Governance",
-      "National Formulary",
-      "Tertiary Healthcare",
-      "Drug Efficacy",
-    ],
-    tagsDz: [
-      "གསོ་རིག་ལམ་ལུགས།",
-      "རྒྱལ་ཡོངས་སྨན་རྫས་ཐོ།",
-      "སྨན་ཁང་ལྟེ་བ།",
-      "སྨན་གྱི་སྤུས་ཚད།",
-    ],
+    descDz:
+      "རྒྱལ་ཡོངས་གཙོ་བསྟེན་སྨན་ཁང་ (JDWNRH) གི་ གསོ་རིག་མདོ་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་མི་ འབུམ་རམས་པ་གིས་ སྨན་རྫས་ཀྱི་སྤུས་ཚད་དང་ ནད་པའི་ཞབས་ཏོག་གི་ གྲོས་སྟོན་གནང་དོ་ཡོད།",
+    tags: ["Clinical Governance", "National Formulary", "Tertiary Healthcare", "Drug Efficacy"],
+    tagsDz: ["གསོ་རིག་ལམ་ལུགས།", "རྒྱལ་ཡོངས་སྨན་རྫས་ཐོ།", "སྨན་ཁང་ལྟེ་བ།", "སྨན་གྱི་སྤུས་ཚད།"],
     photo: trusteeDrPhub,
     theme: "emerald",
   },
   {
     id: "trustee-gyambo",
     orderNumber: 8,
-    name: "Mr. Gyambo Sithey, PhD",
-    nameDz: "སྐུ་ཞབས་ རྒྱལ་མཚན་སི་ཐེ། (འབུམ་རམས་པ)",
+    name: "Dr. Gyambo Sithey, PhD",
+    nameDz: "འབུམ་རམས་པ་ རྒྱལ་མཚན་སི་ཐེ།",
     role: "Director & Member Secretary",
     roleDz: "མདོ་ཆེན། / ཚོགས་མི་དྲུང་ཆེན།",
     organization: "Director, Bhutan Health Trust Fund Secretariat",
     organizationDz: "མདོ་ཆེན། འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ དྲུང་ཆེན་ཡིག་ཚང་།",
-    badge: "Director & Member Secretary • Article 5.3",
+    badge: "Director & Member Secretary",
     badgeDz: "མདོ་ཆེན་ / ཚོགས་མི་དྲུང་ཆེན།",
-    desc: "Serves as the ex-officio Member Secretary of the Board of Trustees pursuant to Article 5, Clause 5.3 of the Royal Charter. Heads the Secretariat in executing all Board decisions, managing sovereign endowment disbursements, and steering nationwide healthcare financing.",
-    descDz: "རྒྱལ་པོའི་བཀའ་ཤོག་གི་དགོངས་དོན་ལྟར་ བཀོད་ཚོགས་ཀྱི་ ཚོགས་མི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་སྟེ་ བཀོད་ཚོགས་ཀྱི་གྲོས་ཆོད་ཚུ་ ལག་ལེན་འཐབ་ནི་དང་ དྲུང་ཆེན་ཡིག་ཚང་གི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
+    desc: "Serves as the ex-officio Member Secretary of the Board of Directors pursuant to Article 5, Clause 5.3 of the Royal Charter. Heads the Secretariat in executing all Board decisions, managing sovereign endowment disbursements, and steering nationwide healthcare financing.",
+    descDz:
+      "རྒྱལ་པོའི་བཀའ་ཤོག་གི་དགོངས་དོན་ལྟར་ བཀོད་ཚོགས་ཀྱི་ ཚོགས་མི་དྲུང་ཆེན་སྦེ་ ཕྱག་ལཱ་གནང་སྟེ་ བཀོད་ཚོགས་ཀྱི་གྲོས་ཆོད་ཚུ་ ལག་ལེན་འཐབ་ནི་དང་ དྲུང་ཆེན་ཡིག་ཚང་གི་ འགོ་ཁྲིད་གནང་དོ་ཡོད།",
     tags: [
       "Ex-Officio Member Secretary",
       "Executive Directorate",
       "Board Governance",
       "Operations & Policy",
     ],
-    tagsDz: [
-      "ཚོགས་མི་དྲུང་ཆེན།",
-      "དྲུང་ཆེན་ཡིག་ཚང་།",
-      "བཀོད་ཚོགས་གྲོས་ཆོད།",
-      "སྲིད་བྱུས་ལག་ལེན།",
-    ],
+    tagsDz: ["ཚོགས་མི་དྲུང་ཆེན།", "དྲུང་ཆེན་ཡིག་ཚང་།", "བཀོད་ཚོགས་གྲོས་ཆོད།", "སྲིད་བྱུས་ལག་ལེན།"],
     photo: trusteeDrGyambo,
     theme: "emerald",
   },
 ];
 
 function TrusteesPage() {
+  const loaderData = Route.useLoaderData();
+  const [dbTrustees, setDbTrustees] = useState<Trustee[]>(loaderData?.liveTrustees || []);
+  const [hasLoadedTrustees, setHasLoadedTrustees] = useState(Boolean(loaderData?.trusteesLoaded));
   const { t, isDzongkha } = useLanguage();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
+
+  useEffect(() => {
+    getPublicTrustees()
+      .then((res) => { setDbTrustees(res || []); setHasLoadedTrustees(true); })
+      .catch(() => {});
+  }, []);
+
+  const effectiveTrustees = useMemo(() => {
+    if (!hasLoadedTrustees) return trusteesList;
+
+    const activeDb = dbTrustees
+      .filter((t) => t.isActive !== false)
+      .sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
+
+    const identityAliases: Record<string, string[]> = {
+      "trustee-tandin": ["tandin wangchuk", "tandin"],
+      "trustee-lopen": ["lopen tshering"],
+      "trustee-ugyen": ["ugyen choden"],
+      "trustee-chencho": ["chencho t namgay", "chencho namgay", "chencho"],
+      "trustee-norbu": ["norbu dendup"],
+      "trustee-pema": ["pema tshering"],
+      "trustee-phub": ["phub tshering"],
+      "trustee-gyambo": ["gyambo sithey", "gyambo"],
+    };
+    const normalizedName = (name: string) =>
+      name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, " ")
+        .trim();
+    const canonicalTrustees = new Map<string, Trustee>();
+    activeDb.forEach((record) => {
+      const normalized = normalizedName(record.name);
+      const canonical = trusteesList.find((candidate) => {
+        const aliases = identityAliases[candidate.id] || [];
+        return aliases.some((alias) => normalized.includes(alias));
+      });
+      if (canonical && !canonicalTrustees.has(canonical.id)) {
+        canonicalTrustees.set(canonical.id, record);
+      }
+    });
+
+    // The official PDF defines the public roster. Ignore unrelated legacy rows in the
+    // trustees table, while still allowing admin edits to each recognized profile.
+    return trusteesList.map((canonical): FiduciaryMember => {
+      const record = canonicalTrustees.get(canonical.id);
+      if (!record) return canonical;
+      const storedPhoto = record.photoUrl?.trim();
+      const usableStoredPhoto = storedPhoto && !/\/src\//i.test(storedPhoto);
+      return {
+        ...canonical,
+        name: canonical.name,
+        role: record.role || canonical.role,
+        organization: record.organization || canonical.organization,
+        badge: record.badge || canonical.badge,
+        desc: record.bio || canonical.desc,
+        photo: usableStoredPhoto ? storedPhoto : canonical.photo,
+        fallbackPhoto: canonical.photo,
+      };
+    });
+  }, [dbTrustees, hasLoadedTrustees]);
+
+  const director = effectiveTrustees.find((member) => member.id === "trustee-gyambo");
+  const boardMembers = effectiveTrustees.filter((member) => member.id !== "trustee-gyambo");
 
   const handleToggleCard = (id: string) => {
     setActiveCardId((prev) => (prev === id ? null : id));
@@ -267,68 +307,35 @@ function TrusteesPage() {
   return (
     <div className="space-y-16 sm:space-y-24 pb-28 sm:pb-36 bg-[#FAF8F3]">
       <PageHero
-        badge={t("trustees_page_badge", "Section 1.1 • Fiduciary Governance")}
-        title={t("trustees_page_title", "Board of trustees")}
+        title={isDzongkha ? "བཀོད་ཚོགས།" : "Board of Directors"}
         subtitle={t(
           "trustees_page_subtitle",
-          "The Bhutan Health Trust Fund operates under the guidance of the Board of Directors, headed by a Chairperson, providing strategic direction, accountability, and long-term sustainability."
+          "The Bhutan Health Trust Fund operates under the guidance of the Board of Directors, headed by a Chairperson, providing strategic direction, accountability, and long-term sustainability.",
         )}
         breadcrumb={[
           { label: t("nav_home", "Home"), to: "/" },
           { label: t("nav_about_us", "About Us"), to: "/about" },
-          { label: t("trustees_page_title", "Board of trustees") },
+          { label: isDzongkha ? "བཀོད་ཚོགས།" : "Board of Directors" },
         ]}
       />
 
-      {/* Complete Trustees Gallery Grid in Clean Large Cards with DHI-Style Interactive Hover Reveal */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="trustees-roster">
-        <SectionEditBadge
-          label="Board of Trustees Roster"
-          pageSlug="about-trustees"
-          sectionId="trustees-roster"
-          studioHref="/admin/trustees"
-          initialData={{
-            title: "1.1 Board of trustees",
-            subtitle: "Table 1.1 official listing of Board of Trustees members and their positions.",
-            badge: "Table 1.1 • Board of Trustees",
-          }}
-        />
-
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-emerald-800 block font-mono">
-            {t("trustees_table_badge", "Table 1.1 • High-Level Governance")}
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900">
-            {isDzongkha
-              ? "རེའུ་མིག་ ༡.༡ • བཀོད་ཚོགས་ཀྱི་འཐུས་མི་ཚུ།"
-              : "Table 1.1 • Fiduciary Board of Directors"}
-          </h2>
-          <p className="text-slate-600 text-sm sm:text-base font-light max-w-2xl mx-auto">
-            {isDzongkha
-              ? "ཁ་གསལ་གཟིགས་ནིའི་དོན་ལུ་ བཀོད་ཚོགས་ཚོགས་མིའི་པར་གུར་ མཛུབ་རིས་ (Hover) བཞག་གནང་། ཚོགས་མི་རེ་རེ་བཞིན་གྱི་ ལོ་རྒྱུས་དང་ འགན་ཁུར་ མཛད་འགན་ཚུ་ གསལ་ཏོག་ཏོ་སྦེ་ མཐོང་ཚུགས།"
-              : "Hover over any trustee card to reveal detailed institutional biographies, statutory responsibilities, and fiduciary portfolios."}
-          </p>
-          <div className="pt-2 flex items-center justify-center gap-2">
-            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-3.5 py-1 rounded-full shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-              <span>{isDzongkha ? "པར་གུར་ Hover འབད་དེ་ ཁ་གསལ་གཟིགས།" : "Interactive Hover Reveal (DHI Style)"}</span>
-            </span>
-          </div>
-        </div>
-
-        {/* 1. Chairperson Featured Leadership Card (#1 HE Lyonpo Tandin Wangchuk) */}
-        <div className="max-w-xl mx-auto mb-10 sm:mb-14">
+      {/* Complete Trustees Gallery Grid in Clean Large Cards */}
+      <section
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
+        data-bhtf-section="trustees-roster"
+      >
+        {boardMembers.length > 0 && <div className="max-w-xl mx-auto mb-10 sm:mb-14">
           <FiduciaryMemberCard
-            member={trusteesList[0]}
-            isActive={activeCardId === trusteesList[0].id}
-            onToggle={() => handleToggleCard(trusteesList[0].id)}
+            member={boardMembers[0]}
+            isActive={activeCardId === boardMembers[0].id}
+            onToggle={() => handleToggleCard(boardMembers[0].id)}
             isDzongkha={isDzongkha}
           />
-        </div>
+        </div>}
 
         {/* 2. Key Trustees Large 3-Column Grid (#2 to #7) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto mb-12 sm:mb-16">
-          {trusteesList.slice(1, 7).map((member) => (
+          {boardMembers.slice(1).map((member) => (
             <FiduciaryMemberCard
               key={member.id}
               member={member}
@@ -339,26 +346,20 @@ function TrusteesPage() {
           ))}
         </div>
 
-        {/* 3. Director & Member Secretary Featured Anchor Card (#8 Mr. Gyambo Sithey, PhD) */}
-        <div className="max-w-xl mx-auto pt-8 border-t border-slate-200/80">
-          <div className="text-center mb-6 space-y-1">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-emerald-800">
-              {isDzongkha ? "ལས་འཛིན་དབུ་ཁྲིད། • རྩ་ཁྲིམས་ ༥.༣" : "Executive Directorate • Article 5.3"}
-            </span>
-            <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900">
-              {isDzongkha ? "མདོ་ཆེན་དང་ ཚོགས་མི་དྲུང་ཆེན།" : "Director & Member Secretary"}
-            </h3>
-          </div>
+        {/* 3. Director & Member Secretary Featured Anchor Card (#8 Dr. Gyambo Sithey, PhD) */}
+        {director && <div className="max-w-xl mx-auto pt-8 border-t border-slate-200/80">
           <FiduciaryMemberCard
-            member={trusteesList[7]}
-            isActive={activeCardId === trusteesList[7].id}
-            onToggle={() => handleToggleCard(trusteesList[7].id)}
+            member={director}
+            isActive={activeCardId === director.id}
+            onToggle={() => handleToggleCard(director.id)}
             isDzongkha={isDzongkha}
           />
-        </div>
+        </div>}
       </section>
 
-      {/* Floating Sub-pages Sticky Bottom Capsule */}
+      <PageRenderer sections={(loaderData?.customPage?.sections || []) as PageBlockSection[]} pageSlug="about-trustees" />
+
+      {/* Floating Bottom Sub-pages Navigation Capsule */}
       <AboutBottomCapsule />
     </div>
   );

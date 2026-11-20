@@ -33,7 +33,7 @@ export const Route = createFileRoute("/track-donation")({
       {
         name: "description",
         content:
-          "Track your healthcare contribution, verify 1:1 RGOB Royal Matching, and generate your Department of Revenue & Customs Tax Exemption Certificate (Reg. E-73).",
+          "Track your healthcare contribution, and generate your Department of Revenue & Customs Tax Exemption Certificate (Reg. E-73).",
       },
     ],
   }),
@@ -179,7 +179,7 @@ export function TrackDonationPage() {
         <PageHero
           badge="SOVEREIGN HEALTH REPOSITORY"
           title="Track Donation & DRC Tax Certificate"
-          subtitle="Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC Tax Exemption Certificate (Reg. E-73)"
+          subtitle="Contribution Ledger Status & Official DRC Tax Exemption Certificate (Reg. E-73)"
         />
       </div>
 
@@ -193,7 +193,7 @@ export function TrackDonationPage() {
             studioHref="/admin/donations"
             initialData={{
               title: "Track Donation & DRC Tax Certificate",
-              subtitle: "Real-Time 1:1 RGOB Sovereign Matching, Contribution Ledger Status & Official DRC Tax Exemption Certificate (Reg. E-73)",
+              subtitle: "Contribution Ledger Status & Official DRC Tax Exemption Certificate (Reg. E-73)",
               badge: "SOVEREIGN HEALTH REPOSITORY",
             }}
           />
@@ -205,7 +205,7 @@ export function TrackDonationPage() {
               <h2 className="text-xl font-black text-slate-900 mt-1">Lookup Contribution Record</h2>
             </div>
             <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-              RGOB Matching Model
+              Sovereign Health Fund
             </span>
           </div>
 
@@ -357,8 +357,8 @@ export function TrackDonationPage() {
                 </div>
               </div>
 
-              {/* 1:1 RGOB Sovereign Matching Multiplier Banner */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Contribution Summary Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
                   <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                     Donor Remittance
@@ -371,24 +371,12 @@ export function TrackDonationPage() {
                   </span>
                 </div>
 
-                <div className="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-5">
-                  <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider block">
-                    RGOB 1:1 Matching
-                  </span>
-                  <span className="text-2xl font-black text-emerald-700 block mt-1">
-                    + Nu. {donation.amountNu.toLocaleString()}
-                  </span>
-                  <span className="text-[10px] text-emerald-600 mt-0.5 block">
-                    Royal Government Allocation
-                  </span>
-                </div>
-
                 <div className="editorial-band rounded-xl p-5">
                   <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
-                    Total Healthcare Impact
+                    Total Healthcare Endowment Augmentation
                   </span>
                   <span className="text-2xl font-black text-amber-300 block mt-1">
-                    Nu. {(donation.amountNu * 2).toLocaleString()}
+                    Nu. {donation.amountNu.toLocaleString()}
                   </span>
                   <span className="text-[10px] text-emerald-200 mt-0.5 block">
                     Guaranteed Medicine Corpus
@@ -531,7 +519,7 @@ export function TrackDonationPage() {
               {/* Financial Endorsement Table */}
               <div className="space-y-3">
                 <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Contribution & Sovereign Matching Valuation
+                  Contribution Valuation
                 </div>
                 <table className="w-full text-xs border border-slate-300">
                   <thead className="bg-slate-100 border-b border-slate-300 font-bold text-slate-700">
@@ -554,25 +542,12 @@ export function TrackDonationPage() {
                         Nu. {donation.amountNu.toLocaleString()}.00
                       </td>
                     </tr>
-                    <tr className="bg-slate-50/50">
-                      <td className="p-3">
-                        <span className="font-bold text-emerald-800">
-                          RGOB 1:1 Sovereign Matching Component
-                        </span>
-                        <p className="text-[10px] text-slate-500">
-                          Allocated directly from Ministry of Finance
-                        </p>
-                      </td>
-                      <td className="p-3 text-right font-mono font-bold text-emerald-800">
-                        + Nu. {donation.amountNu.toLocaleString()}.00
-                      </td>
-                    </tr>
                     <tr className="bg-slate-100 font-bold">
                       <td className="p-3 uppercase tracking-wider text-slate-900">
                         Total Sovereign Endowment Augmentation
                       </td>
                       <td className="p-3 text-right font-mono text-sm text-slate-900">
-                        Nu. {(donation.amountNu * 2).toLocaleString()}.00
+                        Nu. {donation.amountNu.toLocaleString()}.00
                       </td>
                     </tr>
                   </tbody>

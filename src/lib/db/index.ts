@@ -694,6 +694,23 @@ class BHTFDataStore {
     }
   }
 
+  public async updateInquiryDetails(
+    id: number,
+    data: Pick<Inquiry, "name" | "email" | "subject" | "message">,
+  ): Promise<Inquiry | null> {
+    try {
+      const [updated] = await drizzleDb
+        .update(schema.inquiries)
+        .set(data)
+        .where(eq(schema.inquiries.id, id))
+        .returning();
+      return updated || null;
+    } catch (error) {
+      if (!isStorageUnavailable(error)) throw error;
+      return persistentStore.updateInquiryDetails(id, data);
+    }
+  }
+
   public async deleteInquiry(id: number): Promise<boolean> {
     try {
       const deleted = await drizzleDb
@@ -1291,6 +1308,9 @@ class BHTFDataStore {
 
     const pendingDonationsCount = allDonations.filter((d) => d.status === "PENDING").length;
     const unreadInquiriesCount = allInquiries.filter((iq) => iq.status === "UNREAD").length;
+    const pendingMembershipsCount = allInquiries.filter(
+      (iq) => iq.channel?.startsWith("MEMBERSHIP") && ["UNREAD", "IN_PROGRESS"].includes(iq.status),
+    ).length;
     const publishedNewsCount = allNews.filter((n) => n.isPublished).length;
     const activeSubscribersCount = allSubscribers.filter((s) => s.isActive).length;
     const totalReportsCount = allReports.length;
@@ -1343,6 +1363,7 @@ class BHTFDataStore {
       totalDonationsNu,
       pendingDonationsCount,
       unreadInquiriesCount,
+      pendingMembershipsCount,
       publishedNewsCount,
       activeSubscribersCount,
       totalReportsCount,
@@ -1441,17 +1462,17 @@ class BHTFDataStore {
 
   public async getActiveSessionsForUser(userId: number): Promise<UserSession[]> {
     try {
-    return await drizzleDb
-      .select()
-      .from(schema.userSessions)
-      .where(
-        and(
-          eq(schema.userSessions.userId, userId),
-          eq(schema.userSessions.isActive, true),
-          gt(schema.userSessions.expiresAt, new Date()),
-        ),
-      )
-      .orderBy(desc(schema.userSessions.createdAt));
+      return await drizzleDb
+        .select()
+        .from(schema.userSessions)
+        .where(
+          and(
+            eq(schema.userSessions.userId, userId),
+            eq(schema.userSessions.isActive, true),
+            gt(schema.userSessions.expiresAt, new Date()),
+          ),
+        )
+        .orderBy(desc(schema.userSessions.createdAt));
     } catch (error) {
       if (!isStorageUnavailable(error)) throw error;
       return persistentStore.getActiveSessionsForUser(userId);

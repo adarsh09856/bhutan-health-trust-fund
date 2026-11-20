@@ -123,15 +123,12 @@ export function AdminDashboardPage() {
   };
 
   const publicDonations = data?.totalDonationsNu || 0;
-  const rgobMatch = publicDonations; // 1:1 RGOB Sovereign Matching Multiplier
-  const totalCombinedYield = publicDonations + rgobMatch;
+  const totalCombinedYield = publicDonations;
 
-  // Chart data with 1:1 RGOB Sovereign match
+  // Chart data
   const chartData = (data?.monthlyStats || []).map((item) => ({
     month: item.month,
     PublicDonations: item.amount,
-    RGOBMatching: item.amount,
-    TotalYield: item.amount * 2,
   }));
 
   const statutoryZones = [
@@ -156,7 +153,7 @@ export function AdminDashboardPage() {
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
               Supervising perpetual healthcare endowment allocations, public donation pledges, and
-              the statutory 1:1 Royal Government matching fund for universal primary healthcare.
+              fiduciary fund management for universal primary healthcare.
             </p>
           </div>
 
@@ -275,22 +272,22 @@ export function AdminDashboardPage() {
                 </div>
               </div>
 
-              {/* Card 2: 1:1 RGOB Matching Yield */}
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-lg hover:border-amber-400/50 transition-all duration-200 space-y-3 relative overflow-hidden">
+              {/* Card 2: Endowment Corpus */}
+              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-lg hover:border-emerald-400/50 transition-all duration-200 space-y-3 relative overflow-hidden">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-sans">
-                    1:1 RGOB Sovereign Match
+                    Ring-Fenced Corpus
                   </span>
-                  <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-700 grid place-items-center border border-amber-200/70">
+                  <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center border border-emerald-200/70">
                     <Building2 className="h-4 w-4" />
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-amber-700 font-mono tracking-tight">
-                    + Nu. {rgobMatch.toLocaleString()}
+                  <div className="text-2xl font-black text-emerald-800 font-mono tracking-tight">
+                    Nu. 4.8B+
                   </div>
-                  <div className="text-[11px] text-amber-800 font-bold mt-1 flex items-center gap-1">
-                    <ShieldCheck className="h-3 w-3 text-amber-600" /> MoF Statutory Doubling
+                  <div className="text-[11px] text-emerald-800 font-bold mt-1 flex items-center gap-1">
+                    <ShieldCheck className="h-3 w-3 text-emerald-600" /> Royal Charter Principal
                   </div>
                 </div>
               </div>
@@ -343,10 +340,10 @@ export function AdminDashboardPage() {
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <h3 className="text-base font-extrabold text-slate-900">
-                      Monthly Fiduciary Revenue & 1:1 RGOB Doubling
+                      Monthly Fiduciary Revenue & Pledges
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Public citizen contributions doubled by sovereign matching funds.
+                      Verified public citizen and institutional contributions.
                     </p>
                   </div>
                   <span className="text-[11px] font-mono font-bold bg-emerald-50 text-emerald-800 px-3 py-1 rounded-full border border-emerald-200">
@@ -364,7 +361,7 @@ export function AdminDashboardPage() {
                         No Verified Pledges Recorded Yet for FY 2026
                       </p>
                       <p className="text-[11px] text-slate-500 max-w-sm mt-1 leading-relaxed">
-                        Public donations and automatic 1:1 RGOB sovereign doubling will plot dynamically as contributions are verified.
+                        Public donations will plot dynamically as contributions are verified.
                       </p>
                     </div>
                   )}
@@ -377,10 +374,6 @@ export function AdminDashboardPage() {
                         <linearGradient id="publicGrad" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#059669" stopOpacity={0.4} />
                           <stop offset="95%" stopColor="#059669" stopOpacity={0.0} />
-                        </linearGradient>
-                        <linearGradient id="matchGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -404,16 +397,6 @@ export function AdminDashboardPage() {
                         strokeWidth={2.5}
                         fillOpacity={1}
                         fill="url(#publicGrad)"
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="TotalYield"
-                        name="Total Yield with 1:1 RGOB Match (Nu)"
-                        stroke="#f59e0b"
-                        strokeWidth={2}
-                        strokeDasharray="4 4"
-                        fillOpacity={1}
-                        fill="url(#matchGrad)"
                       />
                     </AreaChart>
                   </ResponsiveContainer>

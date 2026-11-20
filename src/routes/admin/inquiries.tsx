@@ -39,8 +39,12 @@ export const Route = createFileRoute("/admin/inquiries")({
 
 const quickTemplates = [
   {
-    title: "Tax Voucher Delivery",
-    text: "Thank you for your generous contribution to the Bhutan Health Trust Fund. Please find your official DRC-approved tax voucher attached. Your contribution has been matched 1:1 by the Royal Government.",
+    title: "Membership Application Follow-up",
+    text: "The Secretariat has received your membership application and is reviewing the information provided. We will contact you if further details are required.",
+  },
+  {
+    title: "Contribution Inquiry Follow-up",
+    text: "Thank you for contacting the Bhutan Health Trust Fund about your contribution. The Secretariat will review your inquiry and follow up with the information requested.",
   },
   {
     title: "Medicine Buffer Stock Inquiry",
@@ -141,10 +145,14 @@ export function AdminInquiriesPage() {
     setReplyNotes(iq.replyNotes || "");
     setResponseMessage("");
     if (iq.status === "UNREAD") {
-      updateInquiryStatus({ data: { id: iq.id, status: "IN_PROGRESS" } }).then(() => {
-        setSelectedInquiry(current => current?.id === iq.id ? { ...current, status: "IN_PROGRESS" } : current);
-        fetchInquiries();
-      }).catch(() => toast.error("Could not update the ticket status."));
+      updateInquiryStatus({ data: { id: iq.id, status: "IN_PROGRESS" } })
+        .then(() => {
+          setSelectedInquiry((current) =>
+            current?.id === iq.id ? { ...current, status: "IN_PROGRESS" } : current,
+          );
+          fetchInquiries();
+        })
+        .catch(() => toast.error("Could not update the ticket status."));
     }
   };
 
@@ -171,7 +179,7 @@ export function AdminInquiriesPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!await confirm("Are you sure you want to delete this message record?")) return;
+    if (!(await confirm("Are you sure you want to delete this message record?"))) return;
     try {
       await deleteAdminInquiry({ data: { id } });
       toast.success("Message removed from inbox.");
@@ -184,8 +192,23 @@ export function AdminInquiriesPage() {
     }
   };
 
-  const getInquiryCategory = (subject: string, message: string) => {
+  const getInquiryCategory = (subject: string, message: string, channel?: string) => {
     const text = (subject + " " + message).toLowerCase();
+    if (
+      channel?.startsWith("MEMBERSHIP") ||
+      text.includes("membership application") ||
+      text.includes("bhtf-mem-")
+    ) {
+      return {
+        label:
+          channel === "MEMBERSHIP_INSTITUTIONAL"
+            ? "Institutional Membership Application"
+            : "Individual Membership Application",
+        color: "bg-purple-100 text-purple-900 border-purple-300 font-bold",
+        isWhistleblower: false,
+        isMembership: true,
+      };
+    }
     if (
       text.includes("whistleblower") ||
       text.includes("corruption") ||
@@ -195,6 +218,7 @@ export function AdminInquiriesPage() {
         label: "Confidential Ombudsman Report",
         color: "bg-rose-100 text-rose-800 border-rose-300",
         isWhistleblower: true,
+        isMembership: false,
       };
     }
     if (
@@ -207,6 +231,7 @@ export function AdminInquiriesPage() {
         label: "Donation & Tax Voucher Query",
         color: "bg-emerald-100 text-emerald-800 border-emerald-300",
         isWhistleblower: false,
+        isMembership: false,
       };
     }
     if (
@@ -219,14 +244,20 @@ export function AdminInquiriesPage() {
         label: "Health Commodity Alert",
         color: "bg-amber-100 text-amber-800 border-amber-300",
         isWhistleblower: false,
+        isMembership: false,
       };
     }
     return {
       label: "General Citizen Inquiry",
       color: "bg-blue-100 text-blue-800 border-blue-300",
       isWhistleblower: false,
+      isMembership: false,
     };
   };
+
+  const [categoryFilter, setCategoryFilter] = useState<"ALL" | "MEMBERSHIP" | "OMBUDSMAN" | "TAX">(
+    "ALL",
+  );
 
   const filteredInquiries = inquiries.filter((iq) => {
     const matchesSearch =
@@ -235,7 +266,20 @@ export function AdminInquiriesPage() {
       iq.subject.toLowerCase().includes(search.toLowerCase()) ||
       iq.message.toLowerCase().includes(search.toLowerCase());
     const matchesStatus = statusFilter === "ALL" || iq.status === statusFilter;
-    return matchesSearch && matchesStatus;
+
+    let matchesCategory = true;
+    if (categoryFilter === "MEMBERSHIP") {
+      matchesCategory =
+        iq.channel?.startsWith("MEMBERSHIP") || iq.subject.toLowerCase().includes("membership");
+    } else if (categoryFilter === "OMBUDSMAN") {
+      const cat = getInquiryCategory(iq.subject, iq.message, iq.channel);
+      matchesCategory = cat.isWhistleblower;
+    } else if (categoryFilter === "TAX") {
+      matchesCategory =
+        iq.subject.toLowerCase().includes("tax") || iq.subject.toLowerCase().includes("donation");
+    }
+
+    return matchesSearch && matchesStatus && matchesCategory;
   });
 
   return (
@@ -309,6 +353,63 @@ export function AdminInquiriesPage() {
           </div>
         </div>
 
+        {/* Category Tabs */}
+        <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
+          <button
+            type="button"
+            onClick={() => setCategoryFilter("ALL")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+              categoryFilter === "ALL"
+                ? "bg-slate-900 text-white shadow-xs"
+                : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+            }`}
+          >
+            All Inquiries ({inquiries.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter("MEMBERSHIP")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              categoryFilter === "MEMBERSHIP"
+                ? "bg-purple-700 text-white shadow-xs"
+                : "bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200"
+            }`}
+          >
+            <span>⭐ Membership Applications</span>
+            <span className="px-1.5 py-0.5 bg-purple-200 text-purple-900 rounded-full text-[10px] font-black">
+              {
+                inquiries.filter(
+                  (i) =>
+                    i.channel?.startsWith("MEMBERSHIP") ||
+                    i.subject.toLowerCase().includes("membership"),
+                ).length
+              }
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter("TAX")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+              categoryFilter === "TAX"
+                ? "bg-emerald-700 text-white shadow-xs"
+                : "bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200"
+            }`}
+          >
+            Donations & Tax Vouchers
+          </button>
+          <button
+            type="button"
+            onClick={() => setCategoryFilter("OMBUDSMAN")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+              categoryFilter === "OMBUDSMAN"
+                ? "bg-rose-700 text-white shadow-xs"
+                : "bg-rose-50 hover:bg-rose-100 text-rose-900 border border-rose-200"
+            }`}
+          >
+            Ombudsman & Whistleblower
+          </button>
+        </div>
+
         {/* Search & Filters */}
         <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5 flex-1 w-full bg-slate-50 rounded-2xl px-4 py-2.5 border border-slate-200">
@@ -366,7 +467,7 @@ export function AdminInquiriesPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {filteredInquiries.map((iq) => {
-                    const cat = getInquiryCategory(iq.subject, iq.message);
+                    const cat = getInquiryCategory(iq.subject, iq.message, iq.channel);
                     return (
                       <tr key={iq.id} className="hover:bg-slate-50/80 transition">
                         <td className="py-4 px-5 space-y-1">
@@ -542,7 +643,9 @@ export function AdminInquiriesPage() {
                     placeholder="Record the response sent through your official email channel..."
                     className="w-full rounded-2xl border border-slate-300 p-3 text-xs focus:border-purple-600 focus:outline-none"
                   />
-                  <p className="text-xs text-slate-500">Saved with the case notes. Send the response using your official email account.</p>
+                  <p className="text-xs text-slate-500">
+                    Saved with the case notes. Send the response using your official email account.
+                  </p>
                 </div>
 
                 {/* Staff Internal Notes */}
@@ -568,7 +671,13 @@ export function AdminInquiriesPage() {
                         key={st}
                         type="button"
                         onClick={() => handleUpdateStatus(st)}
-                        disabled={updating || ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"].indexOf(st) < ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"].indexOf(selectedInquiry.status)}
+                        disabled={
+                          updating ||
+                          ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"].indexOf(st) <
+                            ["UNREAD", "IN_PROGRESS", "REPLIED", "ARCHIVED"].indexOf(
+                              selectedInquiry.status,
+                            )
+                        }
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer disabled:opacity-50 ${
                           selectedInquiry.status === st
                             ? "bg-slate-900 text-white shadow-md"

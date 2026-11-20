@@ -39,6 +39,7 @@ dist-ssr
 # Scratch scripts
 scratch_*
 screenshots/
+.chrome-data/
 docs/
 *.docx
 *.pptx

@@ -33,7 +33,7 @@ export const translations: TranslationDictionary = {
     dz: "འཕྲོད་བསྟེན་ལྡན་པའི་འབྲུག་རྒྱལ་ཁབ་ཀྱི་དོན་ལུ་ མཉམ་རུབ་ཐོག་ལཱ་འབད་དོ།",
   },
   topbar_address: {
-    en: "Lower Motithang, Thimphu",
+    en: "Lower Motithang, Thori Lam, Thimphu, Bhutan",
     dz: "ཐིམ་ཕུག མཐོ་རིས་ལམ། སྨད་མོ་ཏི་ཐང་།",
   },
 
@@ -43,31 +43,51 @@ export const translations: TranslationDictionary = {
     dz: "ང་བཅས་ཀྱི་སྐོར།",
   },
   nav_about_overview: {
-    en: "About Us Overview",
-    dz: "ང་བཅས་ཀྱི་སྐོར་ སྤྱི་མཐོང་།",
+    en: "About Us",
+    dz: "ང་བཅས་ཀྱི་སྐོར།",
   },
   nav_about_overview_desc: {
     en: "Founding narrative & 26-year mission",
     dz: "གཞི་བཙུགས་བྱུང་རབས་དང་ ལོ་ངོ་ ༢༦ གི་དམིགས་ཡུལ།",
   },
   nav_organization: {
-    en: "Organization & Organogram",
-    dz: "ལས་ཁུངས་དང་ བཀོད་རིམ།",
+    en: "Organogram",
+    dz: "བཀོད་རིམ།",
   },
   nav_organization_desc: {
-    en: "Mandate, Vision, Mission & Organizational Chart",
-    dz: "འགན་དབང་། མཐོང་སྣང་། དམིགས་ཡུལ་དང་ བཀོད་རིམ་རེའུ་མིག",
+    en: "Organizational Chart & Reporting Hierarchy",
+    dz: "བཀོད་རིམ་རེའུ་མིག",
+  },
+  nav_join_membership: {
+    en: "Join Membership",
+    dz: "འཐུས་མིའི་ནང་འཛུལ་ཞུགས།",
+  },
+  nav_membership_inst: {
+    en: "Institutional Membership",
+    dz: "ལས་ཚོགས་འཐུས་མི།",
+  },
+  nav_membership_inst_desc: {
+    en: "Corporate & institutional partner tier",
+    dz: "ལས་ཚོགས་དང་ གཞུང་འབྲེལ་མཉམ་འབྲེལ་ཐེབས།",
+  },
+  nav_membership_indiv: {
+    en: "Individual Membership",
+    dz: "སྒེར་གྱི་འཐུས་མི།",
+  },
+  nav_membership_indiv_desc: {
+    en: "Citizen & lifelong philanthropic member tier",
+    dz: "མི་སེར་སྒེར་གྱི་ འཕྲོད་བསྟེན་འཐུས་མིའི་ཐེབས།",
   },
   nav_trustees: {
-    en: "Board of trustees (with photos)",
-    dz: "བདག་སྐྱོང་ལྷན་ཚོགས། (འདྲ་པར་དང་བཅས)",
+    en: "Board of Directors",
+    dz: "བཀོད་ཚོགས།",
   },
   nav_trustees_desc: {
-    en: "Apex governing body & ministerial leadership",
+    en: "Board leadership and members",
     dz: "མཐོ་རིམ་བདག་སྐྱོང་ཚོགས་པ་དང་ བློན་པོའི་དབུ་ཁྲིད།",
   },
   nav_amc: {
-    en: "Asset management committee",
+    en: "Asset Management Committee",
     dz: "མ་རྩ་འཛིན་སྐྱོང་ཚོགས་ཆུང་།",
   },
   nav_amc_desc: {
@@ -245,8 +265,8 @@ export const translations: TranslationDictionary = {
 
   // Organogram & Hierarchy
   organogram_title: {
-    en: "Organizational Chart (Organogram)",
-    dz: "ལས་ཁུངས་ཀྱི་བཀོད་རིམ་རེའུ་མིག (Organogram)",
+    en: "Organogram",
+    dz: "བཀོད་རིམ།",
   },
   organogram_subtitle: {
     en: "Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions.",
@@ -254,11 +274,11 @@ export const translations: TranslationDictionary = {
   },
   organogram_board: {
     en: "Board of Trustees",
-    dz: "བདག་སྐྱོང་ལྷན་ཚོགས།",
+    dz: "བཀོད་ཚོགས།",
   },
   organogram_board_sub: {
     en: "High-Level Governance • 7 Trustees (Table 1.1)",
-    dz: "མཐོ་རིམ་བདག་སྐྱོང་ • འཐུས་མི་ ༧ (རེའུ་མིག་ ༡.༡)",
+    dz: "འགོ་མཐོའི་བདག་སྐྱོང་། • བཀོད་ཚོགས་འཐུས་མི་ ༧ (ཐིག་ཁྲམ་ ༡.༡)",
   },
   organogram_amc: {
     en: "Asset Management Committee",
@@ -266,7 +286,7 @@ export const translations: TranslationDictionary = {
   },
   organogram_amc_sub: {
     en: "Specialized Advisory Sub-committee (Table 1.2)",
-    dz: "དམིགས་བསལ་གྲོས་སྟོན་ཚོགས་ཆུང་ (རེའུ་མིག་ ༡.༢)",
+    dz: "མཁས་མཆོག་གྲོས་སྟོན་ཡན་ལག་ཚོགས་ཆུང་། (ཐིག་ཁྲམ་ ༡.༢)",
   },
   organogram_director: {
     en: "Director",
@@ -333,24 +353,24 @@ export const translations: TranslationDictionary = {
     dz: "སྐོར།",
   },
   capsule_org: {
-    en: "Organization",
-    dz: "ལས་ཁུངས།",
+    en: "Organogram",
+    dz: "བཀོད་རིམ།",
   },
   capsule_org_full: {
-    en: "Organization & Organogram",
-    dz: "ལས་ཁུངས་དང་བཀོད་རིམ།",
+    en: "Organogram",
+    dz: "བཀོད་རིམ།",
   },
   capsule_org_short: {
-    en: "Org",
-    dz: "ལས་ཁུངས།",
+    en: "Organogram",
+    dz: "བཀོད་རིམ།",
   },
   capsule_trustees: {
-    en: "Board of Trustees",
-    dz: "བདག་སྐྱོང་ལྷན་ཚོགས།",
+    en: "Board of Directors",
+    dz: "བཀོད་ཚོགས།",
   },
   capsule_trustees_short: {
-    en: "Trustees",
-    dz: "ལྷན་ཚོགས།",
+    en: "Directors",
+    dz: "བཀོད་ཚོགས།",
   },
   capsule_amc: {
     en: "Asset Management",
@@ -395,8 +415,8 @@ export const translations: TranslationDictionary = {
     dz: "དྲུང་ཆེན་ཡིག་ཚང་ལྟེ་བ།",
   },
   footer_charter_note: {
-    en: "Established under Royal Charter in Geneva to guarantee uninterrupted sovereign financing for essential medicines and universal vaccines across all 20 Dzongkhags in Bhutan.",
-    dz: "འབྲུག་རྒྱལ་ཁབ་ཀྱི་རྫོང་ཁག་ ༢༠ ཆ་མཉམ་ནང་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས་དང་ སྨན་ཁབ་ཚུ་ རྒྱུན་ཆད་མེད་པར་ ཐོབ་ཚུགས་པའི་ཁག་འཁྱགས་ཀྱི་དོན་ལུ་ ཇི་ནི་བཱ་ལུ་ རྒྱལ་པོའི་བཀའ་ཤོག་འོག་ལུ་ གཞི་བཙུགས་འབད་ཡོད།",
+    en: "Established under Royal Charter in 2000 to guarantee uninterrupted sovereign financing for essential medicines and universal vaccines across all 20 Dzongkhags in Bhutan.",
+    dz: "འབྲུག་རྒྱལ་ཁབ་ཀྱི་རྫོང་ཁག་ ༢༠ ཆ་མཉམ་ནང་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས་དང་ སྨན་ཁབ་ཚུ་ རྒྱུན་ཆད་མེད་པར་ ཐོབ་ཚུགས་པའི་ཁག་འཁྱགས་ཀྱི་དོན་ལུ་ སྤྱི་ལོ་ ༢༠༠༠ ལུ་ རྒྱལ་པོའི་བཀའ་ཤོག་འོག་ལུ་ གཞི་བཙུགས་འབད་ཡོད།",
   },
   footer_copyright: {
     en: "All rights reserved. Autonomous Statutory Entity of the Kingdom of Bhutan.",
@@ -409,8 +429,8 @@ export const translations: TranslationDictionary = {
 
   // Official Quotes
   quote_king_label: {
-    en: "Royal Proclamation — His Majesty the Fourth Druk Gyalpo (2004)",
-    dz: "རྒྱལ་པོའི་བཀའ་སློབ་ — མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག (༢༠༠༤)",
+    en: "Royal Proclamation — His Majesty the Fourth Druk Gyalpo",
+    dz: "རྒྱལ་པོའི་བཀའ་སློབ་ — མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག",
   },
   quote_king_text: {
     en: "“No Bhutanese should ever have to choose between their health and their livelihood.”",
@@ -429,6 +449,10 @@ export const translations: TranslationDictionary = {
   about_p1: {
     en: "The Bhutan Health Trust Fund (BHTF) is a symbol of compassion, shared responsibility and Bhutan’s enduring commitment to the health and well-being of its people. Inspired by the vision of His Majesty the Fourth Druk Gyalpo, Jigme Singye Wangchuck, the Fund was established to help sustain Bhutan’s free primary healthcare service and ensure that essential medicines and vaccines remain accessible to all. It was officially launched on 12 May 1998 at the World Health Organization headquarters in Geneva, and received its formal legal foundation through the Royal Charter issued on 3 August 2000. Since 2018, the Fund has become a self-independent autonomous agency and continues to uphold a simple yet profound mission to protect lives and safeguard the health of present and future generations.",
     dz: "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ (BHTF) འདི་ བྱམས་སྙིང་རྗེ་དང་ ཐུན་མོང་གི་འགན་ཁུར། མི་སེར་ཚུ་གི་འཕྲོད་བསྟེན་དང་ སྐྱིད་སྡུག་ལུ་ འབྲུག་རྒྱལ་ཁབ་ཀྱི་ རྒྱུན་བརྟན་ཁས་བླངས་ཀྱི་ བརྡ་མཚོན་ཅིག་ཨིན། མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་ འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག་མཆོག་གི་ རླབས་ཆེན་མཐོང་སྣང་ལུ་ བརྟེན་ཏེ་ འབྲུག་གི་རིན་མེད་འཕྲོད་བསྟེན་ཞབས་ཏོག་ རྒྱུན་སྐྱོང་འབད་ནི་དང་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས་དང་སྨན་ཁབ་ཚུ་ མི་སེར་ཆ་མཉམ་ལུ་ རྒྱུན་ཆད་མེད་པར་ ཐོབ་ཚུགས་པའི་དོན་ལུ་ གཞི་བཙུགས་གནང་ཡི། མ་དངུལ་འདི་ སྤྱི་ལོ་ ༡༩༩༨ སྤྱི་ཟླ་ ༥ པའི་ཚེས་ ༡༢ ལུ་ ཇི་ནི་བཱ་ཡོད་པའི་ འཛམ་གླིང་འཕྲོད་བསྟེན་ལས་ཚོགས་ཀྱི་ ཡིག་ཚང་ལྟེ་བ་ལུ་ གཞུང་འབྲེལ་ཐོག་ལས་ འགོ་འབྱེད་གནང་ཡོདཔ་དང་ སྤྱི་ལོ་ ༢༠༠༠ སྤྱི་ཟླ་ ༨ པའི་ཚེས་ ༣ ལུ་ རྒྱལ་པོའི་བཀའ་ཤོག་གནང་མི་ཐོག་ལས་ ཁྲིམས་མཐུན་གཞི་རྟེན་ཐོབ་ཡི། སྤྱི་ལོ་ ༢༠༡༨ ལས་ཚུར་ མ་དངུལ་འདི་ རང་སྐྱོང་ཅན་གྱི་ལས་ཚོགས་ཅིག་ལུ་གྱུར་ཏེ་ ད་ལྟོ་དང་མ་འོངས་པའི་མི་རབས་ཚུ་གི་ ཚེ་སྲོག་སྲུང་སྐྱོབ་འབད་ནིའི་ དམིགས་ཡུལ་གཙོ་བོ་འདི་ བཟུང་སྟེ་ཡོད།",
+  },
+  about_p1_preview: {
+    en: "The Bhutan Health Trust Fund (BHTF) is a symbol of compassion, shared responsibility and Bhutan’s enduring commitment to the health and well-being of its people. Inspired by the vision of His Majesty the Fourth Druk Gyalpo, Jigme Singye Wangchuck, the Fund was established to help sustain Bhutan’s free primary healthcare service and ensure that essential medicines and vaccines remain accessible to all.",
+    dz: "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་ (BHTF) འདི་ བྱམས་སྙིང་རྗེ་དང་ ཐུན་མོང་གི་འགན་ཁུར། མི་སེར་ཚུ་གི་འཕྲོད་བསྟེན་དང་ སྐྱིད་སྡུག་ལུ་ འབྲུག་རྒྱལ་ཁབ་ཀྱི་ རྒྱུན་བརྟན་ཁས་བླངས་ཀྱི་ བརྡ་མཚོན་ཅིག་ཨིན། མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་ འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག་མཆོག་གི་ རླབས་ཆེན་མཐོང་སྣང་ལུ་ བརྟེན་ཏེ་ འབྲུག་གི་རིན་མེད་འཕྲོད་བསྟེན་ཞབས་ཏོག་ རྒྱུན་སྐྱོང་འབད་ནི་དང་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས་དང་སྨན་ཁབ་ཚུ་ མི་སེར་ཆ་མཉམ་ལུ་ ཐོབ་ཚུགསཔ་བཟོ་ནིའི་དོན་ལུ་ གཞི་བཙུགས་གནང་ཡི།",
   },
   about_p2: {
     en: "Over the past two decades, the Bhutan Health Trust Fund has grown into a vital pillar of sustainable healthcare financing in Bhutan. Beginning with support for vaccines, the Fund expanded its assistance to include essential medicines in 2014. Today, it supports the procurement of 438 national essential medicines, 110 traditional medicines and four key vaccines, with an annual commitment of approximately Nu. 600 million. To date, the Fund has disbursed Nu. 4.3 billion towards essential medicines and vaccines, helping strengthen the delivery of free primary healthcare services across the country. Behind these figures are countless lives touched, families supported and communities given greater peace of mind through access to essential healthcare.",
@@ -449,8 +473,8 @@ export const translations: TranslationDictionary = {
     dz: "དབྱེ་ཚན་ ༡.༡ • དངུལ་རྩིས་བདག་སྐྱོང་།",
   },
   trustees_page_title: {
-    en: "Board of trustees",
-    dz: "བདག་སྐྱོང་ལྷན་ཚོགས།",
+    en: "Board of Directors",
+    dz: "བཀོད་ཚོགས།",
   },
   trustees_page_subtitle: {
     en: "The Bhutan Health Trust Fund operates under the guidance of the Board of Directors, headed by a Chairperson, providing strategic direction, accountability, and long-term sustainability.",
@@ -607,7 +631,7 @@ export const translations: TranslationDictionary = {
     dz: "དབྱེ་ཚན་ ༡.༢ • དངུལ་རྩིས་ལྟ་རྟོག",
   },
   amc_page_title: {
-    en: "Asset management committee",
+    en: "Asset Management Committee",
     dz: "མ་རྩ་འཛིན་སྐྱོང་ཚོགས་ཆུང་།",
   },
   amc_page_subtitle: {
@@ -765,8 +789,8 @@ export const translations: TranslationDictionary = {
 
   // --- Homepage Translations ---
   home_hero_match_badge: {
-    en: "1:1 Sovereign Match",
-    dz: "༡:༡ རྒྱལ་གཞུང་འདྲ་མཉམ་གཏོང་ལེན།",
+    en: "Sovereign Health Fund",
+    dz: "རྒྱལ་གཞུང་འཕྲོད་བསྟེན་མ་དངུལ།",
   },
   home_hero_title_1: {
     en: "Building a",
@@ -781,8 +805,8 @@ export const translations: TranslationDictionary = {
     dz: "འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་གྱིས་ གཞི་རྟེན་འཕྲོད་བསྟེན་ཞབས་ཏོག་སྒྲིང་སྒྲིང་བཟོ་ནི་དང་ འབྲུག་པའི་མི་སེར་རེ་རེ་བཞིན་དུ་གི་ བདེ་སྐྱིད་སྲུང་སྐྱོབ་ཀྱི་དོན་ལུ་ ཉེ་བར་མཁོ་བའི་སྨན་རྫས་དང་ སྨན་ཁབ་ཚུ་ བརྟན་བཞུགས་ཅན་གྱི་དངུལ་རྩིས་རྒྱབ་སྐྱོར་འབདཝ་ཨིན།",
   },
   home_btn_donate: {
-    en: "Donate (1:1 Sovereign Match)",
-    dz: "ཞལ་འདེབས་ཕུལ། (༡:༡ རྒྱལ་གཞུང་འདྲ་མཉམ)",
+    en: "Donate Now",
+    dz: "ཞལ་འདེབས་ཕུལ།",
   },
   home_btn_explore_impact: {
     en: "Explore Our Impact",
@@ -809,7 +833,7 @@ export const translations: TranslationDictionary = {
     dz: "གསོ་བ་རིག་པའི་སྨན་སྦྱོར།",
   },
   ql_traditional_med_sub: {
-    en: "110 gSo-ba Rig-pa Formulations",
+    en: "110 so-wai rigpa formulations",
     dz: "གསོ་བ་རིག་པའི་སྨན་སྦྱོར་ ༡༡༠",
   },
   ql_cold_chain: {
@@ -833,7 +857,7 @@ export const translations: TranslationDictionary = {
     dz: "སྒོ་འབྱེད་དངུལ་རྩིས།",
   },
   ql_window_financing_sub: {
-    en: "Quarterly DMS Releases",
+    en: "Quarterly Releases",
     dz: "བཞི་དཔྱའི་མཁོ་སྒྲུབ་གཏོང་ལེན།",
   },
   stat_sovereign_endowment: {
@@ -853,8 +877,8 @@ export const translations: TranslationDictionary = {
     dz: "སྒེར་གྱི་ཟད་འགྲོ་མེད་པ།",
   },
   stat_meds_formulations: {
-    en: "Medicines & Formulations",
-    dz: "སྨན་རྫས་དང་སྨན་སྦྱོར།",
+    en: "National Essential Medicines and Traditional Medicines",
+    dz: "རྒྱལ་ཡོངས་ཉེ་བར་མཁོ་བའི་སྨན་རྫས་དང་ གསོ་བ་རིག་པའི་སྨན་སྦྱོར།",
   },
   stat_modern_trad: {
     en: "Modern + Traditional",

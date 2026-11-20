@@ -74,7 +74,7 @@ const resolveTrusteePhoto = (name?: string, photoUrl?: string | null, idx = 0) =
 
 export const Route = createFileRoute("/admin/trustees")({
   head: () => ({
-    meta: [{ title: "Board of Trustees CMS | BHTF Admin" }],
+    meta: [{ title: "Board of Directors CMS | BHTF Admin" }],
   }),
   component: AdminTrusteesPage,
 });
@@ -84,6 +84,7 @@ export function AdminTrusteesPage() {
   const [trustees, setTrustees] = useState<Trustee[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [committeeFilter, setCommitteeFilter] = useState<"ALL" | "AMC" | "DIRECTOR" | "ACTIVE">("ALL");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
 
@@ -91,7 +92,7 @@ export function AdminTrusteesPage() {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [organization, setOrganization] = useState("");
-  const [badge, setBadge] = useState("Trustee");
+  const [badge, setBadge] = useState("Member");
   const [bio, setBio] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [orderIndex, setOrderIndex] = useState(0);
@@ -103,7 +104,7 @@ export function AdminTrusteesPage() {
       const res = await getAdminTrustees();
       setTrustees(res);
     } catch {
-      toast.error("Failed to load trustees.");
+      toast.error("Failed to load Board members.");
     } finally {
       setLoading(false);
     }
@@ -116,9 +117,9 @@ export function AdminTrusteesPage() {
   const openCreateModal = () => {
     setEditingId(null);
     setName("");
-    setRole("");
+    setRole("Member");
     setOrganization("");
-    setBadge("Trustee");
+    setBadge("Member");
     setBio("");
     setPhotoUrl("");
     setOrderIndex(trustees.length + 1);
@@ -161,7 +162,7 @@ export function AdminTrusteesPage() {
             isActive,
           },
         });
-        toast.success("Trustee details updated successfully.");
+        toast.success("Board member details updated successfully.");
       } else {
         await createAdminTrustee({
           data: {
@@ -175,25 +176,25 @@ export function AdminTrusteesPage() {
             isActive,
           },
         });
-        toast.success("New trustee appointed successfully.");
+        toast.success("New Board member appointed successfully.");
       }
       setModalOpen(false);
       fetchTrustees();
     } catch {
-      toast.error("Failed to save trustee.");
+      toast.error("Failed to save Board member.");
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async (id: number, trusteeName: string) => {
-    if (!await confirm(`Are you sure you want to remove ${trusteeName} from the Board?`)) return;
+    if (!await confirm(`Are you sure you want to remove ${trusteeName} from the Board of Directors?`)) return;
     try {
       await deleteAdminTrustee({ data: { id } });
-      toast.success("Trustee removed.");
+      toast.success("Board member removed.");
       fetchTrustees();
     } catch {
-      toast.error("Failed to remove trustee.");
+      toast.error("Failed to remove Board member.");
     }
   };
 
@@ -212,13 +213,49 @@ export function AdminTrusteesPage() {
     }
   };
 
-  const filteredTrustees = trustees.filter(
+  const amcCount = trustees.filter(
     (t) =>
+      t.role.toLowerCase().includes("amc") ||
+      t.badge.toLowerCase().includes("amc") ||
+      t.organization.toLowerCase().includes("amc") ||
+      t.name.toLowerCase().includes("gyambo") ||
+      t.name.toLowerCase().includes("ugyen") ||
+      t.name.toLowerCase().includes("chencho") ||
+      t.name.toLowerCase().includes("norbu")
+  ).length;
+
+  const filteredTrustees = trustees.filter((t) => {
+    const matchesSearch =
       t.name.toLowerCase().includes(search.toLowerCase()) ||
       t.role.toLowerCase().includes(search.toLowerCase()) ||
       t.organization.toLowerCase().includes(search.toLowerCase()) ||
-      t.badge.toLowerCase().includes(search.toLowerCase()),
-  );
+      t.badge.toLowerCase().includes(search.toLowerCase());
+
+    if (!matchesSearch) return false;
+
+    if (committeeFilter === "AMC") {
+      return (
+        t.role.toLowerCase().includes("amc") ||
+        t.badge.toLowerCase().includes("amc") ||
+        t.organization.toLowerCase().includes("amc") ||
+        t.name.toLowerCase().includes("gyambo") ||
+        t.name.toLowerCase().includes("ugyen") ||
+        t.name.toLowerCase().includes("chencho") ||
+        t.name.toLowerCase().includes("norbu")
+      );
+    }
+    if (committeeFilter === "DIRECTOR") {
+      return (
+        t.role.toLowerCase().includes("director") ||
+        t.badge.toLowerCase().includes("director") ||
+        t.name.toLowerCase().includes("gyambo")
+      );
+    }
+    if (committeeFilter === "ACTIVE") {
+      return t.isActive;
+    }
+    return true;
+  });
 
   return (
     <AdminShell>
@@ -231,14 +268,14 @@ export function AdminTrusteesPage() {
                 Fiduciary Oversight
               </span>
               <span className="text-xs text-slate-400 font-mono">
-                {trustees.length} Members Appointed
+                {trustees.length} Members Registered
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
-              Board of Trustees Directory
+              Board of Directors & Committee Directory
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Manage high-level fiduciary governors, committee chairs, institutional affiliations,
+              Manage high-level fiduciary governors, AMC committee members, institutional affiliations,
               and public bios.
             </p>
           </div>
@@ -249,7 +286,61 @@ export function AdminTrusteesPage() {
             className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-emerald-700/20 transition cursor-pointer self-start sm:self-auto"
           >
             <Plus className="h-4 w-4" />
-            Appoint Trustee
+            Appoint Board Member
+          </button>
+        </div>
+
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setCommitteeFilter("ALL")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              committeeFilter === "ALL"
+                ? "bg-slate-900 text-white shadow-xs"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <span>All Board Members</span>
+            <span className="text-[10px] bg-slate-800 text-slate-200 px-1.5 py-0.2 rounded-full font-mono">
+              {trustees.length}
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setCommitteeFilter("AMC")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              committeeFilter === "AMC"
+                ? "bg-amber-600 text-white shadow-xs"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <span>Asset Management Committee (AMC)</span>
+            <span className="text-[10px] bg-amber-500/20 text-amber-800 px-1.5 py-0.2 rounded-full font-mono font-bold">
+              {amcCount}
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setCommitteeFilter("DIRECTOR")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              committeeFilter === "DIRECTOR"
+                ? "bg-teal-700 text-white shadow-xs"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <span>Secretariat Director</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setCommitteeFilter("ACTIVE")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              committeeFilter === "ACTIVE"
+                ? "bg-emerald-700 text-white shadow-xs"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <span>Active Only</span>
           </button>
         </div>
 
@@ -379,7 +470,7 @@ export function AdminTrusteesPage() {
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-emerald-600" />
                   <h2 className="text-lg font-bold text-slate-900">
-                    {editingId ? "Edit Trustee Profile" : "Appoint New Trustee"}
+                    {editingId ? "Edit Board Member Profile" : "Appoint New Board Member"}
                   </h2>
                 </div>
                 <button
@@ -398,7 +489,7 @@ export function AdminTrusteesPage() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Dasho Dechen Wangmo"
+                      placeholder="e.g. Lyonpo Tandin Wangchuk"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
@@ -410,7 +501,7 @@ export function AdminTrusteesPage() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Chairwoman / Trustee"
+                      placeholder="e.g. Chairperson, Board of Directors / Member"
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
@@ -421,7 +512,7 @@ export function AdminTrusteesPage() {
                     <label className="text-xs font-bold text-slate-700">Display Badge</label>
                     <input
                       type="text"
-                      placeholder="e.g. Chairman, Trustee, Member Secretary"
+                      placeholder="e.g. Chairperson, Member, Member Secretary"
                       value={badge}
                       onChange={(e) => setBadge(e.target.value)}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
@@ -435,7 +526,7 @@ export function AdminTrusteesPage() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Former Minister of Health / Ministry of Finance"
+                      placeholder="e.g. Minister for Health / Ministry of Finance"
                       value={organization}
                       onChange={(e) => setOrganization(e.target.value)}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
@@ -460,7 +551,7 @@ export function AdminTrusteesPage() {
                       onChange={(url) => setPhotoUrl(url)}
                       accept="image/*"
                       category="trustees"
-                      label="Trustee Official Portrait Photo (Optional)"
+                      label="Board Member Official Portrait Photo (Optional)"
                       description="Upload official high-resolution portrait photograph. Max 50MB."
                       aspectRatio="square"
                       compact

@@ -200,9 +200,7 @@ function NewsDetailPage() {
             </p>
             <p>
               The Trust Fund Secretariat ensures that 100% of public and international contributions
-              are matched 1:1 by the Royal Government, effectively multiplying the impact of every
-              donation and reinforcing Bhutan's constitutional commitment to free primary
-              healthcare.
+              are preserved in the ring-fenced sovereign endowment corpus, reinforcing Bhutan's constitutional commitment to free primary healthcare.
             </p>
           </div>
 

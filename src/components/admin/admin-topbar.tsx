@@ -16,7 +16,7 @@ import {
 const ROUTE_STUDIO_MAP: Record<string, { label: string; href: string }> = {
   "/": { label: "Homepage Studio", href: "/admin/page-editor?slug=home" },
   "/about": { label: "About Us Studio", href: "/admin/page-editor?slug=about" },
-  "/about/trustees": { label: "Trustees Studio", href: "/admin/trustees" },
+  "/about/trustees": { label: "Board of Directors Studio", href: "/admin/trustees" },
   "/about/secretariat": { label: "Secretariat Studio", href: "/admin/page-editor?slug=about-secretariat" },
   "/about/committees": { label: "Committees Studio", href: "/admin/page-editor?slug=about-committees" },
   "/about/organization": { label: "Organization Studio", href: "/admin/page-editor?slug=about-organization" },

@@ -67,7 +67,7 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
         {
           value: "110",
           title: "Traditional Medicines",
-          description: "Indigenous gSo-ba Rig-pa remedies (including 65 core formulations).",
+          description: "Indigenous so-wai rigpa remedies (including 65 core formulations).",
           icon: "Sparkles",
         },
         {
@@ -144,7 +144,7 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
       title: "Autonomous Statutory Mandate",
       subtitle: "Ring-Fenced Health Procurement Power",
       content:
-        "The Bhutan Health Trust Fund operates under the highest fiduciary benchmarks in the Kingdom. Governed by an eminent Board of Trustees and audited annually by the Royal Audit Authority, all operational yields are ring-fenced exclusively for primary healthcare commodities.",
+        "The Bhutan Health Trust Fund operates under the highest fiduciary benchmarks in the Kingdom. Governed by an eminent Board of Directors and audited annually by the Royal Audit Authority, all operational yields are ring-fenced exclusively for primary healthcare commodities.",
       bgVariant: "warm",
       padding: "normal",
       isVisible: true,
@@ -164,9 +164,9 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
       isVisible: true,
       items: [
         {
-          question: "How is my donation matched by the Royal Government?",
+          question: "How is my donation protected in the endowment?",
           answer:
-            "Every Ngultrum donated by citizens and international well-wishers is doubled 1:1 by the Royal Government of Bhutan and deposited directly into the permanent endowment corpus.",
+            "Every Ngultrum donated by citizens and international well-wishers is deposited directly into the permanent sovereign endowment corpus to fund essential healthcare.",
         },
         {
           question: "Is the principal corpus ever spent?",
@@ -183,19 +183,19 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
   },
   {
     type: "cta_banner",
-    name: "Matched Giving / Action Banner",
-    description: "High-converting action ribbon with matched pledge messaging and direct action button.",
+    name: "Sovereign Endowment Action Banner",
+    description: "High-converting action ribbon with healthcare endowment messaging and direct action button.",
     icon: Megaphone,
     defaultData: {
       type: "cta_banner",
-      title: "Every Ngultrum is Matched 1:1 by the Royal Government",
+      title: "Sustain Bhutan's Free Healthcare Endowment",
       subtitle:
         "Strengthen Bhutan's perpetual sovereign health buffer. 100% of your contribution is ring-fenced for life-saving medicines and vaccines.",
-      badge: "1:1 Sovereign Matching Grant",
+      badge: "Sovereign Healthcare Guarantee",
       bgVariant: "emerald",
       padding: "normal",
       isVisible: true,
-      primaryCtaText: "Contribute to Corpus (1:1 Matched)",
+      primaryCtaText: "Contribute to Corpus",
       primaryCtaUrl: "/get-involved",
       secondaryCtaText: "Track Donation Reference",
       secondaryCtaUrl: "/track-donation",
@@ -204,12 +204,12 @@ export const BLOCK_REGISTRY: BlockMeta[] = [
   {
     type: "interactive_tools",
     name: "Interactive Sovereign Portals",
-    description: "Interactive tools including 20 Dzongkhags Explorer, Commodities Pipeline, and 1:1 Matching Simulator.",
+    description: "Interactive tools including 20 Dzongkhags Explorer and Commodities Pipeline.",
     icon: Sparkles,
     defaultData: {
       type: "interactive_tools",
-      title: "National Health District Coverage & Matching Tools",
-      subtitle: "Explore national health commodity supply chains, all 20 Dzongkhags cold-chain coverage, and simulate your 1:1 RGOB matched pledge.",
+      title: "National Health District Coverage & Portals",
+      subtitle: "Explore national health commodity supply chains and all 20 Dzongkhags cold-chain coverage.",
       badge: "Interactive Portals & Simulations",
       bgVariant: "white",
       padding: "normal",

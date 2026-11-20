@@ -48,12 +48,12 @@ const faqs = [
     a: "BHTF was created to insulate Bhutan's universal free healthcare system from donor dependency, geopolitical shifts, and economic volatility. By using only the investment returns of its endowment corpus, BHTF ensures that essential drugs and vaccines remain freely accessible to every Bhutanese citizen without interruption.",
   },
   {
-    q: "How does the sovereign 1:1 RGOB matching fund work?",
-    a: "Under the sovereign Royal Charter, every single Ngultrum contributed by individuals, corporations, civil society, and international well-wishers is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling the impact of every donation.",
+    q: "How is my donation protected in the endowment?",
+    a: "Under the Royal Charter, every single Ngultrum contributed by individuals, corporations, and international well-wishers is ring-fenced directly into the permanent endowment corpus. Only investment yields are disbursed to fund medicines and vaccines, ensuring your contribution creates lifelong impact without depleting the principal.",
   },
   {
     q: "What healthcare commodities does BHTF finance?",
-    a: "BHTF finances 100% of the National Essential Medicines List comprising 438 essential modern medicines, 110 traditional medicines (gSo-ba Rig-pa) including 65 core formulations, and 4 routine national vaccines (Pentavalent, PCV, HPV, and seasonal Influenza), along with needles, syringes, and cold-chain equipment.",
+    a: "BHTF finances 100% of the National Essential Medicines List comprising 438 essential modern medicines, 110 traditional medicines (so-wai rigpa) including 65 core formulations, and 4 routine national vaccines (Pentavalent, PCV, HPV, and seasonal Influenza), along with needles, syringes, and cold-chain equipment.",
   },
   {
     q: "Are donations to BHTF tax-deductible?",
@@ -61,7 +61,7 @@ const faqs = [
   },
   {
     q: "How is BHTF governed and audited?",
-    a: "BHTF is governed by an eminent Board of Trustees chaired by the Hon'ble Minister for Health, comprising members from Zhung Dratshang, RMA, NPPF, MoF, private finance, and JDWNRH. Its accounts are audited annually by the Royal Audit Authority (RAA) of Bhutan, consistently receiving unqualified (clean) audit reports.",
+    a: "BHTF is governed by an eminent Board of Directors chaired by the Hon'ble Minister for Health, comprising members from Zhung Dratshang, RMA, NPPF, MoF, private finance, and JDWNRH. Its accounts are audited annually by the Royal Audit Authority (RAA) of Bhutan, consistently receiving unqualified (clean) audit reports.",
   },
   {
     q: "How are funds invested and managed?",

@@ -438,9 +438,9 @@ export function AdminSettingsPage() {
     },
     {
       id: "fiduciary",
-      label: "Fiduciary, Endowment & Matching",
+      label: "Fiduciary & Endowment",
       icon: Coins,
-      desc: "Sovereign 1:1 RGOB matching parameters, capital endowment goals, and annual healthcare disbursement.",
+      desc: "Capital endowment parameters, fiduciary targets, and annual healthcare disbursements.",
     },
     {
       id: "pillars",
@@ -1375,7 +1375,7 @@ export function AdminSettingsPage() {
                 </div>
                 <p className="text-rose-200/90 leading-relaxed">
                   Purge all mock transaction records, test inquiries, and dummy newsletter subscriptions from the active PostgreSQL database instance. 
-                  Genuine sovereign records including Board of Trustees, Royal Charter documents, Impact Metrics, Milestones, and Procurement Tenders are strictly protected and never touched.
+                  Genuine sovereign records including Board of Directors, Royal Charter documents, Impact Metrics, Milestones, and Procurement Tenders are strictly protected and never touched.
                 </p>
               </div>
             </div>

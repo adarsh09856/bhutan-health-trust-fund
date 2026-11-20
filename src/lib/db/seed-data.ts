@@ -18,24 +18,8 @@ import type {
 } from "./schema";
 import { institutionalConfig } from "../../config/institutional";
 
-// Precomputed genuine bcrypt hash for password "Admin@BHTF2026"
-export const DEFAULT_ADMIN_PASSWORD_HASH =
-  "$2b$10$.xtbHaRBEw.UtXl/l3FH0.NGBtoyZVOmvvcMw/KBJY.I.knfbv256";
-
-export const initialAdminUsers: NewUser[] = [
-  {
-    name: "Executive Administrator",
-    email: "admin@bhtf.bt",
-    passwordHash: DEFAULT_ADMIN_PASSWORD_HASH,
-    role: "SUPER_ADMIN",
-  },
-  {
-    name: "Communications Officer",
-    email: "media@bhtf.bt",
-    passwordHash: DEFAULT_ADMIN_PASSWORD_HASH,
-    role: "EDITOR",
-  },
-];
+// Administrators must be provisioned through the authenticated first-run setup.
+export const initialAdminUsers: NewUser[] = [];
 
 export const initialNewsArticles: NewNewsArticle[] = [
   {
@@ -209,7 +193,7 @@ export const initialPolicies: NewPolicy[] = [
     slug: "royal-charter-governance",
     category: "Governance",
     summary:
-      "Foundational legal instrument establishing BHTF's autonomy, Board of Trustees mandate, and fiduciary duties.",
+      "Foundational legal instrument establishing BHTF's autonomy, Board of Directors mandate, and fiduciary duties.",
     content: `The Royal Charter defines the sovereign mandate of the Bhutan Health Trust Fund as an autonomous institution dedicated to the perpetual financing of essential medicines and vaccines for the people of Bhutan.`,
     effectiveDate: "2020 (Revised)",
     fileUrl: "/documents/bhtf-charter.pdf",
@@ -360,7 +344,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Lopen Tshering Wangchuk",
-    role: "Trustee (Monastic Representative)",
+    role: "Member",
     organization: "Secretary, Monastic Council Zhung Dratshang",
     badge: "Zhung Dratshang",
     bio: "Represents the Central Monastic Body (Zhung Dratshang), upholding ethical fiduciary responsibility, spiritual stewardship, and compassionate healthcare across the Kingdom.",
@@ -370,7 +354,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Ms. Ugyen Choden",
-    role: "Trustee & Chairperson of AMC",
+    role: "Member",
     organization: "Deputy Governor, Royal Monetary Authority (RMA)",
     badge: "Central Bank / AMC Chair",
     bio: "Brings extensive central banking, monetary policy, and financial regulatory expertise. Chairs the BHTF Asset Management Committee (AMC) overseeing capital preservation and asset allocation.",
@@ -380,7 +364,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Mr. Chencho T. Namgay",
-    role: "Trustee & Member AMC",
+    role: "Member",
     organization: "CEO, National Pension & Provident Fund (NPPF)",
     badge: "Pension Fund / AMC Member",
     bio: "Provides institutional investment acumen, large-scale portfolio management insight, and fiduciary risk oversight as a member of the Board and Asset Management Committee.",
@@ -390,7 +374,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Mr. Norbu Dendup",
-    role: "Trustee & Member AMC",
+    role: "Member",
     organization: "Director, Department of Treasury & Accounts, Ministry of Finance",
     badge: "Ministry of Finance / AMC Member",
     bio: "Oversees public financial management, treasury coordination, and sovereign endowment governance, serving on the Board and Asset Management Committee.",
@@ -400,7 +384,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Mr. Pema Tshering",
-    role: "Trustee (Independent Director)",
+    role: "Member",
     organization: "Former CEO, T Bank Ltd. (Financial Sector Specialist)",
     badge: "Financial Sector Specialist",
     bio: "Serves as an independent fiduciary expert with decades of commercial banking, capital markets, and corporate governance leadership in Bhutan.",
@@ -410,7 +394,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Dr. Phub Tshering",
-    role: "Trustee (Clinical & Medical Specialist)",
+    role: "Member",
     organization: "Medical Director, Jigme Dorji Wangchuck National Referral Hospital (JDWNRH)",
     badge: "Clinical Specialist",
     bio: "Provides high-level clinical guidance, therapeutic efficacy reviews, and medical formulary alignment directly representing the nation's premier tertiary healthcare institution.",
@@ -420,7 +404,7 @@ export const initialTrustees: NewTrustee[] = [
   },
   {
     name: "Dr. Gyambo Sithey, PhD",
-    role: "Director",
+    role: "Director & Member Secretary",
     organization: "Director, BHTF Secretariat",
     badge: "Director",
     bio: "Leads day-to-day operations of the BHTF Secretariat, execution of statutory board directives, donor engagement, and nationwide healthcare procurement disbursements.",
@@ -448,17 +432,17 @@ export const initialFaqs: NewFaq[] = [
     isPublished: true,
   },
   {
-    question: "How does the sovereign 1:1 RGOB matching fund work?",
+    question: "How is my donation protected in the endowment?",
     answer:
-      "Under the sovereign Royal Charter, every single Ngultrum contributed by individuals, corporations, civil society, and international well-wishers is matched 1:1 by the Royal Government of Bhutan through the Ministry of Finance, effectively doubling the impact of every donation.",
-    category: "Matching Fund",
+      "Under the Royal Charter, every single Ngultrum contributed by individuals, corporations, and international well-wishers is ring-fenced directly into the permanent endowment corpus. Only investment yields are disbursed to fund medicines and vaccines, ensuring your contribution creates lifelong impact without depleting the principal.",
+    category: "Endowment Security",
     orderIndex: 3,
     isPublished: true,
   },
   {
     question: "What healthcare commodities does BHTF finance?",
     answer:
-      "BHTF finances 100% of the National Essential Medicines List comprising 438 essential modern medicines, 110 traditional medicines (gSo-ba Rig-pa) including 65 core formulations, and 4 routine national vaccines (Pentavalent, PCV, HPV, and seasonal Influenza), along with needles, syringes, and cold-chain equipment.",
+      "BHTF finances 100% of the National Essential Medicines List comprising 438 essential modern medicines, 110 traditional medicines (so-wai rigpa) including 65 core formulations, and 4 routine national vaccines (Pentavalent, PCV, HPV, and seasonal Influenza), along with needles, syringes, and cold-chain equipment.",
     category: "Financing & Formulary",
     orderIndex: 4,
     isPublished: true,
@@ -474,7 +458,7 @@ export const initialFaqs: NewFaq[] = [
   {
     question: "How is BHTF governed and audited?",
     answer:
-      "BHTF is governed by an eminent Board of Trustees chaired by the Hon'ble Minister for Health, comprising members from Zhung Dratshang, RMA, NPPF, MoF, private finance, and JDWNRH. Its accounts are audited annually by the Royal Audit Authority (RAA) of Bhutan, consistently receiving unqualified (clean) audit reports.",
+      "BHTF is governed by an eminent Board of Directors chaired by the Hon'ble Minister for Health, comprising members from Zhung Dratshang, RMA, NPPF, MoF, private finance, and JDWNRH. Its accounts are audited annually by the Royal Audit Authority (RAA) of Bhutan, consistently receiving unqualified (clean) audit reports.",
     category: "Governance & Audit",
     orderIndex: 6,
     isPublished: true,
@@ -506,7 +490,7 @@ export const initialFaqs: NewFaq[] = [
   {
     question: "Where is the BHTF Secretariat located and how can I contact them?",
     answer:
-      "The Secretariat is located at BTFEC Office Building, Genyen Lam, Thimphu, Bhutan. You can contact the Secretariat by phone at +975 2 322424, email at bhtf@bhtf.bt, or visit during official working hours (Monday-Friday, 9:00 AM - 5:00 PM BST).",
+      "The Secretariat is located at Lower Motithang, Thori Lam, Thimphu, Bhutan. You can contact the Secretariat at 02-338636 / 338637 / 77348083, WhatsApp 77348083, or bhtf@bhtf.bt.",
     category: "Contact & Location",
     orderIndex: 10,
     isPublished: true,
@@ -535,7 +519,7 @@ export const initialImpactMetrics: NewImpactMetric[] = [
   {
     label: "Traditional Medicines",
     value: "110",
-    description: "Indigenous gSo-ba Rig-pa formulations (including 65 core remedies)",
+    description: "Indigenous so-wai rigpa formulations (including 65 core remedies)",
     icon: "Sparkles",
     badge: "Traditional Care",
     orderIndex: 3,
@@ -555,65 +539,56 @@ export const initialImpactMetrics: NewImpactMetric[] = [
 export const initialMilestones: NewMilestone[] = [
   {
     year: "1998",
-    title: "Conception & Geneva Launch",
-    description:
-      "Formally launched on 12 May 1998 at the 51st World Health Assembly in Geneva under the visionary guidance of His Majesty the Fourth Druk Gyalpo Jigme Singye Wangchuck and led by Lyonpo Sangay Ngedup (then Health Minister).",
+    title: "Launched in Geneva",
+    description: "BHTF launched on 12th May at the World Health Organization headquarters in Geneva.",
     orderIndex: 1,
   },
   {
     year: "2000",
-    title: "Royal Charter Enactment",
-    description:
-      "His Majesty the Fourth Druk Gyalpo granted the Royal Charter on 12 May 2000, establishing BHTF as an autonomous statutory body with a ring-fenced capital endowment.",
+    title: "Royal Charter issued",
+    description: "Secretariat established; Charter issued by the Fourth Druk Gyalpo on 3rd August.",
     orderIndex: 2,
   },
   {
     year: "2003",
-    title: "Operational Financing Commences",
-    description:
-      "The Trust Fund began financing essential primary healthcare needs, providing sustained funding for basic medical supplies and consumables across Bhutan's health facilities.",
+    title: "Vaccine financing begins",
+    description: "First funding for primary health care vaccines.",
     orderIndex: 3,
   },
   {
     year: "2006",
-    title: "100% Childhood Vaccines Financing",
-    description:
-      "BHTF assumed complete financing responsibility for all routine childhood vaccines and essential immunization cold-chain equipment nationwide.",
+    title: "National campaigns",
+    description: "Supported nationwide Measles & Rubella campaign; financed the Hepatitis B drive.",
     orderIndex: 4,
   },
   {
-    year: "2014-2015",
-    title: "Pentavalent Vaccine & Supply Chain Resilience",
-    description:
-      "Fully funded the transition to the 5-in-1 Pentavalent vaccine and sustained uninterrupted procurement through global WHO/UNICEF supply pipelines.",
+    year: "2014–15",
+    title: "Health Contribution transferred",
+    description: "HC moved to BHTF; Fund began financing both essential drugs and vaccines.",
     orderIndex: 5,
   },
   {
     year: "2017",
-    title: "Target Endowment Corpus Realization",
-    description:
-      "BHTF reached its primary target endowment corpus of USD 24 Million (Nu. 1.5 Billion+), securing long-term financial independence and sustainability.",
+    title: "HPV vaccine co-financed",
+    description: "Co-financed with the Australian Cervical Cancer Foundation (ACCF).",
     orderIndex: 6,
   },
   {
     year: "2018",
-    title: "Nu. 3.0 Billion Corpus Milestone",
-    description:
-      "With continuous RGOB support, sovereign matching grants, and public donations, the capital endowment crossed Nu. 3.0 Billion.",
+    title: "Autonomous & Pentavalent",
+    description: "Delinked from MoH; supported Pentavalent Vaccine introduction with GAVI.",
     orderIndex: 7,
   },
   {
     year: "2019",
-    title: "Introduction of HPV & Flu Vaccines",
-    description:
-      "Financing expanded to cover nationwide Human Papillomavirus (HPV) vaccination for cervical cancer prevention and annual seasonal influenza vaccines for vulnerable groups.",
+    title: "PCV & Influenza funded",
+    description: "Funded introduction of Pneumococcal Conjugate and Influenza vaccines.",
     orderIndex: 8,
   },
   {
     year: "2026",
-    title: "Nu. 4.8 Billion Corpus & Comprehensive Formulary",
-    description:
-      "Capital endowment reached Nu. 4,798,965,306.85 (~Nu. 4.8B) as of 30 June 2026, funding 438 essential medicines, 110 traditional medicines (65 core formulations), and 4 routine vaccines nationwide.",
+    title: "26 years of service to the nation",
+    description: "26 unbroken years sustaining primary healthcare financing for essential medicines and vaccines across all 20 Dzongkhags.",
     orderIndex: 9,
   },
 ];
@@ -713,15 +688,15 @@ export const initialSiteSettings: NewSiteSetting[] = [
   // 4. Fiduciary, Endowment & Matching
   {
     settingKey: "matching_enabled",
-    settingValue: "true",
+    settingValue: "false",
     category: "fiduciary",
-    description: "Enable sovereign 1:1 government matching grant display",
+    description: "Sovereign government matching grant display",
   },
   {
     settingKey: "matching_ratio",
-    settingValue: "1:1 Sovereign Multiplier",
+    settingValue: "Direct Contribution",
     category: "fiduciary",
-    description: "Sovereign government matching multiplier on qualified donations",
+    description: "Direct healthcare endowment funding ratio",
   },
   {
     settingKey: "capital_endowment_target_nu",
@@ -779,7 +754,7 @@ export const initialSiteSettings: NewSiteSetting[] = [
     settingKey: "pillar_1_title",
     settingValue: "438 Essential Medicines & 110 Traditional Formulations",
     category: "pillars",
-    description: "Pillar 1: Financing 100% of the National Essential Drugs List and gSo-ba Rig-pa remedies",
+    description: "Pillar 1: Financing 100% of the National Essential Drugs List and so-wai rigpa remedies",
   },
   {
     settingKey: "pillar_2_title",

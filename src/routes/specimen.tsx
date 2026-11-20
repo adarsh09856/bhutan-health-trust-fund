@@ -182,14 +182,14 @@ function SpecimenPage() {
             date: "3 August 2000",
             title: "Royal Charter Enacted by His Majesty the Fourth Druk Gyalpo",
             summary:
-              "Formal statutory enactment establishing BHTF as an autonomous body with ring-fenced corpus capital and Board of Trustees oversight.",
+              "Formal statutory enactment establishing BHTF as an autonomous body with ring-fenced corpus capital and Board of Directors oversight.",
             statutoryBasis: "Royal Charter 2000",
           },
           {
             date: "2014",
-            title: "Institutionalization of 1:1 RGOB Sovereign Match",
+            title: "Transfer of 1% Health Contribution to BHTF",
             summary:
-              "The Royal Government of Bhutan cements a permanent dollar-for-dollar matching commitment for all citizen and institutional contributions.",
+              "The Royal Government of Bhutan cements the transfer of the 1% Health Contribution to BHTF, empowering full financing of essential drugs and vaccines.",
             statutoryBasis: "Ministry of Finance Proclamation",
           },
           {

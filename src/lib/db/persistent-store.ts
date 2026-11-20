@@ -14,7 +14,6 @@ import {
   initialImpactMetrics,
   initialMilestones,
   initialSiteSettings,
-  initialAdminUsers,
 } from "./seed-data";
 import { defaultCorePages } from "./default-pages";
 import type {
@@ -106,7 +105,10 @@ class PersistentStore {
         fs.mkdirSync(this.dataDir, { recursive: true });
       }
       const temporaryPath = `${this.filePath}.${randomUUID()}.tmp`;
-      fs.writeFileSync(temporaryPath, JSON.stringify(this.data, null, 2), { encoding: "utf-8", mode: 0o600 });
+      fs.writeFileSync(temporaryPath, JSON.stringify(this.data, null, 2), {
+        encoding: "utf-8",
+        mode: 0o600,
+      });
       fs.renameSync(temporaryPath, this.filePath);
     } catch (err) {
       console.warn("[PersistentStore Persist Warning]:", err);
@@ -276,18 +278,7 @@ class PersistentStore {
       subscribedAt: now,
     }));
 
-    const users: User[] = initialAdminUsers.map((u, idx) => ({
-      id: idx + 1,
-      name: u.name,
-      email: u.email,
-      passwordHash: u.passwordHash,
-      role: u.role || "SUPER_ADMIN",
-      isActive: true,
-      failedAttempts: 0,
-      lockedUntil: null,
-      createdAt: now,
-      updatedAt: now,
-    }));
+    const users: User[] = [];
 
     return {
       users,
@@ -322,9 +313,21 @@ class PersistentStore {
       reports: Array.isArray(parsed.reports) ? parsed.reports : fresh.reports,
       policies: Array.isArray(parsed.policies) ? parsed.policies : fresh.policies,
       programs: Array.isArray(parsed.programs) ? parsed.programs : fresh.programs,
-      trustees: Array.isArray(parsed.trustees) ? parsed.trustees : fresh.trustees,
+      trustees: (() => {
+        const existing = Array.isArray(parsed.trustees) ? parsed.trustees : [];
+        const existingNames = new Set(existing.map((t: any) => t.name?.toLowerCase()));
+        const merged = [...existing];
+        fresh.trustees.forEach((ft) => {
+          if (!existingNames.has(ft.name.toLowerCase())) {
+            merged.push(ft);
+          }
+        });
+        return merged;
+      })(),
       faqs: Array.isArray(parsed.faqs) ? parsed.faqs : fresh.faqs,
-      impactMetrics: Array.isArray(parsed.impactMetrics) ? parsed.impactMetrics : fresh.impactMetrics,
+      impactMetrics: Array.isArray(parsed.impactMetrics)
+        ? parsed.impactMetrics
+        : fresh.impactMetrics,
       milestones: Array.isArray(parsed.milestones) ? parsed.milestones : fresh.milestones,
       siteSettings: Array.isArray(parsed.siteSettings) ? parsed.siteSettings : fresh.siteSettings,
       customPages: (() => {
@@ -353,13 +356,15 @@ class PersistentStore {
 
   public getUploadedAssets(category?: string): UploadedAsset[] {
     this.init();
-    return this.data!.uploadedAssets.filter(item => !category || category === "ALL" || item.category === category);
+    return this.data!.uploadedAssets.filter(
+      (item) => !category || category === "ALL" || item.category === category,
+    );
   }
   public saveUploadedAsset(data: NewUploadedAsset): UploadedAsset {
     this.init();
     const item: UploadedAsset = {
       ...data,
-      id: Math.max(0, ...this.data!.uploadedAssets.map(item => item.id)) + 1,
+      id: Math.max(0, ...this.data!.uploadedAssets.map((item) => item.id)) + 1,
       category: data.category || "general",
       sizeBytes: data.sizeBytes || 0,
       dataBase64: data.dataBase64 || null,
@@ -373,7 +378,7 @@ class PersistentStore {
   public deleteUploadedAsset(id: number): boolean {
     this.init();
     const count = this.data!.uploadedAssets.length;
-    this.data!.uploadedAssets = this.data!.uploadedAssets.filter(item => item.id !== id);
+    this.data!.uploadedAssets = this.data!.uploadedAssets.filter((item) => item.id !== id);
     this.persist();
     return count !== this.data!.uploadedAssets.length;
   }
@@ -384,14 +389,25 @@ class PersistentStore {
   }
   public saveNews(article: NewsArticle): NewsArticle {
     this.init();
-    const existingIdx = this.data!.news.findIndex((a) => a.id === article.id || a.slug === article.slug);
+    const existingIdx = this.data!.news.findIndex(
+      (a) => a.id === article.id || a.slug === article.slug,
+    );
     if (existingIdx >= 0) {
-      this.data!.news[existingIdx] = { ...this.data!.news[existingIdx], ...article, updatedAt: new Date() };
+      this.data!.news[existingIdx] = {
+        ...this.data!.news[existingIdx],
+        ...article,
+        updatedAt: new Date(),
+      };
       this.persist();
       return this.data!.news[existingIdx];
     }
     const nextId = Math.max(0, ...this.data!.news.map((a) => a.id)) + 1;
-    const created: NewsArticle = { ...article, id: nextId, createdAt: new Date(), updatedAt: new Date() };
+    const created: NewsArticle = {
+      ...article,
+      id: nextId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
     this.data!.news.unshift(created);
     this.persist();
     return created;
@@ -451,7 +467,11 @@ class PersistentStore {
     if (policy.id) {
       const idx = this.data!.policies.findIndex((p) => p.id === policy.id);
       if (idx >= 0) {
-        this.data!.policies[idx] = { ...this.data!.policies[idx], ...policy, updatedAt: new Date() };
+        this.data!.policies[idx] = {
+          ...this.data!.policies[idx],
+          ...policy,
+          updatedAt: new Date(),
+        };
         this.persist();
         return this.data!.policies[idx];
       }
@@ -599,7 +619,9 @@ class PersistentStore {
     this.init();
     return this.data!.impactMetrics;
   }
-  public saveImpactMetric(m: Partial<ImpactMetric> & { label: string; value: string }): ImpactMetric {
+  public saveImpactMetric(
+    m: Partial<ImpactMetric> & { label: string; value: string },
+  ): ImpactMetric {
     this.init();
     if (m.id) {
       const idx = this.data!.impactMetrics.findIndex((item) => item.id === m.id);
@@ -792,7 +814,9 @@ class PersistentStore {
       return false;
     }
     const len = this.data!.customPages.length;
-    this.data!.customPages = this.data!.customPages.filter((p) => p.slug.toLowerCase() !== normalized);
+    this.data!.customPages = this.data!.customPages.filter(
+      (p) => p.slug.toLowerCase() !== normalized,
+    );
     this.persist();
     return this.data!.customPages.length < len;
   }
@@ -801,7 +825,9 @@ class PersistentStore {
     this.init();
     return this.data!.inquiries;
   }
-  public saveInquiry(inq: Partial<Inquiry> & { name: string; email: string; subject: string; message: string }): Inquiry {
+  public saveInquiry(
+    inq: Partial<Inquiry> & { name: string; email: string; subject: string; message: string },
+  ): Inquiry {
     this.init();
     const nextId = Math.max(0, ...this.data!.inquiries.map((i) => i.id)) + 1;
     const created: Inquiry = {
@@ -834,12 +860,25 @@ class PersistentStore {
     }
     return null;
   }
+  public updateInquiryDetails(
+    id: number,
+    details: Pick<Inquiry, "name" | "email" | "subject" | "message">,
+  ): Inquiry | null {
+    this.init();
+    const item = this.data!.inquiries.find((inquiry) => inquiry.id === id);
+    if (!item) return null;
+    Object.assign(item, details);
+    this.persist();
+    return item;
+  }
 
   public getDonations(): Donation[] {
     this.init();
     return this.data!.donations;
   }
-  public saveDonation(d: Partial<Donation> & { referenceNo: string; donorName: string; amountNu: number }): Donation {
+  public saveDonation(
+    d: Partial<Donation> & { referenceNo: string; donorName: string; amountNu: number },
+  ): Donation {
     this.init();
     const idx = this.data!.donations.findIndex((item) => item.referenceNo === d.referenceNo);
     if (idx >= 0) {
@@ -925,12 +964,18 @@ class PersistentStore {
     this.init();
     return this.data!.mediaGallery;
   }
-  public saveGalleryItem(item: Partial<MediaGalleryItem> & { title: string; imageUrl: string }): MediaGalleryItem {
+  public saveGalleryItem(
+    item: Partial<MediaGalleryItem> & { title: string; imageUrl: string },
+  ): MediaGalleryItem {
     this.init();
     if (item.id) {
       const idx = this.data!.mediaGallery.findIndex((g) => g.id === item.id);
       if (idx >= 0) {
-        this.data!.mediaGallery[idx] = { ...this.data!.mediaGallery[idx], ...item, updatedAt: new Date() };
+        this.data!.mediaGallery[idx] = {
+          ...this.data!.mediaGallery[idx],
+          ...item,
+          updatedAt: new Date(),
+        };
         this.persist();
         return this.data!.mediaGallery[idx];
       }
@@ -969,7 +1014,11 @@ class PersistentStore {
     if (v.id) {
       const idx = this.data!.mediaVideos.findIndex((item) => item.id === v.id);
       if (idx >= 0) {
-        this.data!.mediaVideos[idx] = { ...this.data!.mediaVideos[idx], ...v, updatedAt: new Date() };
+        this.data!.mediaVideos[idx] = {
+          ...this.data!.mediaVideos[idx],
+          ...v,
+          updatedAt: new Date(),
+        };
         this.persist();
         return this.data!.mediaVideos[idx];
       }
@@ -1004,12 +1053,18 @@ class PersistentStore {
     this.init();
     return this.data!.procurementSteps;
   }
-  public saveProcurementStep(s: Partial<ProcurementStep> & { stepNumber: string; title: string; description: string }): ProcurementStep {
+  public saveProcurementStep(
+    s: Partial<ProcurementStep> & { stepNumber: string; title: string; description: string },
+  ): ProcurementStep {
     this.init();
     if (s.id) {
       const idx = this.data!.procurementSteps.findIndex((item) => item.id === s.id);
       if (idx >= 0) {
-        this.data!.procurementSteps[idx] = { ...this.data!.procurementSteps[idx], ...s, updatedAt: new Date() };
+        this.data!.procurementSteps[idx] = {
+          ...this.data!.procurementSteps[idx],
+          ...s,
+          updatedAt: new Date(),
+        };
         this.persist();
         return this.data!.procurementSteps[idx];
       }
@@ -1041,12 +1096,23 @@ class PersistentStore {
     this.init();
     return this.data!.procurementTenders;
   }
-  public saveProcurementTender(t: Partial<ProcurementTender> & { tenderNo: string; title: string; documentUrl: string; closingDate: Date }): ProcurementTender {
+  public saveProcurementTender(
+    t: Partial<ProcurementTender> & {
+      tenderNo: string;
+      title: string;
+      documentUrl: string;
+      closingDate: Date;
+    },
+  ): ProcurementTender {
     this.init();
     if (t.id) {
       const idx = this.data!.procurementTenders.findIndex((item) => item.id === t.id);
       if (idx >= 0) {
-        this.data!.procurementTenders[idx] = { ...this.data!.procurementTenders[idx], ...t, updatedAt: new Date() };
+        this.data!.procurementTenders[idx] = {
+          ...this.data!.procurementTenders[idx],
+          ...t,
+          updatedAt: new Date(),
+        };
         this.persist();
         return this.data!.procurementTenders[idx];
       }
@@ -1107,7 +1173,9 @@ class PersistentStore {
   }): User {
     this.init();
     const normalized = userData.email.trim().toLowerCase();
-    const existingIdx = this.data!.users.findIndex((u) => u.id === userData.id || u.email.toLowerCase() === normalized);
+    const existingIdx = this.data!.users.findIndex(
+      (u) => u.id === userData.id || u.email.toLowerCase() === normalized,
+    );
     const now = new Date();
     if (existingIdx >= 0) {
       this.data!.users[existingIdx] = {
@@ -1183,7 +1251,12 @@ class PersistentStore {
   }
   public getActiveSessionsForUser(userId: number): UserSession[] {
     this.init();
-    return this.data!.userSessions.filter(session => session.userId === userId && session.isActive && new Date(session.expiresAt).getTime() > Date.now());
+    return this.data!.userSessions.filter(
+      (session) =>
+        session.userId === userId &&
+        session.isActive &&
+        new Date(session.expiresAt).getTime() > Date.now(),
+    );
   }
 
   public revokeSession(sessionId: number): boolean {
@@ -1208,4 +1281,3 @@ class PersistentStore {
 }
 
 export const persistentStore = new PersistentStore();
-

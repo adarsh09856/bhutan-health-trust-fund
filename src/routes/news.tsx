@@ -69,7 +69,7 @@ const fallbackArticles: NewsArticle[] = [
     coverImage: "/src/assets/field/bhtf_bbs_broadcast.jpg",
     excerpt:
       "National television broadcast highlights BHTF's perpetual funding mechanism securing uninterrupted supply of 438 essential drugs and life-saving childhood vaccines without any cost to citizens.",
-    content: "The Bhutan Broadcasting Service (BBS) broadcast an in-depth special report highlighting the vital constitutional role of the Bhutan Health Trust Fund (BHTF) in safeguarding free universal healthcare across all 20 Dzongkhags. The report emphasized that through prudent endowment investment and 1:1 RGOB matching, Bhutan continues to achieve zero stockouts of life-saving medicines.",
+    content: "The Bhutan Broadcasting Service (BBS) broadcast an in-depth special report highlighting the vital constitutional role of the Bhutan Health Trust Fund (BHTF) in safeguarding free universal healthcare across all 20 Dzongkhags. The report emphasized that through prudent endowment investment and ring-fenced financing, Bhutan continues to achieve zero stockouts of life-saving medicines.",
     isPublished: true,
     viewsCount: 2840,
     publishedAt: new Date("2026-10-15"),

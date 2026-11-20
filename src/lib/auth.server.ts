@@ -151,7 +151,7 @@ export async function verifyDatabaseSession(token: string): Promise<SessionUser 
 export async function authenticateAdmin(
   email: string,
   password: string,
-  clientIp = "127.0.0.1",
+  clientIp = "unknown",
   userAgent?: string,
 ): Promise<{ success: boolean; user?: User; token?: string; error?: string }> {
   const normalizedEmail = email.trim().toLowerCase();

@@ -119,18 +119,18 @@ export function AdminPagesList() {
 
   const DEFAULT_CORE_PAGES_FALLBACK = [
     { slug: "home", title: "Home Page", metaDescription: "Bhutan Health Trust Fund — Healthy People, Stronger Bhutan" },
-    { slug: "about", title: "About Us (Main Institutional Overview)", metaDescription: "Founding history, Royal Charter mandate & Board of Trustees" },
+    { slug: "about", title: "About Us (Main Institutional Overview)", metaDescription: "Founding history, Royal Charter mandate & Board of Directors" },
     { slug: "about-organization", title: "About: Organization & Mandate", metaDescription: "Statutory founding under the Royal Charter, Article 9 constitutional rights & Vision/Mission" },
-    { slug: "about-trustees", title: "About: Board of Trustees", metaDescription: "High-level ministerial governance, trustee directory & fiduciary oversight" },
+    { slug: "about-trustees", title: "About: Board of Directors", metaDescription: "High-level ministerial governance, Board of Directors directory & fiduciary oversight" },
     { slug: "about-committees", title: "About: Asset Management & Audit Committees", metaDescription: "Investment Policy Statement (IPS) guidelines and capital preservation" },
     { slug: "about-secretariat", title: "About: Secretariat & Organogram", metaDescription: "Annexure 1 operational organogram and administrative divisions" },
     { slug: "our-story", title: "Our Story & Historical Milestones", metaDescription: "The founding chronicle of Bhutan Health Trust Fund and official milestones" },
-    { slug: "our-impact", title: "Our Impact & Healthcare Commodities", metaDescription: "438 Essential Modern Medicines, 110 Traditional Formulations & 4 Key Routine Vaccines" },
+    { slug: "our-work", title: "Our Impact & Healthcare Commodities", metaDescription: "438 Essential Modern Medicines, 110 Traditional Formulations & 4 Key Routine Vaccines" },
     { slug: "resources", title: "Resources: Official Documents & Audits", metaDescription: "Official statutory archive and RAA certified financial statements" },
     { slug: "window-financing", title: "Resources: Window Financing Protocol", metaDescription: "Quarterly commodity requisition mechanism and MOF fund releases" },
-    { slug: "donate", title: "Donate & Support (1:1 Matched)", metaDescription: "Every Ngultrum matched 1:1 by the Royal Government of Bhutan" },
+    { slug: "donate", title: "Donate & Support", metaDescription: "Sustain universal healthcare with essential medicines and vaccines" },
     { slug: "news", title: "News & Media Bulletins", metaDescription: "Official press releases, field dispatches & procurement communiqués" },
-    { slug: "track-donation", title: "Track Donation & Tax Voucher", metaDescription: "1:1 matching verification and DRC tax exemption vouchers (Reg. E-73)" },
+    { slug: "track-donation", title: "Track Donation & Tax Voucher", metaDescription: "Contribution ledger verification and DRC tax exemption vouchers (Reg. E-73)" },
     { slug: "reports", title: "Reports & Financial Audits", metaDescription: "Annual reports and RAA certified statutory financial statements" },
     { slug: "policies", title: "Governance & Policies", metaDescription: "Trust regulations, procurement ethics & whistleblower protections" },
     { slug: "contact", title: "Contact Secretariat", metaDescription: "Citizen inquiries, donor consultations & Thimphu HQ contact" },
@@ -182,7 +182,7 @@ export function AdminPagesList() {
     else if (page.slug === "window-financing") publicUrl = "/resources/window-financing";
     else if (page.slug === "resources") publicUrl = "/resources";
     else if (page.slug === "donate") publicUrl = "/donate";
-    else if (page.slug === "our-impact") publicUrl = "/our-impact";
+    else if (page.slug === "our-work") publicUrl = "/our-impact";
     else if (isCore) publicUrl = `/${page.slug}`;
 
     return (

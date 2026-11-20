@@ -1,8 +1,21 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { authenticateAdmin, getSessionFromRequest, revokeSessionByToken } from "../auth.server";
+import {
+  authenticateAdmin,
+  getSessionFromRequest,
+  revokeSessionByToken,
+  SESSION_COOKIE_NAME,
+} from "../auth.server";
 import { db } from "../db";
+import {
+  deleteCookie,
+  getCookie,
+  getRequestHeader,
+  getRequestIP,
+  getRequestProtocol,
+  setCookie,
+} from "@tanstack/react-start/server";
 
 export const adminLogin = createServerFn({ method: "POST" })
   .validator(
@@ -13,18 +26,26 @@ export const adminLogin = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     try {
-      const result = await authenticateAdmin(data.email, data.password);
+      const clientIp = getRequestIP({ xForwardedFor: true }) || "unknown";
+      const result = await authenticateAdmin(data.email, data.password, clientIp, getRequestHeader("user-agent"));
 
       if (!result.success || !result.user || !result.token) {
         return {
           success: false,
-          error: result.error || "Invalid email address or password. Please verify credentials.",
+          error: "Invalid email address or password. Please verify your credentials.",
         };
       }
 
+      const secureCookie = getRequestProtocol({ xForwardedProto: true }) === "https";
+      setCookie(SESSION_COOKIE_NAME, result.token, {
+        httpOnly: true,
+        secure: secureCookie,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 7 * 24 * 60 * 60,
+      });
       return {
         success: true,
-        token: result.token,
         user: {
           id: result.user.id,
           email: result.user.email,
@@ -34,27 +55,42 @@ export const adminLogin = createServerFn({ method: "POST" })
       };
     } catch (err: any) {
       console.error("[Admin Auth Error]:", err);
-      const msg = err?.message || String(err);
       return {
         success: false,
-        error: `Authentication Service Error: ${msg}`,
+        error: "Authentication service is temporarily unavailable. Please try again.",
       };
     }
   });
 
 export const adminLogout = createServerFn({ method: "POST" })
-  .validator(z.object({ token: z.string().optional() }))
-  .handler(async ({ data }) => {
-    if (data.token) {
-      await revokeSessionByToken(data.token);
+  .validator(z.object({}).optional())
+  .handler(async () => {
+    const token = getCookie(SESSION_COOKIE_NAME);
+    if (token) {
+      await revokeSessionByToken(token);
     }
+    deleteCookie(SESSION_COOKIE_NAME, {
+      path: "/",
+      secure: getRequestProtocol({ xForwardedProto: true }) === "https",
+      sameSite: "lax",
+    });
     return { success: true };
   });
 
 export const verifyCurrentSession = createServerFn({ method: "POST" })
-  .validator(z.object({ token: z.string().optional() }))
-  .handler(async ({ data }) => {
-    const sessionUser = await getSessionFromRequest(data.token);
+  .validator(z.object({}).optional())
+  .handler(async () => {
+    const token = getCookie(SESSION_COOKIE_NAME);
+    const sessionUser = await getSessionFromRequest();
+    if (token && sessionUser) {
+      setCookie(SESSION_COOKIE_NAME, token, {
+        httpOnly: true,
+        secure: getRequestProtocol({ xForwardedProto: true }) === "https",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 7 * 24 * 60 * 60,
+      });
+    }
     return { user: sessionUser };
   });
 
@@ -131,11 +167,22 @@ export const executeFirstRunSetup = createServerFn({ method: "POST" })
       });
 
       // Auto-login and create database session
-      const authResult = await authenticateAdmin(data.email, data.password);
+      const authResult = await authenticateAdmin(
+        data.email,
+        data.password,
+        getRequestIP({ xForwardedFor: true }) || "unknown",
+        getRequestHeader("user-agent"),
+      );
 
+      setCookie(SESSION_COOKIE_NAME, authResult.token!, {
+        httpOnly: true,
+        secure: getRequestProtocol({ xForwardedProto: true }) === "https",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 7 * 24 * 60 * 60,
+      });
       return {
         success: true,
-        token: authResult.token,
         user: {
           id: superAdmin.id,
           name: superAdmin.name,
@@ -147,7 +194,7 @@ export const executeFirstRunSetup = createServerFn({ method: "POST" })
       console.error("[First Run Setup Error]:", err);
       return {
         success: false,
-        error: `Initialization failed: ${err.message}`,
+        error: "Initialization could not be completed. Please try again or contact the system administrator.",
       };
     }
   });

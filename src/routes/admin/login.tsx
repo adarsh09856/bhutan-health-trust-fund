@@ -40,8 +40,8 @@ function AdminLoginPage() {
     setLoading(true);
     try {
       const res = await adminLogin({ data: { email: loginEmail, password: loginPass } });
-      if (res.success && res.user && res.token) {
-        login(res.user, res.token);
+      if (res.success && res.user) {
+        login(res.user);
         toast.success(`Welcome back, ${res.user.name}!`);
         router.navigate({ to: "/admin/dashboard" });
       } else {
@@ -156,6 +156,7 @@ function AdminLoginPage() {
                 </>
               )}
             </button>
+
           </form>
 
           <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-3">

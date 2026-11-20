@@ -377,7 +377,7 @@ export function AdminFaqsPage() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. How does the 1:1 Sovereign matching mechanism work?"
+                    placeholder="e.g. How is my donation protected in the endowment?"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"

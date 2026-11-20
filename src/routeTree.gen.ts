@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as FinancialReportsRouteImport } from './routes/financial-reports'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
+import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as OtherPublicationsRouteImport } from './routes/other-publications'
 import { Route as OurImpactRouteImport } from './routes/our-impact'
@@ -39,6 +40,7 @@ import { Route as AdminFaqsRouteImport } from './routes/admin/faqs'
 import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminInquiriesRouteImport } from './routes/admin/inquiries'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminMembershipsRouteImport } from './routes/admin/memberships'
 import { Route as AdminMetricsRouteImport } from './routes/admin/metrics'
 import { Route as AdminMilestonesRouteImport } from './routes/admin/milestones'
 import { Route as AdminNewsRouteImport } from './routes/admin/news'
@@ -54,6 +56,8 @@ import { Route as AdminSubscribersRouteImport } from './routes/admin/subscribers
 import { Route as AdminTrusteesRouteImport } from './routes/admin/trustees'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminVideosRouteImport } from './routes/admin/videos'
+import { Route as MembershipIndividualRouteImport } from './routes/membership/individual'
+import { Route as MembershipInstitutionalRouteImport } from './routes/membership/institutional'
 import { Route as NewsSlugRouteImport } from './routes/news/$slug'
 import { Route as NewsAnnouncementsRouteImport } from './routes/news/announcements'
 import { Route as NewsCareersRouteImport } from './routes/news/careers'
@@ -105,6 +109,11 @@ const FinancialReportsRoute = FinancialReportsRouteImport.update({
 const GetInvolvedRoute = GetInvolvedRouteImport.update({
   id: '/get-involved',
   path: '/get-involved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembershipRoute = MembershipRouteImport.update({
+  id: '/membership',
+  path: '/membership',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsRoute = NewsRouteImport.update({
@@ -217,6 +226,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminMembershipsRoute = AdminMembershipsRouteImport.update({
+  id: '/memberships',
+  path: '/memberships',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMetricsRoute = AdminMetricsRouteImport.update({
   id: '/metrics',
   path: '/metrics',
@@ -292,6 +306,16 @@ const AdminVideosRoute = AdminVideosRouteImport.update({
   path: '/videos',
   getParentRoute: () => AdminRoute,
 } as any)
+const MembershipIndividualRoute = MembershipIndividualRouteImport.update({
+  id: '/individual',
+  path: '/individual',
+  getParentRoute: () => MembershipRoute,
+} as any)
+const MembershipInstitutionalRoute = MembershipInstitutionalRouteImport.update({
+  id: '/institutional',
+  path: '/institutional',
+  getParentRoute: () => MembershipRoute,
+} as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -365,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/donate': typeof DonateRoute
   '/financial-reports': typeof FinancialReportsRoute
   '/get-involved': typeof GetInvolvedRoute
+  '/membership': typeof MembershipRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/other-publications': typeof OtherPublicationsRoute
   '/our-impact': typeof OurImpactRoute
@@ -386,6 +411,7 @@ export interface FileRoutesByFullPath {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/memberships': typeof AdminMembershipsRoute
   '/admin/metrics': typeof AdminMetricsRoute
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
@@ -401,6 +427,8 @@ export interface FileRoutesByFullPath {
   '/admin/trustees': typeof AdminTrusteesRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
+  '/membership/individual': typeof MembershipIndividualRoute
+  '/membership/institutional': typeof MembershipInstitutionalRoute
   '/news/$slug': typeof NewsSlugRoute
   '/news/announcements': typeof NewsAnnouncementsRoute
   '/news/careers': typeof NewsCareersRoute
@@ -423,6 +451,7 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateRoute
   '/financial-reports': typeof FinancialReportsRoute
   '/get-involved': typeof GetInvolvedRoute
+  '/membership': typeof MembershipRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/other-publications': typeof OtherPublicationsRoute
   '/our-impact': typeof OurImpactRoute
@@ -444,6 +473,7 @@ export interface FileRoutesByTo {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/memberships': typeof AdminMembershipsRoute
   '/admin/metrics': typeof AdminMetricsRoute
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
@@ -459,6 +489,8 @@ export interface FileRoutesByTo {
   '/admin/trustees': typeof AdminTrusteesRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
+  '/membership/individual': typeof MembershipIndividualRoute
+  '/membership/institutional': typeof MembershipInstitutionalRoute
   '/news/$slug': typeof NewsSlugRoute
   '/news/announcements': typeof NewsAnnouncementsRoute
   '/news/careers': typeof NewsCareersRoute
@@ -483,6 +515,7 @@ export interface FileRoutesById {
   '/donate': typeof DonateRoute
   '/financial-reports': typeof FinancialReportsRoute
   '/get-involved': typeof GetInvolvedRoute
+  '/membership': typeof MembershipRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/other-publications': typeof OtherPublicationsRoute
   '/our-impact': typeof OurImpactRoute
@@ -504,6 +537,7 @@ export interface FileRoutesById {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/memberships': typeof AdminMembershipsRoute
   '/admin/metrics': typeof AdminMetricsRoute
   '/admin/milestones': typeof AdminMilestonesRoute
   '/admin/news': typeof AdminNewsRoute
@@ -519,6 +553,8 @@ export interface FileRoutesById {
   '/admin/trustees': typeof AdminTrusteesRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/videos': typeof AdminVideosRoute
+  '/membership/individual': typeof MembershipIndividualRoute
+  '/membership/institutional': typeof MembershipInstitutionalRoute
   '/news/$slug': typeof NewsSlugRoute
   '/news/announcements': typeof NewsAnnouncementsRoute
   '/news/careers': typeof NewsCareersRoute
@@ -544,6 +580,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/financial-reports'
     | '/get-involved'
+    | '/membership'
     | '/news'
     | '/other-publications'
     | '/our-impact'
@@ -565,6 +602,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/inquiries'
     | '/admin/login'
+    | '/admin/memberships'
     | '/admin/metrics'
     | '/admin/milestones'
     | '/admin/news'
@@ -580,6 +618,8 @@ export interface FileRouteTypes {
     | '/admin/trustees'
     | '/admin/users'
     | '/admin/videos'
+    | '/membership/individual'
+    | '/membership/institutional'
     | '/news/$slug'
     | '/news/announcements'
     | '/news/careers'
@@ -602,6 +642,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/financial-reports'
     | '/get-involved'
+    | '/membership'
     | '/news'
     | '/other-publications'
     | '/our-impact'
@@ -623,6 +664,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/inquiries'
     | '/admin/login'
+    | '/admin/memberships'
     | '/admin/metrics'
     | '/admin/milestones'
     | '/admin/news'
@@ -638,6 +680,8 @@ export interface FileRouteTypes {
     | '/admin/trustees'
     | '/admin/users'
     | '/admin/videos'
+    | '/membership/individual'
+    | '/membership/institutional'
     | '/news/$slug'
     | '/news/announcements'
     | '/news/careers'
@@ -661,6 +705,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/financial-reports'
     | '/get-involved'
+    | '/membership'
     | '/news'
     | '/other-publications'
     | '/our-impact'
@@ -682,6 +727,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/inquiries'
     | '/admin/login'
+    | '/admin/memberships'
     | '/admin/metrics'
     | '/admin/milestones'
     | '/admin/news'
@@ -697,6 +743,8 @@ export interface FileRouteTypes {
     | '/admin/trustees'
     | '/admin/users'
     | '/admin/videos'
+    | '/membership/individual'
+    | '/membership/institutional'
     | '/news/$slug'
     | '/news/announcements'
     | '/news/careers'
@@ -721,6 +769,7 @@ export interface RootRouteChildren {
   DonateRoute: typeof DonateRoute
   FinancialReportsRoute: typeof FinancialReportsRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
+  MembershipRoute: typeof MembershipRouteWithChildren
   NewsRoute: typeof NewsRouteWithChildren
   OtherPublicationsRoute: typeof OtherPublicationsRoute
   OurImpactRoute: typeof OurImpactRoute
@@ -790,6 +839,13 @@ declare module '@tanstack/react-router' {
       path: '/get-involved'
       fullPath: '/get-involved'
       preLoaderRoute: typeof GetInvolvedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/membership': {
+      id: '/membership'
+      path: '/membership'
+      fullPath: '/membership'
+      preLoaderRoute: typeof MembershipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news': {
@@ -946,6 +1002,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/memberships': {
+      id: '/admin/memberships'
+      path: '/memberships'
+      fullPath: '/admin/memberships'
+      preLoaderRoute: typeof AdminMembershipsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/metrics': {
       id: '/admin/metrics'
       path: '/metrics'
@@ -1050,6 +1113,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/videos'
       preLoaderRoute: typeof AdminVideosRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/membership/individual': {
+      id: '/membership/individual'
+      path: '/individual'
+      fullPath: '/membership/individual'
+      preLoaderRoute: typeof MembershipIndividualRouteImport
+      parentRoute: typeof MembershipRoute
+    }
+    '/membership/institutional': {
+      id: '/membership/institutional'
+      path: '/institutional'
+      fullPath: '/membership/institutional'
+      preLoaderRoute: typeof MembershipInstitutionalRouteImport
+      parentRoute: typeof MembershipRoute
     }
     '/news/$slug': {
       id: '/news/$slug'
@@ -1162,6 +1239,7 @@ interface AdminRouteChildren {
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminMembershipsRoute: typeof AdminMembershipsRoute
   AdminMetricsRoute: typeof AdminMetricsRoute
   AdminMilestonesRoute: typeof AdminMilestonesRoute
   AdminNewsRoute: typeof AdminNewsRoute
@@ -1188,6 +1266,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminGalleryRoute: AdminGalleryRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AdminMembershipsRoute: AdminMembershipsRoute,
   AdminMetricsRoute: AdminMetricsRoute,
   AdminMilestonesRoute: AdminMilestonesRoute,
   AdminNewsRoute: AdminNewsRoute,
@@ -1207,6 +1286,20 @@ const AdminRouteChildren: AdminRouteChildren = {
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface MembershipRouteChildren {
+  MembershipIndividualRoute: typeof MembershipIndividualRoute
+  MembershipInstitutionalRoute: typeof MembershipInstitutionalRoute
+}
+
+const MembershipRouteChildren: MembershipRouteChildren = {
+  MembershipIndividualRoute: MembershipIndividualRoute,
+  MembershipInstitutionalRoute: MembershipInstitutionalRoute,
+}
+
+const MembershipRouteWithChildren = MembershipRoute._addFileChildren(
+  MembershipRouteChildren,
+)
 
 interface NewsRouteChildren {
   NewsSlugRoute: typeof NewsSlugRoute
@@ -1257,6 +1350,7 @@ const rootRouteChildren: RootRouteChildren = {
   DonateRoute: DonateRoute,
   FinancialReportsRoute: FinancialReportsRoute,
   GetInvolvedRoute: GetInvolvedRoute,
+  MembershipRoute: MembershipRouteWithChildren,
   NewsRoute: NewsRouteWithChildren,
   OtherPublicationsRoute: OtherPublicationsRoute,
   OurImpactRoute: OurImpactRoute,

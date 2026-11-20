@@ -148,14 +148,14 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-display);
-    overflow-x: hidden;
+    overflow-x: clip;
     min-height: 100vh;
   }
 
@@ -196,6 +196,16 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+.mobile-navigation a,
+.mobile-navigation button {
+  min-height: 44px;
+}
+
+.mobile-navigation > div > a {
+  display: flex;
+  align-items: center;
 }
 
 /* Institutional Light Glass & Ruled Utility Accents */

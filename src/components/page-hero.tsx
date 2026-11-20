@@ -10,6 +10,7 @@ interface PageHeroProps {
   breadcrumb?: { label: string; to?: string }[];
   children?: React.ReactNode;
   className?: string;
+  showTitle?: boolean;
 }
 
 import { ShieldCheck } from "lucide-react";
@@ -21,6 +22,7 @@ export function PageHero({
   breadcrumb,
   children,
   className,
+  showTitle = true,
 }: PageHeroProps) {
   return (
     <section
@@ -84,9 +86,11 @@ export function PageHero({
         )}
 
         {/* Main Title & Subtitle */}
-        <h1 className="font-sans text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15] max-w-4xl">
-          {title}
-        </h1>
+        {showTitle && (
+          <h1 className="font-sans text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15] max-w-4xl">
+            {title}
+          </h1>
+        )}
 
         {subtitle && (
           <div className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 max-w-3xl leading-relaxed font-sans font-light">
