@@ -6,16 +6,12 @@ import { AboutBottomCapsule } from "@/components/about-bottom-capsule";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { getPublicPage } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
-import { getPublicTrustees } from "@/lib/api/public.functions";
 import { SectionEditBadge } from "@/components/public/section-edit-badge";
 
 export const Route = createFileRoute("/about/organization")({
   loader: async () => {
-    const [page, trustees] = await Promise.all([
-      getPublicPage({ data: { slug: "about-organization" } }).catch(() => null),
-      getPublicTrustees().catch(() => []),
-    ]);
-    return { page, trusteesCount: (trustees || []).length };
+    const page = await getPublicPage({ data: { slug: "about-organization" } }).catch(() => null);
+    return { page };
   },
   head: () => ({
     meta: [
@@ -31,7 +27,7 @@ export const Route = createFileRoute("/about/organization")({
 });
 
 function AboutOrganizationPage() {
-  const { page, trusteesCount } = Route.useLoaderData();
+  const { page } = Route.useLoaderData();
   const { t, isDzongkha } = useLanguage();
   const [sectionOverrides, setSectionOverrides] = useState<Record<string, PageBlockSection>>(
     () => Object.fromEntries((page?.sections || []).map((section) => [section.id, section])),
@@ -46,7 +42,7 @@ function AboutOrganizationPage() {
   const investmentSection = sectionFor("investment-operating-model");
   const investmentItems = investmentSection?.items || [];
   const initialOrganogramItems = [
-    { title: "Board of Directors", description: "High-level governance", value: "13 members", url: "/about/trustees" },
+    { title: "Board of Directors", description: "High-level governance", value: "8 members", url: "/about/trustees" },
     { title: "Asset Management Committee", description: "Specialized investment and fiduciary oversight", value: "5 members", url: "/about/committees" },
     { title: "Director", description: "Member Secretary & Executive Head", value: "Dr. Gyambo Sithey, PhD", url: "/about/secretariat" },
     { title: "Investment Management Division" },
@@ -80,7 +76,9 @@ function AboutOrganizationPage() {
           initialData={{
             title: organogramSection?.title || "Official Organizational Chart",
             subtitle: organogramSection?.subtitle || "Hierarchical governance from the Board of Directors and Asset Management Committee to the Secretariat and its four operational divisions.",
-            items: organogramSection?.items || initialOrganogramItems,
+            items: organogramSection?.items?.map((item) =>
+              item.title === "Board of Directors" ? { ...item, value: "8 members" } : item,
+            ) || initialOrganogramItems,
           }}
           onSaved={saveSection}
         />
@@ -104,7 +102,7 @@ function AboutOrganizationPage() {
                 <span className="mt-1 block text-xs sm:text-sm text-slate-600">
                   {isDzongkha
                     ? t("organogram_board_sub", "High-Level Governance")
-                    : "High-level governance • 13 members"}
+                    : "High-level governance • 8 members"}
                 </span>
               </Link>
             </div>
