@@ -397,19 +397,16 @@ function TrusteesPage() {
       const record = recordsByProfile.get(profileId);
       if (!record) return { ...canonical, orderNumber: index + 1 };
       const storedPhoto = record.photoUrl?.trim();
-      const usableStoredPhoto = storedPhoto && !/\/src\//i.test(storedPhoto);
-      const bundledPortraits = [
-        "lyonpo_tandin_wangchuk.jpg",
-        "lopen_tshering_wangchuk.jpg",
-        "dr_phub_tshering.jpg",
-        "pema_tshering.jpg",
-        "ugyen_choden.jpg",
-        "norbu_dendup.jpeg",
-        "chencho_t_namgay.jpeg",
-        "dr_gyambo_sithey.jpg",
-      ];
-      const isUnverifiedBundledPortrait = Boolean(
-        storedPhoto && bundledPortraits.some((file) => storedPhoto.toLowerCase().includes(file)),
+      const isActualUploadedPhoto = Boolean(
+        storedPhoto &&
+          storedPhoto !== "null" &&
+          storedPhoto !== "undefined" &&
+          !/\/src\//i.test(storedPhoto) &&
+          !/logo\.png/i.test(storedPhoto) &&
+          (/^https?:\/\//i.test(storedPhoto) ||
+            /^data:image\//i.test(storedPhoto) ||
+            storedPhoto.startsWith("/uploads/") ||
+            (storedPhoto.startsWith("/") && !storedPhoto.includes("person-placeholder.svg")))
       );
       return {
         ...canonical,
@@ -418,7 +415,7 @@ function TrusteesPage() {
         organization: record.organization || canonical.organization,
         badge: record.badge || canonical.badge,
         desc: record.bio || canonical.desc,
-        photo: (isUnverifiedBundledPortrait ? canonical.photo : usableStoredPhoto || canonical.photo) || "/images/person-placeholder.svg",
+        photo: isActualUploadedPhoto ? storedPhoto : (canonical.photo || "/images/person-placeholder.svg"),
         fallbackPhoto: canonical.photo || "/images/person-placeholder.svg",
         orderNumber: index + 1,
       };

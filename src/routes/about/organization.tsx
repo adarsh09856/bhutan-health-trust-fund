@@ -88,10 +88,9 @@ function AboutOrganizationPage() {
           {/* Interactive Organogram Diagram */}
           <div className="max-w-4xl mx-auto pt-4">
             <p className="max-w-2xl mx-auto mb-8 text-center text-sm sm:text-base leading-relaxed text-slate-600">
-              {organogramSection?.subtitle || t(
-                "organogram_subtitle",
-                "Hierarchical governance from the Board of Directors and Asset Management Committee to the Secretariat Directorate and four operational divisions.",
-              )}
+              {isDzongkha
+                ? t("organogram_subtitle")
+                : "Hierarchical governance from the Board of Directors and Asset Management Committee to the Secretariat Directorate and four operational divisions."}
             </p>
             {/* Level 1: Board of Directors */}
             <div className="flex justify-center">
@@ -100,12 +99,12 @@ function AboutOrganizationPage() {
                 className="w-full max-w-sm bg-slate-50 hover:bg-emerald-50/50 border-2 border-slate-800 hover:border-emerald-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
               >
                 <span className="font-serif font-bold text-base text-slate-900 group-hover:text-emerald-900 block">
-                  {(isDzongkha ? t("organogram_board", "Board of Directors") : organogramItems[0]?.title) || t("organogram_board", "Board of Directors")}
+                  {isDzongkha ? t("organogram_board", "Board of Directors") : "Board of Directors"}
                 </span>
                 <span className="mt-1 block text-xs sm:text-sm text-slate-600">
                   {isDzongkha
                     ? t("organogram_board_sub", "High-Level Governance")
-                    : `${organogramItems[0]?.description || "High-level governance"} • ${trusteesCount || 13} members`}
+                    : "High-level governance • 13 members"}
                 </span>
               </Link>
             </div>
@@ -122,10 +121,10 @@ function AboutOrganizationPage() {
                   className="w-full max-w-xs bg-amber-50/70 hover:bg-amber-100/70 border-2 border-amber-800/80 hover:border-amber-900 rounded-2xl p-3 text-center shadow-xs transition group cursor-pointer block"
                 >
                   <span className="font-serif font-bold text-xs sm:text-sm text-slate-900 group-hover:text-amber-950 block leading-snug">
-                    {(isDzongkha ? t("organogram_amc", "Asset Management Committee") : organogramItems[1]?.title) || t("organogram_amc", "Asset Management Committee")}
+                    {isDzongkha ? t("organogram_amc", "Asset Management Committee") : "Asset Management Committee"}
                   </span>
                   <span className="mt-1 block text-xs text-slate-600">
-                    {isDzongkha ? t("organogram_amc_sub", "Specialized Advisory Sub-committee") : organogramItems[1]?.description || t("organogram_amc_sub", "Specialized Advisory Sub-committee")}
+                    {isDzongkha ? t("organogram_amc_sub", "Specialized Advisory Sub-committee") : "Specialized Advisory Sub-committee"}
                   </span>
                 </Link>
                 <div className="hidden sm:block w-16 md:w-20 h-0.5 bg-slate-700" />
@@ -139,13 +138,13 @@ function AboutOrganizationPage() {
                 className="w-full max-w-sm bg-slate-50 hover:bg-teal-50/50 border-2 border-slate-800 hover:border-teal-700 rounded-2xl p-4 text-center shadow-xs transition group cursor-pointer block"
               >
                 <span className="font-serif font-bold text-base text-slate-900 group-hover:text-teal-900 block">
-                  {(isDzongkha ? t("organogram_director", "Director") : organogramItems[2]?.title) || t("organogram_director", "Director")}
+                  {isDzongkha ? t("organogram_director", "Director") : "Director"}
                 </span>
                 <span className="mt-1 block text-sm font-semibold text-slate-800">
-                  {(isDzongkha ? t("organogram_director_name", "Dr. Gyambo Sithey, PhD") : organogramItems[2]?.value) || t("organogram_director_name", "Dr. Gyambo Sithey, PhD")}
+                  {isDzongkha ? t("organogram_director_name", "Dr. Gyambo Sithey, PhD") : "Dr. Gyambo Sithey, PhD"}
                 </span>
                 <span className="mt-1 block text-xs sm:text-sm text-slate-600">
-                  {(isDzongkha ? t("organogram_director_sub", "Member Secretary & Executive Head") : organogramItems[2]?.description) || t("organogram_director_sub", "Member Secretary & Executive Head")}
+                  {isDzongkha ? t("organogram_director_sub", "Member Secretary & Executive Head") : "Member Secretary & Executive Head"}
                 </span>
               </Link>
             </div>

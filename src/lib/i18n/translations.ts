@@ -269,24 +269,24 @@ export const translations: TranslationDictionary = {
     dz: "བཀོད་རིམ།",
   },
   organogram_subtitle: {
-    en: "Hierarchical governance from the Board of Trustees and Asset Management Committee to the Secretariat Directorate and four operational divisions.",
+    en: "Hierarchical governance from the Board of Directors and Asset Management Committee to the Secretariat Directorate and four operational divisions.",
     dz: "བདག་སྐྱོང་ལྷན་ཚོགས་དང་ མ་རྩ་འཛིན་སྐྱོང་ཚོགས་ཆུང་ལས་ དྲུང་ཆེན་ཡིག་ཚང་དང་ ལག་ལེན་སྡེ་ཚན་བཞི་གི་བར་ནའི་ བདག་སྐྱོང་གོ་རིམ།",
   },
   organogram_board: {
-    en: "Board of Trustees",
+    en: "Board of Directors",
     dz: "བཀོད་ཚོགས།",
   },
   organogram_board_sub: {
-    en: "High-Level Governance • 7 Trustees (Table 1.1)",
-    dz: "འགོ་མཐོའི་བདག་སྐྱོང་། • བཀོད་ཚོགས་འཐུས་མི་ ༧ (ཐིག་ཁྲམ་ ༡.༡)",
+    en: "High-Level Governance",
+    dz: "འགོ་མཐོའི་བདག་སྐྱོང་།",
   },
   organogram_amc: {
     en: "Asset Management Committee",
     dz: "མ་རྩ་འཛིན་སྐྱོང་ཚོགས་ཆུང་།",
   },
   organogram_amc_sub: {
-    en: "Specialized Advisory Sub-committee (Table 1.2)",
-    dz: "མཁས་མཆོག་གྲོས་སྟོན་ཡན་ལག་ཚོགས་ཆུང་། (ཐིག་ཁྲམ་ ༡.༢)",
+    en: "Specialized Advisory Sub-committee",
+    dz: "མཁས་མཆོག་གྲོས་སྟོན་ཡན་ལག་ཚོགས་ཆུང་།",
   },
   organogram_director: {
     en: "Director",

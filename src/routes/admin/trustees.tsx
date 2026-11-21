@@ -49,6 +49,19 @@ const trusteeFallbackPhotos: Record<string, string> = {
 
 const resolveTrusteePhoto = (name?: string, photoUrl?: string | null) => {
   const storedPhoto = photoUrl?.trim();
+  const isActualUploadedPhoto = Boolean(
+    storedPhoto &&
+      storedPhoto !== "null" &&
+      storedPhoto !== "undefined" &&
+      !/\/src\//i.test(storedPhoto) &&
+      !/logo\.png/i.test(storedPhoto) &&
+      (/^https?:\/\//i.test(storedPhoto) ||
+        /^data:image\//i.test(storedPhoto) ||
+        storedPhoto.startsWith("/uploads/") ||
+        (storedPhoto.startsWith("/") && !storedPhoto.includes("person-placeholder.svg")))
+  );
+  if (isActualUploadedPhoto) return storedPhoto;
+
   const normalizedName = name?.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() || "";
   const knownPhoto = Object.entries(trusteeFallbackPhotos).find(([person]) => {
     const normalizedPerson = person.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -56,31 +69,6 @@ const resolveTrusteePhoto = (name?: string, photoUrl?: string | null) => {
   })?.[1];
   if (knownPhoto) return knownPhoto;
 
-  const bundledPortraits = [
-    "lyonpo_tandin_wangchuk.jpg",
-    "lopen_tshering_wangchuk.jpg",
-    "dr_phub_tshering.jpg",
-    "pema_tshering.jpg",
-    "ugyen_choden.jpg",
-    "norbu_dendup.jpeg",
-    "chencho_t_namgay.jpeg",
-    "dr_gyambo_sithey.jpg",
-  ];
-  if (storedPhoto && bundledPortraits.some((file) => storedPhoto.toLowerCase().includes(file))) {
-    return undefined;
-  }
-  if (
-    storedPhoto &&
-    (/^https?:\/\//i.test(storedPhoto) || /^data:image\//i.test(storedPhoto) ||
-      (storedPhoto.startsWith("/") && !/\/src\//i.test(storedPhoto)))
-  ) {
-    return storedPhoto;
-  }
-  if (name) {
-    for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
-      if (name.toLowerCase().includes(key.toLowerCase())) return p;
-    }
-  }
   return undefined;
 };
 
@@ -146,7 +134,15 @@ export function AdminTrusteesPage() {
     setOrganization(t.organization);
     setBadge(t.badge);
     setBio(t.bio);
-    setPhotoUrl(t.photoUrl || "");
+    const cleanPhoto =
+      t.photoUrl &&
+      !/\/src\//i.test(t.photoUrl) &&
+      !/logo\.png/i.test(t.photoUrl) &&
+      t.photoUrl !== "null" &&
+      t.photoUrl !== "undefined"
+        ? t.photoUrl
+        : "";
+    setPhotoUrl(cleanPhoto);
     setOrderIndex(t.orderIndex);
     setIsActive(t.isActive);
     setModalOpen(true);
