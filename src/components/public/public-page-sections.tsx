@@ -7,7 +7,6 @@ import type { PageBlockSection } from "@/lib/db/schema";
 // These routes render institutional React layouts directly. CMS blocks are
 // appended here so published page-editor changes also appear on those routes.
 const CMS_ROUTE_SLUGS: Record<string, string> = {
-  "/": "home",
   "/donate": "donate",
   "/get-involved": "get-involved",
   "/our-impact": "our-work",
