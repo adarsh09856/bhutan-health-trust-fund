@@ -209,6 +209,7 @@ function CommitteesPage() {
               isActive={activeCardId === member.id}
               onToggle={() => handleToggleCard(member.id)}
               isDzongkha={isDzongkha}
+              showNumber={false}
             />
           ))}
         </div>

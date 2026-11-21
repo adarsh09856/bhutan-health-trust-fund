@@ -26,6 +26,7 @@ interface FiduciaryMemberCardProps {
   isActive: boolean;
   onToggle: () => void;
   isDzongkha: boolean;
+  showNumber?: boolean;
 }
 
 export function FiduciaryMemberCard({
@@ -33,6 +34,7 @@ export function FiduciaryMemberCard({
   isActive,
   onToggle,
   isDzongkha,
+  showNumber = true,
 }: FiduciaryMemberCardProps) {
   const [photoFailed, setPhotoFailed] = useState(false);
   const isAmber = member.theme === "amber";
@@ -88,9 +90,11 @@ export function FiduciaryMemberCard({
             }`}
           />
 
-          <span className="absolute left-4 top-4 z-20 inline-flex size-8 items-center justify-center rounded-full bg-slate-900/90 font-mono text-xs font-bold text-white shadow-md ring-2 ring-white">
-            {member.orderNumber}
-          </span>
+          {showNumber && (
+            <span className="absolute left-4 top-4 z-20 inline-flex size-8 items-center justify-center rounded-full bg-slate-900/90 font-mono text-xs font-bold text-white shadow-md ring-2 ring-white">
+              {member.orderNumber}
+            </span>
+          )}
 
           {/* Centered, completely uncropped photo */}
           {member.photo && !photoFailed ? (
@@ -144,7 +148,9 @@ export function FiduciaryMemberCard({
       >
         {/* Mandate details */}
         <div className="space-y-2">
-          <span className="font-mono text-xs font-bold text-slate-400">#{member.orderNumber}</span>
+          {showNumber && (
+            <span className="font-mono text-xs font-bold text-slate-400">#{member.orderNumber}</span>
+          )}
           <div>
             <h3 className="font-serif text-xl sm:text-2xl font-black text-slate-900 leading-snug">
               {displayName}
