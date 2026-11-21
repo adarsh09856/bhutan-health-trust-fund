@@ -37,39 +37,51 @@ import trusteeChenchoNamgay from "@/assets/bhtf/trustees/chencho_t_namgay.jpeg";
 import trusteeDrGyambo from "@/assets/bhtf/trustees/dr_gyambo_sithey.jpg";
 
 const trusteeFallbackPhotos: Record<string, string> = {
-  "Tandin": trusteeLyonpoTandin,
-  "Tshering Wangchuk": trusteeLopenTshering,
-  "Lopen": trusteeLopenTshering,
-  "Choten": trusteeLopenTshering,
-  "Phub": trusteeDrPhub,
-  "Pema": trusteePemaTshering,
-  "Ugyen": trusteeUgyenChoden,
-  "Norbu": trusteeNorbuDendup,
-  "Chencho": trusteeChenchoNamgay,
-  "Gyambo": trusteeDrGyambo,
+  "Lyonpo Tandin Wangchuk": trusteeLyonpoTandin,
+  "Lopen Tshering Wangchuk": trusteeLopenTshering,
+  "Dr. Phub Tshering": trusteeDrPhub,
+  "Mr. Pema Tshering": trusteePemaTshering,
+  "Ms. Ugyen Choden": trusteeUgyenChoden,
+  "Mr. Norbu Dendup": trusteeNorbuDendup,
+  "Mr. Chencho T. Namgay": trusteeChenchoNamgay,
+  "Dr. Gyambo Sithey": trusteeDrGyambo,
 };
 
-const defaultPhotos = [
-  trusteeLyonpoTandin,
-  trusteeLopenTshering,
-  trusteeDrPhub,
-  trusteePemaTshering,
-  trusteeUgyenChoden,
-  trusteeNorbuDendup,
-  trusteeChenchoNamgay,
-  trusteeDrGyambo,
-];
+const resolveTrusteePhoto = (name?: string, photoUrl?: string | null) => {
+  const storedPhoto = photoUrl?.trim();
+  const normalizedName = name?.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() || "";
+  const knownPhoto = Object.entries(trusteeFallbackPhotos).find(([person]) => {
+    const normalizedPerson = person.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    return normalizedName.includes(normalizedPerson) || normalizedPerson.includes(normalizedName);
+  })?.[1];
+  if (knownPhoto) return knownPhoto;
 
-const resolveTrusteePhoto = (name?: string, photoUrl?: string | null, idx = 0) => {
-  if (photoUrl && (photoUrl.startsWith("http://") || photoUrl.startsWith("https://") || photoUrl.startsWith("data:"))) {
-    return photoUrl;
+  const bundledPortraits = [
+    "lyonpo_tandin_wangchuk.jpg",
+    "lopen_tshering_wangchuk.jpg",
+    "dr_phub_tshering.jpg",
+    "pema_tshering.jpg",
+    "ugyen_choden.jpg",
+    "norbu_dendup.jpeg",
+    "chencho_t_namgay.jpeg",
+    "dr_gyambo_sithey.jpg",
+  ];
+  if (storedPhoto && bundledPortraits.some((file) => storedPhoto.toLowerCase().includes(file))) {
+    return undefined;
+  }
+  if (
+    storedPhoto &&
+    (/^https?:\/\//i.test(storedPhoto) || /^data:image\//i.test(storedPhoto) ||
+      (storedPhoto.startsWith("/") && !/\/src\//i.test(storedPhoto)))
+  ) {
+    return storedPhoto;
   }
   if (name) {
     for (const [key, p] of Object.entries(trusteeFallbackPhotos)) {
       if (name.toLowerCase().includes(key.toLowerCase())) return p;
     }
   }
-  return defaultPhotos[idx % defaultPhotos.length];
+  return undefined;
 };
 
 export const Route = createFileRoute("/admin/trustees")({
@@ -376,7 +388,9 @@ export function AdminTrusteesPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTrustees.map((t) => (
+    {filteredTrustees.map((t) => {
+      const trusteePhoto = resolveTrusteePhoto(t.name, t.photoUrl);
+      return (
               <div
                 key={t.id}
                 className={`bg-white rounded-2xl border transition hover:shadow-md flex flex-col justify-between overflow-hidden ${
@@ -387,11 +401,18 @@ export function AdminTrusteesPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <div className="h-12 w-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
-                        <img
-                          src={resolveTrusteePhoto(t.name, t.photoUrl, t.id)}
-                          alt={t.name}
-                          className="h-full w-full object-cover object-top"
-                        />
+                        {trusteePhoto ? (
+                          <img
+                            src={trusteePhoto}
+                            alt={t.name}
+                            className="h-full w-full object-cover object-top"
+                            onError={(event) => {
+                              event.currentTarget.style.display = "none";
+                            }}
+                          />
+                        ) : (
+                          <Users className="h-6 w-6 text-slate-400" aria-hidden="true" />
+                        )}
                       </div>
                       <div>
                         <span className="text-[10px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full border border-amber-200/60 inline-block mb-1">
@@ -458,7 +479,8 @@ export function AdminTrusteesPage() {
                   </div>
                 </div>
               </div>
-            ))}
+      );
+    })}
           </div>
         )}
 

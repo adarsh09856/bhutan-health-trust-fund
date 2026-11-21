@@ -27,6 +27,66 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+const pageDataManagers: Record<string, Array<{ label: string; href: string }>> = {
+  home: [
+    { label: "Impact metrics", href: "/admin/metrics" },
+    { label: "News", href: "/admin/news" },
+    { label: "Settings", href: "/admin/settings" },
+  ],
+  about: [
+    { label: "Board & Secretariat", href: "/admin/trustees" },
+    { label: "Milestones", href: "/admin/milestones" },
+  ],
+  "about-organization": [
+    { label: "Board & governance", href: "/admin/trustees" },
+    { label: "Page sections", href: "/admin/page-editor?slug=about-organization" },
+  ],
+  "about-trustees": [{ label: "Board directory", href: "/admin/trustees" }],
+  "about-committees": [{ label: "Board & AMC members", href: "/admin/trustees" }],
+  "about-secretariat": [{ label: "Secretariat profiles", href: "/admin/trustees" }],
+  "our-story": [{ label: "Milestones", href: "/admin/milestones" }],
+  "our-work": [
+    { label: "Programs", href: "/admin/programs" },
+    { label: "Metrics", href: "/admin/metrics" },
+    { label: "Procurement", href: "/admin/procurement" },
+  ],
+  "our-impact": [
+    { label: "Programs", href: "/admin/programs" },
+    { label: "Metrics", href: "/admin/metrics" },
+    { label: "Procurement", href: "/admin/procurement" },
+  ],
+  reports: [{ label: "Reports", href: "/admin/reports" }],
+  policies: [{ label: "Policies", href: "/admin/policies" }],
+  contact: [
+    { label: "FAQs", href: "/admin/faqs" },
+    { label: "Inquiries", href: "/admin/inquiries" },
+    { label: "Settings", href: "/admin/settings" },
+  ],
+  news: [
+    { label: "News", href: "/admin/news" },
+    { label: "Gallery", href: "/admin/gallery" },
+    { label: "Videos", href: "/admin/videos" },
+  ],
+  "news-events": [{ label: "Events & notices", href: "/admin/news" }],
+  "news-announcements": [{ label: "Announcements", href: "/admin/news" }],
+  "news-careers": [{ label: "Procurement notices", href: "/admin/procurement" }],
+  resources: [{ label: "Reports & documents", href: "/admin/reports" }],
+  "resources-annual-reports": [{ label: "Annual reports", href: "/admin/reports" }],
+  "resources-audit-reports": [{ label: "Audit reports", href: "/admin/reports" }],
+  "resources-advocacy": [{ label: "Publications", href: "/admin/reports" }],
+  "window-financing": [{ label: "Procurement workflow", href: "/admin/procurement" }],
+  "resources-window-financing": [{ label: "Procurement workflow", href: "/admin/procurement" }],
+  donate: [
+    { label: "Donations", href: "/admin/donations" },
+    { label: "Payment settings", href: "/admin/settings" },
+  ],
+  "get-involved": [
+    { label: "Donations", href: "/admin/donations" },
+    { label: "Memberships", href: "/admin/memberships" },
+  ],
+  "track-donation": [{ label: "Donations", href: "/admin/donations" }],
+};
+
 export const Route = createFileRoute("/admin/pages")({
   head: () => ({
     meta: [{ title: "Pages & Live Page Builder | BHTF Admin" }],
@@ -173,6 +233,13 @@ export function AdminPagesList() {
     } catch {}
 
     const isCore = page.isSystemPage || isCorePageSlug(page.slug);
+    const pageManagers = pageDataManagers[page.slug] || [];
+    const updatedAt = new Date(page.updatedAt);
+    const updatedLabel = page.id < 0
+      ? "No saved CMS changes"
+      : Number.isNaN(updatedAt.getTime())
+        ? "Update time unavailable"
+        : `Saved ${new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(updatedAt)}`;
     let publicUrl = `/p/${page.slug}`;
     if (page.slug === "home") publicUrl = "/";
     else if (page.slug === "about-organization") publicUrl = "/about/organization";
@@ -214,7 +281,7 @@ export function AdminPagesList() {
                     : "bg-blue-100 text-blue-800 border border-blue-200"
                 }`}
               >
-                {isCore ? "System Core" : "Custom Landing"}
+                  {page.id < 0 ? "Route-managed" : isCore ? "System Core" : "Custom Landing"}
               </span>
               <span
                 className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
@@ -235,9 +302,23 @@ export function AdminPagesList() {
             </div>
             <div className="flex items-center gap-1.5">
               <Clock className="h-3.5 w-3.5 text-slate-400" />
-              <span>Updated recently</span>
+              <span>{updatedLabel}</span>
             </div>
           </div>
+
+          {pageManagers.length > 0 && (
+            <div className="pt-1 flex flex-wrap gap-2" aria-label={`Content managers for ${page.title}`}>
+              {pageManagers.map((manager) => (
+                <a
+                  key={manager.href}
+                  href={manager.href}
+                  className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-800 hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+                >
+                  {manager.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Actions Footer */}
@@ -284,7 +365,7 @@ export function AdminPagesList() {
             className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-lg text-xs transition-all shadow-2xs"
           >
             <Edit3 className="h-3.5 w-3.5" />
-            <span>Live Customizer</span>
+            <span>Edit saved blocks</span>
           </Link>
         </div>
       </div>
@@ -299,13 +380,13 @@ export function AdminPagesList() {
           <div>
             <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
               <Sparkles className="h-4 w-4" />
-              <span>WordPress-Style Live Page CMS</span>
+              <span>Public content directory</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
-              Pages & Visual Live Editor
+              Pages & Content Managers
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl font-sans">
-              Manage page content, block layouts, and real-time visual customizer across all public routes.
+              Manage saved page blocks here. Use each page’s linked manager for live records such as board members, metrics, programs, reports, and news.
             </p>
           </div>
 

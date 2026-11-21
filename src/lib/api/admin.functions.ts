@@ -506,7 +506,7 @@ export const createAdminTrustee = createServerFn({ method: "POST" })
       organization: data.organization.trim(),
       badge: data.badge.trim(),
       bio: data.bio.trim(),
-      photoUrl: data.photoUrl?.trim() || "/src/assets/logo.png",
+      photoUrl: data.photoUrl?.trim() || null,
       orderIndex: data.orderIndex,
       isActive: data.isActive,
     });

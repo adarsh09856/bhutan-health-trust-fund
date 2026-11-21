@@ -230,6 +230,85 @@ const trusteesList: FiduciaryMember[] = [
   },
 ];
 
+const additionalTrustees: FiduciaryMember[] = [
+  {
+    id: "trustee-leki",
+    orderNumber: 0,
+    name: "Dasho Leki Wangmo",
+    role: "Secretary of Finance",
+    organization: "Ministry of Finance, RGOB",
+    badge: "Fiscal Trustee",
+    desc: "",
+    tags: [],
+    photo: undefined,
+    theme: "emerald",
+  },
+  {
+    id: "trustee-bhupinder",
+    orderNumber: 0,
+    name: "Dr. Bhupinder Kaur Aulakh",
+    role: "Country Representative",
+    organization: "World Health Organization (WHO)",
+    badge: "Multilateral Partner",
+    desc: "",
+    tags: [],
+    photo: undefined,
+    theme: "emerald",
+  },
+  {
+    id: "trustee-ugyen-tsewang",
+    orderNumber: 0,
+    name: "Dasho Ugyen Tsewang",
+    role: "Civil Society & Private Sector Trustee",
+    organization: "Eminent Public Representative",
+    badge: "Public Oversight",
+    desc: "",
+    tags: [],
+    photo: undefined,
+    theme: "emerald",
+  },
+  {
+    id: "trustee-pandup",
+    orderNumber: 0,
+    name: "Dr. Pandup Tshering",
+    role: "Director of Medical Services",
+    organization: "Department of Medical Services, RGOB",
+    badge: "Clinical Technical",
+    desc: "",
+    tags: [],
+    photo: undefined,
+    theme: "emerald",
+  },
+  {
+    id: "trustee-sithar",
+    orderNumber: 0,
+    name: "Dr. Sithar Dorjee",
+    role: "Secretariat Director",
+    organization: "BHTF Executive Secretariat",
+    badge: "Executive Leadership",
+    desc: "",
+    tags: [],
+    photo: undefined,
+    theme: "emerald",
+  },
+];
+
+const officialRosterOrder = [
+  "trustee-tandin",
+  "trustee-lopen",
+  "trustee-leki",
+  "trustee-ugyen",
+  "trustee-bhupinder",
+  "trustee-chencho",
+  "trustee-ugyen-tsewang",
+  "trustee-norbu",
+  "trustee-pandup",
+  "trustee-pema",
+  "trustee-sithar",
+  "trustee-phub",
+  "trustee-gyambo",
+];
+
 function TrusteesPage() {
   const loaderData = Route.useLoaderData();
   const [dbTrustees, setDbTrustees] = useState<Trustee[]>(loaderData?.liveTrustees || []);
@@ -244,19 +323,18 @@ function TrusteesPage() {
   }, []);
 
   const effectiveTrustees = useMemo(() => {
-    if (!hasLoadedTrustees) return trusteesList;
-
-    const activeDb = dbTrustees
-      .filter((t) => t.isActive !== false)
-      .sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
-
     const identityAliases: Record<string, string[]> = {
       "trustee-tandin": ["tandin wangchuk", "tandin"],
       "trustee-lopen": ["lopen tshering"],
+      "trustee-leki": ["leki wangmo", "leki"],
       "trustee-ugyen": ["ugyen choden"],
+      "trustee-bhupinder": ["bhupinder kaur aulakh", "bhupinder aulakh", "bhupinder"],
       "trustee-chencho": ["chencho t namgay", "chencho namgay", "chencho"],
+      "trustee-ugyen-tsewang": ["ugyen tsewang"],
       "trustee-norbu": ["norbu dendup"],
+      "trustee-pandup": ["pandup tshering", "pandup"],
       "trustee-pema": ["pema tshering"],
+      "trustee-sithar": ["sithar dorjee", "sithar"],
       "trustee-phub": ["phub tshering"],
       "trustee-gyambo": ["gyambo sithey", "gyambo"],
     };
@@ -265,34 +343,49 @@ function TrusteesPage() {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, " ")
         .trim();
-    const canonicalTrustees = new Map<string, Trustee>();
-    activeDb.forEach((record) => {
+    const canonicalProfiles = new Map(
+      [...trusteesList, ...additionalTrustees].map((profile) => [profile.id, profile]),
+    );
+    const recordsByProfile = new Map<string, Trustee>();
+    (hasLoadedTrustees ? dbTrustees.filter((record) => record.isActive !== false) : []).forEach((record) => {
       const normalized = normalizedName(record.name);
-      const canonical = trusteesList.find((candidate) => {
-        const aliases = identityAliases[candidate.id] || [];
-        return aliases.some((alias) => normalized.includes(alias));
-      });
-      if (canonical && !canonicalTrustees.has(canonical.id)) {
-        canonicalTrustees.set(canonical.id, record);
+      const profileId = officialRosterOrder.find((id) =>
+        (identityAliases[id] || []).some((alias) => normalized.includes(alias)),
+      );
+      if (profileId && !recordsByProfile.has(profileId)) {
+        recordsByProfile.set(profileId, record);
       }
     });
 
-    // The official PDF defines the public roster. Ignore unrelated legacy rows in the
-    // trustees table, while still allowing admin edits to each recognized profile.
-    return trusteesList.map((canonical): FiduciaryMember => {
-      const record = canonicalTrustees.get(canonical.id);
-      if (!record) return canonical;
+    return officialRosterOrder.map((profileId, index): FiduciaryMember => {
+      const canonical = canonicalProfiles.get(profileId)!;
+      const record = recordsByProfile.get(profileId);
+      if (!record) return { ...canonical, orderNumber: index + 1 };
       const storedPhoto = record.photoUrl?.trim();
       const usableStoredPhoto = storedPhoto && !/\/src\//i.test(storedPhoto);
+      const bundledPortraits = [
+        "lyonpo_tandin_wangchuk.jpg",
+        "lopen_tshering_wangchuk.jpg",
+        "dr_phub_tshering.jpg",
+        "pema_tshering.jpg",
+        "ugyen_choden.jpg",
+        "norbu_dendup.jpeg",
+        "chencho_t_namgay.jpeg",
+        "dr_gyambo_sithey.jpg",
+      ];
+      const isUnverifiedBundledPortrait = Boolean(
+        storedPhoto && bundledPortraits.some((file) => storedPhoto.toLowerCase().includes(file)),
+      );
       return {
         ...canonical,
-        name: canonical.name,
+        name: record.name || canonical.name,
         role: record.role || canonical.role,
         organization: record.organization || canonical.organization,
         badge: record.badge || canonical.badge,
         desc: record.bio || canonical.desc,
-        photo: usableStoredPhoto ? storedPhoto : canonical.photo,
+        photo: canonical.photo || (isUnverifiedBundledPortrait ? undefined : usableStoredPhoto || undefined),
         fallbackPhoto: canonical.photo,
+        orderNumber: index + 1,
       };
     });
   }, [dbTrustees, hasLoadedTrustees]);

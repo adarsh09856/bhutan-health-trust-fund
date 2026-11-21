@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { UserRound } from "lucide-react";
 
 export interface FiduciaryMember {
   id: string;
@@ -15,7 +16,7 @@ export interface FiduciaryMember {
   descDz?: string;
   tags: string[];
   tagsDz?: string[];
-  photo: string;
+  photo?: string;
   fallbackPhoto?: string;
   theme?: "emerald" | "amber";
 }
@@ -33,6 +34,7 @@ export function FiduciaryMemberCard({
   onToggle,
   isDzongkha,
 }: FiduciaryMemberCardProps) {
+  const [photoFailed, setPhotoFailed] = useState(false);
   const isAmber = member.theme === "amber";
 
   const borderColor = isAmber
@@ -91,19 +93,27 @@ export function FiduciaryMemberCard({
           </span>
 
           {/* Centered, completely uncropped photo */}
-          <img
-            src={member.photo}
-            alt={displayName}
-            className="w-full h-full object-contain object-center drop-shadow-md group-hover:scale-105 transition-transform duration-500 relative z-10"
-            loading="lazy"
-            onError={(event) => {
-              const image = event.currentTarget;
-              if (member.fallbackPhoto && image.dataset.fallbackApplied !== "true") {
-                image.dataset.fallbackApplied = "true";
-                image.src = member.fallbackPhoto;
-              }
-            }}
-          />
+          {member.photo && !photoFailed ? (
+            <img
+              src={member.photo}
+              alt={displayName}
+              className="w-full h-full object-contain object-center drop-shadow-md group-hover:scale-105 transition-transform duration-500 relative z-10"
+              loading="lazy"
+              onError={(event) => {
+                const image = event.currentTarget;
+                if (member.fallbackPhoto && image.dataset.fallbackApplied !== "true") {
+                  image.dataset.fallbackApplied = "true";
+                  image.src = member.fallbackPhoto;
+                } else {
+                  setPhotoFailed(true);
+                }
+              }}
+            />
+          ) : (
+            <div className="relative z-10 flex h-full w-full items-center justify-center text-slate-300" aria-label={`${displayName} portrait not available`}>
+              <UserRound className="h-24 w-24" strokeWidth={1.1} aria-hidden="true" />
+            </div>
+          )}
         </div>
 
         {/* Front Footer Info */}
@@ -146,12 +156,14 @@ export function FiduciaryMemberCard({
 
         {/* Middle: Fiduciary Biography & Mandates */}
         <div className="my-3 py-2 border-y border-slate-200/80 overflow-y-auto max-h-[220px] sm:max-h-[250px] pr-1 space-y-3">
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
-            {displayDesc}
-          </p>
+          {displayDesc && (
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
+              {displayDesc}
+            </p>
+          )}
 
           {/* Focus Tags */}
-          <div className="pt-1">
+          {displayTags.length > 0 && <div className="pt-1">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block mb-1.5">
               {isDzongkha ? "གཙོ་བོའི་འགན་ཁུར།" : "Institutional Focus & Mandate"}
             </span>
@@ -165,7 +177,7 @@ export function FiduciaryMemberCard({
                 </span>
               ))}
             </div>
-          </div>
+          </div>}
         </div>
 
         <p className="text-[11px] text-slate-500">

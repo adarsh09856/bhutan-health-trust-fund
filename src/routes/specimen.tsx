@@ -119,8 +119,8 @@ function SpecimenPage() {
         sectionTitle="Universal Vaccine & Primary Formulary Financing"
         referenceCode="Statutory Mandate & Allocation"
         paragraphs={[
-          "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines and over 120 essential pharmaceuticals directly for every hospital and gewog clinic in the Kingdom.",
-          "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. All annual purchases are funded entirely from endowment returns, ensuring the core capital corpus of Nu. 3.24B remains untouched in perpetuity.",
+          "Under the benevolent vision of His Majesty the Fourth Druk Gyalpo, the Bhutan Health Trust Fund was enacted to protect the nation's primary healthcare from the volatility of external donor funding. Operating as an autonomous statutory institution, the Fund finances 100% of routine pediatric vaccines and 438 essential modern medicines directly for public health facilities across the Kingdom.",
+          "Procurement is conducted through WHO-prequalified international supply agreements and UNICEF supply divisions to eliminate intermediaries and guarantee verified cold chain potency. Annual purchases are financed from endowment returns, protecting the Nu. 4.8B core capital corpus in perpetuity.",
         ]}
         actionLink={{
           label: "Read Full Governance & Mandate Details",

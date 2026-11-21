@@ -312,18 +312,31 @@ function HomePage() {
 
   // Dynamic stats merged from Admin CMS
   const localizedStats = useMemo(() => {
+    const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    const metricAliasesByStat = [
+      ["sovereign endowment", "endowment corpus", "endowment"],
+      ["free primary healthcare", "universal access"],
+      ["essential medicines", "traditional medicines", "formulary"],
+      ["dzongkhags covered", "dzongkhag", "nationwide reach"],
+      ["sovereign match", "government match", "rgob match"],
+    ];
+
     return defaultLocalizedStats.map((fallback, index) => {
-      const metric = liveMetrics[index];
+      const aliases = metricAliasesByStat[index] || [normalize(fallback.label)];
+      const metric = liveMetrics.find((candidate) => {
+        const label = normalize(candidate.label);
+        return aliases.some((alias) => label.includes(normalize(alias)));
+      });
       if (!metric) return fallback;
       return {
         ...fallback,
         value: metric.value || fallback.value,
-        label: index === 2 ? fallback.label : metric.label || fallback.label,
-        sub: index === 2 ? "" : metric.description || fallback.sub,
+        label: isDzongkha ? fallback.label : metric.label || fallback.label,
+        sub: isDzongkha ? fallback.sub : metric.description || fallback.sub,
         icon: resolveMetricIcon(metric.icon),
       };
     });
-  }, [liveMetrics, defaultLocalizedStats]);
+  }, [liveMetrics, defaultLocalizedStats, isDzongkha]);
 
   // Dynamic news merged from Admin CMS
   const effectiveNews = useMemo(() => {
