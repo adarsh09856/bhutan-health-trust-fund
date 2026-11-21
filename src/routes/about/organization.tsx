@@ -153,6 +153,24 @@ function AboutOrganizationPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid gap-8 lg:grid-cols-2" data-bhtf-section="governance-and-investment-model">
+        <article className="rounded-3xl border border-emerald-700/30 bg-white p-6 sm:p-8 shadow-sm">
+          <p className="mb-4 text-sm font-bold uppercase tracking-widest text-amber-700">Governance</p>
+          <h2 className="mb-4 font-serif text-2xl sm:text-3xl font-bold text-slate-900">Governance Framework</h2>
+          <p className="leading-relaxed text-slate-700">The Bhutan Health Trust Fund (BHTF) operates under the guidance of the Board of Directors, headed by a Chairperson. The Board provides strategic direction and ensures effective governance, accountability and the long-term sustainability of the Fund. To strengthen financial stewardship and investment oversight, the Board appoints an Asset Management Committee (AMC), which supports the responsible management of the Fund’s assets in line with its mandate and objectives. Together, the Board and the AMC play an important role in safeguarding the Fund’s resources to ensure the continued availability of essential medicines and vaccines for the people of Bhutan.</p>
+        </article>
+        <article className="rounded-3xl border border-emerald-700/30 bg-white p-6 sm:p-8 shadow-sm">
+          <p className="mb-4 text-sm font-bold uppercase tracking-widest text-amber-700">Investment Strategy Statement</p>
+          <h2 className="mb-4 font-serif text-2xl sm:text-3xl font-bold text-slate-900">The 70–20–10 Operating Model</h2>
+          <p className="mb-6 leading-relaxed text-slate-700">As per the Investment Strategy Statement, the Bhutan Health Trust Fund follows a 70–20–10 operating model to ensure the sustainable financing of national essential medicines and vaccines in Bhutan.</p>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl bg-emerald-50 p-4"><strong className="block text-3xl text-emerald-900">70%</strong><span className="text-sm text-slate-700">Funds national essential medicines and vaccines.</span></div>
+            <div className="rounded-2xl bg-sky-50 p-4"><strong className="block text-3xl text-sky-900">20%</strong><span className="text-sm text-slate-700">Is reinvested to support capital growth.</span></div>
+            <div className="rounded-2xl bg-amber-50 p-4"><strong className="block text-3xl text-amber-900">10%</strong><span className="text-sm text-slate-700">Covers operating expenses.</span></div>
+          </div>
+        </article>
+      </section>
+
       <PageRenderer sections={(page?.sections || []) as PageBlockSection[]} pageSlug="about-organization" />
 
       {/* Floating Bottom Sub-pages Navigation Capsule */}
