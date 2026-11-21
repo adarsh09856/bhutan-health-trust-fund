@@ -28,7 +28,7 @@ export const createNewsArticle = createServerFn({ method: "POST" })
       category: z.string().default("General"),
       excerpt: z.string().min(5),
       content: z.string().min(10),
-      coverImage: z.string().default("/src/assets/news-vaccine.jpg"),
+      coverImage: z.string().default("/news-vaccine.jpg"),
       author: z.string().default("BHTF Media"),
       isPublished: z.boolean().default(true),
     }),
@@ -1547,16 +1547,23 @@ export const verifyDonationJournalAction = createServerFn({ method: "POST" })
 
 // --- WordPress-Style Live Page Editor Server Functions ---
 
+const PAGE_DRAFT_SUFFIX = "--draft";
+const pageDraftSlug = (slug: string) => `${slug.trim().toLowerCase()}${PAGE_DRAFT_SUFFIX}`;
+
 export const getAdminPages = createServerFn({ method: "GET" }).handler(async () => {
   await requireAdminFromRequest();
-  return await db.getAllPages();
+  const pages = await db.getAllPages();
+  return pages.filter((page) => !page.slug.endsWith(PAGE_DRAFT_SUFFIX));
 });
 
 export const getAdminPage = createServerFn({ method: "GET" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
     await requireAdminFromRequest();
-    return await db.getPageBySlug(data.slug);
+    const slug = data.slug.trim().toLowerCase();
+    const draft = await db.getPageBySlug(pageDraftSlug(slug));
+    if (draft?.status === "draft") return { ...draft, slug };
+    return await db.getPageBySlug(slug);
   });
 
 export const createAdminPage = createServerFn({ method: "POST" })
@@ -1573,6 +1580,13 @@ export const createAdminPage = createServerFn({ method: "POST" })
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, "-")
       .replace(/(^-|-$)/g, "");
+
+    if (!slug || slug.endsWith(PAGE_DRAFT_SUFFIX)) {
+      throw new Error("Choose a valid page slug. The reserved draft suffix cannot be used.");
+    }
+    if (await db.getPageBySlug(slug)) {
+      throw new Error(`A page with the slug "${slug}" already exists.`);
+    }
 
     const initialSections = [
       {
@@ -1619,12 +1633,19 @@ export const saveAdminPageDraft = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     await requireAdminFromRequest();
-    return await db.savePage(data.slug, {
+    const slug = data.slug.trim().toLowerCase();
+    if (!slug || slug.endsWith(PAGE_DRAFT_SUFFIX)) {
+      throw new Error("Invalid page slug.");
+    }
+    const current = await db.getPageBySlug(slug);
+    const draft = await db.savePage(pageDraftSlug(slug), {
       title: data.title,
       metaDescription: data.metaDescription,
       sectionsJson: data.sectionsJson,
       status: "draft",
+      isSystemPage: false,
     });
+    return { ...draft, slug, isSystemPage: current?.isSystemPage ?? false };
   });
 
 export const publishAdminPage = createServerFn({ method: "POST" })
@@ -1638,26 +1659,45 @@ export const publishAdminPage = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     await requireAdminFromRequest();
-    return await db.savePage(data.slug, {
+    const slug = data.slug.trim().toLowerCase();
+    if (!slug || slug.endsWith(PAGE_DRAFT_SUFFIX)) {
+      throw new Error("Invalid page slug.");
+    }
+    const [current, draft] = await Promise.all([
+      db.getPageBySlug(slug),
+      db.getPageBySlug(pageDraftSlug(slug)),
+    ]);
+    const published = await db.savePage(slug, {
       title: data.title,
       metaDescription: data.metaDescription,
       sectionsJson: data.sectionsJson,
       status: "published",
+      isSystemPage: current?.isSystemPage ?? defaultCorePages.some((page) => page.slug === slug),
     });
+    if (draft?.status === "draft") await db.deletePage(pageDraftSlug(slug));
+    return published;
   });
 
 export const resetAdminPageToDefault = createServerFn({ method: "POST" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
     await requireAdminFromRequest();
-    return await db.resetPageToDefault(data.slug);
+    const slug = data.slug.trim().toLowerCase();
+    const reset = await db.resetPageToDefault(slug);
+    if (reset) await db.deletePage(pageDraftSlug(slug));
+    return reset;
   });
 
 export const deleteAdminPage = createServerFn({ method: "POST" })
   .validator(z.object({ slug: z.string() }))
   .handler(async ({ data }) => {
     await requireAdminFromRequest();
-    return await db.deletePage(data.slug);
+    const slug = data.slug.trim().toLowerCase();
+    const page = await db.getPageBySlug(slug);
+    if (!page || page.isSystemPage) return false;
+    const deleted = await db.deletePage(slug);
+    if (deleted) await db.deletePage(pageDraftSlug(slug));
+    return deleted;
   });
 
 // --- Quick Live Visual Section Editor Server Function ---

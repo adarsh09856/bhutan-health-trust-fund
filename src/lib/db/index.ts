@@ -1216,7 +1216,10 @@ class BHTFDataStore {
     },
   ): Promise<CustomPage> {
     const normalized = slug.trim().toLowerCase();
-    const localSaved = persistentStore.saveCustomPage(normalized, payload);
+    const definedPayload = Object.fromEntries(
+      Object.entries(payload).filter(([, value]) => value !== undefined),
+    ) as typeof payload;
+    const localSaved = persistentStore.saveCustomPage(normalized, definedPayload);
 
     try {
       const [existing] = await drizzleDb
@@ -1228,7 +1231,7 @@ class BHTFDataStore {
         const [updated] = await drizzleDb
           .update(schema.customPages)
           .set({
-            ...payload,
+          ...definedPayload,
             updatedAt: new Date(),
           })
           .where(eq(schema.customPages.slug, normalized))
@@ -1239,11 +1242,11 @@ class BHTFDataStore {
           .insert(schema.customPages)
           .values({
             slug: normalized,
-            title: payload.title || `Page - ${normalized}`,
-            metaDescription: payload.metaDescription || null,
-            sectionsJson: payload.sectionsJson || "[]",
-            status: payload.status || "published",
-            isSystemPage: payload.isSystemPage || false,
+            title: definedPayload.title || `Page - ${normalized}`,
+            metaDescription: definedPayload.metaDescription || null,
+            sectionsJson: definedPayload.sectionsJson || "[]",
+            status: definedPayload.status || "published",
+            isSystemPage: definedPayload.isSystemPage || false,
             updatedAt: new Date(),
           })
           .returning();

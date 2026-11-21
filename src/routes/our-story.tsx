@@ -244,11 +244,6 @@ function OurStoryPage() {
                       ? "མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་མཆོག"
                       : "His Majesty the Fourth Druk Gyalpo"}
                   </h3>
-                  <p className="text-xs text-slate-500 font-sans">
-                    {isDzongkha
-                      ? "འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག • རྒྱལ་པོའི་བཀའ་ཤོག་ ༢༠༠༠ ཟླ་ ༨ ཚེས་ ༣"
-                      : "Jigme Singye Wangchuck • Royal Charter 3 August 2000"}
-                  </p>
                 </div>
 
                 {/* Dignified Portrait Plate: Full Face & Robes 100% Visible & Centered */}
@@ -262,10 +257,12 @@ function OurStoryPage() {
                 </div>
                 <div className="rounded-2xl border border-slate-200/80 border-l-4 border-l-amber-500 bg-[#FAF8F3] p-5">
                   <p className="font-serif text-sm sm:text-base italic leading-relaxed text-slate-800">
-                    “No Bhutanese should ever have to choose between their health and their livelihood.”
+                    {isDzongkha
+                      ? "“འབྲུག་གི་མི་སེར་ཚུ་ལུ་ རིན་མེད་གསོ་བའི་ཞབས་ཏོག་ རྒྱུན་ཆད་མེད་པར་ བཞག་ནི་དང་ ད་ལྟོ་དང་ མ་འོངས་པའི་ མི་རབས་ཚུ་གི་དོན་ལུ་ ཁག་ཆེ་བའི་སྨན་རྫས་དང་ སྨན་ཁབ་ཚུ་ ཐོབ་ཚུགསཔ་བཟོ་ནི་འདི་ ང་བཅས་ཀྱི་ དམ་བཅའ་ཨིན།”"
+                      : "“To guarantee the continued provision of free primary healthcare to the people of Bhutan, and to ensure that essential medicines and vaccines remain accessible to all present and future generations.”"}
                   </p>
                   <p className="mt-2 text-xs font-semibold text-slate-600">
-                    {isDzongkha ? "— མི་དབང་འབྲུག་རྒྱལ་བཞི་པ། ༢༠༠༤" : "— His Majesty the Fourth Druk Gyalpo, 2004"}
+                    {isDzongkha ? "— མི་དབང་འབྲུག་རྒྱལ་བཞི་པ་ འཇིགས་མེད་སེངྒེ་དབང་ཕྱུག་མཆོག" : "— His Majesty the Fourth Druk Gyalpo"}
                   </p>
                 </div>
               </div>
@@ -323,82 +320,30 @@ function OurStoryPage() {
         </div>
 
         {/* Horizontal Milestones Flow */}
-        <div className="space-y-8">
-          {/* Era 1: Foundational Years */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950 text-amber-300 border border-emerald-700/60 text-xs font-mono font-bold shadow-xs">
-                <span>
-                  {isDzongkha ? "༡༩༩༨–༢༠༠༦ · གཞི་བཙུགས་དུས་རབས།" : "1998–2006 · FOUNDATIONAL YEARS"}
-                </span>
-              </span>
-              <div className="h-0.5 flex-1 bg-gradient-to-r from-emerald-600/60 to-transparent" />
-            </div>
-
-            <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-              <div className="flex gap-5 min-w-max">
-                {milestonesToRender.slice(0, 4).map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="w-[280px] sm:w-[320px] bg-white p-6 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 flex flex-col justify-between space-y-3 group"
-                  >
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
-                        <span className="inline-block text-xs font-black text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full font-mono border border-emerald-200/80">
-                          {m.year}
-                        </span>
-                        <div className="h-2 w-2 rounded-full bg-emerald-500 group-hover:scale-150 transition-transform" />
-                      </div>
-                      <h3 className="font-serif font-bold text-base sm:text-lg text-slate-900 leading-snug">
-                        {m.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans font-light">
-                        {m.desc}
-                      </p>
+        <div className="space-y-6">
+          <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="flex gap-5 min-w-max">
+              {milestonesToRender.map((m, idx) => (
+                <div
+                  key={idx}
+                  className="w-[280px] sm:w-[320px] bg-white p-6 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 flex flex-col justify-between space-y-3 group"
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-block text-xs font-black text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full font-mono border border-emerald-200/80">
+                        {m.year}
+                      </span>
+                      <div className="h-2 w-2 rounded-full bg-emerald-500 group-hover:scale-150 transition-transform" />
                     </div>
+                    <h3 className="font-serif font-bold text-base sm:text-lg text-slate-900 leading-snug">
+                      {m.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans font-light">
+                      {m.desc}
+                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Era 2: Scaling to National Coverage */}
-          <div className="space-y-4 pt-4">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-emerald-400 border border-slate-700 text-xs font-mono font-bold shadow-xs">
-                <span>
-                  {isDzongkha
-                    ? "༢༠༡༤–༢༠༢༦ · རྒྱལ་ཡོངས་ཁྱབ་ཚད་རྒྱ་བསྐྱེད།"
-                    : "2014–2026 · SCALING TO NATIONAL COVERAGE"}
-                </span>
-              </span>
-              <div className="h-0.5 flex-1 bg-gradient-to-r from-slate-700 to-transparent" />
-            </div>
-
-            <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-              <div className="flex gap-5 min-w-max">
-                {milestonesToRender.slice(4).map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="w-[280px] sm:w-[320px] bg-white p-6 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 flex flex-col justify-between space-y-3 group"
-                  >
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
-                        <span className="inline-block text-xs font-black text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full font-mono border border-emerald-200/80">
-                          {m.year}
-                        </span>
-                        <div className="h-2 w-2 rounded-full bg-emerald-500 group-hover:scale-150 transition-transform" />
-                      </div>
-                      <h3 className="font-serif font-bold text-base sm:text-lg text-slate-900 leading-snug">
-                        {m.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans font-light">
-                        {m.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

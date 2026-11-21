@@ -61,6 +61,15 @@ export function FileUploadDropzone({
     accept.includes("pdf") ||
     value.toLowerCase().endsWith(".pdf") ||
     value.includes("pdf");
+  const trimmedValue = value.trim();
+  const isPrivateSourcePath = /^\/?src\//i.test(trimmedValue);
+  const hasUsableAssetUrl = Boolean(
+    trimmedValue &&
+      !isPrivateSourcePath &&
+      (/^https?:\/\//i.test(trimmedValue) ||
+        /^data:image\//i.test(trimmedValue) ||
+        trimmedValue.startsWith("/")),
+  );
 
   const handleFile = async (file: File) => {
     if (!file) return;
@@ -169,7 +178,7 @@ export function FileUploadDropzone({
         {label && (
           <label className="font-bold text-slate-700 flex items-center gap-1.5">
             <span>{label}</span>
-            {value && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />}
+            {hasUsableAssetUrl && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />}
           </label>
         )}
         <div className="flex items-center gap-2 ml-auto">
@@ -229,7 +238,7 @@ export function FileUploadDropzone({
       />
 
       {/* Current File Preview OR Dropzone */}
-      {value ? (
+      {hasUsableAssetUrl ? (
         <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-3 group hover:border-emerald-400 transition">
           <div className="flex items-center gap-3 min-w-0">
             {isImage ? (
@@ -294,6 +303,35 @@ export function FileUploadDropzone({
               onClick={() => onChange("")}
               className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
               title="Remove File"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      ) : value ? (
+        <div className="flex items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-3">
+          <div className="flex min-w-0 items-start gap-3">
+            <ImageIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-700" />
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-amber-900">This file path is not available to the public site</p>
+              <p className="mt-0.5 truncate font-mono text-[11px] text-amber-800">{value}</p>
+              <p className="mt-1 text-[11px] text-amber-800">Upload the image or use a public URL such as /uploads/filename.jpg.</p>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-1.5">
+            <button
+              type="button"
+              onClick={handleBrowseClick}
+              disabled={uploading}
+              className="rounded-xl bg-white px-3 py-1.5 text-xs font-bold text-amber-900 shadow-xs hover:bg-amber-100"
+            >
+              Replace
+            </button>
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="rounded-xl p-2 text-amber-800 hover:bg-amber-100"
+              title="Remove unavailable path"
             >
               <X className="h-4 w-4" />
             </button>

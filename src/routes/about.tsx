@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { getPublicPage } from "@/lib/api/public.functions";
 import type { PageBlockSection } from "@/lib/db/schema";
 import { PageRenderer } from "@/components/page-renderer";
@@ -11,6 +11,10 @@ import {
   Heart,
   ChevronDown,
   ChevronUp,
+  ShieldCheck,
+  Scale,
+  Users,
+  ArrowRight,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -69,8 +73,8 @@ function AboutUsMainPage({ sections }: { sections: PageBlockSection[] }) {
               )}
             </div>
 
-            {/* Read More / Read Less Toggle */}
-            <div className="pt-2 flex items-center">
+            {/* Read More / Read Less Toggle & Action Buttons */}
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100">
               <button
                 type="button"
                 onClick={() => setIsExpanded(!isExpanded)}
@@ -81,12 +85,29 @@ function AboutUsMainPage({ sections }: { sections: PageBlockSection[] }) {
                 <span>{isExpanded ? (isDzongkha ? "ཉུང་སུ་སྟོན།" : "Read Less") : (isDzongkha ? "ལྷག་པ་ལྷག" : "Read More")}</span>
                 {isExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
               </button>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Link
+                  to="/donate"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-4 py-1.5 text-xs font-bold text-white shadow-xs transition active:scale-95"
+                >
+                  <Heart className="size-3.5 fill-current text-amber-300" />
+                  <span>{t("home_btn_donate", "Donate (1:1 Sovereign Match)")}</span>
+                </Link>
+                <Link
+                  to="/about/organization"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 px-4 py-1.5 text-xs font-bold text-slate-800 shadow-2xs transition active:scale-95"
+                >
+                  <span>{t("nav_organization", "Organization & Organogram")}</span>
+                  <ArrowRight className="size-3 text-emerald-800" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </PageHero>
 
-      {/* 2. Mandate, Vision & Mission (Moved from Organization & Organogram Page) */}
+      {/* 2. Mandate, Vision & Mission */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="about-tenets">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Mandate */}
@@ -142,6 +163,111 @@ function AboutUsMainPage({ sections }: { sections: PageBlockSection[] }) {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 3. Governance & Institutional Navigation Cards */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="border-t border-slate-200/80 pt-10">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 block mb-1">
+            Institutional Sections
+          </span>
+          <h3 className="font-serif text-2xl sm:text-3xl font-black text-slate-900">
+            {t("about_explore_title", "Explore Governance, Mandate & Administration")}
+          </h3>
+          <p className="text-slate-600 text-sm mt-1 max-w-2xl font-light">
+            Comprehensive oversight across our legal framework, fiduciary leadership, operational divisions, and investment policies.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1: Organogram & Structure */}
+          <Link
+            to="/about/organization"
+            className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-800 grid place-items-center group-hover:scale-110 transition-transform">
+                <Target className="size-6 text-emerald-800" />
+              </div>
+              <h4 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
+                {t("nav_organization", "Organogram & Structure")}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
+                Mandate, Royal Charter Governance Framework, 70–20–10 financial model, and full organizational chart.
+              </p>
+            </div>
+            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-800">
+              <span>View Organogram</span>
+              <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          {/* Card 2: Board of Directors */}
+          <Link
+            to="/about/trustees"
+            className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-800 grid place-items-center group-hover:scale-110 transition-transform">
+                <ShieldCheck className="size-6 text-amber-800" />
+              </div>
+              <h4 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
+                {t("nav_trustees", "Board of Directors")}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
+                Official directory of the Board of Directors headed by the Hon'ble Minister for Health.
+              </p>
+            </div>
+            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-800">
+              <span>View Directors</span>
+              <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          {/* Card 3: Asset Management Committee */}
+          <Link
+            to="/about/committees"
+            className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-teal-50 text-teal-800 grid place-items-center group-hover:scale-110 transition-transform">
+                <Scale className="size-6 text-teal-800" />
+              </div>
+              <h4 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
+                {t("nav_amc", "Asset Management Committee")}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
+                Supporting responsible management and investment oversight of the Fund’s assets.
+              </p>
+            </div>
+            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-800">
+              <span>View Committee</span>
+              <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          {/* Card 4: Secretariat */}
+          <Link
+            to="/about/secretariat"
+            className="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between"
+          >
+            <div className="space-y-3">
+              <div className="h-12 w-12 rounded-2xl bg-blue-50 text-blue-800 grid place-items-center group-hover:scale-110 transition-transform">
+                <Users className="size-6 text-blue-800" />
+              </div>
+              <h4 className="font-serif text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition">
+                {t("nav_secretariat", "Secretariat")}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-light">
+                Director Dr. Gyambo Sithey, operational divisions, and key officer profiles.
+              </p>
+            </div>
+            <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-800">
+              <span>View Secretariat</span>
+              <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
         </div>
       </section>
 

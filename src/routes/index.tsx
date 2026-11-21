@@ -347,7 +347,7 @@ function HomePage() {
       if (imgUrl.includes("report") || imgUrl.includes("annual")) return newsReport;
       if (imgUrl.includes("bbs")) return imgBbs;
       if (imgUrl.includes("traditional")) return imgTraditionalMed;
-      if (imgUrl.startsWith("http") || imgUrl.startsWith("/")) return imgUrl;
+      if (imgUrl.startsWith("http") || (imgUrl.startsWith("/") && !imgUrl.startsWith("/src/"))) return imgUrl;
       return [newsVaccine, newsCommunity, newsReport][idx % 3];
     };
 

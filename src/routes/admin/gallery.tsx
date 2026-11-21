@@ -43,15 +43,15 @@ export const Route = createFileRoute("/admin/gallery")({
 const defaultImageOptions = [
   {
     label: "Community Healthcare Access",
-    path: "/src/assets/news-community.jpg",
+    path: "/news-community.jpg",
     img: newsCommunity,
   },
   {
     label: "Routine Vaccines & Cold Chain",
-    path: "/src/assets/news-vaccine.jpg",
+    path: "/news-vaccine.jpg",
     img: newsVaccine,
   },
-  { label: "Audited Reports & Governance", path: "/src/assets/news-report.jpg", img: newsReport },
+  { label: "Audited Reports & Governance", path: "/news-report.jpg", img: newsReport },
 ];
 
 const categories = [
@@ -101,7 +101,7 @@ export function AdminGalleryPage() {
   // Form State
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Field Operations");
-  const [imageUrl, setImageUrl] = useState("/src/assets/news-community.jpg");
+  const [imageUrl, setImageUrl] = useState("/news-community.jpg");
   const [caption, setCaption] = useState("");
   const [dzongkhag, setDzongkhag] = useState("All 20 Dzongkhags");
   const [orderIndex, setOrderIndex] = useState(0);
@@ -128,7 +128,7 @@ export function AdminGalleryPage() {
     setEditingId(null);
     setTitle("");
     setCategory("Field Operations");
-    setImageUrl("/src/assets/news-community.jpg");
+    setImageUrl("/news-community.jpg");
     setCaption("");
     setDzongkhag("All 20 Dzongkhags");
     setOrderIndex(items.length + 1);

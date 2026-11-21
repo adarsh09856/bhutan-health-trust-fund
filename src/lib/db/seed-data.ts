@@ -27,7 +27,7 @@ export const initialNewsArticles: NewNewsArticle[] = [
     title: "BHTF supports nationwide influenza vaccination program for 2024-2025",
     category: "Immunization",
     author: "BHTF Communications",
-    coverImage: "/src/assets/news-vaccine.jpg",
+    coverImage: "/news-vaccine.jpg",
     excerpt:
       "Over 200,000 doses of seasonal influenza vaccines are being deployed across all twenty dzongkhags to protect high-risk populations.",
     content: `The Bhutan Health Trust Fund (BHTF) has mobilized complete financial backing for the 2024-2025 Nationwide Seasonal Influenza Vaccination Campaign in close collaboration with the Department of Public Health, Ministry of Health.
@@ -54,7 +54,7 @@ The vaccines are distributed via the National Cold Chain System, ensuring strict
     title: "Strengthening primary healthcare across remote communities in Bhutan",
     category: "Essential Medicines",
     author: "Program Operations Team",
-    coverImage: "/src/assets/news-community.jpg",
+    coverImage: "/news-community.jpg",
     excerpt:
       "BHTF expands financing to outreach clinics and Basic Health Units serving Bhutan's most geographically isolated settlements.",
     content: `Ensuring equity in healthcare delivery is central to Gross National Happiness. This month, BHTF completed the second-quarter disbursement for essential commodity procurement, bolstering over 200 Basic Health Units (BHUs) and 450 Outreach Clinics (ORCs) across Bhutan.
@@ -71,7 +71,7 @@ Health workers in Zhemgang, Trashiyangtse, and Gasa have reported zero stockouts
     title: "BHTF Annual Report 2023: Celebrating Resilience and Financial Sustainability",
     category: "Governance",
     author: "Governance & Planning",
-    coverImage: "/src/assets/news-report.jpg",
+    coverImage: "/news-report.jpg",
     excerpt:
       "Read our full report detailing program impacts, capital endowment growth, and audited financials for fiscal year 2023.",
     content: `The Bhutan Health Trust Fund has officially published its Annual Report and Audited Financial Statements for the fiscal year ending December 2023.
@@ -91,7 +91,7 @@ The complete publication is now available for public download in our Reports & P
     title: "Strategic Partnership with Gavi Extended Through 2027",
     category: "Partnership",
     author: "BHTF Media",
-    coverImage: "/src/assets/news-community.jpg",
+    coverImage: "/news-community.jpg",
     excerpt:
       "Continued bilateral support reinforces sustainable co-financing for routine immunization and future vaccine introductions.",
     content: `BHTF and Gavi, the Vaccine Alliance, have finalized an agreement extending their co-financing partnership through 2027. Under this framework, BHTF continues to assume an increasing share of national vaccine procurement costs, advancing Bhutan's journey toward full self-reliance in public health commodities.`,
@@ -103,7 +103,7 @@ The complete publication is now available for public download in our Reports & P
     title: "Bhutan Achieves 95% Coverage in Nationwide HPV Vaccination",
     category: "Immunization",
     author: "Public Health Desk",
-    coverImage: "/src/assets/news-vaccine.jpg",
+    coverImage: "/news-vaccine.jpg",
     excerpt:
       "A landmark milestone in the global campaign against cervical cancer, safeguarding young girls across all schools.",
     content: `Through school-based delivery mechanisms financed by BHTF and executed by the Ministry of Health, Bhutan has achieved over 95% first and second dose coverage for Human Papillomavirus (HPV) vaccination among eligible adolescent girls nationwide, positioning Bhutan as a regional leader in cervical cancer elimination.`,
@@ -115,7 +115,7 @@ The complete publication is now available for public download in our Reports & P
     title: "BHTF Recognized with Regional Award for Health Financing Transparency",
     category: "Governance",
     author: "Secretariat",
-    coverImage: "/src/assets/news-report.jpg",
+    coverImage: "/news-report.jpg",
     excerpt:
       "Recognized for exemplary governance, fiduciary transparency, and sustainable public health endowment stewardship in South Asia.",
     content: `The South Asian Public Health Association has awarded BHTF the 2024 Excellence in Fiduciary Governance Citation, acknowledging BHTF's innovative trust fund model and transparency in tracking every Ngultrum directly to health outcomes.`,
@@ -856,7 +856,7 @@ export const initialMediaGallery: NewMediaGalleryItem[] = [
   {
     title: "Cold-Chain Porterage to Lunana Basic Health Unit",
     category: "Highlands Outreach",
-    imageUrl: "/src/assets/news-community.jpg",
+    imageUrl: "/news-community.jpg",
     caption:
       "Health workers carrying solar-powered vaccine carrier boxes across 4,500m Himalayan passes to ensure zero children miss immunizations.",
     dzongkhag: "Gasa",
@@ -866,7 +866,7 @@ export const initialMediaGallery: NewMediaGalleryItem[] = [
   {
     title: "Nationwide Influenza Vaccine Arrival at Paro International",
     category: "Cold Chain",
-    imageUrl: "/src/assets/news-vaccine.jpg",
+    imageUrl: "/news-vaccine.jpg",
     caption:
       "Over 200,000 doses of quadrivalent seasonal influenza vaccines arriving under strict digital temperature logging.",
     dzongkhag: "Paro",
@@ -876,7 +876,7 @@ export const initialMediaGallery: NewMediaGalleryItem[] = [
   {
     title: "Outreach Clinic Primary Care in Trashigang",
     category: "Clinics",
-    imageUrl: "/src/assets/news-report.jpg",
+    imageUrl: "/news-report.jpg",
     caption:
       "Primary health technicians administering life-saving essential medicines to elderly villagers at an outreach clinic.",
     dzongkhag: "Trashigang",
@@ -891,7 +891,7 @@ export const initialMediaVideos: NewMediaVideo[] = [
     category: "Documentary",
     videoUrl: "https://www.youtube.com/@bhtf_bhutan",
     duration: "14:20",
-    thumbnailUrl: "/src/assets/news-report.jpg",
+    thumbnailUrl: "/news-report.jpg",
     description:
       "Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.",
     orderIndex: 1,
@@ -902,7 +902,7 @@ export const initialMediaVideos: NewMediaVideo[] = [
     category: "Field Report",
     videoUrl: "https://www.youtube.com/@bhtf_bhutan",
     duration: "08:15",
-    thumbnailUrl: "/src/assets/news-vaccine.jpg",
+    thumbnailUrl: "/news-vaccine.jpg",
     description:
       "Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.",
     orderIndex: 2,

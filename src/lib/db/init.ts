@@ -375,9 +375,9 @@ export async function ensureDatabaseSchema() {
       await client.query(`
         INSERT INTO media_gallery (title, category, image_url, caption, dzongkhag, order_index, is_published)
         VALUES
-          ('Cold-Chain Porterage to Lunana Basic Health Unit', 'Highlands Outreach', '/src/assets/news-community.jpg', 'Health workers carrying solar-powered vaccine carrier boxes across 4,500m Himalayan passes to ensure zero children miss immunizations.', 'Gasa', 1, true),
-          ('Nationwide Influenza Vaccine Arrival at Paro International', 'Cold Chain', '/src/assets/news-vaccine.jpg', 'Over 200,000 doses of quadrivalent seasonal influenza vaccines arriving under strict digital temperature logging.', 'Paro', 2, true),
-          ('Outreach Clinic Primary Care in Trashigang', 'Clinics', '/src/assets/news-report.jpg', 'Primary health technicians administering life-saving essential medicines to elderly villagers at an outreach clinic.', 'Trashigang', 3, true);
+          ('Cold-Chain Porterage to Lunana Basic Health Unit', 'Highlands Outreach', '/news-community.jpg', 'Health workers carrying solar-powered vaccine carrier boxes across 4,500m Himalayan passes to ensure zero children miss immunizations.', 'Gasa', 1, true),
+          ('Nationwide Influenza Vaccine Arrival at Paro International', 'Cold Chain', '/news-vaccine.jpg', 'Over 200,000 doses of quadrivalent seasonal influenza vaccines arriving under strict digital temperature logging.', 'Paro', 2, true),
+          ('Outreach Clinic Primary Care in Trashigang', 'Clinics', '/news-report.jpg', 'Primary health technicians administering life-saving essential medicines to elderly villagers at an outreach clinic.', 'Trashigang', 3, true);
       `);
     }
 
@@ -387,8 +387,8 @@ export async function ensureDatabaseSchema() {
       await client.query(`
         INSERT INTO media_videos (title, category, video_url, duration, thumbnail_url, description, order_index, is_published)
         VALUES
-          ('25 Years of Free Healthcare: The Royal Sovereign Mandate', 'Documentary', 'https://www.youtube.com/@bhtf_bhutan', '14:20', '/src/assets/news-report.jpg', 'Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.', 1, true),
-          ('Behind the Cold Chain: Delivering Vaccines to Laya & Lunana', 'Field Report', 'https://www.youtube.com/@bhtf_bhutan', '08:15', '/src/assets/news-vaccine.jpg', 'Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.', 2, true);
+          ('25 Years of Free Healthcare: The Royal Sovereign Mandate', 'Documentary', 'https://www.youtube.com/@bhtf_bhutan', '14:20', '/news-report.jpg', 'Comprehensive retrospective on the visionary founding of BHTF in 1998 by His Majesty the Fourth Druk Gyalpo.', 1, true),
+          ('Behind the Cold Chain: Delivering Vaccines to Laya & Lunana', 'Field Report', 'https://www.youtube.com/@bhtf_bhutan', '08:15', '/news-vaccine.jpg', 'Follow Bhutanese frontline healthcare workers traversing snowbound glacial passes to protect remote mountain communities.', 2, true);
       `);
     }
 

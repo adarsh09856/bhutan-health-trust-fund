@@ -40,15 +40,15 @@ export const Route = createFileRoute("/admin/videos")({
 });
 
 const defaultThumbnails = [
-  { label: "Audited Reports & Governance", path: "/src/assets/news-report.jpg", img: newsReport },
+  { label: "Audited Reports & Governance", path: "/news-report.jpg", img: newsReport },
   {
     label: "Routine Vaccines & Cold Chain",
-    path: "/src/assets/news-vaccine.jpg",
+    path: "/news-vaccine.jpg",
     img: newsVaccine,
   },
   {
     label: "Community Healthcare Access",
-    path: "/src/assets/news-community.jpg",
+    path: "/news-community.jpg",
     img: newsCommunity,
   },
 ];
@@ -77,7 +77,7 @@ export function AdminVideosPage() {
   const [category, setCategory] = useState("Documentary");
   const [videoUrl, setVideoUrl] = useState("");
   const [duration, setDuration] = useState("10:00");
-  const [thumbnailUrl, setThumbnailUrl] = useState("/src/assets/news-report.jpg");
+  const [thumbnailUrl, setThumbnailUrl] = useState("/news-report.jpg");
   const [description, setDescription] = useState("");
   const [orderIndex, setOrderIndex] = useState(0);
   const [isPublished, setIsPublished] = useState(true);
@@ -105,7 +105,7 @@ export function AdminVideosPage() {
     setCategory("Documentary");
     setVideoUrl("");
     setDuration("10:00");
-    setThumbnailUrl("/src/assets/news-report.jpg");
+    setThumbnailUrl("/news-report.jpg");
     setDescription("");
     setOrderIndex(videos.length + 1);
     setIsPublished(true);
@@ -118,7 +118,7 @@ export function AdminVideosPage() {
     setCategory(v.category);
     setVideoUrl(v.videoUrl);
     setDuration(v.duration);
-    setThumbnailUrl(v.thumbnailUrl || "/src/assets/news-report.jpg");
+    setThumbnailUrl(v.thumbnailUrl || "/news-report.jpg");
     setDescription(v.description || "");
     setOrderIndex(v.orderIndex);
     setIsPublished(v.isPublished);
@@ -311,7 +311,7 @@ export function AdminVideosPage() {
                   onClick={() => setActiveVideoPreview(video)}
                 >
                   <img
-                    src={video.thumbnailUrl || "/src/assets/news-report.jpg"}
+                    src={video.thumbnailUrl || "/news-report.jpg"}
                     alt={video.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300 opacity-80 group-hover:opacity-95"
                   />
@@ -481,7 +481,7 @@ export function AdminVideosPage() {
                     type="text"
                     value={thumbnailUrl}
                     onChange={(e) => setThumbnailUrl(e.target.value)}
-                    placeholder="/src/assets/news-report.jpg"
+                    placeholder="/news-report.jpg"
                     className="w-full text-xs font-mono rounded-xl border border-slate-200 p-2.5 focus:border-emerald-600 focus:outline-none"
                   />
 

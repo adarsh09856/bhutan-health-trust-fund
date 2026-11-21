@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Landmark, ShieldCheck, Scale, Users, Target } from "lucide-react";
+import { Landmark, ShieldCheck, Scale, Users, Target, BookOpen } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 interface SubTab {
@@ -14,7 +14,7 @@ interface SubTab {
   icon: React.ElementType;
 }
 
-// 5 core About sub-pages ("Our Story" removed as requested)
+// 6 core About sub-pages including Our Story
 const ABOUT_SUB_TABS: SubTab[] = [
   {
     to: "/about",
@@ -39,7 +39,7 @@ const ABOUT_SUB_TABS: SubTab[] = [
     midLabelKey: "capsule_trustees_short",
     midLabel: "Directors",
     shortLabelKey: "capsule_trustees_short",
-    shortLabel: "Directors",
+    shortLabel: "Trustees",
     icon: ShieldCheck,
   },
   {
@@ -59,6 +59,16 @@ const ABOUT_SUB_TABS: SubTab[] = [
     shortLabelKey: "capsule_secretariat_short",
     shortLabel: "Secretariat",
     icon: Users,
+  },
+  {
+    to: "/our-story",
+    labelKey: "capsule_story",
+    label: "Our Story",
+    midLabelKey: "capsule_story",
+    midLabel: "Story",
+    shortLabelKey: "capsule_story",
+    shortLabel: "Story",
+    icon: BookOpen,
   },
 ];
 
