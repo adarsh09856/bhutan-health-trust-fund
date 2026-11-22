@@ -17,20 +17,12 @@ import {
   Microscope,
   GraduationCap,
   CheckCircle2,
-  ShieldCheck,
   HandHeart,
-  ThermometerSnowflake,
   Loader2,
-  Scale,
-  Coins,
-  TrendingUp,
-  Building2,
   Quote,
 } from "lucide-react";
 import { CommodityTracker } from "@/components/commodity-tracker";
 import { DzongkhagExplorer } from "@/components/dzongkhag-map";
-import { DisbursementChart } from "@/components/disbursement-chart";
-import { PortfolioAllocationCharts } from "@/components/portfolio-allocation-chart";
 import photoCubicles from "@/assets/field/bhtf_medicine_cubicles.jpg";
 import photoFluVial from "@/assets/field/bhtf_flu_vaccine_vial.jpg";
 import photoPharmacist from "@/assets/field/bhtf_pharmacist_inspection.jpg";
@@ -156,7 +148,9 @@ export function OurWorkExperience({
   }));
 
   const showSection = (id: string) =>
-    !customSections || customSections.some((section) => section.id === id && section.isVisible);
+    !customSections ||
+    !customSections.some((section) => section.id === id) ||
+    customSections.some((section) => section.id === id && section.isVisible);
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16 bg-[#FAF8F3]">
@@ -174,7 +168,7 @@ export function OurWorkExperience({
           studioHref="/admin/page-editor?slug=our-work"
           initialData={{
             title: "3. Impact — What BHTF delivers today",
-            subtitle: "No Bhutanese citizen has ever been billed for an essential medicine or vaccine.",
+            subtitle: "BHTF supports the sustainability of Bhutan’s public healthcare financing.",
             badge: "Section 3 • Impact",
           }}
         />
@@ -202,22 +196,6 @@ export function OurWorkExperience({
             ))}
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="rounded-xl bg-white p-5 border border-slate-200">
-                <span className="text-xs font-semibold text-slate-500 block">
-                  Annual Procurement Financing
-                </span>
-                <div className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">Nu. 557M per year</div>
-                <p className="mt-1 text-xs text-slate-600">Scaling to over Nu. 613M in FY 2025–26.</p>
-              </div>
-            <div className="rounded-xl bg-white p-5 border border-slate-200">
-                <span className="text-xs font-semibold text-slate-500 block">
-                  Cumulative Spend Since Inception
-                </span>
-                <div className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">Nu. 4.37 billion</div>
-                <p className="mt-1 text-xs text-slate-600">Total health disbursements from 2003–04 to 2025–26.</p>
-              </div>
-          </div>
         </div>
       </section>}
 
@@ -311,7 +289,7 @@ export function OurWorkExperience({
         )}
       </section>}
 
-      {/* 2a. Constitutional & Royal Guarantee (Slide 9 Side-by-Side Quotes & Metric Tiles) */}
+      {/* Constitutional and Royal mandate */}
       {showSection("sacred-mandate-quotes") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="sacred-mandate-quotes">
         <SectionEditBadge
           label="Sacred Mandate Quotes"
@@ -324,8 +302,7 @@ export function OurWorkExperience({
             badge: "Sacred Constitutional Foundation",
           }}
         />
-        <div className="space-y-8">
-          {/* Side-by-Side Quotes */}
+        <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Quote 1: HM Fourth Druk Gyalpo */}
             <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-card flex flex-col justify-between space-y-4">
@@ -370,30 +347,10 @@ export function OurWorkExperience({
             </div>
           </div>
 
-          {/* 3 Metric Tiles (Slide 9) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-card space-y-2 text-center">
-              <div className="font-mono text-3xl sm:text-4xl font-black text-amber-600">0</div>
-              <h4 className="font-sans text-sm font-bold text-slate-900">Citizens Billed</h4>
-              <p className="text-xs text-slate-500 font-light">Zero out-of-pocket costs for essential medicines or routine vaccines at all public facilities.</p>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-card space-y-2 text-center">
-              <div className="font-mono text-3xl sm:text-4xl font-black text-emerald-700">253 → 438</div>
-              <h4 className="font-sans text-sm font-bold text-slate-900">Essential & Traditional Medicines</h4>
-              <p className="text-xs text-slate-500 font-light">Expanded from 253 to 438 essential modern medicines plus 110 traditional medicinal formulations.</p>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-card space-y-2 text-center">
-              <div className="font-mono text-3xl sm:text-4xl font-black text-teal-700">90,167+</div>
-              <h4 className="font-sans text-sm font-bold text-slate-900">Citizens Protected Annually</h4>
-              <p className="text-xs text-slate-500 font-light">Babies, adolescent girls, elderly, and high-risk patients protected against vaccine-preventable diseases.</p>
-            </div>
-          </div>
         </div>
       </section>}
 
-      {/* 2b. Life-Cycle Immunization Protection Grid (Strategy Workshop Verified Data) */}
+      {/* Routine immunization programmes */}
       {showSection("vaccine-coverage") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="vaccine-coverage">
         <SectionEditBadge
           label="Immunization Coverage"
@@ -401,82 +358,65 @@ export function OurWorkExperience({
           sectionId="vaccine-coverage"
           studioHref="/admin/programs"
           initialData={{
-            title: "Protection Across the Life Cycle — 90,167+ Citizens Annually",
-            subtitle: "Uninterrupted sovereign financing for routine childhood and adult immunization with 100% facility coverage.",
+            title: "Routine Immunization Programmes",
+            subtitle: "BHTF supports routine immunization as part of Bhutan’s public healthcare system.",
             badge: "Universal Vaccine Security",
           }}
         />
         <div className="bg-gradient-to-br from-emerald-950 via-[#071F18] to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-emerald-500/20 space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-emerald-500/20 pb-6">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-widest text-amber-400 font-bold">
-                Universal Vaccine Security
-              </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-black text-white mt-1">
-                Protection Across the Life Cycle: 90,167+ Protected Annually
+                Routine immunization programmes
               </h2>
               <p className="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl font-light">
-                Zero stockouts across all 4 critical vaccine programs. Financed directly by BHTF endowment yields and RGOB matched funds.
+                BHTF supports vaccine financing for people at different stages of life.
               </p>
-            </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
-                <span className="block text-2xl font-black text-amber-400 font-mono">0</span>
-                <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold">Citizens Billed</span>
-              </div>
-              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
-                <span className="block text-2xl font-black text-emerald-400 font-mono">100%</span>
-                <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold">Health Facilities</span>
-              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* 1. Pentavalent */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
+              <div className="p-5 rounded-xl bg-white/5 border border-white/10 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-emerald-400">98.9% Coverage</span>
                 <Syringe className="h-4 w-4 text-emerald-400" />
               </div>
               <h3 className="font-bold text-lg text-white">Pentavalent Vaccine</h3>
               <p className="text-xs text-slate-300 font-light">
-                <strong className="text-white font-mono">8,961 babies</strong> protected against Diphtheria, Pertussis, Tetanus, Hepatitis B, and Hib.
+                Protects infants against Diphtheria, Pertussis, Tetanus, Hepatitis B, and Hib.
               </p>
             </div>
 
             {/* 2. PCV */}
             <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-blue-400">98.7% Coverage</span>
-                <ShieldCheck className="h-4 w-4 text-blue-400" />
+                <Pill className="h-4 w-4 text-blue-400" />
               </div>
               <h3 className="font-bold text-lg text-white">PCV (Pneumococcal)</h3>
               <p className="text-xs text-slate-300 font-light">
-                <strong className="text-white font-mono">8,927 babies</strong> shielded against infant pneumonia, sepsis, and bacterial meningitis.
+                Supports protection against pneumococcal disease, including pneumonia and meningitis.
               </p>
             </div>
 
             {/* 3. Influenza */}
             <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-amber-400">97.4% Coverage</span>
-                <ThermometerSnowflake className="h-4 w-4 text-amber-400" />
+                <HeartPulse className="h-4 w-4 text-amber-400" />
               </div>
               <h3 className="font-bold text-lg text-white">Seasonal Influenza</h3>
               <p className="text-xs text-slate-300 font-light">
-                <strong className="text-white font-mono">66,238 citizens</strong> (elderly 65+, comorbidities, children & frontline healthcare workers).
+                Seasonal vaccination supports people at increased risk of influenza.
               </p>
             </div>
 
             {/* 4. HPV */}
             <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2 hover:bg-white/10 transition">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-pink-400">99.8% Coverage</span>
-                <HeartPulse className="h-4 w-4 text-pink-400" />
+                <Syringe className="h-4 w-4 text-pink-400" />
               </div>
               <h3 className="font-bold text-lg text-white">HPV (Cervical Cancer)</h3>
               <p className="text-xs text-slate-300 font-light">
-                <strong className="text-white font-mono">6,041 adolescent girls</strong> vaccinated to eliminate cervical cancer nationwide.
+                Supports cervical cancer prevention through HPV vaccination.
               </p>
             </div>
           </div>
@@ -603,76 +543,24 @@ export function OurWorkExperience({
         </div>
       </section>}
 
-      {/* 2c. Essential Drug Formulary & Expenditure Ranking (Slide 6 & Chart 1) */}
+      {/* Procurement information */}
       {showSection("top-medicines") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="top-medicines">
         <SectionEditBadge
-          label="Top Procured Medicines & Expenditure"
+          label="Medicines and formulary"
           pageSlug={pageSlug}
           sectionId="top-medicines"
-          studioHref="/admin/reports"
+          studioHref="/admin/programs"
           initialData={{
-            title: "Top 10 Procured Medicines & Nu. 4.37B Cumulative Record",
-            subtitle: "Verified procurement volume and expenditure ranking under Royal Audit Authority oversight.",
-            badge: "Procurement Transparency",
+            title: "Essential medicines",
+            subtitle: "National essential medicines financed by BHTF.",
+            badge: "Medicines",
           }}
         />
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-                FY 2025–2026 Formulary Ranking
-              </span>
-              <h2 className="font-sans text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
-                Top Ten Essential Medicines Financed by BHTF
-              </h2>
-              <p className="text-slate-600 text-xs sm:text-sm mt-2 max-w-2xl font-light">
-                Over <strong className="font-mono text-emerald-900 font-bold">Nu. 4.37 Billion</strong> cumulatively disbursed for essential medicines and vaccines since inception (2003–04 to 2025–26), scaling from under Nu. 5M/yr to over Nu. 613M in FY 2025–26.
-              </p>
-            </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-50 text-amber-950 border border-amber-300 text-xs font-mono font-bold shrink-0">
-              <Coins className="h-4 w-4 text-amber-600" />
-              <span>Cumulative Disbursed: Nu. 4.37B</span>
-            </div>
-          </div>
-
-          <div className="overflow-x-auto rounded-2xl border border-slate-200">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-mono uppercase tracking-wider text-[10px]">
-                <tr>
-                  <th className="py-3 px-4"># Rank</th>
-                  <th className="py-3 px-4">Medicine / Formulary Description</th>
-                  <th className="py-3 px-4">Clinical Indication</th>
-                  <th className="py-3 px-4 text-right">Annual Allocation (Nu.)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-sans">
-                {[
-                  { rank: "1", name: "Losartan", desc: "Essential Antihypertensive therapy", cost: "Nu. 51,000,000" },
-                  { rank: "2", name: "Diabetes Metformin", desc: "First-line Type-2 Diabetes oral glycemic management", cost: "Nu. 25,000,000" },
-                  { rank: "3", name: "Paracetamol", desc: "National essential analgesic & antipyretic", cost: "Nu. 17,000,000" },
-                  { rank: "4", name: "Hydrochlorothiazide", desc: "Cardiovascular diuretic therapy", cost: "Nu. 14,000,000" },
-                  { rank: "5", name: "Glipizide", desc: "Oral sulfonylurea antidiabetic therapy", cost: "Nu. 10,000,000" },
-                  { rank: "6", name: "Immunosuppressant (Vitamin B & D)", desc: "Post-transplant immunosuppression & therapeutic vitamins", cost: "Nu. 9,000,000" },
-                  { rank: "7", name: "Omeprazole", desc: "Proton-pump inhibitor for acid peptic disease", cost: "Nu. 9,000,000" },
-                  { rank: "8", name: "Ranitidine", desc: "Histamine H2 receptor antagonist for acid peptic disease", cost: "Nu. 8,000,000" },
-                  { rank: "9", name: "Cetirizine", desc: "Second-generation antihistamine", cost: "Nu. 8,000,000" },
-                  { rank: "10", name: "Vitamin C", desc: "Essential nutritional micronutrient supplementation", cost: "Nu. 8,000,000" },
-                ].map((med) => (
-                  <tr key={med.rank} className="hover:bg-slate-50/70 transition">
-                    <td className="py-2.5 px-4 font-mono font-bold text-slate-500">{med.rank}</td>
-                    <td className="py-2.5 px-4 font-bold text-slate-900">{med.name}</td>
-                    <td className="py-2.5 px-4 text-slate-600 font-light">{med.desc}</td>
-                    <td className="py-2.5 px-4 text-right font-mono font-bold text-emerald-800">{med.cost}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Strategy Workshop Chart 1 Trajectory & Two Income Streams */}
-          <div className="pt-8 border-t border-slate-100">
-            <DisbursementChart />
-          </div>
+        <div className="max-w-3xl border-y border-slate-200 py-6">
+          <h2 className="text-2xl font-bold text-slate-900">Essential medicines</h2>
+          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+            BHTF finances Bhutan’s national essential medicines and traditional medicine formulations. Current procurement details can be managed through the Programs area in the admin panel.
+          </p>
         </div>
       </section>}
 
@@ -684,101 +572,16 @@ export function OurWorkExperience({
           sectionId="fund-financing-structure"
           studioHref="/admin/reports"
           initialData={{
-            title: "How the Fund is Financed: Two Income Streams",
-            subtitle: "Bridging the Nu. 240M annual financing gap between investment returns and statutory procurement obligations.",
+            title: "How the Fund Is Financed",
+            subtitle: "BHTF combines endowment income with health contributions to support healthcare financing.",
             badge: "Sustainable Health Financing",
           }}
         />
-        <div className="space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-              Sustainable Health Financing Structure
-            </span>
-            <h2 className="font-sans text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              How the Fund is Financed
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 font-light">
-              Dual sovereign income channels powering lifelong medicine and vaccine security across Bhutan.
-            </p>
-          </div>
-
-          {/* Two Income Streams + Financing Gap Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Stream 1 */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-card flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-800 grid place-items-center">
-                    <TrendingUp className="h-5 w-5" />
-                  </div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900">
-                    Stream 1
-                  </span>
-                </div>
-                <div>
-                  <div className="font-mono text-2xl sm:text-3xl font-black text-slate-900">Nu. 318M</div>
-                  <h4 className="font-sans font-bold text-base text-slate-900 mt-1">Investment Returns</h4>
-                </div>
-                <p className="text-xs text-slate-600 font-light leading-relaxed">
-                  Average annual return generated by the endowment corpus across onshore domestic term deposits, bonds, and offshore ADB global market investments.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500">
-                Primary perpetual capital yield
-              </div>
-            </div>
-
-            {/* Stream 2 */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-card flex flex-col justify-between space-y-4 hover:border-emerald-300 transition">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-800 grid place-items-center">
-                    <Scale className="h-5 w-5" />
-                  </div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">
-                    Stream 2
-                  </span>
-                </div>
-                <div>
-                  <div className="font-mono text-2xl sm:text-3xl font-black text-slate-900">~Nu. 450M</div>
-                  <h4 className="font-sans font-bold text-base text-slate-900 mt-1">Health Contribution</h4>
-                </div>
-                <p className="text-xs text-slate-600 font-light leading-relaxed">
-                  1% statutory monthly payroll deduction from the gross salaries of all civil servants and formally employed citizens nationwide.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-100 text-[11px] font-medium text-slate-500">
-                Solidarity payroll contribution
-              </div>
-            </div>
-
-            {/* Financing Gap & RGOB Multiplier */}
-            <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-card flex flex-col justify-between space-y-4 border border-slate-800">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-amber-400/20 text-amber-300 grid place-items-center">
-                    <Coins className="h-5 w-5" />
-                  </div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300">
-                    Fiscal Reality
-                  </span>
-                </div>
-                <div>
-                  <div className="font-mono text-2xl sm:text-3xl font-black text-amber-400">~Nu. 240M</div>
-                  <h4 className="font-sans font-bold text-base text-white mt-1">Annual Financing Gap</h4>
-                </div>
-                <p className="text-xs text-slate-300 font-light leading-relaxed">
-                  Rising procurement needs (Nu. 557M+ scaling to Nu. 613M in 2025–26) exceed current investment returns (Nu. 318M), bridged by Health Contributions and RGOB matching.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-800 text-[11px] font-medium text-emerald-400">
-                Ring-fenced sovereign healthcare endowment
-              </div>
-            </div>
-          </div>
-
-          {/* Slide 12 Donut Charts (Portfolio Allocation & Spending Policy) */}
-          <PortfolioAllocationCharts />
+        <div className="max-w-3xl border-y border-slate-200 py-6">
+          <h2 className="text-2xl font-bold text-slate-900">How the Fund is financed</h2>
+          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+            The Fund supports its mandate through investment income and health contributions. Its investment strategy follows the 70–20–10 operating model described in the BHTF Investment Strategy Statement.
+          </p>
         </div>
       </section>}
 
