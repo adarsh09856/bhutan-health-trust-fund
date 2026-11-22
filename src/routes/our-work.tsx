@@ -12,12 +12,10 @@ import { SectionEditBadge } from "@/components/public/section-edit-badge";
 import {
   Pill,
   Syringe,
-  Stethoscope,
   HeartPulse,
-  Microscope,
-  GraduationCap,
   CheckCircle2,
   HandHeart,
+  ShieldCheck,
   Loader2,
   Quote,
 } from "lucide-react";
@@ -78,12 +76,8 @@ export const Route = createFileRoute("/our-work")({
 const progIconMap: Record<string, any> = {
   Syringe,
   Pill,
-  Microscope,
   HeartPulse,
-  ThermometerSnowflake,
   ShieldCheck,
-  Stethoscope,
-  GraduationCap,
 };
 
 const progColors = [
