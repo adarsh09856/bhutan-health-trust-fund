@@ -28,6 +28,10 @@ const CMS_ROUTE_SLUGS: Record<string, string> = {
   "/track-donation": "track-donation",
 };
 
+// These routes already render their CMS-managed sections inside the page
+// component; appending a second PageRenderer here duplicated the entire page.
+const ROUTES_WITH_INLINE_CMS = new Set(["/our-impact", "/our-work"]);
+
 const ROUTES_WITH_LOCAL_RENDERER = new Set([
   "/about",
   "/about/organization",
@@ -67,7 +71,12 @@ export function PublicPageSections() {
     };
   }, [pathname, slug]);
 
-  if (!slug || ROUTES_WITH_LOCAL_RENDERER.has(pathname) || sections.length === 0) return null;
+  if (
+    !slug ||
+    ROUTES_WITH_LOCAL_RENDERER.has(pathname) ||
+    ROUTES_WITH_INLINE_CMS.has(pathname) ||
+    sections.length === 0
+  ) return null;
 
   // The donate route already uses the CMS hero title and subtitle in PageHero.
   const renderableSections = pathname === "/donate" || pathname === "/get-involved"

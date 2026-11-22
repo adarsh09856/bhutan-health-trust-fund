@@ -155,16 +155,18 @@ export function OurWorkExperience({
     color: progColors[idx % progColors.length],
   }));
 
+  const showSection = (id: string) =>
+    !customSections || customSections.some((section) => section.id === id && section.isVisible);
+
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 bg-[#FAF8F3]">
+    <div className="space-y-12 sm:space-y-16 pb-16 bg-[#FAF8F3]">
       <PageHero
-        badge="Section 3 • Healthcare Impact"
-        title="Impact"
-        subtitle="BHTF contributes to the sustainability of free primary healthcare in Bhutan by financing national essential medicines and vaccines through investment returns and health contributions."
+        title="Our Impact"
+        subtitle="BHTF sustains free primary healthcare by financing essential medicines and vaccines across Bhutan."
       />
 
       {/* Official Section 3: Impact & What BHTF Delivers Today */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="today-impact-summary">
+      {showSection("today-impact-summary") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="today-impact-summary">
         <SectionEditBadge
           label="What BHTF Delivers Today"
           pageSlug={pageSlug}
@@ -178,94 +180,49 @@ export function OurWorkExperience({
         />
         <div className="space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
-              Section 3 • Impact Overview
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              What BHTF Delivers Today
+              Healthcare impact at a glance
             </h2>
             <p className="text-sm sm:text-base text-slate-700 font-medium">
               Through prudent financial management, the Fund continues supply of national essential medicines and vaccines and strengthens the long-term sustainability of primary healthcare financing for the people of Bhutan.
             </p>
-            <p className="text-base sm:text-lg text-emerald-900 font-bold font-serif">
-              No Bhutanese citizen has ever been billed for an essential medicine or vaccine.
-            </p>
           </div>
 
-          {/* 4 Impact Stat Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
-              <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-700 grid place-items-center">
-                <Pill className="h-5 w-5" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-slate-200 border-y border-slate-200 bg-white">
+            {[
+              { value: "438", label: "Essential medicines" },
+              { value: "110", label: "Traditional formulations" },
+              { value: "4", label: "Routine vaccine programmes" },
+              { value: "20", label: "Dzongkhags served" },
+            ].map((metric) => (
+              <div key={metric.label} className="px-4 py-5 sm:px-6 sm:py-7">
+                <div className="font-sans text-2xl sm:text-3xl font-bold text-[#0B4F42]">{metric.value}</div>
+                <div className="mt-1 text-xs sm:text-sm text-slate-600">{metric.label}</div>
               </div>
-              <div className="font-mono text-3xl font-black text-slate-900">438</div>
-              <h4 className="font-sans font-bold text-base text-slate-900">Essential Medicines</h4>
-              <p className="text-xs text-slate-600 font-light">100% of the National Essential Drugs List financed across all therapy lines.</p>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
-              <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 grid place-items-center">
-                <HeartPulse className="h-5 w-5" />
-              </div>
-              <div className="font-mono text-3xl font-black text-slate-900">65–110</div>
-              <h4 className="font-sans font-bold text-base text-slate-900">Traditional Medicines</h4>
-              <p className="text-xs text-slate-600 font-light">65 core traditional formulations and 110 total indigenous remedies funded.</p>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
-              <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-700 grid place-items-center">
-                <Syringe className="h-5 w-5" />
-              </div>
-              <div className="font-mono text-3xl font-black text-slate-900">4</div>
-              <h4 className="font-sans font-bold text-base text-slate-900">Routine Vaccines</h4>
-              <p className="text-xs text-slate-600 font-light">Pentavalent, PCV, Seasonal Flu, and HPV shielding infants, youth, and elderly.</p>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-card hover:border-emerald-300 transition space-y-2">
-              <div className="h-10 w-10 rounded-xl bg-teal-50 text-teal-700 grid place-items-center">
-                <Building2 className="h-5 w-5" />
-              </div>
-              <div className="font-mono text-3xl font-black text-slate-900">100%</div>
-              <h4 className="font-sans font-bold text-base text-slate-900">Facility Coverage</h4>
-              <p className="text-xs text-slate-600 font-light">Every referral hospital, district hospital, and Primary Health Centre across all 20 Dzongkhags.</p>
-            </div>
+            ))}
           </div>
 
-          {/* Spend Ribbon (Slide 8 Bottom Banner) */}
-          <div className="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-6 border border-emerald-500/20 shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 grid place-items-center shrink-0">
-                <Coins className="h-6 w-6" />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-300 font-bold block">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="rounded-xl bg-white p-5 border border-slate-200">
+                <span className="text-xs font-semibold text-slate-500 block">
                   Annual Procurement Financing
                 </span>
-                <div className="text-2xl sm:text-3xl font-mono font-black text-white">Nu. 557M / Year</div>
-                <p className="text-xs text-slate-300 font-light">Scaling to over Nu. 613M in FY 2025–26.</p>
+                <div className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">Nu. 557M per year</div>
+                <p className="mt-1 text-xs text-slate-600">Scaling to over Nu. 613M in FY 2025–26.</p>
               </div>
-            </div>
-
-            <div className="h-10 w-px bg-slate-700 hidden sm:block" />
-
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 grid place-items-center shrink-0">
-                <TrendingUp className="h-6 w-6" />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-amber-300 font-bold block">
+            <div className="rounded-xl bg-white p-5 border border-slate-200">
+                <span className="text-xs font-semibold text-slate-500 block">
                   Cumulative Spend Since Inception
                 </span>
-                <div className="text-2xl sm:text-3xl font-mono font-black text-amber-300">Nu. 4.37 Billion</div>
-                <p className="text-xs text-slate-300 font-light">Total health disbursements from 2003–04 to 2025–26.</p>
+                <div className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">Nu. 4.37 billion</div>
+                <p className="mt-1 text-xs text-slate-600">Total health disbursements from 2003–04 to 2025–26.</p>
               </div>
-            </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* 1. Interactive Health Commodity Streams */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-tracker">
+      {showSection("commodity-tracker") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-tracker">
         <SectionEditBadge
           label="Commodity Tracker"
           pageSlug={pageSlug}
@@ -278,10 +235,10 @@ export function OurWorkExperience({
           }}
         />
         <CommodityTracker />
-      </section>
+      </section>}
 
       {/* 2. Core Commodities Summary Cards */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-streams">
+      {showSection("commodity-streams") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="commodity-streams">
         <SectionEditBadge
           label="Financed Commodities"
           pageSlug={pageSlug}
@@ -352,10 +309,10 @@ export function OurWorkExperience({
             ))}
           </div>
         )}
-      </section>
+      </section>}
 
       {/* 2a. Constitutional & Royal Guarantee (Slide 9 Side-by-Side Quotes & Metric Tiles) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="sacred-mandate-quotes">
+      {showSection("sacred-mandate-quotes") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="sacred-mandate-quotes">
         <SectionEditBadge
           label="Sacred Mandate Quotes"
           pageSlug={pageSlug}
@@ -434,10 +391,10 @@ export function OurWorkExperience({
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* 2b. Life-Cycle Immunization Protection Grid (Strategy Workshop Verified Data) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="vaccine-coverage">
+      {showSection("vaccine-coverage") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="vaccine-coverage">
         <SectionEditBadge
           label="Immunization Coverage"
           pageSlug={pageSlug}
@@ -524,10 +481,10 @@ export function OurWorkExperience({
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Authentic Field Photography & Cold-Chain Logistics Gallery */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="field-gallery">
+      {showSection("field-gallery") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="field-gallery">
         <SectionEditBadge
           label="Field Operations & Logistics Gallery"
           pageSlug={pageSlug}
@@ -644,10 +601,10 @@ export function OurWorkExperience({
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* 2c. Essential Drug Formulary & Expenditure Ranking (Slide 6 & Chart 1) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="top-medicines">
+      {showSection("top-medicines") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="top-medicines">
         <SectionEditBadge
           label="Top Procured Medicines & Expenditure"
           pageSlug={pageSlug}
@@ -659,7 +616,7 @@ export function OurWorkExperience({
             badge: "Procurement Transparency",
           }}
         />
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-card space-y-8">
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-8 space-y-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
@@ -717,10 +674,10 @@ export function OurWorkExperience({
             <DisbursementChart />
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* How the Fund is Financed: Two Income Streams & Asset Allocation (Slide 11 & 12 / Screenshots 9 & 10) */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="fund-financing-structure">
+      {showSection("fund-financing-structure") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="fund-financing-structure">
         <SectionEditBadge
           label="How the Fund is Financed"
           pageSlug={pageSlug}
@@ -823,10 +780,10 @@ export function OurWorkExperience({
           {/* Slide 12 Donut Charts (Portfolio Allocation & Spending Policy) */}
           <PortfolioAllocationCharts />
         </div>
-      </section>
+      </section>}
 
       {/* 3. Interactive Nationwide Reach Across 20 Dzongkhags */}
-      <section className="bg-slate-50 border-y border-slate-200/80 py-16 sm:py-20 relative" data-bhtf-section="dzongkhag-explorer">
+      {showSection("dzongkhag-explorer") && <section className="bg-slate-50 border-y border-slate-200/80 py-12 sm:py-16 relative" data-bhtf-section="dzongkhag-explorer">
         <SectionEditBadge
           label="20 Dzongkhags Explorer"
           pageSlug={pageSlug}
@@ -836,10 +793,10 @@ export function OurWorkExperience({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <DzongkhagExplorer />
         </div>
-      </section>
+      </section>}
 
       {/* 4. Transparent Procurement Cycle */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="procurement-lifecycle">
+      {showSection("procurement-lifecycle") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="procurement-lifecycle">
         <SectionEditBadge
           label="Procurement Lifecycle"
           pageSlug={pageSlug}
@@ -865,13 +822,10 @@ export function OurWorkExperience({
             {procurementSteps.map((step, idx) => (
               <div
                 key={step.id || idx}
-                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs relative overflow-hidden flex flex-col justify-between"
+                className="bg-white border border-slate-200 rounded-xl p-5 relative flex flex-col justify-between"
               >
-                <span className="text-4xl font-black text-slate-100 absolute top-3 right-3 select-none">
-                  {step.stepNumber}
-                </span>
                 <div className="relative z-10 space-y-2">
-                  <div className="h-8 w-8 rounded-lg bg-emerald-600 text-white font-bold text-xs grid place-items-center mb-4">
+                  <div className="text-xs font-semibold text-emerald-800 mb-3">
                     {step.stepNumber}
                   </div>
                   <h3 className="font-bold text-base text-slate-900">{step.title}</h3>
@@ -881,10 +835,10 @@ export function OurWorkExperience({
             ))}
           </div>
         )}
-      </section>
+      </section>}
 
       {/* 5. Action Banner */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donation-banner">
+      {showSection("donation-banner") && <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative" data-bhtf-section="donation-banner">
         <SectionEditBadge
           label="Donation Call-To-Action"
           pageSlug={pageSlug}
@@ -914,7 +868,7 @@ export function OurWorkExperience({
             <span>Donate to the Trust Fund</span>
           </Link>
         </div>
-      </section>
+      </section>}
     </div>
   );
 }
