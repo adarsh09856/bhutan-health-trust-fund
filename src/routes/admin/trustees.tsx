@@ -84,7 +84,7 @@ export function AdminTrusteesPage() {
   const [trustees, setTrustees] = useState<Trustee[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [committeeFilter, setCommitteeFilter] = useState<"ALL" | "AMC" | "DIRECTOR" | "ACTIVE">("ALL");
+  const [committeeFilter, setCommitteeFilter] = useState<"ALL" | "AMC" | "DIRECTOR" | "ACTIVE">("ACTIVE");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
 
@@ -98,6 +98,8 @@ export function AdminTrusteesPage() {
   const [orderIndex, setOrderIndex] = useState(0);
   const [isActive, setIsActive] = useState(true);
   const [saving, setSaving] = useState(false);
+  const activeTrusteeCount = trustees.filter((trustee) => trustee.isActive).length;
+  const archivedTrusteeCount = trustees.length - activeTrusteeCount;
 
   const fetchTrustees = async () => {
     try {
@@ -122,7 +124,7 @@ export function AdminTrusteesPage() {
     setBadge("Member");
     setBio("");
     setPhotoUrl("");
-    setOrderIndex(trustees.length + 1);
+    setOrderIndex(activeTrusteeCount + 1);
     setIsActive(true);
     setModalOpen(true);
   };
@@ -142,7 +144,7 @@ export function AdminTrusteesPage() {
       t.photoUrl !== "undefined"
         ? t.photoUrl
         : "";
-    setPhotoUrl(cleanPhoto);
+    setPhotoUrl(cleanPhoto || resolveTrusteePhoto(t.name) || "");
     setOrderIndex(t.orderIndex);
     setIsActive(t.isActive);
     setModalOpen(true);
@@ -276,7 +278,7 @@ export function AdminTrusteesPage() {
                 Fiduciary Oversight
               </span>
               <span className="text-xs text-slate-400 font-mono">
-                {trustees.length} Members Registered
+                {activeTrusteeCount} Active • {archivedTrusteeCount} Archived
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
