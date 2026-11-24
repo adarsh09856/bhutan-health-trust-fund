@@ -114,10 +114,10 @@ export function SiteHeader() {
 
       {/* 2. Main Institutional Navigation Bar */}
       <div className="bg-white">
-        <div className="container-page flex min-h-20 items-center justify-between gap-2 py-2 min-[1440px]:gap-2">
+        <div className="container-page flex min-h-20 items-center justify-between gap-2 py-2 min-[1100px]:gap-1.5">
           {/* Logo & Royal Proclamation (Official Dzongkha & English Brand Display) */}
-          <Link to="/" className="flex min-w-0 min-[1440px]:min-w-[300px] min-[1600px]:min-w-[340px] items-center gap-2 sm:gap-3.5 shrink group">
-            <div className="size-10 sm:size-15 md:size-16 rounded-full bg-white border border-slate-200/90 p-0.5 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
+          <Link to="/" className="flex min-w-0 min-[1100px]:min-w-[250px] min-[1440px]:min-w-[300px] min-[1600px]:min-w-[340px] items-center gap-2 sm:gap-3.5 shrink group">
+            <div className="size-10 sm:size-15 md:size-16 min-[1100px]:size-14 min-[1440px]:size-16 rounded-full bg-white border border-slate-200/90 p-0.5 shadow-xs grid place-items-center transition duration-200 group-hover:scale-105 shrink-0">
               <img
                 src={logo}
                 alt="Bhutan Health Trust Fund Emblem"
@@ -129,7 +129,7 @@ export function SiteHeader() {
               <div className="font-dzongkha text-[10px] sm:text-[14px] font-bold text-amber-950 tracking-normal leading-tight group-hover:text-emerald-900 transition">
                 ༄༅༎ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ ༎
               </div>
-              <div className="text-primary font-black text-[11px] sm:text-base lg:text-base tracking-tight whitespace-nowrap group-hover:text-primary/90 mt-0.5">
+              <div className="text-primary font-black text-[11px] sm:text-base lg:text-base min-[1100px]:text-[13px] min-[1440px]:text-base tracking-tight whitespace-nowrap group-hover:text-primary/90 mt-0.5">
                 BHUTAN HEALTH TRUST FUND
               </div>
               <div className="hidden min-[1440px]:block text-[10px] sm:text-[11px] text-muted-foreground mt-0.5 whitespace-normal leading-tight">
@@ -142,7 +142,7 @@ export function SiteHeader() {
           </Link>
 
           {/* Desktop Navigation Links (Clean, Dignified Institutional Palette - Zero vertical text wrapping) */}
-          <nav className="hidden min-[1440px]:flex items-center gap-0 2xl:gap-0.5 shrink-0">
+          <nav className="hidden min-[1100px]:flex items-center gap-0 shrink-0">
             {/* 1. About Us with Dropdown */}
             <div
               className="relative py-2 shrink-0"
@@ -151,7 +151,7 @@ export function SiteHeader() {
             >
               <Link
                 to="/about"
-                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 2xl:px-2 py-1.5 text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 min-[1100px]:px-1.5 2xl:px-2 py-1.5 text-xs min-[1100px]:text-[11px] min-[1440px]:text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
                   location.pathname === "/about" || location.pathname.startsWith("/about/")
                     ? "bg-primary/10 text-primary font-bold"
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
@@ -225,7 +225,7 @@ export function SiteHeader() {
             {/* 2. Our Story (Direct Link) */}
             <Link
               to="/our-story"
-              className={`whitespace-nowrap shrink-0 inline-flex items-center px-2 2xl:px-2 py-1.5 text-xs rounded-full transition-all duration-150 ${
+              className={`whitespace-nowrap shrink-0 inline-flex items-center px-2 min-[1100px]:px-1.5 2xl:px-2 py-1.5 text-xs min-[1100px]:text-[11px] min-[1440px]:text-xs rounded-full transition-all duration-150 ${
                 location.pathname === "/our-story"
                   ? "bg-primary/10 text-primary font-bold"
                   : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
@@ -242,7 +242,7 @@ export function SiteHeader() {
             >
               <Link
                 to="/our-impact"
-                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 2xl:px-2 py-1.5 text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 min-[1100px]:px-1.5 2xl:px-2 py-1.5 text-xs min-[1100px]:text-[11px] min-[1440px]:text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
                   location.pathname.startsWith("/our-impact") ||
                   location.pathname.startsWith("/our-work")
                     ? "bg-primary/10 text-primary font-bold"
@@ -291,7 +291,7 @@ export function SiteHeader() {
             >
               <Link
                 to="/resources"
-                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 2xl:px-2 py-1.5 text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 min-[1100px]:px-1.5 2xl:px-2 py-1.5 text-xs min-[1100px]:text-[11px] min-[1440px]:text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
                   location.pathname.startsWith("/resources") ||
                   location.pathname.startsWith("/reports")
                     ? "bg-primary/10 text-primary font-bold"
@@ -431,7 +431,7 @@ export function SiteHeader() {
             >
               <Link
                 to="/news"
-                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 2xl:px-2 py-1.5 text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
+                className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 min-[1100px]:px-1.5 2xl:px-2 py-1.5 text-xs min-[1100px]:text-[11px] min-[1440px]:text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
                   location.pathname.startsWith("/news")
                     ? "bg-primary/10 text-primary font-bold"
                     : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
@@ -535,7 +535,7 @@ export function SiteHeader() {
             {/* 6. Contact Us (Direct Link) */}
             <Link
               to="/contact"
-              className={`whitespace-nowrap shrink-0 inline-flex items-center px-2 2xl:px-2 py-1.5 text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
+              className={`whitespace-nowrap shrink-0 inline-flex items-center px-2 min-[1100px]:px-1.5 2xl:px-2 py-1.5 text-xs min-[1100px]:text-[11px] min-[1440px]:text-xs rounded-full transition-all duration-200 hover:-translate-y-0.5 motion-reduce:transform-none ${
                 location.pathname === "/contact"
                   ? "bg-primary/10 text-primary font-bold"
                   : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/70"
@@ -548,7 +548,7 @@ export function SiteHeader() {
           {/* Membership and contribution actions */}
           <div className="flex items-center gap-2 shrink-0">
             <div
-              className="relative hidden min-[1440px]:block"
+              className="relative hidden min-[1100px]:block"
               onMouseEnter={() => setOpenDropdown("membership")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
@@ -558,7 +558,7 @@ export function SiteHeader() {
                   setOpenDropdown((value) => (value === "membership" ? null : "membership"))
                 }
                 aria-expanded={openDropdown === "membership"}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#0B4F42]/30 px-3 py-2 text-xs font-bold text-[#0B4F42] hover:bg-emerald-50 transition whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full border border-[#0B4F42]/30 px-2 min-[1440px]:px-3 py-2 text-[11px] min-[1440px]:text-xs font-bold text-[#0B4F42] hover:bg-emerald-50 transition whitespace-nowrap"
               >
                 <Users className="size-3.5" />
                 <span>{t("nav_join_membership", "Join Membership")}</span>
@@ -583,7 +583,7 @@ export function SiteHeader() {
             </div>
             <Link
               to="/donate"
-              className="hidden min-[1440px]:inline-flex items-center gap-1.5 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-4 2xl:px-4 py-2 text-xs font-bold text-white shadow-sm ring-1 ring-emerald-700/40 transition active:scale-95 whitespace-nowrap shrink-0"
+              className="hidden min-[1100px]:inline-flex items-center gap-1.5 rounded-full bg-[#0B4F42] hover:bg-[#073C32] px-3 2xl:px-4 py-2 text-[11px] min-[1440px]:text-xs font-bold text-white shadow-sm ring-1 ring-emerald-700/40 transition active:scale-95 whitespace-nowrap shrink-0"
             >
               <Heart className="size-3.5 2xl:size-4 fill-current shrink-0 text-amber-300" />
               <span>{t("nav_donate", "Donate")}</span>
@@ -592,7 +592,7 @@ export function SiteHeader() {
             {/* Mobile Menu Hamburger */}
             <button
               onClick={() => setMobileMenuOpen((v) => !v)}
-              className="min-[1440px]:hidden grid place-items-center size-10 sm:size-11 rounded-lg border border-border hover:bg-muted transition text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
+              className="min-[1100px]:hidden grid place-items-center size-10 sm:size-11 rounded-lg border border-border hover:bg-muted transition text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-800"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -602,7 +602,7 @@ export function SiteHeader() {
 
         {/* Mobile Navigation Drawer with Accordion Subpages */}
         {mobileMenuOpen && (
-          <nav className="mobile-navigation min-[1440px]:hidden border-t border-border bg-white animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
+          <nav className="mobile-navigation min-[1100px]:hidden border-t border-border bg-white animate-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
             <div className="container-page py-4 flex flex-col space-y-1">
               {/* Mobile Drawer Language Switcher Bar */}
               <div className="flex items-center justify-between px-3 pt-1 pb-3 border-b border-border/60 mb-2">
