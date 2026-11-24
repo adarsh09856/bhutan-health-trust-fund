@@ -58,7 +58,7 @@ const secretariatMembers: SecretariatMember[] = [
     image: drGyamboDirector,
   },
   {
-    id: "officer-sonam-chojay", orderNumber: 2,
+    id: "officer-sonam-chojay", orderNumber: 4,
     name: "Mr. Sonam Chojay", nameDz: "སྐུ་ཞབས་ བསོད་ནམས་ཆོས་རྒྱལ།",
     designation: "Accounts Officer", designationDz: "རྩིས་ཁྲ་འགོ་དཔོན།",
     division: "Administration & Finance Division", divisionDz: "སྲིད་སྐྱོང་དང་ དངུལ་རྩིས་སྡེ་ཚན།",
@@ -76,7 +76,7 @@ const secretariatMembers: SecretariatMember[] = [
     image: staffThinleyWangchuk,
   },
   {
-    id: "staff-rinchen-phuntsho", orderNumber: 4,
+    id: "staff-rinchen-phuntsho", orderNumber: 5,
     name: "Mr. Rinchen Phuntsho", nameDz: "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས།",
     designation: "Driver / Support Logistics", designationDz: "སྣུམ་འཁོར་གཏོང་མི།",
     division: "Support Logistics", divisionDz: "རྒྱབ་སྐྱོར་དོ་དམ།",
@@ -85,7 +85,7 @@ const secretariatMembers: SecretariatMember[] = [
     image: staffRinchenPhuntsho,
   },
   {
-    id: "officer-tshering-choden", orderNumber: 5,
+    id: "officer-tshering-choden", orderNumber: 2,
     name: "Ms. Tshering Choden", nameDz: "སྐུ་ཞབས་ ཚེ་རིང་ཆོས་ལྡན།",
     designation: "Senior Program Officer", designationDz: "ལས་རིམ་འགོ་དཔོན་གཙོ་འཛིན།",
     division: "Programme Division", divisionDz: "ལས་རིམ་སྡེ་ཚན།",
@@ -230,7 +230,7 @@ function SecretariatPage() {
         ]}
       />
 
-      {/* Secretariat staff roster: all five profiles retained in PDF order. */}
+      {/* Secretariat hierarchy: director, programme, investment, finance, support logistics. */}
       <section
         className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
         data-bhtf-section="secretariat-roster"
@@ -239,9 +239,12 @@ function SecretariatPage() {
           <SecretariatMemberCard member={secretariatMembers[0]} isActive={activeCardId === secretariatMembers[0].id} onToggle={() => handleToggleCard(secretariatMembers[0].id)} isDzongkha={isDzongkha} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
-          {secretariatMembers.slice(1).map((member) => (
+          {secretariatMembers
+            .slice(1)
+            .sort((a, b) => a.orderNumber - b.orderNumber)
+            .map((member) => (
             <SecretariatMemberCard key={member.id} member={member} isActive={activeCardId === member.id} onToggle={() => handleToggleCard(member.id)} isDzongkha={isDzongkha} />
-          ))}
+            ))}
         </div>
       </section>
 
