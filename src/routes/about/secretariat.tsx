@@ -78,10 +78,10 @@ const secretariatMembers: SecretariatMember[] = [
   {
     id: "staff-rinchen-phuntsho", orderNumber: 5,
     name: "Mr. Rinchen Phuntsho", nameDz: "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས།",
-    designation: "Driver / Support Logistics", designationDz: "སྣུམ་འཁོར་གཏོང་མི།",
-    division: "Support Logistics", divisionDz: "རྒྱབ་སྐྱོར་དོ་དམ།",
-    bio: "Mr. Rinchen Phuntsho manages essential transport logistics, emergency delivery support, and official mobility for the BHTF Secretariat, ensuring safe and reliable transit for critical documents and official operations across Bhutan.",
-    bioDz: "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས་ཀྱིས་ དྲུང་ཆེན་ཡིག་ཚང་གི་འགྲོ་འགྲུལ་དང་ རྒྱབ་སྐྱོར་ལས་དོན་ཚུ་འབདཝ་ཨིན།",
+    designation: "Driver", designationDz: "སྣུམ་འཁོར་གཏོང་མི།",
+    division: "Secretariat", divisionDz: "དྲུང་ཆེན་ཡིག་ཚང་།",
+    bio: "Mr. Rinchen Phuntsho serves as the driver for the BHTF Secretariat, providing safe and reliable transport for staff and official duties.",
+    bioDz: "སྐུ་ཞབས་ རིན་ཆེན་ཕུན་ཚོགས་མཆོག་གིས་ འབྲུག་གསོ་བའི་བློ་གཏད་མ་དངུལ་གྱི་དྲུང་ཆེན་ཡིག་ཚང་ལུ་ སྣུམ་འཁོར་གཏོང་མིའི་ཞབས་ཏོག་གནངམ་ཨིན།",
     image: staffRinchenPhuntsho,
   },
   {
@@ -230,7 +230,7 @@ function SecretariatPage() {
         ]}
       />
 
-      {/* Secretariat hierarchy: director, programme, investment, finance, support logistics. */}
+      {/* Secretariat hierarchy: director, programme, investment, finance, and driver. */}
       <section
         className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative"
         data-bhtf-section="secretariat-roster"

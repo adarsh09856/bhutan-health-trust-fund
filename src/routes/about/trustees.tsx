@@ -307,7 +307,11 @@ function TrusteesPage() {
         organization: record.organization || canonical.organization,
         badge: record.badge || canonical.badge,
         desc: record.bio || canonical.desc,
-        photo: isActualUploadedPhoto ? storedPhoto : (canonical.photo || "/images/person-placeholder.svg"),
+        photo: profileId === "trustee-tandin"
+          ? canonical.photo
+          : isActualUploadedPhoto
+            ? storedPhoto
+            : (canonical.photo || "/images/person-placeholder.svg"),
         fallbackPhoto: canonical.photo || "/images/person-placeholder.svg",
         orderNumber: index + 1,
       };

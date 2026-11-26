@@ -48,6 +48,13 @@ const trusteeFallbackPhotos: Record<string, string> = {
 };
 
 const resolveTrusteePhoto = (name?: string, photoUrl?: string | null) => {
+  const normalizedName = name?.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() || "";
+  const knownPhoto = Object.entries(trusteeFallbackPhotos).find(([person]) => {
+    const normalizedPerson = person.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    return normalizedName.includes(normalizedPerson) || normalizedPerson.includes(normalizedName);
+  })?.[1];
+  if (normalizedName.includes("tandin wangchuk") && knownPhoto) return knownPhoto;
+
   const storedPhoto = photoUrl?.trim();
   const isActualUploadedPhoto = Boolean(
     storedPhoto &&
@@ -62,11 +69,6 @@ const resolveTrusteePhoto = (name?: string, photoUrl?: string | null) => {
   );
   if (isActualUploadedPhoto) return storedPhoto;
 
-  const normalizedName = name?.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() || "";
-  const knownPhoto = Object.entries(trusteeFallbackPhotos).find(([person]) => {
-    const normalizedPerson = person.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-    return normalizedName.includes(normalizedPerson) || normalizedPerson.includes(normalizedName);
-  })?.[1];
   if (knownPhoto) return knownPhoto;
 
   return undefined;
@@ -138,6 +140,7 @@ export function AdminTrusteesPage() {
     setBio(t.bio);
     const cleanPhoto =
       t.photoUrl &&
+      !t.name.toLowerCase().includes("tandin wangchuk") &&
       !/\/src\//i.test(t.photoUrl) &&
       !/logo\.png/i.test(t.photoUrl) &&
       t.photoUrl !== "null" &&

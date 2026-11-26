@@ -10,7 +10,7 @@ import { Download, ArrowRight, ExternalLink } from "lucide-react";
  * - Forest Green: #061713 / #071914
  * - Royal Gold: #D4A237
  * - Hairline Dividers: 1px border-slate-200 / border-white/10
- * - Fonts: Fraunces (serif), Plus Jakarta Sans (body), JetBrains Mono (codes/figures)
+ * - Fonts: system sans (display and body), JetBrains Mono (codes/figures)
  */
 
 /* =========================================================================
